@@ -19,8 +19,11 @@ setup(name='op_robot_tests',
       zip_safe=False,
       install_requires=[
           # -*- Extra requirements: -*-
+          'robotframework'
       ],
-      entry_points="""
-      # -*- Entry points: -*-
-      """,
+      entry_points={
+          'console_scripts': [
+              'openprocurement_tests = op_robot_tests.runner:runner',
+          ],
+      }
       )
