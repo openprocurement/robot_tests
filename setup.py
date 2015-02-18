@@ -19,7 +19,11 @@ setup(name='op_robot_tests',
       zip_safe=False,
       install_requires=[
           # -*- Extra requirements: -*-
-          'robotframework'
+          'robotframework',
+          'iso8601',
+          'PyYAML',
+          'munch',
+          'fake-factory'
       ],
       entry_points={
           'console_scripts': [
