@@ -58,9 +58,5 @@ def patch_tender_document(api, tender, doc_id):
     return api.update_document(tender, doc_id, file)
 
 
-def let_active_award(api, tender):
-    awards = api.get_awards(tender)
-    print "----_____ WE GOT AN AWARDS _____----"
-    award_id = [i['id'] for i in awards.data if i['status'] == 'pending'][0]
-    active_award = munchify({"data": {"status": "active", "id": award_id}})
-    award = api.patch_award(tender, active_award)
+def create_approve_award_request_data(award_id):
+    return munchify({"data": {"status": "active", "id": award_id}})

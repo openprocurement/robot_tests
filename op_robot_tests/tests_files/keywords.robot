@@ -134,9 +134,7 @@ Wait to end of auction
 Activate award
     ${awards}=  Call Method  ${API}  get_awards  ${tender}
     Log object data  ${awards}
-    # :FOR    ${award}   IN   @{awards.data}
-    # \    
-    # award_id = [i['id'] for i in awards.data if i['status'] == 'pending'][0]
-    # active_award = munchify({"data": {"status": "active", "id": award_id}})
-    # award = api.patch_award(tender, active_award)
-    # write_yaml('award_active.yaml', award)
+    ${award_approve}=  create_approve_award_request_data  ${awards.data[0].id}
+    Log object data  ${award_approve}
+    ${approved_award}=  Call Method  ${API}  patch_award  ${tender}  ${award_approve}
+    Log object data  ${approved_award}
