@@ -4,13 +4,20 @@ now = datetime.now()
 from munch import munchify
 from faker import Factory
 fake = Factory.create('uk_UA')
+fake_ru = Factory.create('ru')
+fake_en = Factory.create()
 
 test_tender_data = {
     "title": fake.catch_phrase(),
     "mode": "test",
     "submissionMethodDetails": "quick",
+    "description": "Тестовий тендер",
+    "description_en": "Test tender",
+    "description_ru": "Тестовый тендер",
     "procuringEntity": {
         "name": fake.company(),
+        "name_ru": fake_ru.company(),
+        "name_en": fake_en.company(),
         "identifier": {
             "scheme": u"UA-EDR",
             "id": u"0000{}".format(fake.pyint()),

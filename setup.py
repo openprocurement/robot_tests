@@ -20,6 +20,10 @@ setup(name='op_robot_tests',
       install_requires=[
           # -*- Extra requirements: -*-
           'robotframework',
+          'robotframework-selenium2library',
+          'robotframework-debuglibrary',
+          'robotframework-selenium2screenshots',
+          'Pillow',
           'iso8601',
           'PyYAML',
           'munch',
