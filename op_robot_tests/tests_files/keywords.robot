@@ -2,6 +2,7 @@
 Library  op_robot_tests.tests_files.ApiCommands
 Library  String
 LIbrary  Collections
+LIbrary  Selenium2Library
 
 
 *** Keywords ***
