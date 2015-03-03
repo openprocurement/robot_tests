@@ -8,19 +8,19 @@ Library   DebugLibrary
 
 *** Keywords ***
 Init auction data
-    ${auction_data}=  load_initial_data_from  aucion_data.yaml
+    ${auction_data}=  load_initial_data_from  auction_data.yaml
     Set Global Variable  ${auction_data}
 
 Create api wrapper
     Init auction data
     ${API}=  prepare_api  ${api_key}
     Set Global Variable  ${API}
-    LOG  ${API} 
+    LOG  ${API}
     Log Variables
 
 Set access key on tender
     ${tender}=  set_access_key  ${tender}  ${access_token}
-    Set Global Variable  ${tender} 
+    Set Global Variable  ${tender}
 
 Create tender
     ${init_tender_data}=  prepare_test_tender_data
@@ -31,7 +31,7 @@ Create tender
     Set Global Variable  ${access_token}
     ${tender_id}=  Get Variable Value  ${tender.data.id}
     Set Global Variable  ${tender_id}
-    Log   access_key: ${access_token}  
+    Log   access_key: ${access_token}
     Log   tender_id: ${tender_id}
     Log Variables
     Set Global Variable  ${tender}
@@ -48,7 +48,7 @@ Change tender title
     Log object data  ${tender}
     ${tender}=  Call Method  ${API}  patch_tender  ${tender}
     Set Global Variable  ${tender}
-    Log object data  ${tender}  tender_changed_titles 
+    Log object data  ${tender}  tender_changed_titles
     Set access key on tender
 
 Change tender periods
@@ -104,7 +104,7 @@ Wait to tender period with name ${period_name}
     Review tender
 
 Wait to start of auction's worker
-    Sleep  4 minutes 
+    Sleep  4 minutes
 
 Submit bids
     Review tender
@@ -112,7 +112,7 @@ Submit bids
     ${bids_items}=    Get Dictionary Items    ${auction_data.bidders}
     :FOR    ${bidder_key}  ${bidder_data}   IN  @{bids_items}
     \    ${bid}=  test bid data
-    \    Log object data  ${bid}  
+    \    Log object data  ${bid}
     \    ${temp_amount}=  Get Variable Value   ${auction_data.bidders.${bidder_key}.start_bid}
     \    Log  ${temp_amount}
     \    ${bid.data.value.amount}=  Get Variable Value  ${temp_amount}
@@ -135,9 +135,9 @@ Get particular urls for bids
     :FOR   ${bidder_key}  ${bidder_data}   IN   @{bids_items}
     \    ${approved_bid}=  Call Method  ${API}  get_bid  ${tender}   ${bidder_data.tender_bid_data.data.id}  ${bidder_data.tender_bid_data.access.token}
     \    Log object data   ${approved_bid}
-    \    Log   ${approved_bid.data.participationUrl}  
+    \    Log   ${approved_bid.data.participationUrl}
     \    Set To Dictionary     ${auction_data.bidders.${bidder_key}}   start_url     ${approved_bid.data.participationUrl}
-    Log object data  ${auction_data}  auction_data_after_get_particular_urls 
+    Log object data  ${auction_data}  auction_data_after_get_particular_urls
     Set Global Variable  ${auction_data}
 
 
@@ -145,10 +145,10 @@ Get auction url for observer
     Review tender
     Set To Dictionary     ${auction_data.observer}  start_url   ${tender.data.auctionUrl}
     Log object data    ${auction_data}  auction_data_after_add_auction_url
-    Set Global Variable  ${auction_data}  
+    Set Global Variable  ${auction_data}
 
 
-Wait to end of auction 
+Wait to end of auction
     Sleep  1 minutes  Wait to end of auction
 
 
@@ -161,35 +161,41 @@ Activate award
     Log object data  ${award_approve}
     ${approved_award}=  Call Method  ${API}  patch_award  ${tender}  ${award_approve}
     Log object data  ${approved_award}   award_approved
-
+    ${award_canceled}=  create_approve_award_request_data  ${awards.data[0].id}
+    Set To Dictionary   ${award_canceled.data}    status   cancelled
+    Log object data  ${award_canceled}
+    ${canceled_award}=  Call Method  ${API}  patch_award  ${tender}  ${award_canceled}
+    Log object data  ${canceled_award}   award_canceled
+    ${awards}=  Call Method  ${API}  get_awards  ${tender}
+    Log object data  ${awards}  awards_after_cancel_one
 
 Game process begin
     Open Browser To bidder0 Login Page
-    Open Browser To bidder1 Login Page 
+    Open Browser To bidder1 Login Page
     Open Browser as observer
     Auction is on round 1
     bidder1 leaves bid 40000
-    Capture Page Screenshot 
+    Capture Page Screenshot
     bidder0 leaves bid 39000
-    Capture Page Screenshot 
+    Capture Page Screenshot
     Auction is finished
-    Capture Page Screenshot 
+    Capture Page Screenshot
 
 Open Browser To ${bidder} Login Page
     Open Browser  ${auction_data.bidders.${bidder}.start_url}  ${auction_data.bidders.${bidder}.browser}  ${bidder}
-    Maximize Browser Window 
+    Maximize Browser Window
     Oauth Confirm Page Should Be Open
     ${bidder} agree with rules
     Sleep  2
-    Capture Page Screenshot 
+    Capture Page Screenshot
 
 
 Open Browser as observer
-    Open Browser   ${auction_data.observer.start_url}    ${auction_data.observer.browser}   observer 
-    Maximize Browser Window 
-    Capture Page Screenshot 
+    Open Browser   ${auction_data.observer.start_url}    ${auction_data.observer.browser}   observer
+    Maximize Browser Window
+    Capture Page Screenshot
 
-Oauth Confirm Page Should Be Open 
+Oauth Confirm Page Should Be Open
     Title Should Be    Authorization
     Capture Page Screenshot
 
@@ -201,8 +207,8 @@ ${bidder} agree with rules
 
 submit bid ${amount} on auction
   Wait Until Page Contains   до закінчення вашої черги   600
-  Input Text   xpath = //input[@id="bid"]   ${amount}
-  Click Button   xpath = //button[@class="btn btn-success ng-scope"]
+  Input Text   xpath = //input[@id="bid-amount-input"]   ${amount}
+  Click Button   xpath = //button[@id="place-bid-button"]
   Wait Until Page Contains    Заявку прийнято     10
   Page Should Not Contain  Надто висока заявка
 
@@ -212,15 +218,15 @@ ${bidder} leaves bid ${amount}
 
 
 Auction is finished
-  Wait Until Page Contains   Аукціон завершився   600
+  Wait Until Page Contains   Аукціон завершився   700
   ${value} =   Get Text   xpath= //p[@class="round-number ng-scope"]
   Should Be Equal   ${value}   Завершено
   Capture Page Screenshot
 
-Auction is on round ${value3} 
+Auction is on round ${value3}
   Wait Until Page Contains   до закінчення раунду   1200
   ${round} =  Get Text   xpath = //p[@class="round-label ng-scope"]
   ${number} =  Get Text  xpath = //p[@class="round-number ng-binding"]
   Should Be Equal   ${round}    Раунд
-  Should Be Equal   ${number}   ${value3} 
-  Capture Page Screenshot  
+  Should Be Equal   ${number}   ${value3}
+  Capture Page Screenshot
