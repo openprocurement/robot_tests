@@ -116,5 +116,10 @@ get the messages
   [return]  ${message_list}
   Capture Page Screenshot
   
-get time 
-  ${text} =    Get text   xpath = //timer[@timerid=1]
+get time and state
+  ${text}=    Get text   xpath = //timer[@timerid=1]
+  ${state}=   Evaluate    " ".join(map(str,'${text}'.split(" ")[-3:]))
+  ${time}=    Evaluate     " ".join(map(str,'${text}'.split(" ")[0:-3]))
+  [return]   ${state}   ${time}   
+  
+  

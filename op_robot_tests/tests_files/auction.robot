@@ -13,7 +13,7 @@ Valid Login
   [Documentation]    Opens a browser for observer and both users agrees 
   ...                with rules as users, waits auction start, checks auction status
   Open ${BROWSER} browser as viewer and go to ${AUCTION_URL}
-  get time 
+  get state  
   Open ${BROWSER} browser as bidder1 and go to ${LOGIN URL1}
   login as bidder
   Open ${BROWSER} browser as bidder2 and go to ${LOGIN URL2}
