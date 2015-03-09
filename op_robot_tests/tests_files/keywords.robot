@@ -156,18 +156,31 @@ Activate award
     Review tender
     Log object data    ${tender}   tender_after_add_auction
     ${awards}=  Call Method  ${API}  get_awards  ${tender}
-    Log object data  ${awards}  awards
+    Log object data  ${awards}  initial_get_awards_response   json
     ${award_approve}=  create_approve_award_request_data  ${awards.data[0].id}
-    Log object data  ${award_approve}
+    Log object data  ${award_approve}  active_award_request  json
     ${approved_award}=  Call Method  ${API}  patch_award  ${tender}  ${award_approve}
-    Log object data  ${approved_award}   award_approved
+    Log object data  ${approved_award}   activeted_award_response  json
     ${award_canceled}=  create_approve_award_request_data  ${awards.data[0].id}
     Set To Dictionary   ${award_canceled.data}    status   cancelled
-    Log object data  ${award_canceled}
+    Log object data  ${award_canceled}   cancel_award_request   json
     ${canceled_award}=  Call Method  ${API}  patch_award  ${tender}  ${award_canceled}
-    Log object data  ${canceled_award}   award_canceled
+    Log object data  ${canceled_award}   cancel_award_response   json
     ${awards}=  Call Method  ${API}  get_awards  ${tender}
-    Log object data  ${awards}  awards_after_cancel_one
+    Log object data  ${awards}  awards_after_cancel_one   json
+    ${unsuccessful_award_request}=  create_approve_award_request_data  ${awards.data[1].id}
+    Set To Dictionary   ${unsuccessful_award_request.data}    status   unsuccessful
+    Log object data  ${unsuccessful_award_request}  unsuccessful_award_request  json
+    ${unsuccessful_award_response}=  Call Method  ${API}  patch_award  ${tender}  ${unsuccessful_award_request}
+    Log object data  ${unsuccessful_award_response}   unsuccessful_award_response  json
+    ${award_canceled}=  create_approve_award_request_data  ${awards.data[0].id}
+    ${awards}=  Call Method  ${API}  get_awards  ${tender}
+    Log object data  ${awards}  awards_after_unsuccessful_one   json
+    ${next_award_activate_request}=  create_approve_award_request_data  ${awards.data[2].id}
+    Set To Dictionary   ${next_award_activate_request.data}    status   active
+    Log object data  ${next_award_activate_request}   next_award_activate_request   json
+    ${next_award_activate_response}=  Call Method  ${API}  patch_award  ${tender}  ${next_award_activate_request}
+    Log object data  ${next_award_activate_response}   next_award_activate_response   json
 
 Game process begin
     Open Browser To bidder0 Login Page
