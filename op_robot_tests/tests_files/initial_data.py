@@ -36,11 +36,11 @@ test_tender_data = {
         }
     },
     "value": {
-        "amount": 50000,
+        "amount": 50000.99,
         "currency": u"UAH"
     },
     "minimalStep": {
-        "amount": 100,
+        "amount": 100.1,
         "currency": u"UAH"
     },
     "items": [
