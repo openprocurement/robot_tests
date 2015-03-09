@@ -1,0 +1,12 @@
+tender_owner: Taras
+users:
+    Taras:
+        broker: Quinta
+    Andew:
+        broker: E-tender
+        username: test
+        browser:  chrome
+        position:  [1060, 0]
+        size:  [860, 1000]
+    Andew1:
+        broker: Quinta
