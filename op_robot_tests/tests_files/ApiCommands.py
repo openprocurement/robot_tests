@@ -1,22 +1,19 @@
 # -*- coding: utf-8 -
-import os
-from munch import munchify, Munch, fromYAML
+from munch import munchify
 from .initial_data import (
     test_tender_data, test_question_data, test_question_answer_data,
     test_bid_data
 )
 
-from dateutil.parser import  parse
+from dateutil.parser import parse
 from dateutil.tz import tzlocal
 from datetime import datetime, timedelta
 
 from json import loads as convert_from_string_to_dict
 from openprocurement_client.client import Client
-from datetime import datetime, timedelta
 from StringIO import StringIO
 from robot.output import LOGGER
 from robot.output.loggerhelper import Message
-from robot.libraries.BuiltIn import BuiltIn
 
 
 def prepare_api(key=''):
@@ -26,22 +23,6 @@ def prepare_api(key=''):
 def prepare_test_tender_data():
     tender = munchify({'data': test_tender_data})
     return tender
-
-
-def log_object_data(data, file_name=""):
-    if not isinstance(data, Munch):
-        data = munchify(data)
-    data = data.toYAML(allow_unicode=True, default_flow_style=False)
-    LOGGER.log_message(Message(data, "INFO"))
-    if file_name:
-        output_dir = BuiltIn().get_variable_value("${OUTPUT_DIR}")
-        with open(os.path.join(output_dir, file_name + '.yaml'), "w") as file_obj:
-            file_obj.write(data)
-
-
-def load_initial_data_from(file_name):
-    with open(os.path.join(os.path.dirname(__file__), 'data/{}'.format(file_name))) as yaml_file:
-        return fromYAML(yaml_file)
 
 
 def set_tender_periods(tender):
