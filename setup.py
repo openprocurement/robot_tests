@@ -27,7 +27,8 @@ setup(name='op_robot_tests',
           'iso8601',
           'PyYAML',
           'munch',
-          'fake-factory'
+          'fake-factory',
+          'robotframework-debuglibrary',
       ],
       entry_points={
           'console_scripts': [
