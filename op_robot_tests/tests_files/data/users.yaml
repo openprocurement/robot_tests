@@ -1,12 +1,12 @@
-tender_owner: Taras
+tender_owner: Tender Owner
 users:
-    Taras:
+    Tender Owner:
         broker: Quinta
-    Andew:
+    E-tender User:
         broker: E-tender
         username: test
         browser:  chrome
-        position:  [1060, 0]
-        size:  [860, 1000]
-    Andew1:
+        position:  [960, 0]
+        size:  [960, 1000]
+    Andrew:
         broker: Quinta

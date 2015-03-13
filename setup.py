@@ -27,7 +27,9 @@ setup(name='op_robot_tests',
           'iso8601',
           'PyYAML',
           'munch',
-          'fake-factory'
+          'fake-factory',
+          'dpath',
+          'jsonpath-rw'
       ],
       entry_points={
           'console_scripts': [

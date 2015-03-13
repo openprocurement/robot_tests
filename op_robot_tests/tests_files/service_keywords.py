@@ -5,8 +5,10 @@ from json import load
 from robot.output import LOGGER
 from robot.output.loggerhelper import Message
 from robot.libraries.BuiltIn import BuiltIn
-
-
+from robot.errors import HandlerExecutionFailed
+from datetime import datetime, timedelta
+from dpath.util import set as xpathset
+from jsonpath_rw import parse
 from .initial_data import (
     test_tender_data, test_question_data, test_question_answer_data,
     test_bid_data
@@ -40,3 +42,54 @@ def load_initial_data_from(file_name):
 
 def prepare_test_tender_data():
     return munchify({'data': test_tender_data})
+
+
+def run_keyword_and_ignore_keyword_definations(name, *args):
+    """Runs the given keyword with given arguments and returns the status as a Boolean value.
+
+    This keyword returns `True` if the keyword that is executed succeeds and
+    `False` if it fails. This is useful, for example, in combination with
+    `Run Keyword If`. If you are interested in the error message or return
+    value, use `Run Keyword And Ignore Error` instead.
+
+    The keyword name and arguments work as in `Run Keyword`.
+
+    Example:
+    | ${passed} = | `Run Keyword And Return Status` | Keyword | args |
+    | `Run Keyword If` | ${passed} | Another keyword |
+
+    New in Robot Framework 2.7.6.
+    """
+    try:
+        status, _ = BuiltIn().run_keyword_and_ignore_error(name, *args)
+    except HandlerExecutionFailed, e:
+        LOGGER.log_message(Message("Keyword {} not implemented", "ERROR"))
+        return "FAIL", ""
+    return status, _
+
+
+def set_tender_periods(tender):
+    now = datetime.now()
+    tender.data.enquiryPeriod.endDate = (now + timedelta(minutes=2)).isoformat()
+    tender.data.tenderPeriod.startDate = (now + timedelta(minutes=2)).isoformat()
+    tender.data.tenderPeriod.endDate = (now + timedelta(minutes=4)).isoformat()
+    return tender
+
+
+def set_access_key(tender, access_token):
+    tender.access = munchify({"token": access_token})
+    return tender
+
+
+def set_to_object(obj, attribute, value):
+    xpathset(obj, attribute.replace('.', '/'), value)
+    return obj
+
+
+def get_from_object(obj, attribute):
+    """Gets data from a dictionary using a dotted accessor-string"""
+    jsonpath_expr = parse(attribute)
+    return_list = [i.value for i in jsonpath_expr.find(obj)]
+    if return_list:
+        return return_list[0]
+    return None

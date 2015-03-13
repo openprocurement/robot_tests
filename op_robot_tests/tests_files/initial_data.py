@@ -46,6 +46,20 @@ test_tender_data = {
     "items": [
         {
             "description": fake.catch_phrase(),
+            "deliveryDate": {
+                "endDate": (now + timedelta(days=5)).isoformat()
+            },
+            "deliveryLocation": {
+                "latitude": "49.8500° N",
+                "longitude": "24.0167° E"
+            },
+            "deliveryAddress": {
+                "countryName": u"Україна",
+                "postalCode": fake.postalcode(),
+                "region": u"м. Київ",
+                "locality": u"м. Київ",
+                "streetAddress": fake.street_address()
+            },
             "classification": {
                 "scheme": u"CPV",
                 "id": u"44617100-9",
