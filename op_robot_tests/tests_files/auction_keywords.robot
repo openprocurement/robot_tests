@@ -113,6 +113,7 @@ get upper bid limit value
 get the messages
   Sleep  1s
   ${message_list}=   Execute Javascript   ${jscode}
+  Log   ${message_list}  WARN
   [return]  ${message_list}
   Capture Page Screenshot
   
