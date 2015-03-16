@@ -26,7 +26,7 @@ Open ${browser_type} browser as ${person} and go to ${location}
     Capture Page Screenshot 
 
 login as bidder
-    Oauth Confirm Page Should Be Open 
+    #Oauth Confirm Page Should Be Open 
     Capture Page Screenshot 
     Agree with rules 
 
@@ -58,19 +58,14 @@ Auction is between rounds ${round_number}
   Should Be Equal   ${round_number}   ${auction_stasus}
   Capture Page Screenshot
   
-Auction is on round ${round_number} with state: ${message}
+Auction on round ${round_number} with state: ${message}
   Wait Until Page Contains   ${message}   ${timeout}
   ${round} =  Get Text   xpath = //p[@class="round-label ng-scope"]
   ${number} =  Get Text  xpath = //p[@class="round-number ng-binding"]
   Should Be Equal   ${round}    Раунд
   Should Be Equal   ${number}   ${round_number} 
   Capture Page Screenshot    
-    
-Auction is finished
-  Wait Until Page Contains   Аукціон завершився   ${timeout}
-  ${auction_status} =   Get Text   xpath = //p[@class="round-number ng-scope"]
-  Should Be Equal   ${auction_status}   Завершено
-  Capture Page Screenshot
+  
   
 ###########   bidding keywords   #########################################
  
@@ -113,7 +108,7 @@ get upper bid limit value
 get the messages
   Sleep  1s
   ${message_list}=   Execute Javascript   ${jscode}
-  Log   ${message_list}  WARN
+  Log many   ${message_list}  WARN
   [return]  ${message_list}
   Capture Page Screenshot
   

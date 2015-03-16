@@ -21,7 +21,7 @@ Valid Login
   Switch Browser   viewer
   #Auction is in standby
   Auction is between rounds → 1
-  Auction is on round 1 with state: до закінчення раунду
+  Auction on round 1 with state: до закінчення раунду
 
 invalid bids test
   [Tags]
@@ -64,7 +64,7 @@ auction runs 2 round
   [Tags]
   [Documentation]    bidders make thair bids on round 2, test verifies if bids are accepted
   ...                and no errors appears
-  Auction is on round 2 with state: до закінчення раунду
+  Auction on round 2 with state: до закінчення раунду
   Switch Browser   bidder1
   Auction Page Should Be Open
   wait for your turn
@@ -79,14 +79,14 @@ auction is on last round
   [Tags]
   [Documentation]    bidders make thair bids on last round, test verifies if bids are accepted
   ...                and no errors appears, auctin is finished and all browsers are closed
-  Auction is on round 3 with state: до оголошення результатів
-  Switch Browser   bidder1
+  Auction on round 3 with state: до оголошення результатів
+  Switch Browser   bidder2
   Auction Page Should Be Open
   wait for your turn
-  place bid as part of limit with coefficient 0.80
-  Switch Browser   bidder2
-  wait for your turn
   place bid as part of limit with coefficient 0.78
+  Switch Browser   bidder1
+  wait for your turn
+  place bid as part of limit with coefficient 0.80
   Switch Browser   viewer
   Auction is finished
   [Teardown]  Close All Browsers
