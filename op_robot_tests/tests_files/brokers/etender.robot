@@ -157,12 +157,16 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   [return]  ${return_value}
 
 отримати інформацію про questions[${question_id}].description
-  відмітити на сторінці поле з тендера   questions title   jquery=tender-questions>div:eq(1)>div.row:contains("Питання:")>:eq(1)>
+  відмітити на сторінці поле з тендера   questions description   jquery=tender-questions>div:eq(1)>div.row:contains("Питання:")>:eq(1)>
   ${return_value}=   Get Text  jquery=tender-questions>div:eq(1)>div.row:contains("Питання:")>:eq(1)>
   [return]  ${return_value}
 
 отримати інформацію про questions[${question_id}].date
-  відмітити на сторінці поле з тендера   questions title   jquery=tender-questions>div:eq(1)>div.row:contains("Дата:")>:eq(1)>
+  відмітити на сторінці поле з тендера   question date   jquery=tender-questions>div:eq(1)>div.row:contains("Дата:")>:eq(1)>
   ${return_value}=   Get Text  jquery=tender-questions>div:eq(1)>div.row:contains("Дата:")>:eq(1)>
   [return]  ${return_value}
 
+отримати інформацію про questions[${question_id}].answer
+  відмітити на сторінці поле з тендера   question answer   jquery=tender-questions>div:eq(1)>div:last>
+  ${return_value}=   Get Text  jquery=tender-questions>div:eq(1)>div:last>
+  [return]  ${return_value}

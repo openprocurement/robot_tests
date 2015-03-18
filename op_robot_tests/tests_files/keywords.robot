@@ -72,3 +72,13 @@ TestCaseSetup
   ${status}  ${value}=  run_keyword_and_ignore_keyword_definations   ${BROKERS['${USERS.users['${username}'].broker}'].keywords_file}.${command}  ${username}  @{arguments}
   Run keyword if  '${status}' == 'FAIL'   Log   Учасник ${username} не зміг виконати "${command}"   WARN
   [return]   ${value}
+
+
+Дочекатись дати
+  [Arguments]  ${date}
+  ${wait_timout}=  wait_to_date  ${date}
+  Run Keyword If   ${wait_timout}>0   Sleep  ${wait_timout}
+
+
+Дочекатись дати початоку прийому пропозицій
+  Дочекатись дати  ${TENDER_DATA.data.tenderPeriod.startDate}

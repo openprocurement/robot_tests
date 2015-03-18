@@ -34,53 +34,23 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
   [return]   ${tender_data}
 
 
+обновити сторінку з тендером
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  tenderId
+  ...      ${ARGUMENTS[2]} ==  id
+  openprocurement_client.Пошук тендера по ідентифікатору    @{ARGUMENTS}
+
+
 отримати інформацію із тендера
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  fieldname
-  [return]  ${USERS.users['${ARGUMENTS[0]}'].tender_data.data.${ARGUMENTS[1]}}
+  ${field_value}=   Get_From_Object  ${USERS.users['${ARGUMENTS[0]}'].tender_data.data}   ${ARGUMENTS[1]}
+  [return]  ${field_value}
 
-
-
-отримати інформацію про description для предмету закупівлі в однопредметному тендері
-  [Arguments]  @{ARGUMENTS}
-  [Documentation]
-  ...      ${ARGUMENTS[0]} ==  username
-  [return]  ${USERS.users['${ARGUMENTS[0]}'].tender_data.data['items'][0].description}
-
-отримати інформацію про quantity для предмету закупівлі в однопредметному тендері
-  [Arguments]  @{ARGUMENTS}
-  [Documentation]
-  ...      ${ARGUMENTS[0]} ==  username
-  [return]  ${USERS.users['${ARGUMENTS[0]}'].tender_data.data['items'][0].quantity}
-
-
-отримати інформацію про classification.id для предмету закупівлі в однопредметному тендері
-  [Arguments]  @{ARGUMENTS}
-  [Documentation]
-  ...      ${ARGUMENTS[0]} ==  username
-  [return]  ${USERS.users['${ARGUMENTS[0]}'].tender_data.data['items'][0].classification.id}
-
-
-отримати інформацію про classification.description для предмету закупівлі в однопредметному тендері
-  [Arguments]  @{ARGUMENTS}
-  [Documentation]
-  ...      ${ARGUMENTS[0]} ==  username
-  [return]  ${USERS.users['${ARGUMENTS[0]}'].tender_data.data['items'][0].classification.description}
-
-
-отримати інформацію про deliveryAddress для предмету закупівлі в однопредметному тендері
-  [Arguments]  @{ARGUMENTS}
-  [Documentation]
-  ...      ${ARGUMENTS[0]} ==  username
-  [return]  ${USERS.users['${ARGUMENTS[0]}'].tender_data.data['items'][0].deliveryAddress}
-
-отримати інформацію про deliveryDate для предмету закупівлі в однопредметному тендері
-  [Arguments]  @{ARGUMENTS}
-  [Documentation]
-  ...      ${ARGUMENTS[0]} ==  username
-  [return]  ${USERS.users['${ARGUMENTS[0]}'].tender_data.data['items'][0].deliveryDate}
 
 Внести зміни в тендер
   [Arguments]  @{ARGUMENTS}
@@ -91,7 +61,6 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
   ...      ${ARGUMENTS[3]} ==  fieldvalue
   отримати тендер   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
   Set_To_Object  ${TENDER_DATA.data}   ${ARGUMENTS[2]}   ${ARGUMENTS[3]}
-
   ${TENDER_DATA}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_tender  ${TENDER_DATA}
   ${TENDER_DATA}=  set_access_key  ${TENDER_DATA}  ${USERS.users['${ARGUMENTS[0]}'].access_token}
   Set Global Variable  ${TENDER_DATA}
@@ -107,13 +76,39 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
   Set Global Variable  ${TENDER_DATA}
 
 
-
 Задати питання
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tender_uid
   ...      ${ARGUMENTS[2]} ==  question
   [Arguments]  @{ARGUMENTS}
+  log many  @{ARGUMENTS}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${ARGUMENTS[1]}
   ${question}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_question  ${tender}  ${ARGUMENTS[2]}
   Log object data   ${question}  question
+
+Відповісти на питання
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  tender_uid
+  ...      ${ARGUMENTS[2]} ==  question_id
+  ...      ${ARGUMENTS[3]} ==  answer_data
+  [Arguments]  @{ARGUMENTS}
+  log many  @{ARGUMENTS}
+  ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${ARGUMENTS[1]}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${ARGUMENTS[0]}'].access_token}
+  ${ARGUMENTS[3].data.id}=  Set Variable   ${tender.data.questions[${ARGUMENTS[2]}].id}
+  ${quvestion_with_answer}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_question  ${tender}  ${ARGUMENTS[3]}
+  Log object data   ${quvestion_with_answer}  quvestion_with_answer
+
+
+Подати цінову пропозицію
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  tender_uid
+  ...      ${ARGUMENTS[2]} ==  bid
+  [Arguments]  @{ARGUMENTS}
+  log many  @{ARGUMENTS}
+  ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${ARGUMENTS[1]}
+  ${bid}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_bid  ${tender}  ${ARGUMENTS[2]}
+  Log object data   ${question}  bid

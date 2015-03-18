@@ -80,16 +80,16 @@ test_tender_data = {
         }
     ],
     "enquiryPeriod": {
-        "endDate": (now + timedelta(days=1)).isoformat()
+        "endDate": (now + timedelta(minutes=2)).isoformat()
     },
     "tenderPeriod": {
-        "endDate": (now + timedelta(days=2)).isoformat()
+        "endDate": (now + timedelta(minutes=5)).isoformat()
     }
 }
 
 
 def test_question_data():
-    return {
+    return munchify({
         "data": {
             "author": {
                 "address": {
@@ -113,15 +113,15 @@ def test_question_data():
             "description": fake.sentence(nb_words=10, variable_nb_words=True),
             "title": fake.sentence(nb_words=6, variable_nb_words=True)
         }
-    }
+    })
 
 
 def test_question_answer_data():
-    return {
+    return munchify({
         "data": {
             "answer": fake.sentence(nb_words=40, variable_nb_words=True)
         }
-    }
+    })
 
 
 def test_bid_data():

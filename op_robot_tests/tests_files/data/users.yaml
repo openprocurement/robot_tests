@@ -2,11 +2,11 @@ tender_owner: Tender Owner
 users:
     Tender Owner:
         broker: Quinta
-    E-tender User:
+    Tender Viewer:
         broker: E-tender
         username: test
         browser:  chrome
         position:  [960, 0]
         size:  [960, 1000]
-    Andrew:
+    Tender User:
         broker: Quinta

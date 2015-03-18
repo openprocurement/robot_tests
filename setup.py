@@ -29,7 +29,8 @@ setup(name='op_robot_tests',
           'munch',
           'fake-factory',
           'dpath',
-          'jsonpath-rw'
+          'jsonpath-rw',
+          'dateutils'
       ],
       entry_points={
           'console_scripts': [

@@ -7,8 +7,10 @@ from robot.output.loggerhelper import Message
 from robot.libraries.BuiltIn import BuiltIn
 from robot.errors import HandlerExecutionFailed
 from datetime import datetime, timedelta
+from dateutil.parser import parse
+from dateutil.tz import tzlocal
 from dpath.util import set as xpathset
-from jsonpath_rw import parse
+from jsonpath_rw import parse as parse_path
 from .initial_data import (
     test_tender_data, test_question_data, test_question_answer_data,
     test_bid_data
@@ -88,8 +90,20 @@ def set_to_object(obj, attribute, value):
 
 def get_from_object(obj, attribute):
     """Gets data from a dictionary using a dotted accessor-string"""
-    jsonpath_expr = parse(attribute)
+    jsonpath_expr = parse_path(attribute)
     return_list = [i.value for i in jsonpath_expr.find(obj)]
     if return_list:
         return return_list[0]
     return None
+
+
+def wait_to_date(date_stamp):
+    date = parse(date_stamp)
+    LOGGER.log_message(Message("date: {}".format(date.isoformat()), "INFO"))
+    now = datetime.now(tzlocal())
+    LOGGER.log_message(Message("now: {}".format(now.isoformat()), "INFO"))
+    wait_seconds = (date - now).total_seconds()
+    wait_seconds += 2
+    if wait_seconds < 0:
+        return 0
+    return wait_seconds
