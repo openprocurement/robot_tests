@@ -19,7 +19,7 @@ Valid Login
   Open ${BROWSER} browser as bidder2 and go to ${LOGIN URL2}
   login as bidder
   Switch Browser   viewer
-  #Auction is in standby
+  Auction is in standby
   Auction is between rounds → 1
   Auction on round 1 with state: до закінчення раунду
 
