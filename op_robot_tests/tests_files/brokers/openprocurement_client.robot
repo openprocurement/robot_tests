@@ -21,6 +21,7 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
   Log   access_token: ${access_token}
   Log   tender_id: ${TENDER_DATA.data.id}
   Set Global Variable  ${TENDER_DATA}
+  #Debug
   [return]  ${TENDER_DATA}
 
 Пошук тендера по ідентифікатору
@@ -110,5 +111,34 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
   [Arguments]  @{ARGUMENTS}
   log many  @{ARGUMENTS}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${ARGUMENTS[1]}
-  ${bid}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_bid  ${tender}  ${ARGUMENTS[2]}
-  Log object data   ${question}  bid
+  ${biddingresponce}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_bid  ${tender}  ${ARGUMENTS[2]}
+  Set Global Variable   ${biddingresponce}
+  Log object data   ${biddingresponce}  bid
+  [return]  ${biddingresponce}
+  
+Змінити цінову пропозицію
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  tender_uid
+  ...      ${ARGUMENTS[2]} ==  bid
+  [Arguments]  @{ARGUMENTS}
+  log many  @{ARGUMENTS}
+  ${token}=  Get Variable Value  ${TENDER_DATA.access.token}
+  Set To Dictionary  ${USERS.users['${ARGUMENTS[0]}']}   token   ${token}
+  ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${ARGUMENTS[1]}
+  ${patch}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_bid  ${tender}  ${ARGUMENTS[2]}
+  Log object data   ${patch}  patch
+ 
+Змінити цінову пропозицію
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  tender_uid
+  ...      ${ARGUMENTS[2]} ==  bid
+  [Arguments]  @{ARGUMENTS}
+  log many  @{ARGUMENTS}
+  ${token}=  Get Variable Value  ${TENDER_DATA.access.token}
+  Set To Dictionary  ${USERS.users['${ARGUMENTS[0]}']}   token   ${token}
+  ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${ARGUMENTS[1]}
+  ${patch}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_bid  ${tender}  ${ARGUMENTS[2]}
+  Log object data   ${patch}  patch
+  

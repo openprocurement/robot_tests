@@ -9,7 +9,8 @@ Suite Setup  TestCaseSetup
 Suite Teardown  Close all browsers
 
 *** Variables ***
-${viewer}     Tender User
+${viewer}     Tender Viewer
+
 # Tender Viewer
 ${provider}   Tender User
 
@@ -125,10 +126,15 @@ ${provider}   Tender User
   Викликати для учасника   ${viewer}   обновити сторінку з тендером   ${TENDER_DATA.data.tenderID}   ${TENDER_DATA.data.id}
   Звірити поле тендера   ${viewer}  questions[0].answer
 
-
 Подати цінову пропозицію
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   Дочекатись дати початоку прийому пропозицій
   ${bid}=  test bid data
   Log object data  ${bid}
   Викликати для учасника   ${provider}   Подати цінову пропозицію   ${TENDER_DATA.data.id}   ${bid}
+
+Змінити цінову пропозицію
+  [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
+  Set To Dictionary  ${biddingresponce.data.value}   amount   600
+  Log object data   ${biddingresponce.data.value}
+  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER_DATA.data.id}   ${biddingresponce}

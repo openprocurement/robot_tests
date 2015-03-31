@@ -33,6 +33,8 @@ TestCaseSetup
   Set Global Variable  ${ANSWERS}
   ${INITIAL_TENDER_DATA}=  prepare_test_tender_data
   Set Global Variable  ${INITIAL_TENDER_DATA}
+  
+  Log  ${INITIAL_TENDER_DATA}
 
 Завантажуємо бібліотеку з реалізацією ${keywords_file} площадки
   Import Resource  ${CURDIR}/brokers/${keywords_file}.robot
@@ -66,7 +68,6 @@ TestCaseSetup
   ${field_value}=   Get_From_Object  ${TENDER_DATA.data}   ${field}
   Should Be Equal   ${field_value}   ${field_response}   Майданчик ${USERS.users['${username}'].broker}
 
-
 Викликати для учасника
   [Arguments]  ${username}  ${command}  @{arguments}
   ${status}  ${value}=  run_keyword_and_ignore_keyword_definations   ${BROKERS['${USERS.users['${username}'].broker}'].keywords_file}.${command}  ${username}  @{arguments}
@@ -78,7 +79,6 @@ TestCaseSetup
   [Arguments]  ${date}
   ${wait_timout}=  wait_to_date  ${date}
   Run Keyword If   ${wait_timout}>0   Sleep  ${wait_timout}
-
 
 Дочекатись дати початоку прийому пропозицій
   Дочекатись дати  ${TENDER_DATA.data.tenderPeriod.startDate}
