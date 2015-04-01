@@ -82,3 +82,6 @@ TestCaseSetup
 
 Дочекатись дати початоку прийому пропозицій
   Дочекатись дати  ${TENDER_DATA.data.tenderPeriod.startDate}
+  
+Дочекатись дати закінчення прийому пропозицій
+  Дочекатись дати  ${TENDER_DATA.data.tenderPeriod.endDate}

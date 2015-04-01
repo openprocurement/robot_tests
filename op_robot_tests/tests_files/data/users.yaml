@@ -6,7 +6,7 @@ users:
         broker: E-tender
         username: test
         browser:  chrome
-        position:  [960, 0]
-        size:  [960, 1000]
+        position:  [640, 0]
+        size:  [640, 900]
     Tender User:
         broker: Quinta

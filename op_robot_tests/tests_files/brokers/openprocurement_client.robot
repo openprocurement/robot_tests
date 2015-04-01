@@ -112,8 +112,6 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
   log many  @{ARGUMENTS}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${ARGUMENTS[1]}
   ${biddingresponce}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_bid  ${tender}  ${ARGUMENTS[2]}
-  Set Global Variable   ${biddingresponce}
-  Log object data   ${biddingresponce}  bid
   [return]  ${biddingresponce}
   
 Змінити цінову пропозицію
@@ -122,23 +120,19 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
   ...      ${ARGUMENTS[1]} ==  tender_uid
   ...      ${ARGUMENTS[2]} ==  bid
   [Arguments]  @{ARGUMENTS}
-  log many  @{ARGUMENTS}
-  ${token}=  Get Variable Value  ${TENDER_DATA.access.token}
-  Set To Dictionary  ${USERS.users['${ARGUMENTS[0]}']}   token   ${token}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${ARGUMENTS[1]}
-  ${patch}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_bid  ${tender}  ${ARGUMENTS[2]}
-  Log object data   ${patch}  patch
- 
-Змінити цінову пропозицію
+  ${changed_bid_amount}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_bid  ${tender}  ${ARGUMENTS[2]}
+  Log object data   ${changed_bid_amount}  changed_bid_amount
+
+  
+Прийняти цінову пропозицію
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tender_uid
-  ...      ${ARGUMENTS[2]} ==  bid
+  ...      ${ARGUMENTS[2]} ==  award
   [Arguments]  @{ARGUMENTS}
-  log many  @{ARGUMENTS}
-  ${token}=  Get Variable Value  ${TENDER_DATA.access.token}
-  Set To Dictionary  ${USERS.users['${ARGUMENTS[0]}']}   token   ${token}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${ARGUMENTS[1]}
-  ${patch}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_bid  ${tender}  ${ARGUMENTS[2]}
-  Log object data   ${patch}  patch
-  
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${ARGUMENTS[0]}'].access_token}
+  ${award_activeted_response}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_award  ${tender}  ${ARGUMENTS[2]}
+  Log object data   ${award_activeted_response}  award_activeted_response
+  [return]  ${award_activeted_response}

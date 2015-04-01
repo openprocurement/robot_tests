@@ -152,3 +152,7 @@ def test_bid_data():
             }
         }
     })
+
+
+def test_award_data():
+    return munchify({'data': {}})
