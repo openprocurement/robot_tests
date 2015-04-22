@@ -1,6 +1,7 @@
 tender_owner: Tender Owner
 users:
     Tender Owner:
+        api_key: e9c3ccb8e8124f26941d5f9639a4ebc3
         broker: Quinta
     Tender Viewer:
         broker: E-tender
@@ -8,5 +9,10 @@ users:
         browser:  chrome
         position:  [640, 0]
         size:  [640, 900]
-    Tender User:
+    Tender Viewer1:
+        api_key: ""
         broker: Quinta
+    Tender User:
+        api_key: e9c3ccb8e8124f26941d5f9639a4ebc3
+        broker: Quinta
+   

@@ -5,10 +5,11 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
 Підготувати клієнт для користувача
   [Arguments]  @{ARGUMENTS}
   [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
-  ${api_wrapper}=  prepare_api_wrapper  ${BROKERS['${USERS.users['${ARGUMENTS[0]}'].broker}'].api_key}
+  ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${ARGUMENTS[0]}'].api_key}
   Set To Dictionary  ${USERS.users['${ARGUMENTS[0]}']}   client  ${api_wrapper}
   Log Variables
 
+  
 Створити тендер
   [Arguments]  @{ARGUMENTS}
   ${INITIAL_TENDER_DATA}=  prepare_test_tender_data
@@ -21,9 +22,22 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
   Log   access_token: ${access_token}
   Log   tender_id: ${TENDER_DATA.data.id}
   Set Global Variable  ${TENDER_DATA}
-  #Debug
   [return]  ${TENDER_DATA}
 
+Створити багатопредметний тендер
+  [Arguments]  @{ARGUMENTS}
+  ${INITIAL_TENDER_DATA}=  prepare_test_tender_data_multiple_items
+  Log object data  ${INITIAL_TENDER_DATA}
+  ${TENDER_DATA}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_tender  ${INITIAL_TENDER_DATA}
+  Log object data  ${TENDER_DATA}  cteated_tender
+  ${access_token}=  Get Variable Value  ${TENDER_DATA.access.token}
+  Set Global Variable  ${access_token}
+  Set To Dictionary  ${USERS.users['${ARGUMENTS[0]}']}   access_token   ${access_token}
+  Log   access_token: ${access_token}
+  Log   tender_id: ${TENDER_DATA.data.id}
+  Set Global Variable  ${TENDER_DATA}
+    [return]  ${TENDER_DATA}
+  
 Пошук тендера по ідентифікатору
   [Arguments]  @{ARGUMENTS}
   [Documentation]
@@ -97,10 +111,39 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
   [Arguments]  @{ARGUMENTS}
   log many  @{ARGUMENTS}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${ARGUMENTS[1]}
+  log many     ${USERS.users['${ARGUMENTS[0]}']}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${ARGUMENTS[0]}'].access_token}
   ${ARGUMENTS[3].data.id}=  Set Variable   ${tender.data.questions[${ARGUMENTS[2]}].id}
   ${quvestion_with_answer}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_question  ${tender}  ${ARGUMENTS[3]}
+  log many   ${USERS.users['${ARGUMENTS[0]}'].client}  ${tender}  ${ARGUMENTS[3]}
   Log object data   ${quvestion_with_answer}  quvestion_with_answer
+
+Подати скаргу
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  tender_uid
+  ...      ${ARGUMENTS[2]} ==  complaint
+  [Arguments]  @{ARGUMENTS}
+  log many  @{ARGUMENTS}
+  ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${ARGUMENTS[1]}
+  ${complaint}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  _create_tender_resource_item  ${tender}  ${ARGUMENTS[2]}   complaints
+  Log object data   ${complaint}  complaint
+
+Обробити скаргу
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  tender_uid
+  ...      ${ARGUMENTS[2]} ==  question_id
+  ...      ${ARGUMENTS[3]} ==  answer_data
+  [Arguments]  @{ARGUMENTS}
+  log many  @{ARGUMENTS}
+  ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${ARGUMENTS[1]}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${ARGUMENTS[0]}'].access_token}
+  ${ARGUMENTS[3].data.id}=  Set Variable   ${tender.data.complaints[${ARGUMENTS[2]}].id}
+  ${complaint_with_answer}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  _patch_tender_resource_item  ${tender}  ${ARGUMENTS[3]}  complaints
+  log many   ${USERS.users['${ARGUMENTS[0]}'].client}  ${tender}  ${ARGUMENTS[3]}
+  Log object data   ${complaint_with_answer}  complaint_with_answer
+  
 
 
 Подати цінову пропозицію
@@ -136,3 +179,5 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
   ${award_activeted_response}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_award  ${tender}  ${ARGUMENTS[2]}
   Log object data   ${award_activeted_response}  award_activeted_response
   [return]  ${award_activeted_response}
+  
+Підписати договір  

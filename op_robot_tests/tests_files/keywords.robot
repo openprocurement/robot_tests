@@ -31,6 +31,16 @@ TestCaseSetup
   ${answer}=  test_question_answer_data
   Append to list   ${ANSWERS}   ${answer}
   Set Global Variable  ${ANSWERS}
+  
+  @{COMPLAINTS} =  Create list
+  ${complaint}=  test_complaint_data
+  Append to list   ${COMPLAINTS}   ${complaint}
+  Set Global Variable  ${COMPLAINTS}
+  @{REPLIES} =  Create list
+  ${reply}=  test_complaint_reply_data
+  Append to list   ${REPLIES}   ${reply}
+  Set Global Variable  ${REPLIES}
+  
   ${INITIAL_TENDER_DATA}=  prepare_test_tender_data
   Set Global Variable  ${INITIAL_TENDER_DATA}
   
@@ -68,6 +78,15 @@ TestCaseSetup
   ${field_value}=   Get_From_Object  ${TENDER_DATA.data}   ${field}
   Should Be Equal   ${field_value}   ${field_response}   Майданчик ${USERS.users['${username}'].broker}
 
+Звірити поля предметів закупівлі багатопрредметного тендера ${field}
+  Дочекатись синхронізації з майданчиком    ${viewer}
+  @{items}=  Get_From_Object  ${TENDER_DATA.data}     items
+  ${len_of_items}=   Get Length   ${items}
+  :FOR   ${index}    IN RANGE   ${len_of_items}
+    \    Log   ${index}
+    \    Звірити поле тендера   ${viewer}  items[${index}].${field}
+
+  
 Викликати для учасника
   [Arguments]  ${username}  ${command}  @{arguments}
   ${status}  ${value}=  run_keyword_and_ignore_keyword_definations   ${BROKERS['${USERS.users['${username}'].broker}'].keywords_file}.${command}  ${username}  @{arguments}

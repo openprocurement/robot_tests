@@ -9,24 +9,23 @@ Suite Setup  TestCaseSetup
 Suite Teardown  Close all browsers
 
 *** Variables ***
-${viewer}     Tender User
-
+${viewer}    Tender User
 # Tender Viewer
 ${provider}   Tender User
 
 
 *** Test Cases ***
-Можливість оголосити тендер
+Можливість оголосити однопердметний тендер
   [Tags]   ${USERS.users['${USERS.tender_owner}'].broker}: Можливість оголосити тендер
   Викликати для учасника     ${USERS.tender_owner}   Створити тендер
   ${LAST_MODIFICATION_DATE}=  Get Current Date
   Set Global Variable   ${LAST_MODIFICATION_DATE}
 
-Пошук тендера по ідентифікатору
+Пошук однопредметного тендера по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
   Дочекатись синхронізації з майданчиком    ${viewer}
   Викликати для учасника   ${viewer}   Пошук тендера по ідентифікатору   ${TENDER_DATA.data.tenderID}   ${TENDER_DATA.data.id}
-
+  
 Відображення заголовоку оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
   Звірити поле тендера   ${viewer}  title
@@ -91,7 +90,6 @@ ${provider}   Tender User
 Відображення строки поставки закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення однопредметного тендера
   Звірити поле тендера   ${viewer}  items[0].deliveryDate.endDate
-
 Задати питання
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість задати запитання
   Викликати для учасника   ${provider}   Задати питання    ${TENDER_DATA.data.id}   ${QUESTIONS[0]}
@@ -137,6 +135,7 @@ ${provider}   Tender User
 
 Змінити цінову пропозицію
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
+  Log object data   ${biddingresponce}
   Set To Dictionary  ${biddingresponce.data.value}   amount   600
   Log object data   ${biddingresponce.data.value}
   Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER_DATA.data.id}   ${biddingresponce}
@@ -152,7 +151,3 @@ ${provider}   Tender User
   Set To Dictionary  ${award}  data  ${award_data}
   Set To Dictionary  ${award['data']}  status  active
   Викликати для учасника   ${USERS.tender_owner}   Прийняти цінову пропозицію   ${TENDER_DATA.data.id}   ${award}
-  
-  
-  
-  
