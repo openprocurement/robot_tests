@@ -34,7 +34,7 @@ ${provider}   Tender User
   отримати останні зміни в тендері  
 
 Можливість відхилити скаргу на умови
-  [Tags]   ${USERS.users['${USERS.tender_owner}'].broker}: Можливість  відхилити скаргу на умови
+  [Tags]   ${USERS.users['${USERS.tender_owner}'].broker}: Можливість відхилити скаргу на умови
   Set To Dictionary  ${COMPLAINTS[0].data}   status   declined
   Викликати для учасника   ${USERS.tender_owner}   Обробити скаргу    ${TENDER_DATA.data.id}  0  ${COMPLAINTS[0]}
   log many   ${COMPLAINTS[0]}

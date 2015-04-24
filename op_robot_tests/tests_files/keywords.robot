@@ -43,10 +43,8 @@ TestCaseSetup
   
   ${INITIAL_TENDER_DATA}=  prepare_test_tender_data
   Set Global Variable  ${INITIAL_TENDER_DATA}
-  
   Log  ${INITIAL_TENDER_DATA}
-
-Завантажуємо бібліотеку з реалізацією ${keywords_file} площадки
+  Завантажуємо бібліотеку з реалізацією ${keywords_file} площадки
   Import Resource  ${CURDIR}/brokers/${keywords_file}.robot
 
 

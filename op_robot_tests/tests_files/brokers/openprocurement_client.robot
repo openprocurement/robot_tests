@@ -90,6 +90,38 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
   ${TENDER_DATA}=  set_access_key  ${TENDER_DATA}  ${USERS.users['${ARGUMENTS[0]}'].access_token}
   Set Global Variable  ${TENDER_DATA}
 
+відняти предмети закупівлі
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  id
+  ...      ${ARGUMENTS[2]} ==  number
+  отримати тендер   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+  ${items}=  get from object   ${TENDER_DATA.data}    items
+  log  ${items}
+  :FOR    ${INDEX}    IN RANGE    ${ARGUMENTS[2]}
+   \          Remove From List  ${items}  0
+  log  ${items}
+  Set_To_Object    ${TENDER_DATA.data}   items  ${items}
+  ${TENDER_DATA}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_tender  ${TENDER_DATA}
+  ${TENDER_DATA}=  set_access_key  ${TENDER_DATA}  ${USERS.users['${ARGUMENTS[0]}'].access_token}
+
+додати предмети закупівлі
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  id
+  ...      ${ARGUMENTS[2]} ==  number
+  отримати тендер   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+  ${items}=  get from object   ${TENDER_DATA.data}    items
+  ${item}=  get variable value   ${items[1]}
+  log  ${items}
+  :FOR    ${INDEX}    IN RANGE    ${ARGUMENTS[2]}
+  \    Append To List  ${items}  ${item}
+  log  ${items}
+  Set_To_Object    ${TENDER_DATA.data}   items  ${items}
+  ${TENDER_DATA}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_tender  ${TENDER_DATA}
+  ${TENDER_DATA}=  set_access_key  ${TENDER_DATA}  ${USERS.users['${ARGUMENTS[0]}'].access_token}
 
 Задати питання
   [Documentation]
@@ -179,5 +211,3 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
   ${award_activeted_response}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_award  ${tender}  ${ARGUMENTS[2]}
   Log object data   ${award_activeted_response}  award_activeted_response
   [return]  ${award_activeted_response}
-  
-Підписати договір  
