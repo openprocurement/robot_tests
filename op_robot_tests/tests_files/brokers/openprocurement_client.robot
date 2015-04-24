@@ -120,8 +120,9 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
   \    Append To List  ${items}  ${item}
   log  ${items}
   Set_To_Object    ${TENDER_DATA.data}   items  ${items}
-  ${TENDER_DATA}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_tender  ${TENDER_DATA}
   ${TENDER_DATA}=  set_access_key  ${TENDER_DATA}  ${USERS.users['${ARGUMENTS[0]}'].access_token}
+  ${TENDER_DATA}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_tender  ${TENDER_DATA}
+  
 
 Задати питання
   [Documentation]
@@ -211,3 +212,13 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
   ${award_activeted_response}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_award  ${tender}  ${ARGUMENTS[2]}
   Log object data   ${award_activeted_response}  award_activeted_response
   [return]  ${award_activeted_response}
+
+Завантажити договір
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  [Arguments]  @{ARGUMENTS}
+  ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${TENDER_DATA.data.id}
+  ${reply}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  upload_tender_document  ${tender}   
+  Log object data   ${reply}  reply
+  
+  
