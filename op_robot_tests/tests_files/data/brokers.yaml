@@ -2,12 +2,18 @@ E-tender:
     keywords_file: etender
     url: http://uat.e-tender.biz/
     timout_on_wait:  15
+Prom:
+    keywords_file: prom
+    url: http://dz.prom.ua/
+    timout_on_wait:  15
+SmartTender:
+    keywords_file: smarttender
+    url: http://smarttender.biz/tenders
+    timout_on_wait:  15
 Quinta:
     keywords_file: openprocurement_client
     timout_on_wait:  0
-Quinta1:
-    keywords_file: openprocurement_client
-    timout_on_wait:  0
-Quinta2:
-    keywords_file: openprocurement_client
-    timout_on_wait:  0
+Publicbid:
+    keywords_file: publicbid
+    url: https://public-bid.com.ua/
+    timout_on_wait:  15    

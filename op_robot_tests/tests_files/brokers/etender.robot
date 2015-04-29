@@ -15,6 +15,7 @@ ${locator.tenderPeriod.endDate}      jquery=tender-procedure-info>div.row:contai
 ${locator.enquiryPeriod.startDate}   jquery=tender-procedure-info>div.row:contains("Початок періоду уточнень:")>:eq(1)>
 ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contains("Завершення періоду уточнень:")>:eq(1)>
 
+
 *** Keywords ***
 Підготувати клієнт для користувача
   [Arguments]  ${username}
@@ -30,6 +31,7 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tenderId
   ...      ${ARGUMENTS[2]} ==  id
+  Switch browser   ${ARGUMENTS[0]}
   ${current_location}=   Get Location
   Run keyword if   '${BROKERS['${USERS.users['${username}'].broker}'].url}/#/tenderDetailes/${ARGUMENTS[2]}'=='${current_location}'  Reload Page
   Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
@@ -76,6 +78,7 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
 
 Отримати тест із поля і показати на сторінці
   [Arguments]   ${fieldname}
+  sleep  3
   відмітити на сторінці поле з тендера   ${fieldname}   ${locator.${fieldname}}
   ${return_value}=   Get Text  ${locator.${fieldname}}
   [return]  ${return_value}
@@ -125,7 +128,9 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
 
 
 отримати інформацію про items[${item_id}].description
-  No Operation
+  відмітити на сторінці поле з тендера   items[${item_id}].description   jquery=tender-subject-info>div.row:contains("Опис:")>:eq(1)>
+ ${return_value}=   Get Text  jquery=tender-subject-info>div.row:contains("Кількість:")>:eq(1)>  
+ [return]  ${return_value}
 
 отримати інформацію про items[${item_id}].quantity
   відмітити на сторінці поле з тендера   items[${item_id}].quantity   jquery=tender-subject-info>div.row:contains("Кількість:")>:eq(1)>
@@ -146,10 +151,12 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   [return]  ${return_value}
 
 отримати інформацію про items[${item_id}].deliveryAddress
-  No Operation
+  ${return_value}=   Отримати тест із поля і показати на сторінці  items[${item_id}].deliveryAddress
+  [return]  ${return_value}
 
 отримати інформацію про items[${item_id}].deliveryDate
-  No Operation
+  ${return_value}=   Отримати тест із поля і показати на сторінці  items[${item_id}].deliveryDate
+  [return]  ${return_value}
 
 отримати інформацію про questions[${question_id}].title
   відмітити на сторінці поле з тендера   questions title   jquery=tender-questions>div:eq(1)>div.row:contains("Тема:")>:eq(1)>

@@ -9,8 +9,12 @@ Suite Setup  TestCaseSetup
 Suite Teardown  Close all browsers
 
 *** Variables ***
-${viewer}    Tender User
-# Tender Viewer
+${viewer}     Tender Viewer
+#E-tender Viewer
+#Prom Viewer
+#SmartTender Viewer
+#Publicbid Viewer
+
 ${provider}   Tender User
 
 
@@ -21,8 +25,10 @@ ${provider}   Tender User
   ${LAST_MODIFICATION_DATE}=  Get Current Date
   Set Global Variable   ${LAST_MODIFICATION_DATE}
 
+
 Пошук однопредметного тендера по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
+  #Switch Browser  ${viewer}
   Дочекатись синхронізації з майданчиком    ${viewer}
   Викликати для учасника   ${viewer}   Пошук тендера по ідентифікатору   ${TENDER_DATA.data.tenderID}   ${TENDER_DATA.data.id}
   

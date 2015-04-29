@@ -76,8 +76,9 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
   ...      ${ARGUMENTS[3]} ==  fieldvalue
   отримати тендер   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
   Set_To_Object  ${TENDER_DATA.data}   ${ARGUMENTS[2]}   ${ARGUMENTS[3]}
-  ${TENDER_DATA}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_tender  ${TENDER_DATA}
   ${TENDER_DATA}=  set_access_key  ${TENDER_DATA}  ${USERS.users['${ARGUMENTS[0]}'].access_token}
+  ${TENDER_DATA}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_tender  ${TENDER_DATA}
+  
   Set Global Variable  ${TENDER_DATA}
 
 отримати тендер
