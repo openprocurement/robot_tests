@@ -46,7 +46,7 @@ def prepare_test_tender_data():
     return munchify({'data': test_tender_data()})
   
 def prepare_test_tender_data_multiple_items():
-    return munchify({'data': test_tender_data_multiple_lots})
+    return munchify({'data': test_tender_data_multiple_lots()})
 
 
 def run_keyword_and_ignore_keyword_definations(name, *args):
