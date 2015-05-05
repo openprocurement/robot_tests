@@ -5,6 +5,7 @@ LIbrary  Collections
 LIbrary  Selenium2Library
 Library  DebugLibrary
 Resource  keywords.robot
+Resource  resource.robot
 Suite Setup  TestCaseSetup
 Suite Teardown  Close all browsers
 
@@ -58,7 +59,7 @@ ${provider}   Tender User
   Set To Dictionary  ${award['data']}  status  active
   Викликати для учасника   ${USERS.tender_owner}   Прийняти цінову пропозицію   ${TENDER_DATA.data.id}   ${award}
 
-Завантажити договір 
-  [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця
-  log   ${USERS.users['${provider}'].broker}
-  Викликати для учасника   ${provider}  Завантажити договір  
+#Завантажити договір 
+#  [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця
+#  log   ${USERS.users['${provider}'].broker}
+#  Викликати для учасника   ${provider}  Завантажити договір  

@@ -5,7 +5,7 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
 Підготувати клієнт для користувача
   [Arguments]  @{ARGUMENTS}
   [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
-  ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${ARGUMENTS[0]}'].api_key}
+  ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${ARGUMENTS[0]}'].api_key}  ${API_HOST_URL}
   Set To Dictionary  ${USERS.users['${ARGUMENTS[0]}']}   client  ${api_wrapper}
   Log Variables
 
@@ -28,7 +28,7 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
   [Arguments]  @{ARGUMENTS}
   ${INITIAL_TENDER_DATA}=  prepare_test_tender_data_multiple_items
   Log object data  ${INITIAL_TENDER_DATA}
-  ${TENDER_DATA}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_tender  ${INITIAL_TENDER_DATA}
+  ${TENDER_DATA}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_tender   ${INITIAL_TENDER_DATA}
   Log object data  ${TENDER_DATA}  cteated_tender
   ${access_token}=  Get Variable Value  ${TENDER_DATA.access.token}
   Set Global Variable  ${access_token}
@@ -177,8 +177,6 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
   ${complaint_with_answer}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  _patch_tender_resource_item  ${tender}  ${ARGUMENTS[3]}  complaints
   log many   ${USERS.users['${ARGUMENTS[0]}'].client}  ${tender}  ${ARGUMENTS[3]}
   Log object data   ${complaint_with_answer}  complaint_with_answer
-  
-
 
 Подати цінову пропозицію
   [Documentation]
@@ -190,7 +188,7 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${ARGUMENTS[1]}
   ${biddingresponce}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_bid  ${tender}  ${ARGUMENTS[2]}
   [return]  ${biddingresponce}
-  
+   
 Змінити цінову пропозицію
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
@@ -214,11 +212,14 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
   Log object data   ${award_activeted_response}  award_activeted_response
   [return]  ${award_activeted_response}
 
-Завантажити договір
+
+Завантажити документ
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  token
   [Arguments]  @{ARGUMENTS}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${TENDER_DATA.data.id}
+  ${tender}=  set_access_key  ${tender}  ${ARGUMENTS[1]}
   ${reply}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  upload_tender_document  ${tender}   
   Log object data   ${reply}  reply
   

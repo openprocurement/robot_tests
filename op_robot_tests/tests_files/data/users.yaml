@@ -1,3 +1,4 @@
+
 tender_owner: Tender Owner
 users:
     Tender Owner:
@@ -26,11 +27,20 @@ users:
         username: Publicbid
         browser:  chrome
         position:  [0, 450]
-        size:  [640, 450]    
+        size:  [640, 450]  
+    Netcast Viewer:
+        broker: Netcast
+        username: TetcastTest
+        browser:  chrome
+        position:  [0, 450]
+        size:  [640, 450]     
     Tender Viewer:
         broker: Quinta
         api_key: ""
     Tender User:
+        api_key: e9c3ccb8e8124f26941d5f9639a4ebc3
+        broker: Quinta
+    Tender User1:
         api_key: e9c3ccb8e8124f26941d5f9639a4ebc3
         broker: Quinta
     

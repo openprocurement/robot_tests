@@ -13,7 +13,8 @@ from dpath.util import set as xpathset
 from jsonpath_rw import parse as parse_path
 from .initial_data import (
     test_tender_data, test_question_data, test_question_answer_data,
-    test_bid_data, test_award_data, test_complaint_data, test_complaint_reply_data, test_tender_data_multiple_lots
+    test_bid_data, test_award_data, test_complaint_data, test_complaint_reply_data, test_tender_data_multiple_lots,
+    auction_bid
 )
 
 

@@ -17,3 +17,7 @@ Publicbid:
     keywords_file: publicbid
     url: https://public-bid.com.ua/
     timout_on_wait:  15    
+Netcast:
+    keywords_file: netcast
+    url: http://dz2.byustudio.in.ua
+    timout_on_wait:  15

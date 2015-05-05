@@ -1,3 +1,6 @@
+*** Setting ***
+Resource  resource.robot
+
 *** Variables ***
 ${tender_dump_id}    0
 
@@ -91,7 +94,7 @@ TestCaseSetup
   Run keyword if  '${status}' == 'FAIL'   Log   Учасник ${username} не зміг виконати "${command}"   WARN
   [return]   ${value}
 
-
+  
 Дочекатись дати
   [Arguments]  ${date}
   ${wait_timout}=  wait_to_date  ${date}
@@ -102,3 +105,9 @@ TestCaseSetup
   
 Дочекатись дати закінчення прийому пропозицій
   Дочекатись дати  ${TENDER_DATA.data.tenderPeriod.endDate}
+  
+Дочекатись дати початоку аукціону
+  Дочекатись дати  ${TENDER_DATA.data.auctionPeriod.startDate}
+
+Дочекатись дати закінчення аукціону
+  Дочекатись дати  ${TENDER_DATA.data.auctionPeriod.endDate}  

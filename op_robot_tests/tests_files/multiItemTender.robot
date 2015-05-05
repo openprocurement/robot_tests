@@ -5,6 +5,7 @@ LIbrary  Collections
 LIbrary  Selenium2Library
 Library  DebugLibrary
 Resource  keywords.robot
+Resource  resource.robot
 Suite Setup  TestCaseSetup
 Suite Teardown  Close all browsers
 

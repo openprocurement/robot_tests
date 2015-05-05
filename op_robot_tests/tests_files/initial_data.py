@@ -303,6 +303,16 @@ def test_bid_data():
             }
         }
     })
+	    
+def auction_bid():
+    return munchify({
+        "data": {"value": {
+                    "amount": 200,
+                    "currency": "UAH",
+                    "valueAddedTaxIncluded": true
+                }
+        }
+    })
 
 
 def test_award_data():
