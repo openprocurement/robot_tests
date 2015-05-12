@@ -30,7 +30,8 @@ setup(name='op_robot_tests',
           'fake-factory',
           'dpath',
           'jsonpath-rw',
-          'dateutils'
+          'dateutils',
+          'parse'
       ],
       entry_points={
           'console_scripts': [
