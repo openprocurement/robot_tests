@@ -10,7 +10,7 @@ Suite Setup  TestCaseSetup
 Suite Teardown  Close all browsers
 
 *** Variables ***
-${viewer}    Tender User
+${viewer}    Tender Viewer
 # Tender Viewer
 ${provider}   Tender User
 
