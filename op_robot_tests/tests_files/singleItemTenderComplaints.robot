@@ -11,7 +11,6 @@ Suite Teardown  Close all browsers
 
 *** Variables ***
 ${viewer}    Tender Viewer
-# Tender Viewer
 ${provider}   Tender User
 
 
