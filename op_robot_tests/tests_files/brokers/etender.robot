@@ -15,7 +15,6 @@ ${locator.tenderPeriod.endDate}      jquery=tender-procedure-info>div.row:contai
 ${locator.enquiryPeriod.startDate}   jquery=tender-procedure-info>div.row:contains("Початок періоду уточнень:")>:eq(1)>
 ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contains("Завершення періоду уточнень:")>:eq(1)>
 
-
 *** Keywords ***
 Підготувати клієнт для користувача
   [Arguments]  ${username}
@@ -107,7 +106,8 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
 
 отримати інформацію про value.amount
   ${return_value}=   Отримати тест із поля і показати на сторінці  value.amount
-  ${return_value}=   Convert To Number   ${return_value.split(' ')[0].replace(',', '')}
+  ${return_value}=   Evaluate   "".join("${return_value}".split(' ')[:-3])
+  ${return_value}=   Convert To Number   ${return_value}
   [return]  ${return_value}
 
 отримати інформацію про tenderPeriod.startDate
@@ -128,13 +128,13 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
 
 
 отримати інформацію про items[${item_id}].description
-  відмітити на сторінці поле з тендера   items[${item_id}].description   jquery=tender-subject-info>div.row:contains("Опис:")>:eq(1)>
- ${return_value}=   Get Text  jquery=tender-subject-info>div.row:contains("Кількість:")>:eq(1)>  
- [return]  ${return_value}
+  відмітити на сторінці поле з тендера   items[${item_id}].description   jquery=tender-subject-info.ng-isolate-scope>div.row:contains("Детальний опис предмету закупівлі:")>:eq(1)>
+  ${return_value}=   Get Text  jquery=tender-subject-info.ng-isolate-scope>div.row:contains("Детальний опис предмету закупівлі:")>:eq(1)>  
+  [return]  ${return_value}
 
 отримати інформацію про items[${item_id}].quantity
-  відмітити на сторінці поле з тендера   items[${item_id}].quantity   jquery=tender-subject-info>div.row:contains("Кількість:")>:eq(1)>
-  ${return_value}=   Get Text  jquery=tender-subject-info>div.row:contains("Кількість:")>:eq(1)>
+  відмітити на сторінці поле з тендера   items[${item_id}].quantity   jquery=tender-subject-info.ng-isolate-scope>div.row:contains("Кількість:")>:eq(1)>
+  ${return_value}=   Get Text  jquery=tender-subject-info.ng-isolate-scope>div.row:contains("Кількість:")>:eq(1)>
   ${return_value}=  Convert To Number   ${return_value}
   [return]  ${return_value}
 
@@ -143,6 +143,10 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   ${return_value}=   Get Text  jquery=tender-subject-info>div.row:contains("Класифікатор CPV:")>:eq(1)>
   [return]  ${return_value.split(' ')[0]}
 
+отримати інформацію про items[${item_id}].classification.scheme
+  відмітити на сторінці поле з тендера   items[0].classification.id   jquery=tender-subject-info>div.row:contains("CPV")>:eq(1)>
+  ${return_value}=   Get Text  jquery=tender-subject-info>div.row:contains("CPV")>:eq(1)>
+  [return]  ${return_value.split(' ')[0]}
 
 отримати інформацію про items[${item_id}].classification.description
   відмітити на сторінці поле з тендера   classification.description   jquery=tender-subject-info>div.row:contains("Класифікатор CPV:")>:eq(1)>
