@@ -11,7 +11,6 @@ Suite Teardown  Close all browsers
 
 *** Variables ***
 ${viewer}    Tender Viewer
-# Tender Viewer
 ${provider}   Tender User
 
 
@@ -59,7 +58,3 @@ ${provider}   Tender User
   Set To Dictionary  ${award['data']}  status  active
   Викликати для учасника   ${USERS.tender_owner}   Прийняти цінову пропозицію   ${TENDER_DATA.data.id}   ${award}
 
-#Завантажити договір 
-#  [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця
-#  log   ${USERS.users['${provider}'].broker}
-#  Викликати для учасника   ${provider}  Завантажити договір  
