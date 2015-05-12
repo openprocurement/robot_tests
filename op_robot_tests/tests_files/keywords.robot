@@ -79,6 +79,13 @@ TestCaseSetup
   ${field_value}=   Get_From_Object  ${TENDER_DATA.data}   ${field}
   Should Be Equal   ${field_value}   ${field_response}   Майданчик ${USERS.users['${username}'].broker}
 
+#Звірити дату  
+#  [Arguments]  ${username}  ${field}
+#  ${field_response}=  Викликати для учасника    ${username}   отримати інформацію із тендера  ${field}
+#  ${field_value}=   Get_From_Object  ${TENDER_DATA.data}   ${field}
+#  ${field_value}=   evaluate  '-'.join(${field_value}.split('T')[0].split('-')[::-1])+' '+${field_value}.split('T')[1].split("+")[0][0:5]
+#  Should Be Equal   ${field_value}   ${field_response}   Майданчик ${USERS.users['${username}'].broker}  
+  
 Звірити поля предметів закупівлі багатопредметного тендера ${field}
   Дочекатись синхронізації з майданчиком    ${viewer}
   @{items}=  Get_From_Object  ${TENDER_DATA.data}     items
