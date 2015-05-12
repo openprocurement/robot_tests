@@ -1,11 +1,15 @@
 *** Settings ***
 Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
 
+***Variables***
+${item_id}       0
+${question_id}   0
+
 *** Keywords ***
 Підготувати клієнт для користувача
   [Arguments]  @{ARGUMENTS}
   [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
-  ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${ARGUMENTS[0]}'].api_key}  ${API_HOST_URL}
+  ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${ARGUMENTS[0]}'].api_key}  ${API_HOST_URL}    ${api_version} 
   Set To Dictionary  ${USERS.users['${ARGUMENTS[0]}']}   client  ${api_wrapper}
   Log Variables
 
@@ -218,6 +222,8 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  token
   [Arguments]  @{ARGUMENTS}
+  log  ${ARGUMENTS[0]}
+  log  ${ARGUMENTS[1]}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${TENDER_DATA.data.id}
   ${tender}=  set_access_key  ${tender}  ${ARGUMENTS[1]}
   ${reply}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  upload_tender_document  ${tender}   
