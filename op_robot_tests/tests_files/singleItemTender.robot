@@ -10,7 +10,7 @@ Suite Setup  TestCaseSetup
 Suite Teardown  Close all browsers
 
 *** Variables ***
-${viewer}    Tender Viewer
+${viewer}   E-tender Viewer
 #E-tender Viewer
 #Prom Viewer
 #SmartTender Viewer
@@ -61,19 +61,19 @@ ${question_id}   0
   
 Відображення початоку періоду уточнення оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
-  Звірити поле тендера   ${viewer}  enquiryPeriod.startDate
+  Звірити дату  ${viewer}  enquiryPeriod.startDate
 
 Відображення закінчення періоду уточнення оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
-  Звірити поле тендера   ${viewer}  enquiryPeriod.endDate
+  Звірити дату   ${viewer}  enquiryPeriod.endDate
 
 Відображення початоку періоду прийому пропозицій оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
-  Звірити поле тендера   ${viewer}  tenderPeriod.startDate
+  Звірити дату   ${viewer}  tenderPeriod.startDate
 
 Відображення закінчення періоду прийому пропозицій оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
-  Звірити поле тендера  ${viewer}  tenderPeriod.endDate
+  Звірити дату  ${viewer}  tenderPeriod.endDate
 
 Відображення мінімального кроку оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
