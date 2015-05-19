@@ -2,6 +2,7 @@
 import os
 from munch import munchify, Munch, fromYAML
 from json import load
+from iso8601 import parse_date
 from robot.output import LOGGER
 from robot.output.loggerhelper import Message
 from robot.libraries.BuiltIn import BuiltIn
@@ -11,12 +12,20 @@ from dateutil.parser import parse
 from dateutil.tz import tzlocal
 from dpath.util import set as xpathset
 from jsonpath_rw import parse as parse_path
+import time
 from .initial_data import (
     test_tender_data, test_question_data, test_question_answer_data,
     test_bid_data, test_award_data, test_complaint_data, test_complaint_reply_data, test_tender_data_multiple_lots,
     auction_bid
 )
-
+def compare_date (isodate, broker_date):
+    iso_dt=parse_date(isodate) 
+    br_dt=datetime.strptime(broker_date, "%d-%m-%Y, %H:%M")
+    br_dt_tz=br_dt.replace(tzinfo = iso_dt.tzinfo)
+    delta = (iso_dt-br_dt_tz).total_seconds()
+    if delta > 60:
+       return False
+    return True 
 
 def log_object_data(data, file_name="", format="yaml"):
     if not isinstance(data, Munch):
