@@ -4,7 +4,7 @@ E-tender:
     timout_on_wait:  15
 Prom:
     keywords_file: prom
-    url: http://dz.prom.ua/
+    url: http://dz.dz-test.net/
     timout_on_wait:  15
 SmartTender:
     keywords_file: smarttender
