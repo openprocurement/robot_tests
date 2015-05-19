@@ -1,29 +1,52 @@
 *** Setting ***
 Resource  resource.robot
-
+Library  op_robot_tests.tests_files.service_keywords
+Library  String
+LIbrary  Collections
+LIbrary  Selenium2Library
+Library  DateTime
+Library  Selenium2Screenshots
+Library  DebugLibrary
+Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
 *** Variables ***
 ${tender_dump_id}    0
+${LOAD_BROKERS}    ['Quinta', 'E-tender']
+${LOAD_USERS}      ['E-tender Viewer', 'Tender Viewer', 'Tender User', 'Tender Owner']
 
 *** Keywords ***
 TestCaseSetup
-    Завантажуємо дані про корисувачів і площадки
+    Завантажуємо дані про корисувачів і площадки  ${LOAD_BROKERS}  ${LOAD_USERS}
     Підготовка початкових даних
 
 Завантажуємо дані про корисувачів і площадки
+  [Arguments]  ${active_brokers}  ${active_users}
   # Init Brokers
+  log  ${active_brokers}
+  log  ${active_users}
+
   ${file_path}=  Get Variable Value  ${BROKERS_FILE}  brokers.yaml
   ${BROKERS}=  load_initial_data_from  ${file_path}
+  log  ${BROKERS}
   Set Global Variable  ${BROKERS}
   ${brokers_list}=    Get Dictionary Items    ${BROKERS}
+  log  ${brokers_list}
+  
   :FOR  ${Broker_Name}  ${Broker_Data}   IN  @{brokers_list}
-  \  Завантажуємо бібліотеку з реалізацією ${Broker_Data.keywords_file} площадки
+  \  log  ${Broker_Name} 
+  \  log  ${active_brokers}
+  \  ${status}=  Run Keyword And Return Status   List Should Contain Value  ${active_brokers}   ${Broker_Name} 
+  \  Run Keyword If   '${status}' == 'True'  Завантажуємо бібліотеку з реалізацією ${Broker_Data.keywords_file} площадки
+  
   # Init Users
   ${file_path}=  Get Variable Value  ${USERS_FILE}  users.yaml
   ${USERS}=  load_initial_data_from  ${file_path}
   Set Global Variable  ${USERS}
   ${users_list}=    Get Dictionary Items    ${USERS.users}
   :FOR  ${username}  ${user_data}   IN  @{users_list}
-  \  Викликати для учасника   ${username}  Підготувати клієнт для користувача
+  \  log  ${active_users} 
+  \  log  ${username}
+  \  ${status}=  Run Keyword And Return Status   List Should Contain Value  ${active_users}   ${username} 
+  \  Run Keyword If   '${status}' == 'True'   Викликати для учасника   ${username}  Підготувати клієнт для користувача
 
 Підготовка початкових даних
   @{QUESTIONS} =  Create list
@@ -79,12 +102,12 @@ TestCaseSetup
   ${field_value}=   Get_From_Object  ${TENDER_DATA.data}   ${field}
   Should Be Equal   ${field_value}   ${field_response}   Майданчик ${USERS.users['${username}'].broker}
 
-#Звірити дату  
-#  [Arguments]  ${username}  ${field}
-#  ${field_response}=  Викликати для учасника    ${username}   отримати інформацію із тендера  ${field}
-#  ${field_value}=   Get_From_Object  ${TENDER_DATA.data}   ${field}
-#  ${field_value}=   evaluate  '-'.join(${field_value}.split('T')[0].split('-')[::-1])+' '+${field_value}.split('T')[1].split("+")[0][0:5]
-#  Should Be Equal   ${field_value}   ${field_response}   Майданчик ${USERS.users['${username}'].broker}  
+Звірити дату  
+  [Arguments]  ${username}  ${field}
+  ${field_date}=  Викликати для учасника    ${username}   отримати інформацію із тендера  ${field}
+  ${isodate}=   Get_From_Object  ${TENDER_DATA.data}   ${field}
+  ${returned}=   compare_date    ${isodate}  ${field_date}
+  Should Be True  '${returned}' == 'True'   
   
 Звірити поля предметів закупівлі багатопредметного тендера ${field}
   Дочекатись синхронізації з майданчиком    ${viewer}
