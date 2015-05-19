@@ -39,9 +39,9 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   Input Text  jquery=input[ng-change='search()']  ${ARGUMENTS[1]}
   Click Link  jquery=a[ng-click='search()']
   sleep  2
-  ${last_note_id}=  Add pointy note   jquery=a[href^="#/tenderDetailes"]   Found tender with tenderID "${ARGUMENTS[1]}"   width=200  position=bottom
-  sleep  1
-  Remove element   ${last_note_id}
+#  ${last_note_id}=  Add pointy note   jquery=a[href^="#/tenderDetailes"]   Found tender with tenderID "${ARGUMENTS[1]}"   width=200  position=bottom
+#  sleep  1
+#  Remove element   ${last_note_id}
   Click Link    jquery=a[href^="#/tenderDetailes"]
   Wait Until Page Contains    ${ARGUMENTS[1]}   10
   sleep  1
@@ -78,7 +78,7 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
 Отримати тест із поля і показати на сторінці
   [Arguments]   ${fieldname}
   sleep  3
-  відмітити на сторінці поле з тендера   ${fieldname}   ${locator.${fieldname}}
+#  відмітити на сторінці поле з тендера   ${fieldname}   ${locator.${fieldname}}
   ${return_value}=   Get Text  ${locator.${fieldname}}
   [return]  ${return_value}
 
