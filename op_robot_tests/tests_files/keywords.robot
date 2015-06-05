@@ -9,9 +9,7 @@ Library  Selenium2Screenshots
 Library  DebugLibrary
 Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
 *** Variables ***
-${tender_dump_id}    0
-${LOAD_BROKERS}    ['Quinta', 'E-tender']
-${LOAD_USERS}      ['E-tender Viewer', 'Tender Viewer', 'Tender User', 'Tender Owner']
+
 
 *** Keywords ***
 TestCaseSetup
@@ -102,6 +100,12 @@ TestCaseSetup
   ${field_value}=   Get_From_Object  ${TENDER_DATA.data}   ${field}
   Should Be Equal   ${field_value}   ${field_response}   Майданчик ${USERS.users['${username}'].broker}
 
+Звірити поле створеного тендера
+  [Arguments]  ${initial}  ${tender_data}  ${field}
+  ${field_value}=   Get_From_Object  ${initial}   ${field}
+  ${field_response}=  Get_From_Object  ${tender_data}   ${field}
+  Should Be Equal   ${field_value}   ${field_response}
+
 Звірити дату  
   [Arguments]  ${username}  ${field}
   ${field_date}=  Викликати для учасника    ${username}   отримати інформацію із тендера  ${field}
@@ -119,11 +123,36 @@ TestCaseSetup
 
   
 Викликати для учасника
+  [Documentation]
+  ...    cause sometimes keyword SHOULD fail to pass the testcase, this keyword takes "shouldfail" argument as first one in @{arguments} and switches the behaviour of keyword and "shouldfail" 
   [Arguments]  ${username}  ${command}  @{arguments}
+  log  ${username}
+  log  ${command}
+  log  ${arguments}
+  ${state}=   change_state  ${arguments}
+  ${value}=  Run keyword if  '${state}' == 'shouldfail'   switchsate  ${username}  ${command}  @{arguments}
+  ${value}=  Run keyword if  '${state}' == 'pass'   normal  ${username}  ${command}  @{arguments}
+  [return]   ${value}
+
+normal
+  [Arguments]  ${username}  ${command}  @{arguments}
+  log  ${username}
+  log  ${command}
+  log  ${arguments}
   ${status}  ${value}=  run_keyword_and_ignore_keyword_definations   ${BROKERS['${USERS.users['${username}'].broker}'].keywords_file}.${command}  ${username}  @{arguments}
   Run keyword if  '${status}' == 'FAIL'   Log   Учасник ${username} не зміг виконати "${command}"   WARN
   [return]   ${value}
 
+switchsate
+  [Arguments]  ${username}  ${command}  @{arguments}
+  log  ${username}
+  log  ${command}
+  log  ${arguments}
+  Remove From List  ${arguments}  0
+  log  ${arguments}
+  ${status}  ${value}=  run_keyword_and_ignore_keyword_definations   ${BROKERS['${USERS.users['${username}'].broker}'].keywords_file}.${command}  ${username}  @{arguments}
+  Run keyword if  '${status}' == 'PASS'   Log   Учасник ${username} зміг виконати "${command}"   WARN
+  [return]   ${value}
   
 Дочекатись дати
   [Arguments]  ${date}
