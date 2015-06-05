@@ -13,13 +13,14 @@ ${question_id}   0
   ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${ARGUMENTS[0]}'].api_key}  ${API_HOST_URL}    ${api_version} 
   Set To Dictionary  ${USERS.users['${ARGUMENTS[0]}']}   client  ${api_wrapper}
   Log Variables
-
+  
+Підготувати дані для оголошення тендера 
+  ${INITIAL_TENDER_DATA}=  prepare_test_tender_data
+  [return]   ${INITIAL_TENDER_DATA}
   
 Створити тендер
   [Arguments]  @{ARGUMENTS}
-  ${INITIAL_TENDER_DATA}=  prepare_test_tender_data
-  Log object data  ${INITIAL_TENDER_DATA}
-  ${TENDER_DATA}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_tender  ${INITIAL_TENDER_DATA}
+  ${TENDER_DATA}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_tender  ${ARGUMENTS[1]}
   Log object data  ${TENDER_DATA}  cteated_tender
   ${access_token}=  Get Variable Value  ${TENDER_DATA.access.token}
   Set Global Variable  ${access_token}
@@ -41,7 +42,7 @@ ${question_id}   0
   Log   access_token: ${access_token}
   Log   tender_id: ${TENDER_DATA.data.id}
   Set Global Variable  ${TENDER_DATA}
-    [return]  ${TENDER_DATA}
+  [return]   ${TENDER_DATA}
   
 Пошук тендера по ідентифікатору
   [Arguments]  @{ARGUMENTS}
@@ -68,7 +69,9 @@ ${question_id}   0
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  fieldname
+  log  ${ARGUMENTS}
   ${field_value}=   Get_From_Object  ${USERS.users['${ARGUMENTS[0]}'].tender_data.data}   ${ARGUMENTS[1]}
+  log   ${field_value}
   [return]  ${field_value}
 
 
@@ -134,13 +137,16 @@ ${question_id}   0
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tender_uid
-  ...      ${ARGUMENTS[2]} ==  question
+  ...      ${ARGUMENTS[2]} ==  bid
   [Arguments]  @{ARGUMENTS}
   log many  @{ARGUMENTS}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${ARGUMENTS[1]}
-  ${question}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_question  ${tender}  ${ARGUMENTS[2]}
-  Log object data   ${question}  question
-
+  log   ${USERS.users['${ARGUMENTS[0]}']}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${ARGUMENTS[0]}'].api_key}
+  log  ${tender}
+  ${biddingresponce}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_question  ${tender}  ${ARGUMENTS[2]}
+  [return]  ${biddingresponce}
+  
 Відповісти на питання
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
@@ -167,7 +173,24 @@ ${question_id}   0
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${ARGUMENTS[1]}
   ${complaint}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  _create_tender_resource_item  ${tender}  ${ARGUMENTS[2]}   complaints
   Log object data   ${complaint}  complaint
-
+  
+порівняти скаргу 
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  tender_uid
+  ...      ${ARGUMENTS[2]} ==  complaint
+  [Arguments]  @{ARGUMENTS}
+  ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${ARGUMENTS[1]}
+  ${complaint}=   Get Variable Value  ${tender.data.complaints[0]}  
+  log   ${complaint}
+  log   ${ARGUMENTS[2]}
+  #TODO: COMPARE 
+  #Dictionary Should Contain Sub Dictionary   ${complaint}   ${ARGUMENTS[2].data}
+  #:FOR  ${element}  IN  ${ARGUMENTS[2].data}
+  #\  log  ${element}
+  #\  Dictionary Should Contain Value  ${complaint}  ${element}
+  
+ 
 Обробити скаргу
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
@@ -182,6 +205,8 @@ ${question_id}   0
   ${complaint_with_answer}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  _patch_tender_resource_item  ${tender}  ${ARGUMENTS[3]}  complaints
   log many   ${USERS.users['${ARGUMENTS[0]}'].client}  ${tender}  ${ARGUMENTS[3]}
   Log object data   ${complaint_with_answer}  complaint_with_answer
+  
+  
 
 Подати цінову пропозицію
   [Documentation]
@@ -191,6 +216,7 @@ ${question_id}   0
   [Arguments]  @{ARGUMENTS}
   log many  @{ARGUMENTS}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${ARGUMENTS[1]}
+  log  ${tender}
   ${biddingresponce}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_bid  ${tender}  ${ARGUMENTS[2]}
   [return]  ${biddingresponce}
    
@@ -218,6 +244,21 @@ ${question_id}   0
   [return]  ${award_activeted_response}
 
 
+Завантажити документ в ставку
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  token
+  ...      ${ARGUMENTS[2]} ==  bid_id
+  [Arguments]  @{ARGUMENTS}
+  log  ${ARGUMENTS[0]}
+  log  ${ARGUMENTS[1]}
+  ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${TENDER_DATA.data.id}
+  ${tender}=  set_access_key  ${tender}  ${ARGUMENTS[1]}
+  ${filename}=   Set Variable  file.txt
+  Set_To_Object  ${TENDER_DATA.data}    documents.title   ${filename}
+  ${reply}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  upload_bid_document  ${filename}  ${tender}   ${ARGUMENTS[2]}
+  Log object data   ${reply}  reply
+
 Завантажити документ
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
@@ -227,7 +268,8 @@ ${question_id}   0
   log  ${ARGUMENTS[1]}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${TENDER_DATA.data.id}
   ${tender}=  set_access_key  ${tender}  ${ARGUMENTS[1]}
-  ${reply}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  upload_tender_document  ${tender}   
+  ${filename}=   Set Variable  file.txt
+  Set_To_Object  ${TENDER_DATA.data}    documents.title   ${filename}
+  ${reply}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  upload_tender_document  ${filename}  ${tender}
   Log object data   ${reply}  reply
-  
   
