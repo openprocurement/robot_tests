@@ -7,7 +7,7 @@ from robot.output import LOGGER
 from robot.output.loggerhelper import Message
 from robot.libraries.BuiltIn import BuiltIn
 from robot.errors import HandlerExecutionFailed
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from dateutil.parser import parse
 from dateutil.tz import tzlocal
 from dpath.util import set as xpathset
@@ -16,8 +16,34 @@ import time
 from .initial_data import (
     test_tender_data, test_question_data, test_question_answer_data,
     test_bid_data, test_award_data, test_complaint_data, test_complaint_reply_data, test_tender_data_multiple_lots,
-    auction_bid
+    auction_bid, prom_tender_data
 )
+
+def change_state(arguments):
+    try:
+      if arguments[0] == "shouldfail":
+	return "shouldfail"
+      return "pass"
+    except IndexError:
+      return "pass"
+
+def prepare_prom_tender_data():
+    return munchify({'data': prom_tender_data()})
+
+def get_dates():
+    start_date = date.today()
+    end_date = start_date + timedelta(days=1)
+    start_request_date = start_date + timedelta(days=2)
+    end_request_date = start_date + timedelta(days=3)
+    date_delivery_start = start_date + timedelta(days=4)
+    date_delivery_end = start_date + timedelta(days=5)
+    return {
+        'end_date': end_date.strftime("%d.%m.%Y %H:%M"),
+        'start_request_date': start_request_date.strftime("%d.%m.%Y %H:%M"),
+        'end_request_date': end_request_date.strftime("%d.%m.%Y %H:%M"),
+        'date_delivery_start': date_delivery_start.strftime("%d.%m.%Y %H:%M"),
+        'date_delivery_end': date_delivery_end.strftime("%d.%m.%Y %H:%M"),
+    }
 def compare_date (isodate, broker_date):
     iso_dt=parse_date(isodate) 
     br_dt=datetime.strptime(broker_date, "%d-%m-%Y, %H:%M")
