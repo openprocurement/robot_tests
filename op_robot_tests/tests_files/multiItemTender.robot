@@ -10,10 +10,16 @@ Suite Setup  TestCaseSetup
 Suite Teardown  Close all browsers
 
 *** Variables ***
-${viewer}    Tender Viewer
-# Tender Viewer
-${provider}   Tender User
+${tender_dump_id}    0
+${LOAD_BROKERS}    ['Quinta']
+${LOAD_USERS}      ['Tender Viewer', 'Tender User', 'Tender Owner']
 
+${tender_owner}   tender_owner    #Tender Owner
+${provider}   Tender User
+${viewer}   Tender Viewer
+
+${item_id}       0
+${question_id}   0
 
 *** Test Cases ***
 Можливість оголосити багатопредметний тендер 
