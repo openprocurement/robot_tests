@@ -227,9 +227,22 @@ ${question_id}   0
   ...      ${ARGUMENTS[2]} ==  bid
   [Arguments]  @{ARGUMENTS}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${ARGUMENTS[1]}
-  ${changed_bid_amount}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_bid  ${tender}  ${ARGUMENTS[2]}
-  Log object data   ${changed_bid_amount}  changed_bid_amount
+  ${changed_bid}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_bid  ${tender}  ${ARGUMENTS[2]}
+  Log  ${changed_bid}
+  [return]   ${changed_bid}
 
+скасувати цінову пропозицію
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  tender_uid
+  ...      ${ARGUMENTS[2]} ==  bid
+  [Arguments]  @{ARGUMENTS}
+  ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${ARGUMENTS[1]}
+  log   ${tender}
+  log   ${ARGUMENTS[2]}
+  ${changed_bid}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  delete_bid   ${tender}  ${ARGUMENTS[2]}
+  Log  ${changed_bid}
+  [return]   ${changed_bid}
   
 Прийняти цінову пропозицію
   [Documentation]
@@ -240,7 +253,7 @@ ${question_id}   0
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${ARGUMENTS[1]}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${ARGUMENTS[0]}'].access_token}
   ${award_activeted_response}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_award  ${tender}  ${ARGUMENTS[2]}
-  Log object data   ${award_activeted_response}  award_activeted_response
+  Log  ${award_activeted_response}
   [return]  ${award_activeted_response}
 
 
