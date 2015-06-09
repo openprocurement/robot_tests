@@ -82,11 +82,11 @@ def test_tender_data():
         }
     ],
     "enquiryPeriod": {
-        "endDate": (now + timedelta(minutes=3)).isoformat()
+        "endDate": (now + timedelta(minutes=1)).isoformat()
     },
     "tenderPeriod": {
-        "startDate": (now + timedelta(minutes=5)).isoformat(),
-        "endDate": (now + timedelta(minutes=7)).isoformat()
+        "startDate": (now + timedelta(minutes=2)).isoformat(),
+        "endDate": (now + timedelta(minutes=3)).isoformat()
     }
 }
     
