@@ -8,7 +8,7 @@ Resource  keywords.robot
 Resource  resource.robot
 Suite Setup  TestCaseSetup
 Suite Teardown  Close all browsers
-q
+
 *** Variables ***
 ${tender_dump_id}    0
 ${LOAD_BROKERS}    ['Quinta']
@@ -236,7 +236,7 @@ ${question_id}   0
 Неможливість подати цінову пропозицію до початку періоду подачі пропозицій bidder1
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   ${bid}=  test bid data
-  Log object data  ${bid}
+  Log   ${bid}
   ${biddingresponce1}=  Викликати для учасника   ${provider}   Подати цінову пропозицію  shouldfail  ${TENDER_DATA.data.id}   ${bid}
 
 #######
@@ -267,16 +267,26 @@ ${question_id}   0
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   Дочекатись дати початоку прийому пропозицій
   ${bid}=  test bid data
-  Log object data  ${bid}
+  Log  ${bid}
   ${biddingresponce1}=  Викликати для учасника   ${provider}   Подати цінову пропозицію   ${TENDER_DATA.data.id}   ${bid}
   Set Global Variable   ${biddingresponce1}
   log  ${biddingresponce1}
 
-Неможливість задати запитання після закінчення періоду уточнень
-  [Documentation]
-  ...    "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
-  [Tags]   ${USERS.users['${provider}'].broker}: Можливість задати запитання
-  ${resp}=  Викликати для учасника   ${provider}  Задати питання   shouldfail   ${TENDER_DATA.data.id}   ${questions[${question_id}]}
+Можливість змінити цінову пропозицію до 50000
+  [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
+  Set To Dictionary  ${biddingresponce1.data.value}   amount   50000
+  Log   ${biddingresponce1.data.value}
+  ${biddingresponce2}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER_DATA.data.id}   ${biddingresponce1}
+  Set Global Variable   ${biddingresponce2}
+  log  ${biddingresponce2}
+
+Можливість змінити цінову пропозицію до 1
+  [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
+  Set To Dictionary  ${biddingresponce1.data.value}   amount   1
+  Log   ${biddingresponce1.data.value}
+  ${biddingresponce3}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER_DATA.data.id}   ${biddingresponce1}
+  Set Global Variable   ${biddingresponce3}
+  log  ${biddingresponce3}
 
 Завантажити документ першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця
@@ -287,14 +297,28 @@ ${question_id}   0
   log  ${token1}
   Викликати для учасника   ${provider}  Завантажити документ в ставку    ${token1}  ${bid_id}
 
+#Можливість змінити документацію цінової пропозиції
+
+Можливість скасувати цінову пропозицію
+  [Tags]   ${USERS.users['${provider}'].broker}: Можливість скасувати цінову пропозицію
+  ${biddingresponce4}=  Викликати для учасника   ${provider}   скасувати цінову пропозицію   ${TENDER_DATA.data.id}   ${biddingresponce1}
+  Set Global Variable   ${biddingresponce4}
+  log  ${biddingresponce4}
+
+Неможливість задати запитання після закінчення періоду уточнень
+  [Documentation]
+  ...    "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
+  [Tags]   ${USERS.users['${provider}'].broker}: Можливість задати запитання
+  ${resp}=  Викликати для учасника   ${provider}  Задати питання   shouldfail   ${TENDER_DATA.data.id}   ${questions[${question_id}]}
+
 Подати цінову пропозицію bidder2
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
   Дочекатись дати початоку прийому пропозицій
   ${bid}=  test bid data
-  Log object data  ${bid}
-  ${biddingresponce2}=  Викликати для учасника   ${provider1}   Подати цінову пропозицію   ${TENDER_DATA.data.id}   ${bid}
-  Set Global Variable   ${biddingresponce2}
-  log  ${biddingresponce2}
+  Log  ${bid}
+  ${biddingresponce5}=  Викликати для учасника   ${provider1}   Подати цінову пропозицію   ${TENDER_DATA.data.id}   ${bid}
+  Set Global Variable   ${biddingresponce5}
+  log  ${biddingresponce5}
 
 Неможливість побачити цінові пропозиції учасників під час прийому пропозицій
   [Tags]   ${USERS.users['${viewer}'].broker}: Можливість подати цінову пропозицію
@@ -303,17 +327,10 @@ ${question_id}   0
 Завантажити документ другим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця
   log   ${USERS.users['${provider1}'].broker}
-  ${bid_id2}=   get variable value   ${biddingresponce2.data.id}
-  ${token2}=  Get Variable Value  ${biddingresponce2.access.token}
+  ${bid_id2}=   get variable value   ${biddingresponce5.data.id}
+  ${token2}=  Get Variable Value  ${biddingresponce5.access.token}
   log  ${token2}
   Викликати для учасника   ${provider1}  Завантажити документ в ставку   ${token2}  ${bid_id2}
-
-Змінити цінову пропозицію
-  [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
-  Log object data   ${biddingresponce1}
-  Set To Dictionary  ${biddingresponce1.data.value}   amount   400
-  Log object data   ${biddingresponce1.data.value}
-  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER_DATA.data.id}   ${biddingresponce1}
 
 Можливість побачити скаргу користувачем під час подачі пропозицій
   [Tags]   ${USERS.users['${provider}'].broker}: Відображення основних даних оголошеного тендера
