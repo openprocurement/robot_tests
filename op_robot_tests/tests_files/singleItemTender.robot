@@ -11,6 +11,7 @@ Suite Teardown  Close all browsers
 
 *** Variables ***
 ${tender_dump_id}    0
+
 ${LOAD_BROKERS}    ['Quinta']
 ${LOAD_USERS}      ['Tender Viewer', 'Tender User', 'Tender User1', 'Tender Owner']
 
@@ -35,8 +36,7 @@ ${question_id}   0
 *** Test Cases ***
 Можливість оголосити однопердметний тендер
   [Tags]   ${USERS.users['${USERS.${tender_owner}}'].broker}: Можливість оголосити тендер
-  ${tdata}=  Підготувати дані для оголошення тендера
-  Викликати для учасника     ${USERS.${tender_owner}}   Створити тендер  ${tdata}
+  Викликати для учасника     ${USERS.${tender_owner}}   Створити тендер  ${INITIAL_TENDER_DATA}
   ${LAST_MODIFICATION_DATE}=  Get Current Date
   Set Global Variable   ${LAST_MODIFICATION_DATE}
 
