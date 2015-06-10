@@ -11,8 +11,8 @@ Suite Teardown  Close all browsers
 
 *** Variables ***
 ${tender_dump_id}    0
-${LOAD_BROKERS}    ['Prom'] #['Prom', 'Quinta']
-${LOAD_USERS}      [ 'Prom Owner'] #'Tender Viewer', 'Tender User'
+${LOAD_BROKERS}    ['Prom']
+${LOAD_USERS}      [ 'Prom Owner']
 
 ${tender_owner}   prom_owner    #Tender Owner
 ${provider}   Tender User
