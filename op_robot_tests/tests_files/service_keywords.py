@@ -16,7 +16,7 @@ import time
 from .initial_data import (
     test_tender_data, test_question_data, test_question_answer_data,
     test_bid_data, test_award_data, test_complaint_data, test_complaint_reply_data, test_tender_data_multiple_lots,
-    auction_bid, prom_tender_data
+    auction_bid, prom_test_tender_data
 )
 
 def change_state(arguments):
@@ -27,23 +27,9 @@ def change_state(arguments):
     except IndexError:
       return "pass"
 
-def prepare_prom_tender_data():
-    return munchify({'data': prom_tender_data()})
+def prepare_prom_test_tender_data():
+    return munchify({'data': prom_test_tender_data()})
 
-def get_dates():
-    start_date = date.today()
-    end_date = start_date + timedelta(days=1)
-    start_request_date = start_date + timedelta(days=2)
-    end_request_date = start_date + timedelta(days=3)
-    date_delivery_start = start_date + timedelta(days=4)
-    date_delivery_end = start_date + timedelta(days=5)
-    return {
-        'end_date': end_date.strftime("%d.%m.%Y %H:%M"),
-        'start_request_date': start_request_date.strftime("%d.%m.%Y %H:%M"),
-        'end_request_date': end_request_date.strftime("%d.%m.%Y %H:%M"),
-        'date_delivery_start': date_delivery_start.strftime("%d.%m.%Y %H:%M"),
-        'date_delivery_end': date_delivery_end.strftime("%d.%m.%Y %H:%M"),
-    }
 def compare_date (isodate, broker_date):
     iso_dt=parse_date(isodate) 
     br_dt=datetime.strptime(broker_date, "%d-%m-%Y, %H:%M")
@@ -67,6 +53,10 @@ def log_object_data(data, file_name="", format="yaml"):
         with open(os.path.join(output_dir, file_name + '.' + format), "w") as file_obj:
             file_obj.write(data)
 
+def convert_date_to_prom_format(isodate):
+    iso_dt=parse_date(isodate)
+    day_string = iso_dt.strftime("%d.%m.%Y %H:%M")
+    return  day_string
 
 def load_initial_data_from(file_name):
     if not os.path.exists(file_name):
