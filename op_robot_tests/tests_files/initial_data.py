@@ -86,11 +86,11 @@ def test_tender_data():
     },
     "tenderPeriod": {
         "startDate": (now + timedelta(minutes=2)).isoformat(),
-        "endDate": (now + timedelta(minutes=3)).isoformat()
+        "endDate": (now + timedelta(minutes=35)).isoformat()
     }
 }
     
-def prom_tender_data():
+def prom_test_tender_data():
   now = datetime.now()
   return {
     "title": fake.catch_phrase(),
@@ -132,6 +132,7 @@ def prom_tender_data():
         {
             "description": fake.catch_phrase(),
             "deliveryDate": {
+				"startDate": (now + timedelta(days=4)).isoformat(),
                 "endDate": (now + timedelta(days=5)).isoformat()
             },
             "deliveryLocation": {
@@ -165,12 +166,12 @@ def prom_tender_data():
         }
     ],
     "enquiryPeriod": {
-        "startDate": (now + timedelta(minutes=1)).isoformat(),
-        "endDate": (now + timedelta(minutes=3)).isoformat()
+        "startDate": (now + timedelta(days=1)).isoformat(),
+        "endDate": (now + timedelta(days=2)).isoformat()
     },
     "tenderPeriod": {
-        "startDate": (now + timedelta(minutes=5)).isoformat(),
-        "endDate": (now + timedelta(minutes=36)).isoformat()
+        "startDate": (now + timedelta(days=3)).isoformat(),
+        "endDate": (now + timedelta(days=5)).isoformat()
     }
 }
 
