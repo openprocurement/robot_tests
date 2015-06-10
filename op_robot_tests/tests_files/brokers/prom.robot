@@ -3,7 +3,6 @@ Library  Selenium2Screenshots
 Library  String
 Library  DateTime
 Library           Selenium2Library
-Library           ApiCommands
 Library           Collections
 
 
@@ -14,6 +13,11 @@ ${LOGIN}        r.zaporozhets@smartweb.com.ua
 ${PASSWORD}     1234
 
 *** Keywords ***
+Підготувати дані для оголошення тендера 
+  ${INITIAL_TENDER_DATA}=  prepare_prom_test_tender_data
+  [return]   ${INITIAL_TENDER_DATA}
+
+
 Підготувати клієнт для користувача
   [Arguments]  ${username}
   log many  @{ARGUMENTS}
@@ -33,36 +37,31 @@ Login
     Input text    id=password    ${PASSWORD}
     Click Button    id=submit_login_button
 
-#TODO: tender data should pass as args make converter from client initial data to prom initial data
-
 Створити тендер
     [Arguments]  @{ARGUMENTS}
     log many  @{ARGUMENTS}
-
     Go to homepage
-    Sleep   10
     Wait Until Page Contains Element     id=phone_email
-
     Login
-    Sleep   3
 
     ${start_date}=    Get From Dictionary  ${ARGUMENTS[1].data.tenderPeriod}   startDate
+    ${start_date}=   convert_date_to_prom_format   ${start_date}
     ${end_date}=      Get From Dictionary  ${ARGUMENTS[1].data.tenderPeriod}   endDate
-
-    ${enquiry_start_date}=    Get From Dictionary  ${ARGUMENTS[1].data.enquiryPeriod}   startDate
+    ${end_date}=   convert_date_to_prom_format   ${end_date}
     ${enquiry_end_date}=      Get From Dictionary  ${ARGUMENTS[1].data.enquiryPeriod}   endDate
+    ${enquiry_end_date}=   convert_date_to_prom_format   ${enquiry_end_date}
 
     ${items}=  Get From Dictionary    ${ARGUMENTS[1].data}   items
     ${delivery_date}=  Get From Dictionary    ${items[0].deliveryDate}   endDate
-
     ${title}=   Get From Dictionary    ${ARGUMENTS[1].data}   title
     ${description}=  Get From Dictionary    ${ARGUMENTS[1].data}   description
-
     ${quantity}=  Get From Dictionary    ${items[0]}   quantity
     ${budget}=  Get From Dictionary    ${ARGUMENTS[1].data.value}   amount
     ${step_rate}=  Get From Dictionary    ${ARGUMENTS[1].data.minimalStep}   amount
 
+    Wait Until Page Contains Element     id=js-btn-0
     Click Element    id=js-btn-0
+    Wait Until Page Contains Element     id=title
     Input text    id=title      ${title}
     Input text    id=descr      ${description}
     Input text    id=quantity      ${quantity}
@@ -74,22 +73,20 @@ Login
     Click Element    xpath=//a[contains(@data-target, 'container-dkpp')]
     Click Element    xpath=//div[contains(@class, 'qa_container_dkpp_popup')]//input[@type='checkbox'][@value='4']
     Click Element    xpath=//div[contains(@class, 'qa_container_dkpp_popup')]//a[contains(@data-target, 'classifiers-inputs-dkpp')]
-    Sleep   3
     Input text  id=dt_enquiry   ${enquiry_end_date}
-    Sleep   5
     Input text  id=dt_tender_start   ${start_date}
-    Sleep   5
     Input text  id=dt_tender_end    ${end_date}
-    Sleep   5
     Input text  id=step   ${step_rate}
-    Sleep   5
     Click Button    id=submit_button
+
     Wait Until Page Contains Element     xpath=//td[@id="qa_state_purchase_id"]/p
+
+    ${id}=   Wait Until Keyword Succeeds   60sec   1sec   get tender id
+    [return]  ${id}
+
+get tender id
     ${id}=  Get Text  xpath=//td[@id="qa_state_purchase_id"]/p
-
-    log  ${id}
     Should Not Be Equal As Strings   ${id}   ожидание...
-
     [return]  ${id}
 
 Пошук тендера по ідентифікатору
