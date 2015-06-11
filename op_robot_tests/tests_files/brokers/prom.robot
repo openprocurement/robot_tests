@@ -17,7 +17,6 @@ ${PASSWORD}     1234
   ${INITIAL_TENDER_DATA}=  prepare_prom_test_tender_data
   [return]   ${INITIAL_TENDER_DATA}
 
-
 Підготувати клієнт для користувача
   [Arguments]  ${username}
   log many  @{ARGUMENTS}
@@ -33,6 +32,7 @@ Go to homepage
     Go To   ${HOMEPAGE}
 
 Login
+	Wait Until Page Contains Element    id=phone_email   100
     Input text    id=phone_email    ${LOGIN}
     Input text    id=password    ${PASSWORD}
     Click Button    id=submit_login_button
@@ -41,7 +41,7 @@ Login
     [Arguments]  @{ARGUMENTS}
     log many  @{ARGUMENTS}
     Go to homepage
-    Wait Until Page Contains Element     id=phone_email
+
     Login
 
     ${start_date}=    Get From Dictionary  ${ARGUMENTS[1].data.tenderPeriod}   startDate
@@ -58,6 +58,8 @@ Login
     ${quantity}=  Get From Dictionary    ${items[0]}   quantity
     ${budget}=  Get From Dictionary    ${ARGUMENTS[1].data.value}   amount
     ${step_rate}=  Get From Dictionary    ${ARGUMENTS[1].data.minimalStep}   amount
+    ${cpv}=  Get From Dictionary    ${items[0].classification}   scheme
+    ${dkpp}=  Get From Dictionary    ${items[0].additionalClassifications[0]}   scheme
 
     Wait Until Page Contains Element     id=js-btn-0
     Click Element    id=js-btn-0
