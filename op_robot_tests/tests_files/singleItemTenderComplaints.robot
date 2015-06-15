@@ -10,14 +10,34 @@ Suite Setup  TestCaseSetup
 Suite Teardown  Close all browsers
 
 *** Variables ***
-${viewer}    Tender Viewer
-${provider}   Tender User
+${tender_dump_id}    0
 
+${LOAD_BROKERS}    ['Quinta']
+${LOAD_USERS}      ['Tender Viewer', 'Tender User', 'Tender User1', 'Tender Owner']
+
+${tender_owner}  tender_owner    #Tender Owner
+${provider}   Tender User
+${provider1}   Tender User1
+${viewer}   Tender Viewer
+
+${item_id}       0
+${question_id}   0
+
+#Avalable roles and users
+
+#roles: Owner, User, Viewer
+
+#palyers:
+  #E-tender
+  #Prom
+  #SmartTender
+  #Publicbid
+  #Netcast
 
 *** Test Cases ***
-Можливість оголосити однопредметний тендер
-  [Tags]   ${USERS.users['${USERS.tender_owner}'].broker}: Можливість оголосити тендер
-  Викликати для учасника     ${USERS.tender_owner}   Створити тендер
+Можливість оголосити однопердметний тендер
+  [Tags]   ${USERS.users['${USERS.${tender_owner}}'].broker}: Можливість оголосити тендер
+  Викликати для учасника     ${USERS.${tender_owner}}   Створити тендер  ${INITIAL_TENDER_DATA}
   ${LAST_MODIFICATION_DATE}=  Get Current Date
   Set Global Variable   ${LAST_MODIFICATION_DATE}
 
