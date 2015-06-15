@@ -83,7 +83,7 @@ Login
 
     Wait Until Page Contains Element     xpath=//td[@id="qa_state_purchase_id"]/p
 
-    ${id}=   Wait Until Keyword Succeeds   60sec   1sec   get tender id
+    ${id}=   Wait Until Keyword Succeeds   120sec   1sec   get tender id
     [return]  ${id}
 
 get tender id
