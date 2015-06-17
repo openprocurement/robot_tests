@@ -13,13 +13,12 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
 
 *** Keywords ***
 TestCaseSetup
-    Завантажуємо дані про корисувачів і площадки  ${LOAD_BROKERS}  ${LOAD_USERS}
+    Завантажуємо дані про корисувачів і площадки  ${LOAD_USERS}
     Підготовка початкових даних
 
 Завантажуємо дані про корисувачів і площадки
-  [Arguments]  ${active_brokers}  ${active_users}
+  [Arguments]  ${active_users}
   # Init Brokers
-  log  ${active_brokers}
   log  ${active_users}
 
   ${file_path}=  Get Variable Value  ${BROKERS_FILE}  brokers.yaml
@@ -28,22 +27,21 @@ TestCaseSetup
   Set Global Variable  ${BROKERS}
   ${brokers_list}=    Get Dictionary Items    ${BROKERS}
   log  ${brokers_list}
-  
-  :FOR  ${Broker_Name}  ${Broker_Data}   IN  @{brokers_list}
-  \  log  ${Broker_Name} 
-  \  log  ${active_brokers}
-  \  ${status}=  Run Keyword And Return Status   List Should Contain Value  ${active_brokers}   ${Broker_Name} 
-  \  Run Keyword If   '${status}' == 'True'  Завантажуємо бібліотеку з реалізацією ${Broker_Data.keywords_file} площадки
-  
   # Init Users
   ${file_path}=  Get Variable Value  ${USERS_FILE}  users.yaml
   ${USERS}=  load_initial_data_from  ${file_path}
   Set Global Variable  ${USERS}
   ${users_list}=    Get Dictionary Items    ${USERS.users}
+  #:FOR  ${Broker_Name}  ${Broker_Data}   IN  @{brokers_list}
+  #\  log  ${Broker_Name} 
+  #\  log  ${active_brokers}
+  #\  ${status}=  Run Keyword And Return Status   List Should Contain Value  ${active_users}   ${username} 
+  #\  Run Keyword If   '${status}' == 'True'  Завантажуємо бібліотеку з реалізацією ${BROKERS['']}${Broker_Data.keywords_file} площадки
   :FOR  ${username}  ${user_data}   IN  @{users_list}
   \  log  ${active_users} 
   \  log  ${username}
   \  ${status}=  Run Keyword And Return Status   List Should Contain Value  ${active_users}   ${username} 
+  \  Run Keyword If   '${status}' == 'True'   Завантажуємо бібліотеку з реалізацією ${BROKERS['${USERS.users['${username}'].broker}'].keywords_file} площадки
   \  Run Keyword If   '${status}' == 'True'   Викликати для учасника   ${username}  Підготувати клієнт для користувача
 
 Підготовка початкових даних
@@ -139,8 +137,7 @@ normal
   log  ${username}
   log  ${command}
   log  ${arguments}
-  ${status}  ${value}=  run_keyword_and_ignore_keyword_definations   ${BROKERS['${USERS.users['${username}'].broker}'].keywords_file}.${command}  ${username}  @{arguments}
-  Run keyword if  '${status}' == 'FAIL'   Log   Учасник ${username} не зміг виконати "${command}"   WARN
+  ${value}=  Run Keyword   ${BROKERS['${USERS.users['${username}'].broker}'].keywords_file}.${command}  ${username}  @{arguments}
   [return]   ${value}
 
 switchsate
