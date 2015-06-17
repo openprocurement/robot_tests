@@ -11,20 +11,19 @@ Suite Teardown  Close all browsers
 
 *** Variables ***
 ${tender_dump_id}    0
-${LOAD_BROKERS}    ['Quinta']
-${LOAD_USERS}      ['Tender Viewer', 'Tender User', 'Tender Owner']
-
-${tender_owner}   tender_owner    #Tender Owner
-${provider}   Tender User
-${viewer}   Tender Viewer
-
 ${item_id}       0
 ${question_id}   0
 
+${tender_owner}  Tender Owner
+${provider}   Tender User
+${viewer}   Tender Viewer
+${LOAD_USERS}      ["${tender_owner}", "${provider}", "${viewer}"]
+
+
 *** Test Cases ***
 Можливість оголосити багатопредметний тендер 
-  [Tags]   ${USERS.users['${USERS.tender_owner}'].broker}: Можливість оголосити багатопредметний тендер 
-  Викликати для учасника     ${USERS.tender_owner}   Створити багатопредметний тендер
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити багатопредметний тендер 
+  Викликати для учасника     ${tender_owner}   Створити багатопредметний тендер
   ${LAST_MODIFICATION_DATE}=  Get Current Date
   Set Global Variable   ${LAST_MODIFICATION_DATE}
   

@@ -142,8 +142,6 @@ ${question_id}   0
   log many  @{ARGUMENTS}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${ARGUMENTS[1]}
   log   ${USERS.users['${ARGUMENTS[0]}']}
-  ${tender}=  set_access_key  ${tender}  ${USERS.users['${ARGUMENTS[0]}'].api_key}
-  log  ${tender}
   ${biddingresponce}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_question  ${tender}  ${ARGUMENTS[2]}
   [return]  ${biddingresponce}
   

@@ -10,7 +10,7 @@ fake_en = Factory.create()
 def test_tender_data(period_interval=2):
   now = datetime.now()
   return {
-    "title": fake.catch_phrase(),
+    "title": u"[ТЕСТУВАННЯ] " + fake.catch_phrase(),
     "mode": "test",
     "submissionMethodDetails": "quick",
     "description": "Test tender1",  #Error @prom when 'Тестовый тендер' 
@@ -52,8 +52,8 @@ def test_tender_data(period_interval=2):
                 "endDate": (now + timedelta(days=5)).isoformat()
             },
             "deliveryLocation": {
-                "latitude": "49.8500° N",
-                "longitude": "24.0167° E"
+                "latitude": u"49.8500° N",
+                "longitude": u"24.0167° E"
             },
             "deliveryAddress": {
                 "countryName": u"Україна",

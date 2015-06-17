@@ -32,11 +32,6 @@ TestCaseSetup
   ${USERS}=  load_initial_data_from  ${file_path}
   Set Global Variable  ${USERS}
   ${users_list}=    Get Dictionary Items    ${USERS.users}
-  #:FOR  ${Broker_Name}  ${Broker_Data}   IN  @{brokers_list}
-  #\  log  ${Broker_Name} 
-  #\  log  ${active_brokers}
-  #\  ${status}=  Run Keyword And Return Status   List Should Contain Value  ${active_users}   ${username} 
-  #\  Run Keyword If   '${status}' == 'True'  Завантажуємо бібліотеку з реалізацією ${BROKERS['']}${Broker_Data.keywords_file} площадки
   :FOR  ${username}  ${user_data}   IN  @{users_list}
   \  log  ${active_users} 
   \  log  ${username}

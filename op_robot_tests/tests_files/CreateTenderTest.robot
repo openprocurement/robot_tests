@@ -11,9 +11,9 @@ Suite Teardown  Close all browsers
 
 *** Variables ***
 ${tender_dump_id}    0
-#${tender_owner}   Prom Owner
-#${provider}   Tender User
-#${viewer}   Tender Viewer
+${tender_owner}   Tender Owner
+${provider}   Tender User
+${viewer}   Tender Viewer
 
 ${LOAD_USERS}      ["${tender_owner}", "${provider}"]
 
@@ -52,9 +52,9 @@ ${question_id}   0
   [Tags]   Owner_Tests   ${USERS.users['${tender_owner}'].broker}: Запис основних даних оголошеного тендера
   Звірити поле тендера   ${provider}  procuringEntity.name
 
-Відображення початоку періоду уточнення оголошеного тендера
-  [Tags]   Owner_Tests   ${USERS.users['${tender_owner}'].broker}: Запис основних даних оголошеного тендера
-  Звірити поле тендера  ${provider}  enquiryPeriod.startDate
+#Відображення початоку періоду уточнення оголошеного тендера
+#  [Tags]   Owner_Tests   ${USERS.users['${tender_owner}'].broker}: Запис основних даних оголошеного тендера
+#  Звірити поле тендера  ${provider}  enquiryPeriod.startDate
 
 Відображення закінчення періоду уточнення оголошеного тендера
   [Tags]   Owner_Tests   ${USERS.users['${tender_owner}'].broker}: Запис основних даних оголошеного тендера

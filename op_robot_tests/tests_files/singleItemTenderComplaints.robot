@@ -11,18 +11,16 @@ Suite Teardown  Close all browsers
 
 *** Variables ***
 ${tender_dump_id}    0
+${item_id}       0
+${question_id}   0
 
-${LOAD_BROKERS}    ['Quinta']
-${LOAD_USERS}      ['Tender Viewer', 'Tender User', 'Tender User1', 'Tender Owner']
 
-${tender_owner}  tender_owner    #Tender Owner
+${tender_owner}  Tender Owner
 ${provider}   Tender User
 ${provider1}   Tender User1
 ${viewer}   Tender Viewer
 
-${item_id}       0
-${question_id}   0
-
+${LOAD_USERS}      ["${tender_owner}", "${provider}", "${provider1}", "${viewer}"]
 #Avalable roles and users
 
 #roles: Owner, User, Viewer
@@ -36,8 +34,8 @@ ${question_id}   0
 
 *** Test Cases ***
 Можливість оголосити однопердметний тендер
-  [Tags]   ${USERS.users['${USERS.${tender_owner}}'].broker}: Можливість оголосити тендер
-  Викликати для учасника     ${USERS.${tender_owner}}   Створити тендер  ${INITIAL_TENDER_DATA}
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
+  Викликати для учасника     ${tender_owner}   Створити тендер  ${INITIAL_TENDER_DATA}
   ${LAST_MODIFICATION_DATE}=  Get Current Date
   Set Global Variable   ${LAST_MODIFICATION_DATE}
 
@@ -54,22 +52,22 @@ ${question_id}   0
   отримати останні зміни в тендері  
 
 Можливість відхилити скаргу на умови
-  [Tags]   ${USERS.users['${USERS.tender_owner}'].broker}: Можливість відхилити скаргу на умови
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість відхилити скаргу на умови
   Set To Dictionary  ${COMPLAINTS[0].data}   status   declined
-  Викликати для учасника   ${USERS.tender_owner}   Обробити скаргу    ${TENDER_DATA.data.id}  0  ${COMPLAINTS[0]}
+  Викликати для учасника   ${tender_owner}   Обробити скаргу    ${TENDER_DATA.data.id}  0  ${COMPLAINTS[0]}
   log many   ${COMPLAINTS[0]}
   ${LAST_MODIFICATION_DATE}=  Get Current Date
   Set Global Variable   ${LAST_MODIFICATION_DATE}
   отримати останні зміни в тендері
 
 Можливість відкинути скаргу на умови
-  [Tags]    ${USERS.users['${USERS.tender_owner}'].broker}: Можливість відкинути скаргу на умови
+  [Tags]    ${USERS.users['${tender_owner}'].broker}: Можливість відкинути скаргу на умови
   Викликати для учасника   ${provider}   Подати скаргу    ${TENDER_DATA.data.id}   ${COMPLAINTS[0]}
   ${LAST_MODIFICATION_DATE}=  Get Current Date
   Set Global Variable   ${LAST_MODIFICATION_DATE}
   отримати останні зміни в тендері    
   Set To Dictionary  ${COMPLAINTS[0].data}   status   invalid
-  Викликати для учасника   ${USERS.tender_owner}   Обробити скаргу    ${TENDER_DATA.data.id}  1  ${COMPLAINTS[0]}
+  Викликати для учасника   ${tender_owner}   Обробити скаргу    ${TENDER_DATA.data.id}  1  ${COMPLAINTS[0]}
   log many   ${COMPLAINTS[0]}
   ${LAST_MODIFICATION_DATE}=  Get Current Date
   Set Global Variable   ${LAST_MODIFICATION_DATE}
@@ -82,7 +80,7 @@ ${question_id}   0
   Set Global Variable   ${LAST_MODIFICATION_DATE}
   отримати останні зміни в тендері      
   Set To Dictionary  ${COMPLAINTS[0].data}   status   resolved
-  Викликати для учасника   ${USERS.tender_owner}   Обробити скаргу    ${TENDER_DATA.data.id}  2  ${COMPLAINTS[0]}
+  Викликати для учасника   ${tender_owner}   Обробити скаргу    ${TENDER_DATA.data.id}  2  ${COMPLAINTS[0]}
   log many   ${COMPLAINTS[0]}
   ${LAST_MODIFICATION_DATE}=  Get Current Date
   Set Global Variable   ${LAST_MODIFICATION_DATE}

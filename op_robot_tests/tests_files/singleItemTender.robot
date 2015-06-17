@@ -12,13 +12,12 @@ Suite Teardown  Close all browsers
 *** Variables ***
 ${tender_dump_id}    0
 
-${LOAD_BROKERS}    ['Quinta']
-${LOAD_USERS}      ['Tender Viewer', 'Tender User', 'Tender User1', 'Tender Owner']
-
-${tender_owner}  tender_owner    #Tender Owner
+${tender_owner}  Tender Owner
 ${provider}   Tender User
 ${provider1}   Tender User1
 ${viewer}   Tender Viewer
+
+${LOAD_USERS}      ["${tender_owner}", "${provider}", "${provider1}", "${viewer}"]
 
 ${item_id}       0
 ${question_id}   0
@@ -35,36 +34,36 @@ ${question_id}   0
   #Netcast
 *** Test Cases ***
 Можливість оголосити однопердметний тендер
-  [Tags]   ${USERS.users['${USERS.${tender_owner}}'].broker}: Можливість оголосити тендер
-  Викликати для учасника     ${USERS.${tender_owner}}   Створити тендер  ${INITIAL_TENDER_DATA}
-  ${LAST_MODIFICATION_DATE}=  Get Current Date
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
+  ${TENDER_ID}=  Викликати для учасника     ${tender_owner}    Створити тендер  ${INITIAL_TENDER_DATA}
+  Set Global Variable    ${TENDER_ID}
   Set Global Variable   ${LAST_MODIFICATION_DATE}
 
 Можливасть додати тендерну документацію
-  [Tags]   ${USERS.users['${USERS.${tender_owner}}'].broker}: Можливість завантажити документ
+  [Tags]    ${USERS.users['${tender_owner}'].broker}: Можливість завантажити документ
   ${access_token}=  Get Variable Value  ${TENDER_DATA.access.token}
-  Викликати для учасника   ${USERS.${tender_owner}}  Завантажити документ  ${access_token}
+  Викликати для учасника   ${tender_owner}   Завантажити документ  ${access_token}
 
 Можливість подати скаргу на умови
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати скаргу на умови
-  Викликати для учасника   ${provider}   Подати скаргу    ${TENDER_DATA.data.id}   ${COMPLAINTS[0]}
+  Викликати для учасника   ${provider}   Подати скаргу    ${TENDER_ID}   ${COMPLAINTS[0]}
   ${LAST_MODIFICATION_DATE}=  Get Current Date
   Set Global Variable   ${LAST_MODIFICATION_DATE}
   отримати останні зміни в тендері
 
 Можливість побачити скаргу користувачем
   [Tags]   ${USERS.users['${provider}'].broker}: Відображення основних даних оголошеного тендера
-  Викликати для учасника   ${provider}   порівняти скаргу  ${TENDER_DATA.data.id}   ${COMPLAINTS[0]}
+  Викликати для учасника   ${provider}   порівняти скаргу  ${TENDER_ID}   ${COMPLAINTS[0]}
 
 можливість побачити скаргу анонімом
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
-  Викликати для учасника    ${viewer}  порівняти скаргу  ${TENDER_DATA.data.id}   ${COMPLAINTS[0]}
+  Викликати для учасника    ${viewer}  порівняти скаргу  ${TENDER_ID}   ${COMPLAINTS[0]}
 
 Пошук однопредметного тендера по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
   #Switch Browser  ${viewer}
   Дочекатись синхронізації з майданчиком    ${viewer}
-  Викликати для учасника   ${viewer}   Пошук тендера по ідентифікатору   ${TENDER_DATA.data.tenderID}   ${TENDER_DATA.data.id}
+  Викликати для учасника   ${viewer}   Пошук тендера по ідентифікатору   ${TENDER_DATA.data.tenderID}   ${TENDER_ID}
 
 ######
 #Відображення основних  даних оголошеного тендера:
@@ -122,16 +121,16 @@ ${question_id}   0
   #documents.id
 
 Можливість редагувати однопредметний тендер
-  [Tags]   ${USERS.users['${USERS.${tender_owner}}'].broker}: Можливість оголосити тендер
-  Викликати для учасника   ${USERS.${tender_owner}}   Внести зміни в тендер     ${TENDER_DATA.data.id}   description     description
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
+  Викликати для учасника   ${tender_owner}  Внести зміни в тендер     ${TENDER_DATA.data.id}   description     description
 
 Можливість додати позицію закупівлі в тендер
-  [Tags]   ${USERS.users['${USERS.${tender_owner}}'].broker}: Можливість оголосити тендер
-  Викликати для учасника   ${USERS.${tender_owner}}   додати предмети закупівлі    ${TENDER_DATA.data.id}   3
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
+  Викликати для учасника   ${tender_owner}   додати предмети закупівлі    ${TENDER_DATA.data.id}   3
 
 Можливість видалити позиції закупівлі тендера
-  [Tags]   ${USERS.users['${USERS.${tender_owner}}'].broker}: Можливість оголосити тендер
-  Викликати для учасника   ${USERS.${tender_owner}}   додати предмети закупівлі    ${TENDER_DATA.data.id}   2
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
+  Викликати для учасника   ${tender_owner}   додати предмети закупівлі    ${TENDER_DATA.data.id}   2
 
 #######
 #Відображення однопредметного тендера
@@ -295,9 +294,18 @@ ${question_id}   0
   ${bid_id}=  get variable value  ${biddingresponce1.data.id}
   ${token1}=  Get Variable Value  ${biddingresponce1.access.token}
   log  ${token1}
-  Викликати для учасника   ${provider}  Завантажити документ в ставку    ${token1}  ${bid_id}
-
-#Можливість змінити документацію цінової пропозиції
+  ${upload_doc_responce}=   Викликати для учасника   ${provider}  Завантажити документ в ставку    ${token1}  ${bid_id}
+  Set Global Variable   ${upload_doc_responce}
+  
+Можливість змінити документацію цінової пропозиції
+  [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця
+  log   ${USERS.users['${provider}'].broker}
+  log  ${biddingresponce1}
+  ${bid_id}=  get variable value  ${biddingresponce1.data.id}
+  ${token1}=  Get Variable Value  ${biddingresponce1.access.token}
+  ${upload_doc_responce_id}=  get variable value  ${upload_doc_responce.data.id}
+  log  ${token1} 
+  Викликати для учасника   ${provider}  Змінити документ в ставці    ${token1}  ${bid_id}  ${upload_doc_responce_id}
 
 Можливість скасувати цінову пропозицію
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість скасувати цінову пропозицію
@@ -339,3 +347,68 @@ ${question_id}   0
 можливість побачити скаргу анонімом під час подачі пропозицій
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
   Викликати для учасника    ${viewer}  порівняти скаргу  ${TENDER_DATA.data.id}   ${COMPLAINTS[0]}
+  
+
+Неможливість змінити цінову пропозицію до 50000 після закінчення прийому пропозицій
+  [Tags]   ${USERS.users['${provider1}'].broker}: Неможливість змінити цінову пропозицію до 50000 після закінчення прийому пропозицій
+  Дочекатись дати закінчення прийому пропозицій
+  Set To Dictionary  ${biddingresponce1.data.value}   amount   50000
+  Log   ${biddingresponce5.data.value}
+  ${biddingresponce6}=  Викликати для учасника   ${provider1}   Змінити цінову пропозицію  shouldfail  ${TENDER_DATA.data.id}   ${biddingresponce5}
+  Set Global Variable   ${biddingresponce6}
+  log  ${biddingresponce6}
+ 
+Можливість скасувати цінову пропозицію
+  [Tags]   ${USERS.users['${provider}'].broker}: Можливість скасувати цінову пропозицію
+  ${biddingresponce8}=  Викликати для учасника   ${provider}   скасувати цінову пропозицію   ${TENDER_DATA.data.id}   ${biddingresponce5}
+  Set Global Variable   ${biddingresponce4}
+  log  ${biddingresponce8}
+
+Неможливість змінити цінову пропозицію до 1 після закінчення прийому пропозицій
+  [Tags]   ${USERS.users['${provider1}'].broker}: Неможливість змінити цінову пропозицію до 1 після закінчення прийому пропозицій
+  Set To Dictionary  ${biddingresponce5.data.value}   amount   1
+  Log   ${biddingresponce1.data.value}
+  ${biddingresponce7}=  Викликати для учасника   ${provider1}   Змінити цінову пропозицію  shouldfail  ${TENDER_DATA.data.id}   ${biddingresponce5}
+  Set Global Variable   ${biddingresponce7}
+  log  ${biddingresponce3}
+
+Неможливість завантажити документ другим учасником після закінчення прийому пропозицій
+  [Tags]   ${USERS.users['${provider}'].broker}: Неможливість документ першим учасником після закінчення прийому пропозицій
+  log   ${USERS.users['${provider1}'].broker}
+  log  ${biddingresponce5}
+  ${bid_id}=  get variable value  ${biddingresponce5.data.id}
+  ${token1}=  Get Variable Value  ${biddingresponce5.access.token}
+  log  ${token1}
+  ${upload_doc_responce2}=   Викликати для учасника   ${provider1}  Завантажити документ в ставку   shouldfail   ${token1}  ${bid_id}
+  log  ${upload_doc_responce_id2}
+  Set Global Variable   ${upload_doc_responce2}
+  
+Неможливість змінити документацію цінової пропозиції після закінчення прийому пропозицій
+  [Tags]   ${USERS.users['${provider}'].broker}: Неможливість змінити документацію цінової пропозиції після закінчення прийому пропозицій
+  log   ${USERS.users['${provider}'].broker}
+  log  ${biddingresponce5}
+  ${bid_id}=  get variable value  ${biddingresponce5.data.id}
+  ${token1}=  Get Variable Value  ${biddingresponce5.access.token}
+  ${upload_doc_responce_id2}=  get variable value  ${upload_doc_responce2.data.id}
+  log  ${upload_doc_responce_id2}
+  log  ${token1} 
+  Викликати для учасника   ${provider1}  Змінити документ в ставці   shouldfail   ${token1}  ${bid_id}  ${upload_doc_responce_id2}
+  
+  
+Неможливість змінити існуючу документацію цінової пропозиції після закінчення прийому пропозицій
+  [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця
+  log   ${USERS.users['${provider}'].broker}
+  log  ${biddingresponce1}
+  ${bid_id}=  get variable value  ${biddingresponce1.data.id}
+  ${token1}=  Get Variable Value  ${biddingresponce1.access.token}
+  ${upload_doc_responce_id}=  get variable value  ${upload_doc_responce.data.id}
+  log  ${token1} 
+  Викликати для учасника   ${provider}  Змінити документ в ставці    ${token1}  ${bid_id}  ${upload_doc_responce_id}
+
+
+Неможливість скасувати цінову пропозицію після закінчення прийому пропозицій
+  [Tags]   ${USERS.users['${provider}'].broker}: Неможливість скасувати цінову пропозицію після закінчення прийому пропозицій
+  ${biddingresponce8}=  Викликати для учасника   ${provider1}   скасувати цінову пропозицію   shouldfail   ${TENDER_DATA.data.id}   ${biddingresponce5}
+  Set Global Variable   ${biddingresponce8}
+  log  ${biddingresponce8}
+
