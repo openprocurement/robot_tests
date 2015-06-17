@@ -28,7 +28,7 @@ ${question_id}   0
   Log   access_token: ${access_token}
   Log   tender_id: ${TENDER_DATA.data.id}
   Set Global Variable  ${TENDER_DATA}
-  [return]  ${TENDER_DATA}
+  [return]  ${TENDER_DATA.data.id}
 
 Створити багатопредметний тендер
   [Arguments]  @{ARGUMENTS}
@@ -270,6 +270,25 @@ ${question_id}   0
   ${filename}=   Set Variable  file.txt
   Set_To_Object  ${TENDER_DATA.data}    documents.title   ${filename}
   ${reply}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  upload_bid_document  ${filename}  ${tender}   ${ARGUMENTS[2]}
+  Log object data   ${reply}  reply
+  [return]  ${reply}
+  
+Змінити документ в ставці
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  token
+  ...      ${ARGUMENTS[2]} ==  bid_id
+  ...      ${ARGUMENTS[3]} ==  file_id
+  [Arguments]  @{ARGUMENTS}
+  log  ${ARGUMENTS[0]}
+  log  ${ARGUMENTS[1]}
+  log  ${ARGUMENTS[2]}
+  log  ${ARGUMENTS[3]}
+  ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${TENDER_DATA.data.id}
+  ${tender}=  set_access_key  ${tender}  ${ARGUMENTS[1]}
+  ${filename}=   Set Variable  newfile.txt
+  Set_To_Object  ${TENDER_DATA.data}    documents.title   ${filename}
+  ${reply}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  update_bid_document  ${filename}  ${tender}   ${ARGUMENTS[2]}  ${ARGUMENTS[3]}
   Log object data   ${reply}  reply
 
 Завантажити документ
