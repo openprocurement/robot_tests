@@ -63,7 +63,7 @@ TestCaseSetup
   Append to list   ${REPLIES}   ${reply}
   Set Global Variable  ${REPLIES}
   
-  ${INITIAL_TENDER_DATA}=  prepare_test_tender_data
+  ${INITIAL_TENDER_DATA}=  prepare_test_tender_data   ${BROKERS['${USERS.users['${tender_owner}'].broker}'].period_interval}
   Set Global Variable  ${INITIAL_TENDER_DATA}
   Log  ${INITIAL_TENDER_DATA}
 Завантажуємо бібліотеку з реалізацією ${keywords_file} площадки

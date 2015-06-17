@@ -68,8 +68,8 @@ def load_initial_data_from(file_name):
             return fromYAML(file_obj)
 
 
-def prepare_test_tender_data():
-    return munchify({'data': test_tender_data()})
+def prepare_test_tender_data(period_interval=2):
+    return munchify({'data': test_tender_data(period_interval=period_interval)})
   
 def prepare_test_tender_data_multiple_items():
     return munchify({'data': test_tender_data_multiple_lots()})

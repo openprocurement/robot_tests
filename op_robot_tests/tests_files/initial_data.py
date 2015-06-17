@@ -7,7 +7,7 @@ fake = Factory.create('uk_UA')
 fake_ru = Factory.create('ru')
 fake_en = Factory.create()
 
-def test_tender_data():
+def test_tender_data(period_interval=2):
   now = datetime.now()
   return {
     "title": fake.catch_phrase(),
@@ -86,7 +86,7 @@ def test_tender_data():
     },
     "tenderPeriod": {
         "startDate": (now + timedelta(minutes=2)).isoformat(),
-        "endDate": (now + timedelta(minutes=35)).isoformat()
+        "endDate": (now + timedelta(minutes=(2+period_interval))).isoformat()
     }
 }
     
