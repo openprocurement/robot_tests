@@ -31,6 +31,7 @@ setup(name='op_robot_tests',
           'dpath',
           'jsonpath-rw',
           'dateutils',
+          'pytz',
           'parse'
       ],
       entry_points={

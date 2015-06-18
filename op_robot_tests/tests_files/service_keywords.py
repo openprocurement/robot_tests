@@ -10,6 +10,7 @@ from robot.errors import HandlerExecutionFailed
 from datetime import datetime, timedelta, date
 from dateutil.parser import parse
 from dateutil.tz import tzlocal
+from pytz import timezone
 from dpath.util import set as xpathset
 from jsonpath_rw import parse as parse_path
 import time
@@ -18,6 +19,9 @@ from .initial_data import (
     test_bid_data, test_award_data, test_complaint_data, test_complaint_reply_data, test_tender_data_multiple_lots,
     auction_bid, prom_test_tender_data
 )
+
+TIMEZONE = timezone('Europe/Kiev')
+
 
 def change_state(arguments):
     try:
@@ -30,12 +34,16 @@ def change_state(arguments):
 def prepare_prom_test_tender_data():
     return munchify({'data': prom_test_tender_data()})
 
-def compare_date (isodate, broker_date):
-    iso_dt=parse_date(isodate) 
-    br_dt=datetime.strptime(broker_date, "%d-%m-%Y, %H:%M")
-    br_dt_tz=br_dt.replace(tzinfo = iso_dt.tzinfo)
-    delta = (iso_dt-br_dt_tz).total_seconds()
-    if delta > 60:
+def compare_date(data1, data2):
+    data1=parse(data1) 
+    data2=parse(data2)
+    if data1.tzinfo is None:
+        data1 = TIMEZONE.localize(data1)
+    if data2.tzinfo is None:
+        data2 = TIMEZONE.localize(data2)
+
+    delta = (data1-data2).total_seconds()
+    if abs(delta) > 60:
        return False
     return True 
 

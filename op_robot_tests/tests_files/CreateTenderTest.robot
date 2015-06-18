@@ -58,19 +58,19 @@ ${question_id}   0
 
 Відображення закінчення періоду уточнення оголошеного тендера
   [Tags]   Owner_Tests   ${USERS.users['${tender_owner}'].broker}: Запис основних даних оголошеного тендера
-  Звірити поле тендера  ${provider}  enquiryPeriod.endDate
+  Звірити дату   ${provider}  enquiryPeriod.endDate
 
 Відображення початоку періоду прийому пропозицій оголошеного тендера
   [Tags]   Owner_Tests   ${USERS.users['${tender_owner}'].broker}: Запис основних даних оголошеного тендера
-  Звірити поле тендера   ${provider}  tenderPeriod.startDate
+  Звірити дату    ${provider}  tenderPeriod.startDate
 
 Відображення закінчення періоду прийому пропозицій оголошеного тендера
   [Tags]   Owner_Tests   ${USERS.users['${tender_owner}'].broker}: Запис основних даних оголошеного тендера
-  Звірити поле тендера  ${provider}  tenderPeriod.endDate
+  Звірити дату   ${provider}  tenderPeriod.endDate
 
 Відображення мінімального кроку оголошеного тендера
   [Tags]   Owner_Tests   ${USERS.users['${tender_owner}'].broker}: Запис основних даних оголошеного тендера
-  Звірити поле тендера   ${provider}  minimalStep.amount
+  Звірити поле тендера    ${provider}  minimalStep.amount
 
 Відображення опису позицій закупівлі однопредметного тендера
   [Tags]   Owner_Tests   ${USERS.users['${tender_owner}'].broker}: Запис полів пердметів однопредметного тендера
@@ -78,7 +78,7 @@ ${question_id}   0
 
 Відображення дати доставки позицій закупівлі однопредметного тендера
   [Tags]   Owner_Tests   ${USERS.users['${tender_owner}'].broker}: Запис полів пердметів однопредметного тендера
-  Звірити поле тендера  ${provider}  items[${item_id}].deliveryDate.endDate
+  Звірити дату    ${provider}  items[${item_id}].deliveryDate.endDate
 
 Відображення координат широти доставки позицій закупівлі однопредметного тендера
   [Tags]   Owner_Tests   ${USERS.users['${tender_owner}'].broker}: Запис полів пердметів однопредметного тендера
