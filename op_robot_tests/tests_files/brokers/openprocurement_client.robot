@@ -28,7 +28,7 @@ ${question_id}   0
   Log   access_token: ${access_token}
   Log   tender_id: ${TENDER_DATA.data.id}
   Set Global Variable  ${TENDER_DATA}
-  [return]  ${TENDER_DATA.data.id}
+  [return]  ${TENDER_DATA.data.tenderID}  ${TENDER_DATA.data.id}
 
 Створити багатопредметний тендер
   [Arguments]  @{ARGUMENTS}
@@ -55,7 +55,7 @@ ${question_id}   0
   [return]   ${tender_data}
 
 
-обновити сторінку з тендером
+Обновити сторінку з тендером
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
