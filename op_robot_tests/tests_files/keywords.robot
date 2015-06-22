@@ -12,7 +12,7 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
 
 
 *** Keywords ***
-TestCaseSetup
+TestSuiteSetup
     Завантажуємо дані про корисувачів і площадки  ${LOAD_USERS}
     Підготовка початкових даних
 
@@ -48,7 +48,6 @@ TestCaseSetup
   ${answer}=  test_question_answer_data
   Append to list   ${ANSWERS}   ${answer}
   Set Global Variable  ${ANSWERS}
-  
   @{COMPLAINTS} =  Create list
   ${complaint}=  test_complaint_data
   Append to list   ${COMPLAINTS}   ${complaint}
@@ -57,10 +56,10 @@ TestCaseSetup
   ${reply}=  test_complaint_reply_data
   Append to list   ${REPLIES}   ${reply}
   Set Global Variable  ${REPLIES}
-  
-  ${INITIAL_TENDER_DATA}=  prepare_test_tender_data   ${BROKERS['${USERS.users['${tender_owner}'].broker}'].period_interval}
+  ${INITIAL_TENDER_DATA}=  prepare_test_tender_data   ${BROKERS['${USERS.users['${tender_owner}'].broker}'].period_interval}   ${mode}
   Set Global Variable  ${INITIAL_TENDER_DATA}
   Log  ${INITIAL_TENDER_DATA}
+
 Завантажуємо бібліотеку з реалізацією ${keywords_file} площадки
   Import Resource  ${CURDIR}/brokers/${keywords_file}.robot
 
@@ -78,20 +77,24 @@ TestCaseSetup
   ${wait_timout}=  Subtract Time From Time  ${BROKERS['${USERS.users['${username}'].broker}'].timout_on_wait}  ${delta}
   Run Keyword If   ${wait_timout}>0   Sleep  ${wait_timout}
 
-отримати останні зміни в тендері
-  ${TENDER_DATA}=   Викликати для учасника   ${USERS.tender_owner}   Пошук тендера по ідентифікатору   ${TENDER_DATA.data.tenderID}   ${TENDER_DATA.data.id}
-  Set To Dictionary  ${TENDER_DATA}   access_token   ${access_token}
-  Set Global Variable  ${TENDER_DATA}
-  ${now}=  Get Current Date
-  Log object data  ${TENDER_DATA}  tender_${tender_dump_id}
-  ${tender_dump_id}=   Evaluate    ${tender_dump_id}+1
-  Set Global Variable  ${tender_dump_id}
+#отримати останні зміни в тендері
+#  ${TENDER_DATA}=   Викликати для учасника   ${tender_owner}   Пошук тендера по ідентифікатору   ${TENDER_DATA.data.tenderID}   ${TENDER_DATA.data.id}
+#  Set To Dictionary  ${TENDER_DATA}   access_token   ${access_token}
+#  Set Global Variable  ${TENDER_DATA}
+#  ${now}=  Get Current Date
+#  Log object data  ${TENDER_DATA}  tender_${tender_dump_id}
+#  ${tender_dump_id}=   Evaluate    ${tender_dump_id}+1
+#  Set Global Variable  ${tender_dump_id}
 
 Звірити поле тендера
   [Arguments]  ${username}  ${field}
-  ${field_response}=  Викликати для учасника    ${username}   отримати інформацію із тендера  ${field}
-  ${field_value}=   Get_From_Object  ${TENDER_DATA.data}   ${field}
-  Should Be Equal   ${field_value}   ${field_response}   Майданчик ${USERS.users['${username}'].broker}
+  ${field_value}=   Get_From_Object  ${INITIAL_TENDER_DATA.data}   ${field}
+  Звірити поле    ${username}  ${field}  ${field_value}
+
+Звірити поле 
+  [Arguments]  ${username}  ${field}   ${subject} 
+  ${field_response}=  Викликати для учасника    ${username}   отримати інформацію із тендера   ${field}
+  Should Be Equal   ${subject}   ${field_response}   Майданчик ${USERS.users['${username}'].broker}
 
 Звірити поле створеного тендера
   [Arguments]  ${initial}  ${tender_data}  ${field}
@@ -99,16 +102,21 @@ TestCaseSetup
   ${field_response}=  Get_From_Object  ${tender_data}   ${field}
   Should Be Equal   ${field_value}   ${field_response}
 
-Звірити дату  
+Звірити дату тендера
   [Arguments]  ${username}  ${field}
-  ${field_date}=  Викликати для учасника    ${username}   отримати інформацію із тендера  ${field}
-  ${isodate}=   Get_From_Object  ${TENDER_DATA.data}   ${field}
-  ${returned}=   compare_date    ${isodate}  ${field_date}
-  Should Be True  '${returned}' == 'True'   
-  
-Звірити поля предметів закупівлі багатопредметного тендера ${field}
-  Дочекатись синхронізації з майданчиком    ${viewer}
-  @{items}=  Get_From_Object  ${TENDER_DATA.data}     items
+  ${isodate}=   Get_From_Object  ${INITIAL_TENDER_DATA.data}   ${field}
+  Звірити дату  ${username}  ${field}  ${isodate}
+
+Звірити дату
+   [Arguments]  ${username}  ${field}   ${subject} 
+   ${field_date}=  Викликати для учасника    ${username}   отримати інформацію із тендера  ${field}
+   ${returned}=   compare_date   ${subject}  ${field_date}
+   Should Be True  '${returned}' == 'True'   
+   
+Звірити поля предметів закупівлі багатопредметного тендера
+  [Arguments]  ${username}  ${field}
+  Дочекатись синхронізації з майданчиком    ${username}
+  @{items}=  Get_From_Object  ${INITIAL_TENDER_DATA.data}     items
   ${len_of_items}=   Get Length   ${items}
   :FOR   ${index}    IN RANGE   ${len_of_items}
     \    Log   ${index}
