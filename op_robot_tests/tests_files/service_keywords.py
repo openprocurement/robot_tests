@@ -25,11 +25,11 @@ TIMEZONE = timezone('Europe/Kiev')
 
 def change_state(arguments):
     try:
-      if arguments[0] == "shouldfail":
-	return "shouldfail"
-      return "pass"
+        if arguments[0] == "shouldfail":
+            return "shouldfail"
+        return "pass"
     except IndexError:
-      return "pass"
+        return "pass"
 
 def prepare_prom_test_tender_data():
     return munchify({'data': prom_test_tender_data()})
@@ -76,11 +76,12 @@ def load_initial_data_from(file_name):
             return fromYAML(file_obj)
 
 
-def prepare_test_tender_data(period_interval=2):
-    return munchify({'data': test_tender_data(period_interval=period_interval)})
-  
-def prepare_test_tender_data_multiple_items():
-    return munchify({'data': test_tender_data_multiple_lots()})
+def prepare_test_tender_data(period_interval=2, mode='single'):
+    if mode == 'single':
+        return munchify({'data': test_tender_data(period_interval=period_interval)})
+    elif mode == 'multi':
+        return munchify({'data': test_tender_data_multiple_lots(period_interval=period_interval)})
+    raise ValueError('A very specific bad thing happened') 
 
 
 def run_keyword_and_ignore_keyword_definations(name, *args):
