@@ -28,7 +28,8 @@ ${PASSWORD}     1234
   Log Variables
 
 Go to homepage
-    Switch Browser  Prom Owner
+    [Arguments]  ${username}
+    Switch Browser  ${username}
     Go To   ${HOMEPAGE}
 
 Login
@@ -40,7 +41,7 @@ Login
 Створити тендер
     [Arguments]  @{ARGUMENTS}
     log many  @{ARGUMENTS}
-    Go to homepage
+    Go to homepage   ${ARGUMENTS[0]}
 
     Login
 
