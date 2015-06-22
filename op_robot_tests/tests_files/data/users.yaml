@@ -1,52 +1,50 @@
-tender_owner: Tender Owner
-prom_owner: Prom Owner
 users:
-    Tender Owner:
+    Tender_Owner:
         api_key: e9c3ccb8e8124f26941d5f9639a4ebc3
         broker: Quinta
-    Prom Owner:
+    Prom_Owner:
         broker: Prom
         username: Promtest
         browser:  chrome
         position:  [0, 0]
         size:  [640, 450]
-    E-tender Viewer:
+    E-tender_Viewer:
         broker: E-tender
         username: E-tendertest
         browser:  chrome
         position:  [0, 0]
         size:  [640, 450]
-    Prom Viewer:
+    Prom_Viewer:
         broker: Prom
         username: Promtest
         browser:  chrome
         position:  [640, 0]
         size:  [640, 450]
-    SmartTender Viewer:
+    SmartTender_Viewer:
         broker: SmartTender
         username: SmartTendertest
         browser:  chrome
         position:  [0, 450]
         size:  [640, 450]
-    Publicbid Viewer:
+    Publicbid_Viewer:
         broker: Publicbid
         username: Publicbid
         browser:  chrome
         position:  [0, 450]
         size:  [640, 450]  
-    Netcast Viewer:
+    Netcast_Viewer:
         broker: Netcast
         username: TetcastTest
         browser:  chrome
         position:  [0, 450]
         size:  [640, 450]     
-    Tender Viewer:
+    Tender_Viewer:
         broker: Quinta
         api_key: ""
-    Tender User:
+    Tender_User:
         api_key: e9c3ccb8e8124f26941d5f9639a4ebc3
         broker: Quinta
-    Tender User1:
+    Tender_User1:
         api_key: e9c3ccb8e8124f26941d5f9639a4ebc3
         broker: Quinta
     
