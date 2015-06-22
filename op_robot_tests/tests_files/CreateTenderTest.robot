@@ -11,9 +11,9 @@ Suite Teardown  Close all browsers
 
 *** Variables ***
 ${tender_dump_id}    0
-${tender_owner}   Tender Owner
-${provider}   Tender User
-${viewer}   Tender Viewer
+${tender_owner}   Tender_Owner
+${provider}   Tender_User
+${viewer}   Tender_Viewer
 
 ${LOAD_USERS}      ["${tender_owner}", "${provider}"]
 
