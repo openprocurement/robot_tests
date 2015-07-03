@@ -51,34 +51,31 @@ Login
 
     Login
 
-    ${items}=   Get From Dictionary   ${ARGUMENTS[1].data}   items
-    ${title}=   Get From Dictionary   ${ARGUMENTS[1].data}   title
-    ${description}=   Get From Dictionary   ${ARGUMENTS[1].data}   description
-    ${budget}=   Get From Dictionary   ${ARGUMENTS[1].data.value}   amount
-    ${step_rate}=   Get From Dictionary   ${ARGUMENTS[1].data.minimalStep}   amount
-    ${items_description}=   Get From Dictionary   ${ARGUMENTS[1].data}   description
-    ${quantity}=  Get From Dictionary    ${items[0]}   quantity
-    ${cpv}=  Get From Dictionary    ${items[0].classification}   id
-    ${dkpp_desc}=               Get From Dictionary    ${items[0].additionalClassifications[0]}   description
-    ${dkpp_id}=               Get From Dictionary    ${items[0].additionalClassifications[0]}   id
-    ${unit}=               Get From Dictionary    ${items[0].unit}   name
-
-    ${start_date}=   Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}   startDate
-    ${start_date}=   convert_date_to_etender_format   ${start_date}
-    ${start_time}=   Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}   startDate
-    ${start_time}=   convert_time_to_etender_format   ${start_time}
-
-    ${end_date}=   Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}   endDate
-    ${end_date}=   convert_date_to_etender_format   ${end_date}
-    ${end_time}=   Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}   endDate
-    ${end_time}=   convert_time_to_etender_format   ${end_time}
-
-    ${enquiry_end_date}=   Get From Dictionary    ${ARGUMENTS[1].data.enquiryPeriod}   endDate
+    ${items}=         Get From Dictionary   ${ARGUMENTS[1].data}               items
+    ${title}=         Get From Dictionary   ${ARGUMENTS[1].data}               title
+    ${description}=   Get From Dictionary   ${ARGUMENTS[1].data}               description
+    ${budget}=        Get From Dictionary   ${ARGUMENTS[1].data.value}         amount
+    ${step_rate}=     Get From Dictionary   ${ARGUMENTS[1].data.minimalStep}   amount
+    ${items_description}=   Get From Dictionary   ${ARGUMENTS[1].data}         description
+    ${quantity}=      Get From Dictionary   ${items[0]}                        quantity
+    ${cpv}=           Get From Dictionary   ${items[0].classification}         id
+    ${dkpp_desc}=     Get From Dictionary   ${items[0].additionalClassifications[0]}   description
+    ${dkpp_id}=       Get From Dictionary   ${items[0].additionalClassifications[0]}  id
+    ${unit}=          Get From Dictionary   ${items[0].unit}                   name
+    ${start_date}=    Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}   startDate
+    ${start_date}=    convert_date_to_etender_format   ${start_date}
+    ${start_time}=    Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}   startDate
+    ${start_time}=    convert_time_to_etender_format   ${start_time}
+    ${end_date}=      Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}   endDate
+    ${end_date}=      convert_date_to_etender_format   ${end_date}
+    ${end_time}=      Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}   endDate
+    ${end_time}=   convert_time_to_etender_format      ${end_time}
+    ${enquiry_end_date}=   Get From Dictionary         ${ARGUMENTS[1].data.enquiryPeriod}   endDate
     ${enquiry_end_date}=   convert_date_to_etender_format   ${enquiry_end_date}
-    ${enquiry_end_time}=   Get From Dictionary   ${ARGUMENTS[1].data.enquiryPeriod}   endDate
+    ${enquiry_end_time}=   Get From Dictionary              ${ARGUMENTS[1].data.enquiryPeriod}   endDate
     ${enquiry_end_time}=   convert_time_to_etender_format   ${enquiry_end_time}
 
-    Wait Until Page Contains    Мої закупівлі    100
+    Wait Until Page Contains          Мої закупівлі    100
     Click Element                     xpath=//a[contains(@class, 'ng-binding')][./text()='Мої закупівлі']
     Wait Until Page Contains Element  xpath=//a[contains(@class, 'btn btn-info')]
     Click Element                     xpath=//a[contains(@class, 'btn btn-info')]
@@ -89,7 +86,7 @@ Login
     Click Element                     xpath=//div[contains(@class, 'form-group col-sm-6')]//input[@type='checkbox']
     Input text    id=minimalStep            ${step_rate}
     Input text    id=itemsDescription       ${items_description}
-    Input text    id=itemsQuantity      ${quantity}
+    Input text    id=itemsQuantity          ${quantity}
     Click Element  xpath=//select[@name="itemsUnit"]/option[@value='kilogram']
     Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//input[@name='enqPEndDate']   ${enquiry_end_date}
     Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//div[contains(@class, 'col-sm-2')]//input[@ng-model='data.enquiryPeriod.endDate']   ${enquiry_end_time}

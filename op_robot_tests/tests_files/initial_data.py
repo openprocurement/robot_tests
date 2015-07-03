@@ -179,7 +179,7 @@ def prom_test_tender_data():
 def etender_test_tender_data():
   now = datetime.now()
   return {
-    "title": u"[ТЕСТУВАННЯ etender] " + fake.catch_phrase(),
+    "title": u"[ТЕСТУВАННЯ] " + fake.catch_phrase(),
     "mode": "test",
     "submissionMethodDetails": "quick",
     "description": "Test etender1",  #Error @prom when 'Тестовый тендер' 

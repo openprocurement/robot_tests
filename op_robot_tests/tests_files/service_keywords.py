@@ -17,7 +17,7 @@ import time
 from .initial_data import (
     test_tender_data, test_question_data, test_question_answer_data,
     test_bid_data, test_award_data, test_complaint_data, test_complaint_reply_data, test_tender_data_multiple_lots,
-    auction_bid, prom_test_tender_data
+    auction_bid, prom_test_tender_data, etender_test_tender_data
 )
 
 TIMEZONE = timezone('Europe/Kiev')
