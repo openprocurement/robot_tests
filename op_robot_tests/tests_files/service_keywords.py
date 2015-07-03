@@ -34,6 +34,9 @@ def change_state(arguments):
 def prepare_prom_test_tender_data():
     return munchify({'data': prom_test_tender_data()})
 
+def prepare_etender_test_tender_data():
+    return munchify({'data': etender_test_tender_data()})
+
 def compare_date(data1, data2):
     data1=parse(data1) 
     data2=parse(data2)
@@ -65,6 +68,16 @@ def convert_date_to_prom_format(isodate):
     iso_dt=parse_date(isodate)
     day_string = iso_dt.strftime("%d.%m.%Y %H:%M")
     return  day_string
+
+def convert_date_to_etender_format(isodate):
+    iso_dt=parse_date(isodate)
+    date_string = iso_dt.strftime("%d-%m-%Y")
+    return  date_string
+
+def convert_time_to_etender_format(isodate):
+    iso_dt=parse_date(isodate)
+    time_string = iso_dt.strftime("%H:%M")
+    return  time_string
 
 def load_initial_data_from(file_name):
     if not os.path.exists(file_name):

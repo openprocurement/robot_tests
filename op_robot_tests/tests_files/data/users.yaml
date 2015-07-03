@@ -8,6 +8,12 @@ users:
         browser:  chrome
         position:  [0, 0]
         size:  [640, 450]
+    E-tender_Owner:
+        broker: E-tender
+        username: E-tendertest
+        browser:  firefox
+        position:  [0, 0]
+        size:  [640, 450]
     E-tender_Viewer:
         broker: E-tender
         username: E-tendertest
