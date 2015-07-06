@@ -11,6 +11,9 @@ users:
     E-tender_Owner:
         broker: E-tender
         username: E-tendertest
+        homepage: "http://uat.e-tender.biz/#/profile"
+        login: st_org
+        password: 12345678
         browser:  firefox
         position:  [0, 0]
         size:  [640, 450]
