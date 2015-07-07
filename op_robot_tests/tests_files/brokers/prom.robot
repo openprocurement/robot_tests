@@ -33,7 +33,7 @@ Go to homepage
     Go To   ${HOMEPAGE}
 
 Login
-	Wait Until Page Contains Element    id=phone_email   100
+    Wait Until Page Contains Element    id=phone_email   100
     Input text    id=phone_email    ${LOGIN}
     Input text    id=password    ${PASSWORD}
     Click Button    id=submit_login_button
@@ -114,3 +114,4 @@ get tender id
   Wait Until Page Contains    ${ARGUMENTS[1]}   10
   sleep  1
   Capture Page Screenshot
+
