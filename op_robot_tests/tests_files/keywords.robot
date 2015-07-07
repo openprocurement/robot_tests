@@ -1,7 +1,6 @@
 *** Setting ***
 Resource  resource.robot
 Library  op_robot_tests.tests_files.service_keywords
-Library  op_robot_tests.tests_files.etender_service
 Library  String
 LIbrary  Collections
 LIbrary  Selenium2Library

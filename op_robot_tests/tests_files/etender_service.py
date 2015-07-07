@@ -1,6 +1,4 @@
 import os
-from munch import munchify, Munch, fromYAML
-from json import load
 from iso8601 import parse_date
 from robot.output import LOGGER
 from robot.output.loggerhelper import Message
@@ -10,7 +8,6 @@ from datetime import datetime, timedelta, date
 from dateutil.parser import parse
 from dateutil.tz import tzlocal
 from pytz import timezone
-from dpath.util import set as xpathset
 from jsonpath_rw import parse as parse_path
 import time
 from .initial_data import (

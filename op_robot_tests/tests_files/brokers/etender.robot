@@ -2,6 +2,7 @@
 Library  Selenium2Screenshots
 Library  String
 Library  DateTime
+Library  op_robot_tests.tests_files.etender_service
 
 *** Variables ***
 ${locator.tenderId}                  jquery=h3
@@ -25,6 +26,8 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
   Open Browser   ${USERS.users['${username}'].homepage}   alias=${username}
   Set Window Size   @{USERS.users['${username}'].size}
+
+Login
   Wait Until Page Contains Element   id=inputUsername   100
   Input text   id=inputUsername      ${USERS.users['${username}'].login}
   Input text   id=inputPassword     ${USERS.users['${username}'].password}
@@ -34,6 +37,8 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   [Arguments]  @{ARGUMENTS}
 
   etender.Підготувати клієнт для користувача   ${username}
+
+  Login
 
   ${items}=         Get From Dictionary   ${ARGUMENTS[1].data}               items
   ${title}=         Get From Dictionary   ${ARGUMENTS[1].data}               title
