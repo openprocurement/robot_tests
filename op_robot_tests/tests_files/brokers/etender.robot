@@ -40,8 +40,6 @@ Login
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tender_data
 
-  etender.Підготувати клієнт для користувача   ${username}
-
   Login
 
   ${items}=         Get From Dictionary   ${ARGUMENTS[1].data}               items
