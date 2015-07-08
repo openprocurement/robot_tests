@@ -32,7 +32,8 @@ setup(name='op_robot_tests',
           'jsonpath-rw',
           'dateutils',
           'pytz',
-          'parse'
+          'parse',
+          'chromedriver'
       ],
       entry_points={
           'console_scripts': [
