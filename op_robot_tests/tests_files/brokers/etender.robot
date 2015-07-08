@@ -25,7 +25,7 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   [Arguments]  @{ARGUMENTS}
   [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
   ...      ${ARGUMENTS[0]} ==  username
-  Open Browser   ${USERS.users['${username}'].homepage}   alias=${username}
+  Open Browser   ${USERS.users['${ARGUMENTS[0]}'].homepage}   alias=${ARGUMENTS[0]}
   Set Window Size   @{USERS.users['${username}'].size}
 
 Login
