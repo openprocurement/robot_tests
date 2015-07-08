@@ -26,7 +26,7 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
   ...      ${ARGUMENTS[0]} ==  username
   Open Browser   ${USERS.users['${ARGUMENTS[0]}'].homepage}   alias=${ARGUMENTS[0]}
-  Set Window Size   @{USERS.users['${username}'].size}
+  Set Window Size   @{USERS.users['${ARGUMENTS[0]}'].size}
 
 Login
   Wait Until Page Contains Element   id=inputUsername   100
