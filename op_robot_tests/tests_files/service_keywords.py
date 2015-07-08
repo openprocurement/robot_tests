@@ -21,7 +21,8 @@ from .initial_data import (
 )
 
 TIMEZONE = timezone('Europe/Kiev')
-
+def get_date():
+	return datetime.now().isoformat()
 
 def change_state(arguments):
     try:
