@@ -229,7 +229,7 @@ def test_tender_data_multiple_lots(period_interval=2):
                 "postalCode": "01008",
                 "region": u"м. Київ",
                 "locality": u"м. Київ",
-                "streetAddress": "ул. Грушевского, 12/2"
+                "streetAddress": u"ул. Грушевского, 12/2"
             },
             "classification": {
                 "scheme": u"CPV",
@@ -297,7 +297,7 @@ def test_tender_data_multiple_lots(period_interval=2):
                 "postalCode": fake.postalcode(),
                 "region": u"м. Луганськ",
                 "locality": u"м. Луганськ",
-                "streetAddress": "Вул. Оборонна 28"
+                "streetAddress": u"Вул. Оборонна 28"
             },
             "classification": {
                 "scheme": u"CPV",

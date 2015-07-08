@@ -18,7 +18,6 @@ TestSuiteSetup
 
 Завантажуємо дані про корисувачів і площадки
   [Arguments]  ${active_users}
-  # Init Brokers
   log  ${active_users}
 
   ${file_path}=  Get Variable Value  ${BROKERS_FILE}  brokers.yaml
@@ -27,7 +26,6 @@ TestSuiteSetup
   Set Global Variable  ${BROKERS}
   ${brokers_list}=    Get Dictionary Items    ${BROKERS}
   log  ${brokers_list}
-  # Init Users
   ${file_path}=  Get Variable Value  ${USERS_FILE}  users.yaml
   ${USERS}=  load_initial_data_from  ${file_path}
   Set Global Variable  ${USERS}
@@ -77,15 +75,6 @@ TestSuiteSetup
   ${wait_timout}=  Subtract Time From Time  ${BROKERS['${USERS.users['${username}'].broker}'].timout_on_wait}  ${delta}
   Run Keyword If   ${wait_timout}>0   Sleep  ${wait_timout}
 
-#отримати останні зміни в тендері
-#  ${TENDER_DATA}=   Викликати для учасника   ${tender_owner}   Пошук тендера по ідентифікатору   ${TENDER_DATA.data.tenderID}   ${TENDER_DATA.data.id}
-#  Set To Dictionary  ${TENDER_DATA}   access_token   ${access_token}
-#  Set Global Variable  ${TENDER_DATA}
-#  ${now}=  Get Current Date
-#  Log object data  ${TENDER_DATA}  tender_${tender_dump_id}
-#  ${tender_dump_id}=   Evaluate    ${tender_dump_id}+1
-#  Set Global Variable  ${tender_dump_id}
-
 Звірити поле тендера
   [Arguments]  ${username}  ${field}
   ${field_value}=   Get_From_Object  ${INITIAL_TENDER_DATA.data}   ${field}
@@ -122,6 +111,14 @@ TestSuiteSetup
     \    Log   ${index}
     \    Звірити поле тендера   ${viewer}  items[${index}].${field}
 
+Звірити дату предметів закупівлі багатопредметного тендера
+  [Arguments]  ${username}  ${field}
+  Дочекатись синхронізації з майданчиком    ${username}
+  @{items}=  Get_From_Object  ${INITIAL_TENDER_DATA.data}     items
+  ${len_of_items}=   Get Length   ${items}
+  :FOR   ${index}    IN RANGE   ${len_of_items}
+    \    Log   ${index}
+    \    Звірити дату тендера   ${viewer}  items[${index}].${field}
   
 Викликати для учасника
   [Documentation]
