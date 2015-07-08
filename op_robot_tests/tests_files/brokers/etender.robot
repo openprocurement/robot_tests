@@ -2,7 +2,7 @@
 Library  Selenium2Screenshots
 Library  String
 Library  DateTime
-Library  op_robot_tests.tests_files.etender_service
+Library  op_robot_tests.tests_files.brokers.etender_service
 
 *** Variables ***
 ${locator.tenderId}                  jquery=h3
@@ -26,21 +26,19 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
   ...      ${ARGUMENTS[0]} ==  username
   Open Browser   ${USERS.users['${ARGUMENTS[0]}'].homepage}   alias=${ARGUMENTS[0]}
-  Set Window Size   @{USERS.users['${ARGUMENTS[0]}'].size}
-
-Login
+  Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
+  Set Window Size       @{USERS.users['${ARGUMENTS[0]}'].size}
   Wait Until Page Contains Element   id=inputUsername   100
-  Input text   id=inputUsername      ${USERS.users['${username}'].login}
-  Input text   id=inputPassword     ${USERS.users['${username}'].password}
+  Input text   id=inputUsername      ${USERS.users['${ARGUMENTS[0]}'].login}
+  Input text   id=inputPassword      ${USERS.users['${ARGUMENTS[0]}'].password}
   Click Button   id=btn_submit
+  Wait Until Page Contains   Ви успішно увійшли в систему!    100
 
 Створити тендер
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tender_data
-
-  Login
 
   ${items}=         Get From Dictionary   ${ARGUMENTS[1].data}               items
   ${title}=         Get From Dictionary   ${ARGUMENTS[1].data}               title
@@ -105,13 +103,13 @@ Login
   Click Element   xpath=//div[contains(@class, 'form-actions')]//button[@type='submit']
   Wait Until Page Contains    [ТЕСТУВАННЯ]   100
   Click Element   xpath=//table[contains(@class, 'table table-hover table-striped table-bordered ng-scope ng-table')]//tr[1]//a
-  ${tender_UAid}=   Wait Until Keyword Succeeds   240sec   2sec   get tender UAid
-  [return]  ${tender_UAid}
+  ${tender_id}=   Wait Until Keyword Succeeds   240sec   2sec   get tender id
+  [return]  ${tender_id}
 
-get tender UAid
-  ${tender_UAid}=  Get Text  xpath=//div[contains(@class, "panel-heading")]
-  ${tender_UAid}=  Get Substring  ${tender_UAid}  7  27
-  [return]  ${tender_UAid}
+get tender id
+  ${tender_id}=  Get Text  xpath=//div[contains(@class, "panel-heading")]
+  ${tender_id}=  Get Substring  ${tender_id}  7  27
+  [return]  ${tender_id}
 
 Пошук тендера по ідентифікатору
   [Arguments]  @{ARGUMENTS}

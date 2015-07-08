@@ -9,7 +9,7 @@ from dateutil.tz import tzlocal
 from pytz import timezone
 from jsonpath_rw import parse as parse_path
 import time
-from .initial_data import (
+from op_robot_tests.tests_files.initial_data import (
     test_tender_data
 )
 
