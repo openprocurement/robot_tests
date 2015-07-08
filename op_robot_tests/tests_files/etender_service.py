@@ -1,4 +1,3 @@
-import os
 from iso8601 import parse_date
 from robot.output import LOGGER
 from robot.output.loggerhelper import Message

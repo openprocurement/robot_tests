@@ -24,6 +24,7 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
 Підготувати клієнт для користувача
   [Arguments]  @{ARGUMENTS}
   [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
+  ...      ${ARGUMENTS[0]} ==  username
   Open Browser   ${USERS.users['${username}'].homepage}   alias=${username}
   Set Window Size   @{USERS.users['${username}'].size}
 
@@ -35,6 +36,9 @@ Login
 
 Створити тендер
   [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  tender_data
 
   etender.Підготувати клієнт для користувача   ${username}
 
