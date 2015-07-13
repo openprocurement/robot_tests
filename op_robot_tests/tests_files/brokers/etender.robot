@@ -195,16 +195,18 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} = username
-  ...      ${ARGUMENTS[1]}=tenderid
+  ...      ${ARGUMENTS[1]} = tenderid
   ...      ${ARGUMENTS[2]} = question_data
 
-  ${title}=  Get From Dictionary  ${ARGUMENTS[2].data}  title
+  ${title}=        Get From Dictionary  ${ARGUMENTS[2].data}  title
   ${description}=  Get From Dictionary  ${ARGUMENTS[2].data}  description
 
   Wait Until Page Contains Element   jquery=a[href="#/"]
   Click Element                      jquery=a[href="#/"]
   Wait Until Page Contains Element   jquery=input[ng-change='search()']
-  Input Text                         jquery=input[ng-change='search()']   ${tender_id}
+  Input Text                         jquery=input[ng-change='search()']    UA-2015-06-12-000038
+#Наразі закупівлі створюються в чернеку, не в ЦБД, використовую хард-код замість:
+#Input Text                          jquery=input[ng-change='search()']       ${ARGUMENTS[1]}
   Wait Until Page Contains Element   jquery=a[ng-click="search()"]
   Click Element                      jquery=a[ng-click="search()"]
   Wait Until Page Contains           [ТЕСТУВАННЯ]    100
