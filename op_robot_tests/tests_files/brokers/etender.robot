@@ -25,13 +25,13 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
   ...      ${ARGUMENTS[0]} ==  username
   Open Browser   ${USERS.users['${ARGUMENTS[0]}'].homepage}   alias=${ARGUMENTS[0]}
-  Set Window Size   @{USERS.users['${ARGUMENTS[0]}'].size}
-
-Login
+  Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
+  Set Window Size       @{USERS.users['${ARGUMENTS[0]}'].size}
   Wait Until Page Contains Element   id=inputUsername   100
-  Input text   id=inputUsername      ${USERS.users['${username}'].login}
-  Input text   id=inputPassword     ${USERS.users['${username}'].password}
+  Input text   id=inputUsername      ${USERS.users['${ARGUMENTS[0]}'].login}
+  Input text   id=inputPassword      ${USERS.users['${ARGUMENTS[0]}'].password}
   Click Button   id=btn_submit
+  Wait Until Page Contains   Ви успішно увійшли в систему!    100
 
 Пошук тендера по ідентифікатору
   [Arguments]  @{ARGUMENTS}
@@ -192,16 +192,19 @@ Login
   [return]  ${return_value}
 
 Задати питання
-  [Arguments]  @{QUESTIONS}
+  [Arguments]  @{ARGUMENTS}
   [Documentation]
-  ...      ${QUESTIONS[0]} ==  question_data
-  Login
-  ${title}=  Get From Dictionary  ${QUESTIONS[0].data}  title
-  ${description}=  Get From Dictionary  ${QUESTIONS[0].data}  description
+  ...      ${ARGUMENTS[0]} = username
+  ...      ${ARGUMENTS[1]}=tenderid
+  ...      ${ARGUMENTS[2]} = question_data
+
+  ${title}=  Get From Dictionary  ${ARGUMENTS[2].data}  title
+  ${description}=  Get From Dictionary  ${ARGUMENTS[2].data}  description
+
   Wait Until Page Contains Element   jquery=a[href="#/"]
   Click Element                      jquery=a[href="#/"]
   Wait Until Page Contains Element   jquery=input[ng-change='search()']
-  Input Text                         jquery=input[ng-change='search()']       UA-2015-06-30-000012    #Так як немає попередніх тестів, використовую хард-код
+  Input Text                         jquery=input[ng-change='search()']   ${tender_id}
   Wait Until Page Contains Element   jquery=a[ng-click="search()"]
   Click Element                      jquery=a[ng-click="search()"]
   Wait Until Page Contains           [ТЕСТУВАННЯ]    100
