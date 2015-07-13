@@ -16,13 +16,22 @@ ${locator.enquiryPeriod.startDate}   jquery=tender-procedure-info>div.row:contai
 ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contains("Завершення періоду уточнень:")>:eq(1)>
 
 *** Keywords ***
+Підготувати дані для задання питання
+  ${QUESTIONS}=  prepare_test_question_data
+  [return]   ${QUESTIONS}
+
 Підготувати клієнт для користувача
-  [Arguments]  ${username}
+  [Arguments]  @{ARGUMENTS}
   [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
-  Open Browser   ${BROKERS['${USERS.users['${username}'].broker}'].url}   ${USERS.users['${username}'].browser}   alias=${username}
-  Set Window Position   @{USERS.users['${username}'].position}
-  Set Window Size       @{USERS.users['${username}'].size}
-  Log Variables
+  ...      ${ARGUMENTS[0]} ==  username
+  Open Browser   ${USERS.users['${ARGUMENTS[0]}'].homepage}   alias=${ARGUMENTS[0]}
+  Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
+  Set Window Size       @{USERS.users['${ARGUMENTS[0]}'].size}
+  Wait Until Page Contains Element   id=inputUsername   100
+  Input text   id=inputUsername      ${USERS.users['${ARGUMENTS[0]}'].login}
+  Input text   id=inputPassword      ${USERS.users['${ARGUMENTS[0]}'].password}
+  Click Button   id=btn_submit
+  Wait Until Page Contains   Ви успішно увійшли в систему!    100
 
 Пошук тендера по ідентифікатору
   [Arguments]  @{ARGUMENTS}
@@ -129,7 +138,7 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
 
 отримати інформацію про items[${item_id}].description
   відмітити на сторінці поле з тендера   items[${item_id}].description   jquery=tender-subject-info.ng-isolate-scope>div.row:contains("Детальний опис предмету закупівлі:")>:eq(1)>
-  ${return_value}=   Get Text  jquery=tender-subject-info.ng-isolate-scope>div.row:contains("Детальний опис предмету закупівлі:")>:eq(1)>  
+  ${return_value}=   Get Text  jquery=tender-subject-info.ng-isolate-scope>div.row:contains("Детальний опис предмету закупівлі:")>:eq(1)>
   [return]  ${return_value}
 
 отримати інформацію про items[${item_id}].quantity
@@ -181,3 +190,30 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   відмітити на сторінці поле з тендера   question answer   jquery=tender-questions>div:eq(1)>div:last>
   ${return_value}=   Get Text  jquery=tender-questions>div:eq(1)>div:last>
   [return]  ${return_value}
+
+Задати питання
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} = username
+  ...      ${ARGUMENTS[1]} = tenderid
+  ...      ${ARGUMENTS[2]} = question_data
+
+  ${title}=        Get From Dictionary  ${ARGUMENTS[2].data}  title
+  ${description}=  Get From Dictionary  ${ARGUMENTS[2].data}  description
+
+  Wait Until Page Contains Element   jquery=a[href="#/"]
+  Click Element                      jquery=a[href="#/"]
+  Wait Until Page Contains Element   jquery=input[ng-change='search()']
+  Input Text                         jquery=input[ng-change='search()']    UA-2015-06-12-000038
+#Наразі закупівлі створюються в чернеку, не в ЦБД, використовую хард-код замість:
+#Input Text                          jquery=input[ng-change='search()']       ${ARGUMENTS[1]}
+  Wait Until Page Contains Element   jquery=a[ng-click="search()"]
+  Click Element                      jquery=a[ng-click="search()"]
+  Wait Until Page Contains           [ТЕСТУВАННЯ]    100
+  Click Element                      xpath=//table[contains(@class, 'table table-hover table-striped table-bordered ng-scope ng-table')]//tr[1]//a
+  Wait Until Page Contains Element   jquery=a[href^="#/addQuestion/"]
+  Click Link                         jquery=a[href^="#/addQuestion/"]
+  Wait Until Page Contains Element   id=title
+  Input text                         id=title                 ${title}
+  Input text                         id=description           ${description}
+  Click Element                      xpath=//div[contains(@class, 'form-actions')]//button[@type='submit']

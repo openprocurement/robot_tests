@@ -35,6 +35,9 @@ def change_state(arguments):
 def prepare_prom_test_tender_data():
     return munchify({'data': prom_test_tender_data()})
 
+def prepare_test_question_data():
+    return munchify({'data': test_question_data()})
+
 def compare_date(data1, data2):
     data1=parse(data1) 
     data2=parse(data2)

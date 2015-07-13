@@ -47,4 +47,12 @@ users:
     Tender_User1:
         api_key: e9c3ccb8e8124f26941d5f9639a4ebc3
         broker: Quinta
-    
+    E-tender_Provider1:
+        broker: E-tender
+        username: E-tendertest
+        homepage: "http://uat.e-tender.biz/#/profile"
+        login: st_org
+        password: 12345678 
+        browser: firefox
+        position: [0, 0]
+        size: [640, 450]
