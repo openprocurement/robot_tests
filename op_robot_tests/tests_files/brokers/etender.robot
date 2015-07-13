@@ -27,8 +27,6 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   ...      ${ARGUMENTS[0]} ==  username
   Open Browser   ${USERS.users['${ARGUMENTS[0]}'].homepage}   alias=${ARGUMENTS[0]}
   Set Window Size   @{USERS.users['${ARGUMENTS[0]}'].size}
-
-Login
   Wait Until Page Contains Element   id=inputUsername   100
   Input text   id=inputUsername      ${USERS.users['${username}'].login}
   Input text   id=inputPassword      ${USERS.users['${username}'].password}
@@ -39,8 +37,6 @@ Login
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tender_data
-
-  Login
 
   ${items}=         Get From Dictionary   ${ARGUMENTS[1].data}               items
   ${title}=         Get From Dictionary   ${ARGUMENTS[1].data}               title
@@ -271,11 +267,6 @@ get tender UAid
   ${return_value}=   Get Text  jquery=tender-questions>div:eq(1)>div:last>
   [return]  ${return_value}
 
-#  Неможливість подати цінову пропозицію до початку періоду подачі пропозицій bidder1
-#  [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
-#  ${bid}=  test bid data
-#  Log   ${bid}
-#  ${biddingresponce1}=  Викликати для учасника   ${provider}   Подати цінову пропозицію  shouldfail  ${INTERNAL_TENDER_ID}   ${bid}
 Подати цінову пропозицію
   [Arguments]  @{ARGUMENTS}
   [Documentation]
@@ -285,7 +276,6 @@ get tender UAid
 
 #  log many  @{ARGUMENTS}
   Selenium2Library.Switch Browser    1
-  Login
   Wait Until Page Contains Element   jquery=a[href="#/"]
   Click Element                      jquery=a[href="#/"]
   Wait Until Page Contains          Список закупівель    100
