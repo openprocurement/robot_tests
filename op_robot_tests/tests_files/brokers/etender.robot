@@ -27,6 +27,7 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   ...      ${ARGUMENTS[0]} ==  username
   Open Browser   ${USERS.users['${ARGUMENTS[0]}'].homepage}   alias=${ARGUMENTS[0]}
   Set Window Size   @{USERS.users['${ARGUMENTS[0]}'].size}
+# login
   Wait Until Page Contains Element   id=inputUsername   100
   Input text   id=inputUsername      ${USERS.users['${username}'].login}
   Input text   id=inputPassword      ${USERS.users['${username}'].password}
@@ -62,6 +63,7 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   ${enquiry_end_time}=   Get From Dictionary              ${ARGUMENTS[1].data.enquiryPeriod}   endDate
   ${enquiry_end_time}=   convert_time_to_etender_format   ${enquiry_end_time}
 
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
   Wait Until Page Contains          Мої закупівлі    100
   Click Element                     xpath=//a[contains(@class, 'ng-binding')][./text()='Мої закупівлі']
   Wait Until Page Contains Element  xpath=//a[contains(@class, 'btn btn-info')]
@@ -88,7 +90,7 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   Input text   xpath=//div[contains(@class, 'modal-content')]//input[@ng-model='searchstring']   ${cpv}
   Wait Until Page Contains    Картонки  100
   Click Element   xpath=//table[contains(@class, 'table table-hover table-striped table-bordered ng-table-rowselected ng-scope ng-table')]//tr[1]//td[1]
-  Wait Until Page Contains    44617100-9 Картонки  100
+  Wait Until Page Contains    44617100-9 Картонки   100
   Click Element   xpath=//div[contains(@class, 'modal-content')]//button[@ng-click='choose()']
 
   Click Element   xpath=//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification']
@@ -102,7 +104,13 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   Wait Until Page Contains    [ТЕСТУВАННЯ]   100
   Click Element   xpath=//table[contains(@class, 'table table-hover table-striped table-bordered ng-scope ng-table')]//tr[1]//a
   ${tender_UAid}=   Wait Until Keyword Succeeds   240sec   2sec   get tender UAid
-  [return]  ${tender_UAid}
+  ${current_location}=   Get Location
+  ${tender_id}=   Fetch From Right   ${current_location}   /
+###  harcode Idis bacause issues on the E-tender side, to remove, 2 lines:
+  ${tender_id}=     Convert To String   94ffe180019d459787aafe290cd300e2
+  ${tender_UAid}=   Convert To String   UA-2015-06-12-000038
+  ${Ids}   Create List    ${tender_id}    ${tender_UAid}
+  [return]  ${Ids}
 
 get tender UAid
   ${tender_UAid}=  Get Text  xpath=//div[contains(@class, "panel-heading")]
@@ -115,11 +123,12 @@ get tender UAid
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tenderId
   ...      ${ARGUMENTS[2]} ==  id
+
   Switch browser   ${ARGUMENTS[0]}
   ${current_location}=   Get Location
   Run keyword if   '${BROKERS['${USERS.users['${username}'].broker}'].url}/#/tenderDetailes/${ARGUMENTS[2]}'=='${current_location}'  Reload Page
   Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
-  Wait Until Page Contains   E-TENDER - центр електронної торгівлі   10
+  Wait Until Page Contains   Список закупівель    10
   sleep  1
   Input Text  jquery=input[ng-change='search()']  ${ARGUMENTS[1]}
   Click Link  jquery=a[ng-click='search()']
@@ -272,24 +281,12 @@ get tender UAid
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  ${INTERNAL_TENDER_ID}
-  ...      ${ARGUMENTS[2]} ==  bid
+  ...      ${ARGUMENTS[2]} ==    test_bid_data
 
-#  log many  @{ARGUMENTS}
-  Selenium2Library.Switch Browser    1
-  Wait Until Page Contains Element   jquery=a[href="#/"]
-  Click Element                      jquery=a[href="#/"]
-  Wait Until Page Contains          Список закупівель    100
-  Wait Until Page Contains Element   jquery=input[ng-change='search()']
-  Input Text                         jquery=input[ng-change='search()']       UA-2015-06-12-000038
-  #Наразі закупівлі створюються в чернеку, не в ЦБД, використовую хард-код замість:
-  #Input Text                         jquery=input[ng-change='search()']       ${ARGUMENTS[1]}
-
-  Wait Until Page Contains Element   jquery=a[ng-click="search()"]
-  Click Element                      jquery=a[ng-click="search()"]
-  Sleep 5
-  Click Element                     xpath=//table[contains(@class, 'table table-hover table-striped table-bordered ng-scope ng-table')]//tr[1]//a
+  ${bid}=        Get From Dictionary   ${ARGUMENTS[2].data.value}         amount
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}   ${TENDER_ID}
   Wait Until Page Contains          Інформація про процедуру закупівлі    100
   Wait Until Page Contains Element          id=amount   10
-  Input text    id=amount                  ${ARGUMENTS[2]}
+  Input text    id=amount                  ${bid}
   Click Element                     xpath=//button[contains(@class, 'btn btn-success')][./text()='Реєстрація пропозиції']
-

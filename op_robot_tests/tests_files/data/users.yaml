@@ -24,7 +24,7 @@ users:
         login: provider2
         password: Qa123456
         browser:  firefox
-        position:  [0, 0]
+        position:  [0, 450]
         size:  [640, 450]
     E-tender_Viewer:
         broker: E-tender
