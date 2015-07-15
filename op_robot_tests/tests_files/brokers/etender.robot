@@ -106,12 +106,9 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   Wait Until Page Contains    [ТЕСТУВАННЯ]   100
   Click Element   xpath=//table[contains(@class, 'table table-hover table-striped table-bordered ng-scope ng-table')]//tr[1]//a
   ${tender_UAid}=   Wait Until Keyword Succeeds   240sec   2sec   get tender UAid
-  ${current_location}=   Get Location
-  ${tender_id}=   Fetch From Right   ${current_location}   /
-###  harcode Idis bacause issues on the E-tender side, to remove, 2 lines:
-  ${tender_id}=     Convert To String   94ffe180019d459787aafe290cd300e2
+###  harcode Idis bacause issues on the E-tender side, to remove, 1 line:
   ${tender_UAid}=   Convert To String   UA-2015-06-12-000038
-  ${Ids}   Create List    ${tender_id}    ${tender_UAid}
+  ${Ids}   Create List    ${tender_UAid}
   [return]  ${Ids}
 
 get tender UAid
@@ -119,25 +116,32 @@ get tender UAid
   ${tender_UAid}=  Get Substring  ${tender_UAid}  7  27
   [return]  ${tender_UAid}
 
+Oтримати internal id по UAid
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  tenderid
+  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+  ${current_location}=   Get Location
+  ${tender_id}=   Fetch From Right   ${current_location}   /
+###  harcode Idis bacause issues on the E-tender side, to remove, 1 line:
+  ${tender_id}=     Convert To String   94ffe180019d459787aafe290cd300e2
+  log  ${internal_id}
+  [return]  ${internal_id}
+
 Пошук тендера по ідентифікатору
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tenderId
-  ...      ${ARGUMENTS[2]} ==  id
 
   Switch browser   ${ARGUMENTS[0]}
-  ${current_location}=   Get Location
-  Run keyword if   '${BROKERS['${USERS.users['${username}'].broker}'].url}/#/tenderDetailes/${ARGUMENTS[2]}'=='${current_location}'  Reload Page
   Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
   Wait Until Page Contains   Список закупівель    10
   sleep  1
   Input Text  jquery=input[ng-change='search()']  ${ARGUMENTS[1]}
   Click Link  jquery=a[ng-click='search()']
   sleep  2
-#  ${last_note_id}=  Add pointy note   jquery=a[href^="#/tenderDetailes"]   Found tender with tenderID "${ARGUMENTS[1]}"   width=200  position=bottom
-#  sleep  1
-#  Remove element   ${last_note_id}
   Click Link    jquery=a[href^="#/tenderDetailes"]
   Wait Until Page Contains    ${ARGUMENTS[1]}   10
   sleep  1
@@ -283,11 +287,10 @@ get tender UAid
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  ${INTERNAL_TENDER_ID}
-  ...      ${ARGUMENTS[2]} ==    test_bid_data
+  ...      ${ARGUMENTS[2]} ==  test_bid_data
 
   ${bid}=        Get From Dictionary   ${ARGUMENTS[2].data.value}         amount
-  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
-  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}   ${TENDER_ID}
+  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
   Wait Until Page Contains          Інформація про процедуру закупівлі    100
   Wait Until Page Contains Element          id=amount   10
   Input text    id=amount                  ${bid}
