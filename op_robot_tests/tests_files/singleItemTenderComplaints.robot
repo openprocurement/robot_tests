@@ -11,9 +11,7 @@ Suite Teardown  Close all browsers
 
 *** Variables ***
 ${tender_dump_id}    0
-${item_id}       0
-${question_id}   0
-
+${mode}       single
 
 ${tender_owner}  Tender_Owner
 ${provider}   Tender_User
@@ -21,16 +19,9 @@ ${provider1}   Tender_User1
 ${viewer}   Tender_Viewer
 
 ${LOAD_USERS}      ["${tender_owner}", "${provider}", "${provider1}", "${viewer}"]
-#Avalable roles and users
 
-#roles: Owner, User, Viewer
-
-#palyers:
-  #E-tender
-  #Prom
-  #SmartTender
-  #Publicbid
-  #Netcast
+${item_id}       0
+${question_id}   0
 
 *** Test Cases ***
 Можливість оголосити однопердметний тендер
