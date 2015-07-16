@@ -31,13 +31,13 @@ users:
         username: Publicbid
         browser:  chrome
         position:  [0, 450]
-        size:  [640, 450]  
+        size:  [640, 450]
     Netcast_Viewer:
         broker: Netcast
         username: TetcastTest
         browser:  chrome
         position:  [0, 450]
-        size:  [640, 450]     
+        size:  [640, 450]
     Tender_Viewer:
         broker: Quinta
         api_key: ""
@@ -52,7 +52,25 @@ users:
         username: E-tendertest
         homepage: "http://uat.e-tender.biz/#/profile"
         login: st_org
-        password: 12345678 
+        password: 12345678
         browser: firefox
         position: [0, 0]
         size: [640, 450]
+    E-tender_Owner:
+        broker: E-tender
+        username: E-tendertest
+        homepage: "http://uat.e-tender.biz/#/profile"
+        login: Misha2
+        password: Password1 
+        browser:  firefox
+        position:  [0, 0]
+        size:  [640, 450]
+    E-tender_Provider2:
+        broker: E-tender
+        username: E-tendertest
+        homepage: "http://uat.e-tender.biz/#/profile"
+        login: provider2
+        password: Qa123456
+        browser:  firefox
+        position:  [0, 450]
+        size:  [640, 450]

@@ -3,6 +3,7 @@ Library  Selenium2Screenshots
 Library  String
 Library  DateTime
 
+
 *** Variables ***
 ${locator.tenderId}                  jquery=h3
 ${locator.title}                     jquery=tender-subject-info>div.row:contains("Назва закупівлі:")>:eq(1)>
@@ -16,22 +17,102 @@ ${locator.enquiryPeriod.startDate}   jquery=tender-procedure-info>div.row:contai
 ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contains("Завершення періоду уточнень:")>:eq(1)>
 
 *** Keywords ***
-Підготувати дані для задання питання
-  ${QUESTIONS}=  prepare_test_question_data
-  [return]   ${QUESTIONS}
-
 Підготувати клієнт для користувача
   [Arguments]  @{ARGUMENTS}
   [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
   ...      ${ARGUMENTS[0]} ==  username
   Open Browser   ${USERS.users['${ARGUMENTS[0]}'].homepage}   alias=${ARGUMENTS[0]}
-  Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
-  Set Window Size       @{USERS.users['${ARGUMENTS[0]}'].size}
+  Set Window Size   @{USERS.users['${ARGUMENTS[0]}'].size}
+# login
   Wait Until Page Contains Element   id=inputUsername   100
-  Input text   id=inputUsername      ${USERS.users['${ARGUMENTS[0]}'].login}
-  Input text   id=inputPassword      ${USERS.users['${ARGUMENTS[0]}'].password}
+  Input text   id=inputUsername      ${USERS.users['${username}'].login}
+  Input text   id=inputPassword      ${USERS.users['${username}'].password}
   Click Button   id=btn_submit
-  Wait Until Page Contains   Ви успішно увійшли в систему!    100
+
+Створити тендер
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  tender_data
+
+  ${items}=         Get From Dictionary   ${ARGUMENTS[1].data}               items
+  ${title}=         Get From Dictionary   ${ARGUMENTS[1].data}               title
+  ${description}=   Get From Dictionary   ${ARGUMENTS[1].data}               description
+  ${budget}=        Get From Dictionary   ${ARGUMENTS[1].data.value}         amount
+  ${step_rate}=     Get From Dictionary   ${ARGUMENTS[1].data.minimalStep}   amount
+  ${items_description}=   Get From Dictionary   ${ARGUMENTS[1].data}         description
+  ${quantity}=      Get From Dictionary   ${items[0]}                        quantity
+  ${cpv}=           Get From Dictionary   ${items[0].classification}         id
+  ${dkpp_desc}=     Get From Dictionary   ${items[0].additionalClassifications[0]}   description
+  ${dkpp_id}=       Get From Dictionary   ${items[0].additionalClassifications[0]}  id
+  ${unit}=          Get From Dictionary   ${items[0].unit}                   name
+  ${start_date}=    Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}   startDate
+  ${start_date}=    convert_date_to_etender_format   ${start_date}
+  ${start_time}=    Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}   startDate
+  ${start_time}=    convert_time_to_etender_format   ${start_time}
+  ${end_date}=      Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}   endDate
+  ${end_date}=      convert_date_to_etender_format   ${end_date}
+  ${end_time}=      Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}   endDate
+  ${end_time}=   convert_time_to_etender_format      ${end_time}
+  ${enquiry_end_date}=   Get From Dictionary         ${ARGUMENTS[1].data.enquiryPeriod}   endDate
+  ${enquiry_end_date}=   convert_date_to_etender_format   ${enquiry_end_date}
+  ${enquiry_end_time}=   Get From Dictionary              ${ARGUMENTS[1].data.enquiryPeriod}   endDate
+  ${enquiry_end_time}=   convert_time_to_etender_format   ${enquiry_end_time}
+
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  Wait Until Page Contains          Мої закупівлі    100
+  Click Element                     xpath=//a[contains(@class, 'ng-binding')][./text()='Мої закупівлі']
+  Wait Until Page Contains Element  xpath=//a[contains(@class, 'btn btn-info')]
+  Click Element                     xpath=//a[contains(@class, 'btn btn-info')]
+  Wait Until Page Contains Element  id=title
+  Input text    id=title                  ${title}
+  Input text    id=description            ${description}
+  Input text    id=value                  ${budget}
+  Click Element                     xpath=//div[contains(@class, 'form-group col-sm-6')]//input[@type='checkbox']
+  Input text    id=minimalStep            ${step_rate}
+  Input text    id=itemsDescription       ${items_description}
+  Input text    id=itemsQuantity          ${quantity}
+  Click Element  xpath=//select[@name="itemsUnit"]/option[@value='kilogram']
+  Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//input[@name='enqPEndDate']   ${enquiry_end_date}
+  Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//div[contains(@class, 'col-sm-2')]//input[@ng-model='data.enquiryPeriod.endDate']   ${enquiry_end_time}
+
+  Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//input[@name='startDate']   ${start_date}
+  Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//div[contains(@class, 'col-sm-2')]//input[@ng-model='data.tenderPeriod.startDate']   ${start_time}
+  Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//input[@name='endDate']   ${end_date}
+  Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//div[contains(@class, 'col-sm-2')]//input[@ng-model='data.tenderPeriod.endDate']   ${end_time}
+
+  Click Element   xpath=//div[contains(@class, 'col-sm-2')]//input[@data-target='#classification']
+  Wait Until Page Contains   Оберіть класифікатор CPV   100
+  Input text   xpath=//div[contains(@class, 'modal-content')]//input[@ng-model='searchstring']   ${cpv}
+  Wait Until Page Contains    Картонки  100
+  Click Element   xpath=//table[contains(@class, 'table table-hover table-striped table-bordered ng-table-rowselected ng-scope ng-table')]//tr[1]//td[1]
+  Wait Until Page Contains    44617100-9 Картонки   100
+  Click Element   xpath=//div[contains(@class, 'modal-content')]//button[@ng-click='choose()']
+
+  Click Element   xpath=//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification']
+  Wait Until Page Contains   Класифікатор ДКПП   100
+  Input text      xpath=//div[contains(@class, 'modal fade ng-scope in')]//input[@ng-model='searchstring']    ${dkpp_desc}
+  Wait Until Page Contains   ${dkpp_id}    100
+  Click Element   xpath=//table[contains(@class, 'table table-hover table-striped table-bordered ng-table-rowselected ng-scope ng-table')]//tr[2]//td[1]
+  Wait Until Page Contains    17.21.1 "Папір і картон гофровані, паперова й картонна тара"   100
+  Click Element   xpath=//div[contains(@class, 'modal fade ng-scope in')]//button[@ng-click='choose()']
+  Click Element   xpath=//div[contains(@class, 'form-actions')]//button[@type='submit']
+  Wait Until Page Contains    [ТЕСТУВАННЯ]   100
+  Click Element   xpath=//table[contains(@class, 'table table-hover table-striped table-bordered ng-scope ng-table')]//tr[1]//a
+  ${tender_UAid}=   Wait Until Keyword Succeeds   240sec   2sec   get tender UAid
+  ${current_location}=   Get Location
+  ${tender_id}=   Fetch From Right   ${current_location}   /
+###  harcode Idis bacause issues on the E-tender side, to remove, 2 lines:
+  #${tender_id}=     Convert To String   94ffe180019d459787aafe290cd300e2
+  ${tender_id}=     Convert To String   cf445fd7836844b68b2c06dcad2a5298
+  ${tender_UAid}=   Convert To String   UA-2015-06-30-000012
+  ${Ids}   Create List    ${tender_id}    ${tender_UAid}
+  [return]  ${Ids}
+
+get tender UAid
+  ${tender_UAid}=  Get Text  xpath=//div[contains(@class, "panel-heading")]
+  ${tender_UAid}=  Get Substring  ${tender_UAid}  7  27
+  [return]  ${tender_UAid}
 
 Пошук тендера по ідентифікатору
   [Arguments]  @{ARGUMENTS}
@@ -40,21 +121,21 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   ...      ${ARGUMENTS[1]} ==  tenderId
   ...      ${ARGUMENTS[2]} ==  id
   Switch browser   ${ARGUMENTS[0]}
-  ${current_location}=   Get Location
-  Run keyword if   '${BROKERS['${USERS.users['${username}'].broker}'].url}/#/tenderDetailes/${ARGUMENTS[2]}'=='${current_location}'  Reload Page
-  Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
-  Wait Until Page Contains   E-TENDER - центр електронної торгівлі   10
-  sleep  1
-  Input Text  jquery=input[ng-change='search()']  ${ARGUMENTS[1]}
-  Click Link  jquery=a[ng-click='search()']
-  sleep  2
+   ${current_location}=   Get Location
+   Run keyword if   '${BROKERS['${USERS.users['${username}'].broker}'].url}/#/tenderDetailes/${ARGUMENTS[2]}'=='${current_location}'  Reload Page
+   Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
+  Wait Until Page Contains   Список закупівель    10
+   sleep  1
+   Input Text  jquery=input[ng-change='search()']  ${ARGUMENTS[1]}
+   Click Link  jquery=a[ng-click='search()']
+   sleep  2
 #  ${last_note_id}=  Add pointy note   jquery=a[href^="#/tenderDetailes"]   Found tender with tenderID "${ARGUMENTS[1]}"   width=200  position=bottom
 #  sleep  1
 #  Remove element   ${last_note_id}
-  Click Link    jquery=a[href^="#/tenderDetailes"]
-  Wait Until Page Contains    ${ARGUMENTS[1]}   10
-  sleep  1
-  Capture Page Screenshot
+   Click Link    jquery=a[href^="#/tenderDetailes"]
+   Wait Until Page Contains    ${ARGUMENTS[1]}   10
+   sleep  1
+   Capture Page Screenshot
 
 обновити сторінку з тендером
   [Arguments]  @{ARGUMENTS}
@@ -191,29 +272,54 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   ${return_value}=   Get Text  jquery=tender-questions>div:eq(1)>div:last>
   [return]  ${return_value}
 
+Подати цінову пропозицію
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  ${INTERNAL_TENDER_ID}
+  ...      ${ARGUMENTS[2]} ==    test_bid_data
+
+  ${bid}=        Get From Dictionary   ${ARGUMENTS[2].data.value}         amount
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}   ${TENDER_ID}
+  Wait Until Page Contains          Інформація про процедуру закупівлі    100
+  Wait Until Page Contains Element          id=amount   10
+  Input text    id=amount                  ${bid}
+  Click Element                     xpath=//button[contains(@class, 'btn btn-success')][./text()='Реєстрація пропозиції']
+
 Задати питання
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} = username
-  ...      ${ARGUMENTS[1]} = tenderid
+  ...      ${ARGUMENTS[1]} = ${INTERNAL_TENDER_ID}
   ...      ${ARGUMENTS[2]} = question_data
 
   ${title}=        Get From Dictionary  ${ARGUMENTS[2].data}  title
   ${description}=  Get From Dictionary  ${ARGUMENTS[2].data}  description
 
-  Wait Until Page Contains Element   jquery=a[href="#/"]
-  Click Element                      jquery=a[href="#/"]
-  Wait Until Page Contains Element   jquery=input[ng-change='search()']
-  Input Text                         jquery=input[ng-change='search()']    UA-2015-06-12-000038
-#Наразі закупівлі створюються в чернеку, не в ЦБД, використовую хард-код замість:
-#Input Text                          jquery=input[ng-change='search()']       ${ARGUMENTS[1]}
-  Wait Until Page Contains Element   jquery=a[ng-click="search()"]
-  Click Element                      jquery=a[ng-click="search()"]
-  Wait Until Page Contains           [ТЕСТУВАННЯ]    100
-  Click Element                      xpath=//table[contains(@class, 'table table-hover table-striped table-bordered ng-scope ng-table')]//tr[1]//a
-  Wait Until Page Contains Element   jquery=a[href^="#/addQuestion/"]
-  Click Link                         jquery=a[href^="#/addQuestion/"]
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}   ${TENDER_ID}
+
+  Wait Until Page Contains Element   jquery=a[href^="#/addQuestion/"]   100
+  Click Element                      jquery=a[href^="#/addQuestion/"]
   Wait Until Page Contains Element   id=title
   Input text                         id=title                 ${title}
   Input text                         id=description           ${description}
   Click Element                      xpath=//div[contains(@class, 'form-actions')]//button[@type='submit']
+
+Відповісти на питання
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} = username
+  ...      ${ARGUMENTS[1]} = ${INTERNAL_TENDER_ID}
+  ...      ${ARGUMENTS[2]} = 0
+  ...      ${ARGUMENTS[3]} = answer_data
+
+  ${answer}=     Get From Dictionary  ${ARGUMENTS[3].data}  answer
+
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}   ${TENDER_ID}
+
+  Click Element                      xpath=//div[div/pre[1]]/div[1]
+  Input text                         xpath=//div[textarea]/textarea            ${answer}
+  Click Element                      xpath=//div[textarea]/span/button[1]
