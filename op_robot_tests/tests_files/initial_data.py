@@ -179,41 +179,41 @@ def prom_test_tender_data():
 def test_tender_data_multiple_lots(period_interval=2):  
     now = datetime.now()
     return {
-      "title": fake.catch_phrase(),
-      "mode": "test",
-      "submissionMethodDetails": "quick",
-      "description": u"Тестовий тендер",
-      "description_en": "Test tender",
-      "description_ru": "Тестовый тендер",
-      "procuringEntity": {
-	  "name": fake.company(),
-	  "name_ru": fake_ru.company(),
-	  "name_en": fake_en.company(),
-	  "identifier": {
-	      "scheme": u"UA-EDR",
-	      "id": u"0000{}".format(fake.pyint()),
-	      "uri": fake.image_url(width=None, height=None)
-	  },
-	  "address": {
-	      "countryName": u"Україна",
-	      "postalCode": fake.postalcode(),
-	      "region": u"м. Київ",
-	      "locality": u"м. Київ",
-	      "streetAddress": fake.street_address()
-	  },
-	  "contactPoint": {
-	      "name": fake.name(),
-	      "telephone": fake.phone_number()
-	  }
-      },
-      "value": {
-	  "amount": 50000.99,
-	  "currency": u"UAH"
-      },
-      "minimalStep": {
-	  "amount": 100.1,
-	  "currency": u"UAH"
-      },
+    "title": fake.catch_phrase(),
+    "mode": "test",
+    "submissionMethodDetails": "quick",
+    "description": u"Тестовий тендер",
+    "description_en": "Test tender",
+    "description_ru": "Тестовый тендер",
+    "procuringEntity": {
+	"name": fake.company(),
+	"name_ru": fake_ru.company(),
+	"name_en": fake_en.company(),
+	"identifier": {
+	    "scheme": u"UA-EDR",
+	    "id": u"0000{}".format(fake.pyint()),
+	    "uri": fake.image_url(width=None, height=None)
+	},
+	"address": {
+	    "countryName": u"Україна",
+	    "postalCode": fake.postalcode(),
+	    "region": u"м. Київ",
+	    "locality": u"м. Київ",
+	    "streetAddress": fake.street_address()
+	},
+	"contactPoint": {
+	    "name": fake.name(),
+	    "telephone": fake.phone_number()
+	}
+    },
+    "value": {
+	    "amount": 50000,
+	    "currency": u"UAH"
+    },
+    "minimalStep": {
+	    "amount": 100,
+	    "currency": u"UAH"
+    },
     "items": [
         {
             "description": fake.catch_phrase(),
@@ -353,8 +353,8 @@ def test_tender_data_multiple_lots(period_interval=2):
         }
     ],
     "enquiryPeriod": {
-        "startDate": (now).isoformat(),
-        "endDate": (now + timedelta(minutes=1)).isoformat()
+        "startDate": (now + timedelta(minutes=2)).isoformat(),
+        "endDate": (now + timedelta(minutes=3)).isoformat()
     },
     "tenderPeriod": {
         "startDate": (now + timedelta(minutes=2)).isoformat(),
