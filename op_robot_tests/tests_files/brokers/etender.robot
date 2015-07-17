@@ -2,7 +2,7 @@
 Library  Selenium2Screenshots
 Library  String
 Library  DateTime
-Library  op_robot_tests.tests_files.etender_service
+
 
 *** Variables ***
 ${locator.tenderId}                  jquery=h3
@@ -107,8 +107,8 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   Click Element   xpath=//table[contains(@class, 'table table-hover table-striped table-bordered ng-scope ng-table')]//tr[1]//a
   ${tender_UAid}=   Wait Until Keyword Succeeds   240sec   2sec   get tender UAid
 ###  harcode Idis bacause issues on the E-tender side, to remove, 1 line:
-  ${tender_UAid}=   Convert To String   UA-2015-06-12-000038
-  ${Ids}   Create List    ${tender_UAid}
+  ${tender_UAid}=   Convert To String   UA-2015-06-30-000012
+    ${Ids}   Create List    ${tender_UAid}
   [return]  ${Ids}
 
 get tender UAid
@@ -136,12 +136,12 @@ Oтримати internal id по UAid
   ...      ${ARGUMENTS[1]} ==  tenderId
 
   Switch browser   ${ARGUMENTS[0]}
-  Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
+   Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
   Wait Until Page Contains   Список закупівель    10
-  sleep  1
-  Input Text  jquery=input[ng-change='search()']  ${ARGUMENTS[1]}
-  Click Link  jquery=a[ng-click='search()']
-  sleep  2
+   sleep  1
+   Input Text  jquery=input[ng-change='search()']  ${ARGUMENTS[1]}
+   Click Link  jquery=a[ng-click='search()']
+   sleep  2
   Click Link    jquery=a[href^="#/tenderDetailes"]
   Wait Until Page Contains    ${ARGUMENTS[1]}   10
   sleep  1
@@ -295,3 +295,40 @@ Oтримати internal id по UAid
   Wait Until Page Contains Element          id=amount   10
   Input text    id=amount                  ${bid}
   Click Element                     xpath=//button[contains(@class, 'btn btn-success')][./text()='Реєстрація пропозиції']
+
+Задати питання
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} = username
+  ...      ${ARGUMENTS[1]} = ${INTERNAL_TENDER_ID}
+  ...      ${ARGUMENTS[2]} = question_data
+
+  ${title}=        Get From Dictionary  ${ARGUMENTS[2].data}  title
+  ${description}=  Get From Dictionary  ${ARGUMENTS[2].data}  description
+
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}   ${TENDER_ID}
+
+  Wait Until Page Contains Element   jquery=a[href^="#/addQuestion/"]   100
+  Click Element                      jquery=a[href^="#/addQuestion/"]
+  Wait Until Page Contains Element   id=title
+  Input text                         id=title                 ${title}
+  Input text                         id=description           ${description}
+  Click Element                      xpath=//div[contains(@class, 'form-actions')]//button[@type='submit']
+
+Відповісти на питання
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} = username
+  ...      ${ARGUMENTS[1]} = ${INTERNAL_TENDER_ID}
+  ...      ${ARGUMENTS[2]} = 0
+  ...      ${ARGUMENTS[3]} = answer_data
+
+  ${answer}=     Get From Dictionary  ${ARGUMENTS[3].data}  answer
+
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}   ${TENDER_ID}
+
+  Click Element                      xpath=//div[div/pre[1]]/div[1]
+  Input text                         xpath=//div[textarea]/textarea            ${answer}
+  Click Element                      xpath=//div[textarea]/span/button[1]

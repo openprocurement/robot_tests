@@ -22,7 +22,17 @@ from .initial_data import (
 
 TIMEZONE = timezone('Europe/Kiev')
 def get_date():
-	return datetime.now().isoformat()
+    return datetime.now().isoformat()
+
+def convert_date_to_etender_format(isodate):
+    iso_dt=parse_date(isodate)
+    date_string = iso_dt.strftime("%d-%m-%Y")
+    return  date_string
+
+def convert_time_to_etender_format(isodate):
+    iso_dt=parse_date(isodate)
+    time_string = iso_dt.strftime("%H:%M")
+    return  time_string
 
 def change_state(arguments):
     try:
