@@ -27,7 +27,7 @@ users:
         login: st_org
         password: 12345678
         browser: firefox
-        position: [0, 0]
+        position: [700, 0]
         size: [640, 450]
     E-tender_Provider2:
         broker: E-tender
@@ -41,7 +41,7 @@ users:
     E-tender_Viewer:
         broker: E-tender
         username: E-tendertest
-        browser:  chrome
+        browser:  firefox
         position:  [0, 0]
         size:  [640, 450]
     Prom_Owner:
@@ -73,4 +73,37 @@ users:
         username: TetcastTest
         browser:  chrome
         position:  [0, 450]
+        size:  [640, 450]
+    Newtend_Owner:
+        broker: Newtend
+        username: Newtendtest
+        homepage: "http://dev23.newtend.com/openprocurement/#/home/page/1"
+        login: openprocurement@mailinator.com
+        password: 123123 
+        browser:  firefox
+        position:  [0, 0]
+        size:  [640, 450]
+    Newtend_Provider1:
+        broker: Newtend
+        username: Newtendtest
+        homepage: "http://dev23.newtend.com/openprocurement/tenders"
+        login: qtest@mailinator.com
+        password: 123123
+        browser: firefox
+        position: [700, 0]
+        size: [640, 450]
+    Newtend_Provider2:
+        broker: Newtend
+        username: Newtendtest
+        homepage: "http://dev23.newtend.com/openprocurement/tenders"
+        login: openprocboss@mailinator.com
+        password: 123123
+        browser:  firefox
+        position:  [700, 0]
+        size:  [640, 450]
+    Newtend_Viewer:
+        broker: Newtend
+        username: Newtendtest
+        browser:  firefox
+        position:  [0, 0]
         size:  [640, 450]
