@@ -26,6 +26,8 @@ ${question_id}   0
 *** Test Cases ***
 Можливість оголосити однопредметний тендер
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
+  log  ${TEMPDIR}
+  log  ${CURDIR}
   ${ids}=  Викликати для учасника     ${tender_owner}    Створити тендер  ${INITIAL_TENDER_DATA}
   ${TENDER_ID}=   Get From List   ${ids}  0  
   Set Global Variable    ${TENDER_ID}
@@ -35,7 +37,6 @@ ${question_id}   0
 Можливасть додати тендерну документацію
   [Tags]    ${USERS.users['${tender_owner}'].broker}: Можливість завантажити документ
   ${filename}=   Set Variable  file.txt
-
   Викликати для учасника   ${tender_owner}   Завантажити документ  ${filename}  ${TENDER_ID}
 
 Можливість подати скаргу на умови
@@ -265,7 +266,7 @@ ${question_id}   0
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість скасувати цінову пропозицію
   ${biddingresponce_0}=  Викликати для учасника   ${provider}   скасувати цінову пропозицію   ${TENDER_ID}   ${biddingresponce0}
 
-Подати цінову пропозицію bidder1
+Подати повторно цінову пропозицію першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   Дочекатись дати початоку прийому пропозицій
   ${bid}=  test bid data
@@ -274,7 +275,7 @@ ${question_id}   0
   Set Global Variable   ${biddingresponce1}
   log  ${biddingresponce1}
 
-Можливість змінити цінову пропозицію до 50000
+Можливість змінити повторну цінову пропозицію до 50000
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
   Set To Dictionary  ${biddingresponce1.data.value}   amount   50000
   Log   ${biddingresponce1.data.value}
@@ -282,15 +283,15 @@ ${question_id}   0
   Set Global Variable   ${biddingresponce2}
   log  ${biddingresponce2}
 
-Можливість змінити цінову пропозицію до 1
+Можливість змінити повторну цінову пропозицію до 400
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
-  Set To Dictionary  ${biddingresponce1.data.value}   amount   1
+  Set To Dictionary  ${biddingresponce1.data.value}   amount   400
   Log   ${biddingresponce1.data.value}
   ${biddingresponce3}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER_ID}   ${biddingresponce1}
   Set Global Variable   ${biddingresponce3}
   log  ${biddingresponce3}
 
-Завантажити документ першим учасником
+Завантажити документ першим учасником в повторну пропозицію
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця
   log   ${USERS.users['${provider}'].broker}
   log  ${biddingresponce1}
@@ -298,15 +299,23 @@ ${question_id}   0
   ${token1}=  Get Variable Value  ${biddingresponce1.access.token}
   log  ${token1}
   ${upload_doc_responce}=   Викликати для учасника   ${provider}  Завантажити документ в ставку    ${token1}  ${bid_id}
+  log   ${upload_doc_responce}
   Set Global Variable   ${upload_doc_responce}
-  
+
+порівняти документ
+  #TODO: compare docs
+  [Tags]   ${USERS.users['${provider}'].broker}: вичитати документ
+  ${url} =  Get Variable Value  ${upload_doc_responce[0].data.url}
+  ${token1}=  Get Variable Value  ${biddingresponce1.access.token}
+  ${doc}=   Викликати для учасника   ${provider}  отримати документ   ${TENDER_ID}  ${url}  ${token1}
+
 Можливість змінити документацію цінової пропозиції
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця
   log   ${USERS.users['${provider}'].broker}
   log  ${biddingresponce1}
   ${bid_id}=  get variable value  ${biddingresponce1.data.id}
   ${token1}=  Get Variable Value  ${biddingresponce1.access.token}
-  ${upload_doc_responce_id}=  get variable value  ${upload_doc_responce.data.id}
+  ${upload_doc_responce_id}=  get variable value  ${upload_doc_responce[0].data.id}
   log  ${token1} 
   Викликати для учасника   ${provider}  Змінити документ в ставці    ${token1}  ${bid_id}  ${upload_doc_responce_id}
 
@@ -316,7 +325,7 @@ ${question_id}   0
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість задати запитання
   ${resp}=  Викликати для учасника   ${provider}  Задати питання   shouldfail   ${TENDER_ID}   ${questions[${question_id}]}
 
-Подати цінову пропозицію bidder2
+Подати цінову пропозицію другим учасником
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
   Дочекатись дати початоку прийому пропозицій
   ${bid}=  test bid data
@@ -344,7 +353,6 @@ ${question_id}   0
 можливість побачити скаргу анонімом під час подачі пропозицій
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
   Викликати для учасника    ${viewer}  порівняти скаргу  ${TENDER_ID}   ${COMPLAINTS[0]}
-  
 
 Неможливість змінити цінову пропозицію до 50000 після закінчення прийому пропозицій
   [Tags]   ${USERS.users['${provider1}'].broker}: Неможливість змінити цінову пропозицію до 50000 після закінчення прийому пропозицій
@@ -354,7 +362,7 @@ ${question_id}   0
   ${biddingresponce6}=  Викликати для учасника   ${provider1}   Змінити цінову пропозицію  shouldfail  ${TENDER_ID}   ${biddingresponce5}
   Set Global Variable   ${biddingresponce6}
   log  ${biddingresponce6}
- 
+
 Неможливість змінити цінову пропозицію до 1 після закінчення прийому пропозицій
   [Tags]   ${USERS.users['${provider1}'].broker}: Неможливість змінити цінову пропозицію до 1 після закінчення прийому пропозицій
   Set To Dictionary  ${biddingresponce5.data.value}   amount   1
@@ -377,29 +385,27 @@ ${question_id}   0
   ${upload_doc_responce2}=   Викликати для учасника   ${provider1}  Завантажити документ в ставку   shouldfail   ${token1}  ${bid_id}
   log  ${upload_doc_responce_2}
   Set Global Variable   ${upload_doc_responce2}
-  
+
 Неможливість змінити документацію цінової пропозиції після закінчення прийому пропозицій
   [Tags]   ${USERS.users['${provider}'].broker}: Неможливість змінити документацію цінової пропозиції після закінчення прийому пропозицій
   log   ${USERS.users['${provider}'].broker}
   log  ${biddingresponce5}
   ${bid_id}=  get variable value  ${biddingresponce5.data.id}
   ${token1}=  Get Variable Value  ${biddingresponce5.access.token}
-  ${upload_doc_responce_id2}=  get variable value  ${upload_doc_responce2.data.id}
+  ${upload_doc_responce_id2}=  get variable value  ${upload_doc_responce2[0].data.id}
   log  ${upload_doc_responce_id2}
   log  ${token1} 
   Викликати для учасника   ${provider1}  Змінити документ в ставці   shouldfail   ${token1}  ${bid_id}  ${upload_doc_responce_id2}
-  
-  
+
 Неможливість змінити існуючу документацію цінової пропозиції після закінчення прийому пропозицій
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця
   log   ${USERS.users['${provider}'].broker}
   log  ${biddingresponce1}
   ${bid_id}=  get variable value  ${biddingresponce1.data.id}
   ${token1}=  Get Variable Value  ${biddingresponce1.access.token}
-  ${upload_doc_responce_id}=  get variable value  ${upload_doc_responce.data.id}
+  ${upload_doc_responce_id}=  get variable value  ${upload_doc_responce[0].data.id}
   log  ${token1} 
   Викликати для учасника   ${provider}  Змінити документ в ставці   shouldfail   ${token1}  ${bid_id}  ${upload_doc_responce_id}
-
 
 Неможливість скасувати цінову пропозицію після закінчення прийому пропозицій
   [Tags]   ${USERS.users['${provider}'].broker}: Неможливість скасувати цінову пропозицію після закінчення прийому пропозицій
@@ -407,3 +413,10 @@ ${question_id}   0
   Set Global Variable   ${biddingresponce8}
   log  ${biddingresponce8}
 
+Вичитати цінову пропозицію
+  sleep  120
+  [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
+  ${bid_id} =  get variable value   ${biddingresponce1.data.id}
+  ${token1}=  Get Variable Value  ${biddingresponce1.access.token}
+  ${bids}=  Викликати для учасника   ${provider}   Отримати пропозиції   ${TENDER_ID}   ${bid_id}   ${token1}
+  log  ${bids}
