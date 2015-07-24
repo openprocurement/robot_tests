@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -
 import os
+from tempfile import NamedTemporaryFile
 from munch import munchify, Munch, fromYAML
 from json import load
 from iso8601 import parse_date
@@ -21,6 +22,13 @@ from .initial_data import (
 )
 
 TIMEZONE = timezone('Europe/Kiev')
+
+def create_file(content):
+    tf = NamedTemporaryFile(delete=False)
+    tf.write(content)
+    tf.close()
+    return tf.name
+
 def get_date():
 	return datetime.now().isoformat()
 
