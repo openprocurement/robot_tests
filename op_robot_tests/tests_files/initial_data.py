@@ -65,7 +65,8 @@ def test_tender_data(period_interval=2):
             "classification": {
                 "scheme": u"CPV",
                 "id": u"44617100-9",
-                "description": u"Cartons"
+                "description": u"Cartons",
+                "description_ua": u"Картонки"
             },
             "additionalClassifications": [
                 {

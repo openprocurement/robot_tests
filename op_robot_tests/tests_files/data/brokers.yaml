@@ -28,7 +28,6 @@ Netcast:
     timout_on_wait:  15
 Newtend:
     keywords_file: newtend
-    url: http://dev23.newtend.com/
-    aut_login: openprocurement
-    aut_pass: test
+    url: http://openprocurement:test@dev23.newtend.com
     timout_on_wait:  15
+    period_interval: 2
