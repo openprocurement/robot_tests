@@ -25,7 +25,7 @@ ${LOAD_USERS}      ["${tender_owner}", "${provider}", "${viewer}"]
 
 Можливість оголосити багатопредметний тендер
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
-  ${ids}=  Викликати для учасника     ${tender_owner}   Багатопредметний тендер   ${INITIAL_TENDER_DATA}
+  ${ids}=  Викликати для учасника     ${tender_owner}   Створити тендер   ${INITIAL_TENDER_DATA}
   ${TENDER_ID}=   Get From List   ${ids}  0
   ${INTERNAL_TENDER_ID}=  Get From List   ${ids}  1
   Set Global Variable    ${INTERNAL_TENDER_ID}
