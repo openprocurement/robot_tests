@@ -64,12 +64,13 @@ ${locator.tenderId}                  jquery=h3
   Wait Until Page Contains Element   xpath=//a[@href="#/create-tender"]   100
   Click Link                         xpath=//a[@href="#/create-tender"]
   Wait Until Page Contains           Новый тендер    100
-# Input fields
+# Input fields tender
   Input text   name=tenderName       ${title}
   Input text   name=tenderDescription            ${description}
   Input text   id=budget             ${budget}
   Click Element                      id=with-nds
   Input text   id=step               ${step_rate}
+## 1-st Item ifo
   Input text   id=itemDescription0   ${items_description}
   Input text   id=quantity0          ${quantity}
   Click Element                      xpath=//a[@class="dropdown-toggle ng-binding"]
@@ -97,12 +98,16 @@ ${locator.tenderId}                  jquery=h3
   Input text                         xpath=//input[1][@class="form-control ng-pristine ng-untouched ng-valid"]   ${locality}
   Input text                         xpath=//input[1][@class="form-control ng-pristine ng-untouched ng-valid"]   ${streetAddress}
   Click Element                      xpath=//button[@class="btn btn-lg single-btn ng-binding"]
-# Set Datetimes
+# Set Item Datetime
   Set datetime   end-date-delivery0         ${deliverydate_end_date}
+##
+# Set tender datatimes
   Set datetime   start-date-registration    ${start_date}
   Set datetime   end-date-registration      ${end_date}
   Set datetime   end-date-qualification     ${enquiry_end_date}
   Set datetime   start-date-qualification   ${enquiry_start_date}
+
+  Run Keyword If    '${mode}' == 'multi'     Додати придмет   items
 
   Click Element                      xpath=//button[@class="btn btn-lg btn-default cancel pull-right ng-binding"]
   Wait Until Page Contains Element   xpath=//div[@ng-click="goHome()"]   30
@@ -131,6 +136,27 @@ Set datetime
   ${minutes}=   Get Substring   ${ARGUMENTS[1]}   14   16
   Input text   xpath=//input[@id="${ARGUMENTS[0]}"]/../..//input[@ng-model="hours"]   ${hous}
   Input text   xpath=//input[@id="${ARGUMENTS[0]}"]/../..//input[@ng-model="minutes"]   ${minutes}
+
+
+Додати придмет
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  items
+
+## Get values
+
+  Click Element   xpath=//a[@class="icon-black plus-black remove-field ng-scope"]
+
+  Debug
+
+
+<a class="icon-black plus-black remove-field ng-scope" href="" ng-if="$index == tender.items.length - 1" ng-click="addField()" title="Добавить лот"></a>
+
+
+
+
+
+
 
 
 
@@ -211,7 +237,7 @@ Oтримати internal id по UAid
   [return]  ${return_value}
 
 отримати інформацію про description
-   ${return_value}=   Отримати тест із поля і показати на сторінці   description
+  ${return_value}=   Отримати тест із поля і показати на сторінці   description
   [return]  ${return_value}
 
 отримати інформацію про minimalStep.amount
