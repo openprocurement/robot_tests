@@ -65,7 +65,8 @@ def test_tender_data(period_interval=2):
             "classification": {
                 "scheme": u"CPV",
                 "id": u"44617100-9",
-                "description": u"Cartons"
+                "description": u"Cartons",
+                "description_ua": u"Картонки",
             },
             "additionalClassifications": [
                 {
@@ -234,7 +235,8 @@ def test_tender_data_multiple_lots(period_interval=2):
             "classification": {
                 "scheme": u"CPV",
                 "id": u"44617100-9",
-                "description": u"Cartons"
+                "description": u"Cartons",
+                "description_ua": u"Картонки",
             },
             "additionalClassifications": [
                 {
@@ -353,12 +355,12 @@ def test_tender_data_multiple_lots(period_interval=2):
         }
     ],
     "enquiryPeriod": {
-        "startDate": (now + timedelta(minutes=2)).isoformat(),
-        "endDate": (now + timedelta(minutes=3)).isoformat()
+        "startDate": (now + timedelta(minutes=3)).isoformat(),
+        "endDate": (now + timedelta(minutes=4)).isoformat()
     },
     "tenderPeriod": {
-        "startDate": (now + timedelta(minutes=2)).isoformat(),
-        "endDate": (now + timedelta(minutes=(2+period_interval))).isoformat()
+        "startDate": (now + timedelta(minutes=4)).isoformat(),
+        "endDate": (now + timedelta(minutes=(5+period_interval))).isoformat()
     }
 }    
 

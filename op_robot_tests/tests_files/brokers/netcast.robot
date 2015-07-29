@@ -15,15 +15,105 @@ ${locator.tenderPeriod.endDate}      jquery=tender-procedure-info>div.row:contai
 ${locator.enquiryPeriod.startDate}   jquery=tender-procedure-info>div.row:contains("Початок періоду уточнень:")>:eq(1)>
 ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contains("Завершення періоду уточнень:")>:eq(1)>
 
-
 *** Keywords ***
 Підготувати клієнт для користувача
-  [Arguments]  ${username}
+  [Arguments]  @{ARGUMENTS}
   [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
-  Open Browser   ${BROKERS['${USERS.users['${username}'].broker}'].url}   ${USERS.users['${username}'].browser}   alias=${username}
-  Set Window Position   @{USERS.users['${username}'].position}
-  Set Window Size       @{USERS.users['${username}'].size}
-  Log Variables
+  ...      ${ARGUMENTS[0]} ==  username
+  Open Browser   ${BROKERS['${USERS.users['${ARGUMENTS[0]}'].broker}'].url}   ${USERS.users['${ARGUMENTS[0]}'].browser}   alias=${ARGUMENTS[0]}
+  Set Window Size       @{USERS.users['${ARGUMENTS[0]}'].size}
+  Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
+
+# login
+  Wait Until Page Contains Element   name=siteLogin   100
+  Input text    name=siteLogin      ${BROKERS['${USERS.users['${username}'].broker}'].login}
+  Input text   name=sitePass       ${BROKERS['${USERS.users['${username}'].broker}'].password}
+  Click Button   xpath=.//*[@id='table1']/tbody/tr/td/form/p[3]/input
+
+  Wait Until Page Contains Element    jquery=a[href="/cabinet"]
+  Click Element                       jquery=a[href="/cabinet"]
+  Wait Until Page Contains Element    name=email   100
+  Input text    name=email     mail
+  Sleep  1
+  Input text    name=email      ${USERS.users['${username}'].login}
+  Sleep  2
+  Input text   name=psw        ${USERS.users['${username}'].password}
+  Wait Until Page Contains Element   xpath=//button[contains(@class, 'btn')][./text()='Вхід в кабінет']   100
+  Click Element                xpath=//button[contains(@class, 'btn')][./text()='Вхід в кабінет']
+
+Створити тендер
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  tender_data
+
+  ${items}=         Get From Dictionary   ${ARGUMENTS[1].data}               items
+  ${title}=         Get From Dictionary   ${ARGUMENTS[1].data}               title
+  ${description}=   Get From Dictionary   ${ARGUMENTS[1].data}               description
+  ${budget}=        Get From Dictionary   ${ARGUMENTS[1].data.value}         amount
+  ${step_rate}=     Get From Dictionary   ${ARGUMENTS[1].data.minimalStep}   amount
+  ${items_description}=   Get From Dictionary   ${ARGUMENTS[1].data}         description
+  ${quantity}=      Get From Dictionary   ${items[0]}         quantity
+  ${countryName}=   Get From Dictionary   ${ARGUMENTS[1].data.procuringEntity.address}       countryName
+  ${delivery_end_date}=      Get From Dictionary   ${items[0].deliveryDate}   endDate
+  ${delivery_end_date}=      convert_date_to_slash_format   ${delivery_end_date}
+  ${cpv}=           Get From Dictionary   ${items[0].classification}          description_ua
+  ${cpv_id}=           Get From Dictionary   ${items[0].classification}         id
+  ${cpv_id1}=       String.Replace String   ${cpv_id}   -   _
+  ${dkpp_desc}=     Get From Dictionary   ${items[0].additionalClassifications[0]}   description
+  ${dkpp_id}=       Get From Dictionary   ${items[0].additionalClassifications[0]}  id
+  ${enquiry_end_date}=   Get From Dictionary         ${ARGUMENTS[1].data.enquiryPeriod}   endDate
+  ${enquiry_end_date}=   convert_date_to_slash_format   ${enquiry_end_date}
+  ${end_date}=      Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}   endDate
+  ${end_date}=      convert_date_to_slash_format   ${end_date}
+
+  Selenium2Library.Switch Browser     ${ARGUMENTS[0]}
+  Wait Until Page Contains Element    jquery=a[href="/tenders/new"]   100
+  Click Element                       jquery=a[href="/tenders/new"]
+  Wait Until Page Contains Element    name=tender_title   100
+  Input text                          name=tender_title    ${title}
+  Wait Until Page Contains Element    name=tender_description   100
+  Input text                          name=tender_description    ${description}
+  Wait Until Page Contains Element    name=tender_value_amount   100
+  Input text                          name=tender_value_amount   ${budget}
+  Wait Until Page Contains Element    name=tender_minimalStep_amount   100
+  Input text                          name=tender_minimalStep_amount   ${step_rate}
+  Wait Until Page Contains Element    name=items[0][item_description]   100
+  Input text                          name=items[0][item_description]    ${items_description}
+  Wait Until Page Contains Element    name=items[0][item_quantity]   100
+  Input text                          name=items[0][item_quantity]   ${quantity}
+  Wait Until Page Contains Element    name=items[0][item_deliveryAddress_countryName]   100
+  Input text                          name=items[0][item_deliveryAddress_countryName]   ${countryName}
+  Wait Until Page Contains Element    name=items[0][item_deliveryDate_endDate]   100
+  Input text                          name=items[0][item_deliveryDate_endDate]       ${delivery_end_date}
+  Wait Until Page Contains Element    xpath=//a[contains(@data-class, 'cpv')][./text()='Визначити за довідником']   100
+  Click Element                       xpath=//a[contains(@data-class, 'cpv')][./text()='Визначити за довідником']
+  Select Frame                        xpath=//iframe[contains(@src,'/js/classifications/cpv/uk.htm?relation=true')]
+  Input text                          id=search     ${cpv}
+  Wait Until Page Contains            ${cpv_id}
+  Click Element                       xpath=//a[contains(@id,'${cpv_id1}')]
+  Click Element                       xpath=.//*[@id='select']
+  Unselect Frame
+  Wait Until Page Contains Element    xpath=//a[contains(@data-class, 'dkpp')][./text()='Визначити за довідником']   100
+  Click Element                       xpath=//a[contains(@data-class, 'dkpp')][./text()='Визначити за довідником']
+  Select Frame                        xpath=//iframe[contains(@src,'/js/classifications/dkpp/uk.htm?relation=true')]
+  Input text                          id=search     ${dkpp_desc}
+  Wait Until Page Contains            ${dkpp_id}
+  Click Element                       xpath=//a[contains(@id,'${dkpp_id}')]
+  Click Element                       xpath=.//*[@id='select']
+  Unselect Frame
+  Wait Until Page Contains Element    name=tender_enquiryPeriod_endDate    100
+  Input text                          name=tender_enquiryPeriod_endDate   ${enquiry_end_date}
+  Wait Until Page Contains Element    name=tender_tenderPeriod_endDate    100
+  Input text                          name=tender_tenderPeriod_endDate    ${end_date}
+  Wait Until Page Contains Element    name=do    100
+  Click Element                       name=do
+  Wait Until Page Contains Element    xpath=//a[contains(@class, 'button pubBtn')]    100
+  Click Element                       xpath=//a[contains(@class, 'button pubBtn')]
+  Wait Until Page Contains            Тендер опубліковано    100
+  ${tender_UAid}=  Get Text           xpath=//*/section[6]/table/tbody/tr[2]/td[2]
+  ${Ids}   Create List    ${tender_UAid}
+  [return]  ${Ids}
 
 Пошук тендера по ідентифікатору
   [Arguments]  @{ARGUMENTS}
@@ -47,3 +137,153 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   Wait Until Page Contains    ${ARGUMENTS[1]}   10
   sleep  1
   Capture Page Screenshot
+
+Багатопредметний тендер
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  tender_data
+  ${items}=         Get From Dictionary   ${ARGUMENTS[1].data}               items
+  ${title}=         Get From Dictionary   ${ARGUMENTS[1].data}               title
+  ${description}=   Get From Dictionary   ${ARGUMENTS[1].data}               description
+  ${budget}=        Get From Dictionary   ${ARGUMENTS[1].data.value}         amount
+  ${step_rate}=     Get From Dictionary   ${ARGUMENTS[1].data.minimalStep}   amount
+  ${items_description}=   Get From Dictionary   ${ARGUMENTS[1].data}         description
+  ${quantity}=      Get From Dictionary   ${items[0]}         quantity
+  ${countryName}=   Get From Dictionary   ${ARGUMENTS[1].data.procuringEntity.address}       countryName
+  ${delivery_end_date}=      Get From Dictionary   ${items[0].deliveryDate}   endDate
+  ${delivery_end_date}=      convert_date_to_slash_format   ${delivery_end_date}
+  ${cpv}=           Get From Dictionary   ${items[0].classification}          description_ua
+  ${cpv_id}=           Get From Dictionary   ${items[0].classification}         id
+  ${cpv_id1}=   String.Replace String   ${cpv_id}   -   _
+  ${dkpp_desc}=     Get From Dictionary   ${items[0].additionalClassifications[0]}   description
+  ${dkpp_desc1}=     Get From Dictionary   ${items[1].additionalClassifications[0]}   description
+  ${dkpp_id11}=      Get From Dictionary   ${items[1].additionalClassifications[0]}  id
+  ${dkpp_1id}=   String.Replace String   ${dkpp_id11}   -   _
+  ${dkpp_desc2}=     Get From Dictionary   ${items[2].additionalClassifications[0]}   description
+  ${dkpp_id2}=       Get From Dictionary   ${items[2].additionalClassifications[0]}  id
+  ${dkpp_id2_1}=   String.Replace String   ${dkpp_id2}   -   _
+  ${dkpp_desc3}=     Get From Dictionary   ${items[3].additionalClassifications[0]}   description
+  ${dkpp_id3}=       Get From Dictionary   ${items[3].additionalClassifications[0]}  id
+  ${dkpp_id3_1}=   String.Replace String   ${dkpp_id3}   -   _
+  ${dkpp_id}=       Get From Dictionary   ${items[0].additionalClassifications[0]}  id
+  ${dkpp_id1}=   String.Replace String   ${dkpp_id}   -   _
+  ${enquiry_end_date}=   Get From Dictionary         ${ARGUMENTS[1].data.enquiryPeriod}   endDate
+  ${enquiry_end_date}=   convert_date_to_slash_format   ${enquiry_end_date}
+  ${end_date}=      Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}   endDate
+  ${end_date}=      convert_date_to_slash_format   ${end_date}
+
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  Wait Until Page Contains Element    jquery=a[href="/tenders/new"]   100
+  Click Element                       jquery=a[href="/tenders/new"]
+  Wait Until Page Contains Element    name=tender_title   100
+  Input text                          name=tender_title    ${title}
+  Wait Until Page Contains Element    name=tender_description   100
+  Input text                          name=tender_description    ${description}
+  Wait Until Page Contains Element    name=tender_value_amount   100
+  Input text                          name=tender_value_amount   ${budget}
+  Wait Until Page Contains Element    name=tender_minimalStep_amount   100
+  Input text                          name=tender_minimalStep_amount   ${step_rate}
+  Wait Until Page Contains Element    name=items[0][item_description]   100
+  Input text                          name=items[0][item_description]    ${items_description}
+  Wait Until Page Contains Element    name=items[0][item_quantity]   100
+  Input text                          name=items[0][item_quantity]   ${quantity}
+  Wait Until Page Contains Element    name=items[0][item_deliveryAddress_countryName]   100
+  Input text                          name=items[0][item_deliveryAddress_countryName]   ${countryName}
+  Wait Until Page Contains Element    name=items[0][item_deliveryDate_endDate]   100
+  Input text                          name=items[0][item_deliveryDate_endDate]       ${delivery_end_date}
+  Wait Until Page Contains Element    xpath=//a[contains(@data-class, 'cpv')][./text()='Визначити за довідником']   100
+  Click Element                       xpath=//a[contains(@data-class, 'cpv')][./text()='Визначити за довідником']
+  Select Frame                        xpath=//iframe[contains(@src,'/js/classifications/cpv/uk.htm?relation=true')]
+  Input text                          id=search     ${cpv}
+  Wait Until Page Contains            ${cpv_id}
+  Click Element                       xpath=//a[contains(@id,'${cpv_id1}')]
+  Click Element                       xpath=.//*[@id='select']
+  Unselect Frame
+  Wait Until Page Contains Element    xpath=//a[contains(@data-class, 'dkpp')][./text()='Визначити за довідником']   100
+  Click Element                       xpath=//a[contains(@data-class, 'dkpp')][./text()='Визначити за довідником']
+  Select Frame                        xpath=//iframe[contains(@src,'/js/classifications/dkpp/uk.htm?relation=true')]
+  Input text                          id=search     ${dkpp_desc}
+  Wait Until Page Contains            ${dkpp_id}
+  Click Element                       xpath=//a[contains(@id,'${dkpp_id1}')]
+  Click Element                       xpath=.//*[@id='select']
+  Unselect Frame
+  Wait Until Page Contains Element    xpath=//a[contains(@class, 'addMultiItem')][./text()='Додати предмет закупівлі']
+  Click Element                       xpath=//a[contains(@class, 'addMultiItem')][./text()='Додати предмет закупівлі']
+  Wait Until Page Contains Element    name=items[1][item_description]   100
+  Input text                          name=items[1][item_description]    ${description}
+  Wait Until Page Contains Element    name=items[1][item_quantity]   100
+  Input text                          name=items[1][item_quantity]   ${quantity}
+  Wait Until Page Contains Element    xpath=(//a[contains(@data-class, 'cpv')][./text()='Визначити за довідником'])[2]   100
+  Click Element                       xpath=(//a[contains(@data-class, 'cpv')][./text()='Визначити за довідником'])[2]
+  Select Frame                        xpath=//iframe[contains(@src,'/js/classifications/cpv/uk.htm?relation=true')]
+  Input text                          id=search     ${cpv}
+  Wait Until Page Contains            ${cpv_id}
+  Click Element                       xpath=//a[contains(@id,'${cpv_id1}')]
+  Click Element                       xpath=.//*[@id='select']
+  Unselect Frame
+  Wait Until Page Contains Element    xpath=(//a[contains(@data-class, 'dkpp')][./text()='Визначити за довідником'])[2]   100
+  Click Element                       xpath=(//a[contains(@data-class, 'dkpp')][./text()='Визначити за довідником'])[2]
+  Select Frame                        xpath=//iframe[contains(@src,'/js/classifications/dkpp/uk.htm?relation=true')]
+  Input text                          id=search     ${dkpp_desc1}
+  Wait Until Page Contains            ${dkpp_id11}
+  Click Element                       xpath=//a[contains(@id,'${dkpp_1id}')]
+  Click Element                       xpath=.//*[@id='select']
+  Unselect Frame
+  Wait Until Page Contains Element    xpath=//a[contains(@class, 'addMultiItem')][./text()='Додати предмет закупівлі']
+  Click Element                       xpath=//a[contains(@class, 'addMultiItem')][./text()='Додати предмет закупівлі']
+  Wait Until Page Contains Element    name=items[2][item_description]   100
+  Input text                          name=items[2][item_description]    ${description}
+  Wait Until Page Contains Element    name=items[2][item_quantity]   100
+  Input text                          name=items[2][item_quantity]   ${quantity}
+  Wait Until Page Contains Element    xpath=(//a[contains(@data-class, 'cpv')][./text()='Визначити за довідником'])[3]   100
+  Click Element                       xpath=(//a[contains(@data-class, 'cpv')][./text()='Визначити за довідником'])[3]
+  Select Frame                        xpath=//iframe[contains(@src,'/js/classifications/cpv/uk.htm?relation=true')]
+  Input text                          id=search     ${cpv}
+  Wait Until Page Contains            ${cpv_id}
+  Click Element                       xpath=//a[contains(@id,'${cpv_id1}')]
+  Click Element                       xpath=.//*[@id='select']
+  Unselect Frame
+  Wait Until Page Contains Element    xpath=(//a[contains(@data-class, 'dkpp')][./text()='Визначити за довідником'])[3]   100
+  Click Element                       xpath=(//a[contains(@data-class, 'dkpp')][./text()='Визначити за довідником'])[3]
+  Select Frame                        xpath=//iframe[contains(@src,'/js/classifications/dkpp/uk.htm?relation=true')]
+  Input text                          id=search     ${dkpp_desc2}
+  Wait Until Page Contains            ${dkpp_id2}
+  Click Element                       xpath=//a[contains(@id,'${dkpp_id2_1}')]
+  Click Element                       xpath=.//*[@id='select']
+  Unselect Frame
+  Wait Until Page Contains Element    xpath=//a[contains(@class, 'addMultiItem')][./text()='Додати предмет закупівлі']
+  Click Element                       xpath=//a[contains(@class, 'addMultiItem')][./text()='Додати предмет закупівлі']
+  Wait Until Page Contains Element    name=items[3][item_description]   100
+  Input text                          name=items[3][item_description]    ${description}
+  Wait Until Page Contains Element    name=items[3][item_quantity]   100
+  Input text                          name=items[3][item_quantity]   ${quantity}
+  Wait Until Page Contains Element    xpath=(//a[contains(@data-class, 'cpv')][./text()='Визначити за довідником'])[4]   100
+  Click Element                       xpath=(//a[contains(@data-class, 'cpv')][./text()='Визначити за довідником'])[4]
+  Select Frame                        xpath=//iframe[contains(@src,'/js/classifications/cpv/uk.htm?relation=true')]
+  Input text                          id=search     ${cpv}
+  Wait Until Page Contains            ${cpv_id}
+  Click Element                       xpath=//a[contains(@id,'${cpv_id1}')]
+  Click Element                       xpath=.//*[@id='select']
+  Unselect Frame
+  Wait Until Page Contains Element    xpath=(//a[contains(@data-class, 'dkpp')][./text()='Визначити за довідником'])[4]   100
+  Click Element                       xpath=(//a[contains(@data-class, 'dkpp')][./text()='Визначити за довідником'])[4]
+  Select Frame                        xpath=//iframe[contains(@src,'/js/classifications/dkpp/uk.htm?relation=true')]
+  Input text                          id=search     ${dkpp_desc3}
+  Wait Until Page Contains            ${dkpp_id3}
+  Click Element                       xpath=//a[contains(@id,'${dkpp_id3_1}')]
+  Click Element                       xpath=.//*[@id='select']
+  Unselect Frame
+  Wait Until Page Contains Element    name=tender_enquiryPeriod_endDate    100
+  Input text                          name=tender_enquiryPeriod_endDate   ${enquiry_end_date}
+  Wait Until Page Contains Element    name=tender_tenderPeriod_endDate    100
+  Input text                          name=tender_tenderPeriod_endDate    ${end_date}
+  Wait Until Page Contains Element    name=do    100
+  Click Element                       name=do
+  Wait Until Page Contains Element    xpath=//a[contains(@class, 'button pubBtn')]    100
+  Click Element                       xpath=//a[contains(@class, 'button pubBtn')]
+  Wait Until Page Contains            Тендер опубліковано    100
+  ${tender_UAid}=  Get Text           xpath=//*/section[6]/table/tbody/tr[2]/td[2]
+  ${id}=           Get Text           xpath=//*/section[6]/table/tbody/tr[1]/td[2]
+  ${Ids}   Create List    ${tender_UAid}   ${id}
+  [return]  ${Ids}

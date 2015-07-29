@@ -74,3 +74,12 @@ users:
         browser:  chrome
         position:  [0, 450]
         size:  [640, 450]
+    Netcast_Owner:
+        broker: Netcast
+        username: Netcasttest
+        homepage: "http://dz2.byustudio.in.ua"
+        login: ovramet.s@gmail.com
+        password: Password1
+        browser: firefox
+        position:  [0, 450]
+        size:  [640, 450]
