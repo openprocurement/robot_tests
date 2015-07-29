@@ -33,7 +33,7 @@ ${locator.tenderId}                  jquery=h3
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tender_data
-
+## Inicialisation
   ${items}=         Get From Dictionary   ${ARGUMENTS[1].data}               items
   ${title}=         Get From Dictionary   ${ARGUMENTS[1].data}               title
   ${description}=   Get From Dictionary   ${ARGUMENTS[1].data}               description
@@ -58,14 +58,13 @@ ${locator.tenderId}                  jquery=h3
   ${region}=          Get From Dictionary   ${items[0].deliveryAddress}   region
   ${locality}=        Get From Dictionary   ${items[0].deliveryAddress}   locality
   ${streetAddress}=   Get From Dictionary   ${items[0].deliveryAddress}   streetAddress
-
-
+##
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
   Go To                              ${USERS.users['${username}'].homepage}
   Wait Until Page Contains Element   xpath=//a[@href="#/create-tender"]   100
   Click Link                         xpath=//a[@href="#/create-tender"]
   Wait Until Page Contains           Новый тендер    100
-
+# Input fields
   Input text   name=tenderName       ${title}
   Input text   name=tenderDescription            ${description}
   Input text   id=budget             ${budget}
@@ -75,18 +74,21 @@ ${locator.tenderId}                  jquery=h3
   Input text   id=quantity0          ${quantity}
   Click Element                      xpath=//a[@class="dropdown-toggle ng-binding"]
   Click Element                      xpath=//a[contains(text(),'${unit}')]
+# Set CPV
   Click Element                      id=classifier10
   Wait Until Page Contains Element   xpath=//input[@class="ng-pristine ng-untouched ng-valid"]   100
   Input text                         xpath=//input[@class="ng-pristine ng-untouched ng-valid"]   ${cpv}
   Wait Until Page Contains Element   xpath=//span[contains(text(),'${cpv}')]   20
   Click Element                      xpath=//input[@class="ng-pristine ng-untouched ng-valid"]
   Click Element                      xpath=//button[@class="btn btn-default btn-lg pull-right choose ng-binding"]
+# Set ДКПП
   Click Element                      id=classifier20
   Wait Until Page Contains Element   xpath=//input[@class="ng-pristine ng-untouched ng-valid"]   100
   Input text                         xpath=//input[@class="ng-pristine ng-untouched ng-valid"]   ${dkpp_desc}
   Wait Until Page Contains Element   xpath=//span[contains(text(),'${dkpp_id}')]   100
   Click Element                      xpath=//span[contains(text(),'${dkpp_id}')]/../..//input[@class="ng-pristine ng-untouched ng-valid"]
   Click Element                      xpath=//button[@class="btn btn-default btn-lg pull-right choose ng-binding"]
+# Set Delivery Address
   Click Element                      id=deliveryAddress0
   Wait Until Page Contains Element   xpath=//input[1][@class="form-control ng-pristine ng-untouched ng-valid"]   100
   Input text                         xpath=//input[1][@class="form-control ng-pristine ng-untouched ng-valid"]   ${countryName}
@@ -95,19 +97,19 @@ ${locator.tenderId}                  jquery=h3
   Input text                         xpath=//input[1][@class="form-control ng-pristine ng-untouched ng-valid"]   ${locality}
   Input text                         xpath=//input[1][@class="form-control ng-pristine ng-untouched ng-valid"]   ${streetAddress}
   Click Element                      xpath=//button[@class="btn btn-lg single-btn ng-binding"]
+# Set Datetimes
   Set datetime   end-date-delivery0         ${deliverydate_end_date}
   Set datetime   start-date-registration    ${start_date}
   Set datetime   end-date-registration      ${end_date}
   Set datetime   end-date-qualification     ${enquiry_end_date}
   Set datetime   start-date-qualification   ${enquiry_start_date}
+
   Click Element                      xpath=//button[@class="btn btn-lg btn-default cancel pull-right ng-binding"]
   Wait Until Page Contains Element   xpath=//div[@ng-click="goHome()"]   30
   Click Element                      xpath=//div[@ng-click="goHome()"]
-
-#  ${tender_UAid}=  Get Text  xpath=//div[@class="title"]
-###  harcode Idis bacause issues on the E-tender side, to remove, 1 line:
+###  harcode Idis bacause issues on the Newtend side, to remove after fix:
   ${tender_UAid}=   Convert To String   UA-2015-07-06-000105
-
+###  ${tender_UAid}=  Get Text  xpath=//div[@class="title"]
   ${Ids}   Create List    ${tender_UAid}
   [return]  ${Ids}
 
@@ -116,6 +118,7 @@ Set datetime
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  control_id
   ...      ${ARGUMENTS[1]} ==  date
+#Pick Date
   Click Element                      xpath=//input[@id="${ARGUMENTS[0]}"]/../span[@class="calendar-btn"]
   Wait Until Page Contains Element   xpath=//td[@class="text-center ng-scope"]   30
   ${datapicker_id}=   Get Element Attribute   xpath=//input[@id="${ARGUMENTS[0]}"]/..//td[@class="text-center ng-scope"]@id
@@ -123,16 +126,11 @@ Set datetime
   ${date_index}=   newtend_date_picker_index   ${ARGUMENTS[1]}
   ${datapicker_id}=   Convert To String   ${datapicker_id}${date_index}
   Click Element                      xpath=//input[@id="${ARGUMENTS[0]}"]/..//td[@id="${datapicker_id}"]/button
-
+#Set time
   ${hous}=   Get Substring   ${ARGUMENTS[1]}   11   13
   ${minutes}=   Get Substring   ${ARGUMENTS[1]}   14   16
   Input text   xpath=//input[@id="${ARGUMENTS[0]}"]/../..//input[@ng-model="hours"]   ${hous}
   Input text   xpath=//input[@id="${ARGUMENTS[0]}"]/../..//input[@ng-model="minutes"]   ${minutes}
-
-get tender UAid
-  ${tender_UAid}=  Get Text  xpath=//div[@class="title"]
-#  ${tender_UAid}=  Get Substring  ${tender_UAid}  7  27
-  [return]  ${tender_UAid}
 
 
 
