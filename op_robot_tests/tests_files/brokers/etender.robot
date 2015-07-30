@@ -31,6 +31,7 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
 # login
   Wait Until Page Contains Element   id=inputUsername   100
   Input text   id=inputUsername      ${USERS.users['${username}'].login}
+  Wait Until Page Contains Element   id=inputPassword   100
   Input text   id=inputPassword      ${USERS.users['${username}'].password}
   Click Button   id=btn_submit
 
@@ -48,6 +49,7 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   ${items_description}=   Get From Dictionary   ${ARGUMENTS[1].data}         description
   ${quantity}=      Get From Dictionary   ${items[0]}                        quantity
   ${cpv}=           Get From Dictionary   ${items[0].classification}         id
+  ${cpv_id}=           Get From Dictionary   ${items[0].classification}         id
   ${dkpp_desc}=     Get From Dictionary   ${items[0].additionalClassifications[0]}   description
   ${dkpp_id}=       Get From Dictionary   ${items[0].additionalClassifications[0]}  id
   ${unit}=          Get From Dictionary   ${items[0].unit}                   name
@@ -80,34 +82,32 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   Click Element  xpath=//select[@name="itemsUnit"]/option[@value='kilogram']
   Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//input[@name='enqPEndDate']   ${enquiry_end_date}
   Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//div[contains(@class, 'col-sm-2')]//input[@ng-model='data.enquiryPeriod.endDate']   ${enquiry_end_time}
-
   Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//input[@name='startDate']   ${start_date}
   Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//div[contains(@class, 'col-sm-2')]//input[@ng-model='data.tenderPeriod.startDate']   ${start_time}
   Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//input[@name='endDate']   ${end_date}
   Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//div[contains(@class, 'col-sm-2')]//input[@ng-model='data.tenderPeriod.endDate']   ${end_time}
-
   Click Element   xpath=//div[contains(@class, 'col-sm-2')]//input[@data-target='#classification']
-  Wait Until Page Contains   Оберіть класифікатор CPV   100
-  Input text   xpath=//div[contains(@class, 'modal-content')]//input[@ng-model='searchstring']   ${cpv}
-  Wait Until Page Contains    Картонки  100
-  Click Element   xpath=//table[contains(@class, 'table table-hover table-striped table-bordered ng-table-rowselected ng-scope ng-table')]//tr[1]//td[1]
-  Wait Until Page Contains    44617100-9 Картонки   100
+  Wait Until Element Is Visible     xpath=//div[contains(@role,'dialog')]
+  Input text      xpath=//div[contains(@class, 'modal-content')]//input[@ng-model='searchstring']   ${cpv}
+  Wait Until Page Contains    ${cpv}
+  Click Element   xpath=//td[contains(., '${cpv}')]
   Click Element   xpath=//div[contains(@class, 'modal-content')]//button[@ng-click='choose()']
-
   Click Element   xpath=//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification']
-  Wait Until Page Contains   Класифікатор ДКПП   100
+  Wait Until Element Is Visible      xpath=//div[contains(@id,'addClassification')]
   Input text      xpath=//div[contains(@class, 'modal fade ng-scope in')]//input[@ng-model='searchstring']    ${dkpp_desc}
-  Wait Until Page Contains   ${dkpp_id}    100
-  Click Element   xpath=//table[contains(@class, 'table table-hover table-striped table-bordered ng-table-rowselected ng-scope ng-table')]//tr[2]//td[1]
-  Wait Until Page Contains    17.21.1 "Папір і картон гофровані, паперова й картонна тара"   100
+  Wait Until Page Contains   ${dkpp_id}
+  Click Element   xpath=//td[contains(., '${dkpp_id}')]
   Click Element   xpath=//div[contains(@class, 'modal fade ng-scope in')]//button[@ng-click='choose()']
+  Run Keyword if   '${mode}' == 'multi'   Додати предмет   items
+  Wait Until Page Contains Element   xpath=//div[contains(@class, 'form-actions')]//button[@type='submit']
   Click Element   xpath=//div[contains(@class, 'form-actions')]//button[@type='submit']
   Wait Until Page Contains    [ТЕСТУВАННЯ]   100
   Click Element   xpath=//table[contains(@class, 'table table-hover table-striped table-bordered ng-scope ng-table')]//tr[1]//a
   ${tender_UAid}=   Wait Until Keyword Succeeds   240sec   2sec   get tender UAid
 ###  harcode Idis bacause issues on the E-tender side, to remove, 1 line:
   ${tender_UAid}=   Convert To String   UA-2015-06-30-000012
-  ${Ids}   Create List    ${tender_UAid}
+  ${id}=   Oтримати internal id по UAid   ${ARGUMENTS[0]}   ${tender_UAid}
+  ${Ids}   Create List    ${tender_UAid}   ${id}
   [return]  ${Ids}
 
 get tender UAid
@@ -127,6 +127,53 @@ Oтримати internal id по UAid
   ${tender_id}=     Convert To String   94ffe180019d459787aafe290cd300e2
   log  ${tender_id}
   [return]  ${tender_id}
+
+Додати предмет
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  items
+  ${dkpp_desc1}=     Get From Dictionary   ${items[1].additionalClassifications[0]}   description
+  ${dkpp_id1}=       Get From Dictionary   ${items[1].additionalClassifications[0]}  id
+  ${dkpp_desc2}=     Get From Dictionary   ${items[2].additionalClassifications[0]}   description
+  ${dkpp_id2}=       Get From Dictionary   ${items[2].additionalClassifications[0]}  id
+  ${dkpp_desc3}=     Get From Dictionary   ${items[3].additionalClassifications[0]}   description
+  ${dkpp_id3}=       Get From Dictionary   ${items[3].additionalClassifications[0]}  id
+
+  Wait Until Page Contains Element   xpath=.//*[@id='myform']/tender-form/div/button   100
+  Click Element                      xpath=.//*[@id='myform']/tender-form/div/button
+  Sleep  2
+  Wait Until Page Contains Element   xpath=(//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification'])[2]   100
+  Click Element                      xpath=(//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification'])[2]
+  Wait Until Element Is Visible      xpath=//div[contains(@id,'addClassification')]
+  Input text                         xpath=//div[contains(@class, 'modal fade ng-scope in')]//input[@ng-model='searchstring']    ${dkpp_desc1}
+  Wait Until Page Contains   ${dkpp_id1}
+  Click Element   xpath=//td[contains(., '${dkpp_id1}')]
+  Click Element                      xpath=//div[contains(@class, 'modal fade ng-scope in')]//button[@ng-click='choose()']
+
+  Sleep  2
+  Wait Until Page Contains Element   xpath=.//*[@id='myform']/tender-form/div/button   100
+  Click Element                      xpath=.//*[@id='myform']/tender-form/div/button
+  Sleep  2
+  Wait Until Page Contains Element   xpath=(//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification'])[3]   100
+  Click Element                      xpath=(//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification'])[3]
+  Wait Until Element Is Visible      xpath=//div[contains(@id,'addClassification')]
+  Input text                         xpath=//div[contains(@class, 'modal fade ng-scope in')]//input[@ng-model='searchstring']    ${dkpp_desc2}
+  Wait Until Page Contains   ${dkpp_id2}
+  Click Element   xpath=//td[contains(., '${dkpp_id2}')]
+  Click Element                      xpath=//div[contains(@class, 'modal fade ng-scope in')]//button[@ng-click='choose()']
+
+  Sleep  2
+  Wait Until Page Contains Element   xpath=.//*[@id='myform']/tender-form/div/button   100
+  Click Element                      xpath=.//*[@id='myform']/tender-form/div/button
+  Sleep  2
+  Wait Until Page Contains Element   xpath=(//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification'])[4]   100
+  Click Element                      xpath=(//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification'])[4]
+  Wait Until Element Is Visible      xpath=//div[contains(@id,'addClassification')]
+  Input text                         xpath=//div[contains(@class, 'modal fade ng-scope in')]//input[@ng-model='searchstring']    ${dkpp_desc3}
+  Wait Until Page Contains   ${dkpp_id3}
+  Click Element   xpath=//td[contains(., '${dkpp_id3}')]
+  Click Element                      xpath=//div[contains(@class, 'modal fade ng-scope in')]//button[@ng-click='choose()']
+
 
 Пошук тендера по ідентифікатору
   [Arguments]  @{ARGUMENTS}
@@ -331,126 +378,3 @@ Oтримати internal id по UAid
   Click Element                      xpath=//div[div/pre[1]]/div[1]
   Input text                         xpath=//div[textarea]/textarea            ${answer}
   Click Element                      xpath=//div[textarea]/span/button[1]
-
-Багатопредметний тендер
-  [Arguments]  @{ARGUMENTS}
-  [Documentation]
-  ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  tender_data
-
-  ${items}=         Get From Dictionary   ${ARGUMENTS[1].data}               items
-  ${title}=         Get From Dictionary   ${ARGUMENTS[1].data}               title
-  ${description}=   Get From Dictionary   ${ARGUMENTS[1].data}               description
-  ${budget}=        Get From Dictionary   ${ARGUMENTS[1].data.value}         amount
-  ${step_rate}=     Get From Dictionary   ${ARGUMENTS[1].data.minimalStep}   amount
-  ${items_description}=   Get From Dictionary   ${ARGUMENTS[1].data}         description
-  ${quantity}=      Get From Dictionary   ${items[0]}                        quantity
-  ${cpv}=           Get From Dictionary   ${items[0].classification}         id
-  ${dkpp_desc0}=     Get From Dictionary   ${items[0].additionalClassifications[0]}   description
-  ${dkpp_id0}=       Get From Dictionary   ${items[0].additionalClassifications[0]}  id
-  ${dkpp_desc1}=     Get From Dictionary   ${items[1].additionalClassifications[0]}   description
-  ${dkpp_id1}=       Get From Dictionary   ${items[1].additionalClassifications[0]}  id
-  ${dkpp_desc2}=     Get From Dictionary   ${items[2].additionalClassifications[0]}   description
-  ${dkpp_id2}=       Get From Dictionary   ${items[2].additionalClassifications[0]}  id
-  ${dkpp_desc3}=     Get From Dictionary   ${items[3].additionalClassifications[0]}   description
-  ${dkpp_id3}=       Get From Dictionary   ${items[3].additionalClassifications[0]}  id
-  ${unit}=          Get From Dictionary   ${items[0].unit}                   name
-  ${start_date}=    Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}   startDate
-  ${start_date}=    convert_date_to_etender_format   ${start_date}
-  ${start_time}=    Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}   startDate
-  ${start_time}=    convert_time_to_etender_format   ${start_time}
-  ${end_date}=      Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}   endDate
-  ${end_date}=      convert_date_to_etender_format   ${end_date}
-  ${end_time}=      Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}   endDate
-  ${end_time}=   convert_time_to_etender_format      ${end_time}
-  ${enquiry_end_date}=   Get From Dictionary         ${ARGUMENTS[1].data.enquiryPeriod}   endDate
-  ${enquiry_end_date}=   convert_date_to_etender_format   ${enquiry_end_date}
-  ${enquiry_end_time}=   Get From Dictionary              ${ARGUMENTS[1].data.enquiryPeriod}   endDate
-  ${enquiry_end_time}=   convert_time_to_etender_format   ${enquiry_end_time}
-
-  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
-  Maximize Browser Window
-  Wait Until Page Contains          Мої закупівлі    100
-  Click Element                     xpath=//a[contains(@class, 'ng-binding')][./text()='Мої закупівлі']
-  Wait Until Page Contains Element  xpath=//a[contains(@class, 'btn btn-info')]   100
-  Click Element                     xpath=//a[contains(@class, 'btn btn-info')]
-  Wait Until Page Contains Element  id=title
-  Input text    id=title                  ${title}
-  Input text    id=description            ${description}
-  Input text    id=value                  ${budget}
-  Click Element                     xpath=//div[contains(@class, 'form-group col-sm-6')]//input[@type='checkbox']
-  Input text    id=minimalStep            ${step_rate}
-  Input text    id=itemsDescription       ${items_description}
-  DEBUG
-  Input text    id=itemsQuantity          ${quantity}
-  Click Element  xpath=//select[@name="itemsUnit"]/option[@value='kilogram']
-  Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//input[@name='enqPEndDate']   ${enquiry_end_date}
-  Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//div[contains(@class, 'col-sm-2')]//input[@ng-model='data.enquiryPeriod.endDate']   ${enquiry_end_time}
-
-  Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//input[@name='startDate']   ${start_date}
-  Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//div[contains(@class, 'col-sm-2')]//input[@ng-model='data.tenderPeriod.startDate']   ${start_time}
-  Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//input[@name='endDate']   ${end_date}
-  Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//div[contains(@class, 'col-sm-2')]//input[@ng-model='data.tenderPeriod.endDate']   ${end_time}
-
-  Click Element                      xpath=//div[contains(@class, 'col-sm-2')]//input[@data-target='#classification']
-  Wait Until Page Contains Element   xpath=//div[contains(@class, 'modal-content')]//input[@ng-model='searchstring']   100
-  Input text                         xpath=//div[contains(@class, 'modal-content')]//input[@ng-model='searchstring']   ${cpv}
-  Wait Until Page Contains    Картонки  100
-  Click Element                      xpath=//table[contains(@class, 'table table-hover table-striped table-bordered ng-table-rowselected ng-scope ng-table')]//tr[1]//td[1]
-  Wait Until Page Contains    44617100-9 Картонки   100
-  Click Element                      xpath=//div[contains(@class, 'modal-content')]//button[@ng-click='choose()']
-
-  Wait Until Page Contains Element   xpath=//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification']   100
-  Click Element                      xpath=//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification']
-  Wait Until Page Contains Element   xpath=//div[contains(@class, 'modal fade ng-scope in')]//input[@ng-model='searchstring']   100
-  Input text                         xpath=//div[contains(@class, 'modal fade ng-scope in')]//input[@ng-model='searchstring']    ${dkpp_desc0}
-  Wait Until Page Contains   ${dkpp_id0}    100
-  Click Element                      xpath=//table[contains(@class, 'table table-hover table-striped table-bordered ng-table-rowselected ng-scope ng-table')]//tr[2]//td[1]
-  Wait Until Page Contains    17.29.12-00.00 "Блоки, плити та пластини фільтрувальні, з паперової маси"   100
-  Click Element                      xpath=//div[contains(@class, 'modal fade ng-scope in')]//button[@ng-click='choose()']
-
-  Wait Until Page Contains Element   xpath=.//*[@id='myform']/tender-form/div/button   100
-  Click Element                      xpath=.//*[@id='myform']/tender-form/div/button
-  Sleep  2
-  Click Element                      xpath=(//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification'])[2]
-  Wait Until Page Contains Element   xpath=//div[contains(@class, 'modal fade ng-scope in')]//input[@ng-model='searchstring']   100
-  Input text                         xpath=//div[contains(@class, 'modal fade ng-scope in')]//input[@ng-model='searchstring']    ${dkpp_desc1}
-  Wait Until Page Contains   ${dkpp_id1}    100
-  Click Element                      xpath=//table[contains(@class, 'table table-hover table-striped table-bordered ng-table-rowselected ng-scope ng-table')]//tr[3]//td[1]
-  Wait Until Page Contains    17.21.99-00.00 "Роботи субпідрядні як частина виробництва гофрованих паперу й картону, паперової та картонної тари"   100
-  Click Element                      xpath=//div[contains(@class, 'modal fade ng-scope in')]//button[@ng-click='choose()']
-
-  Wait Until Page Contains Element   xpath=.//*[@id='myform']/tender-form/div/button   100
-  Click Element                      xpath=.//*[@id='myform']/tender-form/div/button
-  Sleep  2
-  Click Element                      xpath=(//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification'])[3]
-  Wait Until Page Contains Element   xpath=//div[contains(@class, 'modal fade ng-scope in')]//input[@ng-model='searchstring']   100
-  Input text                         xpath=//div[contains(@class, 'modal fade ng-scope in')]//input[@ng-model='searchstring']    ${dkpp_desc2}
-  Wait Until Page Contains   ${dkpp_id2}    100
-  Click Element                      xpath=.//*[@id='addClassification']/div/div/div[2]/table/tbody/tr/td[2]
-  Wait Until Page Contains     17.22.12-40.00 "Вата; вироби з вати, інші"   100
-  Click Element                      xpath=//div[contains(@class, 'modal fade ng-scope in')]//button[@ng-click='choose()']
-
-  Sleep  2
-  Wait Until Page Contains Element   xpath=.//*[@id='myform']/tender-form/div/button   100
-  Click Element                      xpath=.//*[@id='myform']/tender-form/div/button
-  Wait Until Page Contains Element   xpath=(//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification'])[4]   100
-  Click Element                      xpath=(//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification'])[4]
-  Wait Until Page Contains Element   xpath=//div[contains(@class, 'modal fade ng-scope in')]//input[@ng-model='searchstring']   100
-  Input text                         xpath=//div[contains(@class, 'modal fade ng-scope in')]//input[@ng-model='searchstring']    ${dkpp_desc3}
-  Wait Until Page Contains   ${dkpp_id3}    100
-  Click Element                      xpath=.//*[@id='addClassification']/div/div/div[2]/table/tbody/tr/td[2]
-  Wait Until Page Contains     17.22.12-50.00 "Одяг і речі до одягу з паперової маси, паперу, целюлозної вати чи полотна з целюлозного волокна (крім носових хусточок, наголовних уборів)"   100
-  Click Element                      xpath=//div[contains(@class, 'modal fade ng-scope in')]//button[@ng-click='choose()']
-
-  Wait Until Page Contains Element   xpath=//div[contains(@class, 'form-actions')]//button[@type='submit']
-  Capture Page Screenshot
-  Click Element                      xpath=//div[contains(@class, 'form-actions')]//button[@type='submit']
-  Wait Until Page Contains    [ТЕСТУВАННЯ]   100
-  Click Element   xpath=//table[contains(@class, 'table table-hover table-striped table-bordered ng-scope ng-table')]//tr[1]//a
-  ${tender_UAid}=   Wait Until Keyword Succeeds   240sec   2sec   get tender UAid
-###  harcode Idis bacause issues on the E-tender side, to remove, 1 line:
-  ${tender_UAid}=   Convert To String   UA-2015-06-30-000012
-  ${id}=   Oтримати internal id по UAid   ${ARGUMENTS[0]}   ${tender_UAid}
-  ${Ids}   Create List    ${tender_UAid}   ${id}
-  [return]  ${Ids}

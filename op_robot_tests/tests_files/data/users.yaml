@@ -19,7 +19,7 @@ users:
         password: Password1 
         browser:  firefox
         position:  [0, 0]
-        size:  [640, 450]
+        size:  [740, 550]
     E-tender_Provider1:
         broker: E-tender
         username: E-tendertest
