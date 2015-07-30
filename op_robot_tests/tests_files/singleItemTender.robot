@@ -298,16 +298,22 @@ ${question_id}   0
   ${bid_id}=  get variable value  ${biddingresponce1.data.id}
   ${token1}=  Get Variable Value  ${biddingresponce1.access.token}
   log  ${token1}
-  ${upload_doc_responce}=   Викликати для учасника   ${provider}  Завантажити документ в ставку    ${token1}  ${bid_id}
-  log   ${upload_doc_responce}
-  Set Global Variable   ${upload_doc_responce}
+  ${uploaded_file_data}=   Викликати для учасника   ${provider}  Завантажити документ в ставку    ${token1}  ${bid_id}
+  log  ${uploaded_file_data}
+  Set Global Variable   ${uploaded_file_data}
+
 
 порівняти документ
-  #TODO: compare docs
   [Tags]   ${USERS.users['${provider}'].broker}: вичитати документ
-  ${url} =  Get Variable Value  ${upload_doc_responce[0].data.url}
+  ${flcntnt}=  Get From Dictionary  ${uploaded_file_data}   filecontent
+  ${resp}=  Get From Dictionary  ${uploaded_file_data}   upload_responce
+  ${flpth}=  Get From Dictionary  ${uploaded_file_data}   filepath
+  ${url} =  Get Variable Value  ${resp.data.url}
   ${token1}=  Get Variable Value  ${biddingresponce1.access.token}
-  ${doc}=   Викликати для учасника   ${provider}  отримати документ   ${TENDER_ID}  ${url}  ${token1}
+  ${doc}  ${flnnm}=   Викликати для учасника   ${provider}  отримати документ   ${TENDER_ID}  ${url}  ${token1}
+  Should Be Equal  ${flcntnt}   ${doc}
+  Should Be Equal  ${flpth}   ${flnnm}
+
 
 Можливість змінити документацію цінової пропозиції
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця
@@ -315,7 +321,8 @@ ${question_id}   0
   log  ${biddingresponce1}
   ${bid_id}=  get variable value  ${biddingresponce1.data.id}
   ${token1}=  Get Variable Value  ${biddingresponce1.access.token}
-  ${upload_doc_responce_id}=  get variable value  ${upload_doc_responce[0].data.id}
+  ${resp}=  Get From Dictionary  ${uploaded_file_data}   upload_responce
+  ${upload_doc_responce_id}=  get variable value  ${resp.data.id}
   log  ${token1} 
   Викликати для учасника   ${provider}  Змінити документ в ставці    ${token1}  ${bid_id}  ${upload_doc_responce_id}
 
