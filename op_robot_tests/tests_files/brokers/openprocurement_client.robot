@@ -295,10 +295,10 @@ ${question_id}   0
   ${created_file_path}=   create_file  ${filecontent}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${TENDER_DATA.data.id}
   ${tender}=  set_access_key  ${tender}  ${ARGUMENTS[1]}
-  ${reply}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  upload_bid_document  ${created_file_path}  ${tender}   ${ARGUMENTS[2]}
-  
-  Log object data   ${reply}  reply
-  [return]  ${reply}   ${filecontent}
+  ${responce}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  upload_bid_document  ${created_file_path}  ${tender}   ${ARGUMENTS[2]}
+  ${uploaded_file} =  Create Dictionary   filepath  ${created_file_path}   filecontent  ${filecontent}   upload_responce  ${responce}
+  Log object data   ${uploaded_file}
+  [return]  ${uploaded_file}
 
 Змінити документ в ставці
   [Documentation]
@@ -359,6 +359,7 @@ ${question_id}   0
   log  ${ARGUMENTS[2]}
   ${tenderID}=  openprocurement_client.отримати internal id по UAid  ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${tenderID}
-  ${reply}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_file   ${tender}   ${ARGUMENTS[2]}  ${ARGUMENTS[3]}
-  log   ${reply}
-  [return]   ${reply}
+  ${contents}  ${filename}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_file   ${tender}   ${ARGUMENTS[2]}  ${ARGUMENTS[3]}
+  log   ${contents}
+  log   ${filename}
+  [return]   ${contents}  ${filename}
