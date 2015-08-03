@@ -114,8 +114,11 @@ ${locator.tenderId}                  jquery=h3
   Click Element                      xpath=//div[@ng-click="goHome()"]
 ###  harcode Idis bacause issues on the Newtend side, to remove after fix:
   ${tender_UAid}=   Convert To String   UA-2015-07-06-000105
+  ${tender_id}=     Convert To String   192c86c7d8b74c1081d1a9b2db0faba2
+
 ###  ${tender_UAid}=  Get Text  xpath=//div[@class="title"]
-  ${Ids}   Create List    ${tender_UAid}
+
+  ${Ids}   Create List   ${tender_UAid}   ${tender_id}
   [return]  ${Ids}
 
 Set datetime
@@ -143,16 +146,98 @@ Set datetime
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  items
 
-## Get values
+## Get values for 2-nd item
+  ${items_description1}=   Get From Dictionary   ${items[1]}                          description
+  ${quantity1}=      Get From Dictionary   ${items[1]}                                quantity
+  ${cpv1}=           Get From Dictionary   ${items[1].classification}                 description_ua
+  ${dkpp_desc1}=     Get From Dictionary   ${items[1].additionalClassifications[0]}   description
+  ${dkpp_id1}=       Get From Dictionary   ${items[1].additionalClassifications[0]}   id
+  ${unit1}=          Get From Dictionary   ${items[1].unit}                           name
+
+  ${deliverydate_end_date1}=   Get From Dictionary   ${items[1].deliveryDate}          endDate
+
+  ${countryName1}=     Get From Dictionary   ${items[1].deliveryAddress}   countryName
+  ${ZIP1}=             Get From Dictionary   ${items[1].deliveryAddress}   postalCode
+  ${region1}=          Get From Dictionary   ${items[1].deliveryAddress}   region
+  ${locality1}=        Get From Dictionary   ${items[1].deliveryAddress}   locality
+  ${streetAddress1}=   Get From Dictionary   ${items[1].deliveryAddress}   streetAddress
+
+## Get values for 3-rd item
+  ${items_description2}=   Get From Dictionary   ${items[2]}                          description
+  ${quantity2}=      Get From Dictionary   ${items[2]}                                quantity
+  ${cpv2}=           Get From Dictionary   ${items[2].classification}                 description_ua
+  ${dkpp_desc2}=     Get From Dictionary   ${items[2].additionalClassifications[0]}   description
+  ${dkpp_id2}=       Get From Dictionary   ${items[2].additionalClassifications[0]}   id
+  ${unit2}=          Get From Dictionary   ${items[2].unit}                           name
+
+  ${deliverydate_end_date2}=   Get From Dictionary   ${items[2].deliveryDate}          endDate
+
+  ${countryName2}=     Get From Dictionary   ${items[2].deliveryAddress}   countryName
+  ${ZIP2}=             Get From Dictionary   ${items[2].deliveryAddress}   postalCode
+  ${region2}=          Get From Dictionary   ${items[2].deliveryAddress}   region
+  ${locality2}=        Get From Dictionary   ${items[2].deliveryAddress}   locality
+  ${streetAddress2}=   Get From Dictionary   ${items[2].deliveryAddress}   streetAddress
+
+## Get values for 4-th item
+  ${items_description3}=   Get From Dictionary   ${items[3]}                          description
+  ${quantity3}=      Get From Dictionary   ${items[3]}                                quantity
+  ${cpv3}=           Get From Dictionary   ${items[3].classification}                 description_ua
+  ${dkpp_desc3}=     Get From Dictionary   ${items[3].additionalClassifications[0]}   description
+  ${dkpp_id3}=       Get From Dictionary   ${items[3].additionalClassifications[0]}   id
+  ${unit3}=          Get From Dictionary   ${items[3].unit}                           name
+
+  ${deliverydate_end_date3}=   Get From Dictionary   ${items[3].deliveryDate}          endDate
+
+  ${countryName3}=     Get From Dictionary   ${items[3].deliveryAddress}   countryName
+  ${ZIP3}=             Get From Dictionary   ${items[3].deliveryAddress}   postalCode
+  ${region3}=          Get From Dictionary   ${items[3].deliveryAddress}   region
+  ${locality3}=        Get From Dictionary   ${items[3].deliveryAddress}   locality
+  ${streetAddress3}=   Get From Dictionary   ${items[3].deliveryAddress}   streetAddress
+
 
   Click Element   xpath=//a[@class="icon-black plus-black remove-field ng-scope"]
+###переробити на наступний ітем
 
+# Input text   id=itemDescription0   ${items_description}
+  Input text   id=itemDescription1   ${items_description1}
+# Input text   id=quantity0          ${quantity}
+  Input text   id=quantity1          ${quantity1}
+### to fix
+  Click Element                      xpath=//a[@class="dropdown-toggle ng-binding"]
+  Click Element                       xpath=(//span[contains(@class, 'caret')][./text()='единицы измерения'])
+
+<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle ng-binding" dropdown-toggle="">
+                          единицы измерения <span class="caret"></span>
+                      </a>
+  Click Element                      xpath=//a[contains(text(),'${unit1}')]
+
+# Set CPV
+  Click Element                      id=classifier11
+  Wait Until Page Contains Element   xpath=//input[@class="ng-pristine ng-untouched ng-valid"]   100
+  Input text                         xpath=//input[@class="ng-pristine ng-untouched ng-valid"]   ${cpv1}
+  Wait Until Page Contains Element   xpath=//span[contains(text(),'${cpv1}')]   20
+  Click Element                      xpath=//input[@class="ng-pristine ng-untouched ng-valid"]
+  Click Element                      xpath=//button[@class="btn btn-default btn-lg pull-right choose ng-binding"]
+# Set ДКПП
+  Click Element                      id=classifier21
+  Wait Until Page Contains Element   xpath=//input[@class="ng-pristine ng-untouched ng-valid"]   100
+  Input text                         xpath=//input[@class="ng-pristine ng-untouched ng-valid"]   ${dkpp_desc1}
+  Wait Until Page Contains Element   xpath=//span[contains(text(),'${dkpp_id1}')]   100
+  Click Element                      xpath=//span[contains(text(),'${dkpp_id1}')]/../..//input[@class="ng-pristine ng-untouched ng-valid"]
+  Click Element                      xpath=//button[@class="btn btn-default btn-lg pull-right choose ng-binding"]
+# Set Delivery Address
+  Click Element                      id=deliveryAddress1
+  Wait Until Page Contains Element   xpath=//input[1][@class="form-control ng-pristine ng-untouched ng-valid"]   100
+  Input text                         xpath=//input[1][@class="form-control ng-pristine ng-untouched ng-valid"]   ${countryName}
+  Input text                         xpath=//input[1][@class="form-control ng-pristine ng-untouched ng-valid"]   ${ZIP}
+  Input text                         xpath=//input[1][@class="form-control ng-pristine ng-untouched ng-valid"]   ${region}
+  Input text                         xpath=//input[1][@class="form-control ng-pristine ng-untouched ng-valid"]   ${locality}
+  Input text                         xpath=//input[1][@class="form-control ng-pristine ng-untouched ng-valid"]   ${streetAddress}
+  Click Element                      xpath=//button[@class="btn btn-lg single-btn ng-binding"]
+# Set Item Datetime
+  Set datetime   end-date-delivery1         ${deliverydate_end_date1}
+###
   Debug
-
-
-<a class="icon-black plus-black remove-field ng-scope" href="" ng-if="$index == tender.items.length - 1" ng-click="addField()" title="Добавить лот"></a>
-
-
 
 
 
