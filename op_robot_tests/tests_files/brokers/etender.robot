@@ -5,15 +5,6 @@ Library  DateTime
 
 *** Variables ***
 ${locator.tenderId}                  jquery=h3
-${locator.title}                     jquery=tender-subject-info>div.row:contains("Назва закупівлі:")>:eq(1)>
-${locator.description}               jquery=tender-subject-info>div.row:contains("Детальний опис закупівлі:")>:eq(1)>
-${locator.minimalStep.amount}        jquery=tender-subject-info>div.row:contains("Мінімальний крок аукціону, грн.:")>:eq(1)>
-${locator.procuringEntity.name}      jquery=customer-info>div.row:contains("Найменування:")>:eq(1)>
-${locator.value.amount}              jquery=tender-subject-info>div.row:contains("Повний доступний бюджет закупівлі, грн.:")>:eq(1)>
-${locator.tenderPeriod.startDate}    jquery=tender-procedure-info>div.row:contains("Початок прийому пропозицій:")>:eq(1)>
-${locator.tenderPeriod.endDate}      jquery=tender-procedure-info>div.row:contains("Завершення прийому пропозицій:")>:eq(1)>
-${locator.enquiryPeriod.startDate}   jquery=tender-procedure-info>div.row:contains("Початок періоду уточнень:")>:eq(1)>
-${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contains("Завершення періоду уточнень:")>:eq(1)>
 
 *** Keywords ***
 Підготувати дані для оголошення тендера
@@ -114,7 +105,6 @@ get tender UAid
   ${tender_UAid}=  Get Text  xpath=//div[contains(@class, "panel-heading")]
   ${tender_UAid}=  Get Substring  ${tender_UAid}  7  27
 
-
 Oтримати internal id по UAid
   [Arguments]  @{ARGUMENTS}
   [Documentation]
@@ -184,6 +174,57 @@ Oтримати internal id по UAid
   Wait Until Page Contains    ${ARGUMENTS[1]}   10
   sleep  1
   Capture Page Screenshot
+
+  Подати цінову пропозицію
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  ${INTERNAL_TENDER_ID}
+  ...      ${ARGUMENTS[2]} ==  test_bid_data
+
+  ${bid}=        Get From Dictionary   ${ARGUMENTS[2].data.value}         amount
+  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+  Wait Until Page Contains          Інформація про процедуру закупівлі    100
+  Wait Until Page Contains Element          id=amount   10
+  Input text    id=amount                  ${bid}
+  Click Element                     xpath=//button[contains(@class, 'btn btn-success')][./text()='Реєстрація пропозиції']
+
+Задати питання
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} = username
+  ...      ${ARGUMENTS[1]} = ${INTERNAL_TENDER_ID}
+  ...      ${ARGUMENTS[2]} = question_data
+
+  ${title}=        Get From Dictionary  ${ARGUMENTS[2].data}  title
+  ${description}=  Get From Dictionary  ${ARGUMENTS[2].data}  description
+
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}   ${TENDER_ID}
+
+  Wait Until Page Contains Element   jquery=a[href^="#/addQuestion/"]   100
+  Click Element                      jquery=a[href^="#/addQuestion/"]
+  Wait Until Page Contains Element   id=title
+  Input text                         id=title                 ${title}
+  Input text                         id=description           ${description}
+  Click Element                      xpath=//div[contains(@class, 'form-actions')]//button[@type='submit']
+
+Відповісти на питання
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} = username
+  ...      ${ARGUMENTS[1]} = ${INTERNAL_TENDER_ID}
+  ...      ${ARGUMENTS[2]} = 0
+  ...      ${ARGUMENTS[3]} = answer_data
+
+  ${answer}=     Get From Dictionary  ${ARGUMENTS[3].data}  answer
+
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}   ${TENDER_ID}
+
+  Click Element                      xpath=//div[div/pre[1]]/div[1]
+  Input text                         xpath=//div[textarea]/textarea            ${answer}
+  Click Element                      xpath=//div[textarea]/span/button[1]
 
 обновити сторінку з тендером
   [Arguments]  @{ARGUMENTS}
@@ -319,54 +360,3 @@ Oтримати internal id по UAid
   відмітити на сторінці поле з тендера   question answer   jquery=tender-questions>div:eq(1)>div:last>
   ${return_value}=   Get Text  jquery=tender-questions>div:eq(1)>div:last>
   [return]  ${return_value}
-
-Подати цінову пропозицію
-  [Arguments]  @{ARGUMENTS}
-  [Documentation]
-  ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  ${INTERNAL_TENDER_ID}
-  ...      ${ARGUMENTS[2]} ==  test_bid_data
-
-  ${bid}=        Get From Dictionary   ${ARGUMENTS[2].data.value}         amount
-  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
-  Wait Until Page Contains          Інформація про процедуру закупівлі    100
-  Wait Until Page Contains Element          id=amount   10
-  Input text    id=amount                  ${bid}
-  Click Element                     xpath=//button[contains(@class, 'btn btn-success')][./text()='Реєстрація пропозиції']
-
-Задати питання
-  [Arguments]  @{ARGUMENTS}
-  [Documentation]
-  ...      ${ARGUMENTS[0]} = username
-  ...      ${ARGUMENTS[1]} = ${INTERNAL_TENDER_ID}
-  ...      ${ARGUMENTS[2]} = question_data
-
-  ${title}=        Get From Dictionary  ${ARGUMENTS[2].data}  title
-  ${description}=  Get From Dictionary  ${ARGUMENTS[2].data}  description
-
-  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
-  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}   ${TENDER_ID}
-
-  Wait Until Page Contains Element   jquery=a[href^="#/addQuestion/"]   100
-  Click Element                      jquery=a[href^="#/addQuestion/"]
-  Wait Until Page Contains Element   id=title
-  Input text                         id=title                 ${title}
-  Input text                         id=description           ${description}
-  Click Element                      xpath=//div[contains(@class, 'form-actions')]//button[@type='submit']
-
-Відповісти на питання
-  [Arguments]  @{ARGUMENTS}
-  [Documentation]
-  ...      ${ARGUMENTS[0]} = username
-  ...      ${ARGUMENTS[1]} = ${INTERNAL_TENDER_ID}
-  ...      ${ARGUMENTS[2]} = 0
-  ...      ${ARGUMENTS[3]} = answer_data
-
-  ${answer}=     Get From Dictionary  ${ARGUMENTS[3].data}  answer
-
-  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
-  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}   ${TENDER_ID}
-
-  Click Element                      xpath=//div[div/pre[1]]/div[1]
-  Input text                         xpath=//div[textarea]/textarea            ${answer}
-  Click Element                      xpath=//div[textarea]/span/button[1]

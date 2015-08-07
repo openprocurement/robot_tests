@@ -5,15 +5,6 @@ Library  DateTime
 
 *** Variables ***
 ${locator.tenderId}                  jquery=h3
-${locator.title}                     jquery=tender-subject-info>div.row:contains("Назва закупівлі:")>:eq(1)>
-${locator.description}               jquery=tender-subject-info>div.row:contains("Детальний опис закупівлі:")>:eq(1)>
-${locator.minimalStep.amount}        jquery=tender-subject-info>div.row:contains("Мінімальний крок аукціону, грн.:")>:eq(1)>
-${locator.procuringEntity.name}      jquery=customer-info>div.row:contains("Найменування:")>:eq(1)>
-${locator.value.amount}              jquery=tender-subject-info>div.row:contains("Повний доступний бюджет закупівлі, грн.:")>:eq(1)>
-${locator.tenderPeriod.startDate}    jquery=tender-procedure-info>div.row:contains("Початок прийому пропозицій:")>:eq(1)>
-${locator.tenderPeriod.endDate}      jquery=tender-procedure-info>div.row:contains("Завершення прийому пропозицій:")>:eq(1)>
-${locator.enquiryPeriod.startDate}   jquery=tender-procedure-info>div.row:contains("Початок періоду уточнень:")>:eq(1)>
-${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contains("Завершення періоду уточнень:")>:eq(1)>
 
 *** Keywords ***
 Підготувати клієнт для користувача
@@ -178,7 +169,6 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   Unselect Frame
   Input text                          name=tender_enquiryPeriod_endDate   ${enquiry_end_date}
   Input text                          name=tender_tenderPeriod_endDate    ${end_date}
-
 
 Пошук тендера по ідентифікатору
   [Arguments]  @{ARGUMENTS}
