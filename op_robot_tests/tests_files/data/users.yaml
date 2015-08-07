@@ -83,3 +83,12 @@ users:
         browser: firefox
         position:  [0, 450]
         size:  [640, 450]
+    Publicbid_Owner:
+        broker: Publicbid
+        username: Publicbid
+        homepage: "https://public-bid.com.ua/test/"
+        login: yaroslav1boyko@gmail.com
+        password: Password1
+        browser: firefox
+        position: [0, 0]
+        size: [740, 550]

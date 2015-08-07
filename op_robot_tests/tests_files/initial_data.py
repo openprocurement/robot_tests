@@ -67,7 +67,6 @@ def test_tender_data(period_interval=2):
                 "id": u"44617100-9",
                 "description": u"Cartons",
                 "description_ua": u"Картонки",
-            },
             "additionalClassifications": [
                 {
                     "scheme": u"ДКПП",
@@ -134,7 +133,7 @@ def prom_test_tender_data():
         {
             "description": fake.catch_phrase(),
             "deliveryDate": {
-				"startDate": (now + timedelta(days=4)).isoformat(),
+                "startDate": (now + timedelta(days=4)).isoformat(),
                 "endDate": (now + timedelta(days=5)).isoformat()
             },
             "deliveryLocation": {
@@ -180,40 +179,42 @@ def prom_test_tender_data():
 def test_tender_data_multiple_lots(period_interval=2):  
     now = datetime.now()
     return {
-    "title": fake.catch_phrase(),
-    "mode": "test",
-    "submissionMethodDetails": "quick",
-    "description": u"Тестовий тендер",
-    "description_en": "Test tender",
-    "description_ru": "Тестовый тендер",
-    "procuringEntity": {
-	"name": fake.company(),
-	"name_ru": fake_ru.company(),
-	"name_en": fake_en.company(),
-	"identifier": {
-	    "scheme": u"UA-EDR",
-	    "id": u"0000{}".format(fake.pyint()),
-	    "uri": fake.image_url(width=None, height=None)
-	},
-	"address": {
-	    "countryName": u"Україна",
-	    "postalCode": fake.postalcode(),
-	    "region": u"м. Київ",
-	    "locality": u"м. Київ",
-	    "streetAddress": fake.street_address()
-	},
-	"contactPoint": {
-	    "name": fake.name(),
-	    "telephone": fake.phone_number()
-	}
+      "title": fake.catch_phrase(),
+      "mode": "test",
+      "submissionMethodDetails": "quick",
+      "description": u"Тестовий тендер",
+      "description_en": "Test tender",
+      "description_ru": "Тестовый тендер",
+      "procuringEntity": {
+	  "name": fake.company(),
+	  "name_ru": fake_ru.company(),
+	  "name_en": fake_en.company(),
+	  "identifier": {
+	      "scheme": u"UA-EDR",
+	      "id": u"0000{}".format(fake.pyint()),
+	      "uri": fake.image_url(width=None, height=None)
+	  },
+	  "address": {
+	      "countryName": u"Україна",
+	      "postalCode": fake.postalcode(),
+	      "region": u"м. Київ",
+	      "locality": u"м. Київ",
+	      "streetAddress": fake.street_address()
+	  },
+	  "contactPoint": {
+	      "name": fake.name(),
+	      "telephone": fake.phone_number()
+	  }
     },
     "value": {
-	    "amount": 50000,
-	    "currency": u"UAH"
+      },
+      "value": {
+        "amount": 50000,
+        "currency": u"UAH"
     },
     "minimalStep": {
-	    "amount": 100,
-	    "currency": u"UAH"
+        "amount": 100,
+        "currency": u"UAH"
     },
     "items": [
         {
@@ -462,7 +463,7 @@ def test_bid_data():
             }
         }
     })
-	    
+        
 def auction_bid():
     return munchify({
         "data": {"value": {
