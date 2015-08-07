@@ -2,15 +2,51 @@ users:
     Tender_Owner:
         api_key: e9c3ccb8e8124f26941d5f9639a4ebc3
         broker: Quinta
-    Prom_Owner:
-        broker: Prom
-        username: Promtest
-        browser:  chrome
+    Tender_Viewer:
+        broker: Quinta
+        api_key: ""
+    Tender_User:
+        api_key: e9c3ccb8e8124f26941d5f9639a4ebc3
+        broker: Quinta
+    Tender_User1:
+        api_key: e9c3ccb8e8124f26941d5f9639a4ebc3
+        broker: Quinta
+    E-tender_Owner:
+        broker: E-tender
+        username: E-tendertest
+        homepage: "http://uat.e-tender.biz/#/profile"
+        login: Misha2
+        password: Password1 
+        browser:  firefox
         position:  [0, 0]
+        size:  [740, 550]
+    E-tender_Provider1:
+        broker: E-tender
+        username: E-tendertest
+        homepage: "http://uat.e-tender.biz/#/profile"
+        login: st_org
+        password: 12345678
+        browser: firefox
+        position: [0, 0]
+        size: [640, 450]
+    E-tender_Provider2:
+        broker: E-tender
+        username: E-tendertest
+        homepage: "http://uat.e-tender.biz/#/profile"
+        login: provider2
+        password: Qa123456
+        browser:  firefox
+        position:  [700, 0]
         size:  [640, 450]
     E-tender_Viewer:
         broker: E-tender
         username: E-tendertest
+        browser:  chrome
+        position:  [0, 0]
+        size:  [640, 450]
+    Prom_Owner:
+        broker: Prom
+        username: Promtest
         browser:  chrome
         position:  [0, 0]
         size:  [640, 450]
@@ -31,20 +67,28 @@ users:
         username: Publicbid
         browser:  chrome
         position:  [0, 450]
-        size:  [640, 450]  
+        size:  [640, 450]
     Netcast_Viewer:
         broker: Netcast
         username: TetcastTest
         browser:  chrome
         position:  [0, 450]
-        size:  [640, 450]     
-    Tender_Viewer:
-        broker: Quinta
-        api_key: ""
-    Tender_User:
-        api_key: e9c3ccb8e8124f26941d5f9639a4ebc3
-        broker: Quinta
-    Tender_User1:
-        api_key: e9c3ccb8e8124f26941d5f9639a4ebc3
-        broker: Quinta
-    
+        size:  [640, 450]
+    Netcast_Owner:
+        broker: Netcast
+        username: Netcasttest
+        homepage: "http://dz2.byustudio.in.ua"
+        login: ovramet.s@gmail.com
+        password: Password1
+        browser: firefox
+        position:  [0, 450]
+        size:  [640, 450]
+    Publicbid_Owner:
+        broker: Publicbid
+        username: Publicbid
+        homepage: "https://public-bid.com.ua/test/"
+        login: yaroslav1boyko@gmail.com
+        password: Password1
+        browser: firefox
+        position: [0, 0]
+        size: [740, 550]

@@ -35,6 +35,7 @@ def test_tender_data(period_interval=2):
         "contactPoint": {
             "name": fake.name(),
             "telephone": fake.phone_number()
+            
         }
     },
     "value": {
@@ -65,7 +66,8 @@ def test_tender_data(period_interval=2):
             "classification": {
                 "scheme": u"CPV",
                 "id": u"44617100-9",
-                "description": u"Cartons"
+                "description": u"Cartons",
+                "description_ua": u"Картонки",
             },
             "additionalClassifications": [
                 {
@@ -82,8 +84,8 @@ def test_tender_data(period_interval=2):
         }
     ],
     "enquiryPeriod": {
-        "startDate": (now).isoformat(),
-        "endDate": (now + timedelta(minutes=1)).isoformat()
+        "startDate": (now + timedelta(minutes=2)).isoformat(),
+        "endDate": (now + timedelta(minutes=3)).isoformat()
     },
     "tenderPeriod": {
         "startDate": (now + timedelta(minutes=2)).isoformat(),
@@ -133,7 +135,7 @@ def prom_test_tender_data():
         {
             "description": fake.catch_phrase(),
             "deliveryDate": {
-				"startDate": (now + timedelta(days=4)).isoformat(),
+                "startDate": (now + timedelta(days=4)).isoformat(),
                 "endDate": (now + timedelta(days=5)).isoformat()
             },
             "deliveryLocation": {
@@ -179,41 +181,41 @@ def prom_test_tender_data():
 def test_tender_data_multiple_lots(period_interval=2):  
     now = datetime.now()
     return {
-      "title": fake.catch_phrase(),
-      "mode": "test",
-      "submissionMethodDetails": "quick",
-      "description": u"Тестовий тендер",
-      "description_en": "Test tender",
-      "description_ru": "Тестовый тендер",
-      "procuringEntity": {
-	  "name": fake.company(),
-	  "name_ru": fake_ru.company(),
-	  "name_en": fake_en.company(),
-	  "identifier": {
-	      "scheme": u"UA-EDR",
-	      "id": u"0000{}".format(fake.pyint()),
-	      "uri": fake.image_url(width=None, height=None)
-	  },
-	  "address": {
-	      "countryName": u"Україна",
-	      "postalCode": fake.postalcode(),
-	      "region": u"м. Київ",
-	      "locality": u"м. Київ",
-	      "streetAddress": fake.street_address()
-	  },
-	  "contactPoint": {
-	      "name": fake.name(),
-	      "telephone": fake.phone_number()
-	  }
-      },
-      "value": {
-	  "amount": 50000.99,
-	  "currency": u"UAH"
-      },
-      "minimalStep": {
-	  "amount": 100.1,
-	  "currency": u"UAH"
-      },
+    "title": fake.catch_phrase(),
+    "mode": "test",
+    "submissionMethodDetails": "quick",
+    "description": u"Тестовий тендер",
+    "description_en": "Test tender",
+    "description_ru": "Тестовый тендер",
+    "procuringEntity": {
+    "name": fake.company(),
+    "name_ru": fake_ru.company(),
+    "name_en": fake_en.company(),
+    "identifier": {
+        "scheme": u"UA-EDR",
+        "id": u"0000{}".format(fake.pyint()),
+        "uri": fake.image_url(width=None, height=None)
+    },
+    "address": {
+        "countryName": u"Україна",
+        "postalCode": fake.postalcode(),
+        "region": u"м. Київ",
+        "locality": u"м. Київ",
+        "streetAddress": fake.street_address()
+    },
+    "contactPoint": {
+        "name": fake.name(),
+        "telephone": fake.phone_number()
+    }
+    },
+    "value": {
+        "amount": 50000,
+        "currency": u"UAH"
+    },
+    "minimalStep": {
+        "amount": 100,
+        "currency": u"UAH"
+    },
     "items": [
         {
             "description": fake.catch_phrase(),
@@ -234,7 +236,8 @@ def test_tender_data_multiple_lots(period_interval=2):
             "classification": {
                 "scheme": u"CPV",
                 "id": u"44617100-9",
-                "description": u"Cartons"
+                "description": u"Cartons",
+                "description_ua": u"Картонки",
             },
             "additionalClassifications": [
                 {
@@ -249,7 +252,7 @@ def test_tender_data_multiple_lots(period_interval=2):
             },
             "quantity": fake.pyint()
         },
-	{
+    {
             "description": fake.catch_phrase(),
             "deliveryDate": {
                 "endDate": (now + timedelta(days=5)).isoformat()
@@ -283,7 +286,7 @@ def test_tender_data_multiple_lots(period_interval=2):
             },
             "quantity": fake.pyint()
         },
-	{
+    {
             "description": fake.catch_phrase(),
             "deliveryDate": {
                 "endDate": (now + timedelta(days=5)).isoformat()
@@ -317,7 +320,7 @@ def test_tender_data_multiple_lots(period_interval=2):
             },
             "quantity": fake.pyint()
         },
-	{
+    {
             "description": fake.catch_phrase(),
             "deliveryDate": {
                 "endDate": (now + timedelta(days=5)).isoformat()
@@ -353,12 +356,12 @@ def test_tender_data_multiple_lots(period_interval=2):
         }
     ],
     "enquiryPeriod": {
-        "startDate": (now).isoformat(),
-        "endDate": (now + timedelta(minutes=1)).isoformat()
+        "startDate": (now + timedelta(minutes=3)).isoformat(),
+        "endDate": (now + timedelta(minutes=4)).isoformat()
     },
     "tenderPeriod": {
-        "startDate": (now + timedelta(minutes=2)).isoformat(),
-        "endDate": (now + timedelta(minutes=(2+period_interval))).isoformat()
+        "startDate": (now + timedelta(minutes=4)).isoformat(),
+        "endDate": (now + timedelta(minutes=(5+period_interval))).isoformat()
     }
 }    
 
@@ -460,7 +463,7 @@ def test_bid_data():
             }
         }
     })
-	    
+        
 def auction_bid():
     return munchify({
         "data": {"value": {

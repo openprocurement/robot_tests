@@ -1,6 +1,6 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -
 import os
-from tempfile import NamedTemporaryFile
 from munch import munchify, Munch, fromYAML
 from json import load
 from iso8601 import parse_date
@@ -23,14 +23,23 @@ from .initial_data import (
 
 TIMEZONE = timezone('Europe/Kiev')
 
-def create_file(content):
-    tf = NamedTemporaryFile(delete=False)
-    tf.write(content)
-    tf.close()
-    return tf.name
-
 def get_date():
-	return datetime.now().isoformat()
+    return datetime.now().isoformat()
+
+def convert_date_to_slash_format(isodate):
+    iso_dt=parse_date(isodate)
+    date_string = iso_dt.strftime("%d/%m/%Y")
+    return  date_string
+
+def convert_date_to_etender_format(isodate):
+    iso_dt=parse_date(isodate)
+    date_string = iso_dt.strftime("%d-%m-%Y")
+    return  date_string
+
+def convert_time_to_etender_format(isodate):
+    iso_dt=parse_date(isodate)
+    time_string = iso_dt.strftime("%H:%M")
+    return  time_string
 
 def change_state(arguments):
     try:
