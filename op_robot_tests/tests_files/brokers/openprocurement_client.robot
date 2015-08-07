@@ -149,13 +149,13 @@ ${question_id}   0
   Set_To_Object    ${TENDER_DATA.data}   items  ${items}
   ${TENDER_DATA}=  set_access_key  ${TENDER_DATA}  ${USERS.users['${ARGUMENTS[0]}'].access_token}
   ${TENDER_DATA}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_tender  ${TENDER_DATA}
-  
+
 
 Задати питання
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tender_uid
-  ...      ${ARGUMENTS[2]} ==  bid
+  ...      ${ARGUMENTS[2]} ==  question
   [Arguments]  @{ARGUMENTS}
   log many  @{ARGUMENTS}
   ${internalid}=  отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
@@ -163,7 +163,7 @@ ${question_id}   0
   log   ${USERS.users['${ARGUMENTS[0]}']}
   ${biddingresponce}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_question  ${tender}  ${ARGUMENTS[2]}
   [return]  ${biddingresponce}
-  
+
 Відповісти на питання
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
@@ -192,7 +192,7 @@ ${question_id}   0
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
   ${complaint}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  _create_tender_resource_item  ${tender}  ${ARGUMENTS[2]}   complaints
   Log object data   ${complaint}  complaint
-  
+
 порівняти скаргу 
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
@@ -209,7 +209,7 @@ ${question_id}   0
   #:FOR  ${element}  IN  ${ARGUMENTS[2].data}
   #\  log  ${element}
   #\  Dictionary Should Contain Value  ${complaint}  ${element}
- 
+
 Обробити скаргу
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
@@ -238,7 +238,7 @@ ${question_id}   0
   log  ${tender}отримати
   ${biddingresponce}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_bid  ${tender}  ${ARGUMENTS[2]}
   [return]  ${biddingresponce}
-   
+
 Змінити цінову пропозицію
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
@@ -264,7 +264,7 @@ ${question_id}   0
   ${changed_bid}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  delete_bid   ${tender}  ${ARGUMENTS[2]}
   Log  ${changed_bid}
   [return]   ${changed_bid}
-  
+
 Прийняти цінову пропозицію
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
@@ -286,14 +286,20 @@ ${question_id}   0
   [Arguments]  @{ARGUMENTS}
   log  ${ARGUMENTS[0]}
   log  ${ARGUMENTS[1]}
+
+  # Built-in variables related to the operating system ease making the test data operating-system-agnostic.
+  log  ${TEMPDIR} # An absolute path to the directory where the test data file is located. This variable is case-sensitive.
+  log  ${CURDIR}  # An absolute path to the system temporary directory. In UNIX-like systems this is typically /tmp, and in Windows c:\Documents and Settings\<user>\Local Settings\Temp.
+
+  ${filecontent} =  Set Variable  somestring
+  ${created_file_path}=   create_file  ${filecontent}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${TENDER_DATA.data.id}
   ${tender}=  set_access_key  ${tender}  ${ARGUMENTS[1]}
-  ${filename}=   Set Variable  file.txt
-  Set_To_Object  ${TENDER_DATA.data}    documents.title   ${filename}
-  ${reply}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  upload_bid_document  ${filename}  ${tender}   ${ARGUMENTS[2]}
-  Log object data   ${reply}  reply
-  [return]  ${reply}
-  
+  ${responce}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  upload_bid_document  ${created_file_path}  ${tender}   ${ARGUMENTS[2]}
+  ${uploaded_file} =  Create Dictionary   filepath  ${created_file_path}   filecontent  ${filecontent}   upload_responce  ${responce}
+  Log object data   ${uploaded_file}
+  [return]  ${uploaded_file}
+
 Змінити документ в ставці
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
@@ -310,7 +316,7 @@ ${question_id}   0
   ${filename}=   Set Variable  newfile.txt
   Set_To_Object  ${TENDER_DATA.data}    documents.title   ${filename}
   ${reply}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  update_bid_document  ${filename}  ${tender}   ${ARGUMENTS[2]}  ${ARGUMENTS[3]}
-  Log object data   ${reply}  replyотримати
+  Log object data   ${reply}  reply
 
 Завантажити документ
   [Documentation]
@@ -327,4 +333,33 @@ ${question_id}   0
   Set_To_Object  ${TENDER_DATA.data}    documents.title   ${filename}
   ${reply}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  upload_tender_document  ${filename}  ${tender}
   Log object data   ${reply}  reply
-  
+
+Отримати пропозиції
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  tender_uid
+  ...      ${ARGUMENTS[2]} ==  bid_id
+  ...      ${ARGUMENTS[3]} ==  token
+  [Arguments]  @{ARGUMENTS}
+  ${internalid}=  отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
+  ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
+  ${bids}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_bid    ${tender}   ${ARGUMENTS[2]}  ${ARGUMENTS[3]}
+  Log  ${bids}
+  [return]   ${bids}
+
+отримати документ
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  tenderUaID
+  ...      ${ARGUMENTS[2]} ==  url
+  ...      ${ARGUMENTS[3]} ==  token
+  [Arguments]  @{ARGUMENTS}
+  log  ${ARGUMENTS[0]}
+  log  ${ARGUMENTS[1]}
+  log  ${ARGUMENTS[2]}
+  ${tenderID}=  openprocurement_client.отримати internal id по UAid  ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+  ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${tenderID}
+  ${contents}  ${filename}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_file   ${tender}   ${ARGUMENTS[2]}  ${ARGUMENTS[3]}
+  log   ${contents}
+  log   ${filename}
+  [return]   ${contents}  ${filename}

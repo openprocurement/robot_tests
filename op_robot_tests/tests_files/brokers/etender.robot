@@ -3,18 +3,8 @@ Library  Selenium2Screenshots
 Library  String
 Library  DateTime
 
-
 *** Variables ***
 ${locator.tenderId}                  jquery=h3
-${locator.title}                     jquery=tender-subject-info>div.row:contains("Назва закупівлі:")>:eq(1)>
-${locator.description}               jquery=tender-subject-info>div.row:contains("Детальний опис закупівлі:")>:eq(1)>
-${locator.minimalStep.amount}        jquery=tender-subject-info>div.row:contains("Мінімальний крок аукціону, грн.:")>:eq(1)>
-${locator.procuringEntity.name}      jquery=customer-info>div.row:contains("Найменування:")>:eq(1)>
-${locator.value.amount}              jquery=tender-subject-info>div.row:contains("Повний доступний бюджет закупівлі, грн.:")>:eq(1)>
-${locator.tenderPeriod.startDate}    jquery=tender-procedure-info>div.row:contains("Початок прийому пропозицій:")>:eq(1)>
-${locator.tenderPeriod.endDate}      jquery=tender-procedure-info>div.row:contains("Завершення прийому пропозицій:")>:eq(1)>
-${locator.enquiryPeriod.startDate}   jquery=tender-procedure-info>div.row:contains("Початок періоду уточнень:")>:eq(1)>
-${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contains("Завершення періоду уточнень:")>:eq(1)>
 
 *** Keywords ***
 Підготувати дані для оголошення тендера
@@ -32,6 +22,7 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
 # login
   Wait Until Page Contains Element   id=inputUsername   100
   Input text   id=inputUsername      ${USERS.users['${username}'].login}
+  Wait Until Page Contains Element   id=inputPassword   100
   Input text   id=inputPassword      ${USERS.users['${username}'].password}
   Click Button   id=btn_submit
 
@@ -78,43 +69,41 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   Input text    id=minimalStep            ${step_rate}
   Input text    id=itemsDescription       ${items_description}
   Input text    id=itemsQuantity          ${quantity}
+  Wait Until Page Contains Element    xpath=//select[@name="itemsUnit"]/option[@value='kilogram']   100
   Click Element  xpath=//select[@name="itemsUnit"]/option[@value='kilogram']
   Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//input[@name='enqPEndDate']   ${enquiry_end_date}
   Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//div[contains(@class, 'col-sm-2')]//input[@ng-model='data.enquiryPeriod.endDate']   ${enquiry_end_time}
-
   Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//input[@name='startDate']   ${start_date}
   Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//div[contains(@class, 'col-sm-2')]//input[@ng-model='data.tenderPeriod.startDate']   ${start_time}
   Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//input[@name='endDate']   ${end_date}
   Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//div[contains(@class, 'col-sm-2')]//input[@ng-model='data.tenderPeriod.endDate']   ${end_time}
-
   Click Element   xpath=//div[contains(@class, 'col-sm-2')]//input[@data-target='#classification']
-  Wait Until Page Contains   Оберіть класифікатор CPV   100
-  Input text   xpath=//div[contains(@class, 'modal-content')]//input[@ng-model='searchstring']   ${cpv}
-  Wait Until Page Contains    Картонки  100
-  Click Element   xpath=//table[contains(@class, 'table table-hover table-striped table-bordered ng-table-rowselected ng-scope ng-table')]//tr[1]//td[1]
-  Wait Until Page Contains    44617100-9 Картонки   100
+  Wait Until Element Is Visible     xpath=//div[contains(@role,'dialog')]
+  Input text      xpath=//div[contains(@class, 'modal-content')]//input[@ng-model='searchstring']   ${cpv}
+  Wait Until Page Contains    ${cpv}
+  Click Element   xpath=//td[contains(., '${cpv}')]
   Click Element   xpath=//div[contains(@class, 'modal-content')]//button[@ng-click='choose()']
-
   Click Element   xpath=//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification']
-  Wait Until Page Contains   Класифікатор ДКПП   100
+  Wait Until Element Is Visible      xpath=//div[contains(@id,'addClassification')]
   Input text      xpath=//div[contains(@class, 'modal fade ng-scope in')]//input[@ng-model='searchstring']    ${dkpp_desc}
-  Wait Until Page Contains   ${dkpp_id}    100
-  Click Element   xpath=//table[contains(@class, 'table table-hover table-striped table-bordered ng-table-rowselected ng-scope ng-table')]//tr[2]//td[1]
-  Wait Until Page Contains    17.21.1 "Папір і картон гофровані, паперова й картонна тара"   100
+  Wait Until Page Contains   ${dkpp_id}
+  Click Element   xpath=//td[contains(., '${dkpp_id}')]
   Click Element   xpath=//div[contains(@class, 'modal fade ng-scope in')]//button[@ng-click='choose()']
+  Run Keyword if   '${mode}' == 'multi'   Додати предмет   items
+  Wait Until Page Contains Element   xpath=//div[contains(@class, 'form-actions')]//button[@type='submit']
   Click Element   xpath=//div[contains(@class, 'form-actions')]//button[@type='submit']
   Wait Until Page Contains    [ТЕСТУВАННЯ]   100
   Click Element   xpath=//table[contains(@class, 'table table-hover table-striped table-bordered ng-scope ng-table')]//tr[1]//a
   ${tender_UAid}=   Wait Until Keyword Succeeds   240sec   2sec   get tender UAid
 ###  harcode Idis bacause issues on the E-tender side, to remove, 1 line:
-  ${tender_UAid}=   Convert To String   UA-2015-06-30-000012
-    ${Ids}   Create List    ${tender_UAid}
+  ${tender_UAid}=   Convert To String   UA-2015-08-03-000025
+  ${id}=   Oтримати internal id по UAid   ${ARGUMENTS[0]}   ${tender_UAid}
+  ${Ids}   Create List    ${tender_UAid}   ${id}
   [return]  ${Ids}
 
 get tender UAid
   ${tender_UAid}=  Get Text  xpath=//div[contains(@class, "panel-heading")]
   ${tender_UAid}=  Get Substring  ${tender_UAid}  7  27
-  [return]  ${tender_UAid}
 
 Oтримати internal id по UAid
   [Arguments]  @{ARGUMENTS}
@@ -124,10 +113,49 @@ Oтримати internal id по UAid
   etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
   ${current_location}=   Get Location
   ${tender_id}=   Fetch From Right   ${current_location}   /
-###  harcode Idis bacause issues on the E-tender side, to remove, 1 line:
+##  harcode Idis bacause issues on the E-tender side, to remove, 1 line:
   ${tender_id}=     Convert To String   94ffe180019d459787aafe290cd300e2
-  log  ${internal_id}
-  [return]  ${internal_id}
+  log  ${tender_id}
+  [return]  ${tender_id}
+
+Додати предмет
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  items
+  ${dkpp_desc1}=     Get From Dictionary   ${items[1].additionalClassifications[0]}   description
+  ${dkpp_id1}=       Get From Dictionary   ${items[1].additionalClassifications[0]}  id
+  ${dkpp_desc2}=     Get From Dictionary   ${items[2].additionalClassifications[0]}   description
+  ${dkpp_id2}=       Get From Dictionary   ${items[2].additionalClassifications[0]}  id
+  ${dkpp_desc3}=     Get From Dictionary   ${items[3].additionalClassifications[0]}   description
+  ${dkpp_id3}=       Get From Dictionary   ${items[3].additionalClassifications[0]}  id
+
+  Wait Until Page Contains Element   xpath=.//*[@id='myform']/tender-form/div/button   100
+  Click Element                      xpath=.//*[@id='myform']/tender-form/div/button
+  Sleep  2
+  Click Element                      xpath=(//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification'])[2]
+  Wait Until Element Is Visible      xpath=//div[contains(@id,'addClassification')]
+  Input text                         xpath=//div[contains(@class, 'modal fade ng-scope in')]//input[@ng-model='searchstring']    ${dkpp_desc1}
+  Wait Until Page Contains   ${dkpp_id1}
+  Click Element   xpath=//td[contains(., '${dkpp_id1}')]
+  Click Element                      xpath=//div[contains(@class, 'modal fade ng-scope in')]//button[@ng-click='choose()']
+  Sleep  2
+  Click Element                      xpath=.//*[@id='myform']/tender-form/div/button
+  Sleep  2
+  Click Element                      xpath=(//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification'])[3]
+  Wait Until Element Is Visible      xpath=//div[contains(@id,'addClassification')]
+  Input text                         xpath=//div[contains(@class, 'modal fade ng-scope in')]//input[@ng-model='searchstring']    ${dkpp_desc2}
+  Wait Until Page Contains   ${dkpp_id2}
+  Click Element   xpath=//td[contains(., '${dkpp_id2}')]
+  Click Element                      xpath=//div[contains(@class, 'modal fade ng-scope in')]//button[@ng-click='choose()']
+  Sleep  2
+  Click Element                      xpath=.//*[@id='myform']/tender-form/div/button
+  Sleep  2
+  Click Element                      xpath=(//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification'])[4]
+  Wait Until Element Is Visible      xpath=//div[contains(@id,'addClassification')]
+  Input text                         xpath=//div[contains(@class, 'modal fade ng-scope in')]//input[@ng-model='searchstring']    ${dkpp_desc3}
+  Wait Until Page Contains   ${dkpp_id3}
+  Click Element   xpath=//td[contains(., '${dkpp_id3}')]
+  Click Element                      xpath=//div[contains(@class, 'modal fade ng-scope in')]//button[@ng-click='choose()']
 
 Пошук тендера по ідентифікатору
   [Arguments]  @{ARGUMENTS}
@@ -136,16 +164,67 @@ Oтримати internal id по UAid
   ...      ${ARGUMENTS[1]} ==  tenderId
 
   Switch browser   ${ARGUMENTS[0]}
-   Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
+  Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
   Wait Until Page Contains   Список закупівель    10
-   sleep  1
-   Input Text  jquery=input[ng-change='search()']  ${ARGUMENTS[1]}
-   Click Link  jquery=a[ng-click='search()']
-   sleep  2
+  sleep  1
+  Input Text  jquery=input[ng-change='search()']  ${ARGUMENTS[1]}
+  Click Link  jquery=a[ng-click='search()']
+  sleep  2
   Click Link    jquery=a[href^="#/tenderDetailes"]
   Wait Until Page Contains    ${ARGUMENTS[1]}   10
   sleep  1
   Capture Page Screenshot
+
+  Подати цінову пропозицію
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  ${INTERNAL_TENDER_ID}
+  ...      ${ARGUMENTS[2]} ==  test_bid_data
+
+  ${bid}=        Get From Dictionary   ${ARGUMENTS[2].data.value}         amount
+  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+  Wait Until Page Contains          Інформація про процедуру закупівлі    100
+  Wait Until Page Contains Element          id=amount   10
+  Input text    id=amount                  ${bid}
+  Click Element                     xpath=//button[contains(@class, 'btn btn-success')][./text()='Реєстрація пропозиції']
+
+Задати питання
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} = username
+  ...      ${ARGUMENTS[1]} = ${INTERNAL_TENDER_ID}
+  ...      ${ARGUMENTS[2]} = question_data
+
+  ${title}=        Get From Dictionary  ${ARGUMENTS[2].data}  title
+  ${description}=  Get From Dictionary  ${ARGUMENTS[2].data}  description
+
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}   ${TENDER_ID}
+
+  Wait Until Page Contains Element   jquery=a[href^="#/addQuestion/"]   100
+  Click Element                      jquery=a[href^="#/addQuestion/"]
+  Wait Until Page Contains Element   id=title
+  Input text                         id=title                 ${title}
+  Input text                         id=description           ${description}
+  Click Element                      xpath=//div[contains(@class, 'form-actions')]//button[@type='submit']
+
+Відповісти на питання
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} = username
+  ...      ${ARGUMENTS[1]} = ${INTERNAL_TENDER_ID}
+  ...      ${ARGUMENTS[2]} = 0
+  ...      ${ARGUMENTS[3]} = answer_data
+
+  ${answer}=     Get From Dictionary  ${ARGUMENTS[3].data}  answer
+
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}   ${TENDER_ID}
+
+  Click Element                      xpath=//div[div/pre[1]]/div[1]
+  Input text                         xpath=//div[textarea]/textarea            ${answer}
+  Click Element                      xpath=//div[textarea]/span/button[1]
 
 обновити сторінку з тендером
   [Arguments]  @{ARGUMENTS}
@@ -281,54 +360,3 @@ Oтримати internal id по UAid
   відмітити на сторінці поле з тендера   question answer   jquery=tender-questions>div:eq(1)>div:last>
   ${return_value}=   Get Text  jquery=tender-questions>div:eq(1)>div:last>
   [return]  ${return_value}
-
-Подати цінову пропозицію
-  [Arguments]  @{ARGUMENTS}
-  [Documentation]
-  ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  ${INTERNAL_TENDER_ID}
-  ...      ${ARGUMENTS[2]} ==  test_bid_data
-
-  ${bid}=        Get From Dictionary   ${ARGUMENTS[2].data.value}         amount
-  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
-  Wait Until Page Contains          Інформація про процедуру закупівлі    100
-  Wait Until Page Contains Element          id=amount   10
-  Input text    id=amount                  ${bid}
-  Click Element                     xpath=//button[contains(@class, 'btn btn-success')][./text()='Реєстрація пропозиції']
-
-Задати питання
-  [Arguments]  @{ARGUMENTS}
-  [Documentation]
-  ...      ${ARGUMENTS[0]} = username
-  ...      ${ARGUMENTS[1]} = ${INTERNAL_TENDER_ID}
-  ...      ${ARGUMENTS[2]} = question_data
-
-  ${title}=        Get From Dictionary  ${ARGUMENTS[2].data}  title
-  ${description}=  Get From Dictionary  ${ARGUMENTS[2].data}  description
-
-  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
-  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}   ${TENDER_ID}
-
-  Wait Until Page Contains Element   jquery=a[href^="#/addQuestion/"]   100
-  Click Element                      jquery=a[href^="#/addQuestion/"]
-  Wait Until Page Contains Element   id=title
-  Input text                         id=title                 ${title}
-  Input text                         id=description           ${description}
-  Click Element                      xpath=//div[contains(@class, 'form-actions')]//button[@type='submit']
-
-Відповісти на питання
-  [Arguments]  @{ARGUMENTS}
-  [Documentation]
-  ...      ${ARGUMENTS[0]} = username
-  ...      ${ARGUMENTS[1]} = ${INTERNAL_TENDER_ID}
-  ...      ${ARGUMENTS[2]} = 0
-  ...      ${ARGUMENTS[3]} = answer_data
-
-  ${answer}=     Get From Dictionary  ${ARGUMENTS[3].data}  answer
-
-  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
-  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}   ${TENDER_ID}
-
-  Click Element                      xpath=//div[div/pre[1]]/div[1]
-  Input text                         xpath=//div[textarea]/textarea            ${answer}
-  Click Element                      xpath=//div[textarea]/span/button[1]

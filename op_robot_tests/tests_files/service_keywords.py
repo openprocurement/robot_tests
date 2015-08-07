@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -
 import os
 from munch import munchify, Munch, fromYAML
@@ -22,8 +23,14 @@ from .initial_data import (
 import calendar
 
 TIMEZONE = timezone('Europe/Kiev')
+
 def get_date():
     return datetime.now().isoformat()
+
+def convert_date_to_slash_format(isodate):
+    iso_dt=parse_date(isodate)
+    date_string = iso_dt.strftime("%d/%m/%Y")
+    return  date_string
 
 def convert_date_to_etender_format(isodate):
     iso_dt=parse_date(isodate)

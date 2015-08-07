@@ -19,7 +19,7 @@ users:
         password: Password1 
         browser:  firefox
         position:  [0, 0]
-        size:  [640, 450]
+        size:  [740, 550]
     E-tender_Provider1:
         broker: E-tender
         username: E-tendertest
@@ -83,6 +83,15 @@ users:
         browser:  firefox
         position:  [0, 0]
         size:  [640, 450]
+    Netcast_Owner:
+        broker: Netcast
+        username: Netcasttest
+        homepage: "http://dz2.byustudio.in.ua"
+        login: ovramet.s@gmail.com
+        password: Password1
+        browser: firefox
+        position:  [0, 450]
+        size:  [640, 450]
     Newtend_Provider1:
         broker: Newtend
         username: Newtendtest
@@ -90,8 +99,17 @@ users:
         login: qtest@mailinator.com
         password: 123123
         browser: firefox
-        position: [700, 0]
-        size: [640, 450]
+        position:  [0, 450]
+        size:  [640, 450]
+    Publicbid_Owner:
+        broker: Publicbid
+        username: Publicbid
+        homepage: "https://public-bid.com.ua/test/"
+        login: yaroslav1boyko@gmail.com
+        password: Password1
+        browser: firefox
+        position: [0, 0]
+        size: [740, 550]
     Newtend_Provider2:
         broker: Newtend
         username: Newtendtest
