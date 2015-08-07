@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -
 import os
-from tempfile import NamedTemporaryFile
 from munch import munchify, Munch, fromYAML
 from json import load
 from iso8601 import parse_date
@@ -18,16 +17,10 @@ import time
 from .initial_data import (
     test_tender_data, test_question_data, test_question_answer_data,
     test_bid_data, test_award_data, test_complaint_data, test_complaint_reply_data, test_tender_data_multiple_lots,
-    auction_bid, prom_test_tender_data
+    auction_bid, prom_test_tender_data, create_fake_doc
 )
 
 TIMEZONE = timezone('Europe/Kiev')
-
-def create_file(content):
-    tf = NamedTemporaryFile(delete=False)
-    tf.write(content)
-    tf.close()
-    return tf.name
 
 def get_date():
 	return datetime.now().isoformat()
