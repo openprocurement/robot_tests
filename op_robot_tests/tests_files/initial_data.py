@@ -65,7 +65,8 @@ def test_tender_data(period_interval=2):
             "classification": {
                 "scheme": u"CPV",
                 "id": u"44617100-9",
-                "description": u"Cartons"
+                "description": u"Cartons",
+                "description_ua": u"Картонки"
             },
             "additionalClassifications": [
                 {
@@ -150,7 +151,7 @@ def prom_test_tender_data():
             "classification": {
                 "scheme": u"CPV",
                 "id": u"44617100-9",
-                "description": u"Cartons"
+                "description": u"Cartons",
             },
             "additionalClassifications": [
                 {
@@ -207,11 +208,11 @@ def test_tender_data_multiple_lots(period_interval=2):
 	  }
       },
       "value": {
-	  "amount": 50000.99,
+	  "amount": 50000,
 	  "currency": u"UAH"
       },
       "minimalStep": {
-	  "amount": 100.1,
+	  "amount": 100,
 	  "currency": u"UAH"
       },
     "items": [
@@ -234,7 +235,8 @@ def test_tender_data_multiple_lots(period_interval=2):
             "classification": {
                 "scheme": u"CPV",
                 "id": u"44617100-9",
-                "description": u"Cartons"
+                "description": u"Cartons",
+                "description_ua": u"Картонки"
             },
             "additionalClassifications": [
                 {
@@ -268,7 +270,8 @@ def test_tender_data_multiple_lots(period_interval=2):
             "classification": {
                 "scheme": u"CPV",
                 "id": u"44617100-9",
-                "description": u"Cartons"
+                "description": u"Cartons",
+                "description_ua": u"Картонки"
             },
             "additionalClassifications": [
                 {
@@ -302,7 +305,8 @@ def test_tender_data_multiple_lots(period_interval=2):
             "classification": {
                 "scheme": u"CPV",
                 "id": u"44617100-9",
-                "description": u"Cartons"
+                "description": u"Cartons",
+                "description_ua": u"Картонки"
             },
             "additionalClassifications": [
                 {
@@ -336,7 +340,8 @@ def test_tender_data_multiple_lots(period_interval=2):
             "classification": {
                 "scheme": u"CPV",
                 "id": u"44617100-9",
-                "description": u"Cartons"
+                "description": u"Cartons",
+                "description_ua": u"Картонки"
             },
             "additionalClassifications": [
                 {
