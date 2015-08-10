@@ -14,6 +14,8 @@ ${locator.tenderPeriod.startDate}    jquery=tender-procedure-info>div.row:contai
 ${locator.tenderPeriod.endDate}      jquery=tender-procedure-info>div.row:contains("Завершення прийому пропозицій:")>:eq(1)>
 ${locator.enquiryPeriod.startDate}   jquery=tender-procedure-info>div.row:contains("Початок періоду уточнень:")>:eq(1)>
 ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contains("Завершення періоду уточнень:")>:eq(1)>
+##Використовую такий шлях у кожного буде мінятись /yboi/. Міняйте на сві шлях до файлу
+${file_path}     /home/yboi/openprocurement.robottests.buildout/Document.docx
 
 *** Keywords ***
 Підготувати клієнт для користувача
@@ -367,3 +369,15 @@ Oтримати internal id по UAid
   Click Element                      xpath=//div[div/pre[1]]/div[1]
   Input text                         xpath=//div[textarea]/textarea            ${answer}
   Click Element                      xpath=//div[textarea]/span/button[1]
+
+Завантажити документ
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} = username
+  ...      ${ARGUMENTS[1]} = filename
+  ...      ${ARGUMENTS[2]} = ${TENDER_ID}
+
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[2]}   ${TENDER_ID}
+  Wait Until Page Contains Element   xpath=//button[text()="Завантажити"]   100
+  Choose File                        xpath=//button[text()="Завантажити"]   ${file_path}
