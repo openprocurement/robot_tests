@@ -6,6 +6,14 @@ from faker import Factory
 fake = Factory.create('uk_UA')
 fake_ru = Factory.create('ru')
 fake_en = Factory.create()
+from tempfile import NamedTemporaryFile
+
+def create_fake_doc():
+    content = fake.text()
+    tf = NamedTemporaryFile(delete=False)
+    tf.write(content)
+    tf.close()
+    return tf.name
 
 def test_tender_data(period_interval=2):
   now = datetime.now()

@@ -16,10 +16,10 @@ ${locator.tenderId}                  jquery=h3
   Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
 
 # login
-  Wait Until Page Contains Element   name=siteLogin   100
-  Input text    name=siteLogin      ${BROKERS['${USERS.users['${username}'].broker}'].login}
-  Input text   name=sitePass       ${BROKERS['${USERS.users['${username}'].broker}'].password}
-  Click Button   xpath=.//*[@id='table1']/tbody/tr/td/form/p[3]/input
+#  Wait Until Page Contains Element   name=siteLogin   100
+#  Input text    name=siteLogin      ${BROKERS['${USERS.users['${username}'].broker}'].login}
+#  Input text   name=sitePass       ${BROKERS['${USERS.users['${username}'].broker}'].password}
+#  Click Button   xpath=.//*[@id='table1']/tbody/tr/td/form/p[3]/input
 
   Wait Until Page Contains Element    jquery=a[href="/cabinet"]
   Click Element                       jquery=a[href="/cabinet"]

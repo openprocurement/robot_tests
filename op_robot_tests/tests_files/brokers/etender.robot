@@ -175,7 +175,7 @@ Oтримати internal id по UAid
   sleep  1
   Capture Page Screenshot
 
-  Подати цінову пропозицію
+Подати цінову пропозицію
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
