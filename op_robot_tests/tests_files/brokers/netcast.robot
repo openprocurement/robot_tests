@@ -241,3 +241,6 @@ Set Multi Ids
   Click Element                      xpath=//div[1]/div[3]/form/div/table/tbody/tr/td[2]/button
   Wait Until Page Contains           ${answer}   30
   Capture Page Screenshot
+
+#  KEYWORD: BuiltIn.Log ${TENDER}
+#  18:11:57.979  INFO  {u'LAST_MODIFICATION_DATE': '2015-08-11 18:11:57.974', u'TENDER_UAID': u'UA-2015-08-11-000050'}
