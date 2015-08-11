@@ -81,5 +81,14 @@ users:
         login: ovramet.s@gmail.com
         password: Password1
         browser: firefox
-        position:  [0, 450]
-        size:  [640, 450]
+        position:  [0, 1080]
+        size:  [1920, 1080]
+    Netcast_Provider1:
+        broker: Netcast
+        username: Netcasttest
+        homepage: "http://dz2.byustudio.in.ua"
+        login: halyna.khimka@gmail.com 
+        password: JHO5VUp5n
+        browser: firefox
+        position:  [0, 1080]
+        size:  [1920, 1080]

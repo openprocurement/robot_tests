@@ -25,15 +25,15 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
 
 # login
-  Wait Until Page Contains Element   name=siteLogin   100
-  Input text    name=siteLogin      ${BROKERS['${USERS.users['${username}'].broker}'].login}
-  Input text   name=sitePass       ${BROKERS['${USERS.users['${username}'].broker}'].password}
-  Click Button   xpath=.//*[@id='table1']/tbody/tr/td/form/p[3]/input
+#  Wait Until Page Contains Element   name=siteLogin   100
+#  Input text    name=siteLogin      ${BROKERS['${USERS.users['${username}'].broker}'].login}
+#  Input text   name=sitePass       ${BROKERS['${USERS.users['${username}'].broker}'].password}
+#  Click Button   xpath=.//*[@id='table1']/tbody/tr/td/form/p[3]/input
 
   Wait Until Page Contains Element    jquery=a[href="/cabinet"]
   Click Element                       jquery=a[href="/cabinet"]
   Wait Until Page Contains Element    name=email   100
-  Input text    name=email     mail
+#  Input text    name=email     mail
   Sleep  1
   Input text    name=email      ${USERS.users['${username}'].login}
   Sleep  2
@@ -187,18 +187,16 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   ...      ${ARGUMENTS[1]} ==  tenderId
   ...      ${ARGUMENTS[2]} ==  id
   Switch browser   ${ARGUMENTS[0]}
+
   ${current_location}=   Get Location
   Run keyword if   '${BROKERS['${USERS.users['${username}'].broker}'].url}/#/tenderDetailes/${ARGUMENTS[2]}'=='${current_location}'  Reload Page
   Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
-  Wait Until Page Contains   E-TENDER - центр електронної торгівлі   10
-  sleep  1
-  Input Text  jquery=input[ng-change='search()']  ${ARGUMENTS[1]}
-  Click Link  jquery=a[ng-click='search()']
-  sleep  2
-  ${last_note_id}=  Add pointy note   jquery=a[href^="#/tenderDetailes"]   Found tender with tenderID "${ARGUMENTS[1]}"   width=200  position=bottom
-  sleep  1
-  Remove element   ${last_note_id}
-  Click Link    jquery=a[href^="#/tenderDetailes"]
+  Wait Until Page Contains            Держзакупівлі.онлайн   10
+#  sleep  1
+  Click Element                       xpath=//a[text()='Закупівлі']
+  Click Element                       xpath=//select[@name='filter[object]']/option[@value='tenderID']
+  Input text                          xpath=//input[@name='filter[search]']  ${ARGUMENTS[1]}
+  Click Element                       xpath=//button[@class='btn'][./text()='Пошук']
   Wait Until Page Contains    ${ARGUMENTS[1]}   10
   sleep  1
   Capture Page Screenshot
@@ -215,5 +213,31 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
   netcast.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}   ${ARGUMENTS[1]}   ${TENDER_ID}
 
-  Wait Until Page Contains Element   jquery=a[href^="#/addQuestions/"]   30
-  Click Element                      jquery=a[href^="#/addQuestions/"]
+  Click Element                       xpath=//a[@class='reverse tenderLink']
+  Wait Until Page Contains Element    xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]    20
+  Click Element                       xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]
+  Wait Until Page Contains Element    name=title
+  Input text                          name=title                 ${title}
+  Input text                          xpath=//textarea[@name='description']           ${description}
+  Click Element                       xpath=//div[contains(@class, 'buttons')]//button[@type='submit']
+  Wait Until Page Contains            ${title}   30
+  Capture Page Screenshot
+
+Відповісти на питання
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} = username
+  ...      ${ARGUMENTS[1]} = ${INTERNAL_TENDER_ID}
+  ...      ${ARGUMENTS[2]} = 0
+  ...      ${ARGUMENTS[3]} = answer_data
+
+  ${answer}=     Get From Dictionary  ${ARGUMENTS[3].data}  answer
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  netcast.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}   ${TENDER_ID}
+
+  Click Element                      xpath=//a[@class='reverse tenderLink']
+  Click Element                      xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]
+  Input text                         xpath=//textarea[@name='answer']            ${answer}
+  Click Element                      xpath=//div[1]/div[3]/form/div/table/tbody/tr/td[2]/button
+  Wait Until Page Contains           ${answer}   30
+  Capture Page Screenshot
