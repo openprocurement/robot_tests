@@ -91,8 +91,8 @@ def test_tender_data(period_interval=2):
         }
     ],
     "enquiryPeriod": {
-        "startDate": (now + timedelta(minutes=2)).isoformat(),
-        "endDate": (now + timedelta(minutes=3)).isoformat()
+        "startDate": (now).isoformat(),
+        "endDate": (now + timedelta(minutes=1)).isoformat()
     },
     "tenderPeriod": {
         "startDate": (now + timedelta(minutes=2)).isoformat(),
@@ -366,12 +366,12 @@ def test_tender_data_multiple_lots(period_interval=2):
         }
     ],
     "enquiryPeriod": {
-        "startDate": (now + timedelta(minutes=3)).isoformat(),
-        "endDate": (now + timedelta(minutes=4)).isoformat()
+        "startDate": (now).isoformat(),
+        "endDate": (now + timedelta(minutes=1)).isoformat()
     },
     "tenderPeriod": {
-        "startDate": (now + timedelta(minutes=4)).isoformat(),
-        "endDate": (now + timedelta(minutes=(5+period_interval))).isoformat()
+        "startDate": (now + timedelta(minutes=2)).isoformat(),
+        "endDate": (now + timedelta(minutes=(2+period_interval))).isoformat()
     }
 }    
 

@@ -14,16 +14,11 @@ ${locator.tenderId}                  jquery=h3
   Open Browser   ${BROKERS['${USERS.users['${ARGUMENTS[0]}'].broker}'].url}   ${USERS.users['${ARGUMENTS[0]}'].browser}   alias=${ARGUMENTS[0]}
   Set Window Size       @{USERS.users['${ARGUMENTS[0]}'].size}
   Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
-
-# login
-#  Wait Until Page Contains Element   name=siteLogin   100
-#  Input text    name=siteLogin      ${BROKERS['${USERS.users['${username}'].broker}'].login}
-#  Input text   name=sitePass       ${BROKERS['${USERS.users['${username}'].broker}'].password}
-#  Click Button   xpath=.//*[@id='table1']/tbody/tr/td/form/p[3]/input
+  Run Keyword And Ignore Error   Pre Login   ${ARGUMENTS[0]}
 
   Wait Until Page Contains Element    jquery=a[href="/cabinet"]
   Click Element                       jquery=a[href="/cabinet"]
-  Wait Until Page Contains Element    name=email   100
+  Wait Until Page Contains Element    name=email   10
   Input text    name=email     mail
   Sleep  1
   Input text    name=email      ${USERS.users['${username}'].login}
@@ -32,20 +27,29 @@ ${locator.tenderId}                  jquery=h3
   Wait Until Page Contains Element   xpath=//button[contains(@class, 'btn')][./text()='Вхід в кабінет']   100
   Click Element                xpath=//button[contains(@class, 'btn')][./text()='Вхід в кабінет']
 
+Pre Login
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...    ${ARGUMENTS[0]} ==  username
+  Wait Until Page Contains Element   name=siteLogin   10
+  Input text    name=siteLogin      ${BROKERS['${USERS.users['${username}'].broker}'].login}
+  Input text   name=sitePass       ${BROKERS['${USERS.users['${username}'].broker}'].password}
+  Click Button   xpath=.//*[@id='table1']/tbody/tr/td/form/p[3]/input
+
 Створити тендер
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tender_data
-
-  ${items}=         Get From Dictionary   ${ARGUMENTS[1].data}               items
-  ${title}=         Get From Dictionary   ${ARGUMENTS[1].data}               title
-  ${description}=   Get From Dictionary   ${ARGUMENTS[1].data}               description
-  ${budget}=        Get From Dictionary   ${ARGUMENTS[1].data.value}         amount
-  ${step_rate}=     Get From Dictionary   ${ARGUMENTS[1].data.minimalStep}   amount
-  ${items_description}=   Get From Dictionary   ${ARGUMENTS[1].data}         description
+  ${tender_data}=   Add_time_for_GUI_FrontEnds   ${ARGUMENTS[1]}
+  ${items}=         Get From Dictionary   ${tender_data.data}               items
+  ${title}=         Get From Dictionary   ${tender_data.data}               title
+  ${description}=   Get From Dictionary   ${tender_data.data}               description
+  ${budget}=        Get From Dictionary   ${tender_data.data.value}         amount
+  ${step_rate}=     Get From Dictionary   ${tender_data.data.minimalStep}   amount
+  ${items_description}=   Get From Dictionary   ${tender_data.data}         description
   ${quantity}=      Get From Dictionary   ${items[0]}         quantity
-  ${countryName}=   Get From Dictionary   ${ARGUMENTS[1].data.procuringEntity.address}       countryName
+  ${countryName}=   Get From Dictionary   ${tender_data.data.procuringEntity.address}       countryName
   ${delivery_end_date}=      Get From Dictionary   ${items[0].deliveryDate}   endDate
   ${delivery_end_date}=      convert_date_to_slash_format   ${delivery_end_date}
   ${cpv}=           Get From Dictionary   ${items[0].classification}          description_ua
@@ -54,9 +58,9 @@ ${locator.tenderId}                  jquery=h3
   ${dkpp_desc}=     Get From Dictionary   ${items[0].additionalClassifications[0]}   description
   ${dkpp_id}=       Get From Dictionary   ${items[0].additionalClassifications[0]}  id
   ${dkpp_id1}=      Replace String   ${dkpp_id}   -   _
-  ${enquiry_end_date}=   Get From Dictionary         ${ARGUMENTS[1].data.enquiryPeriod}   endDate
+  ${enquiry_end_date}=   Get From Dictionary         ${tender_data.data.enquiryPeriod}   endDate
   ${enquiry_end_date}=   convert_date_to_slash_format   ${enquiry_end_date}
-  ${end_date}=      Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}   endDate
+  ${end_date}=      Get From Dictionary   ${tender_data.data.tenderPeriod}   endDate
   ${end_date}=      convert_date_to_slash_format   ${end_date}
 
   Selenium2Library.Switch Browser     ${ARGUMENTS[0]}
@@ -93,10 +97,17 @@ ${locator.tenderId}                  jquery=h3
   Wait Until Page Contains Element    xpath=//a[contains(@class, 'button pubBtn')]    100
   Click Element                       xpath=//a[contains(@class, 'button pubBtn')]
   Wait Until Page Contains            Тендер опубліковано    100
-  ${tender_UAid}=  Get Text           xpath=//*/section[6]/table/tbody/tr[2]/td[2]
-  ${id}=           Get Text           xpath=//*/section[6]/table/tbody/tr[1]/td[2]
-  ${Ids}   Create List    ${tender_UAid}   ${id}
+  ${tender_UAid}=   Get Text          xpath=//*/section[6]/table/tbody/tr[2]/td[2]
+  ${Ids}=   Convert To String         ${tender_UAid}
+  Run keyword if   '${mode}' == 'multi'   Set Multi Ids   ${tender_UAid}
   [return]  ${Ids}
+
+Set Multi Ids
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[1]} ==  ${tender_UAid}
+  ${id}=    Get Text   xpath=//*/section[6]/table/tbody/tr[1]/td[2]
+  ${Ids}=   Create List    ${tender_UAid}   ${id}
 
 Додати предмет
   [Arguments]  @{ARGUMENTS}

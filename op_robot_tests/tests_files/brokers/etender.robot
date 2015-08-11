@@ -7,10 +7,6 @@ Library  DateTime
 ${locator.tenderId}                  jquery=h3
 
 *** Keywords ***
-Підготувати дані для оголошення тендера
-  ${INITIAL_TENDER_DATA}=  prepare_test_tender_data
-  [return]   ${INITIAL_TENDER_DATA}
-
 Підготувати клієнт для користувача
   [Arguments]  @{ARGUMENTS}
   [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
@@ -18,7 +14,6 @@ ${locator.tenderId}                  jquery=h3
   Open Browser   ${USERS.users['${ARGUMENTS[0]}'].homepage}   ${USERS.users['${username}'].browser}   alias=${ARGUMENTS[0]}
   Set Window Size   @{USERS.users['${ARGUMENTS[0]}'].size}
   Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
-
 # login
   Wait Until Page Contains Element   id=inputUsername   100
   Input text   id=inputUsername      ${USERS.users['${username}'].login}
@@ -31,31 +26,30 @@ ${locator.tenderId}                  jquery=h3
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tender_data
-
-  ${items}=         Get From Dictionary   ${ARGUMENTS[1].data}               items
-  ${title}=         Get From Dictionary   ${ARGUMENTS[1].data}               title
-  ${description}=   Get From Dictionary   ${ARGUMENTS[1].data}               description
-  ${budget}=        Get From Dictionary   ${ARGUMENTS[1].data.value}         amount
-  ${step_rate}=     Get From Dictionary   ${ARGUMENTS[1].data.minimalStep}   amount
-  ${items_description}=   Get From Dictionary   ${ARGUMENTS[1].data}         description
+  ${tender_data}=   Add_time_for_GUI_FrontEnds   ${ARGUMENTS[1]}
+  ${items}=         Get From Dictionary   ${tender_data.data}               items
+  ${title}=         Get From Dictionary   ${tender_data.data}               title
+  ${description}=   Get From Dictionary   ${tender_data.data}               description
+  ${budget}=        Get From Dictionary   ${tender_data.data.value}         amount
+  ${step_rate}=     Get From Dictionary   ${tender_data.data.minimalStep}   amount
+  ${items_description}=   Get From Dictionary   ${tender_data.data}         description
   ${quantity}=      Get From Dictionary   ${items[0]}                        quantity
   ${cpv}=           Get From Dictionary   ${items[0].classification}         id
   ${dkpp_desc}=     Get From Dictionary   ${items[0].additionalClassifications[0]}   description
   ${dkpp_id}=       Get From Dictionary   ${items[0].additionalClassifications[0]}  id
   ${unit}=          Get From Dictionary   ${items[0].unit}                   name
-  ${start_date}=    Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}   startDate
+  ${start_date}=    Get From Dictionary   ${tender_data.data.tenderPeriod}   startDate
   ${start_date}=    convert_date_to_etender_format   ${start_date}
-  ${start_time}=    Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}   startDate
+  ${start_time}=    Get From Dictionary   ${tender_data.data.tenderPeriod}   startDate
   ${start_time}=    convert_time_to_etender_format   ${start_time}
-  ${end_date}=      Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}   endDate
+  ${end_date}=      Get From Dictionary   ${tender_data.data.tenderPeriod}   endDate
   ${end_date}=      convert_date_to_etender_format   ${end_date}
-  ${end_time}=      Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}   endDate
+  ${end_time}=      Get From Dictionary   ${tender_data.data.tenderPeriod}   endDate
   ${end_time}=   convert_time_to_etender_format      ${end_time}
-  ${enquiry_end_date}=   Get From Dictionary         ${ARGUMENTS[1].data.enquiryPeriod}   endDate
+  ${enquiry_end_date}=   Get From Dictionary         ${tender_data.data.enquiryPeriod}   endDate
   ${enquiry_end_date}=   convert_date_to_etender_format   ${enquiry_end_date}
-  ${enquiry_end_time}=   Get From Dictionary              ${ARGUMENTS[1].data.enquiryPeriod}   endDate
+  ${enquiry_end_time}=   Get From Dictionary              ${tender_data.data.enquiryPeriod}   endDate
   ${enquiry_end_time}=   convert_time_to_etender_format   ${enquiry_end_time}
-
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
   Wait Until Page Contains          Мої закупівлі    100
   Click Element                     xpath=//a[contains(@class, 'ng-binding')][./text()='Мої закупівлі']
@@ -97,9 +91,17 @@ ${locator.tenderId}                  jquery=h3
   ${tender_UAid}=   Wait Until Keyword Succeeds   240sec   2sec   get tender UAid
 ###  harcode Idis bacause issues on the E-tender side, to remove, 1 line:
   ${tender_UAid}=   Convert To String   UA-2015-08-03-000025
-  ${id}=   Oтримати internal id по UAid   ${ARGUMENTS[0]}   ${tender_UAid}
-  ${Ids}   Create List    ${tender_UAid}   ${id}
+  ${Ids}=   Convert To String   ${tender_UAid}
+  Run keyword if   '${mode}' == 'multi'   Set Multi Ids   ${ARGUMENTS[0]}   ${tender_UAid}
   [return]  ${Ids}
+
+Set Multi Ids
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  ${tender_UAid}
+  ${id}=   Oтримати internal id по UAid   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+  ${Ids}=   Create List    ${tender_UAid}   ${id}
 
 get tender UAid
   ${tender_UAid}=  Get Text  xpath=//div[contains(@class, "panel-heading")]
@@ -109,13 +111,12 @@ Oтримати internal id по UAid
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  tenderid
+  ...      ${ARGUMENTS[1]} ==  ${tender_UAid}
   etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
   ${current_location}=   Get Location
   ${tender_id}=   Fetch From Right   ${current_location}   /
 ##  harcode Idis bacause issues on the E-tender side, to remove, 1 line:
   ${tender_id}=     Convert To String   94ffe180019d459787aafe290cd300e2
-  log  ${tender_id}
   [return]  ${tender_id}
 
 Додати предмет
@@ -161,8 +162,7 @@ Oтримати internal id по UAid
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  tenderId
-
+  ...      ${ARGUMENTS[1]} ==  ${TENDER_UAID}
   Switch browser   ${ARGUMENTS[0]}
   Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
   Wait Until Page Contains   Список закупівель    10
@@ -179,7 +179,7 @@ Oтримати internal id по UAid
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  ${INTERNAL_TENDER_ID}
+  ...      ${ARGUMENTS[1]} ==  ${TENDER_UAID}
   ...      ${ARGUMENTS[2]} ==  test_bid_data
 
   ${bid}=        Get From Dictionary   ${ARGUMENTS[2].data.value}         amount
@@ -193,14 +193,14 @@ Oтримати internal id по UAid
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} = username
-  ...      ${ARGUMENTS[1]} = ${INTERNAL_TENDER_ID}
+  ...      ${ARGUMENTS[1]} = ${TENDER_UAID}
   ...      ${ARGUMENTS[2]} = question_data
 
   ${title}=        Get From Dictionary  ${ARGUMENTS[2].data}  title
   ${description}=  Get From Dictionary  ${ARGUMENTS[2].data}  description
 
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
-  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}   ${TENDER_ID}
+  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
 
   Wait Until Page Contains Element   jquery=a[href^="#/addQuestion/"]   100
   Click Element                      jquery=a[href^="#/addQuestion/"]
@@ -213,14 +213,14 @@ Oтримати internal id по UAid
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} = username
-  ...      ${ARGUMENTS[1]} = ${INTERNAL_TENDER_ID}
+  ...      ${ARGUMENTS[1]} = ${TENDER_UAID}
   ...      ${ARGUMENTS[2]} = 0
   ...      ${ARGUMENTS[3]} = answer_data
 
   ${answer}=     Get From Dictionary  ${ARGUMENTS[3].data}  answer
 
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
-  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}   ${TENDER_ID}
+  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
 
   Click Element                      xpath=//div[div/pre[1]]/div[1]
   Input text                         xpath=//div[textarea]/textarea            ${answer}

@@ -70,11 +70,17 @@ ${locator.tenderId}                  jquery=h3
 # Get Ids
   Wait Until Page Contains Element   xpath=//div[@class="title"]   30
   ${tender_UAid}=         Get Text   xpath=//div[@class="title"]
-  ${current_location}=               Get Location
-  ${tender_id}=      Get Substring   ${current_location}   -41   -9
-  ${Ids}               Create List   ${tender_UAid}   ${tender_id}
+  ${Ids}=        Convert To String   ${tender_UAid}
+  Run keyword if   '${mode}' == 'multi'   Set Multi Ids   ${tender_UAid}
   [return]  ${Ids}
 
+Set Multi Ids
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  ${tender_UAid}
+  ${current_location}=      Get Location
+  ${id}=    Get Substring   ${current_location}   -41   -9
+  ${Ids}=   Create List     ${tender_UAid}   ${id}
 
 Set datetime
   [Arguments]  @{ARGUMENTS}

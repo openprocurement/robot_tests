@@ -176,3 +176,11 @@ def newtend_date_picker_index(isodate):
     if now.day>iso_dt.day:
         mod = calendar.monthrange(now.year, now.month)[1] + mod
     return mod + iso_dt.day
+
+def Add_time_for_GUI_FrontEnds(INITIAL_TENDER_DATA):
+    now = datetime.now() 
+    INITIAL_TENDER_DATA.data.enquiryPeriod['startDate'] = (now + timedelta(minutes=2)).isoformat()
+    INITIAL_TENDER_DATA.data.enquiryPeriod['endDate'] = (now + timedelta(minutes=3)).isoformat()
+    INITIAL_TENDER_DATA.data.tenderPeriod['startDate'] = (now + timedelta(minutes=4)).isoformat()
+    INITIAL_TENDER_DATA.data.tenderPeriod['endDate'] = (now + timedelta(minutes=5)).isoformat()
+    return INITIAL_TENDER_DATA
