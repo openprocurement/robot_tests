@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -
 import os
 from munch import munchify, Munch, fromYAML
@@ -26,21 +25,6 @@ TIMEZONE = timezone('Europe/Kiev')
 
 def get_date():
     return datetime.now().isoformat()
-
-def convert_date_to_slash_format(isodate):
-    iso_dt=parse_date(isodate)
-    date_string = iso_dt.strftime("%d/%m/%Y")
-    return  date_string
-
-def convert_date_to_etender_format(isodate):
-    iso_dt=parse_date(isodate)
-    date_string = iso_dt.strftime("%d-%m-%Y")
-    return  date_string
-
-def convert_time_to_etender_format(isodate):
-    iso_dt=parse_date(isodate)
-    time_string = iso_dt.strftime("%H:%M")
-    return  time_string
 
 def change_state(arguments):
     try:
@@ -94,7 +78,6 @@ def load_initial_data_from(file_name):
         elif file_name.endswith(".yaml"):
             return fromYAML(file_obj)
 
-
 def prepare_test_tender_data(period_interval=2, mode='single'):
     if mode == 'single':
         return munchify({'data': test_tender_data(period_interval=period_interval)})
@@ -102,21 +85,16 @@ def prepare_test_tender_data(period_interval=2, mode='single'):
         return munchify({'data': test_tender_data_multiple_lots(period_interval=period_interval)})
     raise ValueError('A very specific bad thing happened') 
 
-
 def run_keyword_and_ignore_keyword_definations(name, *args):
     """Runs the given keyword with given arguments and returns the status as a Boolean value.
-
     This keyword returns `True` if the keyword that is executed succeeds and
     `False` if it fails. This is useful, for example, in combination with
     `Run Keyword If`. If you are interested in the error message or return
     value, use `Run Keyword And Ignore Error` instead.
-
     The keyword name and arguments work as in `Run Keyword`.
-
     Example:
     | ${passed} = | `Run Keyword And Return Status` | Keyword | args |
     | `Run Keyword If` | ${passed} | Another keyword |
-
     New in Robot Framework 2.7.6.
     """
     try:
@@ -126,7 +104,6 @@ def run_keyword_and_ignore_keyword_definations(name, *args):
         return "FAIL", ""
     return status, _
 
-
 def set_tender_periods(tender):
     now = datetime.now()
     tender.data.enquiryPeriod.endDate = (now + timedelta(minutes=2)).isoformat()
@@ -134,16 +111,13 @@ def set_tender_periods(tender):
     tender.data.tenderPeriod.endDate = (now + timedelta(minutes=4)).isoformat()
     return tender
 
-
 def set_access_key(tender, access_token):
     tender.access = munchify({"token": access_token})
     return tender
 
-
 def set_to_object(obj, attribute, value):
     xpathset(obj, attribute.replace('.', '/'), value)
     return obj
-
 
 def get_from_object(obj, attribute):
     """Gets data from a dictionary using a dotted accessor-string"""
@@ -152,7 +126,6 @@ def get_from_object(obj, attribute):
     if return_list:
         return return_list[0]
     return None
-
 
 def wait_to_date(date_stamp):
     date = parse(date_stamp)
@@ -164,6 +137,22 @@ def wait_to_date(date_stamp):
     if wait_seconds < 0:
         return 0
     return wait_seconds
+#!/usr/bin/env python
+
+def convert_date_to_slash_format(isodate):
+    iso_dt=parse_date(isodate)
+    date_string = iso_dt.strftime("%d/%m/%Y")
+    return  date_string
+
+def convert_date_to_etender_format(isodate):
+    iso_dt=parse_date(isodate)
+    date_string = iso_dt.strftime("%d-%m-%Y")
+    return  date_string
+
+def convert_time_to_etender_format(isodate):
+    iso_dt=parse_date(isodate)
+    time_string = iso_dt.strftime("%H:%M")
+    return  time_string
 
 def newtend_date_picker_index(isodate):
     now = datetime.today()
@@ -177,10 +166,28 @@ def newtend_date_picker_index(isodate):
         mod = calendar.monthrange(now.year, now.month)[1] + mod
     return mod + iso_dt.day
 
-def Add_time_for_GUI_FrontEnds(INITIAL_TENDER_DATA):
+def Add_data_for_GUI_FrontEnds(INITIAL_TENDER_DATA):
     now = datetime.now() 
     INITIAL_TENDER_DATA.data.enquiryPeriod['startDate'] = (now + timedelta(minutes=2)).isoformat()
     INITIAL_TENDER_DATA.data.enquiryPeriod['endDate'] = (now + timedelta(minutes=3)).isoformat()
     INITIAL_TENDER_DATA.data.tenderPeriod['startDate'] = (now + timedelta(minutes=4)).isoformat()
     INITIAL_TENDER_DATA.data.tenderPeriod['endDate'] = (now + timedelta(minutes=5)).isoformat()
+
+##len(dict.items()[0])
+##len(dict[key])
+
+     
+    #LOGGER.log_message(Message("itemsss: {}".format(INITIAL_TENDER_DATA.data.items[0]), "INFO")) 
+
+    #item_len = len(INITIAL_TENDER_DATA.data.items)
+
+    #LOGGER.log_message(Message("item_len: {}".format(item_len), "INFO")) 
+
+    #for i in range(len(INITIAL_TENDER_DATA.data.items)):
+    #dict.update(INITIAL_TENDER_DATA.data.items.classification['description_ua'] = "Картонки"
+#    INITIAL_TENDER_DATA.data.items.classification.update({'description_ua': 'Картонки'})
+
+#    for itm in INITIAL_TENDER_DATA.data.items:
+#        itm.classification['description_ua'] = u"Картонки"
+
     return INITIAL_TENDER_DATA
