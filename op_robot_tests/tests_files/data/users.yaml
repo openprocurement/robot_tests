@@ -125,3 +125,12 @@ users:
         browser:  firefox
         position:  [0, 0]
         size:  [640, 450]
+    E-tender_Viewer1:
+        broker: E-tender
+        username: E-tendertest
+        homepage: "http://uat.e-tender.biz/#/profile"
+        login: provider2
+        password: Qa123456
+        browser:  firefox
+        position:  [720, 0]
+        size:  [640, 450]
