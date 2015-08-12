@@ -41,26 +41,26 @@ Pre Login
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tender_data
-  ${tender_data}=   Add_time_for_GUI_FrontEnds   ${ARGUMENTS[1]}
-  ${items}=         Get From Dictionary   ${tender_data.data}               items
-  ${title}=         Get From Dictionary   ${tender_data.data}               title
-  ${description}=   Get From Dictionary   ${tender_data.data}               description
-  ${budget}=        Get From Dictionary   ${tender_data.data.value}         amount
-  ${step_rate}=     Get From Dictionary   ${tender_data.data.minimalStep}   amount
-  ${items_description}=   Get From Dictionary   ${tender_data.data}         description
+  ${prepared_tender_data}=   Add_data_for_GUI_FrontEnds   ${ARGUMENTS[1]}
+  ${items}=         Get From Dictionary   ${prepared_tender_data.data}               items
+  ${title}=         Get From Dictionary   ${prepared_tender_data.data}               title
+  ${description}=   Get From Dictionary   ${prepared_tender_data.data}               description
+  ${budget}=        Get From Dictionary   ${prepared_tender_data.data.value}         amount
+  ${step_rate}=     Get From Dictionary   ${prepared_tender_data.data.minimalStep}   amount
+  ${items_description}=   Get From Dictionary   ${prepared_tender_data.data}         description
   ${quantity}=      Get From Dictionary   ${items[0]}         quantity
-  ${countryName}=   Get From Dictionary   ${tender_data.data.procuringEntity.address}       countryName
+  ${countryName}=   Get From Dictionary   ${prepared_tender_data.data.procuringEntity.address}       countryName
   ${delivery_end_date}=      Get From Dictionary   ${items[0].deliveryDate}   endDate
   ${delivery_end_date}=      convert_date_to_slash_format   ${delivery_end_date}
-  ${cpv}=           Get From Dictionary   ${items[0].classification}          description_ua
+  ${cpv}=           Convert To String   Картонки
   ${cpv_id}=           Get From Dictionary   ${items[0].classification}         id
   ${cpv_id1}=       Replace String   ${cpv_id}   -   _
   ${dkpp_desc}=     Get From Dictionary   ${items[0].additionalClassifications[0]}   description
   ${dkpp_id}=       Get From Dictionary   ${items[0].additionalClassifications[0]}  id
   ${dkpp_id1}=      Replace String   ${dkpp_id}   -   _
-  ${enquiry_end_date}=   Get From Dictionary         ${tender_data.data.enquiryPeriod}   endDate
+  ${enquiry_end_date}=   Get From Dictionary         ${prepared_tender_data.data.enquiryPeriod}   endDate
   ${enquiry_end_date}=   convert_date_to_slash_format   ${enquiry_end_date}
-  ${end_date}=      Get From Dictionary   ${tender_data.data.tenderPeriod}   endDate
+  ${end_date}=      Get From Dictionary   ${prepared_tender_data.data.tenderPeriod}   endDate
   ${end_date}=      convert_date_to_slash_format   ${end_date}
 
   Selenium2Library.Switch Browser     ${ARGUMENTS[0]}
@@ -191,15 +191,56 @@ Set Multi Ids
   ${current_location}=   Get Location
   Run keyword if   '${BROKERS['${USERS.users['${username}'].broker}'].url}/#/tenderDetailes/${ARGUMENTS[2]}'=='${current_location}'  Reload Page
   Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
-  Wait Until Page Contains   E-TENDER - центр електронної торгівлі   10
-  sleep  1
-  Input Text  jquery=input[ng-change='search()']  ${ARGUMENTS[1]}
-  Click Link  jquery=a[ng-click='search()']
-  sleep  2
-  ${last_note_id}=  Add pointy note   jquery=a[href^="#/tenderDetailes"]   Found tender with tenderID "${ARGUMENTS[1]}"   width=200  position=bottom
-  sleep  1
-  Remove element   ${last_note_id}
-  Click Link    jquery=a[href^="#/tenderDetailes"]
+  Wait Until Page Contains            Держзакупівлі.онлайн   10
+#  sleep  1
+  Click Element                       xpath=//a[text()='Закупівлі']
+  Click Element                       xpath=//select[@name='filter[object]']/option[@value='tenderID']
+  Input text                          xpath=//input[@name='filter[search]']  ${ARGUMENTS[1]}
+  Click Element                       xpath=//button[@class='btn'][./text()='Пошук']
   Wait Until Page Contains    ${ARGUMENTS[1]}   10
   sleep  1
   Capture Page Screenshot
+
+Задати питання
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  tenderId
+  ...      ${ARGUMENTS[2]} ==  id
+  ${title}=        Get From Dictionary  ${ARGUMENTS[2].data}  title
+  ${description}=  Get From Dictionary  ${ARGUMENTS[2].data}  description
+
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  netcast.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}   ${ARGUMENTS[1]}   ${TENDER_ID}
+
+  Click Element                       xpath=//a[@class='reverse tenderLink']
+  Wait Until Page Contains Element    xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]    20
+  Click Element                       xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]
+  Wait Until Page Contains Element    name=title
+  Input text                          name=title                 ${title}
+  Input text                          xpath=//textarea[@name='description']           ${description}
+  Click Element                       xpath=//div[contains(@class, 'buttons')]//button[@type='submit']
+  Wait Until Page Contains            ${title}   30
+  Capture Page Screenshot
+
+Відповісти на питання
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} = username
+  ...      ${ARGUMENTS[1]} = ${INTERNAL_TENDER_ID}
+  ...      ${ARGUMENTS[2]} = 0
+  ...      ${ARGUMENTS[3]} = answer_data
+
+  ${answer}=     Get From Dictionary  ${ARGUMENTS[3].data}  answer
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  netcast.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}   ${TENDER_ID}
+
+  Click Element                      xpath=//a[@class='reverse tenderLink']
+  Click Element                      xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]
+  Input text                         xpath=//textarea[@name='answer']            ${answer}
+  Click Element                      xpath=//div[1]/div[3]/form/div/table/tbody/tr/td[2]/button
+  Wait Until Page Contains           ${answer}   30
+  Capture Page Screenshot
+
+#  KEYWORD: BuiltIn.Log ${TENDER}
+#  18:11:57.979  INFO  {u'LAST_MODIFICATION_DATE': '2015-08-11 18:11:57.974', u'TENDER_UAID': u'UA-2015-08-11-000050'}
