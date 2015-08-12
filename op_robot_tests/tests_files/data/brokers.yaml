@@ -24,7 +24,9 @@ Publicbid:
     period_interval: 2
 Netcast:
     keywords_file: netcast
-    url: http://dz2.byustudio.in.ua
+    url: "http://dz2.byustudio.in.ua"
+    login: admin
+    password: uStudio
     timout_on_wait:  15
     period_interval: 2
 Netcast:
@@ -32,5 +34,10 @@ Netcast:
     url: "http://dz2.byustudio.in.ua"
     login: admin
     password: uStudio
+    timout_on_wait:  15
+    period_interval: 2
+Newtend:
+    keywords_file: newtend
+    url: http://openprocurement:test@dev23.newtend.com
     timout_on_wait:  15
     period_interval: 2

@@ -56,6 +56,9 @@ TestSuiteSetup
   Set Global Variable  ${REPLIES}
   ${INITIAL_TENDER_DATA}=  prepare_test_tender_data   ${BROKERS['${USERS.users['${tender_owner}'].broker}'].period_interval}   ${mode}
   Set Global Variable  ${INITIAL_TENDER_DATA}
+  ${TENDER}=  Create Dictionary 
+  Set Global Variable  ${TENDER}
+  Log  ${TENDER}
   Log  ${INITIAL_TENDER_DATA}
 
 Завантажуємо бібліотеку з реалізацією ${keywords_file} площадки
@@ -71,7 +74,7 @@ TestSuiteSetup
   ...      ${ARGUMENTS[2]} ==  id
 
   ${now}=  Get Current Date
-  ${delta}=  Subtract Date From Date  ${now}  ${LAST_MODIFICATION_DATE}
+  ${delta}=  Subtract Date From Date  ${now}  ${TENDER['LAST_MODIFICATION_DATE']}
   ${wait_timout}=  Subtract Time From Time  ${BROKERS['${USERS.users['${username}'].broker}'].timout_on_wait}  ${delta}
   Run Keyword If   ${wait_timout}>0   Sleep  ${wait_timout}
 
@@ -83,23 +86,29 @@ TestSuiteSetup
 Звірити поле 
   [Arguments]  ${username}  ${field}   ${subject} 
   ${field_response}=  Викликати для учасника    ${username}   отримати інформацію із тендера   ${field}
+  Should Not Be Equal  ${field_response}   ${None}
   Should Be Equal   ${subject}   ${field_response}   Майданчик ${USERS.users['${username}'].broker}
 
 Звірити поле створеного тендера
   [Arguments]  ${initial}  ${tender_data}  ${field}
   ${field_value}=   Get_From_Object  ${initial}   ${field}
   ${field_response}=  Get_From_Object  ${tender_data}   ${field}
+  Should Not Be Equal  ${field_response}   ${None}
+  Should Not Be Equal  ${field_value}   ${None}
   Should Be Equal   ${field_value}   ${field_response}
 
 Звірити дату тендера
   [Arguments]  ${username}  ${field}
   ${isodate}=   Get_From_Object  ${INITIAL_TENDER_DATA.data}   ${field}
+  Should Not Be Equal  ${isodate}   ${None}
   Звірити дату  ${username}  ${field}  ${isodate}
 
 Звірити дату
    [Arguments]  ${username}  ${field}   ${subject} 
    ${field_date}=  Викликати для учасника    ${username}   отримати інформацію із тендера  ${field}
    ${returned}=   compare_date   ${subject}  ${field_date}
+   Should Not Be Equal  ${field_date}   ${None}
+   Should Not Be Equal  ${returned}   ${None}
    Should Be True  '${returned}' == 'True'   
    
 Звірити поля предметів закупівлі багатопредметного тендера
