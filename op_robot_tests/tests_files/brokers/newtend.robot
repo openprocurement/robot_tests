@@ -15,7 +15,6 @@ ${locator.tenderId}                  jquery=h3
   [Arguments]  @{ARGUMENTS}
   [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
   ...      ${ARGUMENTS[0]} ==  username
-
   Open Browser   ${BROKERS['${USERS.users['${username}'].broker}'].url}   ${USERS.users['${username}'].browser}   alias=${ARGUMENTS[0]}
   Set Window Size   @{USERS.users['${ARGUMENTS[0]}'].size}
   Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
@@ -31,18 +30,18 @@ ${locator.tenderId}                  jquery=h3
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  tender_data
-
+  ...      ${ARGUMENTS[1]} ==  initial_tender_data
 ## Inicialisation
-  ${items}=         Get From Dictionary   ${ARGUMENTS[1].data}               items
-  ${title}=         Get From Dictionary   ${ARGUMENTS[1].data}               title
-  ${description}=   Get From Dictionary   ${ARGUMENTS[1].data}               description
-  ${budget}=        Get From Dictionary   ${ARGUMENTS[1].data.value}         amount
-  ${step_rate}=     Get From Dictionary   ${ARGUMENTS[1].data.minimalStep}   amount
-  ${start_date}=           Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}    startDate
-  ${end_date}=             Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}    endDate
-  ${enquiry_start_date}=   Get From Dictionary   ${ARGUMENTS[1].data.enquiryPeriod}   startDate
-  ${enquiry_end_date}=     Get From Dictionary   ${ARGUMENTS[1].data.enquiryPeriod}   endDate
+  ${prepared_tender_data}=   Add_data_for_GUI_FrontEnds   ${ARGUMENTS[1]}
+  ${items}=         Get From Dictionary   ${prepared_tender_data.data}               items
+  ${title}=         Get From Dictionary   ${prepared_tender_data.data}               title
+  ${description}=   Get From Dictionary   ${prepared_tender_data.data}               description
+  ${budget}=        Get From Dictionary   ${prepared_tender_data.data.value}         amount
+  ${step_rate}=     Get From Dictionary   ${prepared_tender_data.data.minimalStep}   amount
+  ${start_date}=           Get From Dictionary   ${prepared_tender_data.data.tenderPeriod}    startDate
+  ${end_date}=             Get From Dictionary   ${prepared_tender_data.data.tenderPeriod}    endDate
+  ${enquiry_start_date}=   Get From Dictionary   ${prepared_tender_data.data.enquiryPeriod}   startDate
+  ${enquiry_end_date}=     Get From Dictionary   ${prepared_tender_data.data.enquiryPeriod}   endDate
 
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
   Go To                              ${USERS.users['${username}'].homepage}
@@ -109,7 +108,7 @@ Set datetime
 ## Get values for item
   ${items_description}=   Get From Dictionary   ${ARGUMENTS[0]}                          description
   ${quantity}=      Get From Dictionary   ${ARGUMENTS[0]}                                quantity
-  ${cpv}=           Get From Dictionary   ${ARGUMENTS[0].classification}                 description_ua
+  ${cpv}=           Convert To String     Картонки
   ${dkpp_desc}=     Get From Dictionary   ${ARGUMENTS[0].additionalClassifications[0]}   description
   ${dkpp_id}=       Get From Dictionary   ${ARGUMENTS[0].additionalClassifications[0]}   id
   ${unit}=          Get From Dictionary   ${ARGUMENTS[0].unit}                           name
@@ -158,10 +157,6 @@ Set datetime
   : FOR    ${INDEX}    IN RANGE    1    ${Items_length}
   \   Click Element   xpath=//a[@class="icon-black plus-black remove-field ng-scope"]
   \   Додати придмет   ${items[${INDEX}]}   ${INDEX}
-
-
-
-
 
 
 

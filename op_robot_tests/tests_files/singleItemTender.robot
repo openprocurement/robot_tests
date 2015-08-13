@@ -387,7 +387,6 @@ ${question_id}   0
   ${bid_doc_upload_fail}=  Викликати для учасника   ${provider1}   Завантажити документ в ставку   shouldfail   ${filepath}   ${TENDER['TENDER_UAID']}
   Set To Dictionary  ${USERS.users['${provider1}'].bidresponces}   bid_doc_upload_fail   ${bid_doc_upload_fail}
 
-
 Неможливість змінити існуючу документацію цінової пропозиції після закінчення прийому пропозицій
   [Tags]   ${USERS.users['${provider1}'].broker}:
   ${filepath}=   create_fake_doc
@@ -396,9 +395,8 @@ ${question_id}   0
   ${bid_doc_modified_failed}=  Викликати для учасника   ${provider1}   Змінити документ в ставці  shouldfail  ${filepath}  ${bidid}  ${docid}
   Set To Dictionary  ${USERS.users['${provider}'].bidresponces}   bid_doc_modified_failed   ${bid_doc_modified_failed}
 
-
 Вичитати цінову пропозицію
-#  sleep  120
+  #sleep  120
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
   ${bidid}=  Get Variable Value  ${USERS.users['${provider1}'].bidresponces['resp'].data.id}
   ${token}=  Get Variable Value  ${USERS.users['${provider1}'].bidresponces['resp'].access.token}

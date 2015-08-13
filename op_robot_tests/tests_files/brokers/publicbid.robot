@@ -5,9 +5,9 @@ Library  DateTime
 
 *** Variables ***
 ${file_path}        local_path_to_file("TestDocument.docx")
-# ${file_path}      /home/vbilos/openprocurement.robottests.buildout/Document.docx
 ${mail}          test@mail.com
 ${telephone}     +380976535447
+
 
 *** Keywords ***
 Підготувати клієнт для користувача
@@ -31,23 +31,23 @@ ${telephone}     +380976535447
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tender_data
-  ${tender_data}=   Add_time_for_GUI_FrontEnds   ${ARGUMENTS[1]}
-  ${items}=         Get From Dictionary   ${tender_data.data}               items
-  ${title}=         Get From Dictionary   ${tender_data.data}               title
-  ${description}=   Get From Dictionary   ${tender_data.data}               description
-  ${budget}=        Get From Dictionary   ${tender_data.data.value}         amount
-  ${step_rate}=     Get From Dictionary   ${tender_data.data.minimalStep}   amount
-  ${countryName}=   Get From Dictionary   ${tender_data.data.procuringEntity.address}       countryName
+  ${prepared_tender_data}=   Add_data_for_GUI_FrontEnds   ${ARGUMENTS[1]}
+  ${items}=         Get From Dictionary   ${prepared_tender_data.data}               items
+  ${title}=         Get From Dictionary   ${prepared_tender_data.data}               title
+  ${description}=   Get From Dictionary   ${prepared_tender_data.data}               description
+  ${budget}=        Get From Dictionary   ${prepared_tender_data.data.value}         amount
+  ${step_rate}=     Get From Dictionary   ${prepared_tender_data.data.minimalStep}   amount
+  ${countryName}=   Get From Dictionary   ${prepared_tender_data.data.procuringEntity.address}       countryName
   ${delivery_end_date}=      Get From Dictionary   ${items[0].deliveryDate}   endDate
   ${delivery_end_date}=      convert_date_to_prom_format   ${delivery_end_date}
-  ${cpv}=           Get From Dictionary   ${items[0].classification}          description_ua
+  ${cpv}=           Convert To String     "Картонки"
   ${cpv_id}=           Get From Dictionary   ${items[0].classification}         id
   ${cpv_id_1}=           Get Substring    ${cpv_id}   0   3
   ${dkpp_desc}=     Get From Dictionary   ${items[0].additionalClassifications[0]}   description
   ${dkpp_id}=       Get From Dictionary   ${items[0].additionalClassifications[0]}  id
   ${code}=           Get From Dictionary   ${items[0].unit}          code
   ${quantity}=      Get From Dictionary   ${items[0]}                        quantity
-  ${name}=      Get From Dictionary   ${tender_data.data.procuringEntity.contactPoint}       name
+  ${name}=      Get From Dictionary   ${prepared_tender_data.data.procuringEntity.contactPoint}       name
 
   Selenium2Library.Switch Browser     ${ARGUMENTS[0]}
   Wait Until Page Contains Element    xpath=//*[contains(@class, 'ui-button-text ui-c')][./text()='Нова закупівля']   10

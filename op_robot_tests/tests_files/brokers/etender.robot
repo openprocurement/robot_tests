@@ -5,6 +5,8 @@ Library  DateTime
 
 *** Variables ***
 ${locator.tenderId}                  jquery=h3
+##Використовую такий шлях у кожного буде мінятись /yboi/. Міняйте на сві шлях до файлу
+${file_path}     /home/yboi/openprocurement.robottests.buildout/Document.docx
 
 *** Keywords ***
 Підготувати клієнт для користувача
@@ -25,30 +27,30 @@ ${locator.tenderId}                  jquery=h3
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  tender_data
-  ${tender_data}=   Add_time_for_GUI_FrontEnds   ${ARGUMENTS[1]}
-  ${items}=         Get From Dictionary   ${tender_data.data}               items
-  ${title}=         Get From Dictionary   ${tender_data.data}               title
-  ${description}=   Get From Dictionary   ${tender_data.data}               description
-  ${budget}=        Get From Dictionary   ${tender_data.data.value}         amount
-  ${step_rate}=     Get From Dictionary   ${tender_data.data.minimalStep}   amount
-  ${items_description}=   Get From Dictionary   ${tender_data.data}         description
+  ...      ${ARGUMENTS[1]} ==  initial_tender_data
+  ${prepared_tender_data}=   Add_data_for_GUI_FrontEnds   ${ARGUMENTS[1]}
+  ${items}=         Get From Dictionary   ${prepared_tender_data.data}               items
+  ${title}=         Get From Dictionary   ${prepared_tender_data.data}               title
+  ${description}=   Get From Dictionary   ${prepared_tender_data.data}               description
+  ${budget}=        Get From Dictionary   ${prepared_tender_data.data.value}         amount
+  ${step_rate}=     Get From Dictionary   ${prepared_tender_data.data.minimalStep}   amount
+  ${items_description}=   Get From Dictionary   ${prepared_tender_data.data}         description
   ${quantity}=      Get From Dictionary   ${items[0]}                        quantity
   ${cpv}=           Get From Dictionary   ${items[0].classification}         id
   ${dkpp_desc}=     Get From Dictionary   ${items[0].additionalClassifications[0]}   description
   ${dkpp_id}=       Get From Dictionary   ${items[0].additionalClassifications[0]}  id
   ${unit}=          Get From Dictionary   ${items[0].unit}                   name
-  ${start_date}=    Get From Dictionary   ${tender_data.data.tenderPeriod}   startDate
+  ${start_date}=    Get From Dictionary   ${prepared_tender_data.data.tenderPeriod}   startDate
   ${start_date}=    convert_date_to_etender_format   ${start_date}
-  ${start_time}=    Get From Dictionary   ${tender_data.data.tenderPeriod}   startDate
+  ${start_time}=    Get From Dictionary   ${prepared_tender_data.data.tenderPeriod}   startDate
   ${start_time}=    convert_time_to_etender_format   ${start_time}
-  ${end_date}=      Get From Dictionary   ${tender_data.data.tenderPeriod}   endDate
+  ${end_date}=      Get From Dictionary   ${prepared_tender_data.data.tenderPeriod}   endDate
   ${end_date}=      convert_date_to_etender_format   ${end_date}
-  ${end_time}=      Get From Dictionary   ${tender_data.data.tenderPeriod}   endDate
+  ${end_time}=      Get From Dictionary   ${prepared_tender_data.data.tenderPeriod}   endDate
   ${end_time}=   convert_time_to_etender_format      ${end_time}
-  ${enquiry_end_date}=   Get From Dictionary         ${tender_data.data.enquiryPeriod}   endDate
+  ${enquiry_end_date}=   Get From Dictionary         ${prepared_tender_data.data.enquiryPeriod}   endDate
   ${enquiry_end_date}=   convert_date_to_etender_format   ${enquiry_end_date}
-  ${enquiry_end_time}=   Get From Dictionary              ${tender_data.data.enquiryPeriod}   endDate
+  ${enquiry_end_time}=   Get From Dictionary              ${prepared_tender_data.data.enquiryPeriod}   endDate
   ${enquiry_end_time}=   convert_time_to_etender_format   ${enquiry_end_time}
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
   Wait Until Page Contains          Мої закупівлі    100
@@ -88,8 +90,10 @@ ${locator.tenderId}                  jquery=h3
   Click Element   xpath=//div[contains(@class, 'form-actions')]//button[@type='submit']
   Wait Until Page Contains    [ТЕСТУВАННЯ]   100
   Click Element   xpath=//table[contains(@class, 'table table-hover table-striped table-bordered ng-scope ng-table')]//tr[1]//a
-  ${tender_UAid}=   Wait Until Keyword Succeeds   240sec   2sec   get tender UAid
-###  harcode Idis bacause issues on the E-tender side, to remove, 1 line:
+  Sleep   5
+  ${tender_UAid}=  Get Text  xpath=//div[contains(@class, "panel-heading")]
+  ${tender_UAid}=  Get Substring  ${tender_UAid}   7
+  ###  harcode Idis bacause issues on the E-tender side, to remove, 1 line:
   ${tender_UAid}=   Convert To String   UA-2015-08-03-000025
   ${Ids}=   Convert To String   ${tender_UAid}
   Run keyword if   '${mode}' == 'multi'   Set Multi Ids   ${ARGUMENTS[0]}   ${tender_UAid}
@@ -99,13 +103,8 @@ Set Multi Ids
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  ${tender_UAid}
-  ${id}=   Oтримати internal id по UAid   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+  ${id}=   Get Text  xpath=//div[contains(@class, "panel-heading")]
   ${Ids}=   Create List    ${tender_UAid}   ${id}
-
-get tender UAid
-  ${tender_UAid}=  Get Text  xpath=//div[contains(@class, "panel-heading")]
-  ${tender_UAid}=  Get Substring  ${tender_UAid}  7  27
 
 Oтримати internal id по UAid
   [Arguments]  @{ARGUMENTS}

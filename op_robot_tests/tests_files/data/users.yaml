@@ -17,7 +17,7 @@ users:
         homepage: "http://uat.e-tender.biz/#/profile"
         login: Misha2
         password: Password1 
-        browser:  firefox
+        browser:  chrome
         position:  [0, 0]
         size:  [740, 550]
     E-tender_Provider1:
@@ -26,7 +26,7 @@ users:
         homepage: "http://uat.e-tender.biz/#/profile"
         login: st_org
         password: 12345678
-        browser: firefox
+        browser: chrome
         position: [700, 0]
         size: [640, 450]
     E-tender_Provider2:
@@ -35,7 +35,7 @@ users:
         homepage: "http://uat.e-tender.biz/#/profile"
         login: provider2
         password: Qa123456
-        browser:  firefox
+        browser:  chrome
         position:  [700, 0]
         size:  [640, 450]
     E-tender_Viewer:
@@ -80,7 +80,7 @@ users:
         homepage: "http://dev23.newtend.com/openprocurement/#/home/page/1"
         login: openprocurement@mailinator.com
         password: 123123 
-        browser:  firefox
+        browser:  chrome
         position:  [0, 0]
         size:  [640, 450]
     Netcast_Owner:
@@ -89,25 +89,25 @@ users:
         homepage: "http://dz2.byustudio.in.ua"
         login: ovramet.s@gmail.com
         password: Password1
-        browser: firefox
+        browser: chrome
         position:  [0, 0]
-        size:  [1920, 1080]
+        size:  [920, 580]
     Netcast_Provider1:
         broker: Netcast
         username: Netcasttest
         homepage: "http://dz2.byustudio.in.ua"
         login: halyna.khimka@gmail.com 
         password: JHO5VUp5n
-        browser: firefox
-        position:  [0, 450]
-        size:  [1920, 1080]
+        browser: chrome
+        position:  [0, 900]
+        size:  [920, 580]
     Publicbid_Owner:
         broker: Publicbid
         username: Publicbid
         homepage: "https://public-bid.com.ua/test/"
         login: yaroslav1boyko@gmail.com
         password: Password1
-        browser: firefox
+        browser: chrome
         position: [0, 0]
         size: [740, 550]
     Newtend_Provider2:
@@ -116,12 +116,12 @@ users:
         homepage: "http://dev23.newtend.com/openprocurement/tenders"
         login: openprocboss@mailinator.com
         password: 123123
-        browser:  firefox
+        browser:  chrome
         position:  [700, 0]
         size:  [640, 450]
     Newtend_Viewer:
         broker: Newtend
         username: Newtendtest
-        browser:  firefox
+        browser:  chrome
         position:  [0, 0]
         size:  [640, 450]
