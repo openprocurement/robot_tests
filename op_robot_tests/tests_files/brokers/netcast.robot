@@ -76,9 +76,6 @@ Pre Login
   Input text                          name=items[0][item_quantity]   ${quantity}
   Input text                          name=items[0][item_deliveryAddress_countryName]   ${countryName}
   Input text                          name=items[0][item_deliveryDate_endDate]       ${delivery_end_date}
-  Click Element                       xpath=//a[@class ='uploadFile']
-  Choose File                         xpath=//a[@class ='uploadFile']       ${file_path}
-  Debug
   Click Element                       xpath=//a[contains(@data-class, 'cpv')][./text()='Визначити за довідником']
   Select Frame                        xpath=//iframe[contains(@src,'/js/classifications/cpv/uk.htm?relation=true')]
   Input text                          id=search     ${cpv}
@@ -196,6 +193,7 @@ Set Multi Ids
   Wait Until Page Contains            Держзакупівлі.онлайн   10
 #  sleep  1
   Click Element                       xpath=//a[text()='Закупівлі']
+  sleep  5
   Click Element                       xpath=//select[@name='filter[object]']/option[@value='tenderID']
   Input text                          xpath=//input[@name='filter[search]']  ${ARGUMENTS[1]}
   Click Element                       xpath=//button[@class='btn'][./text()='Пошук']
