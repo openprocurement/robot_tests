@@ -255,24 +255,23 @@ Set Multi Ids
   [return]  ${return_value}
 
 отримати інформацію про description
-   ${return_value}=   Отримати тест із поля і показати на сторінці   description
-  [return]  ${return_value}
+  ${description}=  Get text   xpath=(//div[@class = 'col-sm-8'])[8]
+  [return]  ${description}
 
 отримати інформацію про minimalStep.amount
-  ${return_value}=   Отримати тест із поля і показати на сторінці   minimalStep.amount
-  ${return_value}=   Convert To Number   ${return_value.split(' ')[0]}
-  [return]  ${return_value}
+  ${step_rate}=  Get text   xpath=(//div[@class = 'col-sm-8'])[10]
+  ${step_rate}=  Convert To Number   ${step_rate.split(' ')[0]}
+  [return]  ${step_rate}
 
 отримати інформацію про procuringEntity.name
   ${return_value}=   Отримати тест із поля і показати на сторінці   procuringEntity.name
   [return]  ${return_value}
 
-
 отримати інформацію про value.amount
-  ${return_value}=   Отримати тест із поля і показати на сторінці  value.amount
-  ${return_value}=   Evaluate   "".join("${return_value}".split(' ')[:-3])
-  ${return_value}=   Convert To Number   ${return_value}
-  [return]  ${return_value}
+  ${budget}=  Get text   xpath=(//div[@class = 'col-sm-8'])[9]
+  ${budget}=  Evaluate   "".join("${budget}".split(' ')[:-3])
+  ${budget}=  Convert To Number   ${budget}
+  [return]  ${budget}
 
 отримати інформацію про tenderPeriod.startDate
   ${return_value}=   Отримати тест із поля і показати на сторінці  tenderPeriod.startDate
