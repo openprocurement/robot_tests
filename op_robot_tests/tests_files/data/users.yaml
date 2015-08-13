@@ -27,7 +27,7 @@ users:
         login: st_org
         password: 12345678
         browser: firefox
-        position: [0, 0]
+        position: [700, 0]
         size: [640, 450]
     E-tender_Provider2:
         broker: E-tender
@@ -41,7 +41,7 @@ users:
     E-tender_Viewer:
         broker: E-tender
         username: E-tendertest
-        browser:  chrome
+        browser:  firefox
         position:  [0, 0]
         size:  [640, 450]
     Prom_Owner:
@@ -74,6 +74,15 @@ users:
         browser:  chrome
         position:  [0, 450]
         size:  [640, 450]
+    Newtend_Owner:
+        broker: Newtend
+        username: Newtendtest
+        homepage: "http://dev23.newtend.com/openprocurement/#/home/page/1"
+        login: openprocurement@mailinator.com
+        password: 123123 
+        browser:  firefox
+        position:  [0, 0]
+        size:  [640, 450]
     Netcast_Owner:
         broker: Netcast
         username: Netcasttest
@@ -81,7 +90,7 @@ users:
         login: ovramet.s@gmail.com
         password: Password1
         browser: firefox
-        position:  [0, 1080]
+        position:  [0, 0]
         size:  [1920, 1080]
     Netcast_Provider1:
         broker: Netcast
@@ -90,5 +99,29 @@ users:
         login: halyna.khimka@gmail.com 
         password: JHO5VUp5n
         browser: firefox
-        position:  [0, 1080]
+        position:  [0, 450]
         size:  [1920, 1080]
+    Publicbid_Owner:
+        broker: Publicbid
+        username: Publicbid
+        homepage: "https://public-bid.com.ua/test/"
+        login: yaroslav1boyko@gmail.com
+        password: Password1
+        browser: firefox
+        position: [0, 0]
+        size: [740, 550]
+    Newtend_Provider2:
+        broker: Newtend
+        username: Newtendtest
+        homepage: "http://dev23.newtend.com/openprocurement/tenders"
+        login: openprocboss@mailinator.com
+        password: 123123
+        browser:  firefox
+        position:  [700, 0]
+        size:  [640, 450]
+    Newtend_Viewer:
+        broker: Newtend
+        username: Newtendtest
+        browser:  firefox
+        position:  [0, 0]
+        size:  [640, 450]
