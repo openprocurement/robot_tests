@@ -5,7 +5,6 @@ Library  DateTime
 
 *** Variables ***
 ${locator.tenderId}                  jquery=h3
-${file_path}                         local_path_to_file("TestDocument.docx")
 
 *** Keywords ***
 Підготувати клієнт для користувача
@@ -76,8 +75,6 @@ Pre Login
   Input text                          name=items[0][item_quantity]   ${quantity}
   Input text                          name=items[0][item_deliveryAddress_countryName]   ${countryName}
   Input text                          name=items[0][item_deliveryDate_endDate]       ${delivery_end_date}
-  Click Element                       xpath=//a[@class ='uploadFile']
-  Choose File                         xpath=//a[@class ='uploadFile']       ${file_path}
   Click Element                       xpath=//a[contains(@data-class, 'cpv')][./text()='Визначити за довідником']
   Select Frame                        xpath=//iframe[contains(@src,'/js/classifications/cpv/uk.htm?relation=true')]
   Input text                          id=search     ${cpv}

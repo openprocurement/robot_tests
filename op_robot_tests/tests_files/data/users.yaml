@@ -17,7 +17,7 @@ users:
         homepage: "http://uat.e-tender.biz/#/profile"
         login: Misha2
         password: Password1 
-        browser:  chrome
+        browser:  firefox
         position:  [0, 0]
         size:  [740, 550]
     E-tender_Provider1:
@@ -26,7 +26,7 @@ users:
         homepage: "http://uat.e-tender.biz/#/profile"
         login: st_org
         password: 12345678
-        browser: chrome
+        browser: firefox
         position: [700, 0]
         size: [640, 450]
     E-tender_Provider2:
@@ -82,14 +82,14 @@ users:
         password: 123123 
         browser:  chrome
         position:  [0, 0]
-        size:  [640, 450]
+        size:  [1100, 1000]
     Netcast_Owner:
         broker: Netcast
         username: Netcasttest
         homepage: "http://dz2.byustudio.in.ua"
         login: ovramet.s@gmail.com
         password: Password1
-        browser: chrome
+        browser: firefox
         position:  [0, 0]
         size:  [920, 580]
     Netcast_Provider1:
@@ -107,7 +107,7 @@ users:
         homepage: "https://public-bid.com.ua/test/"
         login: yaroslav1boyko@gmail.com
         password: Password1
-        browser: chrome
+        browser: firefox
         position: [0, 0]
         size: [740, 550]
     Newtend_Provider2:

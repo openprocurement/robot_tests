@@ -93,8 +93,6 @@ ${file_path}     /home/yboi/openprocurement.robottests.buildout/Document.docx
   Sleep   5
   ${tender_UAid}=  Get Text  xpath=//div[contains(@class, "panel-heading")]
   ${tender_UAid}=  Get Substring  ${tender_UAid}   7
-  ###  harcode Idis bacause issues on the E-tender side, to remove, 1 line:
-  ${tender_UAid}=   Convert To String   UA-2015-08-03-000025
   ${Ids}=   Convert To String   ${tender_UAid}
   Run keyword if   '${mode}' == 'multi'   Set Multi Ids   ${ARGUMENTS[0]}   ${tender_UAid}
   [return]  ${Ids}
@@ -114,8 +112,6 @@ Oтримати internal id по UAid
   etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
   ${current_location}=   Get Location
   ${tender_id}=   Fetch From Right   ${current_location}   /
-##  harcode Idis bacause issues on the E-tender side, to remove, 1 line:
-  ${tender_id}=     Convert To String   94ffe180019d459787aafe290cd300e2
   [return]  ${tender_id}
 
 Додати предмет
