@@ -9,7 +9,7 @@ ${question_id}   0
 *** Keywords ***
 отримати internal id по UAid
   [Arguments]  @{ARGUMENTS}
-  [Documentation]
+  [Documentation]  
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tenderid
   log many  @{ARGUMENTS}

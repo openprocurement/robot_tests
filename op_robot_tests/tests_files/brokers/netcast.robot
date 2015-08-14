@@ -186,10 +186,7 @@ Set Multi Ids
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tenderId
-  ...      ${ARGUMENTS[2]} ==  id
   Switch browser   ${ARGUMENTS[0]}
-  ${current_location}=   Get Location
-  Run keyword if   '${BROKERS['${USERS.users['${username}'].broker}'].url}/#/tenderDetailes/${ARGUMENTS[2]}'=='${current_location}'  Reload Page
   Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
   Wait Until Page Contains            Держзакупівлі.онлайн   10
 #  sleep  1
@@ -205,13 +202,13 @@ Set Multi Ids
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  tenderId
-  ...      ${ARGUMENTS[2]} ==  id
+  ...      ${ARGUMENTS[1]} ==  tenderUaId
+  ...      ${ARGUMENTS[2]} ==  questionId
   ${title}=        Get From Dictionary  ${ARGUMENTS[2].data}  title
   ${description}=  Get From Dictionary  ${ARGUMENTS[2].data}  description
 
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
-  netcast.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}   ${ARGUMENTS[1]}   ${TENDER_ID}
+  netcast.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
 
   Click Element                       xpath=//a[@class='reverse tenderLink']
   Wait Until Page Contains Element    xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]    20
@@ -227,13 +224,13 @@ Set Multi Ids
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} = username
-  ...      ${ARGUMENTS[1]} = ${INTERNAL_TENDER_ID}
+  ...      ${ARGUMENTS[1]} = tenderUaId
   ...      ${ARGUMENTS[2]} = 0
   ...      ${ARGUMENTS[3]} = answer_data
 
   ${answer}=     Get From Dictionary  ${ARGUMENTS[3].data}  answer
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
-  netcast.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}   ${TENDER_ID}
+  netcast.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
 
   Click Element                      xpath=//a[@class='reverse tenderLink']
   Click Element                      xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]
@@ -241,6 +238,3 @@ Set Multi Ids
   Click Element                      xpath=//div[1]/div[3]/form/div/table/tbody/tr/td[2]/button
   Wait Until Page Contains           ${answer}   30
   Capture Page Screenshot
-
-#  KEYWORD: BuiltIn.Log ${TENDER}
-#  18:11:57.979  INFO  {u'LAST_MODIFICATION_DATE': '2015-08-11 18:11:57.974', u'TENDER_UAID': u'UA-2015-08-11-000050'}

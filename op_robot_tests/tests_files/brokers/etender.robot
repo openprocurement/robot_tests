@@ -117,6 +117,16 @@ Set Multi Ids
   ${id}=   Get Text  xpath=//div[contains(@class, "panel-heading")]
   ${Ids}=   Create List    ${tender_UAid}   ${id}
 
+Oтримати internal id по UAid
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  ${tender_UAid}
+  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+  ${current_location}=   Get Location
+  ${tender_id}=   Fetch From Right   ${current_location}   /
+  [return]  ${tender_id}
+
 Додати предмет
   [Arguments]  @{ARGUMENTS}
   [Documentation]

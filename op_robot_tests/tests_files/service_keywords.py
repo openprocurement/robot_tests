@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -
 import os
 from munch import munchify, Munch, fromYAML
@@ -137,7 +138,6 @@ def wait_to_date(date_stamp):
     if wait_seconds < 0:
         return 0
     return wait_seconds
-#!/usr/bin/env python
 
 def convert_date_to_slash_format(isodate):
     iso_dt=parse_date(isodate)
@@ -172,22 +172,9 @@ def Add_data_for_GUI_FrontEnds(INITIAL_TENDER_DATA):
     INITIAL_TENDER_DATA.data.enquiryPeriod['endDate'] = (now + timedelta(minutes=3)).isoformat()
     INITIAL_TENDER_DATA.data.tenderPeriod['startDate'] = (now + timedelta(minutes=4)).isoformat()
     INITIAL_TENDER_DATA.data.tenderPeriod['endDate'] = (now + timedelta(minutes=5)).isoformat()
-
-##len(dict.items()[0])
-##len(dict[key])
-
-     
-    #LOGGER.log_message(Message("itemsss: {}".format(INITIAL_TENDER_DATA.data.items[0]), "INFO")) 
-
-    #item_len = len(INITIAL_TENDER_DATA.data.items)
-
-    #LOGGER.log_message(Message("item_len: {}".format(item_len), "INFO")) 
-
-    #for i in range(len(INITIAL_TENDER_DATA.data.items)):
-    #dict.update(INITIAL_TENDER_DATA.data.items.classification['description_ua'] = "Картонки"
-#    INITIAL_TENDER_DATA.data.items.classification.update({'description_ua': 'Картонки'})
-
-#    for itm in INITIAL_TENDER_DATA.data.items:
-#        itm.classification['description_ua'] = u"Картонки"
-
     return INITIAL_TENDER_DATA
+    
+def local_path_to_file( file_name ):
+    path = os.getcwd()
+    path = path.split("brokers", 1)[0] + "documents/" + file_name
+    return path

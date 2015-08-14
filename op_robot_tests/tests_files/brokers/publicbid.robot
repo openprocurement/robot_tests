@@ -4,11 +4,10 @@ Library  String
 Library  DateTime
 
 *** Variables ***
-##Використовую такий шлях у кожного буде мінятись /yboi/. Міняйте на сві шлях до файлу
-#${file_path}     /home/yboi/openprocurement.robottests.buildout/Document.docx
-${file_path}      /home/yboi/openprocurement.robottests.buildout/Document.docx
+${file_path}        local_path_to_file("TestDocument.docx")
 ${mail}          test@mail.com
 ${telephone}     +380976535447
+
 
 *** Keywords ***
 Підготувати клієнт для користувача
