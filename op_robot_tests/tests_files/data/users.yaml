@@ -26,7 +26,7 @@ users:
         homepage: "http://uat.e-tender.biz/#/profile"
         login: st_org
         password: 12345678
-        browser: firefox
+        browser: chrome
         position: [700, 0]
         size: [640, 450]
     E-tender_Provider2:
@@ -41,7 +41,8 @@ users:
     E-tender_Viewer:
         broker: E-tender
         username: E-tendertest
-        browser:  firefox
+        homepage: "http://uat.e-tender.biz/#/profile"
+        browser:  chrome
         position:  [0, 0]
         size:  [640, 450]
     Prom_Owner:
