@@ -17,7 +17,7 @@ users:
         homepage: "http://uat.e-tender.biz/#/profile"
         login: Misha2
         password: Password1 
-        browser:  firefox
+        browser:  chrome
         position:  [0, 0]
         size:  [640, 450]
     E-tender_Provider1:

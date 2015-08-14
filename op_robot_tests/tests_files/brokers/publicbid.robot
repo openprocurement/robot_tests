@@ -4,7 +4,6 @@ Library  String
 Library  DateTime
 
 *** Variables ***
-${file_path}        local_path_to_file("TestDocument.docx")
 ${mail}          test@mail.com
 ${telephone}     +380976535447
 
@@ -32,6 +31,7 @@ ${telephone}     +380976535447
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tender_data
+  ${file_path}=        local_path_to_file   TestDocument.docx
   ${prepared_tender_data}=   Add_data_for_GUI_FrontEnds   ${ARGUMENTS[1]}
   ${items}=         Get From Dictionary   ${prepared_tender_data.data}               items
   ${title}=         Get From Dictionary   ${prepared_tender_data.data}               title
