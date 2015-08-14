@@ -57,7 +57,6 @@ ${file_path}     /home/yboi/openprocurement.robottests.buildout/Document.docx
   Sleep  1
   Click Element                     xpath=//a[contains(@class, 'ng-binding')][./text()='Мої закупівлі']
   Wait Until Page Contains Element  xpath=//a[contains(@class, 'btn btn-info')]
-  Wait Until Element Is Visible     xpath=//a[contains(@class, 'btn btn-info')]
   Sleep  1
   Click Element                     xpath=//a[contains(@class, 'btn btn-info')]
   Wait Until Page Contains Element  id=title
