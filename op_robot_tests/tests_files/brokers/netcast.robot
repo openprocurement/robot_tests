@@ -191,6 +191,7 @@ Set Multi Ids
   Wait Until Page Contains            Держзакупівлі.онлайн   10
 #  sleep  1
   Click Element                       xpath=//a[text()='Закупівлі']
+  sleep  5
   Click Element                       xpath=//select[@name='filter[object]']/option[@value='tenderID']
   Input text                          xpath=//input[@name='filter[search]']  ${ARGUMENTS[1]}
   Click Element                       xpath=//button[@class='btn'][./text()='Пошук']
