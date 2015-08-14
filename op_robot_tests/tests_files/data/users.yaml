@@ -90,9 +90,9 @@ users:
         homepage: "http://dz2.byustudio.in.ua"
         login: ovramet.s@gmail.com
         password: Password1
-        browser: firefox
+        browser: chrome
         position:  [0, 0]
-        size:  [920, 580]
+        size:  [600, 800]
     Netcast_Provider1:
         broker: Netcast
         username: Netcasttest
@@ -100,8 +100,8 @@ users:
         login: halyna.khimka@gmail.com 
         password: JHO5VUp5n
         browser: chrome
-        position:  [0, 900]
-        size:  [920, 580]
+        position:  [0, 0]
+        size:  [640, 450]
     Publicbid_Owner:
         broker: Publicbid
         username: Publicbid

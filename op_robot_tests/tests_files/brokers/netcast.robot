@@ -191,6 +191,7 @@ Set Multi Ids
   Wait Until Page Contains            Держзакупівлі.онлайн   10
 #  sleep  1
   Click Element                       xpath=//a[text()='Закупівлі']
+  sleep  5
   Click Element                       xpath=//select[@name='filter[object]']/option[@value='tenderID']
   Input text                          xpath=//input[@name='filter[search]']  ${ARGUMENTS[1]}
   Click Element                       xpath=//button[@class='btn'][./text()='Пошук']
@@ -233,7 +234,9 @@ Set Multi Ids
   netcast.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
 
   Click Element                      xpath=//a[@class='reverse tenderLink']
+  Wait Until Page Contains Element   xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]   20
   Click Element                      xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]
+  Wait Until Page Contains Element   xpath=//textarea[@name='answer']   20
   Input text                         xpath=//textarea[@name='answer']            ${answer}
   Click Element                      xpath=//div[1]/div[3]/form/div/table/tbody/tr/td[2]/button
   Wait Until Page Contains           ${answer}   30
