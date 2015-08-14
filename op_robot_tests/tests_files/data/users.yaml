@@ -17,8 +17,8 @@ users:
         homepage: "http://uat.e-tender.biz/#/profile"
         login: Misha2
         password: Password1 
-        browser:  firefox
-        position:  [0, 0]
+        browser:  chrome
+        position:  [0, 1000]
         size:  [740, 550]
     E-tender_Provider1:
         broker: E-tender
@@ -107,7 +107,7 @@ users:
         homepage: "https://public-bid.com.ua/test/"
         login: yaroslav1boyko@gmail.com
         password: Password1
-        browser: firefox
+        browser: chrome
         position: [0, 0]
         size: [740, 550]
     Newtend_Provider2:
