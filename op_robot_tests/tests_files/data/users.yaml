@@ -107,7 +107,7 @@ users:
         homepage: "https://public-bid.com.ua/test/"
         login: yaroslav1boyko@gmail.com
         password: Password1
-        browser: firefox
+        browser: chrome
         position: [0, 0]
         size: [740, 550]
     Newtend_Provider2:

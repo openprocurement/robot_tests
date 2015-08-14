@@ -6,7 +6,7 @@ Library  DateTime
 *** Variables ***
 ##Використовую такий шлях у кожного буде мінятись /yboi/. Міняйте на сві шлях до файлу
 #${file_path}     /home/yboi/openprocurement.robottests.buildout/Document.docx
-${file_path}      /home/vbilos/openprocurement.robottests.buildout/Document.docx
+${file_path}      /home/yboi/openprocurement.robottests.buildout/Document.docx
 ${mail}          test@mail.com
 ${telephone}     +380976535447
 
@@ -24,6 +24,7 @@ ${telephone}     +380976535447
   Click Element                      id=mForm:j_idt54
   Run Keyword And Ignore Error   Wait Until Page Contains Element   id=mForm:email   10
   Input text   id=mForm:email      ${USERS.users['${username}'].login}
+  Sleep  2
   Input text   id=mForm:pwd      ${USERS.users['${username}'].password}
   Click Button   id=mForm:login
 
@@ -80,6 +81,7 @@ ${telephone}     +380976535447
   Input text                          id=mForm:data:rPhone    ${telephone}
   Input text                          id=mForm:data:rMail   ${mail}
   Choose File                         id=mForm:data:docFile_input     ${file_path}
+  Sleep  2
   Run Keyword if   '${mode}' == 'multi'   Додати предмет   items
   Click Element                       id=mForm:bSave
   Sleep   5
@@ -149,7 +151,6 @@ Set Multi Ids
   Input text                         id=mForm:data:cDkpp3_input    ${dkpp_id3}
   Wait Until Page Contains Element   xpath=//div[@id='mForm:data:cDkpp3_panel']/table/tbody/tr/td[1]/span   10
   Click Element                      xpath=//div[@id='mForm:data:cDkpp3_panel']/table/tbody/tr/td[1]/span
-
 
 Пошук тендера по ідентифікатору
   [Arguments]  @{ARGUMENTS}
