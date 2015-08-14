@@ -6,7 +6,7 @@ Library  DateTime
 *** Variables ***
 ${locator.tenderId}                  jquery=h3
 ##Використовую такий шлях у кожного буде мінятись /yboi/. Міняйте на сві шлях до файлу
-${file_path}     /home/yboi/openprocurement.robottests.buildout/Document.docx
+${file_add}     /home/yboi/openprocurement.robottests.buildout/Document.docx
 
 *** Keywords ***
 Підготувати клієнт для користувача
@@ -16,7 +16,9 @@ ${file_path}     /home/yboi/openprocurement.robottests.buildout/Document.docx
   Open Browser   ${USERS.users['${ARGUMENTS[0]}'].homepage}   ${USERS.users['${username}'].browser}   alias=${ARGUMENTS[0]}
   Set Window Size   @{USERS.users['${ARGUMENTS[0]}'].size}
   Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
-# login
+  Run Keyword If   '${username}' != 'E-tender_Viewer'   Login
+
+Login
   Wait Until Page Contains Element   id=inputUsername   100
   Input text   id=inputUsername      ${USERS.users['${username}'].login}
   Wait Until Page Contains Element   id=inputPassword   100
