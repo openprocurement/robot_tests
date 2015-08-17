@@ -19,7 +19,7 @@ users:
         password: Password1 
         browser:  firefox
         position:  [0, 0]
-        size:  [740, 550]
+        size:  [800, 800]
     E-tender_Provider1:
         broker: E-tender
         username: E-tendertest
@@ -28,7 +28,7 @@ users:
         password: 12345678
         browser: firefox
         position: [700, 0]
-        size: [640, 450]
+        size: [700, 800]
     E-tender_Provider2:
         broker: E-tender
         username: E-tendertest
@@ -92,7 +92,7 @@ users:
         #browser: firefox
         browser: chrome
         position:  [0, 0]
-        size:  [640, 450]
+        size:  [700, 800]
     Netcast_Provider1:
         broker: Netcast
         username: Netcasttest
@@ -102,7 +102,7 @@ users:
         #browser: firefox
         browser: chrome
         position:  [0, 0]
-        size:  [640, 450]
+        size:  [600, 800]
     Publicbid_Owner:
         broker: Publicbid
         username: Publicbid

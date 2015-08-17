@@ -20,7 +20,6 @@ ${file_path}                         local_path_to_file("TestDocument.docx")
   Wait Until Page Contains Element    jquery=a[href="/cabinet"]
   Click Element                       jquery=a[href="/cabinet"]
   Wait Until Page Contains Element    name=email   10
-#  Input text    name=email     mail
   Sleep  1
   Input text    name=email      ${USERS.users['${username}'].login}
   Sleep  2
@@ -110,6 +109,12 @@ Set Multi Ids
   ${id}=    Get Text   xpath=//*/section[6]/table/tbody/tr[1]/td[2]
   ${Ids}=   Create List    ${tender_UAid}   ${id}
 
+Get Rough Copy Tender Id
+  [Arguments]  @{ARGUMENTS}
+  ${tender_id}=   Get Text          xpath=//*/section[6]/table/tbody/tr[2]/td[2]
+  ${tender_UA_ID}=   Convert To String         ${tender_UAid}
+  [return]  ${tender_UA_ID}
+
 Додати предмет
   [Arguments]  @{ARGUMENTS}
   [Documentation]
@@ -191,7 +196,6 @@ Set Multi Ids
 
   Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
   Wait Until Page Contains            Держзакупівлі.онлайн   10
-#  sleep  1
   Click Element                       xpath=//a[text()='Закупівлі']
   sleep  5
   Click Element                       xpath=//select[@name='filter[object]']/option[@value='tenderID']
@@ -216,7 +220,7 @@ Set Multi Ids
   Click Element                       xpath=//a[@class='reverse tenderLink']
   Wait Until Page Contains Element    xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]    20
   Click Element                       xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]
-  Wait Until Page Contains Element    name=title
+  Wait Until Page Contains Element    name=title    20
   Input text                          name=title                 ${title}
   Input text                          xpath=//textarea[@name='description']           ${description}
   Click Element                       xpath=//div[contains(@class, 'buttons')]//button[@type='submit']
@@ -232,12 +236,55 @@ Set Multi Ids
   ...      ${ARGUMENTS[3]} = answer_data
 
   ${answer}=     Get From Dictionary  ${ARGUMENTS[3].data}  answer
-  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  Selenium2Library.Switch Browser     ${ARGUMENTS[0]}
   netcast.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
 
+  Click Element                       xpath=//a[@class='reverse tenderLink']
+  Wait Until Page Contains Element    xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]    20
+  Click Element                       xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]
+  Wait Until Page Contains Element    xpath=//textarea[@name='answer']    20
+  Input text                          xpath=//textarea[@name='answer']            ${answer}
+  Click Element                       xpath=//div[1]/div[3]/form/div/table/tbody/tr/td[2]/button
+  Wait Until Page Contains            ${answer}   30
+  Capture Page Screenshot
+
+Подати скаргу
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} = username
+  ...      ${ARGUMENTS[1]} = tenderUaId
+
+  ${complaint}=        Get From Dictionary  ${ARGUMENTS[2].data}  title
+  ${description}=      Get From Dictionary  ${ARGUMENTS[2].data}  description
+
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  netcast.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
   Click Element                      xpath=//a[@class='reverse tenderLink']
-  Click Element                      xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]
-  Input text                         xpath=//textarea[@name='answer']            ${answer}
-  Click Element                      xpath=//div[1]/div[3]/form/div/table/tbody/tr/td[2]/button
-  Wait Until Page Contains           ${answer}   30
+  sleep  5
+  Click Element                      xpath=//a[@class='reverse openCPart'][span[text()='Скарги']]
+  Wait Until Page Contains Element   name=title    20
+  Input text                         name=title                 ${complaint}
+  Input text                         xpath=//textarea[@name='description']           ${description}
+  Click Element                      xpath=//div[contains(@class, 'buttons')]//button[@type='submit']
+  Wait Until Page Contains           ${complaint}   30
+  Capture Page Screenshot
+
+Внести зміни в тендер
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} = username
+  ...      ${ARGUMENTS[1]} = tenderUaId
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  Click Element                      xpath=//a[@class='reverse'][./text()='Мої закупівлі']
+  Wait Until Page Contains Element   xpath=//a[@class='reverse'][./text()='Чернетки']   30
+  Click Element                      xpath=//a[@class='reverse'][./text()='Чернетки']
+  Wait Until Page Contains Element   xpath=//a[@class='reverse tenderLink']    30
+  Click Element                      xpath=//a[@class='reverse tenderLink']
+  sleep  1
+  Click Element                      xpath=//a[@class='button save'][./text()='Редагувати']
+  sleep  1
+  Input text                         name=tender_title   "Some new title"
+  sleep  1
+  Click Element                      xpath=//button[@class='saveDraft']
+  Wait Until Page Contains           "Some new title"   30
   Capture Page Screenshot
