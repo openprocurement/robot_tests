@@ -3,9 +3,20 @@ Library  Selenium2Screenshots
 Library  String
 Library  DateTime
 
+
 *** Variables ***
-${locator.tenderId}                  jquery=h3
 ${file_path}                         local_path_to_file("TestDocument.docx")
+${locator.tenderId}                  xpath=//td[./text()='TenderID']/following-sibling::td[1]
+${locator.title}                     xpath=//td[./text()='Загальна назва закупівлі']/following-sibling::td[1]
+${locator.description}               xpath=//td[./text()='Предмет закупівлі']/following-sibling::td[1]
+${locator.value.amount}              xpath=//td[./text()='Максимальний бюджет']/following-sibling::td[1]
+${locator.minimalStep.amount}        xpath=//td[./text()='Крок зменшення ціни']/following-sibling::td[1]
+${locator.enquiryPeriod.endDate}     xpath=//td[./text()='Завершення періоду обговорення']/following-sibling::td[1]
+${locator.tenderPeriod.endDate}      xpath=//td[./text()='Завершення періоду прийому пропозицій']/following-sibling::td[1]
+${locator.items[0].deliveryAddress.countryName}    xpath=//td[@class='nameField'][./text()='Адреса поставки']/following-sibling::td[1]
+${locator.items[0].deliveryDate}            xpath=//td[./text()='Кінцева дата поставки']/following-sibling::td[1]
+${locator.items[0].classification.id}       xpath=//td[./text()='Клас CPV']/following-sibling::td[1]/span[1]
+${locator.items[0].classification.description}       xpath=//td[./text()='Клас CPV']/following-sibling::td[1]/span[2]
 
 *** Keywords ***
 Підготувати клієнт для користувача
@@ -15,10 +26,13 @@ ${file_path}                         local_path_to_file("TestDocument.docx")
   Open Browser   ${BROKERS['${USERS.users['${ARGUMENTS[0]}'].broker}'].url}   ${USERS.users['${ARGUMENTS[0]}'].browser}   alias=${ARGUMENTS[0]}
   Set Window Size       @{USERS.users['${ARGUMENTS[0]}'].size}
   Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
-  Run Keyword And Ignore Error   Pre Login   ${ARGUMENTS[0]}
-
+  Run Keyword And Ignore Error        Pre Login   ${ARGUMENTS[0]}
   Wait Until Page Contains Element    jquery=a[href="/cabinet"]
   Click Element                       jquery=a[href="/cabinet"]
+  Run Keyword If                      '${username}' != 'Netcast_Viewer'   Login
+
+Login
+  [Arguments]  @{ARGUMENTS}
   Wait Until Page Contains Element    name=email   10
   Sleep  1
   Input text    name=email      ${USERS.users['${username}'].login}
@@ -202,8 +216,10 @@ Get Rough Copy Tender Id
   Input text                          xpath=//input[@name='filter[search]']  ${ARGUMENTS[1]}
   Click Element                       xpath=//button[@class='btn'][./text()='Пошук']
   Wait Until Page Contains    ${ARGUMENTS[1]}   10
-  sleep  1
   Capture Page Screenshot
+  sleep  5
+  Click Element                       xpath=//a[@class='reverse tenderLink']
+
 
 Задати питання
   [Arguments]  @{ARGUMENTS}
@@ -217,7 +233,6 @@ Get Rough Copy Tender Id
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
   netcast.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
 
-  Click Element                       xpath=//a[@class='reverse tenderLink']
   Wait Until Page Contains Element    xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]    20
   Click Element                       xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]
   Wait Until Page Contains Element    name=title    20
@@ -239,7 +254,6 @@ Get Rough Copy Tender Id
   Selenium2Library.Switch Browser     ${ARGUMENTS[0]}
   netcast.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
 
-  Click Element                       xpath=//a[@class='reverse tenderLink']
   Wait Until Page Contains Element    xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]    20
   Click Element                       xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]
   Wait Until Page Contains Element    xpath=//textarea[@name='answer']    20
@@ -253,13 +267,13 @@ Get Rough Copy Tender Id
   [Documentation]
   ...      ${ARGUMENTS[0]} = username
   ...      ${ARGUMENTS[1]} = tenderUaId
-
+  ...      ${ARGUMENTS[2]} = complaintsId
   ${complaint}=        Get From Dictionary  ${ARGUMENTS[2].data}  title
   ${description}=      Get From Dictionary  ${ARGUMENTS[2].data}  description
 
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
   netcast.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
-  Click Element                      xpath=//a[@class='reverse tenderLink']
+
   sleep  5
   Click Element                      xpath=//a[@class='reverse openCPart'][span[text()='Скарги']]
   Wait Until Page Contains Element   name=title    20
@@ -288,3 +302,62 @@ Get Rough Copy Tender Id
   Click Element                      xpath=//button[@class='saveDraft']
   Wait Until Page Contains           "Some new title"   30
   Capture Page Screenshot
+
+отримати інформацію із тендера
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  fieldname
+  Switch browser   ${ARGUMENTS[0]}
+
+  ${return_value}=  run keyword  отримати інформацію про ${ARGUMENTS[1]}
+  log  ${return_value}
+  [return]  ${return_value}
+
+отримати тест із поля і показати на сторінці
+  [Arguments]   ${fieldname}
+  sleep  5
+  ${return_value}=   Get Text  ${locator.${fieldname}}
+  [return]  ${return_value}
+
+отримати інформацію про title
+  ${return_value}=   отримати тест із поля і показати на сторінці   title
+  [return]  ${return_value}
+
+отримати інформацію про description
+  ${return_value}=   отримати тест із поля і показати на сторінці   description
+  [return]  ${return_value}
+
+отримати інформацію про tenderId
+  ${return_value}=   отримати тест із поля і показати на сторінці   tenderId
+  [return]  ${return_value}
+
+отримати інформацію про value.amount
+  ${return_value}=   отримати тест із поля і показати на сторінці   value.amount
+  ${return_value}=   Evaluate   "".join("${return_value}".split(' ')[:-3])
+  ${return_value}=   Convert To Number   ${return_value}
+  [return]  ${return_value}
+
+отримати інформацію про minimalStep.amount
+  ${return_value}=   отримати тест із поля і показати на сторінці   minimalStep.amount
+  [return]  ${return_value}
+
+отримати інформацію про enquiryPeriod.endDate
+  ${return_value}=   отримати тест із поля і показати на сторінці   enquiryPeriod.endDate
+  [return]  ${return_value}
+
+отримати інформацію про tenderPeriod.endDate
+  ${return_value}=   отримати тест із поля і показати на сторінці   tenderPeriod.endDate
+  [return]  ${return_value}
+
+отримати інформацію про items[0].deliveryAddress.countryName
+  ${return_value}=   отримати тест із поля і показати на сторінці   items[0].deliveryAddress.countryName
+  [return]  ${return_value}
+
+отримати інформацію про items[0].classification.id
+${return_value}=   отримати тест із поля і показати на сторінці     items[0].classification.id
+  [return]  ${return_value}
+
+отримати інформацію про items[0].classification.description
+${return_value}=   отримати тест із поля і показати на сторінці     items[0].classification.description
+  [return]  ${return_value}
