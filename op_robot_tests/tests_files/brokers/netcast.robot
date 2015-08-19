@@ -15,8 +15,12 @@ ${locator.enquiryPeriod.endDate}     xpath=//td[./text()='Завершення �
 ${locator.tenderPeriod.endDate}      xpath=//td[./text()='Завершення періоду прийому пропозицій']/following-sibling::td[1]
 ${locator.items[0].deliveryAddress.countryName}    xpath=//td[@class='nameField'][./text()='Адреса поставки']/following-sibling::td[1]
 ${locator.items[0].deliveryDate}            xpath=//td[./text()='Кінцева дата поставки']/following-sibling::td[1]
+${locator.items[0].classification.scheme}   xpath=//td[@class = 'nameField'][./text()='Клас CPV']
 ${locator.items[0].classification.id}       xpath=//td[./text()='Клас CPV']/following-sibling::td[1]/span[1]
 ${locator.items[0].classification.description}       xpath=//td[./text()='Клас CPV']/following-sibling::td[1]/span[2]
+${locator.items[0].additionalClassifications[0].scheme}   xpath=//td[@class = 'nameField'][./text()='Клас ДКПП']
+${locator.items[0].additionalClassifications[0].id}       xpath=//td[./text()='Клас ДКПП']/following-sibling::td[1]/span[1]
+${locator.items[0].additionalClassifications[0].description}       xpath=//td[./text()='Клас ДКПП']/following-sibling::td[1]/span[2]
 
 *** Keywords ***
 Підготувати клієнт для користувача
@@ -123,12 +127,6 @@ Set Multi Ids
   ${id}=    Get Text   xpath=//*/section[6]/table/tbody/tr[1]/td[2]
   ${Ids}=   Create List    ${tender_UAid}   ${id}
 
-Get Rough Copy Tender Id
-  [Arguments]  @{ARGUMENTS}
-  ${tender_id}=   Get Text          xpath=//*/section[6]/table/tbody/tr[2]/td[2]
-  ${tender_UA_ID}=   Convert To String         ${tender_UAid}
-  [return]  ${tender_UA_ID}
-
 Додати предмет
   [Arguments]  @{ARGUMENTS}
   [Documentation]
@@ -211,15 +209,14 @@ Get Rough Copy Tender Id
   Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
   Wait Until Page Contains            Держзакупівлі.онлайн   10
   Click Element                       xpath=//a[text()='Закупівлі']
-  sleep  5
+  sleep  1
   Click Element                       xpath=//select[@name='filter[object]']/option[@value='tenderID']
   Input text                          xpath=//input[@name='filter[search]']  ${ARGUMENTS[1]}
   Click Element                       xpath=//button[@class='btn'][./text()='Пошук']
   Wait Until Page Contains    ${ARGUMENTS[1]}   10
   Capture Page Screenshot
-  sleep  5
+  sleep  1
   Click Element                       xpath=//a[@class='reverse tenderLink']
-
 
 Задати питання
   [Arguments]  @{ARGUMENTS}
@@ -273,8 +270,7 @@ Get Rough Copy Tender Id
 
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
   netcast.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
-
-  sleep  5
+  sleep  1
   Click Element                      xpath=//a[@class='reverse openCPart'][span[text()='Скарги']]
   Wait Until Page Contains Element   name=title    20
   Input text                         name=title                 ${complaint}
@@ -321,37 +317,42 @@ Get Rough Copy Tender Id
   [return]  ${return_value}
 
 отримати інформацію про title
-  ${return_value}=   отримати тест із поля і показати на сторінці   title
-  [return]  ${return_value}
+  ${title}=   отримати тест із поля і показати на сторінці   title
+  [return]  ${title}
 
 отримати інформацію про description
-  ${return_value}=   отримати тест із поля і показати на сторінці   description
-  [return]  ${return_value}
+  ${description}=   отримати тест із поля і показати на сторінці   description
+  [return]  ${description}
 
 отримати інформацію про tenderId
-  ${return_value}=   отримати тест із поля і показати на сторінці   tenderId
-  [return]  ${return_value}
+  ${tenderId}=   отримати тест із поля і показати на сторінці   tenderId
+  [return]  ${tenderId}
 
 отримати інформацію про value.amount
-  ${return_value}=   отримати тест із поля і показати на сторінці   value.amount
-  ${return_value}=   Evaluate   "".join("${return_value}".split(' ')[:-3])
-  ${return_value}=   Convert To Number   ${return_value}
-  [return]  ${return_value}
+  ${valueAmount}=   отримати тест із поля і показати на сторінці   value.amount
+  ${valueAmount}=   Evaluate   "".join("${valueAmount}".split(' ')[:-3])
+  ${valueAmount}=   Convert To Number   ${valueAmount}
+  [return]  ${valueAmount}
 
 отримати інформацію про minimalStep.amount
-  ${return_value}=   отримати тест із поля і показати на сторінці   minimalStep.amount
-  [return]  ${return_value}
+  ${minimalStepAamount}=   отримати тест із поля і показати на сторінці   minimalStep.amount
+  [return]  ${minimalStepAmount}
 
 отримати інформацію про enquiryPeriod.endDate
-  ${return_value}=   отримати тест із поля і показати на сторінці   enquiryPeriod.endDate
-  [return]  ${return_value}
+  ${enquiryPeriodEndDate}=   отримати тест із поля і показати на сторінці   enquiryPeriod.endDate
+  [return]  ${enquiryPeriodEndDate}
 
 отримати інформацію про tenderPeriod.endDate
-  ${return_value}=   отримати тест із поля і показати на сторінці   tenderPeriod.endDate
-  [return]  ${return_value}
+  ${enquiryPeriodEndDate}=   отримати тест із поля і показати на сторінці   tenderPeriod.endDate
+  [return]  ${enquiryPeriodEndDate}
 
 отримати інформацію про items[0].deliveryAddress.countryName
   ${return_value}=   отримати тест із поля і показати на сторінці   items[0].deliveryAddress.countryName
+  [return]  ${return_value}
+
+отримати інформацію про items[0].classification.scheme
+  ${return_value}=   отримати тест із поля і показати на сторінці   items[0].classification.scheme
+  ${return_value}=   Get Substring   ${return_value}   5
   [return]  ${return_value}
 
 отримати інформацію про items[0].classification.id
@@ -360,4 +361,17 @@ ${return_value}=   отримати тест із поля і показати �
 
 отримати інформацію про items[0].classification.description
 ${return_value}=   отримати тест із поля і показати на сторінці     items[0].classification.description
+  [return]  ${return_value}
+
+отримати інформацію про items[0].additionalClassifications[0].scheme
+  ${return_value}=   отримати тест із поля і показати на сторінці   items[0].additionalClassifications[0].scheme
+  ${return_value}=   Get Substring   ${return_value}   5
+  [return]  ${return_value}
+
+отримати інформацію про items[0].additionalClassifications[0].id
+${return_value}=   отримати тест із поля і показати на сторінці     items[0].additionalClassifications[0].id
+  [return]  ${return_value}
+
+отримати інформацію про items[0].additionalClassifications[0].description
+${return_value}=   отримати тест із поля і показати на сторінці     items[0].additionalClassifications[0].description
   [return]  ${return_value}
