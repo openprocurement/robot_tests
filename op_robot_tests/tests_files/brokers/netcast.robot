@@ -14,60 +14,56 @@ ${locator.minimalStep.amount}        xpath=//td[./text()='Крок зменше�
 ${locator.enquiryPeriod.endDate}     xpath=//td[./text()='Завершення періоду обговорення']/following-sibling::td[1]
 ${locator.tenderPeriod.endDate}      xpath=//td[./text()='Завершення періоду прийому пропозицій']/following-sibling::td[1]
 ${locator.items[0].deliveryAddress.countryName}    xpath=//td[@class='nameField'][./text()='Адреса поставки']/following-sibling::td[1]
-${locator.items[0].deliveryDate}            xpath=//td[./text()='Кінцева дата поставки']/following-sibling::td[1]
-${locator.items[0].classification.scheme}   xpath=//td[@class = 'nameField'][./text()='Клас CPV']
-${locator.items[0].classification.id}       xpath=//td[./text()='Клас CPV']/following-sibling::td[1]/span[1]
-${locator.items[0].classification.description}       xpath=//td[./text()='Клас CPV']/following-sibling::td[1]/span[2]
+${locator.items[0].deliveryDate}                   xpath=//td[./text()='Кінцева дата поставки']/following-sibling::td[1]
+${locator.items[0].classification.scheme}          xpath=//td[@class = 'nameField'][./text()='Клас CPV']
 ${locator.items[0].additionalClassifications[0].scheme}   xpath=//td[@class = 'nameField'][./text()='Клас ДКПП']
-${locator.items[0].additionalClassifications[0].id}       xpath=//td[./text()='Клас ДКПП']/following-sibling::td[1]/span[1]
-${locator.items[0].additionalClassifications[0].description}       xpath=//td[./text()='Клас ДКПП']/following-sibling::td[1]/span[2]
 
 *** Keywords ***
 Підготувати клієнт для користувача
   [Arguments]  @{ARGUMENTS}
-  [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
+  [Documentation]  Відкрити брaузер, створити обєкт api wrapper, тощо
   ...      ${ARGUMENTS[0]} ==  username
   Open Browser   ${BROKERS['${USERS.users['${ARGUMENTS[0]}'].broker}'].url}   ${USERS.users['${ARGUMENTS[0]}'].browser}   alias=${ARGUMENTS[0]}
   Set Window Size       @{USERS.users['${ARGUMENTS[0]}'].size}
   Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
-  Run Keyword And Ignore Error        Pre Login   ${ARGUMENTS[0]}
-  Wait Until Page Contains Element    jquery=a[href="/cabinet"]
-  Click Element                       jquery=a[href="/cabinet"]
-  Run Keyword If                      '${username}' != 'Netcast_Viewer'   Login
+  Run Keyword And Ignore Error       Pre Login   ${ARGUMENTS[0]}
+  Wait Until Page Contains Element   jquery=a[href="/cabinet"]
+  Click Element                      jquery=a[href="/cabinet"]
+  Run Keyword If                     '${username}' != 'Netcast_Viewer'   Login
 
 Login
   [Arguments]  @{ARGUMENTS}
-  Wait Until Page Contains Element    name=email   10
+  Wait Until Page Contains Element   name=email   10
   Sleep  1
-  Input text    name=email      ${USERS.users['${username}'].login}
+  Input text                         name=email      ${USERS.users['${username}'].login}
   Sleep  2
-  Input text   name=psw        ${USERS.users['${username}'].password}
-  Wait Until Page Contains Element   xpath=//button[contains(@class, 'btn')][./text()='Вхід в кабінет']   100
-  Click Element                xpath=//button[contains(@class, 'btn')][./text()='Вхід в кабінет']
+  Input text                         name=psw        ${USERS.users['${username}'].password}
+  Wait Until Page Contains Element   xpath=//button[contains(@class, 'btn')][./text()='Вхід в кабінет']   20
+  Click Element                      xpath=//button[contains(@class, 'btn')][./text()='Вхід в кабінет']
 
 Pre Login
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...    ${ARGUMENTS[0]} ==  username
   Wait Until Page Contains Element   name=siteLogin   10
-  Input text    name=siteLogin      ${BROKERS['${USERS.users['${username}'].broker}'].login}
-  Input text   name=sitePass       ${BROKERS['${USERS.users['${username}'].broker}'].password}
-  Click Button   xpath=.//*[@id='table1']/tbody/tr/td/form/p[3]/input
+  Input text                         name=siteLogin      ${BROKERS['${USERS.users['${username}'].broker}'].login}
+  Input text                         name=sitePass       ${BROKERS['${USERS.users['${username}'].broker}'].password}
+  Click Button                       xpath=.//*[@id='table1']/tbody/tr/td/form/p[3]/input
 
 Створити тендер
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tender_data
-  ${tender_data}=   Add_time_for_GUI_FrontEnds   ${ARGUMENTS[1]}
-  ${items}=         Get From Dictionary   ${tender_data.data}               items
-  ${title}=         Get From Dictionary   ${tender_data.data}               title
-  ${description}=   Get From Dictionary   ${tender_data.data}               description
-  ${budget}=        Get From Dictionary   ${tender_data.data.value}         amount
-  ${step_rate}=     Get From Dictionary   ${tender_data.data.minimalStep}   amount
-  ${items_description}=   Get From Dictionary   ${tender_data.data}         description
+  #{tender_data}=   Add_time_for_GUI_FrontEnds   ${ARGUMENTS[1]}
+  ${items}=         Get From Dictionary   ${ARGUMENTS[1].data}               items
+  ${title}=         Get From Dictionary   ${ARGUMENTS[1].data}               title
+  ${description}=   Get From Dictionary   ${ARGUMENTS[1].data}               description
+  ${budget}=        Get From Dictionary   ${ARGUMENTS[1].data.value}         amount
+  ${step_rate}=     Get From Dictionary   ${ARGUMENTS[1].data.minimalStep}   amount
+  ${items_description}=   Get From Dictionary   ${ARGUMENTS[1].data}         description
   ${quantity}=      Get From Dictionary   ${items[0]}         quantity
-  ${countryName}=   Get From Dictionary   ${tender_data.data.procuringEntity.address}       countryName
+  ${countryName}=   Get From Dictionary   ${ARGUMENTS[1].data.procuringEntity.address}       countryName
   ${delivery_end_date}=      Get From Dictionary   ${items[0].deliveryDate}   endDate
   ${delivery_end_date}=      convert_date_to_slash_format   ${delivery_end_date}
   ${cpv}=           Get From Dictionary   ${items[0].classification}          description_ua
@@ -76,9 +72,9 @@ Pre Login
   ${dkpp_desc}=     Get From Dictionary   ${items[0].additionalClassifications[0]}   description
   ${dkpp_id}=       Get From Dictionary   ${items[0].additionalClassifications[0]}  id
   ${dkpp_id1}=      Replace String   ${dkpp_id}   -   _
-  ${enquiry_end_date}=   Get From Dictionary         ${tender_data.data.enquiryPeriod}   endDate
+  ${enquiry_end_date}=   Get From Dictionary         ${ARGUMENTS[1].data.enquiryPeriod}   endDate
   ${enquiry_end_date}=   convert_date_to_slash_format   ${enquiry_end_date}
-  ${end_date}=      Get From Dictionary   ${tender_data.data.tenderPeriod}   endDate
+  ${end_date}=      Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}   endDate
   ${end_date}=      convert_date_to_slash_format   ${end_date}
 
   Selenium2Library.Switch Browser     ${ARGUMENTS[0]}
@@ -205,7 +201,6 @@ Set Multi Ids
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tenderId
   Switch browser   ${ARGUMENTS[0]}
-
   Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
   Wait Until Page Contains            Держзакупівлі.онлайн   10
   Click Element                       xpath=//a[text()='Закупівлі']
@@ -213,7 +208,7 @@ Set Multi Ids
   Click Element                       xpath=//select[@name='filter[object]']/option[@value='tenderID']
   Input text                          xpath=//input[@name='filter[search]']  ${ARGUMENTS[1]}
   Click Element                       xpath=//button[@class='btn'][./text()='Пошук']
-  Wait Until Page Contains    ${ARGUMENTS[1]}   10
+  Wait Until Page Contains            ${ARGUMENTS[1]}   10
   Capture Page Screenshot
   sleep  1
   Click Element                       xpath=//a[@class='reverse tenderLink']
@@ -226,6 +221,7 @@ Set Multi Ids
   ...      ${ARGUMENTS[2]} ==  questionId
   ${title}=        Get From Dictionary  ${ARGUMENTS[2].data}  title
   ${description}=  Get From Dictionary  ${ARGUMENTS[2].data}  description
+
 
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
   netcast.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
@@ -279,11 +275,31 @@ Set Multi Ids
   Wait Until Page Contains           ${complaint}   30
   Capture Page Screenshot
 
-Внести зміни в тендер
+Порівняти скаргу
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} = username
   ...      ${ARGUMENTS[1]} = tenderUaId
+  ...      ${ARGUMENTS[2]} = complaintsData
+  ${complaint}=        Get From Dictionary  ${ARGUMENTS[2].data}  title
+  ${description}=      Get From Dictionary  ${ARGUMENTS[2].data}  description
+
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  netcast.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+  sleep  1
+  Click Element                      xpath=//a[@class='reverse openCPart'][span[text()='Скарги']]
+  Wait Until Page Contains           ${complaint}   30
+  Capture Page Screenshot
+
+
+
+Внести зміни в тендер
+  #  Тест написано для уже існуючого тендеру, що знаходиться у чернетках користувача
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} = username
+  ...      ${ARGUMENTS[1]} = description
+
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
   Click Element                      xpath=//a[@class='reverse'][./text()='Мої закупівлі']
   Wait Until Page Contains Element   xpath=//a[@class='reverse'][./text()='Чернетки']   30
@@ -293,10 +309,10 @@ Set Multi Ids
   sleep  1
   Click Element                      xpath=//a[@class='button save'][./text()='Редагувати']
   sleep  1
-  Input text                         name=tender_title   "Some new title"
+  Input text                         name=tender_title   ${ARGUMENTS[1]}
   sleep  1
   Click Element                      xpath=//button[@class='saveDraft']
-  Wait Until Page Contains           "Some new title"   30
+  Wait Until Page Contains           ${ARGUMENTS[1]}   30
   Capture Page Screenshot
 
 отримати інформацію із тендера
@@ -305,9 +321,7 @@ Set Multi Ids
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  fieldname
   Switch browser   ${ARGUMENTS[0]}
-
   ${return_value}=  run keyword  отримати інформацію про ${ARGUMENTS[1]}
-  log  ${return_value}
   [return]  ${return_value}
 
 отримати тест із поля і показати на сторінці
@@ -330,12 +344,12 @@ Set Multi Ids
 
 отримати інформацію про value.amount
   ${valueAmount}=   отримати тест із поля і показати на сторінці   value.amount
-  ${valueAmount}=   Evaluate   "".join("${valueAmount}".split(' ')[:-3])
-  ${valueAmount}=   Convert To Number   ${valueAmount}
+  ${valueAmount}=   Convert To Number   ${valueAmount.split(' ')[0]}
   [return]  ${valueAmount}
 
 отримати інформацію про minimalStep.amount
-  ${minimalStepAamount}=   отримати тест із поля і показати на сторінці   minimalStep.amount
+  ${minimalStepAmount}=   отримати тест із поля і показати на сторінці   minimalStep.amount
+  ${minimalStepAmount}=   Convert To Number   ${minimalStepAmount.split(' ')[0]}
   [return]  ${minimalStepAmount}
 
 отримати інформацію про enquiryPeriod.endDate
@@ -343,35 +357,17 @@ Set Multi Ids
   [return]  ${enquiryPeriodEndDate}
 
 отримати інформацію про tenderPeriod.endDate
-  ${enquiryPeriodEndDate}=   отримати тест із поля і показати на сторінці   tenderPeriod.endDate
-  [return]  ${enquiryPeriodEndDate}
+  ${tenderPeriodEndDate}=   отримати тест із поля і показати на сторінці   tenderPeriod.endDate
+  [return]  ${tenderPeriodEndDate}
 
 отримати інформацію про items[0].deliveryAddress.countryName
-  ${return_value}=   отримати тест із поля і показати на сторінці   items[0].deliveryAddress.countryName
-  [return]  ${return_value}
+  ${countryName}=   отримати тест із поля і показати на сторінці   items[0].deliveryAddress.countryName
+  [return]  ${countryName}
 
 отримати інформацію про items[0].classification.scheme
-  ${return_value}=   отримати тест із поля і показати на сторінці   items[0].classification.scheme
-  ${return_value}=   Get Substring   ${return_value}   5
-  [return]  ${return_value}
-
-отримати інформацію про items[0].classification.id
-${return_value}=   отримати тест із поля і показати на сторінці     items[0].classification.id
-  [return]  ${return_value}
-
-отримати інформацію про items[0].classification.description
-${return_value}=   отримати тест із поля і показати на сторінці     items[0].classification.description
-  [return]  ${return_value}
+  ${classificationScheme}=   отримати тест із поля і показати на сторінці   items[0].classification.scheme
+  [return]  ${classificationScheme.split(' ')[1]}
 
 отримати інформацію про items[0].additionalClassifications[0].scheme
-  ${return_value}=   отримати тест із поля і показати на сторінці   items[0].additionalClassifications[0].scheme
-  ${return_value}=   Get Substring   ${return_value}   5
-  [return]  ${return_value}
-
-отримати інформацію про items[0].additionalClassifications[0].id
-${return_value}=   отримати тест із поля і показати на сторінці     items[0].additionalClassifications[0].id
-  [return]  ${return_value}
-
-отримати інформацію про items[0].additionalClassifications[0].description
-${return_value}=   отримати тест із поля і показати на сторінці     items[0].additionalClassifications[0].description
-  [return]  ${return_value}
+  ${additionalClassificationsScheme}=   отримати тест із поля і показати на сторінці   items[0].additionalClassifications[0].scheme
+  [return]  ${additionalClassificationsScheme.split(' ')[1]}

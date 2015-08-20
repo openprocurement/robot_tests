@@ -60,7 +60,6 @@ def compare_date(data1, data2):
         data1 = TIMEZONE.localize(data1)
     if data2.tzinfo is None:
         data2 = TIMEZONE.localize(data2)
-
     delta = (data1-data2).total_seconds()
     if abs(delta) > 60:
        return False
