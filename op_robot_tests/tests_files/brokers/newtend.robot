@@ -19,7 +19,7 @@ ${locator.tenderId}                  jquery=h3
   Set Window Size   @{USERS.users['${ARGUMENTS[0]}'].size}
   Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
 
-  sleep   10
+#  sleep   10
   Run Keyword If   '${username}' != 'Newtend_Viewer'   Login
 
 Login
@@ -30,9 +30,8 @@ Login
   Input text   id=password   ${USERS.users['${username}'].password}
   Click Element   id=submit-login-button
   Wait Until Page Contains Element   xpath =//a[@class="close-modal-dialog"]  20
-
-
-  Wait Until Page Contains Element   xpath=//div[@class="introjs-overlay"]   20
+  Go to   ${USERS.users['${ARGUMENTS[0]}'].homepage}
+#  Wait Until Page Contains Element   xpath=//div[@class="introjs-overlay"]   20
 
 Створити тендер
   [Arguments]  @{ARGUMENTS}
@@ -171,20 +170,17 @@ Set datetime
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  ${TENDER_UAID}
-  log   ${USERS.users['${ARGUMENTS[0]}'].homepage}
-  log   ${ARGUMENTS[0]}
   Switch browser   ${ARGUMENTS[0]}
-#  Go to   ${USERS.users['${ARGUMENTS[0]}'].homepage}
+  Go to   ${USERS.users['${ARGUMENTS[0]}'].homepage}
   Wait Until Page Contains Element   xpath=//div[@class="search-field"]/input   20
-  ${ARGUMENTS[1]}=   Convert To String   UA-2015-06-08-000023
+#  ${ARGUMENTS[1]}=   Convert To String   UA-2015-06-08-000023
   Input text                         xpath=//div[@class="search-field"]/input   ${ARGUMENTS[1]}
   : FOR    ${INDEX}    IN RANGE    1    30
-#  \   Log To Console   .
-  \   sleep       1
+  \   Log To Console   .   no_newline=true
+#  \   sleep       1
   \   ${count}=   Get Matching Xpath Count   xpath=//a[@class="row tender-info ng-scope"]
   \   Exit For Loop If  '${count}' == '1'
   Click Element                      xpath=//a[@class="row tender-info ng-scope"]
   Wait Until Page Contains Element   xpath=//a[@class="ng-binding ng-scope"]   30
   ${fould_title}=         Get Text   xpath=//a[@class="ng-binding ng-scope"]
   Should Be Equal   ${fould_title}   ${ARGUMENTS[1]}
-

@@ -83,7 +83,8 @@ ${telephone}     +380976535447
   Sleep  2
   Run Keyword if   '${mode}' == 'multi'   Додати предмет   items
   Click Element                       id=mForm:bSave
-  Sleep   5
+  # More smart wait for id is needed there.
+  Sleep   25
   ${tender_UAid}=  Get Text           id=mForm:nBid
   ${tender_UAid}=  Get Substring  ${tender_UAid}  19
   ${Ids}       Convert To String  ${tender_UAid}
