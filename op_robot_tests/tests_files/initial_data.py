@@ -6,6 +6,14 @@ from faker import Factory
 fake = Factory.create('uk_UA')
 fake_ru = Factory.create('ru')
 fake_en = Factory.create()
+from tempfile import NamedTemporaryFile
+
+def create_fake_doc():
+    content = fake.text()
+    tf = NamedTemporaryFile(delete=False)
+    tf.write(content)
+    tf.close()
+    return tf.name
 
 def test_tender_data(period_interval=2):
   now = datetime.now()
@@ -133,7 +141,7 @@ def prom_test_tender_data():
         {
             "description": fake.catch_phrase(),
             "deliveryDate": {
-				"startDate": (now + timedelta(days=4)).isoformat(),
+                "startDate": (now + timedelta(days=4)).isoformat(),
                 "endDate": (now + timedelta(days=5)).isoformat()
             },
             "deliveryLocation": {
@@ -150,7 +158,7 @@ def prom_test_tender_data():
             "classification": {
                 "scheme": u"CPV",
                 "id": u"44617100-9",
-                "description": u"Cartons"
+                "description": u"Cartons",
             },
             "additionalClassifications": [
                 {
@@ -205,15 +213,15 @@ def test_tender_data_multiple_lots(period_interval=2):
 	      "name": fake.name(),
 	      "telephone": fake.phone_number()
 	  }
-      },
-      "value": {
-	  "amount": 50000.99,
+    },
+    "value": {
+	  "amount": 50000,
 	  "currency": u"UAH"
       },
       "minimalStep": {
-	  "amount": 100.1,
-	  "currency": u"UAH"
-      },
+        "amount": 100,
+        "currency": u"UAH"
+    },
     "items": [
         {
             "description": fake.catch_phrase(),
@@ -229,7 +237,7 @@ def test_tender_data_multiple_lots(period_interval=2):
                 "postalCode": "01008",
                 "region": u"м. Київ",
                 "locality": u"м. Київ",
-                "streetAddress": "ул. Грушевского, 12/2"
+                "streetAddress": u"ул. Грушевского, 12/2"
             },
             "classification": {
                 "scheme": u"CPV",
@@ -297,7 +305,7 @@ def test_tender_data_multiple_lots(period_interval=2):
                 "postalCode": fake.postalcode(),
                 "region": u"м. Луганськ",
                 "locality": u"м. Луганськ",
-                "streetAddress": "Вул. Оборонна 28"
+                "streetAddress": u"Вул. Оборонна 28"
             },
             "classification": {
                 "scheme": u"CPV",
@@ -460,7 +468,7 @@ def test_bid_data():
             }
         }
     })
-	    
+        
 def auction_bid():
     return munchify({
         "data": {"value": {

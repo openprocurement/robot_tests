@@ -18,7 +18,6 @@ TestSuiteSetup
 
 Завантажуємо дані про корисувачів і площадки
   [Arguments]  ${active_users}
-  # Init Brokers
   log  ${active_users}
 
   ${file_path}=  Get Variable Value  ${BROKERS_FILE}  brokers.yaml
@@ -27,15 +26,14 @@ TestSuiteSetup
   Set Global Variable  ${BROKERS}
   ${brokers_list}=    Get Dictionary Items    ${BROKERS}
   log  ${brokers_list}
-  # Init Users
   ${file_path}=  Get Variable Value  ${USERS_FILE}  users.yaml
   ${USERS}=  load_initial_data_from  ${file_path}
   Set Global Variable  ${USERS}
   ${users_list}=    Get Dictionary Items    ${USERS.users}
   :FOR  ${username}  ${user_data}   IN  @{users_list}
-  \  log  ${active_users} 
+  \  log  ${active_users}
   \  log  ${username}
-  \  ${status}=  Run Keyword And Return Status   List Should Contain Value  ${active_users}   ${username} 
+  \  ${status}=  Run Keyword And Return Status   List Should Contain Value  ${active_users}   ${username}
   \  Run Keyword If   '${status}' == 'True'   Завантажуємо бібліотеку з реалізацією ${BROKERS['${USERS.users['${username}'].broker}'].keywords_file} площадки
   \  Run Keyword If   '${status}' == 'True'   Викликати для учасника   ${username}  Підготувати клієнт для користувача
 
@@ -58,6 +56,9 @@ TestSuiteSetup
   Set Global Variable  ${REPLIES}
   ${INITIAL_TENDER_DATA}=  prepare_test_tender_data   ${BROKERS['${USERS.users['${tender_owner}'].broker}'].period_interval}   ${mode}
   Set Global Variable  ${INITIAL_TENDER_DATA}
+  ${TENDER}=  Create Dictionary
+  Set Global Variable  ${TENDER}
+  Log  ${TENDER}
   Log  ${INITIAL_TENDER_DATA}
 
 Завантажуємо бібліотеку з реалізацією ${keywords_file} площадки
@@ -73,46 +74,43 @@ TestSuiteSetup
   ...      ${ARGUMENTS[2]} ==  id
 
   ${now}=  Get Current Date
-  ${delta}=  Subtract Date From Date  ${now}  ${LAST_MODIFICATION_DATE}
+  ${delta}=  Subtract Date From Date  ${now}  ${TENDER['LAST_MODIFICATION_DATE']}
   ${wait_timout}=  Subtract Time From Time  ${BROKERS['${USERS.users['${username}'].broker}'].timout_on_wait}  ${delta}
   Run Keyword If   ${wait_timout}>0   Sleep  ${wait_timout}
-
-#отримати останні зміни в тендері
-#  ${TENDER_DATA}=   Викликати для учасника   ${tender_owner}   Пошук тендера по ідентифікатору   ${TENDER_DATA.data.tenderID}   ${TENDER_DATA.data.id}
-#  Set To Dictionary  ${TENDER_DATA}   access_token   ${access_token}
-#  Set Global Variable  ${TENDER_DATA}
-#  ${now}=  Get Current Date
-#  Log object data  ${TENDER_DATA}  tender_${tender_dump_id}
-#  ${tender_dump_id}=   Evaluate    ${tender_dump_id}+1
-#  Set Global Variable  ${tender_dump_id}
 
 Звірити поле тендера
   [Arguments]  ${username}  ${field}
   ${field_value}=   Get_From_Object  ${INITIAL_TENDER_DATA.data}   ${field}
   Звірити поле    ${username}  ${field}  ${field_value}
 
-Звірити поле 
-  [Arguments]  ${username}  ${field}   ${subject} 
+Звірити поле
+  [Arguments]  ${username}  ${field}   ${subject}
   ${field_response}=  Викликати для учасника    ${username}   отримати інформацію із тендера   ${field}
+  Should Not Be Equal  ${field_response}   ${None}
   Should Be Equal   ${subject}   ${field_response}   Майданчик ${USERS.users['${username}'].broker}
 
 Звірити поле створеного тендера
   [Arguments]  ${initial}  ${tender_data}  ${field}
   ${field_value}=   Get_From_Object  ${initial}   ${field}
   ${field_response}=  Get_From_Object  ${tender_data}   ${field}
+  Should Not Be Equal  ${field_response}   ${None}
+  Should Not Be Equal  ${field_value}   ${None}
   Should Be Equal   ${field_value}   ${field_response}
 
 Звірити дату тендера
   [Arguments]  ${username}  ${field}
   ${isodate}=   Get_From_Object  ${INITIAL_TENDER_DATA.data}   ${field}
+  Should Not Be Equal  ${isodate}   ${None}
   Звірити дату  ${username}  ${field}  ${isodate}
 
 Звірити дату
-   [Arguments]  ${username}  ${field}   ${subject} 
+   [Arguments]  ${username}  ${field}   ${subject}
    ${field_date}=  Викликати для учасника    ${username}   отримати інформацію із тендера  ${field}
    ${returned}=   compare_date   ${subject}  ${field_date}
-   Should Be True  '${returned}' == 'True'   
-   
+   Should Not Be Equal  ${field_date}   ${None}
+   Should Not Be Equal  ${returned}   ${None}
+   Should Be True  '${returned}' == 'True'
+
 Звірити поля предметів закупівлі багатопредметного тендера
   [Arguments]  ${username}  ${field}
   Дочекатись синхронізації з майданчиком    ${username}
@@ -122,10 +120,18 @@ TestSuiteSetup
     \    Log   ${index}
     \    Звірити поле тендера   ${viewer}  items[${index}].${field}
 
-  
+Звірити дату предметів закупівлі багатопредметного тендера
+  [Arguments]  ${username}  ${field}
+  Дочекатись синхронізації з майданчиком    ${username}
+  @{items}=  Get_From_Object  ${INITIAL_TENDER_DATA.data}     items
+  ${len_of_items}=   Get Length   ${items}
+  :FOR   ${index}    IN RANGE   ${len_of_items}
+    \    Log   ${index}
+    \    Звірити дату тендера   ${viewer}  items[${index}].${field}
+
 Викликати для учасника
   [Documentation]
-  ...    cause sometimes keyword SHOULD fail to pass the testcase, this keyword takes "shouldfail" argument as first one in @{arguments} and switches the behaviour of keyword and "shouldfail" 
+  ...    cause sometimes keyword SHOULD fail to pass the testcase, this keyword takes "shouldfail" argument as first one in @{arguments} and switches the behaviour of keyword and "shouldfail"
   [Arguments]  ${username}  ${command}  @{arguments}
   log  ${username}
   log  ${command}
@@ -153,7 +159,7 @@ switchsate
   ${status}  ${value}=  run_keyword_and_ignore_keyword_definations   ${BROKERS['${USERS.users['${username}'].broker}'].keywords_file}.${command}  ${username}  @{arguments}
   Run keyword if  '${status}' == 'PASS'   Log   Учасник ${username} зміг виконати "${command}"   WARN
   [return]   ${value}
-  
+
 Дочекатись дати
   [Arguments]  ${date}
   ${wait_timout}=  wait_to_date  ${date}
@@ -161,12 +167,12 @@ switchsate
 
 Дочекатись дати початоку прийому пропозицій
   Дочекатись дати  ${TENDER_DATA.data.tenderPeriod.startDate}
-  
+
 Дочекатись дати закінчення прийому пропозицій
   Дочекатись дати  ${TENDER_DATA.data.tenderPeriod.endDate}
-  
+
 Дочекатись дати початоку аукціону
   Дочекатись дати  ${TENDER_DATA.data.auctionPeriod.startDate}
 
 Дочекатись дати закінчення аукціону
-  Дочекатись дати  ${TENDER_DATA.data.auctionPeriod.endDate}  
+  Дочекатись дати  ${TENDER_DATA.data.auctionPeriod.endDate}
