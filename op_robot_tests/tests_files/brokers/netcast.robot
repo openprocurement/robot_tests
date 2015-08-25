@@ -3,7 +3,6 @@ Library  Selenium2Screenshots
 Library  String
 Library  DateTime
 
-
 *** Variables ***
 ${file_path}                         local_path_to_file("TestDocument.docx")
 ${locator.tenderId}                  xpath=//td[./text()='TenderID']/following-sibling::td[1]
@@ -14,9 +13,13 @@ ${locator.minimalStep.amount}        xpath=//td[./text()='Крок зменше�
 ${locator.enquiryPeriod.endDate}     xpath=//td[./text()='Завершення періоду обговорення']/following-sibling::td[1]
 ${locator.tenderPeriod.endDate}      xpath=//td[./text()='Завершення періоду прийому пропозицій']/following-sibling::td[1]
 ${locator.items[0].deliveryAddress.countryName}    xpath=//td[@class='nameField'][./text()='Адреса поставки']/following-sibling::td[1]
-${locator.items[0].deliveryDate}                   xpath=//td[./text()='Кінцева дата поставки']/following-sibling::td[1]
+${locator.items[0].deliveryDate}     xpath=//td[./text()='Кінцева дата поставки']/following-sibling::td[1]
 ${locator.items[0].classification.scheme}          xpath=//td[@class = 'nameField'][./text()='Клас CPV']
 ${locator.items[0].additionalClassifications[0].scheme}   xpath=//td[@class = 'nameField'][./text()='Клас ДКПП']
+${locator.questions[0].title}        xpath=//div[@class = 'question relative']//div[@class = 'title']
+${locator.questions[0].description}  xpath = //div[@class='text']
+${locator.questions[0].date}         xpath = //div[@class='date']
+${locator.questions[0].answer}       xpath=//div[@class = 'answer relative']//div[@class = 'text']
 
 *** Keywords ***
 Підготувати клієнт для користувача
@@ -315,6 +318,16 @@ Set Multi Ids
   Wait Until Page Contains           ${ARGUMENTS[1]}   30
   Capture Page Screenshot
 
+обновити сторінку з тендером
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} = username
+  ...      ${ARGUMENTS[1]} = description
+
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  netcast.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+  Reload Page
+
 отримати інформацію із тендера
   [Arguments]  @{ARGUMENTS}
   [Documentation]
@@ -371,3 +384,28 @@ Set Multi Ids
 отримати інформацію про items[0].additionalClassifications[0].scheme
   ${additionalClassificationsScheme}=   отримати тест із поля і показати на сторінці   items[0].additionalClassifications[0].scheme
   [return]  ${additionalClassificationsScheme.split(' ')[1]}
+
+отримати інформацію про questions[0].title
+  sleep  1
+  Click Element                       xpath=//a[@class='reverse tenderLink']
+  sleep  1
+  Click Element                       xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]
+  ${questionsTitle}=   отримати тест із поля і показати на сторінці   questions[0].title
+  ${questionsTitle}=   Convert To Lowercase   ${questionsTitle}
+  [return]  ${questionsTitle.capitalize().split('.')[0] + '.'}
+
+отримати інформацію про questions[0].description
+  ${questionsDescription}=   отримати тест із поля і показати на сторінці   questions[0].description
+  [return]  ${questionsDescription}
+
+отримати інформацію про questions[0].date
+  ${questionsDate}=   отримати тест із поля і показати на сторінці   questions[0].date
+  [return]  ${questionsDate}
+
+отримати інформацію про questions[0].answer
+  sleep  1
+  Click Element                       xpath=//a[@class='reverse tenderLink']
+  sleep  1
+  Click Element                       xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]
+  ${questionsAnswer}=   отримати тест із поля і показати на сторінці   questions[0].answer
+  [return]  ${questionsAnswer}
