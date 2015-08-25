@@ -37,6 +37,7 @@ ${locator.questions[0].answer}       xpath=//div[@class = 'answer relative']//di
 Login
   [Arguments]  @{ARGUMENTS}
   Wait Until Page Contains Element   name=email   10
+  Input text    name=email     mail
   Sleep  1
   Input text                         name=email      ${USERS.users['${username}'].login}
   Sleep  2
@@ -69,7 +70,7 @@ Pre Login
   ${countryName}=   Get From Dictionary   ${ARGUMENTS[1].data.procuringEntity.address}       countryName
   ${delivery_end_date}=      Get From Dictionary   ${items[0].deliveryDate}   endDate
   ${delivery_end_date}=      convert_date_to_slash_format   ${delivery_end_date}
-  ${cpv}=           Get From Dictionary   ${items[0].classification}          description_ua
+  ${cpv}=           Convert To String   Картонки
   ${cpv_id}=           Get From Dictionary   ${items[0].classification}         id
   ${cpv_id1}=       Replace String   ${cpv_id}   -   _
   ${dkpp_desc}=     Get From Dictionary   ${items[0].additionalClassifications[0]}   description

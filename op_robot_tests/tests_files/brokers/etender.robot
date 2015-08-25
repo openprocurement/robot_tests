@@ -5,6 +5,12 @@ Library  DateTime
 
 *** Variables ***
 ${locator.tenderId}                  jquery=h3
+##Використовую такий шлях у кожного буде мінятись /yboi/. Міняйте на сві шлях до файлу
+${file_add}     /home/yboi/openprocurement.robottests.buildout/Document.docx
+${locator.title}                     xpath=(//div[@class = 'col-sm-8']/p[@class='ng-binding'])[6]
+${locator.description}               xpath=(//div[@class = 'col-sm-8']/p[@class='ng-binding'])[7]
+${locator.minimalStep.amount}        xpath=(//div[@class = 'col-sm-8']/p[@class='ng-binding'])[9]
+${locator.value.amount}              xpath=(//div[@class = 'col-sm-8']/p[@class='ng-binding'])[8]
 
 *** Keywords ***
 Підготувати клієнт для користувача
@@ -14,7 +20,9 @@ ${locator.tenderId}                  jquery=h3
   Open Browser   ${USERS.users['${ARGUMENTS[0]}'].homepage}   ${USERS.users['${username}'].browser}   alias=${ARGUMENTS[0]}
   Set Window Size   @{USERS.users['${ARGUMENTS[0]}'].size}
   Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
-# login
+  Run Keyword If   '${username}' != 'E-tender_Viewer'   Login
+
+Login
   Wait Until Page Contains Element   id=inputUsername   100
   Input text   id=inputUsername      ${USERS.users['${username}'].login}
   Wait Until Page Contains Element   id=inputPassword   100
@@ -25,35 +33,35 @@ ${locator.tenderId}                  jquery=h3
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  tender_data
-  ${tender_data}=   Add_time_for_GUI_FrontEnds   ${ARGUMENTS[1]}
-  ${items}=         Get From Dictionary   ${tender_data.data}               items
-  ${title}=         Get From Dictionary   ${tender_data.data}               title
-  ${description}=   Get From Dictionary   ${tender_data.data}               description
-  ${budget}=        Get From Dictionary   ${tender_data.data.value}         amount
-  ${step_rate}=     Get From Dictionary   ${tender_data.data.minimalStep}   amount
-  ${items_description}=   Get From Dictionary   ${tender_data.data}         description
+  ...      ${ARGUMENTS[1]} ==  initial_tender_data
+  ${prepared_tender_data}=   Add_data_for_GUI_FrontEnds   ${ARGUMENTS[1]}
+  ${items}=         Get From Dictionary   ${prepared_tender_data.data}               items
+  ${title}=         Get From Dictionary   ${prepared_tender_data.data}               title
+  ${description}=   Get From Dictionary   ${prepared_tender_data.data}               description
+  ${budget}=        Get From Dictionary   ${prepared_tender_data.data.value}         amount
+  ${step_rate}=     Get From Dictionary   ${prepared_tender_data.data.minimalStep}   amount
+  ${items_description}=   Get From Dictionary   ${prepared_tender_data.data}         description
   ${quantity}=      Get From Dictionary   ${items[0]}                        quantity
   ${cpv}=           Get From Dictionary   ${items[0].classification}         id
-  ${dkpp_desc}=     Get From Dictionary   ${items[0].additionalClassifications[0]}   description
-  ${dkpp_id}=       Get From Dictionary   ${items[0].additionalClassifications[0]}  id
   ${unit}=          Get From Dictionary   ${items[0].unit}                   name
-  ${start_date}=    Get From Dictionary   ${tender_data.data.tenderPeriod}   startDate
+  ${start_date}=    Get From Dictionary   ${prepared_tender_data.data.tenderPeriod}   startDate
   ${start_date}=    convert_date_to_etender_format   ${start_date}
-  ${start_time}=    Get From Dictionary   ${tender_data.data.tenderPeriod}   startDate
+  ${start_time}=    Get From Dictionary   ${prepared_tender_data.data.tenderPeriod}   startDate
   ${start_time}=    convert_time_to_etender_format   ${start_time}
-  ${end_date}=      Get From Dictionary   ${tender_data.data.tenderPeriod}   endDate
+  ${end_date}=      Get From Dictionary   ${prepared_tender_data.data.tenderPeriod}   endDate
   ${end_date}=      convert_date_to_etender_format   ${end_date}
-  ${end_time}=      Get From Dictionary   ${tender_data.data.tenderPeriod}   endDate
+  ${end_time}=      Get From Dictionary   ${prepared_tender_data.data.tenderPeriod}   endDate
   ${end_time}=   convert_time_to_etender_format      ${end_time}
-  ${enquiry_end_date}=   Get From Dictionary         ${tender_data.data.enquiryPeriod}   endDate
+  ${enquiry_end_date}=   Get From Dictionary         ${prepared_tender_data.data.enquiryPeriod}   endDate
   ${enquiry_end_date}=   convert_date_to_etender_format   ${enquiry_end_date}
-  ${enquiry_end_time}=   Get From Dictionary              ${tender_data.data.enquiryPeriod}   endDate
+  ${enquiry_end_time}=   Get From Dictionary              ${prepared_tender_data.data.enquiryPeriod}   endDate
   ${enquiry_end_time}=   convert_time_to_etender_format   ${enquiry_end_time}
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
-  Wait Until Page Contains          Мої закупівлі    100
+  Wait Until Page Contains          Мої закупівлі   100
+  Sleep  1
   Click Element                     xpath=//a[contains(@class, 'ng-binding')][./text()='Мої закупівлі']
   Wait Until Page Contains Element  xpath=//a[contains(@class, 'btn btn-info')]
+  Sleep  1
   Click Element                     xpath=//a[contains(@class, 'btn btn-info')]
   Wait Until Page Contains Element  id=title
   Input text    id=title                  ${title}
@@ -63,7 +71,7 @@ ${locator.tenderId}                  jquery=h3
   Input text    id=minimalStep            ${step_rate}
   Input text    id=itemsDescription       ${items_description}
   Input text    id=itemsQuantity          ${quantity}
-  Wait Until Page Contains Element    xpath=//select[@name="itemsUnit"]/option[@value='kilogram']   100
+  Wait Until Page Contains Element    xpath=//select[@name="itemsUnit"]/option[@value='kilogram']
   Click Element  xpath=//select[@name="itemsUnit"]/option[@value='kilogram']
   Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//input[@name='enqPEndDate']   ${enquiry_end_date}
   Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//div[contains(@class, 'col-sm-2')]//input[@ng-model='data.enquiryPeriod.endDate']   ${enquiry_end_time}
@@ -71,26 +79,28 @@ ${locator.tenderId}                  jquery=h3
   Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//div[contains(@class, 'col-sm-2')]//input[@ng-model='data.tenderPeriod.startDate']   ${start_time}
   Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//input[@name='endDate']   ${end_date}
   Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//div[contains(@class, 'col-sm-2')]//input[@ng-model='data.tenderPeriod.endDate']   ${end_time}
+  Sleep  2
   Click Element   xpath=//div[contains(@class, 'col-sm-2')]//input[@data-target='#classification']
-  Wait Until Element Is Visible     xpath=//div[contains(@role,'dialog')]
+  Sleep  1
   Input text      xpath=//div[contains(@class, 'modal-content')]//input[@ng-model='searchstring']   ${cpv}
+  Sleep  2
   Wait Until Page Contains    ${cpv}
   Click Element   xpath=//td[contains(., '${cpv}')]
+  Sleep  1
   Click Element   xpath=//div[contains(@class, 'modal-content')]//button[@ng-click='choose()']
-  Click Element   xpath=//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification']
-  Wait Until Element Is Visible      xpath=//div[contains(@id,'addClassification')]
-  Input text      xpath=//div[contains(@class, 'modal fade ng-scope in')]//input[@ng-model='searchstring']    ${dkpp_desc}
-  Wait Until Page Contains   ${dkpp_id}
-  Click Element   xpath=//td[contains(., '${dkpp_id}')]
-  Click Element   xpath=//div[contains(@class, 'modal fade ng-scope in')]//button[@ng-click='choose()']
-  Run Keyword if   '${mode}' == 'multi'   Додати предмет   items
+  Sleep  1
+  Додати предмет   ${items[0]}   0
+  Run Keyword if   '${mode}' == 'multi'   Додати багато предметів   items
+  Sleep  1
   Wait Until Page Contains Element   xpath=//div[contains(@class, 'form-actions')]//button[@type='submit']
   Click Element   xpath=//div[contains(@class, 'form-actions')]//button[@type='submit']
+  Sleep  1
   Wait Until Page Contains    [ТЕСТУВАННЯ]   100
-  Click Element   xpath=//table[contains(@class, 'table table-hover table-striped table-bordered ng-scope ng-table')]//tr[1]//a
-  ${tender_UAid}=   Wait Until Keyword Succeeds   240sec   2sec   get tender UAid
-###  harcode Idis bacause issues on the E-tender side, to remove, 1 line:
-  ${tender_UAid}=   Convert To String   UA-2015-08-03-000025
+  Sleep   20
+  Click Element   xpath=//*[text()='${title}']
+  Sleep   5
+  ${tender_UAid}=  Get Text  xpath=//div[contains(@class, "panel-heading")]
+  ${tender_UAid}=  Get Substring  ${tender_UAid}   10
   ${Ids}=   Convert To String   ${tender_UAid}
   Run keyword if   '${mode}' == 'multi'   Set Multi Ids   ${ARGUMENTS[0]}   ${tender_UAid}
   [return]  ${Ids}
@@ -98,14 +108,10 @@ ${locator.tenderId}                  jquery=h3
 Set Multi Ids
   [Arguments]  @{ARGUMENTS}
   [Documentation]
-  ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  ${tender_UAid}
-  ${id}=   Oтримати internal id по UAid   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
-  ${Ids}=   Create List    ${tender_UAid}   ${id}
-
-get tender UAid
-  ${tender_UAid}=  Get Text  xpath=//div[contains(@class, "panel-heading")]
-  ${tender_UAid}=  Get Substring  ${tender_UAid}  7  27
+  ...      ${ARGUMENTS[0]} ==  ${tender_UAid}
+  ${current_location}=      Get Location
+  ${id}=    Get Substring   ${current_location}   10
+  ${Ids}=   Create List     ${tender_UAid}   ${id}
 
 Oтримати internal id по UAid
   [Arguments]  @{ARGUMENTS}
@@ -115,48 +121,34 @@ Oтримати internal id по UAid
   etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
   ${current_location}=   Get Location
   ${tender_id}=   Fetch From Right   ${current_location}   /
-##  harcode Idis bacause issues on the E-tender side, to remove, 1 line:
-  ${tender_id}=     Convert To String   94ffe180019d459787aafe290cd300e2
   [return]  ${tender_id}
 
 Додати предмет
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  items
-  ${dkpp_desc1}=     Get From Dictionary   ${items[1].additionalClassifications[0]}   description
-  ${dkpp_id1}=       Get From Dictionary   ${items[1].additionalClassifications[0]}  id
-  ${dkpp_desc2}=     Get From Dictionary   ${items[2].additionalClassifications[0]}   description
-  ${dkpp_id2}=       Get From Dictionary   ${items[2].additionalClassifications[0]}  id
-  ${dkpp_desc3}=     Get From Dictionary   ${items[3].additionalClassifications[0]}   description
-  ${dkpp_id3}=       Get From Dictionary   ${items[3].additionalClassifications[0]}  id
+  ...      ${ARGUMENTS[1]} ==  ${INDEX}
+  ${dkpp_desc}=     Get From Dictionary   ${ARGUMENTS[0].additionalClassifications[0]}   description
+  ${dkpp_id}=       Get From Dictionary   ${ARGUMENTS[0].additionalClassifications[0]}  id
+  Sleep  2
+  Click Element                      xpath=(//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification'])[${ARGUMENTS[1]}+1]
+  Wait Until Element Is Visible      xpath=//div[contains(@id,'addClassification')]
+  Sleep  2
+  Input text                         xpath=//div[contains(@class, 'modal fade ng-scope in')]//input[@ng-model='searchstring']    ${dkpp_desc}
+  Wait Until Page Contains   ${dkpp_id}
+  Sleep  1
+  Click Element   xpath=//td[contains(., '${dkpp_id}')]
+  Click Element                      xpath=//div[contains(@class, 'modal fade ng-scope in')]//button[@ng-click='choose()']
+  Sleep  2
 
-  Wait Until Page Contains Element   xpath=.//*[@id='myform']/tender-form/div/button   100
-  Click Element                      xpath=.//*[@id='myform']/tender-form/div/button
-  Sleep  2
-  Click Element                      xpath=(//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification'])[2]
-  Wait Until Element Is Visible      xpath=//div[contains(@id,'addClassification')]
-  Input text                         xpath=//div[contains(@class, 'modal fade ng-scope in')]//input[@ng-model='searchstring']    ${dkpp_desc1}
-  Wait Until Page Contains   ${dkpp_id1}
-  Click Element   xpath=//td[contains(., '${dkpp_id1}')]
-  Click Element                      xpath=//div[contains(@class, 'modal fade ng-scope in')]//button[@ng-click='choose()']
-  Sleep  2
-  Click Element                      xpath=.//*[@id='myform']/tender-form/div/button
-  Sleep  2
-  Click Element                      xpath=(//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification'])[3]
-  Wait Until Element Is Visible      xpath=//div[contains(@id,'addClassification')]
-  Input text                         xpath=//div[contains(@class, 'modal fade ng-scope in')]//input[@ng-model='searchstring']    ${dkpp_desc2}
-  Wait Until Page Contains   ${dkpp_id2}
-  Click Element   xpath=//td[contains(., '${dkpp_id2}')]
-  Click Element                      xpath=//div[contains(@class, 'modal fade ng-scope in')]//button[@ng-click='choose()']
-  Sleep  2
-  Click Element                      xpath=.//*[@id='myform']/tender-form/div/button
-  Sleep  2
-  Click Element                      xpath=(//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification'])[4]
-  Wait Until Element Is Visible      xpath=//div[contains(@id,'addClassification')]
-  Input text                         xpath=//div[contains(@class, 'modal fade ng-scope in')]//input[@ng-model='searchstring']    ${dkpp_desc3}
-  Wait Until Page Contains   ${dkpp_id3}
-  Click Element   xpath=//td[contains(., '${dkpp_id3}')]
-  Click Element                      xpath=//div[contains(@class, 'modal fade ng-scope in')]//button[@ng-click='choose()']
+Додати багато предметів
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  items
+  ${Items_length}=   Get Length   ${items}
+  : FOR    ${INDEX}    IN RANGE    1    ${Items_length}
+  \   Click Element   xpath=.//*[@id='myform']/tender-form/div/button
+  \   Додати предмет   ${items[${INDEX}]}   ${INDEX}
 
 Пошук тендера по ідентифікатору
   [Arguments]  @{ARGUMENTS}
@@ -238,6 +230,61 @@ Oтримати internal id по UAid
   Wait Until Page Contains    ${ARGUMENTS[1]}   10
   sleep  1
 
+Внести зміни в тендер
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} =  username
+  ...      ${ARGUMENTS[1]} =  ${TENDER_UAID}
+  ${ADDITIONAL_DATA}=  prepare_test_tender_data   ${BROKERS['${USERS.users['${tender_owner}'].broker}'].period_interval}   single
+  ${tender_data}=   Add_data_for_GUI_FrontEnds   ${ADDITIONAL_DATA}
+  ${items}=         Get From Dictionary   ${tender_data.data}               items
+  ${description}=   Get From Dictionary   ${tender_data.data}               description
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+  Wait Until Page Contains Element   xpath=//a[@class='btn btn-primary ng-scope']   10
+  Click Element              xpath=//a[@class='btn btn-primary ng-scope']
+  Sleep  2
+  Input text               id=description    ${description}
+  Click Element              xpath=//button[@class='btn btn-info ng-isolate-scope']
+  Capture Page Screenshot
+
+додати предмети закупівлі
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} =  username
+  ...      ${ARGUMENTS[1]} =  ${TENDER_UAID}
+  ...      ${ARGUMENTS[2]} =  3
+  ${ADDITIONAL_DATA}=  prepare_test_tender_data   ${BROKERS['${USERS.users['${tender_owner}'].broker}'].period_interval}   multi
+  ${tender_data}=   Add_data_for_GUI_FrontEnds   ${ADDITIONAL_DATA}
+  ${items}=         Get From Dictionary   ${tender_data.data}               items
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  Run keyword if   '${TEST NAME}' == 'Можливість додати позицію закупівлі в тендер'   додати позицію
+  Run keyword if   '${TEST NAME}' != 'Можливість додати позицію закупівлі в тендер'   видалити позиції
+
+додати позицію
+  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+  Sleep  2
+  Click Element                     xpath=//a[@class='btn btn-primary ng-scope']
+  Sleep  2
+  : FOR    ${INDEX}    IN RANGE    1    ${ARGUMENTS[2]} +1
+  \   Click Element   xpath=.//*[@id='myform']/tender-form/div/button
+  \   Додати предмет   ${items[${INDEX}]}   ${INDEX}
+  Sleep  2
+  Click Element   xpath=//div[@class='form-actions']/button[./text()='Зберегти зміни']
+  Wait Until Page Contains    [ТЕСТУВАННЯ]   100
+
+видалити позиції
+  etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+  Click Element                     xpath=//a[@class='btn btn-primary ng-scope']
+  Sleep  2
+  : FOR    ${INDEX}    IN RANGE    1    ${ARGUMENTS[2]} +1
+  \   Click Element   xpath=(//button[@class='btn btn-danger ng-scope'])[last()]
+  \   Sleep  1
+  Sleep  2
+  Wait Until Page Contains Element   xpath=//div[@class='form-actions']/button[./text()='Зберегти зміни']   10
+  Click Element   xpath=//div[@class='form-actions']/button[./text()='Зберегти зміни']
+  Wait Until Page Contains    [ТЕСТУВАННЯ]   100
+
 отримати інформацію із тендера
   [Arguments]  @{ARGUMENTS}
   [Documentation]
@@ -245,6 +292,33 @@ Oтримати internal id по UAid
   ...      ${ARGUMENTS[1]} ==  fieldname
   Switch browser   ${ARGUMENTS[0]}
   ${return_value}=  run keyword  отримати інформацію про ${ARGUMENTS[1]}
+  Log  ${return_value}
+  [return]  ${return_value}
+
+Отримати тест із поля і показати на сторінці
+  [Arguments]   ${fieldname}
+  sleep  3
+#  відмітити на сторінці поле з тендера   ${fieldname}   ${locator.${fieldname}}
+  ${return_value}=   Get Text  ${locator.${fieldname}}
+  [return]  ${return_value}
+
+отримати інформацію про title
+  ${return_value}=   Отримати тест із поля і показати на сторінці   title
+  [return]  ${return_value}
+
+отримати інформацію про description
+  ${return_value}=   Отримати тест із поля і показати на сторінці   description
+  [return]  ${return_value}
+
+отримати інформацію про minimalStep.amount
+  ${return_value}=   Отримати тест із поля і показати на сторінці   minimalStep.amount
+  ${return_value}=   Convert To Number   ${return_value.split(' ')[0]}
+  [return]  ${return_value}
+
+отримати інформацію про value.amount
+  ${return_value}=   Отримати тест із поля і показати на сторінці   value.amount
+  ${return_value}=   Evaluate   "".join("${return_value}".split(' ')[:-3])
+  ${return_value}=   Convert To Number   ${return_value}
   [return]  ${return_value}
 
 Відмітити на сторінці поле з тендера
@@ -254,39 +328,13 @@ Oтримати internal id по UAid
   sleep  1
   Remove element   ${last_note_id}
 
-Отримати тест із поля і показати на сторінці
-  [Arguments]   ${fieldname}
-  sleep  3
-#  відмітити на сторінці поле з тендера   ${fieldname}   ${locator.${fieldname}}
-  ${return_value}=   Get Text  ${locator.${fieldname}}
-  [return]  ${return_value}
-
 отримати інформацію про tenderId
-  ${return_value}=   Отримати тест із поля і показати на сторінці   tenderId
-  [return]  ${return_value.split(' ')[1]}
-
-отримати інформацію про title
-  ${return_value}=   Отримати тест із поля і показати на сторінці   title
-  [return]  ${return_value}
-
-отримати інформацію про description
-   ${return_value}=   Отримати тест із поля і показати на сторінці   description
-  [return]  ${return_value}
-
-отримати інформацію про minimalStep.amount
-  ${return_value}=   Отримати тест із поля і показати на сторінці   minimalStep.amount
-  ${return_value}=   Convert To Number   ${return_value.split(' ')[0]}
+  ${return_value}=   отримати тест із поля і показати на сторінці   tenderId
+  ${return_value}=  Get Substring  ${return_value}   10
   [return]  ${return_value}
 
 отримати інформацію про procuringEntity.name
   ${return_value}=   Отримати тест із поля і показати на сторінці   procuringEntity.name
-  [return]  ${return_value}
-
-
-отримати інформацію про value.amount
-  ${return_value}=   Отримати тест із поля і показати на сторінці  value.amount
-  ${return_value}=   Evaluate   "".join("${return_value}".split(' ')[:-3])
-  ${return_value}=   Convert To Number   ${return_value}
   [return]  ${return_value}
 
 отримати інформацію про tenderPeriod.startDate
@@ -304,7 +352,6 @@ Oтримати internal id по UAid
 отримати інформацію про enquiryPeriod.endDate
   ${return_value}=   Отримати тест із поля і показати на сторінці  enquiryPeriod.endDate
   [return]  ${return_value}
-
 
 отримати інформацію про items[${item_id}].description
   відмітити на сторінці поле з тендера   items[${item_id}].description   jquery=tender-subject-info.ng-isolate-scope>div.row:contains("Детальний опис предмету закупівлі:")>:eq(1)>

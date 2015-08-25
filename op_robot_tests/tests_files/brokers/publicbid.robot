@@ -4,10 +4,9 @@ Library  String
 Library  DateTime
 
 *** Variables ***
-${file_path}        local_path_to_file("TestDocument.docx")
-# ${file_path}      /home/vbilos/openprocurement.robottests.buildout/Document.docx
 ${mail}          test@mail.com
 ${telephone}     +380976535447
+
 
 *** Keywords ***
 Підготувати клієнт для користувача
@@ -23,6 +22,7 @@ ${telephone}     +380976535447
   Click Element                      id=mForm:j_idt54
   Run Keyword And Ignore Error   Wait Until Page Contains Element   id=mForm:email   10
   Input text   id=mForm:email      ${USERS.users['${username}'].login}
+  Sleep  2
   Input text   id=mForm:pwd      ${USERS.users['${username}'].password}
   Click Button   id=mForm:login
 
@@ -31,23 +31,24 @@ ${telephone}     +380976535447
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tender_data
-  ${tender_data}=   Add_time_for_GUI_FrontEnds   ${ARGUMENTS[1]}
-  ${items}=         Get From Dictionary   ${tender_data.data}               items
-  ${title}=         Get From Dictionary   ${tender_data.data}               title
-  ${description}=   Get From Dictionary   ${tender_data.data}               description
-  ${budget}=        Get From Dictionary   ${tender_data.data.value}         amount
-  ${step_rate}=     Get From Dictionary   ${tender_data.data.minimalStep}   amount
-  ${countryName}=   Get From Dictionary   ${tender_data.data.procuringEntity.address}       countryName
+  ${file_path}=        local_path_to_file   TestDocument.docx
+  ${prepared_tender_data}=   Add_data_for_GUI_FrontEnds   ${ARGUMENTS[1]}
+  ${items}=         Get From Dictionary   ${prepared_tender_data.data}               items
+  ${title}=         Get From Dictionary   ${prepared_tender_data.data}               title
+  ${description}=   Get From Dictionary   ${prepared_tender_data.data}               description
+  ${budget}=        Get From Dictionary   ${prepared_tender_data.data.value}         amount
+  ${step_rate}=     Get From Dictionary   ${prepared_tender_data.data.minimalStep}   amount
+  ${countryName}=   Get From Dictionary   ${prepared_tender_data.data.procuringEntity.address}       countryName
   ${delivery_end_date}=      Get From Dictionary   ${items[0].deliveryDate}   endDate
   ${delivery_end_date}=      convert_date_to_prom_format   ${delivery_end_date}
-  ${cpv}=           Get From Dictionary   ${items[0].classification}          description_ua
+  ${cpv}=           Convert To String     "Картонки"
   ${cpv_id}=           Get From Dictionary   ${items[0].classification}         id
   ${cpv_id_1}=           Get Substring    ${cpv_id}   0   3
   ${dkpp_desc}=     Get From Dictionary   ${items[0].additionalClassifications[0]}   description
   ${dkpp_id}=       Get From Dictionary   ${items[0].additionalClassifications[0]}  id
   ${code}=           Get From Dictionary   ${items[0].unit}          code
   ${quantity}=      Get From Dictionary   ${items[0]}                        quantity
-  ${name}=      Get From Dictionary   ${tender_data.data.procuringEntity.contactPoint}       name
+  ${name}=      Get From Dictionary   ${prepared_tender_data.data.procuringEntity.contactPoint}       name
 
   Selenium2Library.Switch Browser     ${ARGUMENTS[0]}
   Wait Until Page Contains Element    xpath=//*[contains(@class, 'ui-button-text ui-c')][./text()='Нова закупівля']   10
@@ -79,9 +80,11 @@ ${telephone}     +380976535447
   Input text                          id=mForm:data:rPhone    ${telephone}
   Input text                          id=mForm:data:rMail   ${mail}
   Choose File                         id=mForm:data:docFile_input     ${file_path}
+  Sleep  2
   Run Keyword if   '${mode}' == 'multi'   Додати предмет   items
   Click Element                       id=mForm:bSave
-  Sleep   5
+  # More smart wait for id is needed there.
+  Sleep   25
   ${tender_UAid}=  Get Text           id=mForm:nBid
   ${tender_UAid}=  Get Substring  ${tender_UAid}  19
   ${Ids}       Convert To String  ${tender_UAid}
@@ -148,7 +151,6 @@ Set Multi Ids
   Input text                         id=mForm:data:cDkpp3_input    ${dkpp_id3}
   Wait Until Page Contains Element   xpath=//div[@id='mForm:data:cDkpp3_panel']/table/tbody/tr/td[1]/span   10
   Click Element                      xpath=//div[@id='mForm:data:cDkpp3_panel']/table/tbody/tr/td[1]/span
-
 
 Пошук тендера по ідентифікатору
   [Arguments]  @{ARGUMENTS}
