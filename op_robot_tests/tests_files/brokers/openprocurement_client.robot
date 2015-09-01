@@ -22,7 +22,6 @@ ${question_id}   0
   log  ${tenders}
   [return]  ${internal_id}
 
-
 Підготувати клієнт для користувача
   [Arguments]  @{ARGUMENTS}
   [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
@@ -31,11 +30,11 @@ ${question_id}   0
   Set To Dictionary  ${USERS.users['${ARGUMENTS[0]}']}   creation_date   ${creation_date}
   Set To Dictionary  ${USERS.users['${ARGUMENTS[0]}']}   client  ${api_wrapper}
   Log Variables
-  
+
 Підготувати дані для оголошення тендера 
   ${INITIAL_TENDER_DATA}=  prepare_test_tender_data
   [return]   ${INITIAL_TENDER_DATA}
-  
+
 Створити тендер
   [Arguments]  @{ARGUMENTS}
   ${TENDER_DATA}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_tender  ${ARGUMENTS[1]}
@@ -48,20 +47,6 @@ ${question_id}   0
   Log   ${USERS.users['${ARGUMENTS[0]}'].TENDER_DATA}
   [return]  ${TENDER_DATA.data.tenderID}
 
-Створити багатопредметний тендер
-  [Arguments]  @{ARGUMENTS}
-  ${INITIAL_TENDER_DATA}=  prepare_test_tender_data_multiple_items
-  Log object data  ${INITIAL_TENDER_DATA}
-  ${TENDER_DATA}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_tender   ${INITIAL_TENDER_DATA}
-  Log object data  ${TENDER_DATA}  cteated_tender
-  ${access_token}=  Get Variable Value  ${TENDER_DATA.access.token}
-  Set Global Variable  ${access_token}
-  Set To Dictionary  ${USERS.users['${ARGUMENTS[0]}']}   access_token   ${access_token}
-  Log   access_token: ${access_token}
-  Log   tender_id: ${TENDER_DATA.data.id}
-  Set Global Variable  ${TENDER_DATA}
-  [return]   ${TENDER_DATA}
-  
 Пошук тендера по ідентифікатору
   [Arguments]  @{ARGUMENTS}
   [Documentation]
