@@ -20,24 +20,20 @@ ${provider}   Tender_User
 ${viewer}   Tender_Viewer
 ${LOAD_USERS}      ["${tender_owner}", "${provider}", "${viewer}"]
 
-
 *** Test Cases ***
-
 Можливість оголосити багатопредметний тендер
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
-  ${ids}=  Викликати для учасника     ${tender_owner}    Створити тендер  ${INITIAL_TENDER_DATA}
-  ${TENDER_ID}=   Get From List   ${ids}  0  
-  ${INTERNAL_TENDER_ID}=  Get From List   ${ids}  1 
-  Set Global Variable    ${INTERNAL_TENDER_ID}
-  Set Global Variable    ${TENDER_ID}
+  ${TENDER_UAID}=  Викликати для учасника     ${tender_owner}    Створити тендер  ${INITIAL_TENDER_DATA}
   ${LAST_MODIFICATION_DATE}=  Get Current Date
-  Set Global Variable   ${LAST_MODIFICATION_DATE}
+  Set To Dictionary  ${TENDER}   TENDER_UAID             ${TENDER_UAID}
+  Set To Dictionary  ${TENDER}   LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
+  log  ${TENDER}
 
 Отримати багатопредметний тендер по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
   Дочекатись синхронізації з майданчиком    ${viewer}
-  Викликати для учасника   ${viewer}   Пошук тендера по ідентифікатору   ${TENDER_ID}  ${INTERNAL_TENDER_ID} 
- 
+  Викликати для учасника   ${viewer}   Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
+
 Відображення опису позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів пердметів багатопредметного тендера
   Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  description
@@ -88,15 +84,15 @@ ${LOAD_USERS}      ["${tender_owner}", "${provider}", "${viewer}"]
   
 Відображення схеми додаткової класифікації позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів пердметів багатопредметного тендера
-  Звірити поля предметів закупівлі багатопредметного тендера   ${viewer}  additionalClassifications.scheme
+  Звірити поля предметів закупівлі багатопредметного тендера   ${viewer}  additionalClassifications[0].scheme
   
 Відображення ідентифікатора додаткової класифікації позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів пердметів багатопредметного тендера
-  Звірити поля предметів закупівлі багатопредметного тендера   ${viewer}  additionalClassifications.id
+  Звірити поля предметів закупівлі багатопредметного тендера   ${viewer}  additionalClassifications[0].id
   
 Відображення опису додаткової класифікації позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів пердметів багатопредметного тендера
-  Звірити поля предметів закупівлі багатопредметного тендера   ${viewer}  additionalClassifications.description
+  Звірити поля предметів закупівлі багатопредметного тендера   ${viewer}  additionalClassifications[0].description
   
 Відображення назви одиниці позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів пердметів багатопредметного тендера
@@ -109,5 +105,3 @@ ${LOAD_USERS}      ["${tender_owner}", "${provider}", "${viewer}"]
 Відображення кількості позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів пердметів багатопредметного тендера
   Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  quantity
-    
-    
