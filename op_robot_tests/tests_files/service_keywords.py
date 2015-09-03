@@ -39,8 +39,12 @@ def prepare_prom_test_tender_data():
     return munchify({'data': prom_test_tender_data()})
 
 def compare_date(data1, data2):
+    LOGGER.log_message(Message("data1: {}".format(data1), "INFO")) 
+    LOGGER.log_message(Message("data2: {}".format(data2), "INFO")) 
     data1=parse(data1) 
     data2=parse(data2)
+    LOGGER.log_message(Message("data1: {}".format(data1), "INFO")) 
+    LOGGER.log_message(Message("data2: {}".format(data2), "INFO")) 
     if data1.tzinfo is None:
         data1 = TIMEZONE.localize(data1)
     if data2.tzinfo is None:
@@ -167,13 +171,18 @@ def newtend_date_picker_index(isodate):
 
 def Add_data_for_GUI_FrontEnds(INITIAL_TENDER_DATA):
     now = datetime.now() 
-    INITIAL_TENDER_DATA.data.enquiryPeriod['startDate'] = (now + timedelta(minutes=2)).isoformat()
-    INITIAL_TENDER_DATA.data.enquiryPeriod['endDate'] = (now + timedelta(minutes=3)).isoformat()
-    INITIAL_TENDER_DATA.data.tenderPeriod['startDate'] = (now + timedelta(minutes=4)).isoformat()
-    INITIAL_TENDER_DATA.data.tenderPeriod['endDate'] = (now + timedelta(minutes=5)).isoformat()
+    #INITIAL_TENDER_DATA.data.enquiryPeriod['startDate'] = (now + timedelta(minutes=2)).isoformat()
+    INITIAL_TENDER_DATA.data.enquiryPeriod['endDate'] = (now + timedelta(minutes=5)).isoformat()
+    INITIAL_TENDER_DATA.data.tenderPeriod['startDate'] = (now + timedelta(minutes=6)).isoformat()
+    INITIAL_TENDER_DATA.data.tenderPeriod['endDate'] = (now + timedelta(minutes=7)).isoformat()
     return INITIAL_TENDER_DATA
     
 def local_path_to_file(file_name):
     path = os.getcwd()
     path = path.split("brokers", 1)[0] + "/src/op_robot_tests/op_robot_tests/tests_files/documents/" + file_name
     return path
+
+def Update_data_for_Newtend(INITIAL_TENDER_DATA):
+    #INITIAL_TENDER_DATA.data.items.classification['description'] = u"Картонки"
+    INITIAL_TENDER_DATA.data.procuringEntity['name'] = u"openprocurement"
+    return INITIAL_TENDER_DATA
