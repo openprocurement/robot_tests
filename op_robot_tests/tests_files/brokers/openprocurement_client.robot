@@ -343,7 +343,6 @@ ${question_id}   0
   ${tenderID}=  openprocurement_client.отримати internal id по UAid  ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${tenderID}
   ${token}=    Get Variable Value  ${USERS.users['${ARGUMENTS[0]}'].bidresponces['resp'].access.token}
-  ${contents}  ${filename}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_file   ${tender}   ${ARGUMENTS[2]}  ${ARGUMENTS[3]}
-  log   ${contents}
+  ${contents}  ${filename}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_file   ${tender}   ${ARGUMENTS[2]}   ${token}
   log   ${filename}
   [return]   ${contents}  ${filename}
