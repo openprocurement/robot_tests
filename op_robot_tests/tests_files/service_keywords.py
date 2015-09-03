@@ -22,6 +22,11 @@ from .initial_data import (
 
 TIMEZONE = timezone('Europe/Kiev')
 
+
+def get_file_contents(path):
+    with open(path, 'r') as f:
+        return unicode(f.read()) or u''
+
 def get_date():
 	return datetime.now().isoformat()
 
