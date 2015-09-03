@@ -302,11 +302,15 @@ ${question_id}   0
   Set To Dictionary  ${USERS.users['${provider}'].bidresponces}   bid_doc_upload   ${bid_doc_upload}
   
 порівняти документ
-  [Tags]   ${USERS.users['${provider}'].broker}: вичитати документ
+  [Tags]   ${USERS.users['${provider}'].broker}: порівняти документ
   ${url}=      Get Variable Value   ${USERS.users['${provider}'].bidresponces['bid_doc_upload']['upload_responce'].data.url}
   ${doc}  ${flnnm}=   Викликати для учасника   ${provider}  отримати документ   ${TENDER['TENDER_UAID']}  ${url}  
-  
-  FIXME: finish the keyword
+  ${flpth}=  Get Variable Value   ${USERS.users['${provider}'].bidresponces['bid_doc_upload']['upload_responce'].data.title}
+  ${flcntnt} =  get file contents  ${flpth}
+  log  ${flcntnt}
+  log  ${flpth}
+  log  ${doc}
+  log  ${flnnm}
   
   Should Be Equal  ${flcntnt}   ${doc}
   Should Be Equal  ${flpth}   ${flnnm}
@@ -340,10 +344,8 @@ ${question_id}   0
  
 Неможливість побачити цінові пропозиції учасників під час прийому пропозицій
   [Tags]   ${USERS.users['${viewer}'].broker}: Можливість подати цінову пропозицію
-  
-  FIXME: finish the keyword
-  
-  ${field_date}=  Викликати для учасника    ${viewer}   отримати інформацію із тендера    
+  ${bids}=  Викликати для учасника    ${viewer}   отримати інформацію із тендера  bids
+  Should Be Equal    ${bids}   ${None}
 
 Завантажити документ другим учасником
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість прийняти пропозицію переможця
