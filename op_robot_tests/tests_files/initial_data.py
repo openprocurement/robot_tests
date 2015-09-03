@@ -91,7 +91,7 @@ def test_tender_data(period_interval=2):
     ],
     "enquiryPeriod": {
         "startDate": (now).isoformat(),
-        "endDate": (now + timedelta(minutes=1)).isoformat()
+        "endDate": (now + timedelta(minutes=2)).isoformat()
     },
     "tenderPeriod": {
         "startDate": (now + timedelta(minutes=2)).isoformat(),

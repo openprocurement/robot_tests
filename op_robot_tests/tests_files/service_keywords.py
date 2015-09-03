@@ -43,13 +43,10 @@ def compare_date(data1, data2):
     data2=parse(data2)
     if data1.tzinfo is None:
         data1 = TIMEZONE.localize(data1)
-        print data1
     if data2.tzinfo is None:
         data2 = TIMEZONE.localize(data2)
-        print data2
     delta = (data1-data2).total_seconds()
     if abs(delta) > 60:
-       print delta
        return False
     return True 
 
@@ -180,3 +177,8 @@ def local_path_to_file(file_name):
     path = os.getcwd()
     path = path.split("brokers", 1)[0] + "/src/op_robot_tests/op_robot_tests/tests_files/documents/" + file_name
     return path
+
+def subtract_from_time(date_time,substr_min,substr_sec):
+    now = datetime.strptime(date_time,"%d.%m.%Y %H:%M")
+    now = (now - timedelta(minutes=int(substr_min), seconds = int (substr_sec) )).isoformat()
+    return now

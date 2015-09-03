@@ -56,6 +56,7 @@ Login
   ${enquiry_end_date}=   convert_date_to_etender_format   ${enquiry_end_date}
   ${enquiry_end_time}=   Get From Dictionary              ${prepared_tender_data.data.enquiryPeriod}   endDate
   ${enquiry_end_time}=   convert_time_to_etender_format   ${enquiry_end_time}
+
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
   Wait Until Page Contains          Мої закупівлі   100
   Sleep  1
@@ -129,7 +130,7 @@ Oтримати internal id по UAid
   ...      ${ARGUMENTS[0]} ==  items
   ...      ${ARGUMENTS[1]} ==  ${INDEX}
   ${dkpp_desc}=     Get From Dictionary   ${ARGUMENTS[0].additionalClassifications[0]}   description
-  ${dkpp_id}=       Get From Dictionary   ${ARGUMENTS[0].additionalClassifications[0]}  id
+  ${dkpp_id}=       Get From Dictionary   ${ARGUMENTS[0].additionalClassifications[0]}   id
   Sleep  2
   Click Element                      xpath=(//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification'])[${ARGUMENTS[1]}+1]
   Wait Until Element Is Visible      xpath=//div[contains(@id,'addClassification')]
