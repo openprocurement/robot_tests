@@ -37,6 +37,11 @@ def convert_date_to_etender_format(isodate):
     date_string = iso_dt.strftime("%d-%m-%Y")
     return  date_string
 
+def convert_date_for_delivery(isodate):
+    iso_dt=parse_date(isodate)
+    date_string = iso_dt.strftime("%Y-%m-%d %H:%M")
+    return  date_string
+
 def convert_time_to_etender_format(isodate):
     iso_dt=parse_date(isodate)
     time_string = iso_dt.strftime("%H:%M")
@@ -54,13 +59,16 @@ def prepare_prom_test_tender_data():
     return munchify({'data': prom_test_tender_data()})
 
 def compare_date(data1, data2):
+    #LOGGER.log_message(Message("data1: {}".format(data1), "INFO"))
+    #LOGGER.log_message(Message("data2: {}".format(data2), "INFO"))
     data1=parse(data1) 
     data2=parse(data2)
+    #LOGGER.log_message(Message("data1: {}".format(data1), "INFO"))
+    #LOGGER.log_message(Message("data2: {}".format(data2), "INFO"))
     if data1.tzinfo is None:
         data1 = TIMEZONE.localize(data1)
     if data2.tzinfo is None:
         data2 = TIMEZONE.localize(data2)
-
     delta = (data1-data2).total_seconds()
     if abs(delta) > 60:
        return False
@@ -179,8 +187,12 @@ def newtend_date_picker_index(isodate):
 
 def Add_time_for_GUI_FrontEnds(INITIAL_TENDER_DATA):
     now = datetime.now() 
-    INITIAL_TENDER_DATA.data.enquiryPeriod['startDate'] = (now + timedelta(minutes=2)).isoformat()
-    INITIAL_TENDER_DATA.data.enquiryPeriod['endDate'] = (now + timedelta(minutes=3)).isoformat()
-    INITIAL_TENDER_DATA.data.tenderPeriod['startDate'] = (now + timedelta(minutes=4)).isoformat()
-    INITIAL_TENDER_DATA.data.tenderPeriod['endDate'] = (now + timedelta(minutes=5)).isoformat()
+    INITIAL_TENDER_DATA.data.enquiryPeriod['startDate'] = (now + timedelta(minutes=0)).isoformat()
+    INITIAL_TENDER_DATA.data.enquiryPeriod['endDate'] = (now + timedelta(minutes=6)).isoformat()
+    INITIAL_TENDER_DATA.data.tenderPeriod['startDate'] = (now + timedelta(minutes=7)).isoformat()
+    INITIAL_TENDER_DATA.data.tenderPeriod['endDate'] = (now + timedelta(minutes=11)).isoformat()
+    return INITIAL_TENDER_DATA
+
+def procuringEntity_name(INITIAL_TENDER_DATA):
+    INITIAL_TENDER_DATA.data.procuringEntity['name'] = u"Повна назва невідомо чого"
     return INITIAL_TENDER_DATA
