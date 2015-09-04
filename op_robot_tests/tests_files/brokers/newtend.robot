@@ -240,11 +240,8 @@ Set datetime
   Wait Until Page Contains Element   xpath=(//a[@class="row tender-info ng-scope"])   20
   Sleep   5
   Click Element                      xpath=(//a[@class="row tender-info ng-scope"])
-#  debug
   Wait Until Page Contains Element   xpath=//a[@class="ng-binding ng-scope"]|//span[@class="ng-binding ng-scope"]   30
-#  ${found_title}=         Get Text   xpath=//a[@class="ng-binding ng-scope"]
-#  Should Be Equal   ${found_title}   ${ARGUMENTS[1]}
-#<span ng-switch-when="true" class="ng-binding ng-scope">UA-2015-09-02-000151</span>
+
 
 отримати інформацію із тендера
   [Arguments]  @{ARGUMENTS}
@@ -384,6 +381,7 @@ Set datetime
   ${additional_classification_description}=   Get Substring   ${additional_classification_description}=    0   -2
   [return]  ${additional_classification_description.split(' - ')[1]}
 
+##item
 отримати інформацію про items[0].unit.name
   ${unit_name}=   отримати текст із поля і показати на сторінці   items[0].unit.name
   ${unit_name}=   Run Keyword If   '${unit_name}' == 'килограммы'   Convert To String   кілограм
@@ -406,20 +404,14 @@ Set datetime
   ...      ${ARGUMENTS[1]} =  ${TENDER_UAID}
   ...      ${ARGUMENTS[2]} =  3
   ${ADDITIONAL_DATA}=  prepare_test_tender_data   ${BROKERS['${USERS.users['${tender_owner}'].broker}'].period_interval}   multi
-  #${tender_data}=   Add_time_for_GUI_FrontEnds   ${ADDITIONAL_DATA}
   ${items}=         Get From Dictionary   ${ADDITIONAL_DATA.data}               items
-
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
-  #Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
   Wait Until Page Contains Element   ${locator.edit_tender}    10
   Click Element                      ${locator.edit_tender}
-  #Sleep  2
   Wait Until Page Contains Element   ${locator.edit.add_item}  10
   Input text   ${locator.edit.description}   description
   Run keyword if   '${TEST NAME}' == 'Можливість додати позицію закупівлі в тендер'   додати позицію
-#  debug
   Run keyword if   '${TEST NAME}' != 'Можливість додати позицію закупівлі в тендер'   забрати позицію
-  #Sleep  2
   Wait Until Page Contains Element   ${locator.save}           10
   Click Element   ${locator.save}
   Wait Until Page Contains Element   ${locator.description}    20
@@ -462,8 +454,6 @@ Set datetime
   Wait Until Page Contains   ${ARGUMENTS[1]}   20
 
 отримати інформацію про QUESTIONS[0].title
-  #debug
-  #<span class="ng-binding">Уточнения</span>
   Wait Until Page Contains Element   xpath=//span[contains(text(), "Уточнения")]   20
   Click Element              xpath=//span[contains(text(), "Уточнения")]
   Wait Until Page Contains   Вы не можете задавать вопросы    20

@@ -166,7 +166,7 @@ Set Multi Ids
   ...      ${ARGUMENTS[0]} ==  items
   ...      ${ARGUMENTS[1]} ==  ${INDEX}
   ${dkpp_desc}=     Get From Dictionary   ${ARGUMENTS[0].additionalClassifications[0]}   description
-  ${dkpp_id}=       Get From Dictionary   ${ARGUMENTS[0].additionalClassifications[0]}  id
+  ${dkpp_id}=       Get From Dictionary   ${ARGUMENTS[0].additionalClassifications[0]}   id
   Sleep  2
   Click Element                      xpath=(//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification'])[${ARGUMENTS[1]}+1]
   Wait Until Element Is Visible      xpath=//div[contains(@id,'addClassification')]
