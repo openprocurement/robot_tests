@@ -11,6 +11,7 @@ ${locator.value.amount}              xpath=//td[./text()='Максимальни
 ${locator.minimalStep.amount}        xpath=//td[./text()='Мінімальний крок зменшення ціни']/following-sibling::td[1]
 ${locator.enquiryPeriod.endDate}     xpath=//td[./text()='Завершення періоду обговорення']/following-sibling::td[1]
 ${locator.tenderPeriod.endDate}      xpath=//td[./text()='Завершення періоду прийому пропозицій']/following-sibling::td[1]
+${locator.items[0].description}      xpath=//td[./text()='Предмет закупівлі']/following-sibling::td[1]
 ${locator.items[0].deliveryAddress.countryName}    xpath=//td[@class='nameField'][./text()='Адреса поставки']/following-sibling::td[1]
 ${locator.items[0].deliveryDate.endDate}     xpath=//td[./text()='Кінцева дата поставки']/following-sibling::td[1]
 ${locator.items[0].classification.scheme}    xpath=//td[@class = 'nameField'][./text()='Клас CPV']
@@ -90,11 +91,19 @@ Pre Login
   Selenium2Library.Switch Browser     ${ARGUMENTS[0]}
   Wait Until Page Contains Element    jquery=a[href="/tenders/new"]   30
   Click Element                       jquery=a[href="/tenders/new"]
+
+
   Wait Until Page Contains Element    name=tender_title   30
   Input text                          name=tender_title    ${title}
   Input text                          name=tender_description    ${description}
   Input text                          name=tender_value_amount   ${budget}
   Input text                          name=tender_minimalStep_amount   ${step_rate}
+
+# Click Element             xpath=//a[@class='uploadFile']
+
+  ${local_path} =           local_path_to_file   TestDocument.docx
+  Choose File               xpath= //input[@name='upload']    ${local_path}
+
 
 # Додати специфікацю початок
   Input text                          name=items[0][item_description]    ${items_description}
@@ -102,6 +111,7 @@ Pre Login
   Input text                          name=items[0][item_deliveryAddress_countryName]   ${countryName}
   Input text                          name=items[0][item_deliveryDate_endDate]       ${delivery_end_date}
   Click Element                       xpath=//a[contains(@data-class, 'cpv')][./text()='Визначити за довідником']
+  sleep  1
   Select Frame                        xpath=//iframe[contains(@src,'/js/classifications/cpv/uk.htm?relation=true')]
   Input text                          id=search     ${cpv}
   Wait Until Page Contains            ${cpv_id}
@@ -116,10 +126,12 @@ Pre Login
   Click Element                       xpath=.//*[@id='select']
 # Додати специфікацю кінець
 
+
   Unselect Frame
   Input text                          name=plan_date                      ${enquiry_end_date}
   Input text                          name=tender_enquiryPeriod_endDate   ${enquiry_end_date}
   Input text                          name=tender_tenderPeriod_endDate    ${end_date}
+
 
   Додати предмет    ${items[0]}   0
   Run Keyword if   '${mode}' == 'multi'   Додати багато предметів   items
@@ -127,8 +139,7 @@ Pre Login
 
   Click Element                       xpath= //button[@value='publicate']
   Wait Until Page Contains            Тендер опубліковано    30
-
-  ${tender_UAid}=   Get Text          xpath=//*/section[6]/table/tbody/tr[2]/td[2]
+  ${tender_UAid}=   Get Text          xpath=//td[./text()='TenderID']/following-sibling::td[1]
   ${Ids}=   Convert To String         ${tender_UAid}
   Run keyword if   '${mode}' == 'multi'   Set Multi Ids   ${tender_UAid}
   [return]  ${Ids}
@@ -317,7 +328,8 @@ Set Multi Ids
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
   netcast.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
   sleep  1
-  Execute Javascript                 window.scroll(1500,1500)
+  Execute Javascript                 window.scroll(2500,2500)
+  sleep  1
   Click Element                      xpath=//a[@class='reverse openCPart'][span[text()='Скарги']]
   Wait Until Page Contains           ${complaint}   30
   Capture Page Screenshot
