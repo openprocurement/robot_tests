@@ -41,6 +41,8 @@ def prepare_prom_test_tender_data():
 def compare_date(data1, data2):
     data1=parse(data1) 
     data2=parse(data2)
+    #LOGGER.log_message(Message("data1: {}".format(data1), "INFO"))
+    #LOGGER.log_message(Message("data2: {}".format(data2), "INFO"))
     if data1.tzinfo is None:
         data1 = TIMEZONE.localize(data1)
     if data2.tzinfo is None:
@@ -138,14 +140,34 @@ def wait_to_date(date_stamp):
         return 0
     return wait_seconds
 
+##GUI Frontends common
 def convert_date_to_slash_format(isodate):
     iso_dt=parse_date(isodate)
     date_string = iso_dt.strftime("%d/%m/%Y")
     return  date_string
 
+def Add_data_for_GUI_FrontEnds(INITIAL_TENDER_DATA):
+    now = datetime.now() 
+    #INITIAL_TENDER_DATA.data.enquiryPeriod['startDate'] = (now + timedelta(minutes=2)).isoformat()
+    INITIAL_TENDER_DATA.data.enquiryPeriod['endDate'] = (now + timedelta(minutes=6)).isoformat()
+    INITIAL_TENDER_DATA.data.tenderPeriod['startDate'] = (now + timedelta(minutes=7)).isoformat()
+    INITIAL_TENDER_DATA.data.tenderPeriod['endDate'] = (now + timedelta(minutes=11)).isoformat()
+    return INITIAL_TENDER_DATA
+
+def local_path_to_file(file_name):
+    path = os.getcwd()
+    path = path.split("brokers", 1)[0] + "/src/op_robot_tests/op_robot_tests/tests_files/documents/" + file_name
+    return path
+
+## E-Tender
 def convert_date_to_etender_format(isodate):
     iso_dt=parse_date(isodate)
     date_string = iso_dt.strftime("%d-%m-%Y")
+    return  date_string
+
+def convert_date_for_delivery(isodate):
+    iso_dt=parse_date(isodate)
+    date_string = iso_dt.strftime("%Y-%m-%d %H:%M")
     return  date_string
 
 def convert_time_to_etender_format(isodate):
@@ -153,6 +175,11 @@ def convert_time_to_etender_format(isodate):
     time_string = iso_dt.strftime("%H:%M")
     return  time_string
 
+def procuringEntity_name(INITIAL_TENDER_DATA):
+    INITIAL_TENDER_DATA.data.procuringEntity['name'] = u"Повна назва невідомо чого"
+    return INITIAL_TENDER_DATA
+
+##Newtend
 def newtend_date_picker_index(isodate):
     now = datetime.today()
     date_str = '01' + str(now.month) + str(now.year)
@@ -165,18 +192,10 @@ def newtend_date_picker_index(isodate):
         mod = calendar.monthrange(now.year, now.month)[1] + mod
     return mod + iso_dt.day
 
-def Add_data_for_GUI_FrontEnds(INITIAL_TENDER_DATA):
-    now = datetime.now() 
-    INITIAL_TENDER_DATA.data.enquiryPeriod['startDate'] = (now + timedelta(minutes=2)).isoformat()
-    INITIAL_TENDER_DATA.data.enquiryPeriod['endDate'] = (now + timedelta(minutes=3)).isoformat()
-    INITIAL_TENDER_DATA.data.tenderPeriod['startDate'] = (now + timedelta(minutes=4)).isoformat()
-    INITIAL_TENDER_DATA.data.tenderPeriod['endDate'] = (now + timedelta(minutes=5)).isoformat()
+def Update_data_for_Newtend(INITIAL_TENDER_DATA):
+    #INITIAL_TENDER_DATA.data.items[0].classification['description'] = u"Картонки"
+    INITIAL_TENDER_DATA.data.procuringEntity['name'] = u"openprocurement"
     return INITIAL_TENDER_DATA
-    
-def local_path_to_file(file_name):
-    path = os.getcwd()
-    path = path.split("brokers", 1)[0] + "/src/op_robot_tests/op_robot_tests/tests_files/documents/" + file_name
-    return path
 
 def subtract_from_time(date_time,substr_min,substr_sec):
     now = datetime.strptime(date_time,"%d.%m.%Y %H:%M")
