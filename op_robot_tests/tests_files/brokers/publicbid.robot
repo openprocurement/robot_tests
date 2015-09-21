@@ -6,7 +6,38 @@ Library  DateTime
 *** Variables ***
 ${mail}          test@mail.com
 ${telephone}     +380976535447
-
+${fake_name}     Оніч Прокрув Ійов
+${locator.title}                                               xpath=(//td[@class='ui-panelgrid-cell'])[28]
+${locator.description}                                         xpath=//td[@class='slideColumn'][3]
+#${locator.minimalStep.amount}                                  xpath=
+#${locator.procuringEntity.name}                                xpath=
+${locator.value.amount}                                        xpath=//tbody[@id='mForm:datalist_data']/tr[1]/td[4]
+${locator.tenderId}                                            xpath=//tr[@class='ui-widget-content ui-datatable-even ui-expanded-row']/td[2]
+#${locator.tenderPeriod.startDate}                              xpath=
+#${locator.tenderPeriod.endDate}                                xpath=
+#${locator.enquiryPeriod.startDate}                             xpath=
+#${locator.enquiryPeriod.endDate}                               xpath=
+#${locator.items[0].description}                                xpath=
+#${locator.items[0].deliveryDate.endDate}                       xpath=
+#${locator.items[0].deliveryLocation.latitude}                  xpath=
+#${locator.items[0].deliveryLocation.longitude}                 xpath=
+#${locator.items[0].deliveryAddress.postalCode}                 xpath=
+#${locator.items[0].deliveryAddress.countryName}                xpath=
+#${locator.items[0].deliveryAddress.region}                     xpath=
+#${locator.items[0].deliveryAddress.locality}                   xpath=
+#${locator.items[0].deliveryAddress.streetAddress}              xpath=
+#${locator.items[0].classification.scheme}                      xpath=
+#${locator.items[0].classification.id}                          xpath=
+#${locator.items[0].classification.description}                 xpath=
+#${locator.items[0].additionalClassifications[0].scheme}        xpath=
+#${locator.items[0].additionalClassifications[0].id}            xpath=
+#${locator.items[0].additionalClassifications[0].description}   xpath=
+#${locator.items[0].unit.code}                                  xpath=
+#${locator.items[0].quantity}                                   xpath=
+${locator.questions[0].title}                                   xpath=//div[4]/span/div/div[2]/div[1]/div[2]/table/tbody/tr[1]/td[1]/span
+#${locator.questions[0].description}                            xpath=
+#${locator.questions[0].date}                                   xpath=
+#${locator.questions[0].answer}                                 xpath=
 
 *** Keywords ***
 Підготувати клієнт для користувача
@@ -16,8 +47,8 @@ ${telephone}     +380976535447
   Open Browser   ${USERS.users['${ARGUMENTS[0]}'].homepage}   ${USERS.users['${username}'].browser}   alias=${ARGUMENTS[0]}
   Set Window Size   @{USERS.users['${ARGUMENTS[0]}'].size}
   Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
-
-# login
+#  Run Keyword If   '${username}' != 'Publicbid_Viewer'   Login
+#  login
   Run Keyword And Ignore Error   Wait Until Page Contains Element    id=mForm:j_idt54   10
   Click Element                      id=mForm:j_idt54
   Run Keyword And Ignore Error   Wait Until Page Contains Element   id=mForm:email   10
@@ -81,7 +112,8 @@ ${telephone}     +380976535447
   Input text                          id=mForm:data:rMail   ${mail}
   Choose File                         id=mForm:data:docFile_input     ${file_path}
   Sleep  2
-  Run Keyword if   '${mode}' == 'multi'   Додати предмет   items
+#  Додати предмет   ${items[0]}   0
+  Run Keyword if   '${mode}' == 'multi'   Додати багато предметів   items
   Click Element                       id=mForm:bSave
   # More smart wait for id is needed there.
   Sleep   25
@@ -102,17 +134,15 @@ Set Multi Ids
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  items
+  ...      ${ARGUMENTS[1]} ==  ${INDEX}
   ${dkpp_desc1}=     Get From Dictionary   ${items[1].additionalClassifications[0]}   description
   ${dkpp_id11}=      Get From Dictionary   ${items[1].additionalClassifications[0]}  id
   ${dkpp_desc2}=     Get From Dictionary   ${items[2].additionalClassifications[0]}   description
   ${dkpp_id2}=       Get From Dictionary   ${items[2].additionalClassifications[0]}  id
   ${dkpp_desc3}=     Get From Dictionary   ${items[3].additionalClassifications[0]}   description
   ${dkpp_id3}=       Get From Dictionary   ${items[3].additionalClassifications[0]}  id
-
-  Wait Until Page Contains Element   xpath=//button[@class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"]   10
-  Wait Until Page Contains Element   xpath=//button[contains(@class, 'ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only')]   10
-  Wait Until Page Contains Element   xpath=//button[@id="mForm:data:j_idt911"]|//button[@id="mForm:data:j_idt726"]   10
-  Click Element                      xpath=//button[@id="mForm:data:j_idt911"]|//button[@id="mForm:data:j_idt726"]
+#1
+  Click Element                      xpath=//div[@class='ui-accordion-content ui-helper-reset ui-widget-content']/button
   Wait Until Page Contains Element   id=mForm:data:subject1   10
   Input text                         id=mForm:data:subject1    ${dkpp_desc1}
   Input text                         id=mForm:data:cCpv1_input   ${cpv_id}
@@ -125,7 +155,8 @@ Set Multi Ids
   Input text                         id=mForm:data:cDkpp1_input    ${dkpp_id11}
   Wait Until Page Contains Element   xpath=//div[@id='mForm:data:cDkpp1_panel']/table/tbody/tr/td[1]/span   10
   Click Element                      xpath=//div[@id='mForm:data:cDkpp1_panel']/table/tbody/tr/td[1]/span
-  Click Element                      xpath=//button[@id="mForm:data:j_idt911"]|//button[@id="mForm:data:j_idt726"]
+#2
+  Click Element                      xpath=//div[@class='ui-accordion-content ui-helper-reset ui-widget-content']/button
   Wait Until Page Contains Element   id=mForm:data:subject2   10
   Input text                         id=mForm:data:subject2    ${dkpp_desc2}
   Input text                         id=mForm:data:cCpv2_input   ${cpv_id}
@@ -138,7 +169,8 @@ Set Multi Ids
   Input text                         id=mForm:data:cDkpp2_input    ${dkpp_id2}
   Wait Until Page Contains Element   xpath=//div[@id='mForm:data:cDkpp2_panel']/table/tbody/tr/td[1]/span   10
   Click Element                      xpath=//div[@id='mForm:data:cDkpp2_panel']/table/tbody/tr/td[1]/span
-  Click Element                      xpath=//button[@id="mForm:data:j_idt911"]|//button[@id="mForm:data:j_idt726"]
+#3
+  Click Element                      xpath=//div[@class='ui-accordion-content ui-helper-reset ui-widget-content']/button
   Wait Until Page Contains Element   id=mForm:data:subject3   10
   Input text                         id=mForm:data:subject3    ${dkpp_desc3}
   Input text                         id=mForm:data:cCpv3_input   ${cpv_id}
@@ -159,15 +191,155 @@ Set Multi Ids
   ...      ${ARGUMENTS[1]} ==  tenderId
   ...      ${ARGUMENTS[2]} ==  id
   Switch browser   ${ARGUMENTS[0]}
-  ${current_location}=   Get Location
-  Wait Until Page Contains   Офіційний майданчик державних закупівель України   10
   sleep  1
-  Input Text   id=j_idt18:datalist:j_idt67  ${ARGUMENTS[1]}
-  sleep  2
-  ${last_note_id}=  Add pointy note   jquery=a[href^="#/tenderDetailes"]   Found tender with tenderID "${ARGUMENTS[1]}"   width=200  position=bottom
-  sleep  1
-  Remove element   ${last_note_id}
-  Click Link    jquery=a[href^="#/tenderDetailes"]
-  Wait Until Page Contains    ${ARGUMENTS[1]}   10
+  Click Element    xpath=(//a[@class='ui-commandlink ui-widget'])[2]
+  Sleep  2
+  Input Text   xpath=(//div[@class='ui-column-customfilter'])[1]/input   ${ARGUMENTS[1]}
+  Click Element   id=mForm:datalist:nBidClmn
+  Sleep  2
+  Click Element     xpath=//div[@class='ui-row-toggler ui-icon ui-icon-circle-triangle-e']
   sleep  1
   Capture Page Screenshot
+
+Завантажити документ
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...    ${ARGUMENTS[0]} =  username
+  ...    ${ARGUMENTS[1]} =  ${file_path}
+  ...    ${ARGUMENTS[2]} =  ${TENDER_UAID}
+  ${filepath}=   local_path_to_file   TestDocument.docx
+  Selenium2Library.Switch Browser   ${ARGUMENTS[0]}
+  publicbid.Пошук тендера по ідентифікатору     ${ARGUMENTS[0]}    ${ARGUMENTS[2]}
+  Sleep  2
+  Click Element   xpath=//span[@id='mForm:datalist:0:gButt1']/button[1]
+  Wait Until Page Contains Element   id=mForm:data:docFile_input
+  Choose File                         id=mForm:data:docFile_input     ${file_path}
+  sleep  1
+  Input Text    id=mForm:data:docAdjust          add file
+  Wait Until Page Contains Element   id=mForm:bSave
+  Click Element                       id=mForm:bSave
+  Capture Page Screenshot
+
+Подати скаргу
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...    ${ARGUMENTS[0]} =  username
+  ...    ${ARGUMENTS[1]} =  ${TENDER_UAID}
+  ...    ${ARGUMENTS[2]} =  complaintsId
+  ${complaint}=        Get From Dictionary  ${ARGUMENTS[2].data}  title
+  ${description}=      Get From Dictionary  ${ARGUMENTS[2].data}  description
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  publicbid.Пошук закупівлі по періоду уточнень
+  Sleep  2
+  Click Button    xpath=//span[@id='mForm:datalist:0:gButt1']/button[3]
+  Sleep  2
+  Click Button    xpath=//div[@class='ui-panel-footer ui-widget-content']/button[1]
+  Sleep  2
+  Input Text      id=mForm:data:title      ${complaint}
+  Input Text      id=mForm:data:desc       ${description}
+  Click Element    xpath=//span[@class='ui-icon ui-icon-triangle-1-s ui-c']
+  Click Element   xpath=(//li)[2]
+  Input Text      id=mForm:data:rMail          ${mail}
+  Input Text      id=mForm:data:rPhone         ${telephone}
+  Input Text       id=mForm:data:rName          ${fake_name}
+  Sleep  2
+  Click Button    xpath=//span[@id='mForm:gButt']/button[2]
+  Capture Page Screenshot
+
+Пошук закупівлі по періоду уточнень
+  sleep  2
+  Click Element   xpath=(//td[@class='ui-panelgrid-cell banner_menu_item']/a)[1]
+  sleep  2
+  Click Element   xpath=//div[@class='ui-selectonemenu ui-widget ui-state-default ui-corner-all tblFilter']//span
+  sleep  2
+  Click Element   xpath=(//li)[4]
+  sleep  2
+  Click Element   xpath=//div[@class='ui-row-toggler ui-icon ui-icon-circle-triangle-e']
+
+порівняти скаргу
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...    ${ARGUMENTS[0]} =  username
+  ...    ${ARGUMENTS[1]} =  ${TENDER_UAID}
+  ...    ${ARGUMENTS[2]} =  complaintsId
+  ${complaint}=        Get From Dictionary  ${ARGUMENTS[2].data}  title
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  publicbid.Пошук закупівлі по періоду уточнень
+  Sleep  2
+  Click Button    xpath=//span[@id='mForm:datalist:0:gButt1']/button[3]
+  Sleep  2
+  Wait Until Page Contains           ${complaint}   10
+  Capture Page Screenshot
+
+Внести зміни в тендер
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} =  username
+  ...      ${ARGUMENTS[1]} =  ${TENDER_UAID}
+  ${ADDITIONAL_DATA}=  prepare_test_tender_data   ${BROKERS['${USERS.users['${tender_owner}'].broker}'].period_interval}   single
+  ${tender_data}=   Add_data_for_GUI_FrontEnds   ${ADDITIONAL_DATA}
+  ${description}=   Get From Dictionary   ${tender_data.data}               description
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  publicbid.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+  Click Element   xpath=//span[@id='mForm:datalist:0:gButt1']/button[1]
+  Sleep  2
+  Input text                          id=mForm:data:desc     ${description}
+  Sleep  2
+  Click Element                       id=mForm:bSave
+  Capture Page Screenshot
+
+додати предмети закупівлі
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} =  username
+  ...      ${ARGUMENTS[1]} =  ${TENDER_UAID}
+  ...      ${ARGUMENTS[2]} =  3
+  ${ADDITIONAL_DATA}=  prepare_test_tender_data   ${BROKERS['${USERS.users['${tender_owner}'].broker}'].period_interval}   multi
+  ${tender_data}=   Add_data_for_GUI_FrontEnds   ${ADDITIONAL_DATA}
+  ${items}=         Get From Dictionary   ${tender_data.data}               items
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  Run keyword if   '${TEST NAME}' == 'Можливість додати позицію закупівлі в тендер'   додати позицію
+  Run keyword if   '${TEST NAME}' != 'Можливість додати позицію закупівлі в тендер'   видалити позиції
+
+додати позицію
+  Fail  Не реалізований функціонал
+
+видалити позиції
+  Fail  Не реалізований функціонал
+
+Отримати тест із поля і показати на сторінці
+  [Arguments]   ${fieldname}
+  sleep  3
+#  відмітити на сторінці поле з тендера   ${fieldname}   ${locator.${fieldname}}
+  ${return_value}=   Get Text  ${locator.${fieldname}}
+  [return]  ${return_value}
+
+отримати інформацію із тендера
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  fieldname
+  Switch browser   ${ARGUMENTS[0]}
+  ${return_value}=  run keyword  отримати інформацію про ${ARGUMENTS[1]}
+  [return]  ${return_value}
+
+отримати інформацію про title
+  ${return_value}=   Отримати тест із поля і показати на сторінці   title
+  [return]  ${return_value}
+
+отримати інформацію про description
+  ${return_value}=   Отримати тест із поля і показати на сторінці   description
+  [return]  ${return_value}
+
+отримати інформацію про value.amount
+  ${return_value}=   Отримати тест із поля і показати на сторінці   value.amount
+  ${return_value}=   Get Substring    ${return_value}   0   5
+  ${return_value}=   Convert To Number   ${return_value}
+  [return]  ${return_value}
+
+отримати інформацію про tenderId
+  ${return_value}=   Отримати тест із поля і показати на сторінці   tenderId
+  [return]  ${return_value}
+
+
+

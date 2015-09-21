@@ -113,18 +113,25 @@ users:
         homepage: "https://public-bid.com.ua/test/"
         login: yaroslav1boyko@gmail.com
         password: Password1
-        browser: chrome
+        browser: firefox
         position: [0, 0]
         size: [740, 550]
     Publicbid_Viewer:
         broker: Publicbid
         username: Publicbid
-        browser:  chrome
-        position:  [0, 450]
-        size:  [640, 450]
-    SmartTender_Viewer:
-        broker: SmartTender
-        username: SmartTendertest
-        browser:  chrome
-        position:  [0, 450]
-        size:  [640, 450]
+        homepage: "https://public-bid.com.ua/test/"
+        #login: mail_viewer@i.ua
+        login: yaroslav1boyko@gmail.com
+        password: Password1
+        browser:  firefox
+        position:  [740, 0]
+        size:  [740, 550]
+    Publicbid_Provider:
+        broker: Publicbid
+        username: Publicbid
+        homepage: "https://public-bid.com.ua/test/"
+        login: mail_provider@i.ua
+        password: Password1
+        browser: firefox
+        position: [750, 0]
+        size: [740, 550]

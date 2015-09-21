@@ -166,13 +166,13 @@ switchsate
   Run Keyword If   ${wait_timout}>0   Sleep  ${wait_timout}
 
 Дочекатись дати початоку прийому пропозицій
-  Дочекатись дати  ${TENDER_DATA.data.tenderPeriod.startDate}
+  Дочекатись дати  ${INITIAL_TENDER_DATA.data.tenderPeriod.startDate}
 
 Дочекатись дати закінчення прийому пропозицій
-  Дочекатись дати  ${TENDER_DATA.data.tenderPeriod.endDate}
+  Дочекатись дати  ${INITIAL_TENDER_DATA.data.tenderPeriod.endDate}
 
 Дочекатись дати початоку аукціону
-  Дочекатись дати  ${TENDER_DATA.data.auctionPeriod.startDate}
+  Дочекатись дати  ${INITIAL_TENDER_DATA.data.auctionPeriod.startDate}
 
 Дочекатись дати закінчення аукціону
-  Дочекатись дати  ${TENDER_DATA.data.auctionPeriod.endDate}
+  Дочекатись дати  ${INITIAL_TENDER_DATA.data.auctionPeriod.endDate}

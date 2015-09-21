@@ -45,10 +45,13 @@ def compare_date(data1, data2):
     #LOGGER.log_message(Message("data2: {}".format(data2), "INFO"))
     if data1.tzinfo is None:
         data1 = TIMEZONE.localize(data1)
+        print data1
     if data2.tzinfo is None:
         data2 = TIMEZONE.localize(data2)
+        print data2
     delta = (data1-data2).total_seconds()
     if abs(delta) > 60:
+       print delta 
        return False
     return True 
 
@@ -131,14 +134,18 @@ def get_from_object(obj, attribute):
 
 def wait_to_date(date_stamp):
     date = parse(date_stamp)
+    print date
     LOGGER.log_message(Message("date: {}".format(date.isoformat()), "INFO"))
     now = datetime.now(tzlocal())
+    print now
     LOGGER.log_message(Message("now: {}".format(now.isoformat()), "INFO"))
-    wait_seconds = (date - now).total_seconds()
-    wait_seconds += 2
-    if wait_seconds < 0:
-        return 0
-    return wait_seconds
+    if (date.isoformat() > now.isoformat()):
+        wait_seconds = (date - now).total_seconds()
+        wait_seconds += 2
+        print wait_seconds
+        return wait_seconds
+    else: return 0
+    
 
 ##GUI Frontends common
 def convert_date_to_slash_format(isodate):

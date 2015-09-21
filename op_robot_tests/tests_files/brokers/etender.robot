@@ -111,8 +111,8 @@ Login
   Input text    name=delStartDate         ${deliveryDate}
   Sleep  2
   Input text    xpath=//input[@ng-model='data.items[0].deliveryDate.endDate']         ${deliveryDate}
-  Input text    name=latitude             ${latitude}
-  Input text    name=longitude            ${longitude}
+  #Input text    name=latitude             ${latitude}
+  #Input text    name=longitude            ${longitude}
   Click Element   xpath=//select[@name='region']//option[@label='Київська']
   Sleep  2
   Click Element   xpath=//select[@name='city']//option[@label='Київ']
@@ -203,14 +203,6 @@ Set Multi Ids
   Wait Until Page Contains    ${ARGUMENTS[1]}   10
   sleep  1
   Capture Page Screenshot
-
-Завантажити документ
-  [Arguments]  @{ARGUMENTS}
-  [Documentation]
-  ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  ${TENDER_UAID}
-  ...      ${ARGUMENTS[2]} ==  ${Complain}
-  Fail   Тест не написаний
 
 Подати скаргу
   [Arguments]  @{ARGUMENTS}
@@ -540,3 +532,17 @@ Change_date_to_month
 отримати інформацію про questions[0].answer
   ${return_value}=   отримати тест із поля і показати на сторінці   questions[0].answer
   [return]  ${return_value}
+
+
+Завантажити документ
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...    ${ARGUMENTS[0]} =  username
+  ...    ${ARGUMENTS[1]} =  ${file_path}
+  ...    ${ARGUMENTS[2]} =  ${TENDER_UAID}
+  ${filepath}=   local_path_to_file   TestDocument.docx
+  Selenium2Library.Switch Browser   ${ARGUMENTS[0]}
+  etender.Пошук тендера по ідентифікатору     ${ARGUMENTS[0]}    ${ARGUMENTS[2]}
+  Wait Until Page Contains Element   xpath=//button[text()="Завантажити"]    10
+  Debug
+  Choose File                        xpath=//button[text()="Завантажити"]      http://uploadhost.com/trades.csv

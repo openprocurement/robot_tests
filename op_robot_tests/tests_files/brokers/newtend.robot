@@ -104,7 +104,9 @@ Login
 # Get Ids
   Wait Until Page Contains Element   xpath=//div[@class="title"]   30
   ${tender_UAid}=         Get Text   xpath=//div[@class="title"]
+  Debug
   ${Ids}=        Convert To String   ${tender_UAid}
+  log  ${Ids}
   Run keyword if   '${mode}' == 'multi'   Set Multi Ids   ${tender_UAid}
   [return]  ${Ids}
 
@@ -249,6 +251,7 @@ Set datetime
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  fieldname
   Switch browser   ${ARGUMENTS[0]}
+  log  ${ARGUMENTS[0]}
   ${return_value}=  run keyword  отримати інформацію про ${ARGUMENTS[1]}
   [return]  ${return_value}
 
@@ -260,6 +263,7 @@ Set datetime
 
 отримати інформацію про title
   ${title}=   отримати текст із поля і показати на сторінці   title
+  debug
   [return]  ${title}
 
 отримати інформацію про description
