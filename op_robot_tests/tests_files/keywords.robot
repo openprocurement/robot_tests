@@ -75,8 +75,8 @@ TestSuiteSetup
 
   ${now}=  Get Current Date
   ${delta}=  Subtract Date From Date  ${now}  ${TENDER['LAST_MODIFICATION_DATE']}
-  ${wait_timout}=  Subtract Time From Time  ${BROKERS['${USERS.users['${username}'].broker}'].timout_on_wait}  ${delta}
-  Run Keyword If   ${wait_timout}>0   Sleep  ${wait_timout}
+  ${wait_timeout}=  Subtract Time From Time  ${BROKERS['${USERS.users['${username}'].broker}'].timeout_on_wait}  ${delta}
+  Run Keyword If   ${wait_timeout}>0   Sleep  ${wait_timeout}
 
 Звірити поле тендера
   [Arguments]  ${username}  ${field}
@@ -162,8 +162,8 @@ switchsate
   
 Дочекатись дати
   [Arguments]  ${date}
-  ${wait_timout}=  wait_to_date  ${date}
-  Run Keyword If   ${wait_timout}>0   Sleep  ${wait_timout}
+  ${wait_timeout}=  wait_to_date  ${date}
+  Run Keyword If   ${wait_timeout}>0   Sleep  ${wait_timeout}
 
 Дочекатись дати початоку прийому пропозицій
   Дочекатись дати  ${TENDER_DATA.data.tenderPeriod.startDate}
