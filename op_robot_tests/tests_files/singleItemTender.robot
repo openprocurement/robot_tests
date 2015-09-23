@@ -26,7 +26,7 @@ ${question_id}   0
 *** Test Cases ***
 Можливість оголосити однопредметний тендер
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
-  [Documentation]   Створення закупівлі замовником, обовязково має повертати UAID закупівлі (номер тендера),   
+  [Documentation]   Створення закупівлі замовником, обовязково має повертати UAID закупівлі (номер тендера),
   ${TENDER_UAID}=  Викликати для учасника     ${tender_owner}    Створити тендер  ${INITIAL_TENDER_DATA}
   ${LAST_MODIFICATION_DATE}=  Get Current Date
   Set To Dictionary  ${TENDER}   TENDER_UAID             ${TENDER_UAID}
@@ -38,12 +38,12 @@ ${question_id}   0
   [Documentation]   Закупівельник   ${USERS.users['${tender_owner}'].broker}  завантажує документацію  до  оголошеної закупівлі
   ${filepath}=   create_fake_doc
   ${doc_upload_reply}=  Викликати для учасника   ${tender_owner}   Завантажити документ  ${filepath}  ${TENDER['TENDER_UAID']}
-  ${file_upload_process_data} =  Create Dictionary   filepath=${filepath}  doc_upload_reply=${doc_upload_reply}      
+  ${file_upload_process_data} =  Create Dictionary   filepath=${filepath}  doc_upload_reply=${doc_upload_reply}
   log  ${file_upload_process_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}   file_upload_process_data   ${file_upload_process_data}
   Log  ${USERS.users['${tender_owner}']}
-   
-  
+
+
 Можливість подати скаргу на умови
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати скаргу на умови
   [Documentation]    Користувач  ${USERS.users['${provider}'].broker}  намагається подати скаргу на умови оголошеної  закупівлі
@@ -63,10 +63,10 @@ ${question_id}   0
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
   Дочекатись синхронізації з майданчиком    ${viewer}
   Викликати для учасника   ${viewer}   Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
-  
+
 ######
 #Відображення основних  даних оголошеного тендера:
-#заголовок, опис, бюджет, тендерна документація, 
+#заголовок, опис, бюджет, тендерна документація,
 #procuringEntity, періоди уточнень/прийому-пропозицій, мінімального кроку
 
 Відображення заголовоку оголошеного тендера
@@ -220,16 +220,16 @@ ${question_id}   0
 
 Відображення дати анонімного питання без відповіді
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповідей
-  Звірити дату  ${viewer}  questions[${question_id}].date   ${QUESTIONS[${question_id}].data.date}  
+  Звірити дату  ${viewer}  questions[${question_id}].date   ${QUESTIONS[${question_id}].data.date}
 
 Неможливість подати цінову пропозицію до початку періоду подачі пропозицій bidder1
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   ${bid}=  test bid data
   Log   ${bid}
-  ${bidresponces}=  Create Dictionary 
+  ${bidresponces}=  Create Dictionary
   ${bid_before_biddperiod_resp}=  Викликати для учасника   ${provider}   Подати цінову пропозицію  shouldfail  ${TENDER['TENDER_UAID']}   ${bid}
   Set To Dictionary  ${bidresponces}                 bid_before_biddperiod_resp  ${bid_before_biddperiod_resp}
-  Set To Dictionary  ${USERS.users['${provider}']}   bidresponces  ${bidresponces} 
+  Set To Dictionary  ${USERS.users['${provider}']}   bidresponces  ${bidresponces}
   log   ${USERS.users['${provider}']}
 
 #######
@@ -285,7 +285,7 @@ ${question_id}   0
   ${fixbidto50000resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   ${USERS.users['${provider}'].bidresponces['resp']}
   Set To Dictionary  ${USERS.users['${provider}'].bidresponces}   fixbidto50000resp   ${fixbidto50000resp}
   log  ${fixbidto50000resp}
-  
+
 Можливість змінити повторну цінову пропозицію до 10
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
   Set To Dictionary  ${USERS.users['${provider}'].bidresponces['resp'].data.value}  amount   10
@@ -298,20 +298,20 @@ ${question_id}   0
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця
   log   ${USERS.users['${provider}'].broker}
   ${filepath}=   create_fake_doc
-  ${bid_doc_upload}=  Викликати для учасника   ${provider}   Завантажити документ в ставку  ${filepath}   ${TENDER['TENDER_UAID']}   
+  ${bid_doc_upload}=  Викликати для учасника   ${provider}   Завантажити документ в ставку  ${filepath}   ${TENDER['TENDER_UAID']}
   Set To Dictionary  ${USERS.users['${provider}'].bidresponces}   bid_doc_upload   ${bid_doc_upload}
-  
+
 порівняти документ
   [Tags]   ${USERS.users['${provider}'].broker}: порівняти документ
   ${url}=      Get Variable Value   ${USERS.users['${provider}'].bidresponces['bid_doc_upload']['upload_responce'].data.url}
-  ${doc}  ${flnnm}=   Викликати для учасника   ${provider}  отримати документ   ${TENDER['TENDER_UAID']}  ${url}  
+  ${doc}  ${flnnm}=   Викликати для учасника   ${provider}  отримати документ   ${TENDER['TENDER_UAID']}  ${url}
   ${flpth}=  Get Variable Value   ${USERS.users['${provider}'].bidresponces['bid_doc_upload']['upload_responce'].data.title}
   ${flcntnt} =  get file contents  ${flpth}
   log  ${flcntnt}
   log  ${flpth}
   log  ${doc}
   log  ${flnnm}
-  
+
   Should Be Equal  ${flcntnt}   ${doc}
   Should Be Equal  ${flpth}   ${flnnm}
 
@@ -335,13 +335,13 @@ ${question_id}   0
   Дочекатись дати початоку прийому пропозицій
   ${bid}=  test bid data
   Log  ${bid}
-  ${bidresponces}=  Create Dictionary 
+  ${bidresponces}=  Create Dictionary
   ${resp}=  Викликати для учасника   ${provider1}   Подати цінову пропозицію   ${TENDER['TENDER_UAID']}   ${bid}
   Set To Dictionary  ${bidresponces}                 resp  ${resp}
   Set To Dictionary  ${USERS.users['${provider1}']}   bidresponces  ${bidresponces}
   log  ${resp}
   log  ${USERS.users['${provider1}'].bidresponces}
- 
+
 Неможливість побачити цінові пропозиції учасників під час прийому пропозицій
   [Tags]   ${USERS.users['${viewer}'].broker}: Можливість подати цінову пропозицію
   ${bids}=  Викликати для учасника    ${viewer}   отримати інформацію із тендера  bids
@@ -351,7 +351,7 @@ ${question_id}   0
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість прийняти пропозицію переможця
   log   ${USERS.users['${provider1}'].broker}
   ${filepath}=   create_fake_doc
-  ${bid_doc_upload}=  Викликати для учасника   ${provider1}   Завантажити документ в ставку  ${filepath}   ${TENDER['TENDER_UAID']}   
+  ${bid_doc_upload}=  Викликати для учасника   ${provider1}   Завантажити документ в ставку  ${filepath}   ${TENDER['TENDER_UAID']}
   Set To Dictionary  ${USERS.users['${provider1}'].bidresponces}   bid_doc_upload   ${bid_doc_upload}
 
 Можливість побачити скаргу користувачем під час подачі пропозицій
@@ -386,17 +386,17 @@ ${question_id}   0
 Неможливість завантажити документ другим учасником після закінчення прийому пропозицій
   [Tags]   ${USERS.users['${provider1}'].broker}: Неможливість документ першим учасником після закінчення прийому пропозицій
   ${filepath}=   create_fake_doc
-  ${bid_doc_upload_fail}=  Викликати для учасника   ${provider1}   Завантажити документ в ставку   shouldfail   ${filepath}   ${TENDER['TENDER_UAID']}   
+  ${bid_doc_upload_fail}=  Викликати для учасника   ${provider1}   Завантажити документ в ставку   shouldfail   ${filepath}   ${TENDER['TENDER_UAID']}
   Set To Dictionary  ${USERS.users['${provider1}'].bidresponces}   bid_doc_upload_fail   ${bid_doc_upload_fail}
 
 Неможливість змінити існуючу документацію цінової пропозиції після закінчення прийому пропозицій
-  [Tags]   ${USERS.users['${provider1}'].broker}: 
+  [Tags]   ${USERS.users['${provider1}'].broker}:
   ${filepath}=   create_fake_doc
   ${bidid}=  Get Variable Value  ${USERS.users['${provider1}'].bidresponces['resp'].data.id}
   ${docid}=  Get Variable Value  ${USERS.users['${provider1}'].bidresponces['bid_doc_upload']['upload_responce'].data.id}
   ${bid_doc_modified_failed}=  Викликати для учасника   ${provider1}   Змінити документ в ставці  shouldfail  ${filepath}  ${bidid}  ${docid}
   Set To Dictionary  ${USERS.users['${provider}'].bidresponces}   bid_doc_modified_failed   ${bid_doc_modified_failed}
-  
+
 
 Вичитати цінову пропозицію
   sleep  120

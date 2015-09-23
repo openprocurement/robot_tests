@@ -32,7 +32,7 @@ ${question_id}   0
   Set To Dictionary  ${TENDER}   TENDER_UAID             ${TENDER_UAID}
   Set To Dictionary  ${TENDER}   LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
   log  ${TENDER}
-  
+
 Пошук однопредметного тендера по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
   Дочекатись синхронізації з майданчиком    ${viewer}
@@ -62,7 +62,7 @@ ${question_id}   0
   ${LAST_MODIFICATION_DATE}=  Get Current Date
   Set Global Variable   ${LAST_MODIFICATION_DATE}
   Викликати для учасника   ${viewer}   обновити сторінку з тендером   ${TENDER['TENDER_UAID']}
-  
+
 Можливість задовільнити скаргу на умови
   [Tags]    ${USERS.users['${provider}'].broker}: Можливість відповісти на запитання
   Викликати для учасника   ${provider}   Подати скаргу    ${TENDER['TENDER_UAID']}   ${COMPLAINTS[0]}
