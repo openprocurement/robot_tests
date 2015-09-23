@@ -42,7 +42,7 @@ def prepare_prom_test_tender_data():
     return munchify({'data': prom_test_tender_data()})
 
 def compare_date(data1, data2):
-    data1=parse(data1) 
+    data1=parse(data1)
     data2=parse(data2)
     if data1.tzinfo is None:
         data1 = TIMEZONE.localize(data1)
@@ -52,7 +52,7 @@ def compare_date(data1, data2):
     delta = (data1-data2).total_seconds()
     if abs(delta) > 60:
        return False
-    return True 
+    return True
 
 def log_object_data(data, file_name="", format="yaml"):
     if not isinstance(data, Munch):
@@ -88,7 +88,7 @@ def prepare_test_tender_data(period_interval=2, mode='single'):
         return munchify({'data': test_tender_data(period_interval=period_interval)})
     elif mode == 'multi':
         return munchify({'data': test_tender_data_multiple_lots(period_interval=period_interval)})
-    raise ValueError('A very specific bad thing happened') 
+    raise ValueError('A very specific bad thing happened')
 
 
 def run_keyword_and_ignore_keyword_definations(name, *args):
