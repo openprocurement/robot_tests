@@ -9,11 +9,11 @@ ${question_id}   0
 *** Keywords ***
 отримати internal id по UAid
   [Arguments]  @{ARGUMENTS}
-  [Documentation]  
+  [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tenderid
   log many  @{ARGUMENTS}
-  ${tenders}=  get_internal_id   ${USERS.users['${ARGUMENTS[0]}'].client.get_tenders}      ${USERS.users['${ARGUMENTS[0]}'].creation_date} 
+  ${tenders}=  get_internal_id   ${USERS.users['${ARGUMENTS[0]}'].client.get_tenders}      ${USERS.users['${ARGUMENTS[0]}'].creation_date}
   :FOR  ${tender}  IN  @{tenders}
   \  log  ${tender}
   \  ${internal_id}=  Run Keyword And Return If  '${tender.tenderID}' == '${ARGUMENTS[1]}'      Get Variable Value  ${tender.id}
@@ -25,13 +25,13 @@ ${question_id}   0
 Підготувати клієнт для користувача
   [Arguments]  @{ARGUMENTS}
   [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
-  ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${ARGUMENTS[0]}'].api_key}  ${API_HOST_URL}    ${api_version} 
+  ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${ARGUMENTS[0]}'].api_key}  ${API_HOST_URL}    ${api_version}
   ${creation_date} =   get_date
   Set To Dictionary  ${USERS.users['${ARGUMENTS[0]}']}   creation_date   ${creation_date}
   Set To Dictionary  ${USERS.users['${ARGUMENTS[0]}']}   client  ${api_wrapper}
   Log Variables
 
-Підготувати дані для оголошення тендера 
+Підготувати дані для оголошення тендера
   ${INITIAL_TENDER_DATA}=  prepare_test_tender_data
   [return]   ${INITIAL_TENDER_DATA}
 
@@ -176,7 +176,7 @@ ${question_id}   0
   ${complaint}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  _create_tender_resource_item  ${tender}  ${ARGUMENTS[2]}   complaints
   Log object data   ${complaint}  complaint
 
-порівняти скаргу 
+порівняти скаргу
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tender_uid
@@ -184,10 +184,10 @@ ${question_id}   0
   [Arguments]  @{ARGUMENTS}
   ${internalid}=  отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
-  ${complaint}=   Get Variable Value  ${tender.data.complaints[0]}  
+  ${complaint}=   Get Variable Value  ${tender.data.complaints[0]}
   log   ${complaint}
   log   ${ARGUMENTS[2]}
-  #TODO: COMPARE 
+  #TODO: COMPARE
   #Dictionary Should Contain Sub Dictionary   ${complaint}   ${ARGUMENTS[2].data}
   #:FOR  ${element}  IN  ${ARGUMENTS[2].data}
   #\  log  ${element}
@@ -300,9 +300,9 @@ ${question_id}   0
   [return]  ${uploaded_file}
 
 
-  
 
-Завантажити документ  
+
+Завантажити документ
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  filepath
@@ -317,7 +317,7 @@ ${question_id}   0
   ${reply}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  upload_document  ${tender}  ${ARGUMENTS[1]}
   Log object data   ${reply}  reply
   [return]   ${reply}
- 
+
 Отримати пропозиції
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username

@@ -21,7 +21,7 @@ def test_tender_data(period_interval=2):
     "title": u"[ТЕСТУВАННЯ] " + fake.catch_phrase(),
     "mode": "test",
     "submissionMethodDetails": "quick",
-    "description": "Test tender1",  #Error @prom when 'Тестовый тендер' 
+    "description": "Test tender1",  #Error @prom when 'Тестовый тендер'
     "description_en": "Test tender",
     "description_ru": "Тестовый тендер",
     "procuringEntity": {
@@ -46,11 +46,11 @@ def test_tender_data(period_interval=2):
         }
     },
     "value": {
-        "amount": 50000, #Error @prom when float '50000.99' 
+        "amount": 50000, #Error @prom when float '50000.99'
         "currency": u"UAH"
     },
     "minimalStep": {
-        "amount": 100,   #Error @prom when float '100.1' 
+        "amount": 100,   #Error @prom when float '100.1'
         "currency": u"UAH"
     },
     "items": [
@@ -98,14 +98,14 @@ def test_tender_data(period_interval=2):
         "endDate": (now + timedelta(minutes=(2+period_interval))).isoformat()
     }
 }
-    
+
 def prom_test_tender_data():
   now = datetime.now()
   return {
     "title": fake.catch_phrase(),
     "mode": "test",
     "submissionMethodDetails": "quick",
-    "description": "Test tender1",  #Error @prom when 'Тестовый тендер' 
+    "description": "Test tender1",  #Error @prom when 'Тестовый тендер'
     "description_en": "Test tender",
     "description_ru": "Тестовый тендер",
     "procuringEntity": {
@@ -130,11 +130,11 @@ def prom_test_tender_data():
         }
     },
     "value": {
-        "amount": 50000, #Error @prom when float '50000.99' 
+        "amount": 50000, #Error @prom when float '50000.99'
         "currency": u"UAH"
     },
     "minimalStep": {
-        "amount": 100,   #Error @prom when float '100.1' 
+        "amount": 100,   #Error @prom when float '100.1'
         "currency": u"UAH"
     },
     "items": [
@@ -184,7 +184,7 @@ def prom_test_tender_data():
     }
 }
 
-def test_tender_data_multiple_lots(period_interval=2):  
+def test_tender_data_multiple_lots(period_interval=2):
     now = datetime.now()
     return {
       "title": fake.catch_phrase(),
@@ -368,7 +368,7 @@ def test_tender_data_multiple_lots(period_interval=2):
         "startDate": (now + timedelta(minutes=2)).isoformat(),
         "endDate": (now + timedelta(minutes=(2+period_interval))).isoformat()
     }
-}    
+}
 
 def test_question_data():
     return munchify({
@@ -468,7 +468,7 @@ def test_bid_data():
             }
         }
     })
-	    
+
 def auction_bid():
     return munchify({
         "data": {"value": {
