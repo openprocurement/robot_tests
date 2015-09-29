@@ -30,6 +30,7 @@ ${locator.save}            xpath=//button[@class="btn btn-lg btn-default cancel 
 ${locator.QUESTIONS[0].title}         xpath=//span[@class="user ng-binding"]
 ${locator.QUESTIONS[0].description}   xpath=//span[@class="question-description ng-binding"]
 ${locator.QUESTIONS[0].date}          xpath=//span[@class="date ng-binding"]
+${locator.questions[0].answer}        xpath=//span[@class='answer-description ng-binding']
 
 
 *** Keywords ***
@@ -104,9 +105,7 @@ Login
 # Get Ids
   Wait Until Page Contains Element   xpath=//div[@class="title"]   30
   ${tender_UAid}=         Get Text   xpath=//div[@class="title"]
-  Debug
   ${Ids}=        Convert To String   ${tender_UAid}
-  log  ${Ids}
   Run keyword if   '${mode}' == 'multi'   Set Multi Ids   ${tender_UAid}
   [return]  ${Ids}
 
@@ -156,7 +155,7 @@ Set datetime
   ${locality}=        Get From Dictionary   ${ARGUMENTS[0].deliveryAddress}   locality
   ${streetAddress}=   Get From Dictionary   ${ARGUMENTS[0].deliveryAddress}   streetAddress
 
-  Set datetime   end-date-delivery${ARGUMENTS[1]}         ${deliverydate_end_date}
+  Set datetime    end-date-delivery${ARGUMENTS[1]}         ${deliverydate_end_date}
 # Set CPV
   Wait Until Page Contains Element   id=classifier1${ARGUMENTS[1]}
   Click Element                      id=classifier1${ARGUMENTS[1]}
@@ -235,12 +234,15 @@ Set datetime
 #  \   sleep       1
 #  \   ${count}=   Get Matching Xpath Count   xpath=//a[@class="row tender-info ng-scope"]
 #  \   Exit For Loop If  '${count}' == '1'
-  Sleep   2
+
   Go to   ${USERS.users['${ARGUMENTS[0]}'].homepage}
   ${ARGUMENTS[1]}=   Convert To String   Воркераунд для проходженя наступних тестів - пошук не працює.
 ###
   Wait Until Page Contains Element   xpath=(//a[@class="row tender-info ng-scope"])   20
-  Sleep   5
+  Sleep  20
+  Reload Page
+  Reload Page
+  sleep  5
   Click Element                      xpath=(//a[@class="row tender-info ng-scope"])
   Wait Until Page Contains Element   xpath=//a[@class="ng-binding ng-scope"]|//span[@class="ng-binding ng-scope"]   30
 
@@ -251,7 +253,6 @@ Set datetime
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  fieldname
   Switch browser   ${ARGUMENTS[0]}
-  log  ${ARGUMENTS[0]}
   ${return_value}=  run keyword  отримати інформацію про ${ARGUMENTS[1]}
   [return]  ${return_value}
 
@@ -263,7 +264,6 @@ Set datetime
 
 отримати інформацію про title
   ${title}=   отримати текст із поля і показати на сторінці   title
-  debug
   [return]  ${title}
 
 отримати інформацію про description
@@ -423,7 +423,9 @@ Set datetime
 додати позицію
 ###  Не видно контролів додати пропозицію в хромі, потрібно скролити, скрол не працює. Обхід: додати лише 1 пропозицію + редагувати description для скролу.
   Click Element    ${locator.edit.add_item}
+  #Execute Javascript                  window.scroll(-100,-100)
   Додати придмет   ${items[1]}   1
+  Capture Page Screenshot
 
 забрати позицію
   Click Element   xpath=//a[@title="Добавить лот"]/preceding-sibling::a
@@ -482,3 +484,27 @@ Change_day_to_month
   ${rest}=   Get Substring   ${ARGUMENTS[0]}   5
   ${return_value}=   Convert To String  ${month}${day}${rest}
   [return]  ${return_value}
+
+Відповісти на питання
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} = username
+  ...      ${ARGUMENTS[1]} = tenderUaId
+  ...      ${ARGUMENTS[2]} = 0
+  ...      ${ARGUMENTS[3]} = answer_data
+  ${answer}=     Get From Dictionary  ${ARGUMENTS[3].data}   answer
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  newtend.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+  Click Element      xpath=(//li/a[@class='ng-binding'])[2]
+  Sleep  2
+  Mouse Over       xpath=//div[@class='col-xs-12 col-sm-12']
+  sleep  2
+  Click Element      xpath=//div[@class='answer']
+  sleep  2
+  Input Text         xpath=//textarea[@ng-model='message']    ${answer}
+  Click Element  xpath=//div[@ng-click='sendAnswer()']
+  Capture Page Screenshot
+
+отримати інформацію про questions[0].answer
+  ${questionsAnswer}=   отримати текст із поля і показати на сторінці   questions[0].answer
+  [return]  ${questionsAnswer}

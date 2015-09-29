@@ -208,3 +208,13 @@ def subtract_from_time(date_time,substr_min,substr_sec):
     now = datetime.strptime(date_time,"%d.%m.%Y %H:%M")
     now = (now - timedelta(minutes=int(substr_min), seconds = int (substr_sec) )).isoformat()
     return now
+
+def convert_date_for_publicbid_Delivery(isodate):
+    iso_dt=parse_date(isodate)
+    date_string = iso_dt.strftime("%m.%Y")
+    return  date_string
+
+def convert_date_for_publicbid(isodate):
+    iso_dt=parse_date(isodate)
+    date_string = iso_dt.strftime("%d.%m.%Y %H:%M")
+    return  date_string

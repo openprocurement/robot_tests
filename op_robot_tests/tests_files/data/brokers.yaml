@@ -41,3 +41,8 @@ Newtend:
     url: http://openprocurement:test@dev23.newtend.com
     timout_on_wait:  15
     period_interval: 2
+uatender:
+    keywords_file: uatender
+    url: http://dev.zakupki.com.ua/
+    timout_on_wait:  15
+    period_interval: 2   

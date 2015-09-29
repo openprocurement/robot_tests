@@ -135,3 +135,12 @@ users:
         browser: firefox
         position: [750, 0]
         size: [740, 550]
+    Ua_Owner:
+        broker: uatender
+        username: uatender
+        homepage: "http://dev.zakupki.com.ua/"
+        login: vbilos@softserveinc.com
+        password: Qw123456
+        browser: firefox
+        position: [750, 0]
+        size: [740, 550]
