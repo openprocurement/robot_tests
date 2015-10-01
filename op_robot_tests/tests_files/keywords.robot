@@ -75,6 +75,8 @@ TestSuiteSetup
 
   ${now}=  Get Current Date
   ${delta}=  Subtract Date From Date  ${now}  ${TENDER['LAST_MODIFICATION_DATE']}
+  Log  ${delta}
+  Log  ${TENDER['LAST_MODIFICATION_DATE']}
   ${wait_timout}=  Subtract Time From Time  ${BROKERS['${USERS.users['${username}'].broker}'].timout_on_wait}  ${delta}
   Run Keyword If   ${wait_timout}>0   Sleep  ${wait_timout}
 
@@ -166,7 +168,7 @@ switchsate
   Run Keyword If   ${wait_timout}>0   Sleep  ${wait_timout}
 
 Дочекатись дати початоку прийому пропозицій
-  Дочекатись дати  ${TENDER_DATA.data.tenderPeriod.startDate}
+  Дочекатись дати  ${INITIAL_TENDER_DATA.data.tenderPeriod.startDate}
 
 Дочекатись дати закінчення прийому пропозицій
   Дочекатись дати  ${TENDER_DATA.data.tenderPeriod.endDate}

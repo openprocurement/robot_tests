@@ -129,16 +129,30 @@ def get_from_object(obj, attribute):
         return return_list[0]
     return None
 
+#def wait_to_date(date_stamp):
+#    date = parse(date_stamp)
+#    LOGGER.log_message(Message("date: {}".format(date.isoformat()), "INFO"))
+#    now = datetime.now(tzlocal())
+#    LOGGER.log_message(Message("now: {}".format(now.isoformat()), "INFO"))
+#    wait_seconds = (date - now).total_seconds()
+#    wait_seconds += 2
+#    if wait_seconds < 0:
+#        return 0
+#    return wait_seconds
+
 def wait_to_date(date_stamp):
     date = parse(date_stamp)
+    print date
     LOGGER.log_message(Message("date: {}".format(date.isoformat()), "INFO"))
     now = datetime.now(tzlocal())
+    print now
     LOGGER.log_message(Message("now: {}".format(now.isoformat()), "INFO"))
-    wait_seconds = (date - now).total_seconds()
-    wait_seconds += 2
-    if wait_seconds < 0:
-        return 0
-    return wait_seconds
+    if (date.isoformat() > now.isoformat()):
+        wait_seconds = (date - now).total_seconds()
+        wait_seconds += 2
+        print wait_seconds
+        return wait_seconds
+    else: return 0
 
 ##GUI Frontends common
 def convert_date_to_slash_format(isodate):
@@ -148,10 +162,10 @@ def convert_date_to_slash_format(isodate):
 
 def Add_data_for_GUI_FrontEnds(INITIAL_TENDER_DATA):
     now = datetime.now() 
-    #INITIAL_TENDER_DATA.data.enquiryPeriod['startDate'] = (now + timedelta(minutes=2)).isoformat()
+    INITIAL_TENDER_DATA.data.enquiryPeriod['startDate'] = (now + timedelta(minutes=0)).isoformat()
     INITIAL_TENDER_DATA.data.enquiryPeriod['endDate'] = (now + timedelta(minutes=6)).isoformat()
     INITIAL_TENDER_DATA.data.tenderPeriod['startDate'] = (now + timedelta(minutes=7)).isoformat()
-    INITIAL_TENDER_DATA.data.tenderPeriod['endDate'] = (now + timedelta(minutes=11)).isoformat()
+    INITIAL_TENDER_DATA.data.tenderPeriod['endDate'] = (now + timedelta(minutes=20)).isoformat()
     return INITIAL_TENDER_DATA
 
 def local_path_to_file(file_name):
@@ -168,6 +182,16 @@ def convert_date_to_etender_format(isodate):
 def convert_date_for_delivery(isodate):
     iso_dt=parse_date(isodate)
     date_string = iso_dt.strftime("%Y-%m-%d %H:%M")
+    return  date_string
+
+def convert_date_for_publicbid(isodate):
+    iso_dt=parse_date(isodate)
+    date_string = iso_dt.strftime("%d.%m.%Y %H:%M")
+    return  date_string
+
+def convert_date_for_publicbid_Delivery(isodate):
+    iso_dt=parse_date(isodate)
+    date_string = iso_dt.strftime("%m.%Y")
     return  date_string
 
 def convert_time_to_etender_format(isodate):
@@ -199,5 +223,15 @@ def Update_data_for_Newtend(INITIAL_TENDER_DATA):
 
 def subtract_from_time(date_time,substr_min,substr_sec):
     now = datetime.strptime(date_time,"%d.%m.%Y %H:%M")
+    now = (now - timedelta(minutes=int(substr_min), seconds = int (substr_sec) )).isoformat()
+    return now
+
+def subtract_from_date(date_time,substr_min,substr_sec):
+    now = datetime.strptime(date_time,"%Y-%m-%d %H:%M")
+    now = (now - timedelta(minutes=int(substr_min), seconds = int (substr_sec) )).isoformat()
+    return now
+
+def subtract_from_date_time_publicbid(date_time,substr_min,substr_sec):
+    now = datetime.strptime(date_time,"%m.%d.%Y %H:%M")
     now = (now - timedelta(minutes=int(substr_min), seconds = int (substr_sec) )).isoformat()
     return now

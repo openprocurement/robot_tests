@@ -280,19 +280,19 @@ ${question_id}   0
 
 Можливість змінити повторну цінову пропозицію до 50000
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
-  Set To Dictionary  ${USERS.users['${provider}'].bidresponces['resp'].data.value}  amount   50000
-  Log   ${USERS.users['${provider}'].bidresponces['resp'].data.value}
-  ${fixbidto50000resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   ${USERS.users['${provider}'].bidresponces['resp']}
-  Set To Dictionary  ${USERS.users['${provider}'].bidresponces}   fixbidto50000resp   ${fixbidto50000resp}
-  log  ${fixbidto50000resp}
+  #Set To Dictionary  ${USERS.users['${provider}'].bidresponces['resp'].data.value}  amount   50000
+  #Log   ${USERS.users['${provider}'].bidresponces['resp'].data.value}
+  ${fixbidto50000resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   #${USERS.users['${provider}'].bidresponces['resp']}
+#  Set To Dictionary  ${USERS.users['${provider}'].bidresponces}   fixbidto50000resp   ${fixbidto50000resp}
+#  log  ${fixbidto50000resp}
 
 Можливість змінити повторну цінову пропозицію до 10
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
-  Set To Dictionary  ${USERS.users['${provider}'].bidresponces['resp'].data.value}  amount   10
-  Log   ${USERS.users['${provider}'].bidresponces['fixbidto50000resp'].data.value}
-  ${fixbidto10resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   ${USERS.users['${provider}'].bidresponces['resp']}
-  Set To Dictionary  ${USERS.users['${provider}'].bidresponces}   fixbidto10resp   ${fixbidto10resp}
-  log  ${fixbidto10resp}
+  #Set To Dictionary  ${USERS.users['${provider}'].bidresponces['resp'].data.value}  amount   10
+  #Log   ${USERS.users['${provider}'].bidresponces['fixbidto50000resp'].data.value}
+  ${fixbidto10resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   #${USERS.users['${provider}'].bidresponces['resp']}
+#  Set To Dictionary  ${USERS.users['${provider}'].bidresponces}   fixbidto10resp   ${fixbidto10resp}
+# log  ${fixbidto10resp}
 
 Завантажити документ першим учасником в повторну пропозицію
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця

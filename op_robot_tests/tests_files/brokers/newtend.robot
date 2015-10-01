@@ -178,7 +178,7 @@ Set datetime
   Input text                         xpath=//input[@ng-model="deliveryAddress.locality"]   ${locality}
   Input text                         xpath=//input[@ng-model="deliveryAddress.streetAddress"]   ${streetAddress}
   Click Element                      xpath=//button[@class="btn btn-lg single-btn ng-binding"]
-# Add item main info
+  Add item main info
   Click Element                      xpath=//a[contains(text(), "единицы измерения")]
   Click Element                      xpath=//a[contains(text(), "единицы измерения")]/..//a[contains(text(), '${unit}')]
   Input text   id=quantity${ARGUMENTS[1]}          ${quantity}
@@ -196,7 +196,7 @@ Set datetime
 Завантажити документ
   [Arguments]  @{ARGUMENTS}
   [Documentation]
-  ...      ${ARGUMENTS[0]} ==  username
+ ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  ${TENDER_UAID}
   ...      ${ARGUMENTS[2]} ==  ${Complain}
   Fail   Тест не написаний
