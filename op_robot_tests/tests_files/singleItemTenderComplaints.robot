@@ -27,13 +27,13 @@ ${question_id}   0
 Можливість оголосити однопердметний тендер
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ${ids}=  Викликати для учасника     ${tender_owner}    Створити тендер  ${INITIAL_TENDER_DATA}
-  ${TENDER_ID}=   Get From List   ${ids}  0  
-  ${TENDER_ID1}=  Get From List   ${ids}  1 
+  ${TENDER_ID}=   Get From List   ${ids}  0
+  ${TENDER_ID1}=  Get From List   ${ids}  1
   Set Global Variable    ${TENDER_ID}
   Set Global Variable    ${TENDER_ID1}
   ${LAST_MODIFICATION_DATE}=  Get Current Date
   Set Global Variable   ${LAST_MODIFICATION_DATE}
-  
+
 Пошук однопредметного тендера по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
   Дочекатись синхронізації з майданчиком    ${viewer}
@@ -51,7 +51,6 @@ ${question_id}   0
   Викликати для учасника   ${tender_owner}   Обробити скаргу    ${TENDER_ID}  0  ${COMPLAINTS[0]}
   log many   ${COMPLAINTS[0]}
   викликати для учасника   ${viewer}   обновити сторінку з тендером   ${TENDER_ID}   ${TENDER_ID}
-
 Можливість відкинути скаргу на умови
   [Tags]    ${USERS.users['${tender_owner}'].broker}: Можливість відкинути скаргу на умови
   Викликати для учасника   ${provider}   Подати скаргу    ${TENDER_ID}   ${COMPLAINTS[0]}
@@ -64,7 +63,7 @@ ${question_id}   0
   ${LAST_MODIFICATION_DATE}=  Get Current Date
   Set Global Variable   ${LAST_MODIFICATION_DATE}
   Викликати для учасника   ${viewer}   обновити сторінку з тендером   ${TENDER_ID}   ${TENDER_ID}
-  
+
 Можливість задовільнити скаргу на умови
   [Tags]    ${USERS.users['${provider}'].broker}: Можливість відповісти на запитання
   Викликати для учасника   ${provider}   Подати скаргу    ${TENDER_ID}   ${COMPLAINTS[0]}
@@ -76,6 +75,6 @@ ${question_id}   0
   log many   ${COMPLAINTS[0]}
   ${LAST_MODIFICATION_DATE}=  Get Current Date
   Set Global Variable   ${LAST_MODIFICATION_DATE}
-    
+
 
 

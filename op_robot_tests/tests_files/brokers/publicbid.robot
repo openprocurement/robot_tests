@@ -8,6 +8,7 @@ Library  DateTime
 ${mail}          test@mail.com
 ${telephone}     +380976535447
 ${fake_name}     Оніч Прокрув Ійов
+${UA_ID}     UA-2015-09-16-000126
 ${locator.title}                                               xpath=(//td[@class='ui-panelgrid-cell'])[28]
 ${locator.description}                                         xpath=(//tr[@class='ui-widget-content ui-panelgrid-even']/td[@class='ui-panelgrid-cell'])[15]
 ${locator.procuringEntity.name}                                xpath=(//*[@class='ui-panelgrid ui-widget']/tbody/tr[2]/td[2])[5]
@@ -29,9 +30,9 @@ ${locator.items[0].additionalClassifications[0].description}   xpath=(//table[@c
 ${locator.items[0].unit.code}                                  xpath=(//table[@class='ui-panelgrid ui-widget']/tbody/tr[3]/td[4])[2]
 ${locator.items[0].quantity}                                   xpath=(//table[@class='ui-panelgrid ui-widget']/tbody/tr[3]/td[4])[2]
 ${locator.items[0].unit.name}                                  xpath=(//table[@class='ui-panelgrid ui-widget']/tbody/tr[3]/td[4])[2]
-${locator.questions[0].title}                                  xpath=//div[4]/span/div/div[2]/div[1]/div[2]/table/tbody/tr[1]/td[1]/span
-#${locator.questions[0].description}                            xpath=
-#${locator.questions[0].date}                                   xpath=
+${locator.questions[0].title}                                  xpath=//tr[@class='ui-widget-content ui-datatable-even'][last()]//self::span
+${locator.questions[0].description}                            xpath=//tr[@class='ui-widget-content ui-datatable-odd'][last()]//td[1]
+${locator.questions[0].date}                                   xpath=//tr[@class='ui-widget-content ui-datatable-odd'][last()]//td[2]
 #${locator.questions[0].answer}                                 xpath=
 #${locator.items[0].deliveryAddress.postalCode}                 xpath=
 #${locator.items[0].deliveryAddress.countryName}                xpath=
@@ -277,11 +278,13 @@ Set Multi Ids
   Click Element   xpath=//div[@class='ui-row-toggler ui-icon ui-icon-circle-triangle-e']
 
 Пошук закупівлі по періоду очікування пропозицій
+  Sleep  2
   Click Element   xpath=//td[@class='ui-panelgrid-cell banner_menu_item']/a[./text()='Закупівлі']
-  Sleep  2
+  Sleep  5
+  Input text      id=mForm:datalist:j_idt387     ${UA_ID}
+  Sleep  5
   Click Element   xpath=//div[@class='ui-selectonemenu ui-widget ui-state-default ui-corner-all tblFilter']//span
-  Click Element   xpath=(//li)[5]
-  Sleep  2
+  Sleep  5
   Click Element   xpath=//div[@class='ui-row-toggler ui-icon ui-icon-circle-triangle-e']
 
 порівняти скаргу
@@ -482,7 +485,7 @@ Change_date_to_month
   [return]  ${return_value}
 
 отримати інформацію про items[0].quantity
-#  Sleep  260
+  Sleep  260
   ${return_value}=   Отримати тест із поля і показати на сторінці   items[0].quantity
   ${return_value}=   Get Substring  ${return_value}   0   4
   ${return_value}=   Convert To Number   ${return_value}
@@ -495,23 +498,19 @@ Change_date_to_month
   ...      ${ARGUMENTS[1]} ==  ${TENDER_UAID}
   ...      ${ARGUMENTS[2]} ==  ${test_bid_data}
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
-  ${bid}=        Get From Dictionary   ${INITIAL_TENDER_DATA.data.value}         amount
   Run keyword if   '${TEST NAME}' == 'Неможливість подати цінову пропозицію до початку періоду подачі пропозицій bidder1'     Пошук закупівлі по періоду уточнень
-  Run keyword if   '${TEST NAME}' != 'Неможливість подати цінову пропозицію до початку періоду подачі пропозицій bidder1'     Пошук закупівлі по періоду очікування пропозицій
+  Run keyword if   '${TEST NAME}' == 'Подати цінову пропозицію bidder'     Пошук закупівлі по періоду очікування пропозицій
   Sleep  2
-  Click Element         id=mForm:datalist:0:j_idt583
+  Click Element         xpath=//span[@id='mForm:datalist:0:gButt1']/button[4]
   Sleep  2
   Input text    id=mForm:data:amount   5000
   Input text    id=mForm:data:rName    ${fake_name}
   Input text    id=mForm:data:rPhone   ${telephone}
   Input text    id=mForm:data:rMail    ${mail}
   Click Element          xpath=//span[@id='mForm:gButt1']/button[1]
-  debug
   Sleep  3
-#  Click Element          id=mForm:j_idt1302
-#  Sleep  1
-#  Click Element          id=mForm:j_idt1458
-#  Sleep  2
+  Click Element         xpath//div[@id='primefacesmessagedlg']/div[1]/a/span
+  Sleep  1
 
 скасувати цінову пропозицію
   [Arguments]  @{ARGUMENTS}
@@ -526,12 +525,140 @@ Change_date_to_month
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  ${TENDER_UAID}
   ...      ${ARGUMENTS[2]} ==  bid
-  Log  ${ARGUMENTS[0]}
-  Log  ${ARGUMENTS[1]}
-  Log  ${ARGUMENTS[2]}
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
-  Click Element                  xpath=//a[@class='button save bidToEdit']
-  Input text                     xpath=//input[@name='amount']    ${ARGUMENTS[2]}
-  Click Element                  name = do
+  Click Element                  xpath=//td[@class='ui-panelgrid-cell banner_menu_item']//a[./text()='Мій кабінет']
+  Sleep  2
+  Click Element                  xpath=//li[@class='ui-menuitem ui-widget ui-corner-all']//span[./text()='Мої пропозиції']
+  Sleep  2
+  Click Element                  xpath=(//div[@class='ui-row-toggler ui-icon ui-icon-circle-triangle-e'])[3]
+  Sleep  2
+  Run keyword if   '${TEST NAME}' == 'Можливість змінити повторну цінову пропозицію до 50000'     Змінити до 50000
+  Run keyword if   '${TEST NAME}' != 'Можливість змінити повторну цінову пропозицію до 10'        Змінити до 10
+  sleep  2
+  Click Element                  xpath=//span[@class='ui-button-text ui-c'][./text()='Відкрити детальну інформацію']
+  Capture Page Screenshot
+
+Змінити до 50000
+  Input text      id=mForm:propsRee:2:data:amount    5000
+
+Змінити до 10
+  Input text      id=mForm:propsRee:2:data:amount    10
+
+
+Задати питання
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  tenderUaId
+  ...      ${ARGUMENTS[2]} ==  questionId
+  ${title}=        Get From Dictionary  ${ARGUMENTS[2].data}  title
+  ${description}=  Get From Dictionary  ${ARGUMENTS[2].data}  description
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  Пошук закупівлі по періоду уточнень
   sleep  1
-  Click Element                  xpath=//a[@class='jBtn undefined']
+  Click Element    xpath=//span[@class='ui-button-text ui-c'][./text()='Обговорення']
+  sleep  1
+  Input Text       xpath=//input[@id='mForm:messT']      ${title}
+  sleep  1
+  Input Text       xpath=//textarea[@id='mForm:messQ']   ${description}
+  Click Element    xpath=//button[@id='mForm:btnQ']
+  Capture Page Screenshot
+
+обновити сторінку з тендером
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} = username
+  ...      ${ARGUMENTS[1]} = tenderUaId
+  ${tenderId}=               Convert To String                    ${ARGUMENTS[1]}
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  Пошук закупівлі по періоду уточнень
+  Reload Page
+
+отримати інформацію про questions[0].title
+  sleep  2
+  Click Element   xpath=//div[@class='ui-selectonemenu ui-widget ui-state-default ui-corner-all tblFilter']//span
+  sleep  2
+  Click Element   xpath=(//li)[4]
+  Sleep  2
+  Click Element        xpath=//div[@class='ui-row-toggler ui-icon ui-icon-circle-triangle-e']
+  sleep  2
+  Click Element        xpath=//span[@class='ui-button-text ui-c'][./text()='Обговорення']
+  Sleep  2
+  Click Element        xpath=//div[@id='mForm:data_paginator_bottom']/span[5]
+  sleep  2
+  ${return_value}=   отримати тест із поля і показати на сторінці   questions[0].title
+  ${return_value}=   Convert To Lowercase   ${return_value}
+  [return]   ${return_value}
+
+отримати інформацію про questions[0].description
+  ${return_value}=   отримати тест із поля і показати на сторінці   questions[0].description
+  ${return_value}=   Convert To Lowercase   ${return_value}
+  [return]   ${return_value}
+
+отримати інформацію про questions[0].date
+  ${return_value}=   отримати тест із поля і показати на сторінці   questions[0].date
+  ${return_value}=   Change_date_to_month   ${return_value}
+  [return]   ${return_value}
+
+Завантажити документ в ставку
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  ${TENDER_UAID}
+  ...      ${ARGUMENTS[2]} ==  bid
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  ${file_path}=        local_path_to_file   TestDocument.docx
+  Click Element                  xpath=//td[@class='ui-panelgrid-cell banner_menu_item']//a[./text()='Мій кабінет']
+  Sleep  2
+  Click Element                  xpath=//li[@class='ui-menuitem ui-widget ui-corner-all']//span[./text()='Мої пропозиції']
+  Sleep  2
+  Click Element                  xpath=(//div[@class='ui-row-toggler ui-icon ui-icon-circle-triangle-e'])[3]
+  Sleep  2
+  Click Element                  xpath=//span[@class='ui-button-text ui-c'][./text()='Відкрити детальну інформацію']
+  Sleep  2
+  Choose File             id=mForm:data:qFile_input          ${file_path}
+  Sleep  2
+  Click Element                  xpath=//span[@id='mForm:gButt1']/button[2]
+  Capture Page Screenshot
+
+отримати документ
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  ${TENDER_UAID}
+  ...      ${ARGUMENTS[2]} ==  bid
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  ${file_path}=        local_path_to_file   TestDocument.docx
+  Click Element                  xpath=//td[@class='ui-panelgrid-cell banner_menu_item']//a[./text()='Мій кабінет']
+  Sleep  2
+  Click Element                  xpath=//li[@class='ui-menuitem ui-widget ui-corner-all']//span[./text()='Мої пропозиції']
+  Sleep  2
+  Click Element                  xpath=(//div[@class='ui-row-toggler ui-icon ui-icon-circle-triangle-e'])[3]
+  Sleep  2
+  Click Element                  xpath=//span[@class='ui-button-text ui-c'][./text()='Відкрити детальну інформацію']
+  Sleep  2
+  Click Element                  xpath=//div[@class='ui-outputpanel ui-widget']/a
+  Capture Page Screenshot
+
+Змінити документ в ставці
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  ${TENDER_UAID}
+  ...      ${ARGUMENTS[2]} ==  bid
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  ${file_path}=        local_path_to_file   TestDocument.docx
+  Click Element                  xpath=//td[@class='ui-panelgrid-cell banner_menu_item']//a[./text()='Мій кабінет']
+  Sleep  2
+  Click Element                  xpath=//li[@class='ui-menuitem ui-widget ui-corner-all']//span[./text()='Мої пропозиції']
+  Sleep  2
+  Click Element                  xpath=(//div[@class='ui-row-toggler ui-icon ui-icon-circle-triangle-e'])[3]
+  Sleep  2
+  Click Element                  xpath=//span[@class='ui-button-text ui-c'][./text()='Відкрити детальну інформацію']
+  Sleep  2
+  Click Element                  xpath=(//div[@class='ui-outputpanel ui-widget']/button/span[@class='ui-button-text ui-c'])[1]
+  Sleep  2
+  Choose File             id=mForm:data:qFile_input          ${file_path}
+  Sleep  2
+  Click Element                  xpath=//span[@id='mForm:gButt1']/button[2]
+  Capture Page Screenshot

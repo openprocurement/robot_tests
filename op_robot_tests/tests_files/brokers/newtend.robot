@@ -197,7 +197,7 @@ Set datetime
 Завантажити документ
   [Arguments]  @{ARGUMENTS}
   [Documentation]
-  ...      ${ARGUMENTS[0]} ==  username
+ ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  ${TENDER_UAID}
   ...      ${ARGUMENTS[2]} ==  ${Complain}
   Fail   Тест не написаний

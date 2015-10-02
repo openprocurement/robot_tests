@@ -109,14 +109,14 @@ Login
   Input text                          name=items[0][dkpp]              ${dkpp_desc}
   Input text                          name=items[0][cpv]               ${cpv_id1}
 
-  debug
+  #debug
   #Input text                          name=items[0][unit_id]           ${cpv_id}
   sleep  2
   Input text                          name=items[0][delivery_date_start]    subtract_from_time(${delivery_end_date},120,0)
   Input text                          name=items[0][delivery_date_end]      ${delivery_end_date}
 
   #Додати предмет    ${items[0]}       0
-  debug
+  #debug
   Click Element                       xpath=//input[@class='btn btn-lg btn-danger']
   Run Keyword if   '${mode}' == 'multi'   Додати багато предметів   items
 

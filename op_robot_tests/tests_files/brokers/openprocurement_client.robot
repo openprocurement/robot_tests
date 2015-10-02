@@ -9,7 +9,7 @@ ${question_id}   0
 *** Keywords ***
 отримати internal id по UAid
   [Arguments]  @{ARGUMENTS}
-  [Documentation]  
+  [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tenderid
   log many  @{ARGUMENTS}
@@ -158,7 +158,7 @@ ${question_id}   0
   log many  @{ARGUMENTS}
   ${internalid}=  отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
-  log   ${USERS.users['${ARGUMENTS[0]}']}
+   log   ${USERS.users['${ARGUMENTS[0]}']}
   ${biddingresponce}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_question  ${tender}  ${ARGUMENTS[2]}
   [return]  ${biddingresponce}
 
