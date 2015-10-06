@@ -2,8 +2,8 @@
 Resource  resource.robot
 Library  op_robot_tests.tests_files.service_keywords
 Library  String
-LIbrary  Collections
-LIbrary  Selenium2Library
+Library  Collections
+Library  Selenium2Library
 Library  DateTime
 Library  Selenium2Screenshots
 Library  DebugLibrary

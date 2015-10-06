@@ -1,8 +1,8 @@
 *** Setting ***
 Library  op_robot_tests.tests_files.service_keywords
 Library  String
-LIbrary  Collections
-LIbrary  Selenium2Library
+Library  Collections
+Library  Selenium2Library
 Library  DebugLibrary
 Resource  keywords.robot
 Resource  resource.robot
