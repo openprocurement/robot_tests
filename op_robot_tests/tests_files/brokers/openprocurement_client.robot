@@ -160,9 +160,9 @@ ${question_id}   0
   log many     ${USERS.users['${ARGUMENTS[0]}']}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${ARGUMENTS[0]}'].access_token}
   ${ARGUMENTS[3].data.id}=  Set Variable   ${tender.data.questions[${ARGUMENTS[2]}].id}
-  ${quvestion_with_answer}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_question  ${tender}  ${ARGUMENTS[3]}
+  ${question_with_answer}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_question  ${tender}  ${ARGUMENTS[3]}
   log many   ${USERS.users['${ARGUMENTS[0]}'].client}  ${tender}  ${ARGUMENTS[3]}
-  Log object data   ${quvestion_with_answer}  quvestion_with_answer
+  Log object data   ${question_with_answer}  question_with_answer
 
 Подати скаргу
   [Documentation]
