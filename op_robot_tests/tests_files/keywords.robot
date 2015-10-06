@@ -139,7 +139,7 @@ TestSuiteSetup
   log  ${command}
   log  ${arguments}
   ${state}=   change_state  ${arguments}
-  ${value}=  Run keyword if  '${state}' == 'shouldfail'   switchsate  ${username}  ${command}  @{arguments}
+  ${value}=  Run keyword if  '${state}' == 'shouldfail'   SwitchState  ${username}  ${command}  @{arguments}
   ${value}=  Run keyword if  '${state}' == 'pass'   Normal  ${username}  ${command}  @{arguments}
   [return]   ${value}
 
@@ -151,7 +151,7 @@ Normal
   ${value}=  Run Keyword   ${BROKERS['${USERS.users['${username}'].broker}'].keywords_file}.${command}  ${username}  @{arguments}
   [return]   ${value}
 
-switchsate
+SwitchState
   [Arguments]  ${username}  ${command}  @{arguments}
   log  ${username}
   log  ${command}
