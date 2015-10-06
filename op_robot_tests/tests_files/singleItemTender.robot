@@ -33,7 +33,7 @@ ${question_id}   0
   Set To Dictionary  ${TENDER}   LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
   log  ${TENDER}
 
-Можливасть додати тендерну документацію
+Можливість додати тендерну документацію
   [Tags]    ${USERS.users['${tender_owner}'].broker}: Можливість завантажити документ
   [Documentation]   Закупівельник   ${USERS.users['${tender_owner}'].broker}  завантажує документацію  до  оголошеної закупівлі
   ${filepath}=   create_fake_doc
@@ -55,7 +55,7 @@ ${question_id}   0
   [Tags]   ${USERS.users['${provider}'].broker}: Відображення основних даних оголошеного тендера
   Викликати для учасника   ${provider}   Порівняти скаргу  ${TENDER['TENDER_UAID']}   ${COMPLAINTS[0]}
 
-можливість побачити скаргу анонімом
+Можливість побачити скаргу анонімом
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
   Викликати для учасника    ${viewer}  Порівняти скаргу  ${TENDER['TENDER_UAID']}   ${COMPLAINTS[0]}
 
@@ -251,7 +251,7 @@ ${question_id}   0
   [Tags]   ${USERS.users['${provider}'].broker}: Відображення основних даних оголошеного тендера
   Викликати для учасника   ${provider}   Порівняти скаргу  ${TENDER['TENDER_UAID']}   ${COMPLAINTS[0]}
 
-можливість побачити скаргу анонімом під час періоду уточнень
+Можливість побачити скаргу анонімом під час періоду уточнень
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
   Викликати для учасника    ${viewer}  Порівняти скаргу  ${TENDER['TENDER_UAID']}   ${COMPLAINTS[0]}
 
@@ -358,7 +358,7 @@ ${question_id}   0
   [Tags]   ${USERS.users['${provider}'].broker}: Відображення основних даних оголошеного тендера
   Викликати для учасника   ${provider}   Порівняти скаргу  ${TENDER['TENDER_UAID']}    ${COMPLAINTS[0]}
 
-можливість побачити скаргу анонімом під час подачі пропозицій
+Можливість побачити скаргу анонімом під час подачі пропозицій
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
   Викликати для учасника    ${viewer}  Порівняти скаргу  ${TENDER['TENDER_UAID']}    ${COMPLAINTS[0]}
 
