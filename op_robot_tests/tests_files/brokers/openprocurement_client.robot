@@ -38,7 +38,7 @@ ${question_id}   0
 Створити тендер
   [Arguments]  @{ARGUMENTS}
   ${TENDER_DATA}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_tender  ${ARGUMENTS[1]}
-  Log object data  ${TENDER_DATA}  cteated_tender
+  Log object data  ${TENDER_DATA}  created_tender
   ${access_token}=  Get Variable Value  ${TENDER_DATA.access.token}
   Set To Dictionary  ${USERS.users['${ARGUMENTS[0]}']}   access_token   ${access_token}
   Set To Dictionary  ${USERS.users['${ARGUMENTS[0]}']}   TENDER_DATA   ${TENDER_DATA}
