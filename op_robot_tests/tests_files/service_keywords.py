@@ -91,7 +91,7 @@ def prepare_test_tender_data(period_interval=2, mode='single'):
     raise ValueError('A very specific bad thing happened')
 
 
-def run_keyword_and_ignore_keyword_definations(name, *args):
+def run_keyword_and_ignore_keyword_definitions(name, *args):
     """Runs the given keyword with given arguments and returns the status as a Boolean value.
 
     This keyword returns `True` if the keyword that is executed succeeds and

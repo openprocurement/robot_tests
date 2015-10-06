@@ -156,7 +156,7 @@ switchsate
   log  ${arguments}
   Remove From List  ${arguments}  0
   log  ${arguments}
-  ${status}  ${value}=  run_keyword_and_ignore_keyword_definations   ${BROKERS['${USERS.users['${username}'].broker}'].keywords_file}.${command}  ${username}  @{arguments}
+  ${status}  ${value}=  run_keyword_and_ignore_keyword_definitions   ${BROKERS['${USERS.users['${username}'].broker}'].keywords_file}.${command}  ${username}  @{arguments}
   Run keyword if  '${status}' == 'PASS'   Log   Учасник ${username} зміг виконати "${command}"   WARN
   [return]   ${value}
 
