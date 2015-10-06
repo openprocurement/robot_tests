@@ -131,7 +131,9 @@ TestSuiteSetup
 
 Викликати для учасника
   [Documentation]
-  ...    cause sometimes keyword SHOULD fail to pass the testcase, this keyword takes "shouldfail" argument as first one in @{arguments} and switches the behaviour of keyword and "shouldfail"
+  ...    Cause sometimes keyword SHOULD fail to pass the testcase,
+  ...    this keyword takes "shouldfail" argument as first one in @{arguments}
+  ...    and switches the behaviour of keyword and "shouldfail"
   [Arguments]  ${username}  ${command}  @{arguments}
   log  ${username}
   log  ${command}
