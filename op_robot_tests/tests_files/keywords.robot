@@ -13,10 +13,10 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
 
 *** Keywords ***
 TestSuiteSetup
-    Завантажуємо дані про корисувачів і площадки  ${LOAD_USERS}
+    Завантажуємо дані про користувачів і площадки  ${LOAD_USERS}
     Підготовка початкових даних
 
-Завантажуємо дані про корисувачів і площадки
+Завантажуємо дані про користувачів і площадки
   [Arguments]  ${active_users}
   log  ${active_users}
 
