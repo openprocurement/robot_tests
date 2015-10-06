@@ -7,7 +7,7 @@ ${item_id}       0
 ${question_id}   0
 
 *** Keywords ***
-отримати internal id по UAid
+Отримати internal id по UAid
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
@@ -52,7 +52,7 @@ ${question_id}   0
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tenderId
-  ${internalid}=  отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
+  ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
   ${tender_data}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
   Set To Dictionary  ${USERS.users['${ARGUMENTS[0]}']}   tender_data   ${tender_data}
   [return]   ${tender_data}
@@ -64,7 +64,7 @@ ${question_id}   0
   ...      ${ARGUMENTS[1]} ==  tenderId
   openprocurement_client.Пошук тендера по ідентифікатору    @{ARGUMENTS}
 
-отримати інформацію із тендера
+Отримати інформацію із тендера
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
@@ -81,14 +81,14 @@ ${question_id}   0
   ...      ${ARGUMENTS[1]} ==  id
   ...      ${ARGUMENTS[2]} ==  fieldname
   ...      ${ARGUMENTS[3]} ==  fieldvalue
-  ${internalid}=  отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
-  отримати тендер   ${ARGUMENTS[0]}   ${internalid}
+  ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
+  Отримати тендер   ${ARGUMENTS[0]}   ${internalid}
   Set_To_Object  ${TENDER_DATA.data}   ${ARGUMENTS[2]}   ${ARGUMENTS[3]}
   ${TENDER_DATA}=  set_access_key  ${TENDER_DATA}  ${USERS.users['${ARGUMENTS[0]}'].access_token}
   ${TENDER_DATA}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_tender  ${TENDER_DATA}
   Set Global Variable  ${TENDER_DATA}
 
-отримати тендер
+Отримати тендер
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
@@ -104,8 +104,8 @@ ${question_id}   0
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  id
   ...      ${ARGUMENTS[2]} ==  number
-  ${internalid}=  отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
-  отримати тендер   ${ARGUMENTS[0]}    ${internalid}
+  ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
+  Отримати тендер   ${ARGUMENTS[0]}    ${internalid}
   ${items}=  get from object   ${TENDER_DATA.data}    items
   log  ${items}
   :FOR    ${INDEX}    IN RANGE    ${ARGUMENTS[2]}
@@ -121,8 +121,8 @@ ${question_id}   0
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  id
   ...      ${ARGUMENTS[2]} ==  number
-  ${internalid}=  отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
-  отримати тендер   ${ARGUMENTS[0]}    ${internalid}
+  ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
+  Отримати тендер   ${ARGUMENTS[0]}    ${internalid}
   ${items}=  get from object   ${TENDER_DATA.data}    items
   ${item}=  get variable value   ${items[1]}
   log  ${items}
@@ -141,7 +141,7 @@ ${question_id}   0
   ...      ${ARGUMENTS[2]} ==  question
   [Arguments]  @{ARGUMENTS}
   log many  @{ARGUMENTS}
-  ${internalid}=  отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
+  ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
   log   ${USERS.users['${ARGUMENTS[0]}']}
   ${biddingresponce}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_question  ${tender}  ${ARGUMENTS[2]}
@@ -155,7 +155,7 @@ ${question_id}   0
   ...      ${ARGUMENTS[3]} ==  answer_data
   [Arguments]  @{ARGUMENTS}
   log many  @{ARGUMENTS}
-  ${internalid}=  отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
+  ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
   log many     ${USERS.users['${ARGUMENTS[0]}']}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${ARGUMENTS[0]}'].access_token}
@@ -171,7 +171,7 @@ ${question_id}   0
   ...      ${ARGUMENTS[2]} ==  complaint
   [Arguments]  @{ARGUMENTS}
   log many  @{ARGUMENTS}
-  ${internalid}=  отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
+  ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
   ${complaint}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  _create_tender_resource_item  ${tender}  ${ARGUMENTS[2]}   complaints
   Log object data   ${complaint}  complaint
@@ -182,7 +182,7 @@ ${question_id}   0
   ...      ${ARGUMENTS[1]} ==  tender_uid
   ...      ${ARGUMENTS[2]} ==  complaint
   [Arguments]  @{ARGUMENTS}
-  ${internalid}=  отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
+  ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
   ${complaint}=   Get Variable Value  ${tender.data.complaints[0]}
   log   ${complaint}
@@ -201,7 +201,7 @@ ${question_id}   0
   ...      ${ARGUMENTS[3]} ==  answer_data
   [Arguments]  @{ARGUMENTS}
   log many  @{ARGUMENTS}
-  ${internalid}=  отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
+  ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${ARGUMENTS[0]}'].access_token}
   ${ARGUMENTS[3].data.id}=  Set Variable   ${tender.data.complaints[${ARGUMENTS[2]}].id}
@@ -216,9 +216,9 @@ ${question_id}   0
   ...      ${ARGUMENTS[2]} ==  bid
   [Arguments]  @{ARGUMENTS}
   log many  @{ARGUMENTS}
-  ${internalid}=  отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
+  ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
-  log  ${tender}отримати
+  log  ${tender}Отримати
   ${biddingresponce}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_bid  ${tender}  ${ARGUMENTS[2]}
   [return]  ${biddingresponce}
 
@@ -228,7 +228,7 @@ ${question_id}   0
   ...      ${ARGUMENTS[1]} ==  tender_uid
   ...      ${ARGUMENTS[2]} ==  bid
   [Arguments]  @{ARGUMENTS}
-  ${internalid}=  отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
+  ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
   ${changed_bid}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_bid  ${tender}  ${ARGUMENTS[2]}
   Log  ${changed_bid}
@@ -240,10 +240,10 @@ ${question_id}   0
   ...      ${ARGUMENTS[1]} ==  tender_uid
   ...      ${ARGUMENTS[2]} ==  bid
   [Arguments]  @{ARGUMENTS}
-  ${internalid}=  отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
+  ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
   log   ${tender}
-  log   ${ARGUMENTS[2]}отримати
+  log   ${ARGUMENTS[2]}Отримати
   ${changed_bid}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  delete_bid   ${tender}  ${ARGUMENTS[2]}
   Log  ${changed_bid}
   [return]   ${changed_bid}
@@ -254,7 +254,7 @@ ${question_id}   0
   ...      ${ARGUMENTS[1]} ==  tender_uid
   ...      ${ARGUMENTS[2]} ==  award
   [Arguments]  @{ARGUMENTS}
-  ${internalid}=  отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
+  ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${ARGUMENTS[0]}'].access_token}
   ${award_activeted_response}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_award  ${tender}  ${ARGUMENTS[2]}
@@ -271,7 +271,7 @@ ${question_id}   0
   log  ${ARGUMENTS[1]}
   log  ${ARGUMENTS[2]}
   ${bid_id}=  Get Variable Value   ${USERS.users['${ARGUMENTS[0]}'].bidresponces['resp'].data.id}
-  ${internalid}=  отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[2]}
+  ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[2]}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${ARGUMENTS[0]}'].bidresponces['resp'].access.token}
   ${responce}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  upload_bid_document  ${ARGUMENTS[1]}  ${tender}  ${bid_id}
@@ -290,7 +290,7 @@ ${question_id}   0
   log  ${ARGUMENTS[0]}
   log  ${ARGUMENTS[1]}
   log  ${ARGUMENTS[2]}
-  ${internalid}=  отримати internal id по UAid  ${ARGUMENTS[0]}  ${TENDER['TENDER_UAID']}
+  ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${TENDER['TENDER_UAID']}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${ARGUMENTS[0]}'].bidresponces['resp'].access.token}
   ${responce}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  update_bid_document  ${ARGUMENTS[1]}  ${tender}   ${ARGUMENTS[2]}   ${ARGUMENTS[3]}
@@ -311,7 +311,7 @@ ${question_id}   0
   log  ${ARGUMENTS[0]}
   log  ${ARGUMENTS[1]}
   log  ${ARGUMENTS[2]}
-  ${tenderID}=  openprocurement_client.отримати internal id по UAid  ${ARGUMENTS[0]}   ${ARGUMENTS[2]}
+  ${tenderID}=  openprocurement_client.Отримати internal id по UAid  ${ARGUMENTS[0]}   ${ARGUMENTS[2]}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${tenderID}
   ${tender}=  set_access_key  ${tender}   ${USERS.users['${ARGUMENTS[0]}'].access_token}
   ${reply}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  upload_document  ${tender}  ${ARGUMENTS[1]}
@@ -325,13 +325,13 @@ ${question_id}   0
   ...      ${ARGUMENTS[2]} ==  bid_id
   ...      ${ARGUMENTS[3]} ==  token
   [Arguments]  @{ARGUMENTS}
-  ${internalid}=  отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
+  ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
   ${bids}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_bid    ${tender}   ${ARGUMENTS[2]}  ${ARGUMENTS[3]}
   Log  ${bids}
   [return]   ${bids}
 
-отримати документ
+Отримати документ
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tenderUaID
@@ -340,7 +340,7 @@ ${question_id}   0
   log  ${ARGUMENTS[0]}
   log  ${ARGUMENTS[1]}
   log  ${ARGUMENTS[2]}
-  ${tenderID}=  openprocurement_client.отримати internal id по UAid  ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+  ${tenderID}=  openprocurement_client.Отримати internal id по UAid  ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${tenderID}
   ${token}=    Get Variable Value  ${USERS.users['${ARGUMENTS[0]}'].bidresponces['resp'].access.token}
   ${contents}  ${filename}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_file   ${tender}   ${ARGUMENTS[2]}   ${token}

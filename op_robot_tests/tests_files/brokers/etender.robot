@@ -59,13 +59,13 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   Wait Until Page Contains    ${ARGUMENTS[1]}   10
   sleep  1
 
-отримати інформацію із тендера
+Отримати інформацію із тендера
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  fieldname
   Switch browser   ${ARGUMENTS[0]}
-  ${return_value}=  run keyword  отримати інформацію про ${ARGUMENTS[1]}
+  ${return_value}=  run keyword  Отримати інформацію про ${ARGUMENTS[1]}
   [return]  ${return_value}
 
 Відмітити на сторінці поле з тендера
@@ -82,102 +82,102 @@ ${locator.enquiryPeriod.endDate}     jquery=tender-procedure-info>div.row:contai
   ${return_value}=   Get Text  ${locator.${fieldname}}
   [return]  ${return_value}
 
-отримати інформацію про tenderId
+Отримати інформацію про tenderId
   ${return_value}=   Отримати тест із поля і показати на сторінці   tenderId
   [return]  ${return_value.split(' ')[1]}
 
-отримати інформацію про title
+Отримати інформацію про title
   ${return_value}=   Отримати тест із поля і показати на сторінці   title
   [return]  ${return_value}
 
-отримати інформацію про description
+Отримати інформацію про description
    ${return_value}=   Отримати тест із поля і показати на сторінці   description
   [return]  ${return_value}
 
-отримати інформацію про minimalStep.amount
+Отримати інформацію про minimalStep.amount
   ${return_value}=   Отримати тест із поля і показати на сторінці   minimalStep.amount
   ${return_value}=   Convert To Number   ${return_value.split(' ')[0]}
   [return]  ${return_value}
 
-отримати інформацію про procuringEntity.name
+Отримати інформацію про procuringEntity.name
   ${return_value}=   Отримати тест із поля і показати на сторінці   procuringEntity.name
   [return]  ${return_value}
 
 
-отримати інформацію про value.amount
+Отримати інформацію про value.amount
   ${return_value}=   Отримати тест із поля і показати на сторінці  value.amount
   ${return_value}=   Evaluate   "".join("${return_value}".split(' ')[:-3])
   ${return_value}=   Convert To Number   ${return_value}
   [return]  ${return_value}
 
-отримати інформацію про tenderPeriod.startDate
+Отримати інформацію про tenderPeriod.startDate
   ${return_value}=   Отримати тест із поля і показати на сторінці  tenderPeriod.startDate
   [return]  ${return_value}
 
-отримати інформацію про tenderPeriod.endDate
+Отримати інформацію про tenderPeriod.endDate
   ${return_value}=   Отримати тест із поля і показати на сторінці  tenderPeriod.endDate
   [return]  ${return_value}
 
-отримати інформацію про enquiryPeriod.startDate
+Отримати інформацію про enquiryPeriod.startDate
   ${return_value}=   Отримати тест із поля і показати на сторінці  enquiryPeriod.startDate
   [return]  ${return_value}
 
-отримати інформацію про enquiryPeriod.endDate
+Отримати інформацію про enquiryPeriod.endDate
   ${return_value}=   Отримати тест із поля і показати на сторінці  enquiryPeriod.endDate
   [return]  ${return_value}
 
 
-отримати інформацію про items[${item_id}].description
+Отримати інформацію про items[${item_id}].description
   відмітити на сторінці поле з тендера   items[${item_id}].description   jquery=tender-subject-info.ng-isolate-scope>div.row:contains("Детальний опис предмету закупівлі:")>:eq(1)>
   ${return_value}=   Get Text  jquery=tender-subject-info.ng-isolate-scope>div.row:contains("Детальний опис предмету закупівлі:")>:eq(1)>
   [return]  ${return_value}
 
-отримати інформацію про items[${item_id}].quantity
+Отримати інформацію про items[${item_id}].quantity
   відмітити на сторінці поле з тендера   items[${item_id}].quantity   jquery=tender-subject-info.ng-isolate-scope>div.row:contains("Кількість:")>:eq(1)>
   ${return_value}=   Get Text  jquery=tender-subject-info.ng-isolate-scope>div.row:contains("Кількість:")>:eq(1)>
   ${return_value}=  Convert To Number   ${return_value}
   [return]  ${return_value}
 
-отримати інформацію про items[${item_id}].classification.id
+Отримати інформацію про items[${item_id}].classification.id
   відмітити на сторінці поле з тендера   items[0].classification.id   jquery=tender-subject-info>div.row:contains("Класифікатор CPV:")>:eq(1)>
   ${return_value}=   Get Text  jquery=tender-subject-info>div.row:contains("Класифікатор CPV:")>:eq(1)>
   [return]  ${return_value.split(' ')[0]}
 
-отримати інформацію про items[${item_id}].classification.scheme
+Отримати інформацію про items[${item_id}].classification.scheme
   відмітити на сторінці поле з тендера   items[0].classification.id   jquery=tender-subject-info>div.row:contains("CPV")>:eq(1)>
   ${return_value}=   Get Text  jquery=tender-subject-info>div.row:contains("CPV")>:eq(1)>
   [return]  ${return_value.split(' ')[0]}
 
-отримати інформацію про items[${item_id}].classification.description
+Отримати інформацію про items[${item_id}].classification.description
   відмітити на сторінці поле з тендера   classification.description   jquery=tender-subject-info>div.row:contains("Класифікатор CPV:")>:eq(1)>
   ${return_value}=   Get Text  jquery=tender-subject-info>div.row:contains("Класифікатор CPV:")>:eq(1)>
   ${return_value}=   catenate  @{return_value.split(' ')[1:]}
   [return]  ${return_value}
 
-отримати інформацію про items[${item_id}].deliveryAddress
+Отримати інформацію про items[${item_id}].deliveryAddress
   ${return_value}=   Отримати тест із поля і показати на сторінці  items[${item_id}].deliveryAddress
   [return]  ${return_value}
 
-отримати інформацію про items[${item_id}].deliveryDate
+Отримати інформацію про items[${item_id}].deliveryDate
   ${return_value}=   Отримати тест із поля і показати на сторінці  items[${item_id}].deliveryDate
   [return]  ${return_value}
 
-отримати інформацію про questions[${question_id}].title
+Отримати інформацію про questions[${question_id}].title
   відмітити на сторінці поле з тендера   questions title   jquery=tender-questions>div:eq(1)>div.row:contains("Тема:")>:eq(1)>
   ${return_value}=   Get Text  jquery=tender-questions>div:eq(1)>div.row:contains("Тема:")>:eq(1)>
   [return]  ${return_value}
 
-отримати інформацію про questions[${question_id}].description
+Отримати інформацію про questions[${question_id}].description
   відмітити на сторінці поле з тендера   questions description   jquery=tender-questions>div:eq(1)>div.row:contains("Питання:")>:eq(1)>
   ${return_value}=   Get Text  jquery=tender-questions>div:eq(1)>div.row:contains("Питання:")>:eq(1)>
   [return]  ${return_value}
 
-отримати інформацію про questions[${question_id}].date
+Отримати інформацію про questions[${question_id}].date
   відмітити на сторінці поле з тендера   question date   jquery=tender-questions>div:eq(1)>div.row:contains("Дата:")>:eq(1)>
   ${return_value}=   Get Text  jquery=tender-questions>div:eq(1)>div.row:contains("Дата:")>:eq(1)>
   [return]  ${return_value}
 
-отримати інформацію про questions[${question_id}].answer
+Отримати інформацію про questions[${question_id}].answer
   відмітити на сторінці поле з тендера   question answer   jquery=tender-questions>div:eq(1)>div:last>
   ${return_value}=   Get Text  jquery=tender-questions>div:eq(1)>div:last>
   [return]  ${return_value}

@@ -83,7 +83,7 @@ ${question_id}   0
 
 Відображення tenderID оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
-  ${field_response}=  Викликати для учасника    ${viewer}   отримати інформацію із тендера  tenderID
+  ${field_response}=  Викликати для учасника    ${viewer}   Отримати інформацію із тендера  tenderID
   Should Be Equal   ${TENDER['TENDER_UAID']}   ${field_response}   Майданчик ${USERS.users['${viewer}'].broker}
 
 Відображення procuringEntity.name оголошеного тендера
@@ -304,7 +304,7 @@ ${question_id}   0
 порівняти документ
   [Tags]   ${USERS.users['${provider}'].broker}: порівняти документ
   ${url}=      Get Variable Value   ${USERS.users['${provider}'].bidresponces['bid_doc_upload']['upload_responce'].data.url}
-  ${doc}  ${flnnm}=   Викликати для учасника   ${provider}  отримати документ   ${TENDER['TENDER_UAID']}  ${url}
+  ${doc}  ${flnnm}=   Викликати для учасника   ${provider}  Отримати документ   ${TENDER['TENDER_UAID']}  ${url}
   ${flpth}=  Get Variable Value   ${USERS.users['${provider}'].bidresponces['bid_doc_upload']['upload_responce'].data.title}
   ${flcntnt} =  get file contents  ${flpth}
   log  ${flcntnt}
@@ -344,7 +344,7 @@ ${question_id}   0
 
 Неможливість побачити цінові пропозиції учасників під час прийому пропозицій
   [Tags]   ${USERS.users['${viewer}'].broker}: Можливість подати цінову пропозицію
-  ${bids}=  Викликати для учасника    ${viewer}   отримати інформацію із тендера  bids
+  ${bids}=  Викликати для учасника    ${viewer}   Отримати інформацію із тендера  bids
   Should Be Equal    ${bids}   ${None}
 
 Завантажити документ другим учасником

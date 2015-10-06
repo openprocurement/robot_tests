@@ -85,7 +85,7 @@ TestSuiteSetup
 
 Звірити поле
   [Arguments]  ${username}  ${field}   ${subject}
-  ${field_response}=  Викликати для учасника    ${username}   отримати інформацію із тендера   ${field}
+  ${field_response}=  Викликати для учасника    ${username}   Отримати інформацію із тендера   ${field}
   Should Not Be Equal  ${field_response}   ${None}
   Should Be Equal   ${subject}   ${field_response}   Майданчик ${USERS.users['${username}'].broker}
 
@@ -105,7 +105,7 @@ TestSuiteSetup
 
 Звірити дату
    [Arguments]  ${username}  ${field}   ${subject}
-   ${field_date}=  Викликати для учасника    ${username}   отримати інформацію із тендера  ${field}
+   ${field_date}=  Викликати для учасника    ${username}   Отримати інформацію із тендера  ${field}
    ${returned}=   compare_date   ${subject}  ${field_date}
    Should Not Be Equal  ${field_date}   ${None}
    Should Not Be Equal  ${returned}   ${None}
