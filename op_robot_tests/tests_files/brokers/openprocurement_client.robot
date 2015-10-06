@@ -234,7 +234,7 @@ ${question_id}   0
   Log  ${changed_bid}
   [return]   ${changed_bid}
 
-скасувати цінову пропозицію
+Скасувати цінову пропозицію
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tender_uid

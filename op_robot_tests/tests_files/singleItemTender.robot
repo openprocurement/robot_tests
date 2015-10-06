@@ -266,7 +266,7 @@ ${question_id}   0
 
 Можливість скасувати цінову пропозицію
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість скасувати цінову пропозицію
-  ${biddingresponse_0}=  Викликати для учасника   ${provider}   скасувати цінову пропозицію   ${TENDER['TENDER_UAID']}   ${biddingresponse0}
+  ${biddingresponse_0}=  Викликати для учасника   ${provider}   Скасувати цінову пропозицію   ${TENDER['TENDER_UAID']}   ${biddingresponse0}
 
 Подати повторно цінову пропозицію першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
@@ -381,7 +381,7 @@ ${question_id}   0
 
 Неможливість скасувати цінову пропозицію
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість скасувати цінову пропозицію
-  ${biddingresponse}=  Викликати для учасника   ${provider1}   скасувати цінову пропозицію  shouldfail   ${TENDER['TENDER_UAID']}   ${USERS.users['${provider1}'].bidresponses['resp']}
+  ${biddingresponse}=  Викликати для учасника   ${provider1}   Скасувати цінову пропозицію  shouldfail   ${TENDER['TENDER_UAID']}   ${USERS.users['${provider1}'].bidresponses['resp']}
 
 Неможливість завантажити документ другим учасником після закінчення прийому пропозицій
   [Tags]   ${USERS.users['${provider1}'].broker}: Неможливість документ першим учасником після закінчення прийому пропозицій
