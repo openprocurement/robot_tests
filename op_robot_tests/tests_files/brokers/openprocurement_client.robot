@@ -57,7 +57,7 @@ ${question_id}   0
   Set To Dictionary  ${USERS.users['${ARGUMENTS[0]}']}   tender_data   ${tender_data}
   [return]   ${tender_data}
 
-Обновити сторінку з тендером
+Оновити сторінку з тендером
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username

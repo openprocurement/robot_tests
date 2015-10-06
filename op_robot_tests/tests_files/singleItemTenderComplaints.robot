@@ -49,26 +49,26 @@ ${question_id}   0
   Set To Dictionary  ${COMPLAINTS[0].data}   status   declined
   Викликати для учасника   ${tender_owner}   Обробити скаргу    ${TENDER['TENDER_UAID']}  0  ${COMPLAINTS[0]}
   log many   ${COMPLAINTS[0]}
-  викликати для учасника   ${viewer}   обновити сторінку з тендером   ${TENDER['TENDER_UAID']}
+  викликати для учасника   ${viewer}   Оновити сторінку з тендером   ${TENDER['TENDER_UAID']}
 Можливість відкинути скаргу на умови
   [Tags]    ${USERS.users['${tender_owner}'].broker}: Можливість відкинути скаргу на умови
   Викликати для учасника   ${provider}   Подати скаргу    ${TENDER['TENDER_UAID']}   ${COMPLAINTS[0]}
   ${LAST_MODIFICATION_DATE}=  Get Current Date
   Set Global Variable   ${LAST_MODIFICATION_DATE}
-  Викликати для учасника   ${viewer}   обновити сторінку з тендером   ${TENDER['TENDER_UAID']}
+  Викликати для учасника   ${viewer}   Оновити сторінку з тендером   ${TENDER['TENDER_UAID']}
   Set To Dictionary  ${COMPLAINTS[0].data}   status   invalid
   Викликати для учасника   ${tender_owner}   Обробити скаргу    ${TENDER['TENDER_UAID']}  1  ${COMPLAINTS[0]}
   log many   ${COMPLAINTS[0]}
   ${LAST_MODIFICATION_DATE}=  Get Current Date
   Set Global Variable   ${LAST_MODIFICATION_DATE}
-  Викликати для учасника   ${viewer}   обновити сторінку з тендером   ${TENDER['TENDER_UAID']}
+  Викликати для учасника   ${viewer}   Оновити сторінку з тендером   ${TENDER['TENDER_UAID']}
 
 Можливість задовільнити скаргу на умови
   [Tags]    ${USERS.users['${provider}'].broker}: Можливість відповісти на запитання
   Викликати для учасника   ${provider}   Подати скаргу    ${TENDER['TENDER_UAID']}   ${COMPLAINTS[0]}
   ${LAST_MODIFICATION_DATE}=  Get Current Date
   Set Global Variable   ${LAST_MODIFICATION_DATE}
-  Викликати для учасника   ${viewer}   обновити сторінку з тендером   ${TENDER['TENDER_UAID']}
+  Викликати для учасника   ${viewer}   Оновити сторінку з тендером   ${TENDER['TENDER_UAID']}
   Set To Dictionary  ${COMPLAINTS[0].data}   status   resolved
   Викликати для учасника   ${tender_owner}   Обробити скаргу    ${TENDER['TENDER_UAID']}  2  ${COMPLAINTS[0]}
   log many   ${COMPLAINTS[0]}
