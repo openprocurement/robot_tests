@@ -227,8 +227,8 @@ ${question_id}   0
   ${bid}=  test bid data
   Log   ${bid}
   ${bidresponses}=  Create Dictionary
-  ${bid_before_biddperiod_resp}=  Викликати для учасника   ${provider}   Подати цінову пропозицію  shouldfail  ${TENDER['TENDER_UAID']}   ${bid}
-  Set To Dictionary  ${bidresponses}                 bid_before_biddperiod_resp  ${bid_before_biddperiod_resp}
+  ${bid_before_bidperiod_resp}=  Викликати для учасника   ${provider}   Подати цінову пропозицію  shouldfail  ${TENDER['TENDER_UAID']}   ${bid}
+  Set To Dictionary  ${bidresponses}                 bid_before_bidperiod_resp  ${bid_before_bidperiod_resp}
   Set To Dictionary  ${USERS.users['${provider}']}   bidresponses  ${bidresponses}
   log   ${USERS.users['${provider}']}
 
