@@ -176,7 +176,7 @@ ${question_id}   0
   ${complaint}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  _create_tender_resource_item  ${tender}  ${ARGUMENTS[2]}   complaints
   Log object data   ${complaint}  complaint
 
-порівняти скаргу
+Порівняти скаргу
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tender_uid
