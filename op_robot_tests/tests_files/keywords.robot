@@ -13,10 +13,10 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
 
 *** Keywords ***
 TestSuiteSetup
-    Завантажуємо дані про користувачів і площадки  ${LOAD_USERS}
+    Завантажуємо дані про користувачів і майданчики  ${LOAD_USERS}
     Підготовка початкових даних
 
-Завантажуємо дані про користувачів і площадки
+Завантажуємо дані про користувачів і майданчики
   [Arguments]  ${active_users}
   log  ${active_users}
 
@@ -34,7 +34,7 @@ TestSuiteSetup
   \  log  ${active_users}
   \  log  ${username}
   \  ${status}=  Run Keyword And Return Status   List Should Contain Value  ${active_users}   ${username}
-  \  Run Keyword If   '${status}' == 'True'   Завантажуємо бібліотеку з реалізацією ${BROKERS['${USERS.users['${username}'].broker}'].keywords_file} площадки
+  \  Run Keyword If   '${status}' == 'True'   Завантажуємо бібліотеку з реалізацією ${BROKERS['${USERS.users['${username}'].broker}'].keywords_file} майданчики
   \  Run Keyword If   '${status}' == 'True'   Викликати для учасника   ${username}  Підготувати клієнт для користувача
 
 Підготовка початкових даних
@@ -61,7 +61,7 @@ TestSuiteSetup
   Log  ${TENDER}
   Log  ${INITIAL_TENDER_DATA}
 
-Завантажуємо бібліотеку з реалізацією ${keywords_file} площадки
+Завантажуємо бібліотеку з реалізацією ${keywords_file} майданчики
   Import Resource  ${CURDIR}/brokers/${keywords_file}.robot
 
 
