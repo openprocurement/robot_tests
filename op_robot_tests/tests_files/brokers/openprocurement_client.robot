@@ -144,8 +144,8 @@ ${question_id}   0
   ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
   log   ${USERS.users['${ARGUMENTS[0]}']}
-  ${biddingresponce}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_question  ${tender}  ${ARGUMENTS[2]}
-  [return]  ${biddingresponce}
+  ${biddingresponse}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_question  ${tender}  ${ARGUMENTS[2]}
+  [return]  ${biddingresponse}
 
 Відповісти на питання
   [Documentation]
@@ -219,8 +219,8 @@ ${question_id}   0
   ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
   log  ${tender}Отримати
-  ${biddingresponce}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_bid  ${tender}  ${ARGUMENTS[2]}
-  [return]  ${biddingresponce}
+  ${biddingresponse}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_bid  ${tender}  ${ARGUMENTS[2]}
+  [return]  ${biddingresponse}
 
 Змінити цінову пропозицію
   [Documentation]
@@ -270,13 +270,13 @@ ${question_id}   0
   log  ${ARGUMENTS[0]}
   log  ${ARGUMENTS[1]}
   log  ${ARGUMENTS[2]}
-  ${bid_id}=  Get Variable Value   ${USERS.users['${ARGUMENTS[0]}'].bidresponces['resp'].data.id}
+  ${bid_id}=  Get Variable Value   ${USERS.users['${ARGUMENTS[0]}'].bidresponses['resp'].data.id}
   ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[2]}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
-  ${tender}=  set_access_key  ${tender}  ${USERS.users['${ARGUMENTS[0]}'].bidresponces['resp'].access.token}
-  ${responce}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  upload_bid_document  ${ARGUMENTS[1]}  ${tender}  ${bid_id}
-  ${uploaded_file} =  Create Dictionary   filepath  ${ARGUMENTS[1]}   upload_responce  ${responce}
-  log  ${responce}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${ARGUMENTS[0]}'].bidresponses['resp'].access.token}
+  ${response}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  upload_bid_document  ${ARGUMENTS[1]}  ${tender}  ${bid_id}
+  ${uploaded_file} =  Create Dictionary   filepath  ${ARGUMENTS[1]}   upload_response  ${response}
+  log  ${response}
   Log object data   ${uploaded_file}
   [return]  ${uploaded_file}
 
@@ -292,10 +292,10 @@ ${question_id}   0
   log  ${ARGUMENTS[2]}
   ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${TENDER['TENDER_UAID']}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
-  ${tender}=  set_access_key  ${tender}  ${USERS.users['${ARGUMENTS[0]}'].bidresponces['resp'].access.token}
-  ${responce}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  update_bid_document  ${ARGUMENTS[1]}  ${tender}   ${ARGUMENTS[2]}   ${ARGUMENTS[3]}
-  ${uploaded_file} =  Create Dictionary   filepath  ${ARGUMENTS[1]}   upload_responce  ${responce}
-  log  ${responce}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${ARGUMENTS[0]}'].bidresponses['resp'].access.token}
+  ${response}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  update_bid_document  ${ARGUMENTS[1]}  ${tender}   ${ARGUMENTS[2]}   ${ARGUMENTS[3]}
+  ${uploaded_file} =  Create Dictionary   filepath  ${ARGUMENTS[1]}   upload_response  ${response}
+  log  ${response}
   Log object data   ${uploaded_file}
   [return]  ${uploaded_file}
 
@@ -342,7 +342,7 @@ ${question_id}   0
   log  ${ARGUMENTS[2]}
   ${tenderID}=  openprocurement_client.Отримати internal id по UAid  ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${tenderID}
-  ${token}=    Get Variable Value  ${USERS.users['${ARGUMENTS[0]}'].bidresponces['resp'].access.token}
+  ${token}=    Get Variable Value  ${USERS.users['${ARGUMENTS[0]}'].bidresponses['resp'].access.token}
   ${contents}  ${filename}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_file   ${tender}   ${ARGUMENTS[2]}   ${token}
   log   ${filename}
   [return]   ${contents}  ${filename}
