@@ -280,19 +280,19 @@ ${question_id}   0
 
 Можливість змінити повторну цінову пропозицію до 50000
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
-  #Set To Dictionary  ${USERS.users['${provider}'].bidresponces['resp'].data.value}  amount   50000
-  #Log   ${USERS.users['${provider}'].bidresponces['resp'].data.value}
-  ${fixbidto50000resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   #${USERS.users['${provider}'].bidresponces['resp']}
-#  Set To Dictionary  ${USERS.users['${provider}'].bidresponces}   fixbidto50000resp   ${fixbidto50000resp}
-#  log  ${fixbidto50000resp}
+  Set To Dictionary  ${USERS.users['${provider}'].bidresponces['resp'].data.value}  amount   50000
+  Log   ${USERS.users['${provider}'].bidresponces['resp'].data.value}
+  ${fixbidto50000resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   ${USERS.users['${provider}'].bidresponces['resp']}
+  Set To Dictionary  ${USERS.users['${provider}'].bidresponces}   fixbidto50000resp   ${fixbidto50000resp}
+  log  ${fixbidto50000resp}
 
 Можливість змінити повторну цінову пропозицію до 10
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
-  #Set To Dictionary  ${USERS.users['${provider}'].bidresponces['resp'].data.value}  amount   10
-  #Log   ${USERS.users['${provider}'].bidresponces['fixbidto50000resp'].data.value}
-  ${fixbidto10resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   #${USERS.users['${provider}'].bidresponces['resp']}
-#  Set To Dictionary  ${USERS.users['${provider}'].bidresponces}   fixbidto10resp   ${fixbidto10resp}
-# log  ${fixbidto10resp}
+  Set To Dictionary  ${USERS.users['${provider}'].bidresponces['resp'].data.value}  amount   10
+  Log   ${USERS.users['${provider}'].bidresponces['fixbidto50000resp'].data.value}
+  ${fixbidto10resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   ${USERS.users['${provider}'].bidresponces['resp']}
+  Set To Dictionary  ${USERS.users['${provider}'].bidresponces}   fixbidto10resp   ${fixbidto10resp}
+  log  ${fixbidto10resp}
 
 Завантажити документ першим учасником в повторну пропозицію
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця
@@ -302,11 +302,15 @@ ${question_id}   0
   Set To Dictionary  ${USERS.users['${provider}'].bidresponces}   bid_doc_upload   ${bid_doc_upload}
 
 порівняти документ
-  [Tags]   ${USERS.users['${provider}'].broker}: вичитати документ
+  [Tags]   ${USERS.users['${provider}'].broker}: порівняти документ
   ${url}=      Get Variable Value   ${USERS.users['${provider}'].bidresponces['bid_doc_upload']['upload_responce'].data.url}
   ${doc}  ${flnnm}=   Викликати для учасника   ${provider}  отримати документ   ${TENDER['TENDER_UAID']}  ${url}
-
-  FIXME: finish the keyword
+  ${flpth}=  Get Variable Value   ${USERS.users['${provider}'].bidresponces['bid_doc_upload']['upload_responce'].data.title}
+  ${flcntnt} =  get file contents  ${flpth}
+  log  ${flcntnt}
+  log  ${flpth}
+  log  ${doc}
+  log  ${flnnm}
 
   Should Be Equal  ${flcntnt}   ${doc}
   Should Be Equal  ${flpth}   ${flnnm}
@@ -340,10 +344,8 @@ ${question_id}   0
 
 Неможливість побачити цінові пропозиції учасників під час прийому пропозицій
   [Tags]   ${USERS.users['${viewer}'].broker}: Можливість подати цінову пропозицію
-
-  FIXME: finish the keyword
-
-  ${field_date}=  Викликати для учасника    ${viewer}   отримати інформацію із тендера
+  ${bids}=  Викликати для учасника    ${viewer}   отримати інформацію із тендера  bids
+  Should Be Equal    ${bids}   ${None}
 
 Завантажити документ другим учасником
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість прийняти пропозицію переможця
@@ -396,7 +398,7 @@ ${question_id}   0
   Set To Dictionary  ${USERS.users['${provider}'].bidresponces}   bid_doc_modified_failed   ${bid_doc_modified_failed}
 
 Вичитати цінову пропозицію
-  #sleep  120
+  sleep  120
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
   ${bidid}=  Get Variable Value  ${USERS.users['${provider1}'].bidresponces['resp'].data.id}
   ${token}=  Get Variable Value  ${USERS.users['${provider1}'].bidresponces['resp'].access.token}

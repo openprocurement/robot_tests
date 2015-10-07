@@ -22,7 +22,6 @@ ${question_id}   0
   log  ${tenders}
   [return]  ${internal_id}
 
-
 Підготувати клієнт для користувача
   [Arguments]  @{ARGUMENTS}
   [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
@@ -47,20 +46,6 @@ ${question_id}   0
   Log   ${TENDER_DATA.data.id}
   Log   ${USERS.users['${ARGUMENTS[0]}'].TENDER_DATA}
   [return]  ${TENDER_DATA.data.tenderID}
-
-Створити багатопредметний тендер
-  [Arguments]  @{ARGUMENTS}
-  ${INITIAL_TENDER_DATA}=  prepare_test_tender_data_multiple_items
-  Log object data  ${INITIAL_TENDER_DATA}
-  ${TENDER_DATA}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_tender   ${INITIAL_TENDER_DATA}
-  Log object data  ${TENDER_DATA}  cteated_tender
-  ${access_token}=  Get Variable Value  ${TENDER_DATA.access.token}
-  Set Global Variable  ${access_token}
-  Set To Dictionary  ${USERS.users['${ARGUMENTS[0]}']}   access_token   ${access_token}
-  Log   access_token: ${access_token}
-  Log   tender_id: ${TENDER_DATA.data.id}
-  Set Global Variable  ${TENDER_DATA}
-  [return]   ${TENDER_DATA}
 
 Пошук тендера по ідентифікатору
   [Arguments]  @{ARGUMENTS}
@@ -158,7 +143,7 @@ ${question_id}   0
   log many  @{ARGUMENTS}
   ${internalid}=  отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
-   log   ${USERS.users['${ARGUMENTS[0]}']}
+  log   ${USERS.users['${ARGUMENTS[0]}']}
   ${biddingresponce}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_question  ${tender}  ${ARGUMENTS[2]}
   [return]  ${biddingresponce}
 
@@ -358,7 +343,6 @@ ${question_id}   0
   ${tenderID}=  openprocurement_client.отримати internal id по UAid  ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${tenderID}
   ${token}=    Get Variable Value  ${USERS.users['${ARGUMENTS[0]}'].bidresponces['resp'].access.token}
-  ${contents}  ${filename}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_file   ${tender}   ${ARGUMENTS[2]}  ${ARGUMENTS[3]}
-  log   ${contents}
+  ${contents}  ${filename}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_file   ${tender}   ${ARGUMENTS[2]}   ${token}
   log   ${filename}
   [return]   ${contents}  ${filename}
