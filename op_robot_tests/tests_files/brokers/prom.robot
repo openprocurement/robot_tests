@@ -84,10 +84,10 @@ Login
 
     Wait Until Page Contains Element     xpath=//td[@id="qa_state_purchase_id"]/p
 
-    ${id}=   Wait Until Keyword Succeeds   240sec   2sec   get tender id
+    ${id}=   Wait Until Keyword Succeeds   240sec   2sec   Get tender id
     [return]  ${id}
 
-get tender id
+Get tender id
     ${id}=  Get Text  xpath=//td[@id="qa_state_purchase_id"]/p
     Should Not Be Equal As Strings   ${id}   ожидание...
     [return]  ${id}

@@ -2,8 +2,8 @@
 Resource  resource.robot
 Library  op_robot_tests.tests_files.service_keywords
 Library  String
-LIbrary  Collections
-LIbrary  Selenium2Library
+Library  Collections
+Library  Selenium2Library
 Library  DateTime
 Library  Selenium2Screenshots
 Library  DebugLibrary
@@ -13,10 +13,10 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
 
 *** Keywords ***
 TestSuiteSetup
-    Завантажуємо дані про корисувачів і площадки  ${LOAD_USERS}
+    Завантажуємо дані про користувачів і майданчики  ${LOAD_USERS}
     Підготовка початкових даних
 
-Завантажуємо дані про корисувачів і площадки
+Завантажуємо дані про користувачів і майданчики
   [Arguments]  ${active_users}
   log  ${active_users}
 
@@ -34,7 +34,7 @@ TestSuiteSetup
   \  log  ${active_users}
   \  log  ${username}
   \  ${status}=  Run Keyword And Return Status   List Should Contain Value  ${active_users}   ${username}
-  \  Run Keyword If   '${status}' == 'True'   Завантажуємо бібліотеку з реалізацією ${BROKERS['${USERS.users['${username}'].broker}'].keywords_file} площадки
+  \  Run Keyword If   '${status}' == 'True'   Завантажуємо бібліотеку з реалізацією ${BROKERS['${USERS.users['${username}'].broker}'].keywords_file} майданчики
   \  Run Keyword If   '${status}' == 'True'   Викликати для учасника   ${username}  Підготувати клієнт для користувача
 
 Підготовка початкових даних
@@ -61,7 +61,7 @@ TestSuiteSetup
   Log  ${TENDER}
   Log  ${INITIAL_TENDER_DATA}
 
-Завантажуємо бібліотеку з реалізацією ${keywords_file} площадки
+Завантажуємо бібліотеку з реалізацією ${keywords_file} майданчики
   Import Resource  ${CURDIR}/brokers/${keywords_file}.robot
 
 
@@ -85,7 +85,7 @@ TestSuiteSetup
 
 Звірити поле
   [Arguments]  ${username}  ${field}   ${subject}
-  ${field_response}=  Викликати для учасника    ${username}   отримати інформацію із тендера   ${field}
+  ${field_response}=  Викликати для учасника    ${username}   Отримати інформацію із тендера   ${field}
   Should Not Be Equal  ${field_response}   ${None}
   Should Be Equal   ${subject}   ${field_response}   Майданчик ${USERS.users['${username}'].broker}
 
@@ -105,7 +105,7 @@ TestSuiteSetup
 
 Звірити дату
    [Arguments]  ${username}  ${field}   ${subject}
-   ${field_date}=  Викликати для учасника    ${username}   отримати інформацію із тендера  ${field}
+   ${field_date}=  Викликати для учасника    ${username}   Отримати інформацію із тендера  ${field}
    ${returned}=   compare_date   ${subject}  ${field_date}
    Should Not Be Equal  ${field_date}   ${None}
    Should Not Be Equal  ${returned}   ${None}
@@ -131,17 +131,19 @@ TestSuiteSetup
 
 Викликати для учасника
   [Documentation]
-  ...    cause sometimes keyword SHOULD fail to pass the testcase, this keyword takes "shouldfail" argument as first one in @{arguments} and switches the behaviour of keyword and "shouldfail"
+  ...    Cause sometimes keyword SHOULD fail to pass the testcase,
+  ...    this keyword takes "shouldfail" argument as first one in @{arguments}
+  ...    and switches the behaviour of keyword and "shouldfail"
   [Arguments]  ${username}  ${command}  @{arguments}
   log  ${username}
   log  ${command}
   log  ${arguments}
   ${state}=   change_state  ${arguments}
-  ${value}=  Run keyword if  '${state}' == 'shouldfail'   switchsate  ${username}  ${command}  @{arguments}
-  ${value}=  Run keyword if  '${state}' == 'pass'   normal  ${username}  ${command}  @{arguments}
+  ${value}=  Run keyword if  '${state}' == 'shouldfail'   SwitchState  ${username}  ${command}  @{arguments}
+  ${value}=  Run keyword if  '${state}' == 'pass'   Normal  ${username}  ${command}  @{arguments}
   [return]   ${value}
 
-normal
+Normal
   [Arguments]  ${username}  ${command}  @{arguments}
   log  ${username}
   log  ${command}
@@ -149,14 +151,14 @@ normal
   ${value}=  Run Keyword   ${BROKERS['${USERS.users['${username}'].broker}'].keywords_file}.${command}  ${username}  @{arguments}
   [return]   ${value}
 
-switchsate
+SwitchState
   [Arguments]  ${username}  ${command}  @{arguments}
   log  ${username}
   log  ${command}
   log  ${arguments}
   Remove From List  ${arguments}  0
   log  ${arguments}
-  ${status}  ${value}=  run_keyword_and_ignore_keyword_definations   ${BROKERS['${USERS.users['${username}'].broker}'].keywords_file}.${command}  ${username}  @{arguments}
+  ${status}  ${value}=  run_keyword_and_ignore_keyword_definitions   ${BROKERS['${USERS.users['${username}'].broker}'].keywords_file}.${command}  ${username}  @{arguments}
   Run keyword if  '${status}' == 'PASS'   Log   Учасник ${username} зміг виконати "${command}"   WARN
   [return]   ${value}
 
@@ -165,13 +167,13 @@ switchsate
   ${wait_timeout}=  wait_to_date  ${date}
   Run Keyword If   ${wait_timeout}>0   Sleep  ${wait_timeout}
 
-Дочекатись дати початоку прийому пропозицій
+Дочекатись дати початку прийому пропозицій
   Дочекатись дати  ${TENDER_DATA.data.tenderPeriod.startDate}
 
 Дочекатись дати закінчення прийому пропозицій
   Дочекатись дати  ${TENDER_DATA.data.tenderPeriod.endDate}
 
-Дочекатись дати початоку аукціону
+Дочекатись дати початку аукціону
   Дочекатись дати  ${TENDER_DATA.data.auctionPeriod.startDate}
 
 Дочекатись дати закінчення аукціону
