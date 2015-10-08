@@ -1,12 +1,12 @@
 *** Setting ***
-Library  op_robot_tests.tests_files.service_keywords
-Library  String
-Library  Collections
-Library  Selenium2Library
-Library  DebugLibrary
-Resource  keywords.robot
-Resource  resource.robot
-Suite Setup  TestSuiteSetup
+Library         op_robot_tests.tests_files.service_keywords
+Library         String
+Library         Collections
+Library         Selenium2Library
+Library         DebugLibrary
+Resource        keywords.robot
+Resource        resource.robot
+Suite Setup     TestSuiteSetup
 Suite Teardown  Close all browsers
 
 *** Variables ***

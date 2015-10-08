@@ -299,9 +299,6 @@ ${question_id}   0
   Log object data   ${uploaded_file}
   [return]  ${uploaded_file}
 
-
-
-
 Завантажити документ
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username

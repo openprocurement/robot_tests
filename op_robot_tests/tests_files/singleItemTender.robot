@@ -1,12 +1,12 @@
 *** Setting ***
-Library  op_robot_tests.tests_files.service_keywords
-Library  String
-Library  Collections
-Library  Selenium2Library
-Library  DebugLibrary
-Resource  keywords.robot
-Resource  resource.robot
-Suite Setup  TestSuiteSetup
+Library         op_robot_tests.tests_files.service_keywords
+Library         String
+Library         Collections
+Library         Selenium2Library
+Library         DebugLibrary
+Resource        keywords.robot
+Resource        resource.robot
+Suite Setup     TestSuiteSetup
 Suite Teardown  Close all browsers
 
 *** Variables ***
@@ -42,7 +42,6 @@ ${question_id}   0
   log  ${file_upload_process_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}   file_upload_process_data   ${file_upload_process_data}
   Log  ${USERS.users['${tender_owner}']}
-
 
 Можливість подати скаргу на умови
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати скаргу на умови
@@ -233,7 +232,7 @@ ${question_id}   0
 
 #######
 #Відображення відповіді на запитання
-#
+
 Відповісти на запитання
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість відповісти на запитання
   Викликати для учасника   ${tender_owner}   Відповісти на питання    ${TENDER['TENDER_UAID']}  0  ${ANSWERS[0]}
@@ -395,7 +394,6 @@ ${question_id}   0
   ${docid}=  Get Variable Value  ${USERS.users['${provider1}'].bidresponses['bid_doc_upload']['upload_response'].data.id}
   ${bid_doc_modified_failed}=  Викликати для учасника   ${provider1}   Змінити документ в ставці  shouldfail  ${filepath}  ${bidid}  ${docid}
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   bid_doc_modified_failed   ${bid_doc_modified_failed}
-
 
 Вичитати цінову пропозицію
   sleep  120

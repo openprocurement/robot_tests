@@ -1,12 +1,12 @@
 *** Setting ***
-Library  op_robot_tests.tests_files.service_keywords
-Library  String
-Library  Collections
-Library  Selenium2Library
-Library  DebugLibrary
-Resource  keywords.robot
-Resource  resource.robot
-Suite Setup  TestSuiteSetup
+Library         op_robot_tests.tests_files.service_keywords
+Library         String
+Library         Collections
+Library         Selenium2Library
+Library         DebugLibrary
+Resource        keywords.robot
+Resource        resource.robot
+Suite Setup     TestSuiteSetup
 Suite Teardown  Close all browsers
 
 *** Variables ***
@@ -50,6 +50,7 @@ ${question_id}   0
   Викликати для учасника   ${tender_owner}   Обробити скаргу    ${TENDER['TENDER_UAID']}  0  ${COMPLAINTS[0]}
   log many   ${COMPLAINTS[0]}
   викликати для учасника   ${viewer}   Оновити сторінку з тендером   ${TENDER['TENDER_UAID']}
+
 Можливість відкинути скаргу на умови
   [Tags]    ${USERS.users['${tender_owner}'].broker}: Можливість відкинути скаргу на умови
   Викликати для учасника   ${provider}   Подати скаргу    ${TENDER['TENDER_UAID']}   ${COMPLAINTS[0]}
