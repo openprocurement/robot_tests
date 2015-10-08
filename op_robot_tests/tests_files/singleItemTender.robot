@@ -221,7 +221,7 @@ ${question_id}   0
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповідей
   Звірити дату  ${viewer}  questions[${question_id}].date   ${QUESTIONS[${question_id}].data.date}
 
-Неможливість подати цінову пропозицію до початку періоду подачі пропозицій bidder1
+Неможливість подати цінову пропозицію до початку періоду подачі пропозицій першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   ${bid}=  test bid data
   Log   ${bid}
