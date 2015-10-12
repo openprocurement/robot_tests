@@ -114,9 +114,14 @@ Login
   Input text                          name=items[0][locality]             ${locality}
   Input text                          name=items[0][delivery_address]     ${streetAddress}
   Click Element                       xpath=//input[@class='btn btn-lg btn-danger']
+  Sleep  3
+  Click Element                       xpath=//*[text()='${title}']
+  Sleep  2
+  Click Element                        xpath=//*[text()='Опубликовать']
+  Wait Until Page Contains            Тендер отправлен на публикацию
+  Click Element                       xpath=//*[text()='Мои тендеры']
   Run Keyword if   '${mode}' == 'multi'   Додати багато предметів   items
   Wait Until Page Contains      ${title}
-  Log   ${title}
   Capture Page Screenshot
 #  ${tender_UAid}=   Get Text          xpath=//td[./text()='TenderID']/following-sibling::td[1]
 #  ${Ids}=   Convert To String         ${tender_UAid}
@@ -153,16 +158,16 @@ Set Multi Ids
   Input text                          name=items[${index}][delivery_date_end]    ${delivery_end_date}
   Capture Page Screenshot
 
-Завантажити документ
-  [Arguments]  @{ARGUMENTS}
-  [Documentation]
-  ...    ${ARGUMENTS[0]} =  username
-  ...    ${ARGUMENTS[1]} =  ${file_path}
-  ...    ${ARGUMENTS[2]} =  ${TENDER_UAID}
-  ${filepath}=   local_path_to_file   TestDocument.docx
-  Click Element                      xpath=(//a[@class='btn btn-xs btn-info']/span)[1]
-  Choose File                        xpath=//label[./text()='Добавить файл']        ${filepath}
-  Capture Page Screenshot
+#Завантажити документ
+#  [Arguments]  @{ARGUMENTS}
+#  [Documentation]
+#  ...    ${ARGUMENTS[0]} =  username
+#  ...    ${ARGUMENTS[1]} =  ${file_path}
+#  ...    ${ARGUMENTS[2]} =  ${TENDER_UAID}
+#  ${filepath}=   local_path_to_file   TestDocument.docx
+#  Click Element                      xpath=(//a[@class='btn btn-xs btn-info']/span)[1]
+#  Choose File                        xpath=//label[./text()='Добавить файл']        ${filepath}
+#  Capture Page Screenshot
 
 Внести зміни в тендер
   [Arguments]  @{ARGUMENTS}
@@ -176,6 +181,8 @@ Set Multi Ids
   ${items_description}=   Get From Dictionary   ${items[0]}         description
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
   Click Element                      xpath=(//a[@class='btn btn-xs btn-info']/span)[1]
-  Sleep  1
+  Sleep  2
   Input text                         name=description    ${items_description}
+  Sleep  2
+  Click Element                       xpath=//input[@class='btn btn-lg btn-danger']
   Capture Page Screenshot
