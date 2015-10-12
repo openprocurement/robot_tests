@@ -34,7 +34,7 @@ ${locator.questions[0].answer}       xpath=//div[@class = 'answer relative']//di
   Open Browser   ${BROKERS['${USERS.users['${ARGUMENTS[0]}'].broker}'].url}   ${USERS.users['${ARGUMENTS[0]}'].browser}   alias=${ARGUMENTS[0]}
   Set Window Size       @{USERS.users['${ARGUMENTS[0]}'].size}
   Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
-  Run Keyword If                     '${username}' != 'Ua_Viewer'   Login
+  Run Keyword If   '${username}' != 'Ua_Viewer'   Login
 
 Login
   [Arguments]  @{ARGUMENTS}
@@ -52,13 +52,12 @@ Login
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tender_data
-  #{tender_data}=   Add_time_for_GUI_FrontEnds   ${ARGUMENTS[1]}
+  ${prepared_tender_data}=   Add_data_for_GUI_FrontEnds   ${ARGUMENTS[1]}
   ${items}=         Get From Dictionary   ${ARGUMENTS[1].data}               items
   ${title}=         Get From Dictionary   ${ARGUMENTS[1].data}               title
   ${description}=   Get From Dictionary   ${ARGUMENTS[1].data}               description
   ${budget}=        Get From Dictionary   ${ARGUMENTS[1].data.value}         amount
   ${step_rate}=     Get From Dictionary   ${ARGUMENTS[1].data.minimalStep}   amount
-
   ${items_description}=   Get From Dictionary   ${ARGUMENTS[1].data}         description
   ${quantity}=      Get From Dictionary   ${items[0]}         quantity
   ${countryName}=   Get From Dictionary   ${ARGUMENTS[1].data.procuringEntity.address}       countryName
@@ -70,56 +69,55 @@ Login
   ${dkpp_desc}=     Get From Dictionary   ${items[0].additionalClassifications[0]}   description
   ${dkpp_id}=       Get From Dictionary   ${items[0].additionalClassifications[0]}   id
   ${dkpp_id1}=      Replace String        ${dkpp_id}   -   _
-
-  ${enquiry_start_date}=   Get From Dictionary         ${ARGUMENTS[1].data.enquiryPeriod}   startDate
-
+  ${enquiry_start_date}=   Get From Dictionary         ${prepared_tender_data.data.enquiryPeriod}   startDate
   ${enquiry_start_date}=   convert_date_to_slash_format_with_time   ${enquiry_start_date}
-
-  ${enquiry_end_date}=   Get From Dictionary         ${ARGUMENTS[1].data.enquiryPeriod}   endDate
+  ${enquiry_end_date}=   Get From Dictionary         ${prepared_tender_data.data.enquiryPeriod}   endDate
   ${enquiry_end_date}=   convert_date_to_slash_format_with_time   ${enquiry_end_date}
-
-  ${start_date}=      Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}   startDate
+  ${start_date}=      Get From Dictionary   ${prepared_tender_data.data.tenderPeriod}   startDate
   ${start_date}=      convert_date_to_slash_format_with_time   ${start_date}
-
-  ${end_date}=      Get From Dictionary   ${ARGUMENTS[1].data.tenderPeriod}   endDate
+  ${end_date}=      Get From Dictionary   ${prepared_tender_data.data.tenderPeriod}   endDate
   ${end_date}=      convert_date_to_slash_format_with_time   ${end_date}
+  ${postalCode}     Get From Dictionary   ${items[0].deliveryAddress}     postalCode
+  ${streetAddress}  Get From Dictionary   ${items[0].deliveryAddress}     streetAddress
+  ${locality}  Get From Dictionary   ${items[0].deliveryAddress}     locality
 
   Selenium2Library.Switch Browser     ${ARGUMENTS[0]}
   Maximize Browser Window
   sleep  1
-  Wait Until Page Contains Element    xpath=//a[@class='btn btn-info']    20
+  Wait Until Page Contains Element    xpath=//a[@class='btn btn-info']    10
   Click Element                       xpath=//a[@class='btn btn-info']
-  Wait Until Page Contains Element    name=title   30
+  Wait Until Page Contains Element    name=title   10
   Input text                          name=title    ${title}
   Input text                          name=description    ${description}
   Input text                          name=amount   ${budget}
   Input text                          name=minimal_step  ${step_rate}
-
-# set period dates
-  Input text                          name=enquiry_start_date          subtract_from_time(${enquiry_start_date},180,0)
-  Input text                          name=enquiry_end_date            subtract_from_time(${enquiry_end_date},60,0)
-
+  Input text                          name=enquiry_start_date          ${enquiry_start_date}
+  Input text                          name=enquiry_end_date            ${enquiry_end_date}
   Input text                          name=tender_start_date           ${start_date}
   Input text                          name=tender_end_date             ${end_date}
-
-
   Input text                          name=items[0][description]       ${items_description}
   Input text                          name=items[0][quantity]          ${quantity}
-
   Input text                          name=items[0][dkpp]              ${dkpp_desc}
+  Sleep  1
+  Click Element                       xpath=//ul[@id='ui-id-1']/li[2]
   Input text                          name=items[0][cpv]               ${cpv_id1}
-
-  #debug
-  #Input text                          name=items[0][unit_id]           ${cpv_id}
+  Sleep  1
+  Click Element                       xpath=//ul[@id='ui-id-2']/li[1]
   sleep  2
-  Input text                          name=items[0][delivery_date_start]    subtract_from_time(${delivery_end_date},120,0)
+  Input text                          name=items[0][delivery_date_start]    ${delivery_end_date}
   Input text                          name=items[0][delivery_date_end]      ${delivery_end_date}
-
   #Додати предмет    ${items[0]}       0
-  #debug
+  Click Element                       id=origin-0
+  Sleep  1
+  Click Element     xpath=(//select[@class='form-control'])[4]//option[12]
+  Input text                          name=items[0][postal_code]          ${postalCode}
+  Input text                          name=items[0][locality]             ${locality}
+  Input text                          name=items[0][delivery_address]     ${streetAddress}
   Click Element                       xpath=//input[@class='btn btn-lg btn-danger']
   Run Keyword if   '${mode}' == 'multi'   Додати багато предметів   items
-
+  Wait Until Page Contains      ${title}
+  Log   ${title}
+  Capture Page Screenshot
 #  ${tender_UAid}=   Get Text          xpath=//td[./text()='TenderID']/following-sibling::td[1]
 #  ${Ids}=   Convert To String         ${tender_UAid}
 #  Run keyword if   '${mode}' == 'multi'   Set Multi Ids   ${tender_UAid}
@@ -153,4 +151,31 @@ Set Multi Ids
 
   Input text                          name=items[${index}][delivery_date_start]    ${delivery_end_date}
   Input text                          name=items[${index}][delivery_date_end]    ${delivery_end_date}
+  Capture Page Screenshot
+
+Завантажити документ
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...    ${ARGUMENTS[0]} =  username
+  ...    ${ARGUMENTS[1]} =  ${file_path}
+  ...    ${ARGUMENTS[2]} =  ${TENDER_UAID}
+  ${filepath}=   local_path_to_file   TestDocument.docx
+  Click Element                      xpath=(//a[@class='btn btn-xs btn-info']/span)[1]
+  Choose File                        xpath=//label[./text()='Добавить файл']        ${filepath}
+  Capture Page Screenshot
+
+Внести зміни в тендер
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} =  username
+  ...      ${ARGUMENTS[1]} =  ${TENDER_UAID}
+  ...      ${ARGUMENTS[2]} =  tender_data
+  ${ADDITIONAL_DATA}=  prepare_test_tender_data   ${BROKERS['${USERS.users['${tender_owner}'].broker}'].period_interval}   single
+  ${tender_data}=   Add_data_for_GUI_FrontEnds   ${ADDITIONAL_DATA}
+  ${items}=         Get From Dictionary   ${tender_data.data}               items
+  ${items_description}=   Get From Dictionary   ${items[0]}         description
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  Click Element                      xpath=(//a[@class='btn btn-xs btn-info']/span)[1]
+  Sleep  1
+  Input text                         name=description    ${items_description}
   Capture Page Screenshot
