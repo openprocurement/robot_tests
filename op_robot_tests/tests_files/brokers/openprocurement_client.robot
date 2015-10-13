@@ -311,7 +311,7 @@ ${question_id}   0
   ${tenderID}=  openprocurement_client.Отримати internal id по UAid  ${ARGUMENTS[0]}   ${ARGUMENTS[2]}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${tenderID}
   ${tender}=  set_access_key  ${tender}   ${USERS.users['${ARGUMENTS[0]}'].access_token}
-  ${reply}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  upload_document  ${tender}  ${ARGUMENTS[1]}
+  ${reply}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  upload_document  ${ARGUMENTS[1]}  ${tender}
   Log object data   ${reply}  reply
   [return]   ${reply}
 
