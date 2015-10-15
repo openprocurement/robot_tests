@@ -1,12 +1,20 @@
 # -*- coding: utf-8 -
+import os
+from pytz import timezone
 from datetime import datetime, timedelta
-now = datetime.now()
 from munch import munchify
 from faker import Factory
+from tempfile import NamedTemporaryFile
+
 fake = Factory.create('uk_UA')
 fake_ru = Factory.create('ru')
 fake_en = Factory.create()
-from tempfile import NamedTemporaryFile
+
+TZ = timezone(os.environ['TZ'] if 'TZ' in os.environ else 'Europe/Kiev')
+
+def get_now():
+    return datetime.now(TZ)
+
 
 def create_fake_doc():
     content = fake.text()
@@ -16,7 +24,7 @@ def create_fake_doc():
     return tf.name
 
 def test_tender_data(period_interval=2):
-  now = datetime.now()
+  now = get_now()
   return {
     "title": u"[ТЕСТУВАННЯ] " + fake.catch_phrase(),
     "mode": "test",
@@ -100,7 +108,7 @@ def test_tender_data(period_interval=2):
 }
 
 def prom_test_tender_data():
-  now = datetime.now()
+  now = get_now()
   return {
     "title": fake.catch_phrase(),
     "mode": "test",
@@ -185,7 +193,7 @@ def prom_test_tender_data():
 }
 
 def test_tender_data_multiple_lots(period_interval=2):
-    now = datetime.now()
+    now = get_now()
     return {
       "title": fake.catch_phrase(),
       "mode": "test",
