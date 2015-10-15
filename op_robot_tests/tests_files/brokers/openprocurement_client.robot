@@ -26,7 +26,7 @@ ${question_id}   0
   [Arguments]  @{ARGUMENTS}
   [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
   ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${ARGUMENTS[0]}'].api_key}  ${API_HOST_URL}    ${api_version}
-  ${creation_date} =   get_now
+  ${creation_date} =   get_date
   Set To Dictionary  ${USERS.users['${ARGUMENTS[0]}']}   creation_date   ${creation_date}
   Set To Dictionary  ${USERS.users['${ARGUMENTS[0]}']}   client  ${api_wrapper}
   Log Variables
