@@ -24,7 +24,10 @@ from .initial_data import (
 TZ = timezone(os.environ['TZ'] if 'TZ' in os.environ else 'Europe/Kiev')
 
 def get_now():
-    return datetime.now(TZ).isoformat()
+    return datetime.now(TZ)
+
+def get_date():
+	return get_now().isoformat()
 
 def get_file_contents(path):
     with open(path, 'r') as f:
