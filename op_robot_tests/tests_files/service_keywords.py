@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -
 import os
 from munch import munchify, Munch, fromYAML
@@ -20,17 +19,19 @@ from .initial_data import (
     test_bid_data, test_award_data, test_complaint_data, test_complaint_reply_data, test_tender_data_multiple_lots,
     auction_bid, prom_test_tender_data, create_fake_doc
 )
-import calendar
 
-TIMEZONE = timezone('Europe/Kiev')
 
+TZ = timezone(os.environ['TZ'] if 'TZ' in os.environ else 'Europe/Kiev')
+
+def get_now():
+    return datetime.now(TZ)
+
+def get_date():
+	return get_now().isoformat()
 
 def get_file_contents(path):
     with open(path, 'r') as f:
         return unicode(f.read()) or u''
-
-def get_date():
-    return datetime.now().isoformat()
 
 def change_state(arguments):
     try:
@@ -47,9 +48,9 @@ def compare_date(data1, data2):
     data1=parse(data1)
     data2=parse(data2)
     if data1.tzinfo is None:
-        data1 = TIMEZONE.localize(data1)
+        data1 = TZ.localize(data1)
     if data2.tzinfo is None:
-        data2 = TIMEZONE.localize(data2)
+        data2 = TZ.localize(data2)
 
     delta = (data1-data2).total_seconds()
     if abs(delta) > 60:
@@ -91,7 +92,7 @@ def prepare_test_tender_data(period_interval=2, mode='single'):
         return munchify({'data': test_tender_data_multiple_lots(period_interval=period_interval)})
     raise ValueError('A very specific bad thing happened')
 
-def run_keyword_and_ignore_keyword_definations(name, *args):
+def run_keyword_and_ignore_keyword_definitions(name, *args):
     """Runs the given keyword with given arguments and returns the status as a Boolean value.
     This keyword returns `True` if the keyword that is executed succeeds and
     `False` if it fails. This is useful, for example, in combination with
@@ -111,7 +112,7 @@ def run_keyword_and_ignore_keyword_definations(name, *args):
     return status, _
 
 def set_tender_periods(tender):
-    now = datetime.now()
+    now = get_now()
     tender.data.enquiryPeriod.endDate = (now + timedelta(minutes=2)).isoformat()
     tender.data.tenderPeriod.startDate = (now + timedelta(minutes=2)).isoformat()
     tender.data.tenderPeriod.endDate = (now + timedelta(minutes=4)).isoformat()
@@ -137,7 +138,7 @@ def get_from_object(obj, attribute):
 def wait_to_date(date_stamp):
     date = parse(date_stamp)
     LOGGER.log_message(Message("date: {}".format(date.isoformat()), "INFO"))
-    now = datetime.now(tzlocal())
+    now = get_now()
     LOGGER.log_message(Message("now: {}".format(now.isoformat()), "INFO"))
     wait_seconds = (date - now).total_seconds()
     wait_seconds += 2

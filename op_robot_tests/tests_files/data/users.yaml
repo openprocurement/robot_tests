@@ -115,7 +115,7 @@ users:
         password: Password1
         browser: firefox
         position: [0, 0]
-        size: [740, 550]
+        size: [800, 800]
     Publicbid_Viewer:
         broker: Publicbid
         username: Publicbid
@@ -124,7 +124,7 @@ users:
         password: Password1
         browser:  firefox
         position:  [740, 0]
-        size:  [740, 550]
+        size:  [740, 740]
     Publicbid_Provider:
         broker: Publicbid
         username: Publicbid

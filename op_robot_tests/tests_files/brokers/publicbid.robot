@@ -587,12 +587,12 @@ Change_date_to_month
   Click Element        xpath=//div[@id='mForm:data_paginator_bottom']/span[5]
   sleep  2
   ${return_value}=   отримати тест із поля і показати на сторінці   questions[0].title
-  ${return_value}=   Convert To Lowercase   ${return_value}
+#  ${return_value}=   Convert To Lowercase   ${return_value}
   [return]   ${return_value}
 
 отримати інформацію про questions[0].description
   ${return_value}=   отримати тест із поля і показати на сторінці   questions[0].description
-  ${return_value}=   Convert To Lowercase   ${return_value}
+#  ${return_value}=   Convert To Lowercase   ${return_value}
   [return]   ${return_value}
 
 отримати інформацію про questions[0].date

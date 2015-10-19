@@ -4,11 +4,11 @@ __pycache__/
 
 # C extensions
 *.so
-*.sqlite
 
 # Distribution / packaging
 .Python
 env/
+etc/
 build/
 develop-eggs/
 dist/
@@ -22,6 +22,8 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+bin/*
+src/*
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -53,5 +55,4 @@ docs/_build/
 
 # PyBuilder
 target/
-openprocurement/auction/node_modules/
-openprocurement/auction/static/vendor/
+.mr.developer.cfg
