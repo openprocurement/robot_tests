@@ -1,25 +1,26 @@
 # -*- coding: utf-8 -
-import os
-from munch import munchify, Munch, fromYAML
-from json import load
-from iso8601 import parse_date
-from robot.output import LOGGER
-from robot.output.loggerhelper import Message
-from robot.libraries.BuiltIn import BuiltIn
-from robot.errors import HandlerExecutionFailed
 from datetime import datetime, timedelta, date
 from dateutil.parser import parse
 from dateutil.tz import tzlocal
-from pytz import timezone
 from dpath.util import set as xpathset
+from iso8601 import parse_date
+from json import load
 from jsonpath_rw import parse as parse_path
-import time
+from munch import fromYAML, Munch, munchify
+from pytz import timezone
+from robot.errors import HandlerExecutionFailed
+from robot.libraries.BuiltIn import BuiltIn
+from robot.output import LOGGER
+from robot.output.loggerhelper import Message
 from .initial_data import (
-    test_tender_data, test_question_data, test_question_answer_data,
-    test_bid_data, test_award_data, test_complaint_data, test_complaint_reply_data, test_tender_data_multiple_lots,
-    auction_bid, prom_test_tender_data, create_fake_doc
+    auction_bid, create_fake_doc, prom_test_tender_data,
+    test_award_data, test_bid_data, test_complaint_data,
+    test_complaint_reply_data, test_question_answer_data,
+    test_question_data, test_tender_data, test_tender_data_multiple_lots
 )
 import calendar
+import os
+import time
 
 
 TZ = timezone(os.environ['TZ'] if 'TZ' in os.environ else 'Europe/Kiev')
