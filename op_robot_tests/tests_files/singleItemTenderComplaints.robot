@@ -1,4 +1,4 @@
-*** Setting ***
+*** Settings ***
 Library         op_robot_tests.tests_files.service_keywords
 Library         String
 Library         Collections

@@ -1,4 +1,4 @@
-*** Setting ***
+*** Settings ***
 Resource  resource.robot
 Library  op_robot_tests.tests_files.service_keywords
 Library  String
