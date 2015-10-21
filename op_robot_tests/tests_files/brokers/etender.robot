@@ -187,6 +187,14 @@ Set Multi Ids
   \   Click Element   xpath=.//*[@id='myform']/tender-form/div/button
   \   Додати предмет   ${items[${INDEX}]}   ${INDEX}
 
+Клацнути і дочекатися
+  [Arguments]  ${click_locator}  ${wanted_locator}  ${timeout}
+  Click Link  ${click_locator}
+  Wait Until Page Contains Element  ${wanted_locator}  ${timeout}
+
+Шукати і знайти
+  Клацнути і дочекатися  jquery=a[ng-click='search()']  jquery=a[href^="#/tenderDetailes"]  5
+
 Пошук тендера по ідентифікатору
   [Arguments]  @{ARGUMENTS}
   [Documentation]
@@ -197,8 +205,9 @@ Set Multi Ids
   Wait Until Page Contains   Прозорі закупівлі    10
   sleep  1
   Input Text  jquery=input[ng-change='searchChange()']  ${ARGUMENTS[1]}
-  Click Link  jquery=a[ng-click='search()']
-  sleep  2
+  sleep  1
+  Wait Until Keyword Succeeds  300 s  0 s  Шукати і знайти
+  sleep  3
   Click Link    jquery=a[href^="#/tenderDetailes"]
   Wait Until Page Contains    ${ARGUMENTS[1]}   10
   sleep  1
