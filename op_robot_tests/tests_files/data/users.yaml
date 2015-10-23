@@ -140,7 +140,6 @@ users:
         username: Publicbid
         homepage: "https://public-bid.com.ua/test/"
         login: rsavchuk@softserveinc.com
-        #login: mail_provider@i.ua
         password: Password1
         browser: firefox
         position: [750, 0]
@@ -152,6 +151,15 @@ users:
         position:  [0, 450]
         size:  [640, 450]
     Ua_Owner:
+        broker: uatender
+        username: uatender
+        homepage: "http://dev.zakupki.com.ua/"
+        login: vbilos@softserveinc.com
+        password: Qw123456
+        browser: firefox
+        position: [0, 0]
+        size: [740, 550]
+    Ua_Viewer:
         broker: uatender
         username: uatender
         homepage: "http://dev.zakupki.com.ua/"
