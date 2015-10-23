@@ -94,7 +94,7 @@ users:
         homepage: "http://dev23.newtend.com/openprocurement/tenders"
         browser:  firefox
         position:  [800, 400]
-        size:  [800, 700]
+        size:  [800, 800]
     Prom_Owner:
         broker: Prom
         username: Promtest
@@ -115,7 +115,7 @@ users:
         password: Password1
         browser: firefox
         position: [0, 0]
-        size: [800, 800]
+        size: [900, 800]
     Publicbid_Viewer:
         broker: Publicbid
         username: Publicbid
@@ -124,7 +124,7 @@ users:
         password: Password1
         browser:  firefox
         position:  [740, 0]
-        size:  [740, 740]
+        size:  [900, 800]
     Publicbid_Provider:
         broker: Publicbid
         username: Publicbid
@@ -133,8 +133,8 @@ users:
         #login: mail_provider@i.ua
         password: Password1
         browser: firefox
-        position: [750, 0]
-        size: [740, 550]
+        position: [750, 740]
+        size: [900, 800]
     Publicbid_Provider1:
         broker: Publicbid
         username: Publicbid
@@ -144,7 +144,13 @@ users:
         password: Password1
         browser: firefox
         position: [750, 0]
-        size: [740, 550]
+        size: [900, 800]
+    SmartTender_Viewer:
+        broker: SmartTender
+        username: SmartTendertest
+        browser:  chrome
+        position:  [0, 450]
+        size:  [640, 450]
     Ua_Owner:
         broker: uatender
         username: uatender
@@ -154,9 +160,3 @@ users:
         browser: firefox
         position: [750, 0]
         size: [740, 550]
-    SmartTender_Viewer:
-        broker: SmartTender
-        username: SmartTendertest
-        browser:  chrome
-        position:  [0, 450]
-        size:  [640, 450]

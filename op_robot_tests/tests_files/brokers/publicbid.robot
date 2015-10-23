@@ -9,10 +9,10 @@ ${mail}          test@mail.com
 ${telephone}     +380976535447
 ${fake_name}     Оніч Прокрув Ійов
 ${UA_ID}     UA-2015-09-16-000126
-${locator.title}                                               xpath=(//td[@class='ui-panelgrid-cell'])[28]
-${locator.description}                                         xpath=(//tr[@class='ui-widget-content ui-panelgrid-even']/td[@class='ui-panelgrid-cell'])[15]
-${locator.procuringEntity.name}                                xpath=(//*[@class='ui-panelgrid ui-widget']/tbody/tr[2]/td[2])[5]
-${locator.value.amount}                                        xpath=//tbody[@id='mForm:datalist_data']/tr[1]/td[4]
+${locator.title}                                               xpath=//*[@class='ui-panelgrid ui-widget']/tbody/tr[5]/td[2]
+${locator.description}                                         xpath=//tbody[@id='mForm:datalist_data']/tr[1]/td[7]
+${locator.procuringEntity.name}                                xpath=(//*[@class='ui-panelgrid ui-widget']/tbody/tr[1]/td[3])
+${locator.value.amount}                                        xpath=//tbody[@id='mForm:datalist_data']/tr[1]/td[5]
 ${locator.tenderId}                                            xpath=//tr[@class='ui-widget-content ui-datatable-even ui-expanded-row']/td[2]
 ${locator.tenderPeriod.startDate}                              xpath=//*[@class='ui-panelgrid ui-widget']/tbody/tr[4]/td[4]
 ${locator.tenderPeriod.endDate}                                xpath=//*[@class='ui-panelgrid ui-widget']/tbody/tr[5]/td[4]
@@ -50,13 +50,14 @@ ${locator.questions[0].date}                                   xpath=//tr[@class
   Set Window Size   @{USERS.users['${ARGUMENTS[0]}'].size}
   Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
 #  login
-  Run Keyword And Ignore Error   Wait Until Page Contains Element    id=mForm:j_idt54   10
-  Click Element                      id=mForm:j_idt54
+  Run Keyword And Ignore Error   Wait Until Page Contains Element    id=mForm:j_idt56   10
+  Click Element                      id=mForm:j_idt56
   Run Keyword And Ignore Error   Wait Until Page Contains Element   id=mForm:email   10
   Input text   id=mForm:email      ${USERS.users['${username}'].login}
   Sleep  2
   Input text   id=mForm:pwd      ${USERS.users['${username}'].password}
   Click Button   id=mForm:login
+
 
 Створити тендер
   [Arguments]  @{ARGUMENTS}
@@ -272,6 +273,7 @@ Set Multi Ids
 Пошук закупівлі по періоду уточнень
   Click Element   xpath=//td[@class='ui-panelgrid-cell banner_menu_item']/a[./text()='Закупівлі']
   Sleep  2
+  Wait Until Page Contains Element   xpath=//div[@class='ui-selectonemenu ui-widget ui-state-default ui-corner-all tblFilter']//span   20
   Click Element   xpath=//div[@class='ui-selectonemenu ui-widget ui-state-default ui-corner-all tblFilter']//span
   Click Element   xpath=(//li)[4]
   Sleep  2

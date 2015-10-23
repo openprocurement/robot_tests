@@ -450,19 +450,25 @@ Set datetime
   Click Element   xpath=//div[@ng-click="sendQuestion()"]
   Wait Until Page Contains    ${description}   20
 
-обновити сторінку з тендером
+Оновити сторінку з тендером
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} = username
   ...      ${ARGUMENTS[1]} = ${TENDER_UAID}
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  Go to   ${USERS.users['${ARGUMENTS[0]}'].homepage}
+  Wait Until Page Contains Element   xpath=(//a[@class="row tender-info ng-scope"])   20
   Reload Page
+  sleep  10
+  Click Element                      xpath=(//a[@class="row tender-info ng-scope"])
+#  Reload Page
   Wait Until Page Contains   ${ARGUMENTS[1]}   20
 
 отримати інформацію про QUESTIONS[0].title
   Wait Until Page Contains Element   xpath=//span[contains(text(), "Уточнения")]   20
+  Sleep  10
   Click Element              xpath=//span[contains(text(), "Уточнения")]
-  Wait Until Page Contains   Вы не можете задавать вопросы    20
+  Wait Until Page Contains   Вы не можете задавать вопросы    40
   ${resp}=   отримати текст із поля і показати на сторінці   QUESTIONS[0].title
   [return]  ${resp}
 
@@ -506,5 +512,8 @@ Change_day_to_month
   Capture Page Screenshot
 
 отримати інформацію про questions[0].answer
+  Wait Until Page Contains Element   xpath=//span[contains(text(), "Уточнения")]   20
+  Click Element              xpath=//span[contains(text(), "Уточнения")]
+  Wait Until Page Contains Element   ${locator.questions[0].answer}   20
   ${questionsAnswer}=   отримати текст із поля і показати на сторінці   questions[0].answer
   [return]  ${questionsAnswer}
