@@ -14,7 +14,7 @@ users:
     E-tender_Owner:
         broker: E-tender
         username: E-tendertest
-        homepage: "http://uat.e-tender.biz/#/profile"
+        homepage: "http://bid.uat.e-tender.biz/#/profile"
         login: Misha2
         password: Password1 
         browser:  chrome
@@ -23,7 +23,7 @@ users:
     E-tender_Provider1:
         broker: E-tender
         username: E-tendertest
-        homepage: "http://uat.e-tender.biz/#/profile"
+        homepage: "http://bid.uat.e-tender.biz/#/profile"
         login: st_org
         password: 12345678
         browser: chrome
@@ -32,7 +32,7 @@ users:
     E-tender_Provider2:
         broker: E-tender
         username: E-tendertest
-        homepage: "http://uat.e-tender.biz/#/profile"
+        homepage: "http://bid.uat.e-tender.biz/#/profile"
         login: provider2
         password: Qa123456
         browser:  chrome
@@ -41,7 +41,7 @@ users:
     E-tender_Viewer:
         broker: E-tender
         username: E-tendertest
-        homepage: "http://uat.e-tender.biz/#/profile"
+        homepage: "http://bid.uat.e-tender.biz/#"
         browser:  chrome
         position:  [0, 0]
         size:  [640, 450]

@@ -1,6 +1,6 @@
 E-tender:
     keywords_file: etender
-    url: http://uat.e-tender.biz/
+    url: http://bid.uat.e-tender.biz/
     timeout_on_wait:  15
     period_interval: 2
 Prom:
