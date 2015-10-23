@@ -194,7 +194,7 @@ Set Multi Ids
   ...      ${ARGUMENTS[1]} ==  ${TENDER_UAID}
   Switch browser   ${ARGUMENTS[0]}
   Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
-  Wait Until Page Contains   Список закупівель    10
+  Wait Until Page Contains   Прозорі закупівлі    10
   sleep  1
   Input Text  jquery=input[ng-change='searchChange()']  ${ARGUMENTS[1]}
   Click Link  jquery=a[ng-click='search()']
