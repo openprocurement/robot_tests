@@ -196,7 +196,7 @@ Set Multi Ids
   Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
   Wait Until Page Contains   Список закупівель    10
   sleep  1
-  Input Text  jquery=input[ng-change='search()']  ${ARGUMENTS[1]}
+  Input Text  jquery=input[ng-change='searchChange()']  ${ARGUMENTS[1]}
   Click Link  jquery=a[ng-click='search()']
   sleep  2
   Click Link    jquery=a[href^="#/tenderDetailes"]
