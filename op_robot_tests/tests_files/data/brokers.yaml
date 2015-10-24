@@ -1,6 +1,6 @@
 E-tender:
     keywords_file: etender
-    url: http://uat.e-tender.biz/
+    url: http://bid.uat.e-tender.biz/
     timeout_on_wait:  15
     period_interval: 2
 Prom:
@@ -24,5 +24,20 @@ Publicbid:
     period_interval: 2
 Netcast:
     keywords_file: netcast
-    url: http://dz2.byustudio.in.ua
+    url: "http://dz2.byustudio.in.ua"
+    login: admin
+    password: uStudio
     timeout_on_wait:  15
+    period_interval: 2
+Netcast:
+    keywords_file: netcast
+    url: "http://dz2.byustudio.in.ua"
+    login: admin
+    password: uStudio
+    timeout_on_wait:  15
+    period_interval: 2
+Newtend:
+    keywords_file: newtend
+    url: http://openprocurement:test@dev23.newtend.com
+    timeout_on_wait:  15
+    period_interval: 2
