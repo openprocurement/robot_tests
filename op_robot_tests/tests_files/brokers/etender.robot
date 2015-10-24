@@ -502,11 +502,9 @@ Change_date_to_month
   [return]  ${return_value.split(' ')[1]}
 
 Отримати інформацію про items[0].additionalClassifications[0].description
-  ${return_value}=   Отримати текст із поля і показати на сторінці  items[0].additionalClassifications[0].description
-  ${return_value}=   Get Substring  ${return_value}   8   60
-  ${return_value}=   Remove String   ${return_value}  "
-  ${return_value}=   Convert To Lowercase   ${return_value}
-  [return]  ${return_value}
+  ${return_value}=  Отримати текст із поля і показати на сторінці  items[0].additionalClassifications[0].description
+  ${return_value}=  Split String  ${return_value}  separator=${SPACE}  max_split=1
+  [return]  ${return_value[1]}
 
 Отримати інформацію про items[0].deliveryAddress.postalCode
   ${return_value}=   Отримати текст із поля і показати на сторінці  items[0].deliveryAddress.postalCode
