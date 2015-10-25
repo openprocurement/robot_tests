@@ -64,7 +64,6 @@ TestSuiteSetup
 Завантажуємо бібліотеку з реалізацією ${keywords_file} майданчики
   Import Resource  ${CURDIR}/brokers/${keywords_file}.robot
 
-
 ##################################################################################
 Дочекатись синхронізації з майданчиком
   [Arguments]  ${username}

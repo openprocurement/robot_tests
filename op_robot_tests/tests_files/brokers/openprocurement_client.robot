@@ -133,7 +133,6 @@ ${question_id}   0
   ${TENDER_DATA}=  set_access_key  ${TENDER_DATA}  ${USERS.users['${ARGUMENTS[0]}'].access_token}
   ${TENDER_DATA}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_tender  ${TENDER_DATA}
 
-
 Задати питання
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username

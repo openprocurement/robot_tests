@@ -5,7 +5,6 @@ Library  DateTime
 Library           Selenium2Library
 Library           Collections
 
-
 *** Variables ***
 ${HOMEPAGE}       http://my.dz-test.net/cabinet/sign-in?sp=1&next=%2Fcabinet%2Fpurchases%2Fstate_purchase
 ${BROWSER}        chrome

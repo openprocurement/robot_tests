@@ -7,7 +7,6 @@ Library  DateTime
 ${mail}          test@mail.com
 ${telephone}     +380976535447
 
-
 *** Keywords ***
 Підготувати клієнт для користувача
   [Arguments]  @{ARGUMENTS}

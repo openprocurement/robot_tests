@@ -31,7 +31,6 @@ ${locator.QUESTIONS[0].title}         xpath=//span[@class="user ng-binding"]
 ${locator.QUESTIONS[0].description}   xpath=//span[@class="question-description ng-binding"]
 ${locator.QUESTIONS[0].date}          xpath=//span[@class="date ng-binding"]
 
-
 *** Keywords ***
 Підготувати дані для оголошення тендера
   ${INITIAL_TENDER_DATA}=  prepare_test_tender_data
@@ -242,7 +241,6 @@ Set datetime
   Click Element                      xpath=(//a[@class="row tender-info ng-scope"])
   Wait Until Page Contains Element   xpath=//a[@class="ng-binding ng-scope"]|//span[@class="ng-binding ng-scope"]   30
 
-
 отримати інформацію із тендера
   [Arguments]  @{ARGUMENTS}
   [Documentation]
@@ -423,7 +421,6 @@ Set datetime
 
 забрати позицію
   Click Element   xpath=//a[@title="Добавить лот"]/preceding-sibling::a
-
 
 Задати питання
   [Arguments]  @{ARGUMENTS}
