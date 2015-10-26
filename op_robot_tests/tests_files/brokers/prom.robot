@@ -2,12 +2,12 @@
 Library  Selenium2Screenshots
 Library  String
 Library  DateTime
-Library           Selenium2Library
-Library           Collections
+Library  Selenium2Library
+Library  Collections
 
 *** Variables ***
-${HOMEPAGE}       http://my.dz-test.net/cabinet/sign-in?sp=1&next=%2Fcabinet%2Fpurchases%2Fstate_purchase
-${BROWSER}        chrome
+${HOMEPAGE}     http://my.dz-test.net/cabinet/sign-in?sp=1&next=%2Fcabinet%2Fpurchases%2Fstate_purchase
+${BROWSER}      chrome
 ${LOGIN}        r.zaporozhets@smartweb.com.ua
 ${PASSWORD}     1234
 
