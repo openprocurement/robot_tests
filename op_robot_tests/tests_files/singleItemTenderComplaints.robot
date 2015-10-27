@@ -10,14 +10,10 @@ Suite Setup     TestSuiteSetup
 Suite Teardown  Close all browsers
 
 *** Variables ***
-${mode}       single
+${mode}         single
 
-${tender_owner}  Tender_Owner
-${provider}   Tender_User
-${provider1}   Tender_User1
-${viewer}   Tender_Viewer
-
-${LOAD_USERS}      ["${tender_owner}", "${provider}", "${provider1}", "${viewer}"]
+${role}         viewer
+${broker}       Quinta
 
 *** Test Cases ***
 Можливість оголосити однопредметний тендер
