@@ -1,25 +1,10 @@
-E-tender:
-    keywords_file: etender
-    url: http://bid.uat.e-tender.biz/
-    timeout_on_wait:  15
-    period_interval: 2
-Prom:
-    keywords_file: prom
-    url: http://dz.dz-test.net/
-    timeout_on_wait:  15
-    period_interval: 31
-SmartTender:
-    keywords_file: smarttender
-    url: http://smarttender.biz/tenders
-    timeout_on_wait:  15
-    period_interval: 2
 Quinta:
     keywords_file: openprocurement_client
     timeout_on_wait:  0
     period_interval: 2
-Publicbid:
-    keywords_file: publicbid
-    url: https://public-bid.com.ua/
+E-tender:
+    keywords_file: etender
+    url: http://bid.uat.e-tender.biz/
     timeout_on_wait:  15
     period_interval: 2
 Netcast:
@@ -32,5 +17,20 @@ Netcast:
 Newtend:
     keywords_file: newtend
     url: http://openprocurement:test@dev23.newtend.com
+    timeout_on_wait:  15
+    period_interval: 2
+Prom:
+    keywords_file: prom
+    url: http://dz.dz-test.net/
+    timeout_on_wait:  15
+    period_interval: 31
+Publicbid:
+    keywords_file: publicbid
+    url: https://public-bid.com.ua/
+    timeout_on_wait:  15
+    period_interval: 2
+SmartTender:
+    keywords_file: smarttender
+    url: http://smarttender.biz/tenders
     timeout_on_wait:  15
     period_interval: 2
