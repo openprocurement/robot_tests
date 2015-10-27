@@ -11,7 +11,6 @@ Suite Teardown  Close all browsers
 
 *** Variables ***
 ${mode}  multi
-${tender_dump_id}    0
 ${item_id}       0
 ${question_id}   0
 

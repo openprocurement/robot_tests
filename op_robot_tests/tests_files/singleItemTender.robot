@@ -10,7 +10,6 @@ Suite Setup     TestSuiteSetup
 Suite Teardown  Close all browsers
 
 *** Variables ***
-${tender_dump_id}    0
 ${mode}       single
 
 ${tender_owner}  Tender_Owner
