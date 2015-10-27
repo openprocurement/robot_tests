@@ -8,8 +8,6 @@ Library  DateTime
 Library  Selenium2Screenshots
 Library  DebugLibrary
 Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
-*** Variables ***
-
 
 *** Keywords ***
 TestSuiteSetup
