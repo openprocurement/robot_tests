@@ -19,7 +19,6 @@ ${viewer}   Tender_Viewer
 
 ${LOAD_USERS}      ["${tender_owner}", "${provider}", "${provider1}", "${viewer}"]
 
-${item_id}       0
 ${question_id}   0
 
 *** Test Cases ***
