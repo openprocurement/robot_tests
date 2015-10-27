@@ -14,37 +14,39 @@ users:
     E-tender_Owner:
         broker: E-tender
         username: E-tendertest
-        homepage: "http://uat.e-tender.biz/#/profile"
+        homepage: "http://bid.uat.e-tender.biz/#/login"
         login: Misha2
         password: Password1 
         browser:  firefox
         position:  [0, 0]
-        size:  [640, 450]
+        size:  [800, 800]
     E-tender_Provider1:
         broker: E-tender
         username: E-tendertest
-        homepage: "http://uat.e-tender.biz/#/profile"
+        homepage: "http://bid.uat.e-tender.biz/#/login"
         login: st_org
         password: 12345678
         browser: firefox
         position: [700, 0]
-        size: [640, 450]
+        size: [800, 800]
     E-tender_Provider2:
         broker: E-tender
         username: E-tendertest
-        homepage: "http://uat.e-tender.biz/#/profile"
+        homepage: "http://bid.uat.e-tender.biz/#/login"
         login: provider2
         password: Qa123456
         browser:  firefox
         position:  [700, 0]
-        size:  [640, 450]
+        size:  [800, 800]
     E-tender_Viewer:
         broker: E-tender
         username: E-tendertest
-        homepage: "http://uat.e-tender.biz/#/profile"
+        homepage: "http://bid.uat.e-tender.biz/#/login"
+        login: provider2
+        password: Qa123456
         browser:  firefox
-        position:  [0, 0]
-        size:  [640, 450]
+        position:  [900, 0]
+        size:  [1000, 750]
     Netcast_Owner:
         broker: Netcast
         username: Netcasttest

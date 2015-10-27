@@ -50,9 +50,9 @@ ${locator.questions[0].answer}                                 xpath=(//div[@tex
   Open Browser   ${USERS.users['${ARGUMENTS[0]}'].homepage}   ${USERS.users['${username}'].browser}   alias=${ARGUMENTS[0]}
   Set Window Size   @{USERS.users['${ARGUMENTS[0]}'].size}
   Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
-  Run Keyword If   '${username}' != 'E-tender_Viewer'   Login
+#  Run Keyword If   '${username}' != 'E-tender_Viewer'   Login
 
-Login
+#Login
   Wait Until Page Contains Element   id=inputUsername   10
   Input text   id=inputUsername      ${USERS.users['${username}'].login}
   Wait Until Page Contains Element   id=inputPassword   10
@@ -107,11 +107,11 @@ Login
   Input text    id=value                  ${budget}
   Click Element                     xpath=//div[contains(@class, 'form-group col-sm-6')]//input[@type='checkbox']
   Input text    id=minimalStep            ${step_rate}
-  Input text    id=itemsDescription       ${items_description}
-  Input text    id=itemsQuantity          ${quantity}
-  Input text    name=delStartDate         ${deliveryDate}
-  Sleep  2
-  Input text    xpath=//input[@ng-model='data.items[0].deliveryDate.endDate']         ${deliveryDate}
+  Input text    id=itemsDescription0       ${items_description}
+  Input text    id=itemsQuantity0          ${quantity}
+  Input text    name=delStartDate0         ${deliveryDate}
+  Wait Until Page Contains Element   xpath=//input[@ng-model='data.items[$index].deliveryDate.endDate']   10
+  Input text    xpath=//input[@ng-model='data.items[$index].deliveryDate.endDate']         ${deliveryDate}
   Run Keyword if   '${mode}' == 'multi'   Широта та довгота multi
   Run Keyword if   '${mode}' == 'single'   Широта та довгота single
   Click Element   xpath=//select[@name='region']//option[@label='Київська']
@@ -119,8 +119,8 @@ Login
   Click Element   xpath=//select[@name='city']//option[@label='Київ']
   Input text    name=addressStr   ${streetAddress}
   Input text    name=postIndex    ${postalCode}
-  Wait Until Page Contains Element    xpath=//select[@name="itemsUnit"]/option[@value='kilogram']
-  Click Element  xpath=//select[@name="itemsUnit"]/option[@value='kilogram']
+  Wait Until Page Contains Element    xpath=//select[@name="itemsUnit0"]/option[@value='kilogram']  10
+  Click Element  xpath=//select[@name="itemsUnit0"]/option[@value='kilogram']
   Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//input[@name='enqPEndDate']   ${enquiry_end_date}
   Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//div[contains(@class, 'col-sm-2')]//input[@ng-model='data.enquiryPeriod.endDate']   ${enquiry_end_time}
   Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//input[@name='startDate']   ${start_date}
@@ -128,46 +128,39 @@ Login
   Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//input[@name='endDate']   ${end_date}
   Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//div[contains(@class, 'col-sm-2')]//input[@ng-model='data.tenderPeriod.endDate']   ${end_time}
   Sleep  2
-  Click Element   xpath=//div[contains(@class, 'col-sm-2')]//input[@data-target='#classification']
+  Click Element                      xpath=(//div[contains(@class, 'col-sm-2')]//input[@class="btn btn-danger"])
+  Wait Until Element Is Visible      xpath=//input[@ng-model="searchstring"]  10
   Sleep  1
   Input text      xpath=//div[contains(@class, 'modal-content')]//input[@ng-model='searchstring']   ${cpv}
   Sleep  2
   Wait Until Page Contains    ${cpv}
   Click Element   xpath=//td[contains(., '${cpv}')]
-  Sleep  1
-  Click Element   xpath=//div[contains(@class, 'modal-content')]//button[@ng-click='choose()']
+  Sleep  2
+  Click Element   xpath=//div[contains(@class, 'modal-content')]//button[@class="btn btn-default"]
   Sleep  1
   Додати предмет   ${items[0]}   0
   Run Keyword if   '${mode}' == 'multi'   Додати багато предметів   items
   Sleep  1
-  Wait Until Page Contains Element   xpath=//div[contains(@class, 'form-actions')]//button[@type='submit']
+  Wait Until Page Contains Element   xpath=//div[contains(@class, 'form-actions')]//button[@type='submit']   10
   Click Element   xpath=//div[contains(@class, 'form-actions')]//button[@type='submit']
   Sleep  1
   Wait Until Page Contains    [ТЕСТУВАННЯ]   10
   Sleep   70
   Click Element   xpath=//*[text()='${title}']
-  Sleep   5
-  ${tender_UAid}=  Get Text  xpath=//div[contains(@class, "panel-heading")]
+  Wait Until Page Contains Element   xpath=//div[contains(@class, "panel-heading")]   20
+  Sleep  2
+  ${tender_UAid}=  Get Text  xpath=//div[contains(@class, "panel-heading")]/h3
   ${tender_UAid}=  Get Substring  ${tender_UAid}   10
-  ${Ids}=   Convert To String   ${tender_UAid}
-  Run keyword if   '${mode}' == 'multi'   Set Multi Ids     ${tender_UAid}
-  [return]  ${Ids}
-
-Set Multi Ids
-  [Arguments]  @{ARGUMENTS}
-  [Documentation]
-  ...      ${ARGUMENTS[0]} ==  ${tender_UAid}
-  ${id}=    ${tender_UAid}
-  ${id}=    Get Substring  ${id}   10
-  ${Ids}=   Create List     ${tender_UAid}     ${id}
+  log  ${tender_UAid}
+  [return]  ${tender_UAid}
 
 Широта та довгота multi
   Input text    name=latitude             49.8500
   Input text    name=longitude            24.0167
 
 Широта та довгота single
-  Input text    name=latitude             ${latitude}
-  Input text    name=longitude            ${longitude}
+  Input text    name=latitude0             ${latitude}
+  Input text    name=longitude0            ${longitude}
 
 Додати предмет
   [Arguments]  @{ARGUMENTS}
@@ -177,12 +170,12 @@ Set Multi Ids
   ${dkpp_desc}=     Get From Dictionary   ${ARGUMENTS[0].additionalClassifications[0]}   description
   ${dkpp_id}=       Get From Dictionary   ${ARGUMENTS[0].additionalClassifications[0]}   id
   Sleep  2
-  Click Element                      xpath=(//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification'])[${ARGUMENTS[1]}+1]
-  Wait Until Element Is Visible      xpath=//div[contains(@id,'addClassification')]
+  Click Element                      xpath=(//div[contains(@class, 'col-sm-2')]//input[@class="btn btn-danger"])[${ARGUMENTS[1]}+2]
   Sleep  2
-  Input text                         xpath=//div[contains(@class, 'modal fade ng-scope in')]//input[@ng-model='searchstring']    ${dkpp_desc}
-  Wait Until Page Contains   ${dkpp_id}
-  Sleep  1
+  Input text                         xpath=//div[@id='addClassification']//div[@class='modal-header']/input   ${dkpp_desc}
+  Sleep  2
+  Wait Until Page Contains   ${dkpp_id}   10
+  Sleep  2
   Click Element   xpath=//td[contains(., '${dkpp_id}')]
   Click Element                      xpath=//div[contains(@class, 'modal fade ng-scope in')]//button[@ng-click='choose()']
   Sleep  2
@@ -196,26 +189,19 @@ Set Multi Ids
   \   Click Element   xpath=.//*[@id='myform']/tender-form/div/button
   \   Додати предмет   ${items[${INDEX}]}   ${INDEX}
 
-#Завантажити документ
-#  [Arguments]  @{ARGUMENTS}
-#  [Documentation]
-#  ...    ${ARGUMENTS[0]} =  username
-#  ...    ${ARGUMENTS[1]} =  ${file_path}
-#  ...    ${ARGUMENTS[2]} =  ${TENDER_UAID}
+Завантажити документ
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...    ${ARGUMENTS[0]} =  username
+  ...    ${ARGUMENTS[1]} =  ${file_path}
+  ...    ${ARGUMENTS[2]} =  ${TENDER_UAID}
 #  ${filepath}=   local_path_to_file   TestDocument.docx
 #  Selenium2Library.Switch Browser   ${ARGUMENTS[0]}
 #  etender.Пошук тендера по ідентифікатору     ${ARGUMENTS[0]}    ${ARGUMENTS[2]}
 #  DEBUG
 #  Wait Until Page Contains Element   xpath=//button[text()="Завантажити"]    10
-#  Choose File   xpath=//button[text()="Завантажити"]      http://uploadhost.com/trades.csv
-
-Завантажити документ
-  [Arguments]  @{ARGUMENTS}
-  [Documentation]
-  ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  ${TENDER_UAID}
-  ...      ${ARGUMENTS[2]} ==  ${Complain}
-  Fail   Тест не написаний
+#  Choose File   xpath=//button[text()="Завантажити"]     ${filepath}
+  Fail   Поки не ралізовано тест
 
 Пошук тендера по ідентифікатору
   [Arguments]  @{ARGUMENTS}
@@ -225,9 +211,10 @@ Set Multi Ids
   ...      ${ARGUMENTS[2]} ==  id
   Selenium2Library.Switch browser   ${ARGUMENTS[0]}
   Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
-  Wait Until Page Contains   Список закупівель    10
+#  Wait Until Page Contains   Список закупівель    10
   sleep  1
-  Input Text  jquery=input[ng-change='search()']  ${ARGUMENTS[1]}
+  Input Text   xpath=(//div[@class='input-group']/input)[1]   ${ARGUMENTS[1]}
+  Sleep  2
   Click Link  jquery=a[ng-click='search()']
   sleep  2
   Click Link    jquery=a[href^="#/tenderDetailes"]
@@ -302,7 +289,8 @@ Set Multi Ids
   Click Element      xpath=//button[@class='btn-sm btn-success ng-isolate-scope']
   Sleep  2
 
-Оновити сторінку з тендером
+оновити сторінку з тендером
+#Оновити сторінку з тендером
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} =  username
@@ -317,7 +305,6 @@ Set Multi Ids
   ...      ${ARGUMENTS[0]} = username
   ...      ${ARGUMENTS[1]} = ${TENDER_UAID}
   ...      ${ARGUMENTS[2]} = question_data
-
   ${title}=        Get From Dictionary  ${ARGUMENTS[2].data}  title
   ${description}=  Get From Dictionary  ${ARGUMENTS[2].data}  description
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
@@ -336,7 +323,6 @@ Set Multi Ids
   ...      ${ARGUMENTS[1]} = ${TENDER_UAID}
   ...      ${ARGUMENTS[2]} = 0
   ...      ${ARGUMENTS[3]} = answer_data
-
   ${answer}=     Get From Dictionary  ${ARGUMENTS[3].data}  answer
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
   etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
@@ -378,12 +364,13 @@ Set Multi Ids
   Run keyword if   '${TEST NAME}' != 'Можливість додати позицію закупівлі в тендер'   видалити позиції
 
 додати позицію
+  Sleep  2
   etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
   Sleep  2
   Click Element                     xpath=//a[@class='btn btn-primary ng-scope']
   Sleep  2
   : FOR    ${INDEX}    IN RANGE    1    ${ARGUMENTS[2]} +1
-  \   Click Element   xpath=.//*[@id='myform']/tender-form/div/button
+  \   Click Element   xpath=//form[@id='myform']/tender-form//button[@class='btn btn-lg btn-info']
   \   Додати предмет   ${items[${INDEX}]}   ${INDEX}
   Sleep  2
   Click Element   xpath=//div[@class='form-actions']/button[./text()='Зберегти зміни']
@@ -417,9 +404,9 @@ Set Multi Ids
   ${return_value}=   Get Text  ${locator.${fieldname}}
   [return]  ${return_value}
 
-Отримати інформацію про tenderId
-  ${return_value}=   Отримати тест із поля і показати на сторінці   tenderId
-  [return]  ${return_value.split(' ')[1]}
+#Отримати інформацію про tenderId
+#  ${return_value}=   Отримати тест із поля і показати на сторінці   tenderId
+#  [return]  ${return_value.split(' ')[1]}
 
 Отримати інформацію про title
   ${return_value}=   Отримати тест із поля і показати на сторінці   title
@@ -434,14 +421,9 @@ Set Multi Ids
   ${return_value}=   Convert To Number   ${return_value.split(' ')[0]}
   [return]  ${return_value}
 
-Отримати інформацію про procuringEntity.name
-  ${return_value}=   Отримати тест із поля і показати на сторінці   procuringEntity.name
-  [return]  ${return_value}
-
-
 Отримати інформацію про value.amount
   ${return_value}=   Отримати тест із поля і показати на сторінці   value.amount
-  ${return_value}=   Evaluate   "".join("${return_value}".split(' ')[:-3])
+  ${return_value}=   Get Substring   ${return_value}   0   6
   ${return_value}=   Convert To Number   ${return_value}
   [return]  ${return_value}
 

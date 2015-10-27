@@ -9,10 +9,10 @@ ${mail}          test@mail.com
 ${telephone}     +380976535447
 ${fake_name}     Оніч Прокрув Ійов
 ${UA_ID}     UA-2015-09-16-000126
-${locator.title}                                               xpath=//*[@class='ui-panelgrid ui-widget']/tbody/tr[5]/td[2]
-${locator.description}                                         xpath=//tbody[@id='mForm:datalist_data']/tr[1]/td[7]
-${locator.procuringEntity.name}                                xpath=(//*[@class='ui-panelgrid ui-widget']/tbody/tr[1]/td[3])
-${locator.value.amount}                                        xpath=//tbody[@id='mForm:datalist_data']/tr[1]/td[5]
+${locator.title}                                               xpath=(//tr[@class='ui-widget-content ui-panelgrid-even']/td[2])[9]
+${locator.description}                                         xpath=(//tr[@class='ui-widget-content ui-panelgrid-even']/td[@class='ui-panelgrid-cell'])[13]
+${locator.procuringEntity.name}                                xpath=(//*[@class='ui-panelgrid ui-widget']/tbody/tr[2]/td[2])[5]
+${locator.value.amount}                                        xpath=//tr[@class='ui-widget-content ui-datatable-even ui-expanded-row']/td[5]
 ${locator.tenderId}                                            xpath=//tr[@class='ui-widget-content ui-datatable-even ui-expanded-row']/td[2]
 ${locator.tenderPeriod.startDate}                              xpath=//*[@class='ui-panelgrid ui-widget']/tbody/tr[4]/td[4]
 ${locator.tenderPeriod.endDate}                                xpath=//*[@class='ui-panelgrid ui-widget']/tbody/tr[5]/td[4]
@@ -24,8 +24,8 @@ ${locator.items[0].deliveryLocation.longitude}                 xpath=(//tr[@clas
 ${locator.items[0].classification.scheme}                      xpath=(//tr[@class='ui-widget-content ui-panelgrid-even']/td[@class='ui-panelgrid-cell clmnBold'])[8]
 ${locator.items[0].classification.id}                          xpath=(//tr[@class='ui-widget-content ui-panelgrid-even']/td[@class='ui-panelgrid-cell clmnBold'])[8]
 ${locator.items[0].classification.description}                 xpath=(//tr[@class='ui-widget-content ui-panelgrid-even']/td[@class='ui-panelgrid-cell clmnBold'])[8]
-${locator.items[0].additionalClassifications[0].scheme}        xpath=(//tr[@class='ui-widget-content ui-panelgrid-even']/td[@class='ui-panelgrid-cell clmnBold'])[9]
-${locator.items[0].additionalClassifications[0].id}            xpath=(//table[@class='ui-panelgrid ui-widget']/tbody/tr[1]/td[4])[2]
+${locator.items[0].additionalClassifications[0].scheme}        xpath=(//tr[@class='ui-widget-content ui-panelgrid-even']/td[@class='ui-panelgrid-cell clmnBold'])[8]
+${locator.items[0].additionalClassifications[0].id}            xpath=//table[@class='ui-panelgrid ui-widget']/tbody/tr[1]/td[4]
 ${locator.items[0].additionalClassifications[0].description}   xpath=(//table[@class='ui-panelgrid ui-widget']/tbody/tr[1]/td[2])[7]
 ${locator.items[0].unit.code}                                  xpath=(//table[@class='ui-panelgrid ui-widget']/tbody/tr[3]/td[4])[2]
 ${locator.items[0].quantity}                                   xpath=(//table[@class='ui-panelgrid ui-widget']/tbody/tr[3]/td[4])[2]
@@ -49,15 +49,16 @@ ${locator.questions[0].date}                                   xpath=//tr[@class
   Open Browser   ${USERS.users['${ARGUMENTS[0]}'].homepage}   ${USERS.users['${username}'].browser}   alias=${ARGUMENTS[0]}
   Set Window Size   @{USERS.users['${ARGUMENTS[0]}'].size}
   Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
+
 #  login
-  Run Keyword And Ignore Error   Wait Until Page Contains Element    id=mForm:j_idt56   10
-  Click Element                      id=mForm:j_idt56
-  Run Keyword And Ignore Error   Wait Until Page Contains Element   id=mForm:email   10
+#  Maximize Browser Window
+  Sleep  2
+  Click Element             xpath=//*[text()='Реєстрація/Вхід']
+  Sleep  2
   Input text   id=mForm:email      ${USERS.users['${username}'].login}
   Sleep  2
   Input text   id=mForm:pwd      ${USERS.users['${username}'].password}
   Click Button   id=mForm:login
-
 
 Створити тендер
   [Arguments]  @{ARGUMENTS}
@@ -68,7 +69,7 @@ ${locator.questions[0].date}                                   xpath=//tr[@class
   ${prepared_tender_data}=   Add_data_for_GUI_FrontEnds   ${ARGUMENTS[1]}
   ${items}=         Get From Dictionary   ${prepared_tender_data.data}               items
   ${title}=         Get From Dictionary   ${prepared_tender_data.data}               title
-  ${items_description}=   Get From Dictionary   ${items[0]}         description
+  ${description}=   Get From Dictionary   ${prepared_tender_data.data}               description
   ${budget}=        Get From Dictionary   ${prepared_tender_data.data.value}         amount
   ${step_rate}=     Get From Dictionary   ${prepared_tender_data.data.minimalStep}   amount
   ${countryName}=   Get From Dictionary   ${prepared_tender_data.data.procuringEntity.address}       countryName
@@ -99,7 +100,7 @@ ${locator.questions[0].date}                                   xpath=//tr[@class
   Click Element                       xpath=//*[contains(@class, 'ui-button-text ui-c')][./text()='Нова закупівля']
   Wait Until Page Contains Element    id=mForm:data:name
   Input text                          id=mForm:data:name     ${title}
-  Input text                          id=mForm:data:desc     ${items_description}
+  Input text                          id=mForm:data:desc     ${description}
   Input text                          id=mForm:data:budget   ${budget}
   Input text                          id=mForm:data:step     ${step_rate}
   Click Element                       xpath=//*[@id='mForm:data:vat']/tbody/tr/td[1]//span
@@ -135,19 +136,11 @@ ${locator.questions[0].date}                                   xpath=//tr[@class
   Run Keyword if   '${mode}' == 'multi'   Додати багато предметів   items
   Click Element                       id=mForm:bSave
   # More smart wait for id is needed there.
-  Sleep   25
+  Sleep   20
   ${tender_UAid}=  Get Text           id=mForm:nBid
   ${tender_UAid}=  Get Substring  ${tender_UAid}  19
   ${Ids}       Convert To String  ${tender_UAid}
-  Run keyword if   '${mode}' == 'multi'   Set Multi Ids   ${tender_UAid}
   [return]  ${Ids}
-
-Set Multi Ids
-  [Arguments]  @{ARGUMENTS}
-  [Documentation]
-  ...      ${ARGUMENTS[0]} ==  ${tender_UAid}
-  ${id}=           Get Text           id=mForm:nBid
-  ${Ids}   Create List    ${tender_UAid}   ${id}
 
 Додати предмет
   [Arguments]  @{ARGUMENTS}
@@ -273,8 +266,8 @@ Set Multi Ids
 Пошук закупівлі по періоду уточнень
   Click Element   xpath=//td[@class='ui-panelgrid-cell banner_menu_item']/a[./text()='Закупівлі']
   Sleep  2
-  Wait Until Page Contains Element   xpath=//div[@class='ui-selectonemenu ui-widget ui-state-default ui-corner-all tblFilter']//span   20
   Click Element   xpath=//div[@class='ui-selectonemenu ui-widget ui-state-default ui-corner-all tblFilter']//span
+  Sleep  1
   Click Element   xpath=(//li)[4]
   Sleep  2
   Click Element   xpath=//div[@class='ui-row-toggler ui-icon ui-icon-circle-triangle-e']
@@ -283,7 +276,7 @@ Set Multi Ids
   Sleep  2
   Click Element   xpath=//td[@class='ui-panelgrid-cell banner_menu_item']/a[./text()='Закупівлі']
   Sleep  5
-  Input text      id=mForm:datalist:j_idt387     ${UA_ID}
+  Input text      xpath=(//div[@class='ui-column-customfilter']/input)[1]    ${UA_ID}
   Sleep  5
   Click Element   xpath=//div[@class='ui-selectonemenu ui-widget ui-state-default ui-corner-all tblFilter']//span
   Sleep  5
@@ -300,7 +293,7 @@ Set Multi Ids
   publicbid.Пошук закупівлі по періоду уточнень
   Sleep  2
   Click Button    xpath=//span[@id='mForm:datalist:0:gButt1']/button[3]
-  Sleep  2
+  Sleep  5
   Wait Until Page Contains           ${complaint}   10
   Capture Page Screenshot
 
@@ -415,21 +408,24 @@ Change_date_to_month
   Fail  Немає такого поля при перегляді
 
 отримати інформацію про items[0].description
-  ${return_value}=   Отримати тест із поля і показати на сторінці   items[0].description
-  [return]  ${return_value}
+  Fail  Немає такого поля при перегляді
+#  ${return_value}=   Отримати тест із поля і показати на сторінці   items[0].description
+#  [return]  ${return_value}
 
 отримати інформацію про items[0].deliveryDate.endDate
   Fail  Дата у форматі місяць.рік
 
 отримати інформацію про items[0].deliveryLocation.latitude
-  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].deliveryLocation.latitude
-  ${return_value}=   Run keyword if    '${return_value}' == 'Предмет закупівлі'   Convert To String  49.8500° N
-  [return]  ${return_value}
+  Fail  Немає такого поля при перегляді
+#  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].deliveryLocation.latitude
+#  ${return_value}=   Run keyword if    '${return_value}' == 'Предмет закупівлі'   Convert To String  49.8500° N
+#  [return]  ${return_value}
 
 отримати інформацію про items[0].deliveryLocation.longitude
-  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].deliveryLocation.longitude
-  ${return_value}=   Run keyword if    '${return_value}' == 'Предмет закупівлі'   Convert To String  24.0167° E
-  [return]  ${return_value}
+  Fail  Немає такого поля при перегляді
+#  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].deliveryLocation.longitude
+#  ${return_value}=   Run keyword if    '${return_value}' == 'Предмет закупівлі'   Convert To String  24.0167° E
+#  [return]  ${return_value}
 
 отримати інформацію про items[0].deliveryAddress.countryName
   Fail  Немає такого поля при перегляді
@@ -447,19 +443,22 @@ Change_date_to_month
   Fail  Немає такого поля при перегляді
 
 отримати інформацію про items[0].classification.scheme
-  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].classification.scheme
-  ${return_value}=   Run keyword if    '${return_value}' == 'Предмет закупівлі'   Convert To String  CPV
-  [return]  ${return_value}
+  Fail  Немає такого поля при перегляді
+#  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].classification.scheme
+#  ${return_value}=   Run keyword if    '${return_value}' == 'Предмет закупівлі'   Convert To String  CPV
+#  [return]  ${return_value}
 
 отримати інформацію про items[0].classification.id
-  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].classification.id
-    ${return_value}=   Run keyword if    '${return_value}' == 'Предмет закупівлі'   Convert To String  44617100-9
-  [return]  ${return_value}
+  Fail  Немає такого поля при перегляді
+#  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].classification.id
+#  ${return_value}=   Run keyword if    '${return_value}' == 'Предмет закупівлі'   Convert To String  44617100-9
+#  [return]  ${return_value}
 
 отримати інформацію про items[0].classification.description
-  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].classification.description
-  ${return_value}=   Run keyword if    '${return_value}' == 'Предмет закупівлі'   Convert To String  Cartons
-  [return]  ${return_value}
+  Fail  Немає такого поля при перегляді
+#  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].classification.description
+#  ${return_value}=   Run keyword if    '${return_value}' == 'Предмет закупівлі'   Convert To String  Cartons
+#  [return]  ${return_value}
 
 отримати інформацію про items[0].additionalClassifications[0].scheme
   ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].additionalClassifications[0].scheme
@@ -511,7 +510,7 @@ Change_date_to_month
   Input text    id=mForm:data:rMail    ${mail}
   Click Element          xpath=//span[@id='mForm:gButt1']/button[1]
   Sleep  3
-  Click Element         xpath//div[@id='primefacesmessagedlg']/div[1]/a/span
+  Click Element         xpath=//div[@id='primefacesmessagedlg']/div[1]/a/span
   Sleep  1
 
 скасувати цінову пропозицію
@@ -536,7 +535,7 @@ Change_date_to_month
   Sleep  2
   Run keyword if   '${TEST NAME}' == 'Можливість змінити повторну цінову пропозицію до 50000'     Змінити до 50000
   Run keyword if   '${TEST NAME}' != 'Можливість змінити повторну цінову пропозицію до 10'        Змінити до 10
-  sleep  2
+   sleep  2
   Click Element                  xpath=//span[@class='ui-button-text ui-c'][./text()='Відкрити детальну інформацію']
   Capture Page Screenshot
 
@@ -545,7 +544,6 @@ Change_date_to_month
 
 Змінити до 10
   Input text      id=mForm:propsRee:2:data:amount    10
-
 
 Задати питання
   [Arguments]  @{ARGUMENTS}
@@ -566,7 +564,7 @@ Change_date_to_month
   Click Element    xpath=//button[@id='mForm:btnQ']
   Capture Page Screenshot
 
-обновити сторінку з тендером
+оновити сторінку з тендером
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} = username
@@ -589,12 +587,12 @@ Change_date_to_month
   Click Element        xpath=//div[@id='mForm:data_paginator_bottom']/span[5]
   sleep  2
   ${return_value}=   отримати тест із поля і показати на сторінці   questions[0].title
-#  ${return_value}=   Convert To Lowercase   ${return_value}
+  ${return_value}=   Convert To Lowercase   ${return_value}
   [return]   ${return_value}
 
 отримати інформацію про questions[0].description
   ${return_value}=   отримати тест із поля і показати на сторінці   questions[0].description
-#  ${return_value}=   Convert To Lowercase   ${return_value}
+  ${return_value}=   Convert To Lowercase   ${return_value}
   [return]   ${return_value}
 
 отримати інформацію про questions[0].date
