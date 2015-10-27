@@ -19,8 +19,6 @@ ${viewer}   Tender_Viewer
 
 ${LOAD_USERS}      ["${tender_owner}", "${provider}", "${provider1}", "${viewer}"]
 
-${question_id}   0
-
 *** Test Cases ***
 Можливість оголосити однопредметний тендер
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер

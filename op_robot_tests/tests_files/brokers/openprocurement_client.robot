@@ -3,7 +3,6 @@ Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
 Library  Selenium2Screenshots
 
 ***Variables***
-${question_id}   0
 
 *** Keywords ***
 Отримати internal id по UAid
