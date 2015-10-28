@@ -1,4 +1,4 @@
-*** Setting ***
+*** Settings ***
 Library         op_robot_tests.tests_files.service_keywords
 Library         String
 Library         Collections
@@ -10,15 +10,10 @@ Suite Setup     TestSuiteSetup
 Suite Teardown  Close all browsers
 
 *** Variables ***
-${mode}  multi
-${tender_dump_id}    0
-${item_id}       0
-${question_id}   0
+${mode}         multi
 
-${tender_owner}  Tender_Owner
-${provider}   Tender_User
-${viewer}   Tender_Viewer
-${LOAD_USERS}      ["${tender_owner}", "${provider}", "${viewer}"]
+${role}         viewer
+${broker}       Quinta
 
 *** Test Cases ***
 Можливість оголосити багатопредметний тендер

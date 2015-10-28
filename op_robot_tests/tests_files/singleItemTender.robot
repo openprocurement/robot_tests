@@ -1,4 +1,4 @@
-*** Setting ***
+*** Settings ***
 Library         op_robot_tests.tests_files.service_keywords
 Library         String
 Library         Collections
@@ -10,18 +10,12 @@ Suite Setup     TestSuiteSetup
 Suite Teardown  Close all browsers
 
 *** Variables ***
-${tender_dump_id}    0
-${mode}       single
+${mode}         single
 
-${tender_owner}  Tender_Owner
-${provider}   Tender_User
-${provider1}   Tender_User1
-${viewer}   Tender_Viewer
+${role}         viewer
+${broker}       Quinta
 
-${LOAD_USERS}      ["${tender_owner}", "${provider}", "${provider1}", "${viewer}"]
-
-${item_id}       0
-${question_id}   0
+${question_id}  0
 
 *** Test Cases ***
 Можливість оголосити однопредметний тендер
@@ -119,75 +113,75 @@ ${question_id}   0
 
 Відображення опису позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[${item_id}].description
+  Звірити поле тендера   ${viewer}  items[0].description
 
 Відображення дати доставки позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити дату тендера  ${viewer}  items[${item_id}].deliveryDate.endDate
+  Звірити дату тендера  ${viewer}  items[0].deliveryDate.endDate
 
 Відображення координат широти доставки позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[${item_id}].deliveryLocation.latitude
+  Звірити поле тендера   ${viewer}  items[0].deliveryLocation.latitude
 
 Відображення координат довготи доставки позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[${item_id}].deliveryLocation.longitude
+  Звірити поле тендера   ${viewer}  items[0].deliveryLocation.longitude
 
 Відображення назви нас. пункту доставки позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[${item_id}].deliveryAddress.countryName
+  Звірити поле тендера   ${viewer}  items[0].deliveryAddress.countryName
 
 Відображення пошт. коду доставки позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[${item_id}].deliveryAddress.postalCode
+  Звірити поле тендера   ${viewer}  items[0].deliveryAddress.postalCode
 
 Відображення регіону доставки позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[${item_id}].deliveryAddress.region
+  Звірити поле тендера   ${viewer}  items[0].deliveryAddress.region
 
 Відображення locality адреси доставки позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[${item_id}].deliveryAddress.locality
+  Звірити поле тендера   ${viewer}  items[0].deliveryAddress.locality
 
 Відображення вулиці доставки позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[${item_id}].deliveryAddress.streetAddress
+  Звірити поле тендера   ${viewer}  items[0].deliveryAddress.streetAddress
 
 Відображення схеми класифікації позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[${item_id}].classification.scheme
+  Звірити поле тендера   ${viewer}  items[0].classification.scheme
 
 Відображення ідентифікатора класифікації позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[${item_id}].classification.id
+  Звірити поле тендера   ${viewer}  items[0].classification.id
 
 Відображення опису класифікації позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[${item_id}].classification.description
+  Звірити поле тендера   ${viewer}  items[0].classification.description
 
 Відображення схеми додаткової класифікації позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[${item_id}].additionalClassifications[0].scheme
+  Звірити поле тендера   ${viewer}  items[0].additionalClassifications[0].scheme
 
 Відображення ідентифікатора додаткової класифікації позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[${item_id}].additionalClassifications[0].id
+  Звірити поле тендера   ${viewer}  items[0].additionalClassifications[0].id
 
 Відображення опису додаткової класифікації позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[${item_id}].additionalClassifications[0].description
+  Звірити поле тендера   ${viewer}  items[0].additionalClassifications[0].description
 
 Відображення назви одиниці позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[${item_id}].unit.name
+  Звірити поле тендера   ${viewer}  items[0].unit.name
 
 Відображення коду одиниці позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[${item_id}].unit.code
+  Звірити поле тендера   ${viewer}  items[0].unit.code
 
 Відображення кількості позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[${item_id}].quantity
+  Звірити поле тендера   ${viewer}  items[0].quantity
 
 #######
 #Відображення анонімного питання без відповідей

@@ -1,4 +1,4 @@
-*** Setting ***
+*** Settings ***
 Library  Selenium2Screenshots
 Library  String
 Library  DateTime
@@ -6,7 +6,6 @@ Library  DateTime
 *** Variables ***
 ${mail}          test@mail.com
 ${telephone}     +380976535447
-
 
 *** Keywords ***
 Підготувати клієнт для користувача

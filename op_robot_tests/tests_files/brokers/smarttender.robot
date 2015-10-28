@@ -1,8 +1,7 @@
-*** Setting ***
+*** Settings ***
 Library  Selenium2Screenshots
 Library  String
 Library  DateTime
-
 
 *** Keywords ***
 Підготувати клієнт для користувача

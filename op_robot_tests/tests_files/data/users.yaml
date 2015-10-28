@@ -2,21 +2,21 @@ users:
     Tender_Owner:
         api_key: e9c3ccb8e8124f26941d5f9639a4ebc3
         broker: Quinta
-    Tender_Viewer:
-        broker: Quinta
-        api_key: ""
     Tender_User:
         api_key: e9c3ccb8e8124f26941d5f9639a4ebc3
         broker: Quinta
     Tender_User1:
         api_key: e9c3ccb8e8124f26941d5f9639a4ebc3
         broker: Quinta
+    Tender_Viewer:
+        broker: Quinta
+        api_key: ""
     E-tender_Owner:
         broker: E-tender
         username: E-tendertest
         homepage: "http://bid.uat.e-tender.biz/#/profile"
         login: Misha2
-        password: Password1 
+        password: Password1
         browser:  chrome
         position:  [0, 0]
         size:  [800, 800]
@@ -58,7 +58,7 @@ users:
         broker: Netcast
         username: Netcasttest
         homepage: "http://dz2.byustudio.in.ua"
-        login: halyna.khimka@gmail.com 
+        login: halyna.khimka@gmail.com
         password: JHO5VUp5n
         browser: chrome
         position:  [0, 0]
@@ -75,7 +75,7 @@ users:
         username: Newtendtest
         homepage: "http://dev23.newtend.com/openprocurement/#/home/page/1"
         login: openprocurement@mailinator.com
-        password: 123123 
+        password: 123123
         browser:  chrome
         position:  [0, 0]
         size:  [1200, 1200]
