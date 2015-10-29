@@ -24,15 +24,19 @@ import calendar
 
 TZ = timezone(os.environ['TZ'] if 'TZ' in os.environ else 'Europe/Kiev')
 
+
 def get_now():
     return datetime.now(TZ)
 
+
 def get_date():
-	return get_now().isoformat()
+    return get_now().isoformat()
+
 
 def get_file_contents(path):
     with open(path, 'r') as f:
         return unicode(f.read()) or u''
+
 
 def change_state(arguments):
     try:
@@ -42,21 +46,24 @@ def change_state(arguments):
     except IndexError:
         return "pass"
 
+
 def prepare_prom_test_tender_data():
     return munchify({'data': prom_test_tender_data()})
 
+
 def compare_date(data1, data2):
-    data1=parse(data1)
-    data2=parse(data2)
+    data1 = parse(data1)
+    data2 = parse(data2)
     if data1.tzinfo is None:
         data1 = TZ.localize(data1)
     if data2.tzinfo is None:
         data2 = TZ.localize(data2)
 
-    delta = (data1-data2).total_seconds()
+    delta = (data1 - data2).total_seconds()
     if abs(delta) > 60:
-       return False
+        return False
     return True
+
 
 def log_object_data(data, file_name=None, format="yaml"):
     """Log object data in pretty format (JSON or YAML)
@@ -89,10 +96,12 @@ def log_object_data(data, file_name=None, format="yaml"):
         with open(os.path.join(output_dir, file_name + '.' + format), "w") as file_obj:
             file_obj.write(data)
 
+
 def convert_date_to_prom_format(isodate):
-    iso_dt=parse_date(isodate)
+    iso_dt = parse_date(isodate)
     day_string = iso_dt.strftime("%d.%m.%Y %H:%M")
-    return  day_string
+    return day_string
+
 
 def load_initial_data_from(file_name):
     if not os.path.exists(file_name):
