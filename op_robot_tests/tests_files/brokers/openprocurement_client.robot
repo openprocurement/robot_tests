@@ -2,10 +2,6 @@
 Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
 Library  Selenium2Screenshots
 
-***Variables***
-${item_id}       0
-${question_id}   0
-
 *** Keywords ***
 Отримати internal id по UAid
   [Arguments]  @{ARGUMENTS}
@@ -132,7 +128,6 @@ ${question_id}   0
   Set_To_Object    ${TENDER_DATA.data}   items  ${items}
   ${TENDER_DATA}=  set_access_key  ${TENDER_DATA}  ${USERS.users['${ARGUMENTS[0]}'].access_token}
   ${TENDER_DATA}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_tender  ${TENDER_DATA}
-
 
 Задати питання
   [Documentation]

@@ -1,41 +1,72 @@
+Quinta:
+    keywords_file: openprocurement_client
+    timeout_on_wait: 0
+    period_interval: 2
+    roles:
+        tender_owner:   Tender_Owner
+        provider:       Tender_User
+        provider1:      Tender_User1
+        viewer:         Tender_Viewer
 E-tender:
     keywords_file: etender
     url: http://bid.uat.e-tender.biz/
-    timeout_on_wait:  15
+    timeout_on_wait: 15
     period_interval: 2
-Prom:
-    keywords_file: prom
-    url: http://dz.dz-test.net/
-    timeout_on_wait:  15
-    period_interval: 31
-SmartTender:
-    keywords_file: smarttender
-    url: http://smarttender.biz/tenders
-    timeout_on_wait:  15
-    period_interval: 2
-Quinta:
-    keywords_file: openprocurement_client
-    timeout_on_wait:  0
-    period_interval: 2
-Publicbid:
-    keywords_file: publicbid
-    url: https://public-bid.com.ua/
-    timeout_on_wait:  15
-    period_interval: 2
+    roles:
+        tender_owner:   E-tender_Owner
+        provider:       E-tender_Provider
+        provider1:      E-tender_Provider1
+        viewer:         E-tender_Viewer
 Netcast:
     keywords_file: netcast
     url: "http://dz2.byustudio.in.ua"
     login: admin
     password: uStudio
-    timeout_on_wait:  15
+    timeout_on_wait: 15
     period_interval: 2
+    roles:
+        tender_owner:   Netcast_Owner
+        provider:       Netcast_Provider
+        viewer:         Netcast_Viewer
 Newtend:
     keywords_file: newtend
     url: http://openprocurement:test@dev23.newtend.com
-    timeout_on_wait:  15
+    timeout_on_wait: 15
     period_interval: 2
+    roles:
+        tender_owner:   Newtend_Owner
+        provider:       Newtend_Provider
+        viewer:         Newtend_Viewer
+Prom:
+    keywords_file: prom
+    url: http://dz.dz-test.net/
+    timeout_on_wait: 15
+    period_interval: 31
+    roles:
+        tender_owner:   Prom_Owner
+        viewer:         Prom_Viewer
+Publicbid:
+    keywords_file: publicbid
+    url: https://public-bid.com.ua/
+    timeout_on_wait: 15
+    period_interval: 2
+    roles:
+        tender_owner:   Publicbid_Owner
+        provider:       Publicbid_Provider
+        provider1:      Publicbid_Provider1
+        viewer:         Publicbid_Viewer
+SmartTender:
+    keywords_file: smarttender
+    url: http://smarttender.biz/tenders
+    timeout_on_wait: 15
+    period_interval: 2
+    roles:
+        viewer:         SmartTender_Viewer
 uatender:
     keywords_file: uatender
     url: http://dev.zakupki.com.ua/
     timeout_on_wait:  15
     period_interval: 2   
+    roles:
+        tender_owner:   Ua_Owner
+        viewer:         Ua_Viewer

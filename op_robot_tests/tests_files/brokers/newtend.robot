@@ -19,7 +19,7 @@ ${locator.items[0].deliveryAddress}                             id=deliveryAddre
 ${locator.items[0].deliveryDate.endDate}                        id=end-date-delivery
 ${locator.items[0].description}                                 xpath=//div[@ng-bind="item.description"]
 ${locator.items[0].classification.scheme}                       id=classifier
-${locator.items[0].classification.scheme.title}                 xpath=//label[contains(., "Классификатор CPV")]
+${locator.items[0].classification.scheme.title}                 xpath=//label[contains(., "Классификатор CPV")]|//label[contains(., "Класифікатор CPV")]
 ${locator.items[0].additional_classification[0].scheme}         id=classifier2
 ${locator.items[0].additional_classification[0].scheme.title}   xpath=//label[@for="classifier2"]
 ${locator.items[0].quantity}                                    id=quantity
@@ -31,7 +31,6 @@ ${locator.QUESTIONS[0].title}         xpath=//span[@class="user ng-binding"]
 ${locator.QUESTIONS[0].description}   xpath=//span[@class="question-description ng-binding"]
 ${locator.QUESTIONS[0].date}          xpath=//span[@class="date ng-binding"]
 ${locator.questions[0].answer}        xpath=//span[@class='answer-description ng-binding']
-
 
 *** Keywords ***
 Підготувати дані для оголошення тендера
@@ -83,7 +82,7 @@ Login
   Go To                              ${USERS.users['${username}'].homepage}
   Wait Until Page Contains Element   xpath=//a[@href="#/create-tender"]   100
   Click Link                         xpath=//a[@href="#/create-tender"]
-  Wait Until Page Contains           Новый тендер   100
+  Wait Until Page Contains           Новий тендер   100
 # Input fields tender
   Input text   name=tenderName       ${title}
   Input text   ${locator.edit.description}   ${description}
@@ -246,7 +245,6 @@ Set datetime
   Click Element                      xpath=(//a[@class="row tender-info ng-scope"])
   Wait Until Page Contains Element   xpath=//a[@class="ng-binding ng-scope"]|//span[@class="ng-binding ng-scope"]   30
 
-
 отримати інформацію із тендера
   [Arguments]  @{ARGUMENTS}
   [Documentation]
@@ -388,8 +386,10 @@ Set datetime
 ##item
 отримати інформацію про items[0].unit.name
   ${unit_name}=   отримати текст із поля і показати на сторінці   items[0].unit.name
-  ${unit_name}=   Run Keyword If   '${unit_name}' == 'килограммы'   Convert To String   кілограм
-  [return]  ${unit_name}
+  log  ${unit_name}
+  ${ret}=   Run Keyword If   '${unit_name}' == 'килограммы'   Convert To String   кілограм
+  ${ret}=   Run Keyword If   '${unit_name}' == 'кілограми'    Convert To String   кілограм
+  [return]  ${ret}
 
 отримати інформацію про items[0].unit.code
   Fail  Не реалізований функціонал
@@ -430,7 +430,6 @@ Set datetime
 забрати позицію
   Click Element   xpath=//a[@title="Добавить лот"]/preceding-sibling::a
 
-
 Задати питання
   [Arguments]  @{ARGUMENTS}
   [Documentation]
@@ -441,7 +440,7 @@ Set datetime
   ${description}=  Get From Dictionary  ${ARGUMENTS[2].data}  description
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
   newtend.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
-  Click Element   xpath=//a[contains(text(), "Уточнения")]
+  Click Element   xpath=//a[contains(text(), "Уточнения")]|//a[contains(text(), "Уточнення")]
   Wait Until Page Contains Element   xpath=//button[@class="btn btn-lg btn-default question-btn ng-binding ng-scope"]   20
   Click Element   xpath=//button[@class="btn btn-lg btn-default question-btn ng-binding ng-scope"]
   Wait Until Page Contains Element   xpath=//input[@ng-model="title"]   10
@@ -465,10 +464,11 @@ Set datetime
   Wait Until Page Contains   ${ARGUMENTS[1]}   20
 
 отримати інформацію про QUESTIONS[0].title
-  Wait Until Page Contains Element   xpath=//span[contains(text(), "Уточнения")]   20
+  Wait Until Page Contains Element   xpath=//span[contains(text(), "Уточнения")]|//span[contains(text(), "Уточнення")]   20
   Sleep  10
-  Click Element              xpath=//span[contains(text(), "Уточнения")]
-  Wait Until Page Contains   Вы не можете задавать вопросы    40
+  Click Element              xpath=//span[contains(text(), "Уточнения")]|//span[contains(text(), "Уточнення")]
+  #Wait Until Page Contains   Вы не можете задавать вопросы    40
+  Wait Until Page Contains   Ви не можете задавати питання    40
   ${resp}=   отримати текст із поля і показати на сторінці   QUESTIONS[0].title
   [return]  ${resp}
 
@@ -512,8 +512,8 @@ Change_day_to_month
   Capture Page Screenshot
 
 отримати інформацію про questions[0].answer
-  Wait Until Page Contains Element   xpath=//span[contains(text(), "Уточнения")]   20
-  Click Element              xpath=//span[contains(text(), "Уточнения")]
+  Wait Until Page Contains Element   xpath=//span[contains(text(), "Уточнения")]|//span[contains(text(), "Уточнення")]   20
+  Click Element              xpath=//span[contains(text(), "Уточнения")]|//span[contains(text(), "Уточнення")]
   Wait Until Page Contains Element   ${locator.questions[0].answer}   20
   ${questionsAnswer}=   отримати текст із поля і показати на сторінці   questions[0].answer
   [return]  ${questionsAnswer}

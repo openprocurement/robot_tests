@@ -1,4 +1,4 @@
-*** Setting ***
+*** Settings ***
 Library  Selenium2Screenshots
 Library  String
 Library  DateTime
@@ -40,7 +40,6 @@ ${locator.questions[0].date}                                   xpath=//tr[@class
 #${locator.items[0].deliveryAddress.locality}                   xpath=
 #${locator.items[0].deliveryAddress.streetAddress}              xpath=
 #${locator.minimalStep.amount}                                  xpath=
-
 *** Keywords ***
 Підготувати клієнт для користувача
   [Arguments]  @{ARGUMENTS}
@@ -139,8 +138,8 @@ ${locator.questions[0].date}                                   xpath=//tr[@class
   Sleep   20
   ${tender_UAid}=  Get Text           id=mForm:nBid
   ${tender_UAid}=  Get Substring  ${tender_UAid}  19
-  ${Ids}       Convert To String  ${tender_UAid}
-  [return]  ${Ids}
+  Run Keyword if   '${tender_UAid}' == ''   Fail   Ua_id порожній. Перевірте чи завантажується файл. Розміщення файлу прив"язане до папок проекту.
+  [return]  ${tender_UAid}
 
 Додати предмет
   [Arguments]  @{ARGUMENTS}
@@ -209,8 +208,10 @@ ${locator.questions[0].date}                                   xpath=//tr[@class
   Input Text   xpath=(//div[@class='ui-column-customfilter'])[1]/input   ${ARGUMENTS[1]}
   Sleep  3
   Click Element   id=mForm:datalist:nBidClmn
-  Sleep  3
+  Sleep  5
   Click Element     xpath=//div[@class='ui-row-toggler ui-icon ui-icon-circle-triangle-e']
+  sleep  10
+  Run keyword and ignore error   Click Element   xpath=//div[@class='ui-row-toggler ui-icon ui-icon-circle-triangle-e']
   sleep  1
   Capture Page Screenshot
 
@@ -226,7 +227,7 @@ ${locator.questions[0].date}                                   xpath=//tr[@class
   ${description}=   Get From Dictionary   ${tender_data.data}               description
   Selenium2Library.Switch Browser   ${ARGUMENTS[0]}
   publicbid.Пошук тендера по ідентифікатору     ${ARGUMENTS[0]}    ${ARGUMENTS[2]}
-  Sleep  2
+  Sleep  10
   Click Element   xpath=//span[@id='mForm:datalist:0:gButt1']/button[1]
   Wait Until Page Contains Element   id=mForm:data:docFile_input
   Choose File                         id=mForm:data:docFile_input     ${file_path}

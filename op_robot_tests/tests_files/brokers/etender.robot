@@ -145,7 +145,7 @@ ${locator.questions[0].answer}                                 xpath=(//div[@tex
   Click Element   xpath=//div[contains(@class, 'form-actions')]//button[@type='submit']
   Sleep  1
   Wait Until Page Contains    [ТЕСТУВАННЯ]   10
-  Sleep   70
+  Sleep   20
   Click Element   xpath=//*[text()='${title}']
   Wait Until Page Contains Element   xpath=//div[contains(@class, "panel-heading")]   20
   Sleep  2
@@ -189,38 +189,39 @@ ${locator.questions[0].answer}                                 xpath=(//div[@tex
   \   Click Element   xpath=.//*[@id='myform']/tender-form/div/button
   \   Додати предмет   ${items[${INDEX}]}   ${INDEX}
 
-Завантажити документ
-  [Arguments]  @{ARGUMENTS}
-  [Documentation]
-  ...    ${ARGUMENTS[0]} =  username
-  ...    ${ARGUMENTS[1]} =  ${file_path}
-  ...    ${ARGUMENTS[2]} =  ${TENDER_UAID}
-#  ${filepath}=   local_path_to_file   TestDocument.docx
-#  Selenium2Library.Switch Browser   ${ARGUMENTS[0]}
-#  etender.Пошук тендера по ідентифікатору     ${ARGUMENTS[0]}    ${ARGUMENTS[2]}
-#  DEBUG
-#  Wait Until Page Contains Element   xpath=//button[text()="Завантажити"]    10
-#  Choose File   xpath=//button[text()="Завантажити"]     ${filepath}
-  Fail   Поки не ралізовано тест
+Клацнути і дочекатися
+  [Arguments]  ${click_locator}  ${wanted_locator}  ${timeout}
+  Click Link  ${click_locator}
+  Wait Until Page Contains Element  ${wanted_locator}  ${timeout}
+
+Шукати і знайти
+  Клацнути і дочекатися  jquery=a[ng-click='search()']  jquery=a[href^="#/tenderDetailes"]  5
 
 Пошук тендера по ідентифікатору
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  ${TENDER_UAID}
-  ...      ${ARGUMENTS[2]} ==  id
-  Selenium2Library.Switch browser   ${ARGUMENTS[0]}
+  Switch browser   ${ARGUMENTS[0]}
   Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
-#  Wait Until Page Contains   Список закупівель    10
+  Wait Until Page Contains   Прозорі закупівлі    10
   sleep  1
-  Input Text   xpath=(//div[@class='input-group']/input)[1]   ${ARGUMENTS[1]}
-  Sleep  2
-  Click Link  jquery=a[ng-click='search()']
-  sleep  2
+  Input Text  jquery=input[ng-change='searchChange()']  ${ARGUMENTS[1]}
+  sleep  1
+  Wait Until Keyword Succeeds  300 s  0 s  Шукати і знайти
+  sleep  3
   Click Link    jquery=a[href^="#/tenderDetailes"]
   Wait Until Page Contains    ${ARGUMENTS[1]}   10
   sleep  1
   Capture Page Screenshot
+
+Завантажити документ
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  ${TENDER_UAID}
+  ...      ${ARGUMENTS[2]} ==  ${Complain}
+  Fail   Тест не написаний
 
 Подати скаргу
   [Arguments]  @{ARGUMENTS}
@@ -245,8 +246,9 @@ ${locator.questions[0].answer}                                 xpath=(//div[@tex
   ...      ${ARGUMENTS[1]} ==  ${TENDER_UAID}
   ...      ${ARGUMENTS[2]} ==  ${test_bid_data}
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
-  ${bid}=        Get From Dictionary   ${INITIAL_TENDER_DATA.data.value}         amount
+  ${bid}=        Get From Dictionary   ${ARGUMENTS[2].data.value}         amount
   etender.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+  Wait Until Page Contains          Інформація про процедуру закупівлі    10
   Wait Until Page Contains Element          id=amount   10
   Input text    id=amount   ${bid}
   Click Element               xpath=//button[contains(@class, 'btn btn-success')][./text()='Реєстрація пропозиції']
@@ -404,10 +406,6 @@ ${locator.questions[0].answer}                                 xpath=(//div[@tex
   ${return_value}=   Get Text  ${locator.${fieldname}}
   [return]  ${return_value}
 
-#Отримати інформацію про tenderId
-#  ${return_value}=   Отримати тест із поля і показати на сторінці   tenderId
-#  [return]  ${return_value.split(' ')[1]}
-
 Отримати інформацію про title
   ${return_value}=   Отримати тест із поля і показати на сторінці   title
   [return]  ${return_value}
@@ -423,7 +421,7 @@ ${locator.questions[0].answer}                                 xpath=(//div[@tex
 
 Отримати інформацію про value.amount
   ${return_value}=   Отримати тест із поля і показати на сторінці   value.amount
-  ${return_value}=   Get Substring   ${return_value}   0   6
+  ${return_value}=   Evaluate   "".join("${return_value}".split(' ')[:-3])
   ${return_value}=   Convert To Number   ${return_value}
   [return]  ${return_value}
 
@@ -444,22 +442,22 @@ ${locator.questions[0].answer}                                 xpath=(//div[@tex
   [return]  ${return_value}
 
 Отримати інформацію про tenderPeriod.startDate
-  ${return_value}=   Отримати тест із поля і показати на сторінці   tenderPeriod.startDate
+  ${return_value}=   Отримати тест із поля і показати на сторінці  tenderPeriod.startDate
   ${return_value}=   Change_date_to_month   ${return_value}
   [return]  ${return_value}
 
 Отримати інформацію про tenderPeriod.endDate
-  ${return_value}=   Отримати тест із поля і показати на сторінці   tenderPeriod.endDate
+  ${return_value}=   Отримати тест із поля і показати на сторінці  tenderPeriod.endDate
   ${return_value}=   Change_date_to_month   ${return_value}
   [return]  ${return_value}
 
 Отримати інформацію про enquiryPeriod.startDate
-  ${return_value}=   Отримати тест із поля і показати на сторінці   enquiryPeriod.startDate
+  ${return_value}=   Отримати тест із поля і показати на сторінці  enquiryPeriod.startDate
   ${return_value}=   Change_date_to_month   ${return_value}
   [return]  ${return_value}
 
 Отримати інформацію про enquiryPeriod.endDate
-  ${return_value}=   Отримати тест із поля і показати на сторінці   enquiryPeriod.endDate
+  ${return_value}=   Отримати тест із поля і показати на сторінці  enquiryPeriod.endDate
   ${return_value}=   Change_date_to_month   ${return_value}
   [return]  ${return_value}
 

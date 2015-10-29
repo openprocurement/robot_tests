@@ -2,40 +2,40 @@ users:
     Tender_Owner:
         api_key: e9c3ccb8e8124f26941d5f9639a4ebc3
         broker: Quinta
-    Tender_Viewer:
-        broker: Quinta
-        api_key: ""
     Tender_User:
         api_key: e9c3ccb8e8124f26941d5f9639a4ebc3
         broker: Quinta
     Tender_User1:
         api_key: e9c3ccb8e8124f26941d5f9639a4ebc3
         broker: Quinta
+    Tender_Viewer:
+        broker: Quinta
+        api_key: ""
     E-tender_Owner:
         broker: E-tender
         username: E-tendertest
         homepage: "http://bid.uat.e-tender.biz/#/login"
         login: Misha2
-        password: Password1 
-        browser:  firefox
+        password: Password1
+        browser:  chrome
         position:  [0, 0]
         size:  [800, 800]
-    E-tender_Provider1:
+    E-tender_Provider:
         broker: E-tender
         username: E-tendertest
         homepage: "http://bid.uat.e-tender.biz/#/login"
         login: st_org
         password: 12345678
-        browser: firefox
+        browser: chrome
         position: [700, 0]
         size: [800, 800]
-    E-tender_Provider2:
+    E-tender_Provider1:
         broker: E-tender
         username: E-tendertest
         homepage: "http://bid.uat.e-tender.biz/#/login"
         login: provider2
         password: Qa123456
-        browser:  firefox
+        browser:  chrome
         position:  [700, 0]
         size:  [800, 800]
     E-tender_Viewer:
@@ -44,7 +44,7 @@ users:
         homepage: "http://bid.uat.e-tender.biz/#/login"
         login: provider2
         password: Qa123456
-        browser:  firefox
+        browser:  chrome
         position:  [900, 0]
         size:  [1000, 750]
     Netcast_Owner:
@@ -56,11 +56,11 @@ users:
         browser: chrome
         position:  [0, 0]
         size:  [700, 800]
-    Netcast_Provider1:
+    Netcast_Provider:
         broker: Netcast
         username: Netcasttest
         homepage: "http://dz2.byustudio.in.ua"
-        login: halyna.khimka@gmail.com 
+        login: halyna.khimka@gmail.com
         password: JHO5VUp5n
         browser: chrome
         position:  [0, 0]
@@ -77,24 +77,24 @@ users:
         username: Newtendtest
         homepage: "http://dev23.newtend.com/openprocurement/#/home/page/1"
         login: openprocurement@mailinator.com
-        password: 123123 
-        browser:  firefox
+        password: 123123
+        browser:  chrome
         position:  [0, 0]
         size:  [1200, 1200]
-    Newtend_Provider1:
+    Newtend_Provider:
         broker: Newtend
         username: Newtendtest
         homepage: "http://dev23.newtend.com/openprocurement/tenders"
         login: openprocboss@mailinator.com
         password: 123123
-        browser:  firefox
+        browser:  chrome
         position:  [700, 0]
         size:  [800, 700]
     Newtend_Viewer:
         broker: Newtend
         username: Newtendtest
         homepage: "http://dev23.newtend.com/openprocurement/tenders"
-        browser:  firefox
+        browser:  chrome
         position:  [800, 400]
         size:  [800, 800]
     Prom_Owner:
@@ -115,26 +115,16 @@ users:
         homepage: "https://public-bid.com.ua/test/"
         login: yaroslav1boyko@gmail.com
         password: Password1
-        browser: firefox
+        browser: chrome
         position: [0, 0]
         size: [900, 800]
-    Publicbid_Viewer:
-        broker: Publicbid
-        username: Publicbid
-        homepage: "https://public-bid.com.ua/test/"
-        login: yaroslav1boyko@gmail.com
-        password: Password1
-        browser:  firefox
-        position:  [740, 0]
-        size:  [900, 800]
     Publicbid_Provider:
         broker: Publicbid
         username: Publicbid
         homepage: "https://public-bid.com.ua/test/"
         login: yaroslav1boyko@gmail.com
-        #login: mail_provider@i.ua
         password: Password1
-        browser: firefox
+        browser: chrome
         position: [750, 740]
         size: [900, 800]
     Publicbid_Provider1:
@@ -143,9 +133,18 @@ users:
         homepage: "https://public-bid.com.ua/test/"
         login: rsavchuk@softserveinc.com
         password: Password1
-        browser: firefox
+        browser: chrome
         position: [750, 0]
         size: [900, 800]
+    Publicbid_Viewer:
+        broker: Publicbid
+        username: Publicbid
+        homepage: "https://public-bid.com.ua/test/"
+        login: yaroslav1boyko@gmail.com
+        password: Password1
+        browser:  chrome
+        position:  [740, 0]
+        size:  [900, 800]
     SmartTender_Viewer:
         broker: SmartTender
         username: SmartTendertest
@@ -158,7 +157,7 @@ users:
         homepage: "http://dev.zakupki.com.ua/"
         login: vbilos@softserveinc.com
         password: Qw123456
-        browser: firefox
+        browser: chrome
         position: [0, 0]
         size: [740, 550]
     Ua_Viewer:
@@ -167,6 +166,6 @@ users:
         homepage: "http://dev.zakupki.com.ua/"
         login: vbilos@softserveinc.com
         password: Qw123456
-        browser: firefox
+        browser: chrome
         position: [750, 0]
         size: [740, 550]

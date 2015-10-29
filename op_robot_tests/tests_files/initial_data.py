@@ -149,7 +149,7 @@ def prom_test_tender_data():
         {
             "description": fake.catch_phrase(),
             "deliveryDate": {
-                "startDate": (now + timedelta(days=4)).isoformat(),
+				"startDate": (now + timedelta(days=4)).isoformat(),
                 "endDate": (now + timedelta(days=5)).isoformat()
             },
             "deliveryLocation": {
@@ -221,15 +221,15 @@ def test_tender_data_multiple_lots(period_interval=2):
 	      "name": fake.name(),
 	      "telephone": fake.phone_number()
 	  }
-    },
-    "value": {
-	  "amount": 50000,
+      },
+      "value": {
+	  "amount": 50000.99,
 	  "currency": u"UAH"
       },
       "minimalStep": {
-        "amount": 100,
-        "currency": u"UAH"
-    },
+	  "amount": 100.1,
+	  "currency": u"UAH"
+      },
     "items": [
         {
             "description": fake.catch_phrase(),

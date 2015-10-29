@@ -1,4 +1,4 @@
-*** Setting ***
+*** Settings ***
 Resource  resource.robot
 Library  op_robot_tests.tests_files.service_keywords
 Library  String
@@ -8,32 +8,45 @@ Library  DateTime
 Library  Selenium2Screenshots
 Library  DebugLibrary
 Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
-*** Variables ***
-
 
 *** Keywords ***
 TestSuiteSetup
-    Завантажуємо дані про користувачів і майданчики  ${LOAD_USERS}
+    Завантажуємо дані про користувачів і майданчики
     Підготовка початкових даних
 
+Set Suite Variable With Default Value
+  [Arguments]  ${suite_var}  ${def_value}
+  ${tmp}=  Get Variable Value  ${${suite_var}}  ${def_value}
+  Set Suite Variable  ${${suite_var}}  ${tmp}
+
 Завантажуємо дані про користувачів і майданчики
-  [Arguments]  ${active_users}
-  log  ${active_users}
+  Log  ${broker}
+  Log  ${role}
 
   ${file_path}=  Get Variable Value  ${BROKERS_FILE}  brokers.yaml
   ${BROKERS}=  load_initial_data_from  ${file_path}
   log  ${BROKERS}
   Set Global Variable  ${BROKERS}
+
   ${brokers_list}=    Get Dictionary Items    ${BROKERS}
   log  ${brokers_list}
+
   ${file_path}=  Get Variable Value  ${USERS_FILE}  users.yaml
   ${USERS}=  load_initial_data_from  ${file_path}
   Set Global Variable  ${USERS}
+
+  Set Suite Variable With Default Value  ${role}  ${BROKERS['${broker}'].roles.${role}}
+  Set Suite Variable With Default Value  tender_owner  Tender_Owner
+  Set Suite Variable With Default Value  provider      Tender_User
+  Set Suite Variable With Default Value  provider1     Tender_User1
+  Set Suite Variable With Default Value  viewer        Tender_Viewer
+  ${active_users}=  Create Dictionary  tender_owner  ${tender_owner}  provider  ${provider}  provider1  ${provider1}  viewer  ${viewer}
+
   ${users_list}=    Get Dictionary Items    ${USERS.users}
   :FOR  ${username}  ${user_data}   IN  @{users_list}
   \  log  ${active_users}
   \  log  ${username}
-  \  ${status}=  Run Keyword And Return Status   List Should Contain Value  ${active_users}   ${username}
+  \  ${status}=  Run Keyword And Return Status   Dictionary Should Contain Value  ${active_users}   ${username}
   \  Run Keyword If   '${status}' == 'True'   Завантажуємо бібліотеку з реалізацією ${BROKERS['${USERS.users['${username}'].broker}'].keywords_file} майданчики
   \  Run Keyword If   '${status}' == 'True'   Викликати для учасника   ${username}  Підготувати клієнт для користувача
 
@@ -63,7 +76,6 @@ TestSuiteSetup
 
 Завантажуємо бібліотеку з реалізацією ${keywords_file} майданчики
   Import Resource  ${CURDIR}/brokers/${keywords_file}.robot
-
 
 ##################################################################################
 Дочекатись синхронізації з майданчиком
