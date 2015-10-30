@@ -32,9 +32,18 @@ ${broker}       Quinta
 
 Можливість подати скаргу на умови
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати скаргу на умови
+  [Documentation]    Користувач  ${USERS.users['${provider}'].broker}  намагається подати скаргу на умови оголошеної  закупівлі
   Викликати для учасника   ${provider}   Подати скаргу    ${TENDER['TENDER_UAID']}   ${COMPLAINTS[0]}
   ${LAST_MODIFICATION_DATE}=  Get Current Date
   Set Global Variable   ${LAST_MODIFICATION_DATE}
+
+Можливість побачити скаргу користувачем
+  [Tags]   ${USERS.users['${provider}'].broker}: Відображення основних даних оголошеного тендера
+  Викликати для учасника   ${provider}   Порівняти скаргу  ${TENDER['TENDER_UAID']}   ${COMPLAINTS[0]}
+
+Можливість побачити скаргу анонімом
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+  Викликати для учасника    ${viewer}  Порівняти скаргу  ${TENDER['TENDER_UAID']}   ${COMPLAINTS[0]}
 
 Можливість відхилити скаргу на умови
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість відхилити скаргу на умови

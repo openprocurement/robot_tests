@@ -37,21 +37,6 @@ ${question_id}  0
   Set To Dictionary  ${USERS.users['${tender_owner}']}   file_upload_process_data   ${file_upload_process_data}
   Log  ${USERS.users['${tender_owner}']}
 
-Можливість подати скаргу на умови
-  [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати скаргу на умови
-  [Documentation]    Користувач  ${USERS.users['${provider}'].broker}  намагається подати скаргу на умови оголошеної  закупівлі
-  Викликати для учасника   ${provider}   Подати скаргу    ${TENDER['TENDER_UAID']}   ${COMPLAINTS[0]}
-  ${LAST_MODIFICATION_DATE}=  Get Current Date
-  Set To Dictionary  ${TENDER}   LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
-
-Можливість побачити скаргу користувачем
-  [Tags]   ${USERS.users['${provider}'].broker}: Відображення основних даних оголошеного тендера
-  Викликати для учасника   ${provider}   Порівняти скаргу  ${TENDER['TENDER_UAID']}   ${COMPLAINTS[0]}
-
-Можливість побачити скаргу анонімом
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
-  Викликати для учасника    ${viewer}  Порівняти скаргу  ${TENDER['TENDER_UAID']}   ${COMPLAINTS[0]}
-
 Пошук однопредметного тендера по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
   Дочекатись синхронізації з майданчиком    ${viewer}
@@ -231,14 +216,6 @@ ${question_id}  0
   Викликати для учасника   ${viewer}   Оновити сторінку з тендером   ${TENDER['TENDER_UAID']}
   Звірити поле  ${viewer}   questions[${question_id}].answer    ${ANSWERS[${question_id}].data.answer}
 
-Можливість побачити скаргу користувачем під час періоду уточнень
-  [Tags]   ${USERS.users['${provider}'].broker}: Відображення основних даних оголошеного тендера
-  Викликати для учасника   ${provider}   Порівняти скаргу  ${TENDER['TENDER_UAID']}   ${COMPLAINTS[0]}
-
-Можливість побачити скаргу анонімом під час періоду уточнень
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
-  Викликати для учасника    ${viewer}  Порівняти скаргу  ${TENDER['TENDER_UAID']}   ${COMPLAINTS[0]}
-
 Подати цінову пропозицію bidder
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   Дочекатись дати початку прийому пропозицій
@@ -337,14 +314,6 @@ ${question_id}  0
   ${filepath}=   create_fake_doc
   ${bid_doc_upload}=  Викликати для учасника   ${provider1}   Завантажити документ в ставку  ${filepath}   ${TENDER['TENDER_UAID']}
   Set To Dictionary  ${USERS.users['${provider1}'].bidresponses}   bid_doc_upload   ${bid_doc_upload}
-
-Можливість побачити скаргу користувачем під час подачі пропозицій
-  [Tags]   ${USERS.users['${provider}'].broker}: Відображення основних даних оголошеного тендера
-  Викликати для учасника   ${provider}   Порівняти скаргу  ${TENDER['TENDER_UAID']}    ${COMPLAINTS[0]}
-
-Можливість побачити скаргу анонімом під час подачі пропозицій
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
-  Викликати для учасника    ${viewer}  Порівняти скаргу  ${TENDER['TENDER_UAID']}    ${COMPLAINTS[0]}
 
 Неможливість змінити цінову пропозицію до 50000 після закінчення прийому пропозицій
   [Tags]   ${USERS.users['${provider1}'].broker}: Неможливість змінити цінову пропозицію до 50000 після закінчення прийому пропозицій
