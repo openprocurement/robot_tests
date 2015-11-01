@@ -352,10 +352,22 @@ ${question_id}  0
   ${bid_doc_modified_failed}=  Викликати для учасника   ${provider1}   Змінити документ в ставці  shouldfail  ${filepath}  ${bidid}  ${docid}
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   bid_doc_modified_failed   ${bid_doc_modified_failed}
 
-Вичитати цінову пропозицію
-  sleep  120
-  [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
-  ${bidid}=  Get Variable Value  ${USERS.users['${provider1}'].bidresponses['resp'].data.id}
-  ${token}=  Get Variable Value  ${USERS.users['${provider1}'].bidresponses['resp'].access.token}
-  ${bids}=  Викликати для учасника   ${provider1}   Отримати пропозиції   ${TENDER['TENDER_UAID']}   ${bidid}   ${token}
-  log  ${bids}
+Вичитати посилання на аукціон
+  [Tags]  ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
+  Sleep  120
+  ${url}=  Викликати для учасника  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
+  Log  URL аукціону для глядача: ${url}
+
+Вичитати цінову пропозицію першим учасником
+  [Tags]  ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
+  ${bid}=  Викликати для учасника  ${provider}  Отримати пропозицію  ${TENDER['TENDER_UAID']}
+  Log  ${bid}
+  ${url}=  Викликати для учасника  ${provider}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
+  Log  URL аукціону для першого учасника: ${url}
+
+Вичитати цінову пропозицію другим учасником
+  [Tags]  ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
+  ${bid}=  Викликати для учасника  ${provider1}  Отримати пропозицію  ${TENDER['TENDER_UAID']}
+  Log  ${bid}
+  ${url}=  Викликати для учасника  ${provider1}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
+  Log  URL аукціону для другого учасника: ${url}
