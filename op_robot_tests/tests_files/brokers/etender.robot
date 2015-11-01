@@ -366,8 +366,7 @@ Set Multi Ids
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  fieldname
   Switch browser   ${ARGUMENTS[0]}
-  ${return_value}=  run keyword  Отримати інформацію про ${ARGUMENTS[1]}
-  [return]  ${return_value}
+  Run Keyword And Return  Отримати інформацію про ${ARGUMENTS[1]}
 
 Отримати текст із поля і показати на сторінці
   [Arguments]   ${fieldname}
@@ -458,7 +457,7 @@ Change_date_to_month
 Отримати інформацію про items[0].unit.code
   ${return_value}=   Отримати текст із поля і показати на сторінці   items[0].unit.code
   ${return_value}=   Get Substring  ${return_value}   5
-  ${return_value}=   Run keyword if    '${return_value}' == 'кг.'   Convert To String  KGM
+  Run Keyword And Return If  '${return_value}' == 'кг.'   Convert To String  KGM
   [return]  ${return_value}
 
 Отримати інформацію про items[0].quantity
@@ -479,7 +478,7 @@ Change_date_to_month
 Отримати інформацію про items[0].classification.description
   ${return_value}=   Отримати текст із поля і показати на сторінці  items[0].classification.description
   ${return_value}=   Get Substring  ${return_value}   11
-  ${return_value}=   Run keyword if    '${return_value}' == 'Картонки'   Convert To String  Cartons
+  Run Keyword And Return If  '${return_value}' == 'Картонки'   Convert To String  Cartons
   [return]  ${return_value}
 
 Отримати інформацію про items[0].additionalClassifications[0].id
@@ -510,12 +509,12 @@ Change_date_to_month
 
 Отримати інформацію про items[0].deliveryAddress.region
   ${return_value}=   Отримати текст із поля і показати на сторінці  items[0].deliveryAddress.region
-  ${return_value}=   Run keyword if    '${return_value}' == 'Київська,'   Convert To String  м. Київ
+  Run Keyword And Return If  '${return_value}' == 'Київська,'   Convert To String  м. Київ
   [return]  ${return_value}
 
 Отримати інформацію про items[0].deliveryAddress.locality
   ${return_value}=   Отримати текст із поля і показати на сторінці  items[0].deliveryAddress.locality
-  ${return_value}=   Run keyword if    '${return_value}' == 'Київ,'   Convert To String  м. Київ
+  Run Keyword And Return If  '${return_value}' == 'Київ,'   Convert To String  м. Київ
   [return]  ${return_value}
 
 Отримати інформацію про items[0].deliveryAddress.streetAddress
