@@ -360,8 +360,7 @@ Set Multi Ids
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  fieldname
   Switch browser   ${ARGUMENTS[0]}
-  ${return_value}=  run keyword  отримати інформацію про ${ARGUMENTS[1]}
-  [return]  ${return_value}
+  Run Keyword And Return  Отримати інформацію про ${ARGUMENTS[1]}
 
 Отримати текст із поля і показати на сторінці
   [Arguments]   ${fieldname}
@@ -450,7 +449,7 @@ Set Multi Ids
 
 отримати інформацію про items[0].classification.description
   ${classificationDescription}=   Отримати текст із поля і показати на сторінці     items[0].classification.description
-  ${classificationDescription}=   Run keyword if   '${classificationDescription}' == 'Картонки'    Convert To String  Cartons
+  Run Keyword And Return If  '${classificationDescription}' == 'Картонки'    Convert To String  Cartons
   [return]  ${classificationDescription}
 
 отримати інформацію про items[0].additionalClassifications[0].id
@@ -469,7 +468,7 @@ Set Multi Ids
 
 отримати інформацію про items[0].unit.code
   ${unitCode}=   Отримати текст із поля і показати на сторінці     items[0].unit.code
-  ${unitCode}=   Run keyword if    '${unitCode}'== 'кг'   Convert To String  KGM
+  Run Keyword And Return If  '${unitCode}'== 'кг'   Convert To String  KGM
   [return]  ${unitCode}
 
 отримати інформацію про procuringEntity.name
