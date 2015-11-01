@@ -247,8 +247,7 @@ Set datetime
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  fieldname
   Switch browser   ${ARGUMENTS[0]}
-  ${return_value}=  run keyword  отримати інформацію про ${ARGUMENTS[1]}
-  [return]  ${return_value}
+  Run Keyword And Return  Отримати інформацію про ${ARGUMENTS[1]}
 
 отримати текст із поля і показати на сторінці
   [Arguments]   ${fieldname}
@@ -361,7 +360,7 @@ Set datetime
 
 отримати інформацію про items[0].classification.description
   ${classification_description}=   отримати текст із поля і показати на сторінці   items[0].classification.scheme
-  ${classification_description}=   Run Keyword If   '${classification_description}' == '44617100-9 - Картонки'   Convert To String   Cartons
+  Run Keyword And Return If  '${classification_description}' == '44617100-9 - Картонки'   Convert To String   Cartons
   [return]  ${classification_description}
 
 ##ДКПП
@@ -382,7 +381,7 @@ Set datetime
 ##item
 отримати інформацію про items[0].unit.name
   ${unit_name}=   отримати текст із поля і показати на сторінці   items[0].unit.name
-  ${unit_name}=   Run Keyword If   '${unit_name}' == 'килограммы'   Convert To String   кілограм
+  Run Keyword And Return If  '${unit_name}' == 'килограммы'   Convert To String   кілограм
   [return]  ${unit_name}
 
 отримати інформацію про items[0].unit.code
