@@ -147,21 +147,19 @@ Set Suite Variable With Default Value
   ...    this keyword takes "shouldfail" argument as first one in @{arguments}
   ...    and switches the behaviour of keyword and "shouldfail"
   [Arguments]  ${username}  ${command}  @{arguments}
-  log  ${username}
-  log  ${command}
-  log  ${arguments}
-  ${state}=   change_state  ${arguments}
-  ${value}=  Run keyword if  '${state}' == 'shouldfail'   SwitchState  ${username}  ${command}  @{arguments}
-  ${value}=  Run keyword if  '${state}' == 'pass'   Normal  ${username}  ${command}  @{arguments}
-  [return]   ${value}
+  Log  ${username}
+  Log  ${command}
+  Log  ${arguments}
+  ${state}=  change_state  ${arguments}
+  Run Keyword And Return If  '${state}' == 'shouldfail'  SwitchState  ${username}  ${command}  @{arguments}
+  Run Keyword And Return If  '${state}' == 'pass'  Normal  ${username}  ${command}  @{arguments}
 
 Normal
   [Arguments]  ${username}  ${command}  @{arguments}
-  log  ${username}
-  log  ${command}
-  log  ${arguments}
-  ${value}=  Run Keyword   ${BROKERS['${USERS.users['${username}'].broker}'].keywords_file}.${command}  ${username}  @{arguments}
-  [return]   ${value}
+  Log  ${username}
+  Log  ${command}
+  Log  ${arguments}
+  Run Keyword And Return  ${BROKERS['${USERS.users['${username}'].broker}'].keywords_file}.${command}  ${username}  @{arguments}
 
 SwitchState
   [Arguments]  ${username}  ${command}  @{arguments}
