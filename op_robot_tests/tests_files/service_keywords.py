@@ -66,7 +66,7 @@ def log_object_data(data, file_name="", format="yaml"):
     else:
         data = data.toYAML(allow_unicode=True, default_flow_style=False)
         format = 'yaml'
-    LOGGER.log_message(Message(data, "INFO"))
+    LOGGER.log_message(Message(data.decode('utf-8'), "INFO"))
     if file_name:
         output_dir = BuiltIn().get_variable_value("${OUTPUT_DIR}")
         with open(os.path.join(output_dir, file_name + '.' + format), "w") as file_obj:
