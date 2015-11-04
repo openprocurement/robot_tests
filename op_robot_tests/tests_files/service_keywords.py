@@ -58,10 +58,27 @@ def compare_date(data1, data2):
        return False
     return True
 
-def log_object_data(data, file_name="", format="yaml"):
+def log_object_data(data, file_name=None, format="yaml"):
+    """Log object data in pretty format (JSON or YAML)
+
+    Two output formats are supported: "yaml" and "json".
+
+    If a file name is specified, the output is written into that file.
+
+    If you would like to get similar output everywhere,
+    use the following snippet somewhere in your code
+    before actually using Munch. For instance,
+    put it into your __init__.py, or, if you use zc.buildout,
+    specify it in "initialization" setting of zc.recipe.egg.
+
+    from munch import Munch
+    Munch.__str__ = lambda self: Munch.toYAML(self, allow_unicode=True,
+                                              default_flow_style=False)
+    Munch.__repr__ = Munch.__str__
+    """
     if not isinstance(data, Munch):
         data = munchify(data)
-    if format == 'json':
+    if format.lower() == 'json':
         data = data.toJSON(indent=2)
     else:
         data = data.toYAML(allow_unicode=True, default_flow_style=False)
