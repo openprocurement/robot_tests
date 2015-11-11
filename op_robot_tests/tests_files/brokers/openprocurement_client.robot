@@ -8,23 +8,25 @@ Library  Selenium2Screenshots
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tenderid
-  log many  @{ARGUMENTS}
-  ${tenders}=  get_internal_id   ${USERS.users['${ARGUMENTS[0]}'].client.get_tenders}      ${USERS.users['${ARGUMENTS[0]}'].creation_date}
+  Log Many  @{ARGUMENTS}
+  Log Many  ${ID_MAP}
+  ${status}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${ID_MAP}  ${ARGUMENTS[1]}
+  Run Keyword And Return If  ${status}  Get From Dictionary  ${ID_MAP}  ${ARGUMENTS[1]}
+  ${tenders}=  get_tenders  ${USERS.users['${ARGUMENTS[0]}'].client}
+  Log Many  @{tenders}
   :FOR  ${tender}  IN  @{tenders}
-  \  log  ${tender}
-  \  ${internal_id}=  Run Keyword And Return If  '${tender.tenderID}' == '${ARGUMENTS[1]}'      Get Variable Value  ${tender.id}
-  \  Exit For Loop If  '${tender.tenderID}' == '${ARGUMENTS[1]}'
-  log  ${internal_id}
-  log  ${tenders}
-  [return]  ${internal_id}
+  \  Set To Dictionary  ${ID_MAP}  ${tender.tenderID}  ${tender.id}
+  Log Many  ${ID_MAP}
+  Dictionary Should Contain Key  ${ID_MAP}  ${ARGUMENTS[1]}
+  Run Keyword And Return  Get From Dictionary  ${ID_MAP}  ${ARGUMENTS[1]}
 
 Підготувати клієнт для користувача
   [Arguments]  @{ARGUMENTS}
   [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
-  ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${ARGUMENTS[0]}'].api_key}  ${API_HOST_URL}    ${api_version}
-  ${creation_date} =   get_date
-  Set To Dictionary  ${USERS.users['${ARGUMENTS[0]}']}   creation_date   ${creation_date}
-  Set To Dictionary  ${USERS.users['${ARGUMENTS[0]}']}   client  ${api_wrapper}
+  ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${ARGUMENTS[0]}'].api_key}  ${API_HOST_URL}  ${api_version}
+  Set To Dictionary  ${USERS.users['${ARGUMENTS[0]}']}  client  ${api_wrapper}
+  ${ID_MAP}=  Create Dictionary
+  Set Suite Variable  ${ID_MAP}
   Log Variables
 
 Підготувати дані для оголошення тендера
