@@ -98,12 +98,18 @@ users:
     Prom_Owner:
         broker: Prom
         username: Promtest
+        homepage: "http://zakupki.dz-test.net"
+        login:  r.zaporozhets@smartweb.com.ua
+        password: 1234
         browser:  chrome
         position:  [0, 0]
         size:  [640, 450]
     Prom_Viewer:
         broker: Prom
         username: Promtest
+        homepage: "http://zakupki.dz-test.net"
+        login:  r.zaporozhets@smartweb.com.ua
+        password: 1234
         browser:  chrome
         position:  [640, 0]
         size:  [640, 450]
