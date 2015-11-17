@@ -312,6 +312,17 @@ Library  openprocurement_client_helper.py
   Log object data   ${reply}  reply
   [return]   ${reply}
 
+Отримати посилання на аукціон для глядача
+  [Arguments]  ${username}  ${tender_uid}
+  ${internalid}=  Отримати internal id по UAid  ${username}  ${tender_uid}
+  ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
+  [return]  ${tender.data.auctionUrl}
+
+Отримати посилання на аукціон для учасника
+  [Arguments]  ${username}  ${tender_uid}
+  ${bid}=  Викликати для учасника  ${username}  Отримати пропозицію  ${tender_uid}
+  [return]  ${bid.data.participationUrl}
+
 Отримати пропозицію
   [Arguments]  ${username}  ${tender_uid}
   ${internalid}=  Отримати internal id по UAid  ${username}  ${tender_uid}
