@@ -98,21 +98,21 @@ users:
     Prom_Owner:
         broker: Prom
         username: Promtest
-        homepage: "http://zakupki.dz-test.net"
-        login:  r.zaporozhets@smartweb.com.ua
+        homepage: "http://my.dz-test.net/cabinet/purchases/state_purchase/list"
+        login:  test@test12.com
         password: 1234
         browser:  chrome
         position:  [0, 0]
-        size:  [640, 450]
+        size:  [1280, 1024]
     Prom_Viewer:
         broker: Prom
         username: Promtest
-        homepage: "http://zakupki.dz-test.net"
+        homepage: "http://my.dz-test.net/cabinet/purchases/state_purchase/list"
         login:  r.zaporozhets@smartweb.com.ua
         password: 1234
         browser:  chrome
         position:  [640, 0]
-        size:  [640, 450]
+        size:  [1280, 1024]
     Publicbid_Owner:
         broker: Publicbid
         username: Publicbid
