@@ -21,7 +21,6 @@ from .initial_data import (
 )
 import calendar
 
-
 TZ = timezone(os.environ['TZ'] if 'TZ' in os.environ else 'Europe/Kiev')
 
 def get_now():
@@ -110,7 +109,6 @@ def prepare_test_tender_data(period_interval=2, mode='single'):
     elif mode == 'multi':
         return munchify({'data': test_tender_data_multiple_lots(period_interval=period_interval)})
     raise ValueError('A very specific bad thing happened')
-
 
 def run_keyword_and_ignore_keyword_definitions(name, *args):
     """Runs the given keyword with given arguments and returns the status as a Boolean value.
@@ -204,6 +202,16 @@ def convert_date_for_delivery(isodate):
     date_string = iso_dt.strftime("%Y-%m-%d %H:%M")
     return  date_string
 
+def convert_date_for_publicbid(isodate):
+    iso_dt=parse_date(isodate)
+    date_string = iso_dt.strftime("%d.%m.%Y %H:%M")
+    return  date_string
+
+def convert_date_for_publicbid_Delivery(isodate):
+    iso_dt=parse_date(isodate)
+    date_string = iso_dt.strftime("%m.%Y")
+    return  date_string
+
 def convert_time_to_etender_format(isodate):
     iso_dt=parse_date(isodate)
     time_string = iso_dt.strftime("%H:%M")
@@ -235,3 +243,28 @@ def subtract_from_time(date_time,substr_min,substr_sec):
     now = datetime.strptime(date_time,"%d.%m.%Y %H:%M")
     now = (now - timedelta(minutes=int(substr_min), seconds = int (substr_sec) )).isoformat()
     return now
+
+def subtract_from_date(date_time,substr_min,substr_sec):
+    now = datetime.strptime(date_time,"%Y-%m-%d %H:%M")
+    now = (now - timedelta(minutes=int(substr_min), seconds = int (substr_sec) )).isoformat()
+    return now
+
+def subtract_from_date_time_publicbid(date_time,substr_min,substr_sec):
+    now = datetime.strptime(date_time,"%m.%d.%Y %H:%M")
+    now = (now - timedelta(minutes=int(substr_min), seconds = int (substr_sec) )).isoformat()
+    return now
+
+def convert_date_for_publicbid_Delivery(isodate):
+    iso_dt=parse_date(isodate)
+    date_string = iso_dt.strftime("%m.%Y")
+    return  date_string
+
+def convert_date_for_publicbid(isodate):
+    iso_dt=parse_date(isodate)
+    date_string = iso_dt.strftime("%d.%m.%Y %H:%M")
+    return  date_string
+
+def convert_date_to_slash_format_with_time(isodate):
+    iso_dt=parse_date(isodate)
+    date_string = iso_dt.strftime("%d/%m/%Y %H:%M")
+    return  date_string

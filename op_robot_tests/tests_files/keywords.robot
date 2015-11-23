@@ -183,7 +183,7 @@ SwitchState
   Дочекатись дати  ${TENDER_DATA.data.tenderPeriod.startDate}
 
 Дочекатись дати закінчення прийому пропозицій
-  Дочекатись дати  ${TENDER_DATA.data.tenderPeriod.endDate}
+  Дочекатись дати  ${INITIAL_TENDER_DATA.data.tenderPeriod.endDate}
 
 Дочекатись дати початку аукціону
   Дочекатись дати  ${TENDER_DATA.data.auctionPeriod.startDate}

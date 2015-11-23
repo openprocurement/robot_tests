@@ -90,6 +90,8 @@ Pre Login
   Selenium2Library.Switch Browser     ${ARGUMENTS[0]}
   Wait Until Page Contains Element    jquery=a[href="/tenders/new"]   30
   Click Element                       jquery=a[href="/tenders/new"]
+
+
   Wait Until Page Contains Element    name=tender_title   30
   Input text                          name=tender_title    ${title}
   Input text                          name=tender_description    ${description}
@@ -102,6 +104,7 @@ Pre Login
   Input text                          name=items[0][item_deliveryAddress_countryName]   ${countryName}
   Input text                          name=items[0][item_deliveryDate_endDate]       ${delivery_end_date}
   Click Element                       xpath=//a[contains(@data-class, 'cpv')][./text()='Визначити за довідником']
+  sleep  1
   Select Frame                        xpath=//iframe[contains(@src,'/js/classifications/cpv/uk.htm?relation=true')]
   Input text                          id=search     ${cpv}
   Wait Until Page Contains            ${cpv_id}
@@ -116,10 +119,12 @@ Pre Login
   Click Element                       xpath=.//*[@id='select']
 # Додати специфікацю кінець
 
+
   Unselect Frame
   Input text                          name=plan_date                      ${enquiry_end_date}
   Input text                          name=tender_enquiryPeriod_endDate   ${enquiry_end_date}
   Input text                          name=tender_tenderPeriod_endDate    ${end_date}
+
 
   Додати предмет    ${items[0]}   0
   Run Keyword if   '${mode}' == 'multi'   Додати багато предметів   items
@@ -127,10 +132,10 @@ Pre Login
 
   Click Element                       xpath= //button[@value='publicate']
   Wait Until Page Contains            Тендер опубліковано    30
-
-  ${tender_UAid}=   Get Text          xpath=//*/section[6]/table/tbody/tr[2]/td[2]
+  ${tender_UAid}=   Get Text          xpath=//td[./text()='TenderID']/following-sibling::td[1]
   ${Ids}=   Convert To String         ${tender_UAid}
   Run keyword if   '${mode}' == 'multi'   Set Multi Ids   ${tender_UAid}
+  log  ${Ids}
   [return]  ${Ids}
 
 Set Multi Ids
@@ -317,7 +322,8 @@ Set Multi Ids
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
   netcast.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
   sleep  1
-  Execute Javascript                 window.scroll(1500,1500)
+  Execute Javascript                 window.scroll(2500,2500)
+  sleep  1
   Click Element                      xpath=//a[@class='reverse openCPart'][span[text()='Скарги']]
   Wait Until Page Contains           ${complaint}   30
   Capture Page Screenshot
@@ -342,6 +348,28 @@ Set Multi Ids
   sleep  1
   Click Element                      xpath=//button[@class='saveDraft']
   Wait Until Page Contains           ${ARGUMENTS[1]}   30
+  Capture Page Screenshot
+
+Завантажити документ
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} = filepath
+  ...      ${ARGUMENTS[1]} = tenderUaId
+
+  ${fake_felepath} =                Convert To String     ${ARGUMENTS[1]}
+  ${file_name} =                    Convert To String     TestDocument.docx
+  ${file_path} =                    local_path_to_file    ${file_name}
+
+  Selenium2Library.Switch Browser   ${ARGUMENTS[0]}
+  Click Element                     xpath=//a[@class='reverse'][./text()='Мої закупівлі']
+  sleep  1
+  Click Element                     xpath=//a[@class='reverse tenderLink']
+  Execute Javascript                window.scroll(2500,2500)
+  Click Element                     xpath=//a[@class='button save'][./text()='Редагувати']
+  Execute Javascript                window.scroll(1500,1500)
+
+  Choose File                       xpath= //input[@name='upload']    ${file_path}
+  Wait Until Page Contains Element         //span[./text()='${file_name}']   30
   Capture Page Screenshot
 
 обновити сторінку з тендером
@@ -393,7 +421,7 @@ Set Multi Ids
 
 отримати інформацію про enquiryPeriod.endDate
   ${enquiryPeriodEndDate}=   отримати тест із поля і показати на сторінці   enquiryPeriod.endDate
-  ${enquiryPeriodEndDate}=   subtract_from_time   ${enquiryPeriodEndDate}   6   5
+  ${enquiryPeriodEndDate}=   subtract_from_time   ${enquiryPeriodEndDate}   3   0
   [return]  ${enquiryPeriodEndDate}
 
 отримати інформацію про tenderPeriod.endDate
@@ -422,13 +450,10 @@ Set Multi Ids
   ${questionsTitle}=   Convert To Lowercase   ${questionsTitle}
   [return]  ${questionsTitle.capitalize().split('.')[0] + '.'}
 
-отримати інформацію про questions[0].description
-  ${questionsDescription}=   отримати тест із поля і показати на сторінці   questions[0].description
-  [return]  ${questionsDescription}
-
 отримати інформацію про questions[0].date
   ${questionsDate}=   отримати тест із поля і показати на сторінці   questions[0].date
-  log  ${questionsDate}
+  ${questionsDate}=   Remove String     ${questionsDate}    ,
+  ${questionsDate}=   subtract_from_time   ${questionsDate}   0   0
   [return]  ${questionsDate}
 
 отримати інформацію про questions[0].answer
@@ -438,6 +463,10 @@ Set Multi Ids
   Click Element                       xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]
   ${questionsAnswer}=   отримати тест із поля і показати на сторінці   questions[0].answer
   [return]  ${questionsAnswer}
+
+отримати інформацію про questions[0].description
+  ${questionsDescription}=   отримати тест із поля і показати на сторінці   questions[0].description
+  [return]  ${questionsDescription}
 
 отримати інформацію про items[0].deliveryDate.endDate
   ${deliveryDateEndDate}=   отримати тест із поля і показати на сторінці   items[0].deliveryDate.endDate
@@ -472,6 +501,52 @@ Set Multi Ids
   ${unitCode}=   Run keyword if    '${unitCode}'== 'кг'   Convert To String  KGM
   [return]  ${unitCode}
 
+Подати цінову пропозицію
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  tender_uid
+  ...      ${ARGUMENTS[2]} ==  bid
+  ${tenderUaId}=   Convert To String   ${ARGUMENTS[1]}
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+
+  Run keyword if   '${TEST NAME}' == 'Подати цінову пропозицію bidder'    sleep  400
+  netcast.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+  sleep  1
+  Execute Javascript             window.scroll(2500,2500)
+  sleep  10
+  Input text                     xpath=//input[@name='amount']    100
+  Click Element                  name = do
+  sleep  10
+  Click Element                  xpath=//a[@class='jBtn undefined']
+
+
+Змінити цінову пропозицію
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  tender_uid
+  ...      ${ARGUMENTS[2]} ==  bid_resp
+  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+  netcast.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+  sleep  1
+  Execute Javascript             window.scroll(2500,2500)
+  sleep  1
+  Click Element                  xpath=//a[@class='button save bidToEdit']
+  Input text                     xpath=//input[@name='amount']    ${ARGUMENTS[2]}
+  Click Element                  name = do
+  sleep  1
+  Click Element                  xpath=//a[@class='jBtn undefined']
+
+Завантажити документ в ставку
+  ${file_name} =                    Convert To String     TestDocument.docx
+  ${file_path} =                    local_path_to_file    ${file_name}
+  Execute Javascript             window.scroll(2500,2500)
+  sleep  1
+  Choose File                    xpath= //input[@name='upload']    ${file_path}
+  sleep  1
+  Click Element                  name = do
+
 отримати інформацію про procuringEntity.name
   Log       | Viewer can't see this information on Netcast        console=yes
 
@@ -501,3 +576,7 @@ Set Multi Ids
 
 отримати інформацію про items[0].unit.name
   Log       | Viewer can't see this information on Netcast        console=yes
+
+отримати інформацію про items[0].description
+  Log       | Viewer can't see this information on Netcast        console=yes
+

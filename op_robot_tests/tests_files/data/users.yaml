@@ -14,37 +14,39 @@ users:
     E-tender_Owner:
         broker: E-tender
         username: E-tendertest
-        homepage: "http://bid.uat.e-tender.biz/#/profile"
+        homepage: "http://bid.uat.e-tender.biz/#/login"
         login: Misha2
         password: Password1
         browser:  chrome
         position:  [0, 0]
         size:  [800, 800]
-    E-tender_Provider1:
+    E-tender_Provider:
         broker: E-tender
         username: E-tendertest
-        homepage: "http://bid.uat.e-tender.biz/#/profile"
+        homepage: "http://bid.uat.e-tender.biz/#/login"
         login: st_org
         password: 12345678
         browser: chrome
         position: [700, 0]
-        size: [700, 800]
-    E-tender_Provider2:
+        size: [800, 800]
+    E-tender_Provider1:
         broker: E-tender
         username: E-tendertest
-        homepage: "http://bid.uat.e-tender.biz/#/profile"
+        homepage: "http://bid.uat.e-tender.biz/#/login"
         login: provider2
         password: Qa123456
         browser:  chrome
         position:  [700, 0]
-        size:  [640, 450]
+        size:  [800, 800]
     E-tender_Viewer:
         broker: E-tender
         username: E-tendertest
-        homepage: "http://bid.uat.e-tender.biz/#"
+        homepage: "http://bid.uat.e-tender.biz/#/login"
+        login: provider2
+        password: Qa123456
         browser:  chrome
-        position:  [0, 0]
-        size:  [640, 450]
+        position:  [900, 0]
+        size:  [1000, 750]
     Netcast_Owner:
         broker: Netcast
         username: Netcasttest
@@ -54,7 +56,7 @@ users:
         browser: chrome
         position:  [0, 0]
         size:  [700, 800]
-    Netcast_Provider1:
+    Netcast_Provider:
         broker: Netcast
         username: Netcasttest
         homepage: "http://dz2.byustudio.in.ua"
@@ -79,7 +81,7 @@ users:
         browser:  chrome
         position:  [0, 0]
         size:  [1200, 1200]
-    Newtend_Provider1:
+    Newtend_Provider:
         broker: Newtend
         username: Newtendtest
         homepage: "http://dev23.newtend.com/openprocurement/tenders"
@@ -94,7 +96,7 @@ users:
         homepage: "http://dev23.newtend.com/openprocurement/tenders"
         browser:  chrome
         position:  [800, 400]
-        size:  [800, 700]
+        size:  [800, 800]
     Prom_Owner:
         broker: Prom
         username: Promtest
@@ -115,16 +117,55 @@ users:
         password: Password1
         browser: chrome
         position: [0, 0]
-        size: [740, 550]
+        size: [900, 800]
+    Publicbid_Provider:
+        broker: Publicbid
+        username: Publicbid
+        homepage: "https://public-bid.com.ua/test/"
+        login: yaroslav1boyko@gmail.com
+        password: Password1
+        browser: chrome
+        position: [750, 740]
+        size: [900, 800]
+    Publicbid_Provider1:
+        broker: Publicbid
+        username: Publicbid
+        homepage: "https://public-bid.com.ua/test/"
+        login: rsavchuk@softserveinc.com
+        password: Password1
+        browser: chrome
+        position: [750, 0]
+        size: [900, 800]
     Publicbid_Viewer:
         broker: Publicbid
         username: Publicbid
+        homepage: "https://public-bid.com.ua/test/"
+        login: yaroslav1boyko@gmail.com
+        password: Password1
         browser:  chrome
-        position:  [0, 450]
-        size:  [640, 450]
+        position:  [740, 0]
+        size:  [900, 800]
     SmartTender_Viewer:
         broker: SmartTender
         username: SmartTendertest
         browser:  chrome
         position:  [0, 450]
         size:  [640, 450]
+    Ua_Owner:
+        broker: uatender
+        username: uatender
+        homepage: "http://dev.zakupki.com.ua/"
+        login: vbilos@softserveinc.com
+        password: Qw123456
+        browser: chrome
+        position: [0, 0]
+        size: [740, 550]
+    Ua_Viewer:
+        broker: uatender
+        username: uatender
+        homepage: "http://dev.zakupki.com.ua/"
+        login: vbilos@softserveinc.com
+        password: Qw123456
+        browser: chrome
+        position: [750, 0]
+        size: [740, 550]
