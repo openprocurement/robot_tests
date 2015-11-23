@@ -206,7 +206,8 @@ Set Multi Ids
   sleep  1
   Input Text  jquery=input[ng-change='searchChange()']  ${ARGUMENTS[1]}
   sleep  1
-  Wait Until Keyword Succeeds  300 s  0 s  Шукати і знайти
+  ${passed}=  Run Keyword And Return Status  Wait Until Keyword Succeeds  300 s  0 s  Шукати і знайти
+  Run Keyword Unless  ${passed}  Fatal Error  Тендер не знайдено за 300 секунд
   sleep  3
   Click Link    jquery=a[href^="#/tenderDetailes"]
   Wait Until Page Contains    ${ARGUMENTS[1]}   10
