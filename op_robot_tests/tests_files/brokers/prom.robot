@@ -9,47 +9,60 @@ Library  Collections
 *** Variables ***
 ## Данные для логинна
 ${sign_in}              xpath=//a[contains(@data-afip-url, 'tab_login_cabinet')]
-${login_sign_in}        //div[@data-extend='LoginForm']//input[@id='phone_email']
-${password_sign_in}     //div[@data-extend='LoginForm']//input[@id='password']
+${login_sign_in}        xpath=//div[@data-extend='LoginForm']//input[@id='phone_email']
+${password_sign_in}     xpath=//div[@data-extend='LoginForm']//input[@id='password']
 
 ## Данные для проверки уже готового созданого тендера
 # Начало Тендера
-${locator.title}                     id=title
-${locator.description}               id=descr
-#Список товарів та послуг що закуповуються
-${locator.edit.description}          id=state_purchases_items-0-descr
-${locator.value.amount}              id=state_purchases_items-0-quantity
+${locator.title}                        xpath=//h1
+${locator.description}                  xpath=(//p[@class='h-mv-10'])[1]
+${locator.minimalStep.amount}           xpath=//dd[contains(@class, 'qa_min_budget')]
+${locator.value.amount}                 xpath=//dd[contains(@class, 'qa_budget_pdv')]
+${locator.tenderId}                     xpath=//dd[contains(@class, 'tender-uid')]
+${locator.procuringEntity.name}         xpath=//dd[contains(@class, 'qa_procuring_entity')]
+${locator.enquiryPeriod.startDate}       xpath=//dd[contains(@class, 'qa_date_period_clarifications')]
+${locator.enquiryPeriod.endDate}       xpath=//dd[contains(@class, 'qa_date_period_clarifications')]
+${locator.tenderPeriod.startDate}      xpath=//dd[contains(@class, 'qa_date_submission_of_proposals')]
+${locator.tenderPeriod.endDate}        xpath=//dd[contains(@class, 'qa_date_submission_of_proposals')]
 
-${locator.minimalStep.amount}        id=step
-${locator.tenderId}                  xpath=//a[@class="ng-binding ng-scope"]
-${locator.procuringEntity.name}      xpath=//div[@ng-bind="tender.procuringEntity.name"]
-${locator.enquiryPeriod.StartDate}   id=start-date-qualification
-${locator.enquiryPeriod.endDate}     id=end-date-qualification
-${locator.tenderPeriod.startDate}    id=start-date-registration
-${locator.tenderPeriod.endDate}      id=end-date-registration
+${locator.items[0].quantity}                                    xpath=//td[contains(@class, 'qa_quantity')]/p
+${locator.items[0].description}                                 xpath=//td[contains(@class, 'qa_item_name')]/p
+${locator.tenderPeriod.endDate}                                 xpath=//dd[contains(@class, 'qa_date_period_clarifications')]
+${locator.items[0].deliveryLocation.latitude}                   xpath=//dd[contains(@class, 'qa_place_delivery')]
+${locator.items[0].deliveryLocation.longitude}                  xpath=//dd[contains(@class, 'qa_place_delivery')]
+${locator.items[0].unit.code}                                   xpath=//td[contains(@class, 'qa_quantity')]/p
+${locator.items[0].unit.name}                                   xpath=//td[contains(@class, 'qa_quantity')]/p
 
-#Доставка
-${locator.items[0].deliveryAddress}                             id=state_purchases_items-0-delivery_street_address
-${locator.items[0].deliveryDate.endDate}                        id=state_purchases_items-0-date_delivery_end
+${locator.items[0].deliveryAddress.postalCode}                  xpath=//dd[contains(@class, 'qa_address')]
+${locator.items[0].deliveryAddress.countryName}                 xpath=//dd[contains(@class, 'qa_address')]
+${locator.items[0].deliveryAddress.region}                      xpath=//dd[contains(@class, 'qa_address')]
+${locator.items[0].deliveryAddress.locality}                    xpath=//dd[contains(@class, 'qa_address')]
+${locator.items[0].deliveryAddress.streetAddress}               xpath=//dd[contains(@class, 'qa_address')]
+${locator.items[0].deliveryDate.endDate}                        xpath=//dd[contains(@class, 'qa_delivery_period')]
 
-${locator.items[0].description}                                 xpath=//div[@ng-bind="item.description"]
 
-${locator.items[0].classification.scheme}                       xpath=//div[contains(@class, 'qa_cpv')]
-${locator.items[0].classification.scheme.title}                 xpath=//label[contains(., "Классификатор CPV")]
-${locator.items[0].additional_classification[0].scheme}         id=classifier2
-${locator.items[0].additional_classification[0].scheme.title}   xpath=//label[@for="classifier2"]
-${locator.items[0].quantity}                                    id=quantity
-${locator.items[0].unit.name}                                   xpath=//span[@class="unit ng-binding"]
-${locator.edit_tender}     xpath=//button[@ng-if="actions.can_edit_tender"]
-${locator.edit.add_item}   xpath=//a[@class="icon-black plus-black remove-field ng-scope"]
-${locator.save}            xpath=//button[@class="btn btn-lg btn-default cancel pull-right ng-binding"]
-${locator.QUESTIONS[0].title}         xpath=//span[@class="user ng-binding"]
-${locator.QUESTIONS[0].description}   xpath=//span[@class="question-description ng-binding"]
-${locator.QUESTIONS[0].date}
+${locator.items[0].classification.scheme}                       xpath=//dt[contains(@class, 'item-term')][contains(text(), 'CPV')]
+${locator.items[0].classification.id}                           xpath=//dd[contains(@class, 'qa_cpv_classifier')]
+${locator.items[0].classification.description}                  xpath=//dd[contains(@class, 'qa_cpv_classifier')]
+
+${locator.items[0].additionalClassifications[0].scheme}         xpath=//dt[contains(@class, 'item-term')][contains(text(), 'ДКПП')]
+${locator.items[0].additionalClassifications[0].id}             xpath=//dd[contains(@class, 'qa_dkpp_classifier')]
+${locator.items[0].additionalClassifications[0].description}    xpath=//dd[contains(@class, 'qa_dkpp_classifier')]
+
+
+
+
+#${locator.edit_tender}     xpath=//button[@ng-if="actions.can_edit_tender"]
+#${locator.edit.add_item}   xpath=//a[@class="icon-black plus-black remove-field ng-scope"]
+#${locator.save}            xpath=//button[@class="btn btn-lg btn-default cancel pull-right ng-binding"]
+#${locator.QUESTIONS[0].title}         xpath=//span[@class="user ng-binding"]
+#${locator.QUESTIONS[0].description}   xpath=//span[@class="question-description ng-binding"]
+#${locator.QUESTIONS[0].date}
 
 *** Keywords ***
 Підготувати дані для оголошення тендера
-  ${INITIAL_TENDER_DATA}=  prepare_test_tender_data
+  [Arguments]  @{ARGUMENTS}
+  ${INITIAL_TENDER_DATA}=  prepare_test_tender_data_from_Prom     ${ARGUMENTS[1]}     ${ARGUMENTS[2]}
   [return]   ${INITIAL_TENDER_DATA}
 
 Підготувати клієнт для користувача
@@ -65,7 +78,6 @@ Login
     Click Element  ${sign_in}
     Sleep   1
     Input text      ${login_sign_in}     ${USERS.users['${username}'].login}
-    Sleep   1
     Input text      ${password_sign_in}       ${USERS.users['${username}'].password}
     Click Button    id=submit_login_button
     Wait Until Page Contains Element   xpath =//div[@class='qa_political_procurement']  20
@@ -79,40 +91,35 @@ Login
 
     Login
 ### Создание тендера
-    ${INITIAL_TENDER_DATA}=  procuringEntity_name   ${INITIAL_TENDER_DATA}
-
+    ${INITIAL_TENDER_DATA}=  procuringEntity_name_prom   ${INITIAL_TENDER_DATA}
     ${title}=             Get From Dictionary       ${INITIAL_TENDER_DATA.data}   title
     ${description}=       Get From Dictionary       ${INITIAL_TENDER_DATA.data}   description
     ${items}=             Get From Dictionary       ${INITIAL_TENDER_DATA.data}   items
     ${item0}=             Get From List             ${items}          0
     ${descr_lot}=         Get From Dictionary       ${item0}                        description
-    ${quantity}=          Get From Dictionary       ${items[0]}                     quantity
+    ${budget}=            Get From Dictionary       ${INITIAL_TENDER_DATA.data.value}         amount
     ${unit}=              Get From Dictionary       ${items[0].unit}                name
     ${cpv_id}=            Get From Dictionary       ${items[0].classification}      id
     ${dkpp_id}=           Get From Dictionary       ${items[0].additionalClassifications[0]}      id
-
     ${delivery_end}=      Get From Dictionary       ${items[0].deliveryDate}        endDate
     ${delivery_end}=      convert_date_to_prom_delivery_format        ${delivery_end}
     ${postalCode}=        Get From Dictionary       ${items[0].deliveryAddress}     postalCode
-
     ${streetAddress}=     Get From Dictionary       ${items[0].deliveryAddress}     streetAddress
-#    ${latitude}=          Get From Dictionary       ${items[0].deliveryLocation}    latitude
-#    ${longitude}=         Get From Dictionary       ${items[0].deliveryLocation}    longitude
-
-    ${budget}=            Get From Dictionary       ${INITIAL_TENDER_DATA.data.value}       amount
+    ${latitude}=          Get From Dictionary       ${items[0].deliveryLocation}    latitude
+    ${longitude}=         Get From Dictionary       ${items[0].deliveryLocation}    longitude
+    ${quantity}=          Get From Dictionary       ${items[0]}                     quantity
     ${dates}=             get_all_prom_dates
     ${end_period_adjustments}=      Get From Dictionary         ${dates}        EndPeriod
     ${start_receive_offers}=        Get From Dictionary         ${dates}        StartDate
     ${end_receive_offers}=          Get From Dictionary         ${dates}        EndDate
-#    Log To Console   ${quantity}
 
     Wait Until Page Contains Element     id=js-btn-0
     Click Element                        id=js-btn-0
     Wait Until Page Contains Element     id=title
-    Input text                           id=title           ${title}
-    Input text                           id=descr           ${description}
-    Input text        id=state_purchases_items-0-descr      ${descr_lot}
-    Input text        id=state_purchases_items-0-quantity   ${quantity}
+    Input text                           id=title               ${title}
+    Input text                           id=descr               ${description}
+    Input text        id=state_purchases_items-0-descr          ${descr_lot}
+    Input text        id=state_purchases_items-0-quantity       ${quantity}
     Click Element     id=state_purchases_items-0-unit_id_dd
     Click Element     xpath=//li[@data-value='1']
 
@@ -140,8 +147,8 @@ Login
     Press Key   id=state_purchases_items-0-date_delivery_end             \\13
     Input text  state_purchases_items-0-delivery_postal_code    ${postalCode}
     Input text     id=state_purchases_items-0-delivery_street_address   ${streetAddress}
-#    Input text     id=state_purchases_items-0-delivery_latitude      ${latitude}
-#    Input text     id=state_purchases_items-0-delivery_longitude     ${longitude}
+    Input text     id=state_purchases_items-0-delivery_latitude      ${latitude}
+    Input text     id=state_purchases_items-0-delivery_longitude     ${longitude}
     Input text     id=amount           ${budget}
 
     Input text      id=dt_enquiry           ${end_period_adjustments}
@@ -159,40 +166,210 @@ Login
     Sleep   1
 
     Click Button    id=submit_button
-
-    Sleep   8
+    Sleep   1
+    Wait Until Page Does Not Contain      ...   1000
     Reload Page
-    Wait until element contains     xpath=//p[@id='qa_state_purchase_id']//span 
 
-    ${id}=   Wait Until Keyword Succeeds   240sec   3sec   ID:
-    [return]  ${id}
-#
-#
-#Get tender id
-#    ${id}=  Get Text  xpath=//td[@id="qa_state_purchase_id"]/p
-#    Should Not Be Equal As Strings   ${id}   ожидание...
-#    [return]  ${id}
-#
-#Пошук тендера по ідентифікатору
+    ${tender_id}=     Get Text        xpath=//p[@id='qa_state_purchase_id']
+    ${id}=            Remove String     ${tender_id}      ID:
+#    Log To Console   ${id}
+    [return]    ${id}
+
+
+Пошук тендера по ідентифікатору
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  ${id}
+
+  Switch browser   ${ARGUMENTS[0]}
+  ${current_location}=   Get Location
+  Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
+  sleep  1
+  Input Text      id=search_text_id  ${ARGUMENTS[1]}
+  Click Button    id=search_submit
+  sleep  3
+  CLICK ELEMENT     xpath=(//a[contains(@href, 'net/dz/')])[1]
+  sleep  1
+  Wait Until Page Contains    ${ARGUMENTS[1]}   10
+  sleep  1
+  CLICK ELEMENT   id=show_lot_info-0
+  Capture Page Screenshot
+
+
+
+### Проверка информации с тендера
+Отримати інформацію із тендера
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  fieldname
+  Switch browser   ${ARGUMENTS[0]}
+  ${return_value}=  run keyword  Отримати інформацію про ${ARGUMENTS[1]}
+  [return]  ${return_value}
+
+Отримати тест із поля і показати на сторінці
+  [Arguments]   ${fieldname}
+  sleep  3
+  ${return_value}=   Get Text  ${locator.${fieldname}}
+  [return]  ${return_value}
+
+Отримати інформацію про title
+  ${return_value}=   Отримати тест із поля і показати на сторінці   title
+  [return]  ${return_value}
+
+Отримати інформацію про description
+  ${return_value}=   Отримати тест із поля і показати на сторінці   description
+  [return]  ${return_value}
+
+Отримати інформацію про value.amount
+  ${return_value}=   Отримати тест із поля і показати на сторінці  value.amount
+  ${return_value}=   Remove String      ${return_value}     грн.
+  ${return_value}=   Convert To Number   ${return_value.replace(' ', '').replace(',', '.')}
+  [return]  ${return_value}
+
+Отримати інформацію про minimalStep.amount
+  ${return_value}=   Отримати тест із поля і показати на сторінці   minimalStep.amount
+  ${return_value}=    Remove String      ${return_value}     грн.
+  ${return_value}=    Convert To Number   ${return_value.replace(' ', '')}
+  [return]  ${return_value}
+
+Отримати інформацію про items[0].quantity
+  ${return_value}=   Отримати тест із поля і показати на сторінці   items[0].quantity
+  ${return_value}=    Convert To Number   ${return_value.split(' ')[0]}
+  [return]  ${return_value}
+
+Отримати інформацію про items[0].unit.code
+  ${return_value}=   Отримати тест із поля і показати на сторінці   items[0].unit.code
+  ${return_value}=   ${return_value.split(' ')[1]}
+  ${return_value}=   Convert To String    KGM
+  [return]  ${return_value}
+
+Отримати інформацію про items[0].unit.name
+  ${return_value}=   Отримати тест із поля і показати на сторінці   items[0].unit.name
+  [return]  ${return_value.split(' ')[1]}
+
+Отримати інформацію про tenderId
+  ${return_value}=   Отримати тест із поля і показати на сторінці   tenderId
+  [return]  ${return_value}
+
+Отримати інформацію про procuringEntity.name
+  ${return_value}=   Отримати тест із поля і показати на сторінці   procuringEntity.name
+  [return]  ${return_value}
+
+Отримати інформацію про items[0].deliveryLocation.latitude
+  ${return_value}=   Отримати тест із поля і показати на сторінці   items[0].deliveryLocation.latitude
+  [return]  ${return_value.split(' ')[1]}
+
+Отримати інформацію про items[0].deliveryLocation.longitude
+  ${return_value}=   Отримати тест із поля і показати на сторінці   items[0].deliveryLocation.longitude
+  [return]  ${return_value.split(' ')[0]}
+
+
+## Подача пропозицій
+Отримати інформацію про tenderPeriod.startDate
+  ${return_value}=   Отримати тест із поля і показати на сторінці  tenderPeriod.startDate
+  [return]  ${return_value.[:14]}
+
+
+Отримати інформацію про tenderPeriod.endDate
+  ${return_value}=   Отримати тест із поля і показати на сторінці  tenderPeriod.endDate
+  [return]  ${return_value.[17:]}
+
+
+## Період уточнень до:
+Отримати інформацію про enquiryPeriod.startDate
+  ${return_value}=   Отримати тест із поля і показати на сторінці  enquiryPeriod.startDate
+  Fail   Реализоват автоматический ввод данных
+
+Отримати інформацію про enquiryPeriod.endDate
+  ${return_value}=   Отримати тест із поля і показати на сторінці  enquiryPeriod.endDate
+  ${return_value}=   Remove String      ${return_value}       до
+  [return]  ${return_value}
+
+Отримати інформацію про items[0].description
+  ${return_value}=   Отримати тест із поля і показати на сторінці   items[0].description
+  [return]  ${return_value}
+
+
+
+#Change_date_to_month
 #  [Arguments]  @{ARGUMENTS}
 #  [Documentation]
-#  ...      ${ARGUMENTS[0]} ==  username
-#  ...      ${ARGUMENTS[1]} ==  tenderId
-#  ...      ${ARGUMENTS[2]} ==  id
-#  Switch browser   ${ARGUMENTS[0]}
-#  ${current_location}=   Get Location
-#  Run keyword if   '${BROKERS['${USERS.users['${username}'].broker}'].url}/#/tenderDetailes/${ARGUMENTS[2]}'=='${current_location}'  Reload Page
-#  Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
-#  Wait Until Page Contains   Допороговые закупки Украины   10
-#  sleep  1
-#  Input Text   id=search  ${ARGUMENTS[1]}
-#  Click Button   id=search_submit
-#  sleep  2
-#  ${last_note_id}=  Add pointy note   jquery=a[href^="#/tenderDetailes"]   Found tender with tenderID "${ARGUMENTS[1]}"   width=200  position=bottom
-#  sleep  1
-#  Remove element   ${last_note_id}
-#  Click Link    jquery=a[href^="#/tenderDetailes"]
-#  Wait Until Page Contains    ${ARGUMENTS[1]}   10
-#  sleep  1
-#  Capture Page Screenshot
+#  ...      ${ARGUMENTS[0]}  ==  date
+#  ${day}=   Get Substring   ${ARGUMENTS[0]}   0   2
+#  ${month}=   Get Substring   ${ARGUMENTS[0]}  3   6
+#  ${year}=   Get Substring   ${ARGUMENTS[0]}   5
+#  ${return_value}=   Convert To String  ${month}${day}${year}
+#  [return]  ${return_value}
 
+
+
+Отримати інформацію про items[0].classification.id
+  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].classification.id
+  [return]  ${return_value.split(' ')[0]}
+
+Отримати інформацію про items[0].classification.scheme
+  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].classification.scheme
+  ${return_value}=   Get Text       ${return_value}
+  [return]  ${return_value}
+
+Отримати інформацію про items[0].classification.description
+  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].classification.description
+  [return]  ${return_value.split(' ')[1]}
+
+Отримати інформацію про items[0].additionalClassifications[0].id
+  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].additionalClassifications[0].id
+  [return]  ${return_value.split(' ')[0]}
+
+Отримати інформацію про items[0].additionalClassifications[0].scheme
+  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].additionalClassifications[0].scheme
+  ${return_value}=   Get Text       ${return_value}
+  [return]  ${return_value}
+
+Отримати інформацію про items[0].additionalClassifications[0].description
+  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].additionalClassifications[0].description
+  [return]  ${return_value[8:]}
+
+Отримати інформацію про items[0].deliveryAddress.postalCode
+  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].deliveryAddress.postalCode
+  [return]  ${return_value.split(', ')[0]}
+
+Отримати інформацію про items[0].deliveryAddress.countryName
+  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].deliveryAddress.countryName
+  [return]  ${return_value.split(', ')[1]}
+
+Отримати інформацію про items[0].deliveryAddress.region
+  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].deliveryAddress.region
+  [return]  ${return_value.split(', ')[2]}
+
+Отримати інформацію про items[0].deliveryAddress.locality
+  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].deliveryAddress.locality
+  [return]  ${return_value.split(', ')[3]}
+
+Отримати інформацію про items[0].deliveryAddress.streetAddress
+  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].deliveryAddress.streetAddress
+  [return]  ${return_value}
+
+## Період доставки:
+Отримати інформацію про items[0].deliveryDate.endDate
+  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].deliveryDate.endDate
+  log   ${return_value}
+  [return]  ${return_value.split(u'до ')}
+
+Отримати інформацію про questions[0].title
+  ${return_value}=   отримати тест із поля і показати на сторінці   questions[0].title
+  [return]  ${return_value}
+
+Отримати інформацію про questions[0].description
+  ${return_value}=   отримати тест із поля і показати на сторінці   questions[0].description
+  [return]  ${return_value}
+
+Отримати інформацію про questions[0].date
+  ${return_value}=   отримати тест із поля і показати на сторінці   questions[0].date
+  ${return_value}=   Change_date_to_month   ${return_value}
+  [return]  ${return_value}
+
+Отримати інформацію про questions[0].answer
+  ${return_value}=   отримати тест із поля і показати на сторінці   questions[0].answer
+  [return]  ${return_value}
