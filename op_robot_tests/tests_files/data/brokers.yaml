@@ -40,7 +40,7 @@ Newtend:
 Prom:
     keywords_file: prom
     url: http://zakupki.dz-test.net
-    timeout_on_wait: 15
+    timeout_on_wait: 0
     period_interval: 31
     roles:
         tender_owner:   Prom_Owner

@@ -44,7 +44,7 @@ def test_tender_data_from_Prom(period_interval=2):
         "address": {
             "countryName": u"Украина",
             "postalCode": fake.postalcode(),
-            "region": u"Киев",
+            "region": u"Киевская область",
             "locality": u"Киев",
             "streetAddress": fake.street_address()
         },
@@ -65,7 +65,7 @@ def test_tender_data_from_Prom(period_interval=2):
         {
             "description": fake.catch_phrase(),
             "deliveryDate": {
-                "endDate": (now + timedelta(days=5)).isoformat()
+                "endDate": (now + timedelta(minutes=10)).strftime("%d.%m.%Y")
             },
             "deliveryLocation": {
                 "latitude": u"49.8500",
@@ -74,7 +74,7 @@ def test_tender_data_from_Prom(period_interval=2):
             "deliveryAddress": {
                 "countryName": u"Украина",
                 "postalCode": fake.postalcode(),
-                "region": u"Киев",
+                "region": u"Киевская область",
                 "locality": u"Киев",
                 "streetAddress": fake.street_address()
             },
@@ -99,11 +99,11 @@ def test_tender_data_from_Prom(period_interval=2):
     ],
     "enquiryPeriod": {
         "startDate": (now).isoformat(),
-        "endDate": (now + timedelta(minutes=1)).isoformat()
+        "endDate": (now + timedelta(minutes=10)).strftime("%d.%m.%Y %H:%M")
     },
     "tenderPeriod": {
-        "startDate": (now + timedelta(minutes=2)).isoformat(),
-        "endDate": (now + timedelta(minutes=(2 + period_interval))).isoformat()
+        "startDate": (now + timedelta(minutes=20)).strftime("%d.%m.%Y %H:%M"),
+        "endDate": (now + timedelta(minutes=55)).strftime("%d.%m.%Y %H:%M")
     }
 }
 

@@ -202,16 +202,11 @@ def get_all_prom_dates():
         'EndDate': (now + timedelta(minutes=55)).strftime("%d.%m.%Y %H:%M"),
     }
 
-def convert_date_to_prom_delivery_format(isodate):
-    iso_dt = parse_date(isodate)
-    date_string = iso_dt.strftime("%d.%m.%Y")
-    return  date_string
-
 
 def convert_date_to_prom_end_period_format(isodate):
     iso_dt=parse_date(isodate)
     day_string = iso_dt.strftime("%d.%m.%Y %H:%M")
-    return  day_string
+    return day_string
 
 def procuringEntity_name_prom(INITIAL_TENDER_DATA):
     INITIAL_TENDER_DATA.data.procuringEntity['name'] = u"Test_company_from_Prozorro"
@@ -222,17 +217,17 @@ def procuringEntity_name_prom(INITIAL_TENDER_DATA):
 def convert_date_to_etender_format(isodate):
     iso_dt=parse_date(isodate)
     date_string = iso_dt.strftime("%d-%m-%Y")
-    return  date_string
+    return date_string
 
 def convert_date_for_delivery(isodate):
     iso_dt=parse_date(isodate)
     date_string = iso_dt.strftime("%Y-%m-%d %H:%M")
-    return  date_string
+    return date_string
 
 def convert_time_to_etender_format(isodate):
     iso_dt=parse_date(isodate)
     time_string = iso_dt.strftime("%H:%M")
-    return  time_string
+    return time_string
 
 def procuringEntity_name(INITIAL_TENDER_DATA):
     INITIAL_TENDER_DATA.data.procuringEntity['name'] = u"Повна назва невідомо чого"
