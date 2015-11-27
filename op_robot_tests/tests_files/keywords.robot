@@ -47,6 +47,27 @@ Set Suite Variable With Default Value
   \  Run Keyword If   '${status}' == 'True'   Завантажуємо бібліотеку з реалізацією ${BROKERS['${USERS.users['${username}'].broker}'].keywords_file} майданчики
   \  Run Keyword If   '${status}' == 'True'   Викликати для учасника   ${username}  Підготувати клієнт для користувача
 
+Get Broker Property
+  [Arguments]  ${broker_name}  ${property}
+  [Documentation]
+  ...    This keyword returns a property of specified broker
+  ...    if that property exists, otherwise, it returns a
+  ...    default value.
+  ${status}=  Run Keyword And Return Status  Should Contain  ${BROKERS['${broker_name}']}  ${property}
+  Return From Keyword If  ${status}  ${BROKERS['${broker_name}'].${property}}
+  # If broker doesn't have that property, fall back to default value
+  Should Contain  ${BROKERS['Default']}  ${property}
+  [return]  ${BROKERS['Default'].${property}}
+
+Get Broker Property By Username
+  [Documentation]
+  ...    This keyword gets the corresponding broker name
+  ...    for a specified username and then calls
+  ...    "Get Broker Property"
+  [Arguments]  ${username}  ${property}
+  ${broker_name}=  Get Variable Value  ${USERS.users['${username}'].broker}
+  Run Keyword And Return  Get Broker Property  ${broker_name}  ${property}
+
 Підготовка початкових даних
   @{QUESTIONS} =  Create list
   ${question}=  test question data
