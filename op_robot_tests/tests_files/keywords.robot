@@ -28,9 +28,6 @@ Set Suite Variable With Default Value
   log  ${BROKERS}
   Set Global Variable  ${BROKERS}
 
-  ${brokers_list}=    Get Dictionary Items    ${BROKERS}
-  log  ${brokers_list}
-
   ${file_path}=  Get Variable Value  ${USERS_FILE}  users.yaml
   ${USERS}=  load_initial_data_from  ${file_path}
   Set Global Variable  ${USERS}
