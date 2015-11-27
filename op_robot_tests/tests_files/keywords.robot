@@ -45,7 +45,7 @@ Set Suite Variable With Default Value
   \  log  ${username}
   \  ${status}=  Run Keyword And Return Status   Dictionary Should Contain Value  ${active_users}   ${username}
   \  ${keywords_file}=  Get Broker Property By Username  ${username}  keywords_file
-  \  Run Keyword If  '${status}' == 'True'  Завантажуємо бібліотеку з реалізацією ${keywords_file} майданчики
+  \  Run Keyword If  '${status}' == 'True'  Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
   \  Run Keyword If  '${status}' == 'True'  Викликати для учасника  ${username}  Підготувати клієнт для користувача
 
 Get Broker Property
@@ -94,7 +94,7 @@ Get Broker Property By Username
   Log  ${TENDER}
   Log  ${INITIAL_TENDER_DATA}
 
-Завантажуємо бібліотеку з реалізацією ${keywords_file} майданчики
+Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
   Import Resource  ${CURDIR}/brokers/${keywords_file}.robot
 
 ##################################################################################
