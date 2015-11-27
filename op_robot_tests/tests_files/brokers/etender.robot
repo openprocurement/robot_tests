@@ -201,7 +201,8 @@ Set Multi Ids
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  ${TENDER_UAID}
   Switch browser   ${ARGUMENTS[0]}
-  Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
+  ${url}=  Get Broker Property By Username  ${ARGUMENTS[0]}  url
+  Go To  ${url}
   Wait Until Page Contains   Прозорі закупівлі    10
   sleep  1
   Input Text  jquery=input[ng-change='searchChange()']  ${ARGUMENTS[1]}
@@ -311,7 +312,8 @@ Set Multi Ids
   [Documentation]
   ...      ${ARGUMENTS[0]} =  username
   ...      ${ARGUMENTS[1]} =  ${TENDER_UAID}
-  ${ADDITIONAL_DATA}=  prepare_test_tender_data   ${BROKERS['${USERS.users['${tender_owner}'].broker}'].period_interval}   single
+  ${period_interval}=  Get Broker Property By Username  ${ARGUMENTS[0]}  period_interval
+  ${ADDITIONAL_DATA}=  prepare_test_tender_data  ${period_interval}  single
   ${tender_data}=   Add_data_for_GUI_FrontEnds   ${ADDITIONAL_DATA}
   ${items}=         Get From Dictionary   ${tender_data.data}               items
   ${description}=   Get From Dictionary   ${tender_data.data}               description
@@ -330,7 +332,8 @@ Set Multi Ids
   ...      ${ARGUMENTS[0]} =  username
   ...      ${ARGUMENTS[1]} =  ${TENDER_UAID}
   ...      ${ARGUMENTS[2]} =  3
-  ${ADDITIONAL_DATA}=  prepare_test_tender_data   ${BROKERS['${USERS.users['${tender_owner}'].broker}'].period_interval}   multi
+  ${period_interval}=  Get Broker Property By Username  ${ARGUMENTS[0]}  period_interval
+  ${ADDITIONAL_DATA}=  prepare_test_tender_data  ${period_interval}  multi
   ${tender_data}=   Add_data_for_GUI_FrontEnds   ${ADDITIONAL_DATA}
   ${items}=         Get From Dictionary   ${tender_data.data}               items
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}

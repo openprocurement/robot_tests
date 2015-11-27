@@ -31,7 +31,8 @@ ${locator.questions[0].answer}       xpath=//div[@class = 'answer relative']//di
   [Arguments]  @{ARGUMENTS}
   [Documentation]  Відкрити брaузер, створити обєкт api wrapper, тощо
   ...      ${ARGUMENTS[0]} ==  username
-  Open Browser   ${BROKERS['${USERS.users['${ARGUMENTS[0]}'].broker}'].url}   ${USERS.users['${ARGUMENTS[0]}'].browser}   alias=${ARGUMENTS[0]}
+  ${url}=  Get Broker Property By Username  ${ARGUMENTS[0]}  url
+  Open Browser  ${url}  ${USERS.users['${ARGUMENTS[0]}'].browser}  alias=${ARGUMENTS[0]}
   Set Window Size       @{USERS.users['${ARGUMENTS[0]}'].size}
   Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
   Run Keyword And Ignore Error       Pre Login   ${ARGUMENTS[0]}
@@ -53,10 +54,12 @@ Pre Login
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...    ${ARGUMENTS[0]} ==  username
-  Wait Until Page Contains Element   name=siteLogin   10
-  Input text                         name=siteLogin      ${BROKERS['${USERS.users['${username}'].broker}'].login}
-  Input text                         name=sitePass       ${BROKERS['${USERS.users['${username}'].broker}'].password}
-  Click Button                       xpath=.//*[@id='table1']/tbody/tr/td/form/p[3]/input
+  ${login}=     Get Broker Property By Username  ${ARGUMENTS[0]}  login
+  ${password}=  Get Broker Property By Username  ${ARGUMENTS[0]}  password
+  Wait Until Page Contains Element  name=siteLogin  10
+  Input Text                        name=siteLogin  ${login}
+  Input Text                        name=sitePass   ${password}
+  Click Button                      xpath=.//*[@id='table1']/tbody/tr/td/form/p[3]/input
 
 Створити тендер
   [Arguments]  @{ARGUMENTS}
@@ -187,7 +190,8 @@ Set Multi Ids
   ...      ${ARGUMENTS[0]} =  username
   ...      ${ARGUMENTS[1]} =  ${TENDER_UAID}
   ...      ${ARGUMENTS[2]} =  3
-  ${tender_data}=  prepare_test_tender_data   ${BROKERS['${USERS.users['${tender_owner}'].broker}'].period_interval}   multi
+  ${period_interval}=  Get Broker Property By Username  ${ARGUMENTS[0]}  period_interval
+  ${tender_data}=  prepare_test_tender_data  ${period_interval}  multi
 
   ${items}=         Get From Dictionary   ${tender_data.data}               items
   ${description}=   Get From Dictionary   ${tender_data.data}               description
@@ -229,7 +233,8 @@ Set Multi Ids
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tenderId
   Switch browser   ${ARGUMENTS[0]}
-  Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
+  ${url}=  Get Broker Property By Username  ${ARGUMENTS[0]}  url
+  Go To  ${url}
   Wait Until Page Contains            Держзакупівлі.онлайн   10
   Click Element                       xpath=//a[text()='Закупівлі']
   sleep  1
