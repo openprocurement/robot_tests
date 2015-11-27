@@ -207,8 +207,9 @@ Set Multi Ids
   sleep  1
   Input Text  jquery=input[ng-change='searchChange()']  ${ARGUMENTS[1]}
   sleep  1
-  ${passed}=  Run Keyword And Return Status  Wait Until Keyword Succeeds  300 s  0 s  Шукати і знайти
-  Run Keyword Unless  ${passed}  Fatal Error  Тендер не знайдено за 300 секунд
+  ${timeout_on_wait}=  Get Broker Property By Username  ${ARGUMENTS[0]}  timeout_on_wait
+  ${passed}=  Run Keyword And Return Status  Wait Until Keyword Succeeds  ${timeout_on_wait} s  0 s  Шукати і знайти
+  Run Keyword Unless  ${passed}  Fatal Error  Тендер не знайдено за ${timeout_on_wait} секунд
   sleep  3
   Click Link    jquery=a[href^="#/tenderDetailes"]
   Wait Until Page Contains    ${ARGUMENTS[1]}   10
