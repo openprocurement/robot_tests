@@ -17,8 +17,8 @@ ${telephone}     +380976535447
   Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
 
 # login
-  Run Keyword And Ignore Error   Wait Until Page Contains Element    id=mForm:j_idt54   10
-  Click Element                      id=mForm:j_idt54
+  Run Keyword And Ignore Error   Wait Until Page Contains Element    id=mForm:j_idt56   10
+  Click Element                      id=mForm:j_idt56
   Run Keyword And Ignore Error   Wait Until Page Contains Element   id=mForm:email   10
   Input text   id=mForm:email      ${USERS.users['${username}'].login}
   Sleep  2
