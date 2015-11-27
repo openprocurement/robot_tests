@@ -30,8 +30,7 @@ Library  Selenium2Screenshots
   Log Variables
 
 Підготувати дані для оголошення тендера
-  [Arguments]  @{ARGUMENTS}
-  ${INITIAL_TENDER_DATA}=  prepare_test_tender_data   ${ARGUMENTS[1]} ${ARGUMENTS[2]}
+  ${INITIAL_TENDER_DATA}=  prepare_test_tender_data
   [return]   ${INITIAL_TENDER_DATA}
 
 Створити тендер

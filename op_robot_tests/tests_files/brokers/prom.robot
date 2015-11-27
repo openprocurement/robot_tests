@@ -44,8 +44,7 @@ ${locator.items[0].additionalClassifications[0].description}    xpath=//dd[conta
 
 *** Keywords ***
 Підготувати дані для оголошення тендера
-  [Arguments]  @{ARGUMENTS}
-  ${INITIAL_TENDER_DATA}=  prepare_test_tender_data_from_Prom     ${ARGUMENTS[1]}     ${ARGUMENTS[2]}
+  ${INITIAL_TENDER_DATA}=  prepare_test_tender_data
   [return]   ${INITIAL_TENDER_DATA}
 
 Підготувати клієнт для користувача

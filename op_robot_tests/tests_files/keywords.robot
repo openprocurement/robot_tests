@@ -67,7 +67,7 @@ Set Suite Variable With Default Value
   ${reply}=  test_complaint_reply_data
   Append to list   ${REPLIES}   ${reply}
   Set Global Variable  ${REPLIES}
-  ${INITIAL_TENDER_DATA}=  Викликати для учасника     ${tender_owner}   Підготувати дані для оголошення тендера  ${BROKERS['${USERS.users['${tender_owner}'].broker}'].period_interval}   ${mode}
+  ${INITIAL_TENDER_DATA}=  prepare_test_tender_data   ${BROKERS['${USERS.users['${tender_owner}'].broker}'].period_interval}   ${mode}
   Set Global Variable  ${INITIAL_TENDER_DATA}
   ${TENDER}=  Create Dictionary
   Set Global Variable  ${TENDER}

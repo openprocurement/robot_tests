@@ -27,11 +27,6 @@ ${locator.questions[0].date}         xpath = //div[@class='date']
 ${locator.questions[0].answer}       xpath=//div[@class = 'answer relative']//div[@class = 'text']
 
 *** Keywords ***
-Підготувати дані для оголошення тендера
-  [Arguments]  @{ARGUMENTS}
-  ${INITIAL_TENDER_DATA}=  prepare_test_tender_data   ${ARGUMENTS[1]} ${ARGUMENTS[2]}
-  [return]   ${INITIAL_TENDER_DATA}
-
 Підготувати клієнт для користувача
   [Arguments]  @{ARGUMENTS}
   [Documentation]  Відкрити брaузер, створити обєкт api wrapper, тощо

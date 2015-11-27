@@ -4,11 +4,6 @@ Library  String
 Library  DateTime
 
 *** Keywords ***
-Підготувати дані для оголошення тендера
-  [Arguments]  @{ARGUMENTS}
-  ${INITIAL_TENDER_DATA}=  prepare_test_tender_data   ${ARGUMENTS[1]} ${ARGUMENTS[2]}
-  [return]   ${INITIAL_TENDER_DATA}
-
 Підготувати клієнт для користувача
   [Arguments]  ${username}
   [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо

@@ -8,11 +8,6 @@ ${mail}          test@mail.com
 ${telephone}     +380976535447
 
 *** Keywords ***
-Підготувати дані для оголошення тендера
-  [Arguments]  @{ARGUMENTS}
-  ${INITIAL_TENDER_DATA}=  prepare_test_tender_data   ${ARGUMENTS[1]} ${ARGUMENTS[2]}
-  [return]   ${INITIAL_TENDER_DATA}
-
 Підготувати клієнт для користувача
   [Arguments]  @{ARGUMENTS}
   [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
