@@ -98,19 +98,21 @@ users:
     Prom_Owner:
         broker:   Prom
         username: Promtest
+        homepage: "http://zakupki.dz-test.net"
         browser:  chrome
         position: [0, 0]
         size:     [640, 450]
     Prom_Viewer:
         broker:   Prom
         username: Promtest
+        homepage: "http://zakupki.dz-test.net"
         browser:  chrome
         position: [640, 0]
         size:     [640, 450]
     Publicbid_Owner:
         broker:   Publicbid
         username: Publicbid
-        homepage: "https://public-bid.com.ua/test/"
+        homepage: "https://public-bid.com.ua/"
         login:    yaroslav1boyko@gmail.com
         password: Password1
         browser:  chrome
@@ -119,12 +121,14 @@ users:
     Publicbid_Viewer:
         broker:   Publicbid
         username: Publicbid
+        homepage: "https://public-bid.com.ua/"
         browser:  chrome
         position: [0, 450]
         size:     [640, 450]
     SmartTender_Viewer:
         broker:   SmartTender
         username: SmartTendertest
+        homepage: "http://smarttender.biz/tenders"
         browser:  chrome
         position: [0, 450]
         size:     [640, 450]
