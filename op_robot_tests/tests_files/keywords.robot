@@ -136,8 +136,8 @@ Get Broker Property By Username
 Звірити дату
    [Arguments]  ${username}  ${field}   ${subject}
    ${field_date}=  Викликати для учасника    ${username}   Отримати інформацію із тендера  ${field}
-   ${returned}=   compare_date   ${subject}  ${field_date}
    Should Not Be Equal  ${field_date}   ${None}
+   ${returned}=  compare_date  ${subject}  ${field_date}
    Should Not Be Equal  ${returned}   ${None}
    Should Be True  '${returned}' == 'True'
 
