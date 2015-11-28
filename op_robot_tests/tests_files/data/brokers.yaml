@@ -2,7 +2,7 @@ Default:
     # These values are used by default unless a
     # specific broker entry overrides them.
     timeout_on_wait: 300
-    period_interval: 2
+    period_interval: 3
 Quinta:
     keywords_file: openprocurement_client
     timeout_on_wait: 15
