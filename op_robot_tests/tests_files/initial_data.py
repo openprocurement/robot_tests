@@ -149,7 +149,7 @@ def prom_test_tender_data():
         {
             "description": fake.catch_phrase(),
             "deliveryDate": {
-				"startDate": (now + timedelta(days=4)).isoformat(),
+                "startDate": (now + timedelta(days=4)).isoformat(),
                 "endDate": (now + timedelta(days=5)).isoformat()
             },
             "deliveryLocation": {
@@ -202,33 +202,33 @@ def test_tender_data_multiple_lots(period_interval=2):
       "description_en": "Test tender",
       "description_ru": "Тестовый тендер",
       "procuringEntity": {
-	  "name": fake.company(),
-	  "name_ru": fake_ru.company(),
-	  "name_en": fake_en.company(),
-	  "identifier": {
-	      "scheme": u"UA-EDR",
-	      "id": u"0000{}".format(fake.pyint()),
-	      "uri": fake.image_url(width=None, height=None)
-	  },
-	  "address": {
-	      "countryName": u"Україна",
-	      "postalCode": fake.postalcode(),
-	      "region": u"м. Київ",
-	      "locality": u"м. Київ",
-	      "streetAddress": fake.street_address()
-	  },
-	  "contactPoint": {
-	      "name": fake.name(),
-	      "telephone": fake.phone_number()
-	  }
+      "name": fake.company(),
+      "name_ru": fake_ru.company(),
+      "name_en": fake_en.company(),
+      "identifier": {
+          "scheme": u"UA-EDR",
+          "id": u"0000{}".format(fake.pyint()),
+          "uri": fake.image_url(width=None, height=None)
+      },
+      "address": {
+          "countryName": u"Україна",
+          "postalCode": fake.postalcode(),
+          "region": u"м. Київ",
+          "locality": u"м. Київ",
+          "streetAddress": fake.street_address()
+      },
+      "contactPoint": {
+          "name": fake.name(),
+          "telephone": fake.phone_number()
+      }
       },
       "value": {
-	  "amount": 50000.99,
-	  "currency": u"UAH"
+      "amount": 50000.99,
+      "currency": u"UAH"
       },
       "minimalStep": {
-	  "amount": 100.1,
-	  "currency": u"UAH"
+      "amount": 100.1,
+      "currency": u"UAH"
       },
     "items": [
         {
@@ -265,7 +265,7 @@ def test_tender_data_multiple_lots(period_interval=2):
             },
             "quantity": fake.pyint()
         },
-	{
+    {
             "description": fake.catch_phrase(),
             "deliveryDate": {
                 "endDate": (now + timedelta(days=5)).isoformat()
@@ -299,7 +299,7 @@ def test_tender_data_multiple_lots(period_interval=2):
             },
             "quantity": fake.pyint()
         },
-	{
+    {
             "description": fake.catch_phrase(),
             "deliveryDate": {
                 "endDate": (now + timedelta(days=5)).isoformat()
@@ -333,7 +333,7 @@ def test_tender_data_multiple_lots(period_interval=2):
             },
             "quantity": fake.pyint()
         },
-	{
+    {
             "description": fake.catch_phrase(),
             "deliveryDate": {
                 "endDate": (now + timedelta(days=5)).isoformat()
