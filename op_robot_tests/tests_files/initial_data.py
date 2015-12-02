@@ -23,7 +23,7 @@ def create_fake_doc():
     tf.close()
     return tf.name
 
-def test_tender_data(period_interval=2):
+def test_tender_data(period_interval):
   now = get_now()
   return {
     "title": u"[ТЕСТУВАННЯ] " + fake.catch_phrase(),
@@ -192,7 +192,7 @@ def prom_test_tender_data():
     }
 }
 
-def test_tender_data_multiple_lots(period_interval=2):
+def test_tender_data_multiple_lots(period_interval):
     now = get_now()
     return {
       "title": fake.catch_phrase(),
