@@ -507,14 +507,12 @@ Change_date_to_month
   [return]  ${return_value[1]}
 
 Отримати інформацію про items[0].deliveryAddress.postalCode
-  ${return_value}=   Отримати текст із поля і показати на сторінці  items[0].deliveryAddress.postalCode
-  ${return_value}=   Get Substring  ${return_value}   0   5
-  [return]  ${return_value}
+  ${return_value}=  Отримати текст із поля і показати на сторінці  items[0].deliveryAddress.postalCode
+  Run Keyword And Return  Get Substring  ${return_value}  0  5
 
 Отримати інформацію про items[0].deliveryAddress.countryName
-  ${return_value}=   Отримати текст із поля і показати на сторінці  items[0].deliveryAddress.countryName
-  ${return_value}=   Get Substring  ${return_value}   0   7
-  [return]  ${return_value}
+  ${return_value}=  Отримати текст із поля і показати на сторінці  items[0].deliveryAddress.countryName
+  Run Keyword And Return  Get Substring  ${return_value}  0  7
 
 Отримати інформацію про items[0].deliveryAddress.region
   ${return_value}=  Отримати текст із поля і показати на сторінці  items[0].deliveryAddress.region
@@ -525,32 +523,26 @@ Change_date_to_month
   Run Keyword And Return  Remove String  ${return_value}  ,
 
 Отримати інформацію про items[0].deliveryAddress.streetAddress
-  ${return_value}=   Отримати текст із поля і показати на сторінці  items[0].deliveryAddress.streetAddress
-  [return]  ${return_value}
+  Run Keyword And Return  Отримати текст із поля і показати на сторінці  items[0].deliveryAddress.streetAddress
 
 Отримати інформацію про items[0].deliveryDate.endDate
-  ${return_value}=   Отримати текст із поля і показати на сторінці  items[0].deliveryDate.endDate
-  ${time}=   Отримати текст із поля і показати на сторінці   enquiryPeriod.startDate
-  ${time}=   Get Substring   ${time}   11
-  ${day}=   Get Substring   ${return_value}   16   18
-  ${month}=   Get Substring   ${return_value}   18   22
-  ${year}=   Get Substring   ${return_value}   22
-  ${return_value}=   Convert To String  ${year}${month}${day}${time}
-  [return]  ${return_value}
+  ${return_value}=  Отримати текст із поля і показати на сторінці  items[0].deliveryDate.endDate
+  ${time}=  Отримати текст із поля і показати на сторінці  enquiryPeriod.startDate
+  ${time}=  Get Substring  ${time}  11
+  ${day}=  Get Substring  ${return_value}  16  18
+  ${month}=  Get Substring  ${return_value}  18  22
+  ${year}=  Get Substring  ${return_value}  22
+  Run Keyword And Return  Convert To String  ${year}${month}${day}${time}
 
 Отримати інформацію про questions[0].title
-  ${return_value}=   Отримати текст із поля і показати на сторінці   questions[0].title
-  [return]  ${return_value}
+  Run Keyword And Return  Отримати текст із поля і показати на сторінці  questions[0].title
 
 Отримати інформацію про questions[0].description
-  ${return_value}=   Отримати текст із поля і показати на сторінці   questions[0].description
-  [return]  ${return_value}
+  Run Keyword And Return  Отримати текст із поля і показати на сторінці  questions[0].description
 
 Отримати інформацію про questions[0].date
-  ${return_value}=   Отримати текст із поля і показати на сторінці   questions[0].date
-  ${return_value}=   Change_date_to_month   ${return_value}
-  [return]  ${return_value}
+  ${return_value}=  Отримати текст із поля і показати на сторінці  questions[0].date
+  Run Keyword And Return  Change_date_to_month  ${return_value}
 
 Отримати інформацію про questions[0].answer
-  ${return_value}=   Отримати текст із поля і показати на сторінці   questions[0].answer
-  [return]  ${return_value}
+  Run Keyword And Return  Отримати текст із поля і показати на сторінці  questions[0].answer
