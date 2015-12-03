@@ -421,9 +421,9 @@ def test_question_data():
                     "countryName": u"Україна",
                     "countryName_ru": u"Украина",
                     "countryName_en": "Ukraine",
-                    "locality": "м. Вінниця",
+                    "locality": u"м. Вінниця",
                     "postalCode": "21100",
-                    "region": "м. Вінниця",
+                    "region": u"м. Вінниця",
                     "streetAddress": fake.street_address()
                 },
                 "contactPoint": {
@@ -459,9 +459,9 @@ def test_complaint_data():
                     "countryName": u"Україна",
                     "countryName_ru": u"Украина",
                     "countryName_en": "Ukraine",
-                    "locality": "м. Вінниця",
+                    "locality": u"м. Вінниця",
                     "postalCode": "21100",
-                    "region": "м. Вінниця",
+                    "region": u"м. Вінниця",
                     "streetAddress": fake.street_address()
                 },
                 "contactPoint": {
@@ -498,9 +498,9 @@ def test_bid_data():
                         "countryName": u"Україна",
                         "countryName_ru": u"Украина",
                         "countryName_en": "Ukraine",
-                        "locality": "м. Вінниця",
+                        "locality": u"м. Вінниця",
                         "postalCode": "21100",
-                        "region": "м. Вінниця",
+                        "region": u"м. Вінниця",
                         "streetAddress": fake.street_address()
                     },
                     "contactPoint": {
