@@ -31,7 +31,7 @@ def test_tender_data(period_interval):
         "title": u"[ТЕСТУВАННЯ] " + fake.catch_phrase(),
         "mode": "test",
         "submissionMethodDetails": "quick",
-        "description": "Test tender1",  # Error @prom when 'Тестовый тендер'
+        "description": u"Тестовий тендер",  # Error @prom when "Тестовый тендер"
         "description_ru": u"Тестовый тендер",
         "description_en": "Test tender",
         "procuringEntity": {
@@ -122,7 +122,7 @@ def prom_test_tender_data():
         "title": fake.catch_phrase(),
         "mode": "test",
         "submissionMethodDetails": "quick",
-        "description": "Test tender1",  # Error @prom when 'Тестовый тендер'
+        "description": u"Тестовий тендер",  # Error @prom when "Тестовый тендер"
         "description_ru": u"Тестовый тендер",
         "description_en": "Test tender",
         "procuringEntity": {
