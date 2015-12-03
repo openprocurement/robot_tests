@@ -87,7 +87,9 @@ def test_tender_data(period_interval):
                 "classification": {
                     "scheme": u"CPV",
                     "id": u"44617100-9",
-                    "description": u"Cartons"
+                    "description": u"Картонки",
+                    "description_ru": u"Большие картонные коробки",
+                    "description_en": u"Cartons"
                 },
                 "additionalClassifications": [
                     {
@@ -179,7 +181,9 @@ def prom_test_tender_data():
                 "classification": {
                     "scheme": u"CPV",
                     "id": u"44617100-9",
-                    "description": u"Cartons"
+                    "description": u"Картонки",
+                    "description_ru": u"Большие картонные коробки",
+                    "description_en": u"Cartons"
                 },
                 "additionalClassifications": [
                     {
@@ -270,7 +274,9 @@ def test_tender_data_multiple_lots(period_interval):
                 "classification": {
                     "scheme": u"CPV",
                     "id": u"44617100-9",
-                    "description": u"Cartons"
+                    "description": u"Картонки",
+                    "description_ru": u"Большие картонные коробки",
+                    "description_en": u"Cartons"
                 },
                 "additionalClassifications": [
                     {
@@ -308,7 +314,9 @@ def test_tender_data_multiple_lots(period_interval):
                 "classification": {
                     "scheme": u"CPV",
                     "id": u"44617100-9",
-                    "description": u"Cartons"
+                    "description": u"Картонки",
+                    "description_ru": u"Большие картонные коробки",
+                    "description_en": u"Cartons"
                 },
                 "additionalClassifications": [
                     {
@@ -346,7 +354,9 @@ def test_tender_data_multiple_lots(period_interval):
                 "classification": {
                     "scheme": u"CPV",
                     "id": u"44617100-9",
-                    "description": u"Cartons"
+                    "description": u"Картонки",
+                    "description_ru": u"Большие картонные коробки",
+                    "description_en": u"Cartons"
                 },
                 "additionalClassifications": [
                     {
@@ -384,7 +394,9 @@ def test_tender_data_multiple_lots(period_interval):
                 "classification": {
                     "scheme": u"CPV",
                     "id": u"44617100-9",
-                    "description": u"Cartons"
+                    "description": u"Картонки",
+                    "description_ru": u"Большие картонные коробки",
+                    "description_en": u"Cartons"
                 },
                 "additionalClassifications": [
                     {
