@@ -513,14 +513,12 @@ Change_date_to_month
   [return]  ${return_value}
 
 Отримати інформацію про items[0].deliveryAddress.region
-  ${return_value}=   Отримати текст із поля і показати на сторінці  items[0].deliveryAddress.region
-  Run Keyword And Return If  '${return_value}' == 'Київська,'   Convert To String  м. Київ
-  [return]  ${return_value}
+  ${return_value}=  Отримати текст із поля і показати на сторінці  items[0].deliveryAddress.region
+  Run Keyword And Return  Remove String  ${return_value}  ,
 
 Отримати інформацію про items[0].deliveryAddress.locality
-  ${return_value}=   Отримати текст із поля і показати на сторінці  items[0].deliveryAddress.locality
-  Run Keyword And Return If  '${return_value}' == 'Київ,'   Convert To String  м. Київ
-  [return]  ${return_value}
+  ${return_value}=  Отримати текст із поля і показати на сторінці  items[0].deliveryAddress.locality
+  Run Keyword And Return  Remove String  ${return_value}  ,
 
 Отримати інформацію про items[0].deliveryAddress.streetAddress
   ${return_value}=   Отримати текст із поля і показати на сторінці  items[0].deliveryAddress.streetAddress
