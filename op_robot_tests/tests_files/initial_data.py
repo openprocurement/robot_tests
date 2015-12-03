@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -
-import os
-from pytz import timezone
 from datetime import datetime, timedelta
-from munch import munchify
 from faker import Factory
+from munch import munchify
+from pytz import timezone
 from tempfile import NamedTemporaryFile
+import os
 
 fake = Factory.create('uk_UA')
 fake_ru = Factory.create('ru')
