@@ -45,6 +45,8 @@ def test_tender_data(period_interval):
             },
             "address": {
                 "countryName": u"Україна",
+                "countryName_ru": u"Украина",
+                "countryName_en": "Ukraine",
                 "postalCode": fake.postalcode(),
                 "region": u"м. Київ",
                 "locality": u"м. Київ",
@@ -75,6 +77,8 @@ def test_tender_data(period_interval):
                 },
                 "deliveryAddress": {
                     "countryName": u"Україна",
+                    "countryName_ru": u"Украина",
+                    "countryName_en": "Ukraine",
                     "postalCode": fake.postalcode(),
                     "region": u"м. Київ",
                     "locality": u"м. Київ",
@@ -130,6 +134,8 @@ def prom_test_tender_data():
             },
             "address": {
                 "countryName": u"Україна",
+                "countryName_ru": u"Украина",
+                "countryName_en": "Ukraine",
                 "postalCode": fake.postalcode(),
                 "region": u"м. Київ",
                 "locality": u"м. Київ",
@@ -161,6 +167,8 @@ def prom_test_tender_data():
                 },
                 "deliveryAddress": {
                     "countryName": u"Україна",
+                    "countryName_ru": u"Украина",
+                    "countryName_en": "Ukraine",
                     "postalCode": fake.postalcode(),
                     "region": u"м. Київ",
                     "locality": u"м. Київ",
@@ -216,6 +224,8 @@ def test_tender_data_multiple_lots(period_interval):
             },
             "address": {
                 "countryName": u"Україна",
+                "countryName_ru": u"Украина",
+                "countryName_en": "Ukraine",
                 "postalCode": fake.postalcode(),
                 "region": u"м. Київ",
                 "locality": u"м. Київ",
@@ -246,6 +256,8 @@ def test_tender_data_multiple_lots(period_interval):
                 },
                 "deliveryAddress": {
                     "countryName": u"Україна",
+                    "countryName_ru": u"Украина",
+                    "countryName_en": "Ukraine",
                     "postalCode": "01008",
                     "region": u"м. Київ",
                     "locality": u"м. Київ",
@@ -280,6 +292,8 @@ def test_tender_data_multiple_lots(period_interval):
                 },
                 "deliveryAddress": {
                     "countryName": u"Україна",
+                    "countryName_ru": u"Украина",
+                    "countryName_en": "Ukraine",
                     "postalCode": fake.postalcode(),
                     "region": u"м. Київ",
                     "locality": u"м. Київ",
@@ -314,6 +328,8 @@ def test_tender_data_multiple_lots(period_interval):
                 },
                 "deliveryAddress": {
                     "countryName": u"Україна",
+                    "countryName_ru": u"Украина",
+                    "countryName_en": "Ukraine",
                     "postalCode": fake.postalcode(),
                     "region": u"м. Луганськ",
                     "locality": u"м. Луганськ",
@@ -348,6 +364,8 @@ def test_tender_data_multiple_lots(period_interval):
                 },
                 "deliveryAddress": {
                     "countryName": u"Україна",
+                    "countryName_ru": u"Украина",
+                    "countryName_en": "Ukraine",
                     "postalCode": fake.postalcode(),
                     "region": u"м. Київ",
                     "locality": u"м. Київ",
@@ -388,7 +406,9 @@ def test_question_data():
         "data": {
             "author": {
                 "address": {
-                    "countryName": "Україна",
+                    "countryName": u"Україна",
+                    "countryName_ru": u"Украина",
+                    "countryName_en": "Ukraine",
                     "locality": "м. Вінниця",
                     "postalCode": "21100",
                     "region": "м. Вінниця",
@@ -424,7 +444,9 @@ def test_complaint_data():
         "data": {
             "author": {
                 "address": {
-                    "countryName": "Україна",
+                    "countryName": u"Україна",
+                    "countryName_ru": u"Украина",
+                    "countryName_en": "Ukraine",
                     "locality": "м. Вінниця",
                     "postalCode": "21100",
                     "region": "м. Вінниця",
@@ -461,7 +483,9 @@ def test_bid_data():
             "tenderers": [
                 {
                     "address": {
-                        "countryName": "Україна",
+                        "countryName": u"Україна",
+                        "countryName_ru": u"Украина",
+                        "countryName_en": "Ukraine",
                         "locality": "м. Вінниця",
                         "postalCode": "21100",
                         "region": "м. Вінниця",
