@@ -112,4 +112,4 @@ ${broker}       Quinta
 
 Можливість видалити позиції закупівлі тендера
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
-  Викликати для учасника   ${tender_owner}   Додати предмети закупівлі   ${TENDER['TENDER_UAID']}   2
+  Викликати для учасника   ${tender_owner}   Відняти предмети закупівлі   ${TENDER['TENDER_UAID']}   2
