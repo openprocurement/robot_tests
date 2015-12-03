@@ -339,7 +339,7 @@ def test_tender_data_multiple_lots(period_interval):
                     "countryName_ru": u"Украина",
                     "countryName_en": "Ukraine",
                     "postalCode": fake.postalcode(),
-                    "region": u"м. Луганськ",
+                    "region": u"Луганська область",
                     "locality": u"м. Луганськ",
                     "streetAddress": u"Вул. Оборонна 28"
                 },
@@ -423,7 +423,7 @@ def test_question_data():
                     "countryName_en": "Ukraine",
                     "locality": u"м. Вінниця",
                     "postalCode": "21100",
-                    "region": u"м. Вінниця",
+                    "region": u"Вінницька область",
                     "streetAddress": fake.street_address()
                 },
                 "contactPoint": {
@@ -461,7 +461,7 @@ def test_complaint_data():
                     "countryName_en": "Ukraine",
                     "locality": u"м. Вінниця",
                     "postalCode": "21100",
-                    "region": u"м. Вінниця",
+                    "region": u"Вінницька область",
                     "streetAddress": fake.street_address()
                 },
                 "contactPoint": {
@@ -500,7 +500,7 @@ def test_bid_data():
                         "countryName_en": "Ukraine",
                         "locality": u"м. Вінниця",
                         "postalCode": "21100",
-                        "region": u"м. Вінниця",
+                        "region": u"Вінницька область",
                         "streetAddress": fake.street_address()
                     },
                     "contactPoint": {
