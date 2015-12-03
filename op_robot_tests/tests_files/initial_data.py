@@ -98,6 +98,8 @@ def test_tender_data(period_interval):
                 ],
                 "unit": {
                     "name": u"кілограм",
+                    "name_ru": u"килограмм",
+                    "name_en": "kilogram",
                     "code": u"KGM"
                 },
                 "quantity": fake.pyint()
@@ -188,6 +190,8 @@ def prom_test_tender_data():
                 ],
                 "unit": {
                     "name": u"кілограм",
+                    "name_ru": u"килограмм",
+                    "name_en": "kilogram",
                     "code": u"KGM"
                 },
                 "quantity": fake.pyint()
@@ -277,6 +281,8 @@ def test_tender_data_multiple_lots(period_interval):
                 ],
                 "unit": {
                     "name": u"кілограм",
+                    "name_ru": u"килограмм",
+                    "name_en": "kilogram",
                     "code": u"KGM"
                 },
                 "quantity": fake.pyint()
@@ -313,6 +319,8 @@ def test_tender_data_multiple_lots(period_interval):
                 ],
                 "unit": {
                     "name": u"кілограм",
+                    "name_ru": u"килограмм",
+                    "name_en": "kilogram",
                     "code": u"KGM"
                 },
                 "quantity": fake.pyint()
@@ -349,6 +357,8 @@ def test_tender_data_multiple_lots(period_interval):
                 ],
                 "unit": {
                     "name": u"кілограм",
+                    "name_ru": u"килограмм",
+                    "name_en": "kilogram",
                     "code": u"KGM"
                 },
                 "quantity": fake.pyint()
@@ -385,6 +395,8 @@ def test_tender_data_multiple_lots(period_interval):
                 ],
                 "unit": {
                     "name": u"кілограм",
+                    "name_ru": u"килограмм",
+                    "name_en": "kilogram",
                     "code": u"KGM"
                 },
                 "quantity": fake.pyint()
