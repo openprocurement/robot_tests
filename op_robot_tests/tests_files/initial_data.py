@@ -32,8 +32,8 @@ def test_tender_data(period_interval):
         "mode": "test",
         "submissionMethodDetails": "quick",
         "description": "Test tender1",  # Error @prom when 'Тестовый тендер'
+        "description_ru": u"Тестовый тендер",
         "description_en": "Test tender",
-        "description_ru": "Тестовый тендер",
         "procuringEntity": {
             "name": fake.company(),
             "name_ru": fake_ru.company(),
@@ -117,8 +117,8 @@ def prom_test_tender_data():
         "mode": "test",
         "submissionMethodDetails": "quick",
         "description": "Test tender1",  # Error @prom when 'Тестовый тендер'
+        "description_ru": u"Тестовый тендер",
         "description_en": "Test tender",
-        "description_ru": "Тестовый тендер",
         "procuringEntity": {
             "name": fake.company(),
             "name_ru": fake_ru.company(),
@@ -203,8 +203,8 @@ def test_tender_data_multiple_lots(period_interval):
         "mode": "test",
         "submissionMethodDetails": "quick",
         "description": u"Тестовий тендер",
+        "description_ru": u"Тестовый тендер",
         "description_en": "Test tender",
-        "description_ru": "Тестовый тендер",
         "procuringEntity": {
             "name": fake.company(),
             "name_ru": fake_ru.company(),
