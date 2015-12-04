@@ -52,14 +52,14 @@ ${locator.items[0].additionalClassifications[0].description}    xpath=//dd[conta
   [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
   ...      ${ARGUMENTS[0]} ==  username
   Open Browser   ${BROKERS['${USERS.users['${username}'].broker}'].url}   ${USERS.users['${username}'].browser}   alias=${ARGUMENTS[0]}
-  Set Window Size   @{USERS.users['${ARGUMENTS[0]}'].size}
+  Set Window Size       @{USERS.users['${ARGUMENTS[0]}'].size}
   Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
   Run Keyword If   '${username}' != 'Prom_Viewer'   Login
 
 Login
     Click Element  ${sign_in}
     sleep   1
-    Input text      ${login_sign_in}     ${USERS.users['${username}'].login}
+    Input text      ${login_sign_in}          ${USERS.users['${username}'].login}
     Input text      ${password_sign_in}       ${USERS.users['${username}'].password}
     Click Button    id=submit_login_button
     Wait Until Page Contains Element   xpath =//div[@class='qa_political_procurement']  20
@@ -132,12 +132,12 @@ Login
 
     ## дроп даун области
     Click Element     id=state_purchases_items-0-delivery_region_dd
-    Click Element     xpath=//li[contains(text(), 'Киевская')]
+    Click Element     xpath=//li[contains(@data-value, 'Киевская')]
     Input text        id=state_purchases_items-0-delivery_locality          ${locality}
 
     Input text        id=state_purchases_items-0-delivery_street_address    ${streetAddress}
-    Input text        id=state_purchases_items-0-delivery_latitude          ${latitude}
-    Input text        id=state_purchases_items-0-delivery_longitude         ${longitude}
+    Input text        id=state_purchases_items-0-delivery_latitude          ${latitude.split(u'° ')[0]}
+    Input text        id=state_purchases_items-0-delivery_longitude         ${longitude.split(u'° ')[0]}
     Input text        id=amount             ${budget}
 
     Input text      id=dt_enquiry           ${end_period_adjustments}
@@ -153,7 +153,6 @@ Login
     Click Element   id=dt_tender_end
     Press Key       id=dt_tender_end                \\13
     Sleep   1
-
     Click Button    id=submit_button
     Sleep   1
     Wait Until Page Does Not Contain      ...   1000
@@ -161,7 +160,31 @@ Login
 
     ${tender_id}=     Get Text        xpath=//p[@id='qa_state_purchase_id']
     ${id}=            Remove String     ${tender_id}      ID:
+    log to console      ${id}
     [return]    ${id}
+
+
+Завантажити документ
+  [Arguments]  @{ARGUMENTS}
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  ${filepath}
+  ...      ${ARGUMENTS[2]} ==  ${id}
+
+  Go to   ${USERS.users['${username}'].homepage}
+  Input Text      id=search       ${ARGUMENTS[2]}
+  Click Button    xpath=//button[@type='submit']
+  Sleep   2
+  Click Element   xpath=(//td[contains(@class, 'qa_item_name')]//a)[1]
+  Sleep   1
+  Click Element   xpath=//a[contains(@href, 'state_purchase/edit')]
+  Sleep   1
+  Choose File     xpath=//input[contains(@class, 'qa_state_offer_add_field')]   ${filepath}
+  Sleep   2
+  Reload Page
+  Click Button    id=submit_button
+  sleep   3
+  Capture Page Screenshot
 
 
 Пошук тендера по ідентифікатору
@@ -170,19 +193,41 @@ Login
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  ${id}
 
-  Switch browser   ${ARGUMENTS[0]}
-  ${current_location}=   Get Location
   Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
-  sleep  1
-  Input Text      id=search_text_id  ${ARGUMENTS[1]}
+  Sleep  1
+  Input Text      id=search_text_id   ${ARGUMENTS[1]}
   Click Button    id=search_submit
-  sleep  3
+  Sleep  2
   CLICK ELEMENT     xpath=(//a[contains(@href, 'net/dz/')])[1]
-  sleep  1
+  Sleep  1
   Wait Until Page Contains    ${ARGUMENTS[1]}   10
-  sleep  1
-  CLICK ELEMENT   id=show_lot_info-0
+  Sleep  1
+  Click Element   id=show_lot_info-0
   Capture Page Screenshot
+
+
+#Задати питання
+#  [Arguments]  @{ARGUMENTS}
+#  [Documentation]
+#  ...      ${ARGUMENTS[0]} ==  username
+#  ...      ${ARGUMENTS[1]} ==  tenderUaId
+#  ...      ${ARGUMENTS[2]} ==  questionId
+#  ${title}=        Get From Dictionary  ${ARGUMENTS[2].data}  title
+#  ${description}=  Get From Dictionary  ${ARGUMENTS[2].data}  description
+#
+#  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+#  prom.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+#  sleep  1
+##  Execute Javascript                  window.scroll(2500,2500)
+#  Wait Until Page Contains Element    xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]    20
+#  Click Element                       xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]
+#  Wait Until Page Contains Element    name=title    20
+#  Input text                          name=title                 ${title}
+#  Input text                          xpath=//textarea[@name='description']           ${description}
+#  Click Element                       xpath=//div[contains(@class, 'buttons')]//button[@type='submit']
+#  Wait Until Page Contains            ${title}   30
+#  Capture Page Screenshot
+
 
 
 
@@ -246,11 +291,11 @@ Login
 
 Отримати інформацію про items[0].deliveryLocation.latitude
   ${return_value}=   Отримати тест із поля і показати на сторінці   items[0].deliveryLocation.latitude
-  [return]  ${return_value.split(' ')[1]}
+  [return]  ${return_value.split(' ')[1] + u'° N'}
 
 Отримати інформацію про items[0].deliveryLocation.longitude
   ${return_value}=   Отримати тест із поля і показати на сторінці   items[0].deliveryLocation.longitude
-  [return]  ${return_value.split(' ')[0]}
+  [return]  ${return_value.split(' ')[0] + u'° N'}
 
 
 ## Подача пропозицій
@@ -285,6 +330,7 @@ Login
 
 Отримати інформацію про items[0].classification.scheme
   ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].classification.scheme
+  ${return_value}=    Remove String      ${return_value}     :
   [return]  ${return_value}
 
 Отримати інформацію про items[0].classification.description
@@ -297,6 +343,7 @@ Login
 
 Отримати інформацію про items[0].additionalClassifications[0].scheme
   ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].additionalClassifications[0].scheme
+  ${return_value}=    Remove String      ${return_value}     :
   [return]  ${return_value}
 
 Отримати інформацію про items[0].additionalClassifications[0].description

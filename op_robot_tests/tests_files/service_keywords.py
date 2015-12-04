@@ -17,7 +17,7 @@ import time
 from .initial_data import (
     test_tender_data, test_question_data, test_question_answer_data,
     test_bid_data, test_award_data, test_complaint_data, test_complaint_reply_data, test_tender_data_multiple_lots,
-    auction_bid, create_fake_doc, test_tender_data_from_Prom
+    auction_bid, create_fake_doc
 )
 import calendar
 
@@ -99,14 +99,6 @@ def load_initial_data_from(file_name):
 def prepare_test_tender_data(period_interval=2, mode='single'):
     if mode == 'single':
         return munchify({'data': test_tender_data(period_interval=period_interval)})
-    elif mode == 'multi':
-        return munchify({'data': test_tender_data_multiple_lots(period_interval=period_interval)})
-    raise ValueError('A very specific bad thing happened')
-
-
-def prepare_test_tender_data_from_Prom(period_interval=2, mode='single'):
-    if mode == 'single':
-        return munchify({'data': test_tender_data_from_Prom(period_interval=period_interval)})
     elif mode == 'multi':
         return munchify({'data': test_tender_data_multiple_lots(period_interval=period_interval)})
     raise ValueError('A very specific bad thing happened')
@@ -207,6 +199,7 @@ def convert_date_to_prom_end_period_format(isodate):
     iso_dt=parse_date(isodate)
     day_string = iso_dt.strftime("%d.%m.%Y %H:%M")
     return day_string
+
 
 def procuringEntity_name_prom(INITIAL_TENDER_DATA):
     INITIAL_TENDER_DATA.data.procuringEntity['name'] = u"Test_company_from_Prozorro"
