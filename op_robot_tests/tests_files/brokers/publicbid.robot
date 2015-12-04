@@ -17,8 +17,8 @@ ${telephone}     +380976535447
   Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
 
 # login
-  Run Keyword And Ignore Error   Wait Until Page Contains Element    id=mForm:j_idt54   10
-  Click Element                      id=mForm:j_idt54
+  Run Keyword And Ignore Error   Wait Until Page Contains Element    id=mForm:j_idt56   10
+  Click Element                      id=mForm:j_idt56
   Run Keyword And Ignore Error   Wait Until Page Contains Element   id=mForm:email   10
   Input text   id=mForm:email      ${USERS.users['${username}'].login}
   Sleep  2
@@ -81,9 +81,16 @@ ${telephone}     +380976535447
   Choose File                         id=mForm:data:docFile_input     ${file_path}
   Sleep  2
   Run Keyword if   '${mode}' == 'multi'   Додати предмет   items
+  # Save
   Click Element                       id=mForm:bSave
+  Sleep   5
+  # Announce
+  Click Element                       xpath=//span[text()="Оголосити"]
+  Sleep   2
+  # Confirm in message box
+  Click Element                       xpath=//div[contains(@class, "ui-confirm-dialog") and @aria-hidden="false"]//span[text()="Оголосити"]
   # More smart wait for id is needed there.
-  Sleep   25
+  Sleep   5
   ${tender_UAid}=  Get Text           id=mForm:nBid
   ${tender_UAid}=  Get Substring  ${tender_UAid}  19
   ${Ids}       Convert To String  ${tender_UAid}

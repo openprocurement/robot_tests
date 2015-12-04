@@ -31,7 +31,8 @@ ${locator.questions[0].answer}       xpath=//div[@class = 'answer relative']//di
   [Arguments]  @{ARGUMENTS}
   [Documentation]  Відкрити брaузер, створити обєкт api wrapper, тощо
   ...      ${ARGUMENTS[0]} ==  username
-  Open Browser   ${BROKERS['${USERS.users['${ARGUMENTS[0]}'].broker}'].url}   ${USERS.users['${ARGUMENTS[0]}'].browser}   alias=${ARGUMENTS[0]}
+  ${url}=  Get Broker Property By Username  ${ARGUMENTS[0]}  url
+  Open Browser  ${url}  ${USERS.users['${ARGUMENTS[0]}'].browser}  alias=${ARGUMENTS[0]}
   Set Window Size       @{USERS.users['${ARGUMENTS[0]}'].size}
   Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
   Run Keyword And Ignore Error       Pre Login   ${ARGUMENTS[0]}
@@ -53,10 +54,12 @@ Pre Login
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...    ${ARGUMENTS[0]} ==  username
-  Wait Until Page Contains Element   name=siteLogin   10
-  Input text                         name=siteLogin      ${BROKERS['${USERS.users['${username}'].broker}'].login}
-  Input text                         name=sitePass       ${BROKERS['${USERS.users['${username}'].broker}'].password}
-  Click Button                       xpath=.//*[@id='table1']/tbody/tr/td/form/p[3]/input
+  ${login}=     Get Broker Property By Username  ${ARGUMENTS[0]}  login
+  ${password}=  Get Broker Property By Username  ${ARGUMENTS[0]}  password
+  Wait Until Page Contains Element  name=siteLogin  10
+  Input Text                        name=siteLogin  ${login}
+  Input Text                        name=sitePass   ${password}
+  Click Button                      xpath=.//*[@id='table1']/tbody/tr/td/form/p[3]/input
 
 Створити тендер
   [Arguments]  @{ARGUMENTS}
@@ -187,7 +190,8 @@ Set Multi Ids
   ...      ${ARGUMENTS[0]} =  username
   ...      ${ARGUMENTS[1]} =  ${TENDER_UAID}
   ...      ${ARGUMENTS[2]} =  3
-  ${tender_data}=  prepare_test_tender_data   ${BROKERS['${USERS.users['${tender_owner}'].broker}'].period_interval}   multi
+  ${period_interval}=  Get Broker Property By Username  ${ARGUMENTS[0]}  period_interval
+  ${tender_data}=  prepare_test_tender_data  ${period_interval}  multi
 
   ${items}=         Get From Dictionary   ${tender_data.data}               items
   ${description}=   Get From Dictionary   ${tender_data.data}               description
@@ -229,7 +233,8 @@ Set Multi Ids
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tenderId
   Switch browser   ${ARGUMENTS[0]}
-  Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
+  ${url}=  Get Broker Property By Username  ${ARGUMENTS[0]}  url
+  Go To  ${url}
   Wait Until Page Contains            Держзакупівлі.онлайн   10
   Click Element                       xpath=//a[text()='Закупівлі']
   sleep  1
@@ -360,57 +365,56 @@ Set Multi Ids
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  fieldname
   Switch browser   ${ARGUMENTS[0]}
-  ${return_value}=  run keyword  отримати інформацію про ${ARGUMENTS[1]}
-  [return]  ${return_value}
+  Run Keyword And Return  Отримати інформацію про ${ARGUMENTS[1]}
 
-отримати тест із поля і показати на сторінці
+Отримати текст із поля і показати на сторінці
   [Arguments]   ${fieldname}
   sleep  1
   ${return_value}=   Get Text  ${locator.${fieldname}}
   [return]  ${return_value}
 
 отримати інформацію про title
-  ${title}=   отримати тест із поля і показати на сторінці   title
+  ${title}=   Отримати текст із поля і показати на сторінці   title
   [return]  ${title.split('.')[0]}
 
 отримати інформацію про description
-  ${description}=   отримати тест із поля і показати на сторінці   description
+  ${description}=   Отримати текст із поля і показати на сторінці   description
   [return]  ${description}
 
 отримати інформацію про tenderId
-  ${tenderId}=   отримати тест із поля і показати на сторінці   tenderId
+  ${tenderId}=   Отримати текст із поля і показати на сторінці   tenderId
   [return]  ${tenderId}
 
 отримати інформацію про value.amount
-  ${valueAmount}=   отримати тест із поля і показати на сторінці   value.amount
+  ${valueAmount}=   Отримати текст із поля і показати на сторінці   value.amount
   ${valueAmount}=   Convert To Number   ${valueAmount.split(' ')[0]}
   [return]  ${valueAmount}
 
 отримати інформацію про minimalStep.amount
-  ${minimalStepAmount}=   отримати тест із поля і показати на сторінці   minimalStep.amount
+  ${minimalStepAmount}=   Отримати текст із поля і показати на сторінці   minimalStep.amount
   ${minimalStepAmount}=   Convert To Number   ${minimalStepAmount.split(' ')[0]}
   [return]  ${minimalStepAmount}
 
 отримати інформацію про enquiryPeriod.endDate
-  ${enquiryPeriodEndDate}=   отримати тест із поля і показати на сторінці   enquiryPeriod.endDate
+  ${enquiryPeriodEndDate}=   Отримати текст із поля і показати на сторінці   enquiryPeriod.endDate
   ${enquiryPeriodEndDate}=   subtract_from_time   ${enquiryPeriodEndDate}   6   5
   [return]  ${enquiryPeriodEndDate}
 
 отримати інформацію про tenderPeriod.endDate
-  ${tenderPeriodEndDate}=   отримати тест із поля і показати на сторінці   tenderPeriod.endDate
+  ${tenderPeriodEndDate}=   Отримати текст із поля і показати на сторінці   tenderPeriod.endDate
   ${tenderPeriodEndDate}=   subtract_from_time    ${tenderPeriodEndDate}   11   0
   [return]  ${tenderPeriodEndDate}
 
 отримати інформацію про items[0].deliveryAddress.countryName
-  ${countryName}=   отримати тест із поля і показати на сторінці   items[0].deliveryAddress.countryName
+  ${countryName}=   Отримати текст із поля і показати на сторінці   items[0].deliveryAddress.countryName
   [return]  ${countryName}
 
 отримати інформацію про items[0].classification.scheme
-  ${classificationScheme}=   отримати тест із поля і показати на сторінці   items[0].classification.scheme
+  ${classificationScheme}=   Отримати текст із поля і показати на сторінці   items[0].classification.scheme
   [return]  ${classificationScheme.split(' ')[1]}
 
 отримати інформацію про items[0].additionalClassifications[0].scheme
-  ${additionalClassificationsScheme}=   отримати тест із поля і показати на сторінці   items[0].additionalClassifications[0].scheme
+  ${additionalClassificationsScheme}=   Отримати текст із поля і показати на сторінці   items[0].additionalClassifications[0].scheme
   [return]  ${additionalClassificationsScheme.split(' ')[1]}
 
 отримати інформацію про questions[0].title
@@ -418,16 +422,16 @@ Set Multi Ids
   Click Element                       xpath=//a[@class='reverse tenderLink']
   sleep  1
   Click Element                       xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]
-  ${questionsTitle}=   отримати тест із поля і показати на сторінці   questions[0].title
+  ${questionsTitle}=   Отримати текст із поля і показати на сторінці   questions[0].title
   ${questionsTitle}=   Convert To Lowercase   ${questionsTitle}
   [return]  ${questionsTitle.capitalize().split('.')[0] + '.'}
 
 отримати інформацію про questions[0].description
-  ${questionsDescription}=   отримати тест із поля і показати на сторінці   questions[0].description
+  ${questionsDescription}=   Отримати текст із поля і показати на сторінці   questions[0].description
   [return]  ${questionsDescription}
 
 отримати інформацію про questions[0].date
-  ${questionsDate}=   отримати тест із поля і показати на сторінці   questions[0].date
+  ${questionsDate}=   Отримати текст із поля і показати на сторінці   questions[0].date
   log  ${questionsDate}
   [return]  ${questionsDate}
 
@@ -436,40 +440,40 @@ Set Multi Ids
   Click Element                       xpath=//a[@class='reverse tenderLink']
   sleep  1
   Click Element                       xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]
-  ${questionsAnswer}=   отримати тест із поля і показати на сторінці   questions[0].answer
+  ${questionsAnswer}=   Отримати текст із поля і показати на сторінці   questions[0].answer
   [return]  ${questionsAnswer}
 
 отримати інформацію про items[0].deliveryDate.endDate
-  ${deliveryDateEndDate}=   отримати тест із поля і показати на сторінці   items[0].deliveryDate.endDate
+  ${deliveryDateEndDate}=   Отримати текст із поля і показати на сторінці   items[0].deliveryDate.endDate
   ${deliveryDateEndDate}=   subtract_from_time    ${deliveryDateEndDate}   15   0
   [return]  ${deliveryDateEndDate}
 
 отримати інформацію про items[0].classification.id
-  ${classificationId}=   отримати тест із поля і показати на сторінці   items[0].classification.id
+  ${classificationId}=   Отримати текст із поля і показати на сторінці   items[0].classification.id
   [return]  ${classificationId}
 
 отримати інформацію про items[0].classification.description
-  ${classificationDescription}=   отримати тест із поля і показати на сторінці     items[0].classification.description
-  ${classificationDescription}=   Run keyword if   '${classificationDescription}' == 'Картонки'    Convert To String  Cartons
+  ${classificationDescription}=   Отримати текст із поля і показати на сторінці     items[0].classification.description
+  Run Keyword And Return If  '${classificationDescription}' == 'Картонки'    Convert To String  Cartons
   [return]  ${classificationDescription}
 
 отримати інформацію про items[0].additionalClassifications[0].id
-  ${additionalClassificationsId}=   отримати тест із поля і показати на сторінці     items[0].additionalClassifications[0].id
+  ${additionalClassificationsId}=   Отримати текст із поля і показати на сторінці     items[0].additionalClassifications[0].id
   [return]  ${additionalClassificationsId}
 
 отримати інформацію про items[0].additionalClassifications[0].description
-  ${additionalClassificationsDescription}=   отримати тест із поля і показати на сторінці     items[0].additionalClassifications[0].description
+  ${additionalClassificationsDescription}=   Отримати текст із поля і показати на сторінці     items[0].additionalClassifications[0].description
   ${additionalClassificationsDescription}=   Convert To Lowercase   ${additionalClassificationsDescription}
   [return]  ${additionalClassificationsDescription}
 
 отримати інформацію про items[0].quantity
-  ${itemsQuantity}=   отримати тест із поля і показати на сторінці     items[0].quantity
+  ${itemsQuantity}=   Отримати текст із поля і показати на сторінці     items[0].quantity
   ${itemsQuantity}=   Convert To Integer    ${itemsQuantity}
   [return]  ${itemsQuantity}
 
 отримати інформацію про items[0].unit.code
-  ${unitCode}=   отримати тест із поля і показати на сторінці     items[0].unit.code
-  ${unitCode}=   Run keyword if    '${unitCode}'== 'кг'   Convert To String  KGM
+  ${unitCode}=   Отримати текст із поля і показати на сторінці     items[0].unit.code
+  Run Keyword And Return If  '${unitCode}'== 'кг'   Convert To String  KGM
   [return]  ${unitCode}
 
 отримати інформацію про procuringEntity.name

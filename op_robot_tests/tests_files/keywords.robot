@@ -28,9 +28,6 @@ Set Suite Variable With Default Value
   log  ${BROKERS}
   Set Global Variable  ${BROKERS}
 
-  ${brokers_list}=    Get Dictionary Items    ${BROKERS}
-  log  ${brokers_list}
-
   ${file_path}=  Get Variable Value  ${USERS_FILE}  users.yaml
   ${USERS}=  load_initial_data_from  ${file_path}
   Set Global Variable  ${USERS}
@@ -47,8 +44,30 @@ Set Suite Variable With Default Value
   \  log  ${active_users}
   \  log  ${username}
   \  ${status}=  Run Keyword And Return Status   Dictionary Should Contain Value  ${active_users}   ${username}
-  \  Run Keyword If   '${status}' == 'True'   Завантажуємо бібліотеку з реалізацією ${BROKERS['${USERS.users['${username}'].broker}'].keywords_file} майданчики
-  \  Run Keyword If   '${status}' == 'True'   Викликати для учасника   ${username}  Підготувати клієнт для користувача
+  \  ${keywords_file}=  Get Broker Property By Username  ${username}  keywords_file
+  \  Run Keyword If  '${status}' == 'True'  Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
+  \  Run Keyword If  '${status}' == 'True'  Викликати для учасника  ${username}  Підготувати клієнт для користувача
+
+Get Broker Property
+  [Arguments]  ${broker_name}  ${property}
+  [Documentation]
+  ...    This keyword returns a property of specified broker
+  ...    if that property exists, otherwise, it returns a
+  ...    default value.
+  ${status}=  Run Keyword And Return Status  Should Contain  ${BROKERS['${broker_name}']}  ${property}
+  Return From Keyword If  ${status}  ${BROKERS['${broker_name}'].${property}}
+  # If broker doesn't have that property, fall back to default value
+  Should Contain  ${BROKERS['Default']}  ${property}
+  [return]  ${BROKERS['Default'].${property}}
+
+Get Broker Property By Username
+  [Documentation]
+  ...    This keyword gets the corresponding broker name
+  ...    for a specified username and then calls
+  ...    "Get Broker Property"
+  [Arguments]  ${username}  ${property}
+  ${broker_name}=  Get Variable Value  ${USERS.users['${username}'].broker}
+  Run Keyword And Return  Get Broker Property  ${broker_name}  ${property}
 
 Підготовка початкових даних
   @{QUESTIONS} =  Create list
@@ -67,27 +86,27 @@ Set Suite Variable With Default Value
   ${reply}=  test_complaint_reply_data
   Append to list   ${REPLIES}   ${reply}
   Set Global Variable  ${REPLIES}
-  ${INITIAL_TENDER_DATA}=  prepare_test_tender_data   ${BROKERS['${USERS.users['${tender_owner}'].broker}'].period_interval}   ${mode}
+  ${period_interval}=  Get Broker Property By Username  ${tender_owner}  period_interval
+  ${INITIAL_TENDER_DATA}=  prepare_test_tender_data  ${period_interval}  ${mode}
   Set Global Variable  ${INITIAL_TENDER_DATA}
   ${TENDER}=  Create Dictionary
   Set Global Variable  ${TENDER}
   Log  ${TENDER}
   Log  ${INITIAL_TENDER_DATA}
 
-Завантажуємо бібліотеку з реалізацією ${keywords_file} майданчики
+Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
   Import Resource  ${CURDIR}/brokers/${keywords_file}.robot
 
 ##################################################################################
 Дочекатись синхронізації з майданчиком
   [Arguments]  ${username}
   [Documentation]
-  ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  tenderId
-  ...      ${ARGUMENTS[2]} ==  id
-
+  ...    Get ${wait_timeout} for specified user and wait
+  ...    until that timeout runs out.
   ${now}=  Get Current Date
   ${delta}=  Subtract Date From Date  ${now}  ${TENDER['LAST_MODIFICATION_DATE']}
-  ${wait_timeout}=  Subtract Time From Time  ${BROKERS['${USERS.users['${username}'].broker}'].timeout_on_wait}  ${delta}
+  ${timeout_on_wait}=  Get Broker Property By Username  ${username}  timeout_on_wait
+  ${wait_timeout}=  Subtract Time From Time  ${timeout_on_wait}  ${delta}
   Run Keyword If   ${wait_timeout}>0   Sleep  ${wait_timeout}
 
 Звірити поле тендера
@@ -147,21 +166,20 @@ Set Suite Variable With Default Value
   ...    this keyword takes "shouldfail" argument as first one in @{arguments}
   ...    and switches the behaviour of keyword and "shouldfail"
   [Arguments]  ${username}  ${command}  @{arguments}
-  log  ${username}
-  log  ${command}
-  log  ${arguments}
-  ${state}=   change_state  ${arguments}
-  ${value}=  Run keyword if  '${state}' == 'shouldfail'   SwitchState  ${username}  ${command}  @{arguments}
-  ${value}=  Run keyword if  '${state}' == 'pass'   Normal  ${username}  ${command}  @{arguments}
-  [return]   ${value}
+  Log  ${username}
+  Log  ${command}
+  Log  ${arguments}
+  ${state}=  change_state  ${arguments}
+  Run Keyword And Return If  '${state}' == 'shouldfail'  SwitchState  ${username}  ${command}  @{arguments}
+  Run Keyword And Return If  '${state}' == 'pass'  Normal  ${username}  ${command}  @{arguments}
 
 Normal
   [Arguments]  ${username}  ${command}  @{arguments}
-  log  ${username}
-  log  ${command}
-  log  ${arguments}
-  ${value}=  Run Keyword   ${BROKERS['${USERS.users['${username}'].broker}'].keywords_file}.${command}  ${username}  @{arguments}
-  [return]   ${value}
+  Log  ${username}
+  Log  ${command}
+  Log  ${arguments}
+  ${keywords_file}=  Get Broker Property By Username  ${username}  keywords_file
+  Run Keyword And Return  ${keywords_file}.${command}  ${username}  @{arguments}
 
 SwitchState
   [Arguments]  ${username}  ${command}  @{arguments}
@@ -170,7 +188,8 @@ SwitchState
   log  ${arguments}
   Remove From List  ${arguments}  0
   log  ${arguments}
-  ${status}  ${value}=  run_keyword_and_ignore_keyword_definitions   ${BROKERS['${USERS.users['${username}'].broker}'].keywords_file}.${command}  ${username}  @{arguments}
+  ${keywords_file}=  Get Broker Property By Username  ${username}  keywords_file
+  ${status}  ${value}=  run_keyword_and_ignore_keyword_definitions  ${keywords_file}.${command}  ${username}  @{arguments}
   Run keyword if  '${status}' == 'PASS'   Log   Учасник ${username} зміг виконати "${command}"   WARN
   [return]   ${value}
 

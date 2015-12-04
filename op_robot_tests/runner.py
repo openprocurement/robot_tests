@@ -1,7 +1,7 @@
+from chromedriver import CHROMEDRV_PATH
 from robot import run_cli
 import os
 import sys
-from chromedriver import CHROMEDRV_PATH
 
 sys.path.append(CHROMEDRV_PATH)
 

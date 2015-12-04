@@ -201,12 +201,15 @@ Set Multi Ids
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  ${TENDER_UAID}
   Switch browser   ${ARGUMENTS[0]}
-  Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
+  ${url}=  Get Broker Property By Username  ${ARGUMENTS[0]}  url
+  Go To  ${url}
   Wait Until Page Contains   Прозорі закупівлі    10
   sleep  1
   Input Text  jquery=input[ng-change='searchChange()']  ${ARGUMENTS[1]}
   sleep  1
-  Wait Until Keyword Succeeds  300 s  0 s  Шукати і знайти
+  ${timeout_on_wait}=  Get Broker Property By Username  ${ARGUMENTS[0]}  timeout_on_wait
+  ${passed}=  Run Keyword And Return Status  Wait Until Keyword Succeeds  ${timeout_on_wait} s  0 s  Шукати і знайти
+  Run Keyword Unless  ${passed}  Fatal Error  Тендер не знайдено за ${timeout_on_wait} секунд
   sleep  3
   Click Link    jquery=a[href^="#/tenderDetailes"]
   Wait Until Page Contains    ${ARGUMENTS[1]}   10
@@ -310,7 +313,8 @@ Set Multi Ids
   [Documentation]
   ...      ${ARGUMENTS[0]} =  username
   ...      ${ARGUMENTS[1]} =  ${TENDER_UAID}
-  ${ADDITIONAL_DATA}=  prepare_test_tender_data   ${BROKERS['${USERS.users['${tender_owner}'].broker}'].period_interval}   single
+  ${period_interval}=  Get Broker Property By Username  ${ARGUMENTS[0]}  period_interval
+  ${ADDITIONAL_DATA}=  prepare_test_tender_data  ${period_interval}  single
   ${tender_data}=   Add_data_for_GUI_FrontEnds   ${ADDITIONAL_DATA}
   ${items}=         Get From Dictionary   ${tender_data.data}               items
   ${description}=   Get From Dictionary   ${tender_data.data}               description
@@ -329,7 +333,8 @@ Set Multi Ids
   ...      ${ARGUMENTS[0]} =  username
   ...      ${ARGUMENTS[1]} =  ${TENDER_UAID}
   ...      ${ARGUMENTS[2]} =  3
-  ${ADDITIONAL_DATA}=  prepare_test_tender_data   ${BROKERS['${USERS.users['${tender_owner}'].broker}'].period_interval}   multi
+  ${period_interval}=  Get Broker Property By Username  ${ARGUMENTS[0]}  period_interval
+  ${ADDITIONAL_DATA}=  prepare_test_tender_data  ${period_interval}  multi
   ${tender_data}=   Add_data_for_GUI_FrontEnds   ${ADDITIONAL_DATA}
   ${items}=         Get From Dictionary   ${tender_data.data}               items
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
@@ -366,10 +371,9 @@ Set Multi Ids
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  fieldname
   Switch browser   ${ARGUMENTS[0]}
-  ${return_value}=  run keyword  Отримати інформацію про ${ARGUMENTS[1]}
-  [return]  ${return_value}
+  Run Keyword And Return  Отримати інформацію про ${ARGUMENTS[1]}
 
-Отримати тест із поля і показати на сторінці
+Отримати текст із поля і показати на сторінці
   [Arguments]   ${fieldname}
   sleep  3
 #  відмітити на сторінці поле з тендера   ${fieldname}   ${locator.${fieldname}}
@@ -377,20 +381,20 @@ Set Multi Ids
   [return]  ${return_value}
 
 Отримати інформацію про title
-  ${return_value}=   Отримати тест із поля і показати на сторінці   title
+  ${return_value}=   Отримати текст із поля і показати на сторінці   title
   [return]  ${return_value}
 
 Отримати інформацію про description
-  ${return_value}=   Отримати тест із поля і показати на сторінці   description
+  ${return_value}=   Отримати текст із поля і показати на сторінці   description
   [return]  ${return_value}
 
 Отримати інформацію про minimalStep.amount
-  ${return_value}=   Отримати тест із поля і показати на сторінці   minimalStep.amount
+  ${return_value}=   Отримати текст із поля і показати на сторінці   minimalStep.amount
   ${return_value}=   Convert To Number   ${return_value.split(' ')[0]}
   [return]  ${return_value}
 
 Отримати інформацію про value.amount
-  ${return_value}=   Отримати тест із поля і показати на сторінці  value.amount
+  ${return_value}=   Отримати текст із поля і показати на сторінці  value.amount
   ${return_value}=   Evaluate   "".join("${return_value}".split(' ')[:-3])
   ${return_value}=   Convert To Number   ${return_value}
   [return]  ${return_value}
@@ -403,31 +407,31 @@ Set Multi Ids
   Remove element   ${last_note_id}
 
 Отримати інформацію про tenderId
-  ${return_value}=   Отримати тест із поля і показати на сторінці   tenderId
+  ${return_value}=   Отримати текст із поля і показати на сторінці   tenderId
   ${return_value}=   Get Substring  ${return_value}   10
   [return]  ${return_value}
 
 Отримати інформацію про procuringEntity.name
-  ${return_value}=   Отримати тест із поля і показати на сторінці   procuringEntity.name
+  ${return_value}=   Отримати текст із поля і показати на сторінці   procuringEntity.name
   [return]  ${return_value}
 
 Отримати інформацію про tenderPeriod.startDate
-  ${return_value}=   Отримати тест із поля і показати на сторінці  tenderPeriod.startDate
+  ${return_value}=   Отримати текст із поля і показати на сторінці  tenderPeriod.startDate
   ${return_value}=   Change_date_to_month   ${return_value}
   [return]  ${return_value}
 
 Отримати інформацію про tenderPeriod.endDate
-  ${return_value}=   Отримати тест із поля і показати на сторінці  tenderPeriod.endDate
+  ${return_value}=   Отримати текст із поля і показати на сторінці  tenderPeriod.endDate
   ${return_value}=   Change_date_to_month   ${return_value}
   [return]  ${return_value}
 
 Отримати інформацію про enquiryPeriod.startDate
-  ${return_value}=   Отримати тест із поля і показати на сторінці  enquiryPeriod.startDate
+  ${return_value}=   Отримати текст із поля і показати на сторінці  enquiryPeriod.startDate
   ${return_value}=   Change_date_to_month   ${return_value}
   [return]  ${return_value}
 
 Отримати інформацію про enquiryPeriod.endDate
-  ${return_value}=   Отримати тест із поля і показати на сторінці  enquiryPeriod.endDate
+  ${return_value}=   Отримати текст із поля і показати на сторінці  enquiryPeriod.endDate
   ${return_value}=   Change_date_to_month   ${return_value}
   [return]  ${return_value}
 
@@ -442,89 +446,87 @@ Change_date_to_month
   [return]  ${return_value}
 
 Отримати інформацію про items[0].description
-  ${return_value}=   Отримати тест із поля і показати на сторінці   items[0].description
+  ${return_value}=   Отримати текст із поля і показати на сторінці   items[0].description
   [return]  ${return_value}
 
 Отримати інформацію про items[0].deliveryLocation.latitude
-  ${return_value}=   Отримати тест із поля і показати на сторінці   items[0].deliveryLocation.latitude
+  ${return_value}=   Отримати текст із поля і показати на сторінці   items[0].deliveryLocation.latitude
   ${return_value}=   Get Substring  ${return_value}   0   10
   [return]  ${return_value}
 
 Отримати інформацію про items[0].deliveryLocation.longitude
-  ${return_value}=   Отримати тест із поля і показати на сторінці   items[0].deliveryLocation.longitude
+  ${return_value}=   Отримати текст із поля і показати на сторінці   items[0].deliveryLocation.longitude
   ${return_value}=   Get Substring  ${return_value}   12   22
   [return]  ${return_value}
 
 Отримати інформацію про items[0].unit.code
-  ${return_value}=   Отримати тест із поля і показати на сторінці   items[0].unit.code
+  ${return_value}=   Отримати текст із поля і показати на сторінці   items[0].unit.code
   ${return_value}=   Get Substring  ${return_value}   5
-  ${return_value}=   Run keyword if    '${return_value}' == 'кг.'   Convert To String  KGM
+  Run Keyword And Return If  '${return_value}' == 'кг.'   Convert To String  KGM
   [return]  ${return_value}
 
 Отримати інформацію про items[0].quantity
-  ${return_value}=   Отримати тест із поля і показати на сторінці   items[0].quantity
+  ${return_value}=   Отримати текст із поля і показати на сторінці   items[0].quantity
   ${return_value}=   Get Substring  ${return_value}   0   4
   ${return_value}=   Convert To Number   ${return_value}
   [return]  ${return_value}
 
 Отримати інформацію про items[0].classification.id
-  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].classification.id
+  ${return_value}=   Отримати текст із поля і показати на сторінці  items[0].classification.id
   [return]  ${return_value.split(' ')[0]}
 
 Отримати інформацію про items[0].classification.scheme
-  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].classification.scheme
+  ${return_value}=   Отримати текст із поля і показати на сторінці  items[0].classification.scheme
   ${return_value}=   Get Substring  ${return_value}   0   -1
   [return]  ${return_value.split(' ')[1]}
 
 Отримати інформацію про items[0].classification.description
-  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].classification.description
+  ${return_value}=   Отримати текст із поля і показати на сторінці  items[0].classification.description
   ${return_value}=   Get Substring  ${return_value}   11
-  ${return_value}=   Run keyword if    '${return_value}' == 'Картонки'   Convert To String  Cartons
+  Run Keyword And Return If  '${return_value}' == 'Картонки'   Convert To String  Cartons
   [return]  ${return_value}
 
 Отримати інформацію про items[0].additionalClassifications[0].id
-  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].additionalClassifications[0].id
+  ${return_value}=   Отримати текст із поля і показати на сторінці  items[0].additionalClassifications[0].id
   [return]  ${return_value.split(' ')[0]}
 
 Отримати інформацію про items[0].additionalClassifications[0].scheme
-  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].additionalClassifications[0].scheme
+  ${return_value}=   Отримати текст із поля і показати на сторінці  items[0].additionalClassifications[0].scheme
   ${return_value}=   Get Substring  ${return_value}   0   -1
   [return]  ${return_value.split(' ')[1]}
 
 Отримати інформацію про items[0].additionalClassifications[0].description
-  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].additionalClassifications[0].description
+  ${return_value}=   Отримати текст із поля і показати на сторінці  items[0].additionalClassifications[0].description
   ${return_value}=   Get Substring  ${return_value}   8   60
   ${return_value}=   Remove String   ${return_value}  "
   ${return_value}=   Convert To Lowercase   ${return_value}
   [return]  ${return_value}
 
 Отримати інформацію про items[0].deliveryAddress.postalCode
-  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].deliveryAddress.postalCode
+  ${return_value}=   Отримати текст із поля і показати на сторінці  items[0].deliveryAddress.postalCode
   ${return_value}=   Get Substring  ${return_value}   0   5
   [return]  ${return_value}
 
 Отримати інформацію про items[0].deliveryAddress.countryName
-  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].deliveryAddress.countryName
+  ${return_value}=   Отримати текст із поля і показати на сторінці  items[0].deliveryAddress.countryName
   ${return_value}=   Get Substring  ${return_value}   0   7
   [return]  ${return_value}
 
 Отримати інформацію про items[0].deliveryAddress.region
-  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].deliveryAddress.region
-  ${return_value}=   Run keyword if    '${return_value}' == 'Київська,'   Convert To String  м. Київ
-  [return]  ${return_value}
+  ${return_value}=  Отримати текст із поля і показати на сторінці  items[0].deliveryAddress.region
+  Run Keyword And Return  Remove String  ${return_value}  ,
 
 Отримати інформацію про items[0].deliveryAddress.locality
-  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].deliveryAddress.locality
-  ${return_value}=   Run keyword if    '${return_value}' == 'Київ,'   Convert To String  м. Київ
-  [return]  ${return_value}
+  ${return_value}=  Отримати текст із поля і показати на сторінці  items[0].deliveryAddress.locality
+  Run Keyword And Return  Remove String  ${return_value}  ,
 
 Отримати інформацію про items[0].deliveryAddress.streetAddress
-  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].deliveryAddress.streetAddress
+  ${return_value}=   Отримати текст із поля і показати на сторінці  items[0].deliveryAddress.streetAddress
   [return]  ${return_value}
 
 Отримати інформацію про items[0].deliveryDate.endDate
-  ${return_value}=   Отримати тест із поля і показати на сторінці  items[0].deliveryDate.endDate
-  ${time}=   Отримати тест із поля і показати на сторінці   enquiryPeriod.startDate
+  ${return_value}=   Отримати текст із поля і показати на сторінці  items[0].deliveryDate.endDate
+  ${time}=   Отримати текст із поля і показати на сторінці   enquiryPeriod.startDate
   ${time}=   Get Substring   ${time}   11
   ${day}=   Get Substring   ${return_value}   16   18
   ${month}=   Get Substring   ${return_value}   18   22
@@ -533,18 +535,18 @@ Change_date_to_month
   [return]  ${return_value}
 
 Отримати інформацію про questions[0].title
-  ${return_value}=   отримати тест із поля і показати на сторінці   questions[0].title
+  ${return_value}=   Отримати текст із поля і показати на сторінці   questions[0].title
   [return]  ${return_value}
 
 Отримати інформацію про questions[0].description
-  ${return_value}=   отримати тест із поля і показати на сторінці   questions[0].description
+  ${return_value}=   Отримати текст із поля і показати на сторінці   questions[0].description
   [return]  ${return_value}
 
 Отримати інформацію про questions[0].date
-  ${return_value}=   отримати тест із поля і показати на сторінці   questions[0].date
+  ${return_value}=   Отримати текст із поля і показати на сторінці   questions[0].date
   ${return_value}=   Change_date_to_month   ${return_value}
   [return]  ${return_value}
 
 Отримати інформацію про questions[0].answer
-  ${return_value}=   отримати тест із поля і показати на сторінці   questions[0].answer
+  ${return_value}=   Отримати текст із поля і показати на сторінці   questions[0].answer
   [return]  ${return_value}
