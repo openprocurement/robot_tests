@@ -181,9 +181,7 @@ def Add_data_for_GUI_FrontEnds(INITIAL_TENDER_DATA):
     return INITIAL_TENDER_DATA
 
 def local_path_to_file(file_name):
-    path = os.getcwd()
-    path = path.split("brokers", 1)[0] + "/src/op_robot_tests/op_robot_tests/tests_files/documents/" + file_name
-    return path
+    return os.path.join(os.path.dirname(__file__), 'documents', file_name)
 
 ## Prom.ua
 def get_all_prom_dates():

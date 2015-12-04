@@ -1,102 +1,102 @@
 users:
     Tender_Owner:
-        api_key: e9c3ccb8e8124f26941d5f9639a4ebc3
-        broker: Quinta
+        api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
+        broker:   Quinta
     Tender_User:
-        api_key: e9c3ccb8e8124f26941d5f9639a4ebc3
-        broker: Quinta
+        api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
+        broker:   Quinta
     Tender_User1:
-        api_key: e9c3ccb8e8124f26941d5f9639a4ebc3
-        broker: Quinta
+        api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
+        broker:   Quinta
     Tender_Viewer:
-        broker: Quinta
-        api_key: ""
+        api_key:  ""
+        broker:   Quinta
     E-tender_Owner:
-        broker: E-tender
+        broker:   E-tender
         username: E-tendertest
         homepage: "http://bid.uat.e-tender.biz/#/profile"
-        login: Misha2
+        login:    Misha2
         password: Password1
         browser:  chrome
-        position:  [0, 0]
-        size:  [800, 800]
+        position: [0, 0]
+        size:     [800, 800]
     E-tender_Provider1:
-        broker: E-tender
+        broker:   E-tender
         username: E-tendertest
         homepage: "http://bid.uat.e-tender.biz/#/profile"
-        login: st_org
+        login:    st_org
         password: 12345678
-        browser: chrome
+        browser:  chrome
         position: [700, 0]
-        size: [700, 800]
+        size:     [700, 800]
     E-tender_Provider2:
-        broker: E-tender
+        broker:   E-tender
         username: E-tendertest
         homepage: "http://bid.uat.e-tender.biz/#/profile"
-        login: provider2
+        login:    provider2
         password: Qa123456
         browser:  chrome
-        position:  [700, 0]
-        size:  [640, 450]
+        position: [700, 0]
+        size:     [640, 450]
     E-tender_Viewer:
-        broker: E-tender
+        broker:   E-tender
         username: E-tendertest
         homepage: "http://bid.uat.e-tender.biz/#"
         browser:  chrome
-        position:  [0, 0]
-        size:  [640, 450]
+        position: [0, 0]
+        size:     [640, 450]
     Netcast_Owner:
-        broker: Netcast
+        broker:   Netcast
         username: Netcasttest
         homepage: "http://dz2.byustudio.in.ua"
-        login: ovramet.s@gmail.com
+        login:    ovramet.s@gmail.com
         password: Password1
-        browser: chrome
-        position:  [0, 0]
-        size:  [700, 800]
+        browser:  chrome
+        position: [0, 0]
+        size:     [700, 800]
     Netcast_Provider1:
-        broker: Netcast
+        broker:   Netcast
         username: Netcasttest
         homepage: "http://dz2.byustudio.in.ua"
-        login: halyna.khimka@gmail.com
+        login:    halyna.khimka@gmail.com
         password: JHO5VUp5n
-        browser: chrome
-        position:  [0, 0]
-        size:  [600, 800]
+        browser:  chrome
+        position: [0, 0]
+        size:     [600, 800]
     Netcast_Viewer:
-        broker: Netcast
+        broker:   Netcast
         username: Netcasttest
         homepage: "http://dz2.byustudio.in.ua"
-        browser: chrome
-        position:  [0, 0]
-        size:  [600, 800]
+        browser:  chrome
+        position: [0, 0]
+        size:     [600, 800]
     Newtend_Owner:
-        broker: Newtend
+        broker:   Newtend
         username: Newtendtest
         homepage: "http://dev23.newtend.com/openprocurement/#/home/page/1"
-        login: openprocurement@mailinator.com
+        login:    openprocurement@mailinator.com
         password: 123123
         browser:  chrome
-        position:  [0, 0]
-        size:  [1200, 1200]
+        position: [0, 0]
+        size:     [1200, 1200]
     Newtend_Provider1:
-        broker: Newtend
+        broker:   Newtend
         username: Newtendtest
         homepage: "http://dev23.newtend.com/openprocurement/tenders"
-        login: openprocboss@mailinator.com
+        login:    openprocboss@mailinator.com
         password: 123123
         browser:  chrome
-        position:  [700, 0]
-        size:  [800, 700]
+        position: [700, 0]
+        size:     [800, 700]
     Newtend_Viewer:
-        broker: Newtend
+        broker:   Newtend
         username: Newtendtest
         homepage: "http://dev23.newtend.com/openprocurement/tenders"
         browser:  chrome
-        position:  [800, 400]
-        size:  [800, 700]
+        position: [800, 400]
+        size:     [800, 700]
     Prom_Owner:
-        broker: Prom
+        broker:   Prom
         username: Promtest
         homepage: "http://my.dz-test.net/cabinet/purchases/state_purchase/list"
         login:  test@test12.com
@@ -105,7 +105,7 @@ users:
         position:  [0, 0]
         size:  [1280, 1024]
     Prom_Viewer:
-        broker: Prom
+        broker:   Prom
         username: Promtest
         homepage: "http://my.dz-test.net/cabinet/purchases/state_purchase/list"
         login:  r.zaporozhets@smartweb.com.ua
@@ -114,23 +114,25 @@ users:
         position:  [640, 0]
         size:  [1280, 1024]
     Publicbid_Owner:
-        broker: Publicbid
+        broker:   Publicbid
         username: Publicbid
-        homepage: "https://public-bid.com.ua/test/"
-        login: yaroslav1boyko@gmail.com
+        homepage: "https://public-bid.com.ua/"
+        login:    yaroslav1boyko@gmail.com
         password: Password1
-        browser: chrome
+        browser:  chrome
         position: [0, 0]
-        size: [740, 550]
+        size:     [740, 550]
     Publicbid_Viewer:
-        broker: Publicbid
+        broker:   Publicbid
         username: Publicbid
+        homepage: "https://public-bid.com.ua/"
         browser:  chrome
-        position:  [0, 450]
-        size:  [640, 450]
+        position: [0, 450]
+        size:     [640, 450]
     SmartTender_Viewer:
-        broker: SmartTender
+        broker:   SmartTender
         username: SmartTendertest
+        homepage: "http://smarttender.biz/tenders"
         browser:  chrome
-        position:  [0, 450]
-        size:  [640, 450]
+        position: [0, 450]
+        size:     [640, 450]

@@ -216,7 +216,7 @@ ${question_id}  0
   Викликати для учасника   ${viewer}   Оновити сторінку з тендером   ${TENDER['TENDER_UAID']}
   Звірити поле  ${viewer}   questions[${question_id}].answer    ${ANSWERS[${question_id}].data.answer}
 
-Подати цінову пропозицію bidder
+Подати цінову пропозицію першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   Дочекатись дати початку прийому пропозицій
   ${bid}=  test bid data

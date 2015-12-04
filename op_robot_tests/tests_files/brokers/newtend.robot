@@ -42,7 +42,8 @@ ${locator.QUESTIONS[0].date}          xpath=//span[@class="date ng-binding"]
   [Arguments]  @{ARGUMENTS}
   [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
   ...      ${ARGUMENTS[0]} ==  username
-  Open Browser   ${BROKERS['${USERS.users['${username}'].broker}'].url}   ${USERS.users['${username}'].browser}   alias=${ARGUMENTS[0]}
+  ${url}=  Get Broker Property By Username  ${ARGUMENTS[0]}  url
+  Open Browser  ${url}  ${USERS.users['${username}'].browser}  alias=${ARGUMENTS[0]}
   Set Window Size   @{USERS.users['${ARGUMENTS[0]}'].size}
   Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
   Run Keyword If   '${username}' != 'Newtend_Viewer'   Login
@@ -247,8 +248,7 @@ Set datetime
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  fieldname
   Switch browser   ${ARGUMENTS[0]}
-  ${return_value}=  run keyword  отримати інформацію про ${ARGUMENTS[1]}
-  [return]  ${return_value}
+  Run Keyword And Return  Отримати інформацію про ${ARGUMENTS[1]}
 
 отримати текст із поля і показати на сторінці
   [Arguments]   ${fieldname}
@@ -361,7 +361,7 @@ Set datetime
 
 отримати інформацію про items[0].classification.description
   ${classification_description}=   отримати текст із поля і показати на сторінці   items[0].classification.scheme
-  ${classification_description}=   Run Keyword If   '${classification_description}' == '44617100-9 - Картонки'   Convert To String   Cartons
+  Run Keyword And Return If  '${classification_description}' == '44617100-9 - Картонки'   Convert To String   Cartons
   [return]  ${classification_description}
 
 ##ДКПП
@@ -382,7 +382,7 @@ Set datetime
 ##item
 отримати інформацію про items[0].unit.name
   ${unit_name}=   отримати текст із поля і показати на сторінці   items[0].unit.name
-  ${unit_name}=   Run Keyword If   '${unit_name}' == 'килограммы'   Convert To String   кілограм
+  Run Keyword And Return If  '${unit_name}' == 'килограммы'   Convert To String   кілограм
   [return]  ${unit_name}
 
 отримати інформацію про items[0].unit.code
@@ -401,7 +401,8 @@ Set datetime
   ...      ${ARGUMENTS[0]} =  username
   ...      ${ARGUMENTS[1]} =  ${TENDER_UAID}
   ...      ${ARGUMENTS[2]} =  3
-  ${ADDITIONAL_DATA}=  prepare_test_tender_data   ${BROKERS['${USERS.users['${tender_owner}'].broker}'].period_interval}   multi
+  ${period_interval}=  Get Broker Property By Username  ${ARGUMENTS[0]}  period_interval
+  ${ADDITIONAL_DATA}=  prepare_test_tender_data  ${period_interval}  multi
   ${items}=         Get From Dictionary   ${ADDITIONAL_DATA.data}               items
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
   Wait Until Page Contains Element   ${locator.edit_tender}    10
