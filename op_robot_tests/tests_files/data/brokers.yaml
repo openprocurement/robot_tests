@@ -13,7 +13,6 @@ Quinta:
         viewer:         Tender_Viewer
 E-tender:
     keywords_file: etender
-    url: http://bid.uat.e-tender.biz/
     timeout_on_wait: 60
     roles:
         tender_owner:   E-tender_Owner
@@ -22,7 +21,6 @@ E-tender:
         viewer:         E-tender_Viewer
 Netcast:
     keywords_file: netcast
-    url: http://dz2.byustudio.in.ua
     login: admin
     password: uStudio
     roles:
@@ -31,26 +29,22 @@ Netcast:
         viewer:         Netcast_Viewer
 Newtend:
     keywords_file: newtend
-    url: http://openprocurement:test@dev23.newtend.com
     roles:
         tender_owner:   Newtend_Owner
         provider:       Newtend_Provider1
         viewer:         Newtend_Viewer
 Prom:
     keywords_file: prom
-    url: http://dz.dz-test.net/
     period_interval: 31
     roles:
         tender_owner:   Prom_Owner
         viewer:         Prom_Viewer
 Publicbid:
     keywords_file: publicbid
-    url: https://public-bid.com.ua/
     roles:
         tender_owner:   Publicbid_Owner
         viewer:         Publicbid_Viewer
 SmartTender:
     keywords_file: smarttender
-    url: http://smarttender.biz/tenders
     roles:
         viewer:         SmartTender_Viewer
