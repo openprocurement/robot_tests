@@ -201,8 +201,7 @@ Set Multi Ids
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  ${TENDER_UAID}
   Switch browser   ${ARGUMENTS[0]}
-  ${url}=  Get Broker Property By Username  ${ARGUMENTS[0]}  url
-  Go To  ${url}
+  Go To  ${USERS.users['${ARGUMENTS[0]}'].homepage}
   Wait Until Page Contains   Прозорі закупівлі    10
   sleep  1
   Input Text  jquery=input[ng-change='searchChange()']  ${ARGUMENTS[1]}
