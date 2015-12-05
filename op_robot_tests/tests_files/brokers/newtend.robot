@@ -42,8 +42,10 @@ ${locator.QUESTIONS[0].date}          xpath=//span[@class="date ng-binding"]
   [Arguments]  @{ARGUMENTS}
   [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
   ...      ${ARGUMENTS[0]} ==  username
-  ${url}=  Get Broker Property By Username  ${ARGUMENTS[0]}  url
-  Open Browser  ${url}  ${USERS.users['${username}'].browser}  alias=${ARGUMENTS[0]}
+  Open Browser
+  ...      ${USERS.users['${ARGUMENTS[0]}'].homepage}
+  ...      ${USERS.users['${ARGUMENTS[0]}'].browser}
+  ...      alias=${ARGUMENTS[0]}
   Set Window Size   @{USERS.users['${ARGUMENTS[0]}'].size}
   Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
   Run Keyword If   '${username}' != 'Newtend_Viewer'   Login
