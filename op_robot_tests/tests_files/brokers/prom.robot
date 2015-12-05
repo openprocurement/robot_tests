@@ -21,8 +21,10 @@ ${PASSWORD}     1234
   log many  @{ARGUMENTS}
   log  ${username}
   [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
-  ${url}=  Get Broker Property By Username  ${ARGUMENTS[0]}  url
-  Open Browser  ${url}  ${USERS.users['${username}'].browser}  alias=${username}
+  Open Browser
+  ...      ${USERS.users['${username}'].homepage}
+  ...      ${USERS.users['${username}'].browser}
+  ...      alias=${username}
   Set Window Position   @{USERS.users['${username}'].position}
   #Set Window Size       @{USERS.users['${username}'].size}
   Log Variables
@@ -100,9 +102,9 @@ Get tender id
   ...      ${ARGUMENTS[2]} ==  id
   Switch browser   ${ARGUMENTS[0]}
   ${current_location}=   Get Location
-  ${url}=  Get Broker Property By Username  ${ARGUMENTS[0]}  url
-  Run Keyword If  '${url}/#/tenderDetailes/${ARGUMENTS[2]}'=='${current_location}'  Reload Page
-  Go to  ${url}
+  ${homepage}=  Set Variable  ${USERS.users['${ARGUMENTS[0]}'].homepage}
+  Run Keyword If  '${homepage}/#/tenderDetailes/${ARGUMENTS[2]}'=='${current_location}'  Reload Page
+  Go To  ${homepage}
   Wait Until Page Contains   Допороговые закупки Украины   10
   sleep  1
   Input Text   id=search  ${ARGUMENTS[1]}
