@@ -53,7 +53,7 @@ Login
 Pre Login
   [Arguments]  @{ARGUMENTS}
   [Documentation]
-  ...    ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[0]} ==  username
   ${login}=     Get Broker Property By Username  ${ARGUMENTS[0]}  login
   ${password}=  Get Broker Property By Username  ${ARGUMENTS[0]}  password
   Wait Until Page Contains Element  name=siteLogin  10

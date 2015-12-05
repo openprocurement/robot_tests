@@ -51,9 +51,9 @@ Set Suite Variable With Default Value
 Get Broker Property
   [Arguments]  ${broker_name}  ${property}
   [Documentation]
-  ...    This keyword returns a property of specified broker
-  ...    if that property exists, otherwise, it returns a
-  ...    default value.
+  ...      This keyword returns a property of specified broker
+  ...      if that property exists, otherwise, it returns a
+  ...      default value.
   ${status}=  Run Keyword And Return Status  Should Contain  ${BROKERS['${broker_name}']}  ${property}
   Return From Keyword If  ${status}  ${BROKERS['${broker_name}'].${property}}
   # If broker doesn't have that property, fall back to default value
@@ -62,9 +62,9 @@ Get Broker Property
 
 Get Broker Property By Username
   [Documentation]
-  ...    This keyword gets the corresponding broker name
-  ...    for a specified username and then calls
-  ...    "Get Broker Property"
+  ...      This keyword gets the corresponding broker name
+  ...      for a specified username and then calls
+  ...      "Get Broker Property"
   [Arguments]  ${username}  ${property}
   ${broker_name}=  Get Variable Value  ${USERS.users['${username}'].broker}
   Run Keyword And Return  Get Broker Property  ${broker_name}  ${property}
@@ -101,8 +101,8 @@ Get Broker Property By Username
 Дочекатись синхронізації з майданчиком
   [Arguments]  ${username}
   [Documentation]
-  ...    Get ${wait_timeout} for specified user and wait
-  ...    until that timeout runs out.
+  ...      Get ${wait_timeout} for specified user and wait
+  ...      until that timeout runs out.
   ${now}=  Get Current Date
   ${delta}=  Subtract Date From Date  ${now}  ${TENDER['LAST_MODIFICATION_DATE']}
   ${timeout_on_wait}=  Get Broker Property By Username  ${username}  timeout_on_wait
@@ -162,9 +162,9 @@ Get Broker Property By Username
 
 Викликати для учасника
   [Documentation]
-  ...    Cause sometimes keyword SHOULD fail to pass the testcase,
-  ...    this keyword takes "shouldfail" argument as first one in @{arguments}
-  ...    and switches the behaviour of keyword and "shouldfail"
+  ...      Cause sometimes keyword SHOULD fail to pass the testcase,
+  ...      this keyword takes "shouldfail" argument as first one in @{arguments}
+  ...      and switches the behaviour of keyword and "shouldfail"
   [Arguments]  ${username}  ${command}  @{arguments}
   Log  ${username}
   Log  ${command}
