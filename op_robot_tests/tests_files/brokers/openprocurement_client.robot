@@ -123,6 +123,7 @@ Library  Selenium2Screenshots
   Отримати тендер   ${ARGUMENTS[0]}    ${internalid}
   @{items}=  Get From Object   ${TENDER_DATA.data}    items
   ${item}=  get variable value   ${items[1]}
+  Run Keyword And Continue On Failure  Remove From Dictionary  ${item}  id
   Log Many  @{items}
   :FOR    ${INDEX}    IN RANGE    ${ARGUMENTS[2]}
   \    Append To List  ${items}  ${item}
