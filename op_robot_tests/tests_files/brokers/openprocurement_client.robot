@@ -67,9 +67,9 @@ Library  Selenium2Screenshots
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  fieldname
-  log  ${ARGUMENTS}
-  ${field_value}=   Get_From_Object  ${USERS.users['${ARGUMENTS[0]}'].tender_data.data}   ${ARGUMENTS[1]}
-  log   ${field_value}
+  Log Many  @{ARGUMENTS}
+  ${field_value}=  Get_From_Object  ${USERS.users['${ARGUMENTS[0]}'].tender_data.data}  ${ARGUMENTS[1]}
+  Log  ${field_value}
   [return]  ${field_value}
 
 Внести зміни в тендер
@@ -104,11 +104,11 @@ Library  Selenium2Screenshots
   ...      ${ARGUMENTS[2]} ==  number
   ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
   Отримати тендер   ${ARGUMENTS[0]}    ${internalid}
-  ${items}=  get from object   ${TENDER_DATA.data}    items
-  log  ${items}
+  @{items}=  Get From Object   ${TENDER_DATA.data}    items
+  Log Many  @{items}
   :FOR    ${INDEX}    IN RANGE    ${ARGUMENTS[2]}
    \          Remove From List  ${items}  0
-  log  ${items}
+  Log Many  @{items}
   Set_To_Object    ${TENDER_DATA.data}   items  ${items}
   ${TENDER_DATA}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_tender  ${TENDER_DATA}
   ${TENDER_DATA}=  set_access_key  ${TENDER_DATA}  ${USERS.users['${ARGUMENTS[0]}'].access_token}
@@ -121,12 +121,12 @@ Library  Selenium2Screenshots
   ...      ${ARGUMENTS[2]} ==  number
   ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
   Отримати тендер   ${ARGUMENTS[0]}    ${internalid}
-  ${items}=  get from object   ${TENDER_DATA.data}    items
+  @{items}=  Get From Object   ${TENDER_DATA.data}    items
   ${item}=  get variable value   ${items[1]}
-  log  ${items}
+  Log Many  @{items}
   :FOR    ${INDEX}    IN RANGE    ${ARGUMENTS[2]}
   \    Append To List  ${items}  ${item}
-  log  ${items}
+  Log Many  @{items}
   Set_To_Object    ${TENDER_DATA.data}   items  ${items}
   ${TENDER_DATA}=  set_access_key  ${TENDER_DATA}  ${USERS.users['${ARGUMENTS[0]}'].access_token}
   ${TENDER_DATA}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_tender  ${TENDER_DATA}

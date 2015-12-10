@@ -69,22 +69,22 @@ Get Broker Property By Username
   Run Keyword And Return  Get Broker Property  ${broker_name}  ${property}
 
 Підготовка початкових даних
-  @{QUESTIONS} =  Create list
+  @{QUESTIONS}=  Create list
   ${question}=  test question data
-  Append to list   ${QUESTIONS}   ${question}
-  Set Global Variable  ${QUESTIONS}
-  @{ANSWERS} =  Create list
+  Append to list  ${QUESTIONS}  ${question}
+  Set Global Variable  @{QUESTIONS}
+  @{ANSWERS}=  Create list
   ${answer}=  test_question_answer_data
-  Append to list   ${ANSWERS}   ${answer}
-  Set Global Variable  ${ANSWERS}
-  @{COMPLAINTS} =  Create list
+  Append to list  ${ANSWERS}  ${answer}
+  Set Global Variable  @{ANSWERS}
+  @{COMPLAINTS}=  Create list
   ${complaint}=  test_complaint_data
-  Append to list   ${COMPLAINTS}   ${complaint}
-  Set Global Variable  ${COMPLAINTS}
-  @{REPLIES} =  Create list
+  Append to list  ${COMPLAINTS}  ${complaint}
+  Set Global Variable  @{COMPLAINTS}
+  @{REPLIES}=  Create list
   ${reply}=  test_complaint_reply_data
-  Append to list   ${REPLIES}   ${reply}
-  Set Global Variable  ${REPLIES}
+  Append to list  ${REPLIES}  ${reply}
+  Set Global Variable  @{REPLIES}
   ${period_interval}=  Get Broker Property By Username  ${tender_owner}  period_interval
   ${INITIAL_TENDER_DATA}=  prepare_test_tender_data  ${period_interval}  ${mode}
   Set Global Variable  ${INITIAL_TENDER_DATA}
@@ -167,7 +167,7 @@ Get Broker Property By Username
   [Arguments]  ${username}  ${command}  @{arguments}
   Log  ${username}
   Log  ${command}
-  Log  ${arguments}
+  Log Many  @{arguments}
   ${state}=  change_state  ${arguments}
   Run Keyword And Return If  '${state}' == 'shouldfail'  SwitchState  ${username}  ${command}  @{arguments}
   Run Keyword And Return If  '${state}' == 'pass'  Normal  ${username}  ${command}  @{arguments}
@@ -176,17 +176,17 @@ Normal
   [Arguments]  ${username}  ${command}  @{arguments}
   Log  ${username}
   Log  ${command}
-  Log  ${arguments}
+  Log Many  @{arguments}
   ${keywords_file}=  Get Broker Property By Username  ${username}  keywords_file
   Run Keyword And Return  ${keywords_file}.${command}  ${username}  @{arguments}
 
 SwitchState
   [Arguments]  ${username}  ${command}  @{arguments}
-  log  ${username}
-  log  ${command}
-  log  ${arguments}
+  Log  ${username}
+  Log  ${command}
+  Log Many  @{arguments}
   Remove From List  ${arguments}  0
-  log  ${arguments}
+  Log Many  @{arguments}
   ${keywords_file}=  Get Broker Property By Username  ${username}  keywords_file
   ${status}  ${value}=  run_keyword_and_ignore_keyword_definitions  ${keywords_file}.${command}  ${username}  @{arguments}
   Run keyword if  '${status}' == 'PASS'   Log   Учасник ${username} зміг виконати "${command}"   WARN
