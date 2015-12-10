@@ -31,7 +31,7 @@ def test_tender_data(period_interval):
         "title": u"[ТЕСТУВАННЯ] " + fake.catch_phrase(),
         "mode": "test",
         "submissionMethodDetails": "quick",
-        "description": u"Тестовий тендер",  # Error @prom when "Тестовый тендер"
+        "description": u"Тестовий тендер",
         "description_ru": u"Тестовый тендер",
         "description_en": "Test tender",
         "procuringEntity": {
@@ -58,11 +58,11 @@ def test_tender_data(period_interval):
             }
         },
         "value": {
-            "amount": 50000,  # Error @prom when float '50000.99'
+            "amount": 50000.99,
             "currency": u"UAH"
         },
         "minimalStep": {
-            "amount": 100,    # Error @prom when float '100.1'
+            "amount": 100.1,
             "currency": u"UAH"
         },
         "items": [
@@ -72,8 +72,8 @@ def test_tender_data(period_interval):
                     "endDate": (now + timedelta(days=5)).isoformat()
                 },
                 "deliveryLocation": {
-                    "latitude": u"49.8500° N",
-                    "longitude": u"24.0167° E"
+                    "latitude": 49.8500,
+                    "longitude": 24.0167
                 },
                 "deliveryAddress": {
                     "countryName": u"Україна",
