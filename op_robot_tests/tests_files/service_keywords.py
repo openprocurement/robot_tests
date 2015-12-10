@@ -13,7 +13,7 @@ from robot.libraries.BuiltIn import BuiltIn
 from robot.output import LOGGER
 from robot.output.loggerhelper import Message
 from .initial_data import (
-    auction_bid, create_fake_doc, prom_test_tender_data,
+    auction_bid, create_fake_doc,
     test_award_data, test_bid_data, test_complaint_data,
     test_complaint_reply_data, test_question_answer_data,
     test_question_data, test_tender_data, test_tender_data_multiple_lots
@@ -48,8 +48,9 @@ def change_state(arguments):
         return "pass"
 
 
-def prepare_prom_test_tender_data():
-    return munchify({'data': prom_test_tender_data()})
+def prepare_prom_test_tender_data(period_interval, mode):
+    t_data = prepare_test_tender_data(period_interval, mode)
+    return munchify({'data': t_data})
 
 
 def compare_date(data1, data2):
