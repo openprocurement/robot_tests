@@ -115,7 +115,7 @@ def load_initial_data_from(file_name):
             return fromYAML(file_obj)
 
 
-def prepare_test_tender_data(period_interval=2, mode='single'):
+def prepare_test_tender_data(period_interval, mode):
     if mode == 'single':
         return munchify({'data': test_tender_data(period_interval=period_interval)})
     elif mode == 'multi':
