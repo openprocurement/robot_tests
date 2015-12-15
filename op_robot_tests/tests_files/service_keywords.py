@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -
-from datetime import datetime, timedelta, date
+from datetime import datetime, timedelta
 from dateutil.parser import parse
-from dateutil.tz import tzlocal
 from dpath.util import set as xpathset
 from iso8601 import parse_date
 from json import load
@@ -12,6 +11,9 @@ from robot.errors import HandlerExecutionFailed
 from robot.libraries.BuiltIn import BuiltIn
 from robot.output import LOGGER
 from robot.output.loggerhelper import Message
+# These imports are not pointless. Robot's resource and testsuite files
+# can access them by simply importing library "service_keywords".
+# Please ignore the warning given by Flake8 or other linter.
 from .initial_data import (
     auction_bid, create_fake_doc,
     test_award_data, test_bid_data, test_complaint_data,
@@ -19,7 +21,6 @@ from .initial_data import (
     test_question_data, test_tender_data, test_tender_data_multiple_lots
 )
 import os
-import time
 
 
 TZ = timezone(os.environ['TZ'] if 'TZ' in os.environ else 'Europe/Kiev')
@@ -134,7 +135,7 @@ def run_keyword_and_ignore_keyword_definitions(name, *args):
     """
     try:
         status, _ = BuiltIn().run_keyword_and_ignore_error(name, *args)
-    except HandlerExecutionFailed, e:
+    except HandlerExecutionFailed:
         LOGGER.log_message(Message("Keyword {} not implemented", "ERROR"))
         return "FAIL", ""
     return status, _
@@ -179,10 +180,10 @@ def wait_to_date(date_stamp):
     return wait_seconds
 
 
-##GUI Frontends common
+# GUI Frontends common
 def add_data_for_gui_frontends(INITIAL_TENDER_DATA):
     now = datetime.now()
-    #INITIAL_TENDER_DATA.data.enquiryPeriod['startDate'] = (now + timedelta(minutes=2)).isoformat()
+    # INITIAL_TENDER_DATA.data.enquiryPeriod['startDate'] = (now + timedelta(minutes=2)).isoformat()
     INITIAL_TENDER_DATA.data.enquiryPeriod['endDate'] = (now + timedelta(minutes=6)).isoformat()
     INITIAL_TENDER_DATA.data.tenderPeriod['startDate'] = (now + timedelta(minutes=7)).isoformat()
     INITIAL_TENDER_DATA.data.tenderPeriod['endDate'] = (now + timedelta(minutes=11)).isoformat()
