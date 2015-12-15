@@ -48,11 +48,11 @@ Login
     Login
 
     ${start_date}=    Get From Dictionary  ${ARGUMENTS[1].data.tenderPeriod}   startDate
-    ${start_date}=   convert_date_to_prom_format   ${start_date}
+    ${start_date}=   convert_datetime_to_dot_format  ${start_date}
     ${end_date}=      Get From Dictionary  ${ARGUMENTS[1].data.tenderPeriod}   endDate
-    ${end_date}=   convert_date_to_prom_format   ${end_date}
+    ${end_date}=   convert_datetime_to_dot_format  ${end_date}
     ${enquiry_end_date}=      Get From Dictionary  ${ARGUMENTS[1].data.enquiryPeriod}   endDate
-    ${enquiry_end_date}=   convert_date_to_prom_format   ${enquiry_end_date}
+    ${enquiry_end_date}=   convert_datetime_to_dot_format  ${enquiry_end_date}
 
     ${items}=  Get From Dictionary    ${ARGUMENTS[1].data}   items
     ${delivery_date}=  Get From Dictionary    ${items[0].deliveryDate}   endDate

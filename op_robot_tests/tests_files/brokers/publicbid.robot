@@ -39,7 +39,7 @@ ${telephone}     +380976535447
   ${step_rate}=     Get From Dictionary   ${prepared_tender_data.data.minimalStep}   amount
   ${countryName}=   Get From Dictionary   ${prepared_tender_data.data.procuringEntity.address}       countryName
   ${delivery_end_date}=      Get From Dictionary   ${items[0].deliveryDate}   endDate
-  ${delivery_end_date}=      convert_date_to_prom_format   ${delivery_end_date}
+  ${delivery_end_date}=      convert_datetime_to_dot_format  ${delivery_end_date}
   ${cpv}=           Convert To String     "Картонки"
   ${cpv_id}=           Get From Dictionary   ${items[0].classification}         id
   ${cpv_id_1}=           Get Substring    ${cpv_id}   0   3

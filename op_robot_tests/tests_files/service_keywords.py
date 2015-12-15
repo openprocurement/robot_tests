@@ -98,12 +98,6 @@ def log_object_data(data, file_name=None, format="yaml"):
             file_obj.write(data)
 
 
-def convert_date_to_prom_format(isodate):
-    iso_dt = parse_date(isodate)
-    day_string = iso_dt.strftime("%d.%m.%Y %H:%M")
-    return day_string
-
-
 def load_initial_data_from(file_name):
     if not os.path.exists(file_name):
         file_name = os.path.join(os.path.dirname(__file__), 'data/{}'.format(file_name))
@@ -184,22 +178,32 @@ def wait_to_date(date_stamp):
         return 0
     return wait_seconds
 
-##GUI Frontends common
-def convert_date_to_slash_format(isodate):
-    iso_dt=parse_date(isodate)
-    date_string = iso_dt.strftime("%d/%m/%Y")
-    return  date_string
 
-def Add_data_for_GUI_FrontEnds(INITIAL_TENDER_DATA):
-    now = datetime.now() 
+##GUI Frontends common
+def add_data_for_gui_frontends(INITIAL_TENDER_DATA):
+    now = datetime.now()
     #INITIAL_TENDER_DATA.data.enquiryPeriod['startDate'] = (now + timedelta(minutes=2)).isoformat()
     INITIAL_TENDER_DATA.data.enquiryPeriod['endDate'] = (now + timedelta(minutes=6)).isoformat()
     INITIAL_TENDER_DATA.data.tenderPeriod['startDate'] = (now + timedelta(minutes=7)).isoformat()
     INITIAL_TENDER_DATA.data.tenderPeriod['endDate'] = (now + timedelta(minutes=11)).isoformat()
     return INITIAL_TENDER_DATA
 
+
+def convert_date_to_slash_format(isodate):
+    iso_dt = parse_date(isodate)
+    date_string = iso_dt.strftime("%d/%m/%Y")
+    return date_string
+
+
+def convert_datetime_to_dot_format(isodate):
+    iso_dt = parse_date(isodate)
+    day_string = iso_dt.strftime("%d.%m.%Y %H:%M")
+    return day_string
+
+
 def local_path_to_file(file_name):
     return os.path.join(os.path.dirname(__file__), 'documents', file_name)
+
 
 ## E-Tender
 def convert_date_to_etender_format(isodate):
