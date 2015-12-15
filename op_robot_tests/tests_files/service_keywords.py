@@ -224,8 +224,3 @@ def convert_time_to_etender_format(isodate):
 def procuringEntity_name(INITIAL_TENDER_DATA):
     INITIAL_TENDER_DATA.data.procuringEntity['name'] = u"Повна назва невідомо чого"
     return INITIAL_TENDER_DATA
-
-def subtract_from_time(date_time,substr_min,substr_sec):
-    now = datetime.strptime(date_time,"%d.%m.%Y %H:%M")
-    now = (now - timedelta(minutes=int(substr_min), seconds = int (substr_sec) )).isoformat()
-    return now
