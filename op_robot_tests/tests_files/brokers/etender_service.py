@@ -1,19 +1,4 @@
-from datetime import date, datetime, timedelta
-from dateutil.parser import parse
-from dateutil.tz import tzlocal
 from iso8601 import parse_date
-from jsonpath_rw import parse as parse_path
-from pytz import timezone
-from robot.output import LOGGER
-from robot.output.loggerhelper import Message
-from robot.libraries.BuiltIn import BuiltIn
-from robot.errors import HandlerExecutionFailed
-from op_robot_tests.tests_files.initial_data import (
-    test_tender_data
-)
-import time
-
-TIMEZONE = timezone('Europe/Kiev')
 
 
 def convert_date_to_etender_format(isodate):
@@ -22,7 +7,18 @@ def convert_date_to_etender_format(isodate):
     return date_string
 
 
+def convert_datetime_for_delivery(isodate):
+    iso_dt = parse_date(isodate)
+    date_string = iso_dt.strftime("%Y-%m-%d %H:%M")
+    return date_string
+
+
 def convert_time_to_etender_format(isodate):
     iso_dt = parse_date(isodate)
     time_string = iso_dt.strftime("%H:%M")
     return time_string
+
+
+def procuring_entity_name(INITIAL_TENDER_DATA):
+    INITIAL_TENDER_DATA.data.procuringEntity['name'] = u"Повна назва невідомо чого"
+    return INITIAL_TENDER_DATA

@@ -203,24 +203,3 @@ def convert_datetime_to_dot_format(isodate):
 
 def local_path_to_file(file_name):
     return os.path.join(os.path.dirname(__file__), 'documents', file_name)
-
-
-## E-Tender
-def convert_date_to_etender_format(isodate):
-    iso_dt=parse_date(isodate)
-    date_string = iso_dt.strftime("%d-%m-%Y")
-    return  date_string
-
-def convert_date_for_delivery(isodate):
-    iso_dt=parse_date(isodate)
-    date_string = iso_dt.strftime("%Y-%m-%d %H:%M")
-    return  date_string
-
-def convert_time_to_etender_format(isodate):
-    iso_dt=parse_date(isodate)
-    time_string = iso_dt.strftime("%H:%M")
-    return  time_string
-
-def procuringEntity_name(INITIAL_TENDER_DATA):
-    INITIAL_TENDER_DATA.data.procuringEntity['name'] = u"Повна назва невідомо чого"
-    return INITIAL_TENDER_DATA

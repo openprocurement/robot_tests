@@ -2,6 +2,7 @@
 Library  Selenium2Screenshots
 Library  String
 Library  DateTime
+Library  etender_service.py
 
 *** Variables ***
 ${locator.tenderId}                                            jquery=h3
@@ -63,8 +64,8 @@ Login
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tender_data
-  ${INITIAL_TENDER_DATA}=  procuringEntity_name   ${INITIAL_TENDER_DATA}
-  ${tender_data}=   Add_data_for_GUI_FrontEnds   ${ARGUMENTS[1]}
+  ${tender_data}=  Add_data_for_GUI_FrontEnds  ${ARGUMENTS[1]}
+  ${tender_data}=  procuring_entity_name  ${tender_data}
   ${items}=         Get From Dictionary   ${tender_data.data}               items
   ${title}=         Get From Dictionary   ${tender_data.data}               title
   ${description}=   Get From Dictionary   ${tender_data.data}               description
