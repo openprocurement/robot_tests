@@ -22,7 +22,7 @@ Library  Selenium2Screenshots
 
 Підготувати клієнт для користувача
   [Arguments]  @{ARGUMENTS}
-  [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
+  [Documentation]  Відкрити браузер, створити об’єкт api wrapper, тощо
   ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${ARGUMENTS[0]}'].api_key}  ${API_HOST_URL}  ${api_version}
   Set To Dictionary  ${USERS.users['${ARGUMENTS[0]}']}  client  ${api_wrapper}
   ${ID_MAP}=  Create Dictionary

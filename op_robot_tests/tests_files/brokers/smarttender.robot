@@ -6,7 +6,7 @@ Library  DateTime
 *** Keywords ***
 Підготувати клієнт для користувача
   [Arguments]  ${username}
-  [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
+  [Documentation]  Відкрити браузер, створити об’єкт api wrapper, тощо
   Open Browser
   ...      ${USERS.users['${username}'].homepage}
   ...      ${USERS.users['${username}'].browser}

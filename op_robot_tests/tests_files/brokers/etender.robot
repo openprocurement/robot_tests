@@ -1,4 +1,4 @@
-*** Setting ***
+*** Settings ***
 Library  Selenium2Screenshots
 Library  String
 Library  DateTime
@@ -45,7 +45,7 @@ ${locator.questions[0].answer}                                 xpath=(//div[@tex
 
 Підготувати клієнт для користувача
   [Arguments]  @{ARGUMENTS}
-  [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
+  [Documentation]  Відкрити браузер, створити об’єкт api wrapper, тощо
   ...      ${ARGUMENTS[0]} ==  username
   Open Browser   ${USERS.users['${ARGUMENTS[0]}'].homepage}   ${USERS.users['${username}'].browser}   alias=${ARGUMENTS[0]}
   Set Window Size   @{USERS.users['${ARGUMENTS[0]}'].size}

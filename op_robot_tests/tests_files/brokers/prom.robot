@@ -20,7 +20,7 @@ ${PASSWORD}     1234
   [Arguments]  ${username}
   log many  @{ARGUMENTS}
   log  ${username}
-  [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
+  [Documentation]  Відкрити браузер, створити об’єкт api wrapper, тощо
   Open Browser
   ...      ${USERS.users['${username}'].homepage}
   ...      ${USERS.users['${username}'].browser}

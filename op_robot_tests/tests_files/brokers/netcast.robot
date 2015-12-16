@@ -1,4 +1,4 @@
-*** Setting ***
+*** Settings ***
 Library  Selenium2Screenshots
 Library  String
 Library  DateTime
@@ -30,7 +30,7 @@ ${locator.questions[0].answer}       xpath=//div[@class = 'answer relative']//di
 *** Keywords ***
 Підготувати клієнт для користувача
   [Arguments]  @{ARGUMENTS}
-  [Documentation]  Відкрити брaузер, створити обєкт api wrapper, тощо
+  [Documentation]  Відкрити браузер, створити об’єкт api wrapper, тощо
   ...      ${ARGUMENTS[0]} ==  username
   Open Browser
   ...      ${USERS.users['${ARGUMENTS[0]}'].homepage}
