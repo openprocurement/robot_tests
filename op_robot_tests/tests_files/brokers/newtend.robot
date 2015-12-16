@@ -66,20 +66,19 @@ Login
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  initial_tender_data
+  ...      ${ARGUMENTS[1]} ==  tender_data
 ## Initialisation
-  #${prepared_tender_data}=   Add_data_for_GUI_FrontEnds   ${ARGUMENTS[1]}
-  ${INITIAL_TENDER_DATA}=  Add_data_for_GUI_FrontEnds  ${INITIAL_TENDER_DATA}
-  ${INITIAL_TENDER_DATA}=  Update_data_for_Newtend  ${INITIAL_TENDER_DATA}
-  ${items}=         Get From Dictionary   ${INITIAL_TENDER_DATA.data}               items
-  ${title}=         Get From Dictionary   ${INITIAL_TENDER_DATA.data}               title
-  ${description}=   Get From Dictionary   ${INITIAL_TENDER_DATA.data}               description
-  ${budget}=        Get From Dictionary   ${INITIAL_TENDER_DATA.data.value}         amount
-  ${step_rate}=     Get From Dictionary   ${INITIAL_TENDER_DATA.data.minimalStep}   amount
-  ${start_date}=           Get From Dictionary   ${INITIAL_TENDER_DATA.data.tenderPeriod}    startDate
-  ${end_date}=             Get From Dictionary   ${INITIAL_TENDER_DATA.data.tenderPeriod}    endDate
-  ${enquiry_start_date}=   Get From Dictionary   ${INITIAL_TENDER_DATA.data.enquiryPeriod}   startDate
-  ${enquiry_end_date}=     Get From Dictionary   ${INITIAL_TENDER_DATA.data.enquiryPeriod}   endDate
+  ${prepared_tender_data}=  Add_data_for_GUI_FrontEnds  ${ARGUMENTS[1]}
+  ${prepared_tender_data}=  Update_data_for_Newtend  ${prepared_tender_data}
+  ${items}=         Get From Dictionary   ${prepared_tender_data.data}               items
+  ${title}=         Get From Dictionary   ${prepared_tender_data.data}               title
+  ${description}=   Get From Dictionary   ${prepared_tender_data.data}               description
+  ${budget}=        Get From Dictionary   ${prepared_tender_data.data.value}         amount
+  ${step_rate}=     Get From Dictionary   ${prepared_tender_data.data.minimalStep}   amount
+  ${start_date}=           Get From Dictionary   ${prepared_tender_data.data.tenderPeriod}    startDate
+  ${end_date}=             Get From Dictionary   ${prepared_tender_data.data.tenderPeriod}    endDate
+  ${enquiry_start_date}=   Get From Dictionary   ${prepared_tender_data.data.enquiryPeriod}   startDate
+  ${enquiry_end_date}=     Get From Dictionary   ${prepared_tender_data.data.enquiryPeriod}   endDate
 
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
   Go To                              ${USERS.users['${username}'].homepage}
