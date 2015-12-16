@@ -19,6 +19,6 @@ def convert_time_to_etender_format(isodate):
     return time_string
 
 
-def procuring_entity_name(INITIAL_TENDER_DATA):
-    INITIAL_TENDER_DATA.data.procuringEntity['name'] = u"Повна назва невідомо чого"
-    return INITIAL_TENDER_DATA
+def procuring_entity_name(tender_data):
+    tender_data.data.procuringEntity['name'] = u"Повна назва невідомо чого"
+    return tender_data

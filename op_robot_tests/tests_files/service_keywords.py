@@ -181,13 +181,13 @@ def wait_to_date(date_stamp):
 
 
 # GUI Frontends common
-def add_data_for_gui_frontends(INITIAL_TENDER_DATA):
+def add_data_for_gui_frontends(tender_data):
     now = datetime.now()
-    # INITIAL_TENDER_DATA.data.enquiryPeriod['startDate'] = (now + timedelta(minutes=2)).isoformat()
-    INITIAL_TENDER_DATA.data.enquiryPeriod['endDate'] = (now + timedelta(minutes=6)).isoformat()
-    INITIAL_TENDER_DATA.data.tenderPeriod['startDate'] = (now + timedelta(minutes=7)).isoformat()
-    INITIAL_TENDER_DATA.data.tenderPeriod['endDate'] = (now + timedelta(minutes=11)).isoformat()
-    return INITIAL_TENDER_DATA
+    # tender_data.data.enquiryPeriod['startDate'] = (now + timedelta(minutes=2)).isoformat()
+    tender_data.data.enquiryPeriod['endDate'] = (now + timedelta(minutes=6)).isoformat()
+    tender_data.data.tenderPeriod['startDate'] = (now + timedelta(minutes=7)).isoformat()
+    tender_data.data.tenderPeriod['endDate'] = (now + timedelta(minutes=11)).isoformat()
+    return tender_data
 
 
 def convert_date_to_slash_format(isodate):

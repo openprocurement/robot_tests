@@ -16,6 +16,6 @@ def newtend_date_picker_index(isodate):
     return mod + iso_dt.day
 
 
-def update_data_for_newtend(INITIAL_TENDER_DATA):
-    INITIAL_TENDER_DATA.data.procuringEntity['name'] = u"openprocurement"
-    return INITIAL_TENDER_DATA
+def update_data_for_newtend(tender_data):
+    tender_data.data.procuringEntity['name'] = u"openprocurement"
+    return tender_data
