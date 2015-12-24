@@ -38,7 +38,8 @@ Newtend:
         viewer:         Newtend_Viewer
 Prom:
     keywords_file: prom
-    url: http://dz.dz-test.net/
+    url: http://zakupki.dz-test.net
+    timeout_on_wait: 0
     period_interval: 31
     roles:
         tender_owner:   Prom_Owner

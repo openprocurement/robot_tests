@@ -17,10 +17,9 @@ import time
 from .initial_data import (
     test_tender_data, test_question_data, test_question_answer_data,
     test_bid_data, test_award_data, test_complaint_data, test_complaint_reply_data, test_tender_data_multiple_lots,
-    auction_bid, prom_test_tender_data, create_fake_doc
+    auction_bid, create_fake_doc
 )
 import calendar
-
 
 TZ = timezone(os.environ['TZ'] if 'TZ' in os.environ else 'Europe/Kiev')
 
@@ -41,9 +40,6 @@ def change_state(arguments):
         return "pass"
     except IndexError:
         return "pass"
-
-def prepare_prom_test_tender_data():
-    return munchify({'data': prom_test_tender_data()})
 
 def compare_date(data1, data2):
     data1=parse(data1)
@@ -89,10 +85,6 @@ def log_object_data(data, file_name=None, format="yaml"):
         with open(os.path.join(output_dir, file_name + '.' + format), "w") as file_obj:
             file_obj.write(data)
 
-def convert_date_to_prom_format(isodate):
-    iso_dt=parse_date(isodate)
-    day_string = iso_dt.strftime("%d.%m.%Y %H:%M")
-    return  day_string
 
 def load_initial_data_from(file_name):
     if not os.path.exists(file_name):
@@ -191,21 +183,59 @@ def Add_data_for_GUI_FrontEnds(INITIAL_TENDER_DATA):
 def local_path_to_file(file_name):
     return os.path.join(os.path.dirname(__file__), 'documents', file_name)
 
+## Prom.ua
+def get_all_prom_dates(period_interval=31):
+    now = datetime.now()
+    return {
+        'EndPeriod': (now + timedelta(minutes=8)).strftime("%d.%m.%Y %H:%M"),
+        'StartDate': (now + timedelta(minutes=8)).strftime("%d.%m.%Y %H:%M"),
+        'EndDate': (now + timedelta(minutes=(8 + period_interval))).strftime("%d.%m.%Y %H:%M"),
+    }
+
+def convert_date_to_prom_tender(isodate):
+    first_iso = datetime.strptime(isodate, "%d.%m.%y").isoformat()
+    return first_iso
+
+
+def convert_date_to_prom_tender_startdate(isodate):
+    first_date = isodate.split(' - ')[0]
+    first_iso = datetime.strptime(first_date, "%d.%m.%y %H:%M").isoformat()
+    return first_iso
+
+def convert_date_to_prom_tender_enddate(isodate):
+    second_date = isodate.split(' - ')[1]
+    second_iso = datetime.strptime(second_date, "%d.%m.%y %H:%M").isoformat()
+    return second_iso
+
+
+def procuringEntity_name_prom(INITIAL_TENDER_DATA):
+    INITIAL_TENDER_DATA.data.procuringEntity['name'] = u"Test_company_from_Prozorro"
+    return INITIAL_TENDER_DATA
+
+
+def convert_prom_string_to_common_string(string):
+    return {
+        u"Украина": u"Україна",
+        u"Киевская область": u"м. Київ",
+        u"килограммы": u"кілограм",
+    }.get(string, string)
+
+
 ## E-Tender
 def convert_date_to_etender_format(isodate):
     iso_dt=parse_date(isodate)
     date_string = iso_dt.strftime("%d-%m-%Y")
-    return  date_string
+    return date_string
 
 def convert_date_for_delivery(isodate):
     iso_dt=parse_date(isodate)
     date_string = iso_dt.strftime("%Y-%m-%d %H:%M")
-    return  date_string
+    return date_string
 
 def convert_time_to_etender_format(isodate):
     iso_dt=parse_date(isodate)
     time_string = iso_dt.strftime("%H:%M")
-    return  time_string
+    return time_string
 
 def procuringEntity_name(INITIAL_TENDER_DATA):
     INITIAL_TENDER_DATA.data.procuringEntity['name'] = u"Повна назва невідомо чого"
