@@ -57,7 +57,7 @@ ${locator.items[0].additionalClassifications[0].description}    xpath=//dd[conta
 
 Login
     Click Element  ${sign_in}
-    sleep   1
+    Sleep   1
     Input text      ${login_sign_in}          ${USERS.users['${username}'].login}
     Input text      ${password_sign_in}       ${USERS.users['${username}'].password}
     Click Button    id=submit_login_button
@@ -70,7 +70,6 @@ Login
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tender_data
 
-    Login
 ### Создание тендера
     ${INITIAL_TENDER_DATA}=  procuringEntity_name_prom   ${INITIAL_TENDER_DATA}
     ${title}=                Get From Dictionary         ${INITIAL_TENDER_DATA.data}   title
@@ -95,10 +94,10 @@ Login
     ${start_receive_offers}=        Get From Dictionary         ${dates}        StartDate
     ${end_receive_offers}=          Get From Dictionary         ${dates}        EndDate
 
-
-    Wait Until Page Contains Element     id=js-btn-0
+    Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
+    Wait Until Page Contains Element     id=js-btn-0    20
     Click Element                        id=js-btn-0
-    Wait Until Page Contains Element     id=title
+    Wait Until Page Contains Element     id=title       20
     Input text                           id=title               ${title}
     Input text                           id=descr               ${description}
     Input text        id=state_purchases_items-0-descr          ${descr_lot}
@@ -107,21 +106,21 @@ Login
     Click Element     xpath=//li[@data-value='1']
     ## Cpv
     Click Element     xpath=//div[contains(@class, 'qa_cpv_button')]
-    Wait Until Page Contains Element    xpath=//div[contains(@class, 'qa_cpv_popup')]//input[contains(@data-url, 'classifier_type=cpv')]
+    Wait Until Page Contains Element    xpath=//div[contains(@class, 'qa_cpv_popup')]//input[contains(@data-url, 'classifier_type=cpv')]    20
     Input text        xpath=//div[contains(@class, 'qa_cpv_popup')]//input[contains(@data-url, 'classifier_type=cpv')]    ${cpv_id}
     Click Element     xpath=//div[contains(@class, 'qa_cpv_popup')]//input[contains(@data-url, 'classifier_type=cpv')]
     Press Key         xpath=//div[contains(@class, 'qa_cpv_popup')]//input[contains(@data-url, 'classifier_type=cpv')]             \\13
-    Wait Until Page Contains Element      xpath=//input[contains(@data-label, '44617100-9')]
+    Wait Until Page Contains Element      xpath=//input[contains(@data-label, '44617100-9')]      20
     Click Element     xpath=//input[contains(@data-label, '44617100-9')]
     Click Element     xpath=//div[contains(@class, 'qa_cpv_popup')]//a[contains(@class, 'classifiers-submit')]
     ## dkkp
-    Wait Until Page Contains Element   xpath=//div[contains(@class, 'qa_dkpp_button')]
+    Wait Until Page Contains Element   xpath=//div[contains(@class, 'qa_dkpp_button')]      20
     Click Element     xpath=//div[contains(@class, 'qa_dkpp_button')]
-    Wait Until Page Contains Element    xpath=//div[contains(@class, 'qa_dkpp_popup')]//input[contains(@data-url, 'classifier_type=dkpp')]
+    Wait Until Page Contains Element    xpath=//div[contains(@class, 'qa_dkpp_popup')]//input[contains(@data-url, 'classifier_type=dkpp')]    20
     Input text        xpath=//div[contains(@class, 'qa_dkpp_popup')]//input[contains(@data-url, 'classifier_type=dkpp')]    ${dkpp_id}
     Click Element     xpath=//div[contains(@class, 'qa_dkpp_popup')]//input[contains(@data-url, 'classifier_type=dkpp')]
     Press Key         xpath=//div[contains(@class, 'qa_dkpp_popup')]//input[contains(@data-url, 'classifier_type=dkpp')]             \\13
-    Wait Until Page Contains Element      id=classifier_id-1228
+    Wait Until Page Contains Element      id=classifier_id-1228     20
     Click Element     id=classifier_id-1228
     Click Element     xpath=//div[contains(@class, 'qa_dkpp_popup')]//a[contains(@class, 'classifiers-submit')]
     Input text        id=state_purchases_items-0-date_delivery_end          ${delivery_end}
@@ -180,7 +179,7 @@ Login
   Sleep   2
   Reload Page
   Click Button    id=submit_button
-  sleep   3
+  Sleep   3
   Capture Page Screenshot
 
 
@@ -191,7 +190,6 @@ Login
   ...      ${ARGUMENTS[1]} ==  ${id}
 
   Go to   ${BROKERS['${USERS.users['${username}'].broker}'].url}
-  Sleep  1
   Input Text      id=search_text_id   ${ARGUMENTS[1]}
   Click Button    id=search_submit
   Sleep  2
@@ -214,10 +212,10 @@ Login
 #
 #  Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
 #  prom.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
-#  sleep  1
+#  Sleep  1
 ##  Execute Javascript                  window.scroll(2500,2500)
 #  Wait Until Page Contains Element    xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]    20
-#  Click Element                       xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]
+#  Click Element                       xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]    20
 #  Wait Until Page Contains Element    name=title    20
 #  Input text                          name=title                 ${title}
 #  Input text                          xpath=//textarea[@name='description']           ${description}
@@ -234,7 +232,7 @@ Login
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  fieldname
-  Switch browser   ${ARGUMENTS[0]}
+
   ${return_value}=  run keyword  Отримати інформацію про ${ARGUMENTS[1]}
   [return]  ${return_value}
 
