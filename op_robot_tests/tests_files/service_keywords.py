@@ -114,7 +114,7 @@ def prepare_test_tender_data(period_interval, mode):
         return munchify({'data': test_tender_data(period_interval=period_interval)})
     elif mode == 'multi':
         return munchify({'data': test_tender_data_multiple_lots(period_interval=period_interval)})
-    raise ValueError('A very specific bad thing happened')
+    raise ValueError('Invalid mode for test_tender_data')
 
 
 def run_keyword_and_ignore_keyword_definitions(name, *args):
