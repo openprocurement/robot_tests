@@ -48,8 +48,8 @@ def change_state(arguments):
         return "pass"
 
 
-def prepare_prom_test_tender_data(period_interval, mode):
-    t_data = prepare_test_tender_data(period_interval, mode)
+def prepare_prom_test_tender_data(period_intervals, mode):
+    t_data = prepare_test_tender_data(period_intervals, mode)
     return munchify({'data': t_data})
 
 
@@ -109,11 +109,11 @@ def load_initial_data_from(file_name):
             return fromYAML(file_obj)
 
 
-def prepare_test_tender_data(period_interval, mode):
+def prepare_test_tender_data(period_intervals, mode):
     if mode == 'single':
-        return munchify({'data': test_tender_data(period_interval=period_interval)})
+        return munchify({'data': test_tender_data(period_intervals)})
     elif mode == 'multi':
-        return munchify({'data': test_tender_data_multiple_lots(period_interval=period_interval)})
+        return munchify({'data': test_tender_data_multiple_lots(period_intervals)})
     raise ValueError('Invalid mode for test_tender_data')
 
 

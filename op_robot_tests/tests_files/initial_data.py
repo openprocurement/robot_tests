@@ -25,7 +25,7 @@ def create_fake_doc():
     return tf.name
 
 
-def test_tender_data(period_interval):
+def test_tender_data(intervals):
     now = get_now()
     return {
         "title": u"[ТЕСТУВАННЯ] " + fake.catch_phrase(),
@@ -109,18 +109,20 @@ def test_tender_data(period_interval):
         ],
         "enquiryPeriod": {
             "startDate": (now).isoformat(),
-            "endDate": (now + timedelta(minutes=1)).isoformat()
+            "endDate": (now + timedelta(minutes=(
+                intervals['enquiry']))).isoformat()
         },
         "tenderPeriod": {
             "startDate": (now + timedelta(minutes=2)).isoformat(),
-            "endDate": (now + timedelta(minutes=(2 + period_interval))).isoformat()
+            "endDate": (now + timedelta(minutes=(
+                intervals['tender']))).isoformat()
         }
     }
 
 
-def test_tender_data_multiple_lots(period_interval):
+def test_tender_data_multiple_lots(intervals):
     now = get_now()
-    t_data = test_tender_data(period_interval)
+    t_data = test_tender_data(intervals)
     t_data.update({
         "items": [
             {
