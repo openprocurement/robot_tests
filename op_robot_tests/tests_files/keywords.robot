@@ -108,37 +108,29 @@ Get Broker Property By Username
   Run Keyword If   ${wait_timeout}>0   Sleep  ${wait_timeout}
 
 Звірити поле тендера
-  [Arguments]  ${username}  ${field}
-  ${field_value}=  Get_From_Object  ${tender_data.data}  ${field}
-  Звірити поле    ${username}  ${field}  ${field_value}
+  [Arguments]  ${username}  ${tender_data}  ${field}
+  ${left}=  Get_From_Object  ${tender_data.data}  ${field}
+  ${right}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field}
+  Порівняти об'єкти  ${left}  ${right}
 
-Звірити поле
-  [Arguments]  ${username}  ${field}   ${subject}
-  ${field_response}=  Викликати для учасника    ${username}   Отримати інформацію із тендера   ${field}
-  Should Not Be Equal  ${field_response}   ${None}
-  Should Be Equal   ${subject}   ${field_response}   Майданчик ${USERS.users['${username}'].broker}
-
-Звірити поле створеного тендера
-  [Arguments]  ${initial}  ${tender_data}  ${field}
-  ${field_value}=  Get_From_Object  ${initial}  ${field}
-  ${field_response}=  Get_From_Object  ${tender_data}  ${field}
-  Should Not Be Equal  ${field_response}  ${None}
-  Should Not Be Equal  ${field_value}   ${None}
-  Should Be Equal   ${field_value}   ${field_response}
+Порівняти об'єкти
+  [Arguments]  ${left}  ${right}
+  Should Not Be Equal  ${left}  ${None}
+  Should Not Be Equal  ${right}  ${None}
+  Should Be Equal  ${left}  ${right}
 
 Звірити дату тендера
-  [Arguments]  ${username}  ${field}
-  ${isodate}=  Get_From_Object  ${tender_data.data}  ${field}
-  Should Not Be Equal  ${isodate}   ${None}
-  Звірити дату  ${username}  ${field}  ${isodate}
+  [Arguments]  ${username}  ${tender_data}  ${field}
+  ${left}=  Get_From_Object  ${tender_data.data}  ${field}
+  ${right}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field}
+  Звірити дату  ${left}  ${right}
 
 Звірити дату
-   [Arguments]  ${username}  ${field}   ${subject}
-   ${field_date}=  Викликати для учасника    ${username}   Отримати інформацію із тендера  ${field}
-   Should Not Be Equal  ${field_date}   ${None}
-   ${returned}=  compare_date  ${subject}  ${field_date}
-   Should Not Be Equal  ${returned}   ${None}
-   Should Be True  '${returned}' == 'True'
+  [Arguments]  ${left}  ${right}
+  Should Not Be Equal  ${left}  ${None}
+  Should Not Be Equal  ${right}  ${None}
+  ${status}=  compare_date  ${left}  ${right}
+  Should Be True  ${status}
 
 Звірити поля предметів закупівлі багатопредметного тендера
   [Arguments]  ${username}  ${tender_data}  ${field}
