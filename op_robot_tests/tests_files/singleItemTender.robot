@@ -21,7 +21,8 @@ ${question_id}  0
 Можливість оголосити однопредметний тендер
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   [Documentation]   Створення закупівлі замовником, обовязково має повертати UAID закупівлі (номер тендера),
-  ${TENDER_UAID}=  Викликати для учасника     ${tender_owner}    Створити тендер  ${INITIAL_TENDER_DATA}
+  ${tender_data}=  Підготовка початкових даних
+  ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${tender_data}
   ${LAST_MODIFICATION_DATE}=  Get Current Date
   Set To Dictionary  ${TENDER}   TENDER_UAID             ${TENDER_UAID}
   Set To Dictionary  ${TENDER}   LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}

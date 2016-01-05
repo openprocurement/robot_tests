@@ -11,7 +11,6 @@ Library  DebugLibrary
 *** Keywords ***
 TestSuiteSetup
     Завантажуємо дані про користувачів і майданчики
-    Підготовка початкових даних
 
 Set Suite Variable With Default Value
   [Arguments]  ${suite_var}  ${def_value}
@@ -86,12 +85,12 @@ Get Broker Property By Username
   Append to list  ${REPLIES}  ${reply}
   Set Global Variable  @{REPLIES}
   ${period_intervals}=  Get Broker Property By Username  ${tender_owner}  intervals
-  ${INITIAL_TENDER_DATA}=  prepare_test_tender_data  ${period_intervals}  ${mode}
-  Set Global Variable  ${INITIAL_TENDER_DATA}
+  ${tender_data}=  prepare_test_tender_data  ${period_intervals}  ${mode}
   ${TENDER}=  Create Dictionary
   Set Global Variable  ${TENDER}
   Log  ${TENDER}
-  Log  ${INITIAL_TENDER_DATA}
+  Log  ${tender_data}
+  [return]  ${tender_data}
 
 Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
   Import Resource  ${CURDIR}/brokers/${keywords_file}.robot
@@ -110,7 +109,7 @@ Get Broker Property By Username
 
 Звірити поле тендера
   [Arguments]  ${username}  ${field}
-  ${field_value}=   Get_From_Object  ${INITIAL_TENDER_DATA.data}   ${field}
+  ${field_value}=  Get_From_Object  ${tender_data.data}  ${field}
   Звірити поле    ${username}  ${field}  ${field_value}
 
 Звірити поле
@@ -121,15 +120,15 @@ Get Broker Property By Username
 
 Звірити поле створеного тендера
   [Arguments]  ${initial}  ${tender_data}  ${field}
-  ${field_value}=   Get_From_Object  ${initial}   ${field}
-  ${field_response}=  Get_From_Object  ${tender_data}   ${field}
-  Should Not Be Equal  ${field_response}   ${None}
+  ${field_value}=  Get_From_Object  ${initial}  ${field}
+  ${field_response}=  Get_From_Object  ${tender_data}  ${field}
+  Should Not Be Equal  ${field_response}  ${None}
   Should Not Be Equal  ${field_value}   ${None}
   Should Be Equal   ${field_value}   ${field_response}
 
 Звірити дату тендера
   [Arguments]  ${username}  ${field}
-  ${isodate}=   Get_From_Object  ${INITIAL_TENDER_DATA.data}   ${field}
+  ${isodate}=  Get_From_Object  ${tender_data.data}  ${field}
   Should Not Be Equal  ${isodate}   ${None}
   Звірити дату  ${username}  ${field}  ${isodate}
 
@@ -142,18 +141,18 @@ Get Broker Property By Username
    Should Be True  '${returned}' == 'True'
 
 Звірити поля предметів закупівлі багатопредметного тендера
-  [Arguments]  ${username}  ${field}
+  [Arguments]  ${username}  ${tender_data}  ${field}
   Дочекатись синхронізації з майданчиком    ${username}
-  @{items}=  Get_From_Object  ${INITIAL_TENDER_DATA.data}     items
+  @{items}=  Get_From_Object  ${tender_data.data}  items
   ${len_of_items}=   Get Length   ${items}
   :FOR   ${index}    IN RANGE   ${len_of_items}
     \    Log   ${index}
     \    Звірити поле тендера   ${viewer}  items[${index}].${field}
 
 Звірити дату предметів закупівлі багатопредметного тендера
-  [Arguments]  ${username}  ${field}
+  [Arguments]  ${username}  ${tender_data}  ${field}
   Дочекатись синхронізації з майданчиком    ${username}
-  @{items}=  Get_From_Object  ${INITIAL_TENDER_DATA.data}     items
+  @{items}=  Get_From_Object  ${tender_data.data}  items
   ${len_of_items}=   Get Length   ${items}
   :FOR   ${index}    IN RANGE   ${len_of_items}
     \    Log   ${index}
