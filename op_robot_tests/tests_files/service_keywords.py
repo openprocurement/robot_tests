@@ -1,38 +1,43 @@
 # -*- coding: utf-8 -
-import os
-from munch import munchify, Munch, fromYAML
-from json import load
+from datetime import datetime, timedelta
+from dateutil.parser import parse
+from dpath.util import set as xpathset
 from iso8601 import parse_date
+from json import load
+from jsonpath_rw import parse as parse_path
+from munch import fromYAML, Munch, munchify
+from pytz import timezone
+from robot.errors import HandlerExecutionFailed
+from robot.libraries.BuiltIn import BuiltIn
 from robot.output import LOGGER
 from robot.output.loggerhelper import Message
-from robot.libraries.BuiltIn import BuiltIn
-from robot.errors import HandlerExecutionFailed
-from datetime import datetime, timedelta, date
-from dateutil.parser import parse
-from dateutil.tz import tzlocal
-from pytz import timezone
-from dpath.util import set as xpathset
-from jsonpath_rw import parse as parse_path
-import time
+# These imports are not pointless. Robot's resource and testsuite files
+# can access them by simply importing library "service_keywords".
+# Please ignore the warning given by Flake8 or other linter.
 from .initial_data import (
-    test_tender_data, test_question_data, test_question_answer_data,
-    test_bid_data, test_award_data, test_complaint_data, test_complaint_reply_data, test_tender_data_multiple_lots,
-    auction_bid, prom_test_tender_data, create_fake_doc
+    auction_bid, create_fake_doc,
+    test_award_data, test_bid_data, test_complaint_data,
+    test_complaint_reply_data, test_question_answer_data,
+    test_question_data, test_tender_data, test_tender_data_multiple_lots
 )
-import calendar
+import os
 
 
 TZ = timezone(os.environ['TZ'] if 'TZ' in os.environ else 'Europe/Kiev')
 
+
 def get_now():
     return datetime.now(TZ)
 
+
 def get_date():
-	return get_now().isoformat()
+    return get_now().isoformat()
+
 
 def get_file_contents(path):
     with open(path, 'r') as f:
         return unicode(f.read()) or u''
+
 
 def change_state(arguments):
     try:
@@ -42,21 +47,25 @@ def change_state(arguments):
     except IndexError:
         return "pass"
 
-def prepare_prom_test_tender_data():
-    return munchify({'data': prom_test_tender_data()})
+
+def prepare_prom_test_tender_data(period_intervals, mode):
+    t_data = prepare_test_tender_data(period_intervals, mode)
+    return munchify({'data': t_data})
+
 
 def compare_date(data1, data2):
-    data1=parse(data1)
-    data2=parse(data2)
+    data1 = parse(data1)
+    data2 = parse(data2)
     if data1.tzinfo is None:
         data1 = TZ.localize(data1)
     if data2.tzinfo is None:
         data2 = TZ.localize(data2)
 
-    delta = (data1-data2).total_seconds()
+    delta = (data1 - data2).total_seconds()
     if abs(delta) > 60:
-       return False
+        return False
     return True
+
 
 def log_object_data(data, file_name=None, format="yaml"):
     """Log object data in pretty format (JSON or YAML)
@@ -89,10 +98,6 @@ def log_object_data(data, file_name=None, format="yaml"):
         with open(os.path.join(output_dir, file_name + '.' + format), "w") as file_obj:
             file_obj.write(data)
 
-def convert_date_to_prom_format(isodate):
-    iso_dt=parse_date(isodate)
-    day_string = iso_dt.strftime("%d.%m.%Y %H:%M")
-    return  day_string
 
 def load_initial_data_from(file_name):
     if not os.path.exists(file_name):
@@ -104,12 +109,12 @@ def load_initial_data_from(file_name):
             return fromYAML(file_obj)
 
 
-def prepare_test_tender_data(period_interval=2, mode='single'):
+def prepare_test_tender_data(period_intervals, mode):
     if mode == 'single':
-        return munchify({'data': test_tender_data(period_interval=period_interval)})
+        return munchify({'data': test_tender_data(period_intervals)})
     elif mode == 'multi':
-        return munchify({'data': test_tender_data_multiple_lots(period_interval=period_interval)})
-    raise ValueError('A very specific bad thing happened')
+        return munchify({'data': test_tender_data_multiple_lots(period_intervals)})
+    raise ValueError('Invalid mode for test_tender_data')
 
 
 def run_keyword_and_ignore_keyword_definitions(name, *args):
@@ -130,7 +135,7 @@ def run_keyword_and_ignore_keyword_definitions(name, *args):
     """
     try:
         status, _ = BuiltIn().run_keyword_and_ignore_error(name, *args)
-    except HandlerExecutionFailed, e:
+    except HandlerExecutionFailed:
         LOGGER.log_message(Message("Keyword {} not implemented", "ERROR"))
         return "FAIL", ""
     return status, _
@@ -174,62 +179,35 @@ def wait_to_date(date_stamp):
         return 0
     return wait_seconds
 
-##GUI Frontends common
-def convert_date_to_slash_format(isodate):
-    iso_dt=parse_date(isodate)
-    date_string = iso_dt.strftime("%d/%m/%Y")
-    return  date_string
 
-def Add_data_for_GUI_FrontEnds(INITIAL_TENDER_DATA):
-    now = datetime.now() 
-    #INITIAL_TENDER_DATA.data.enquiryPeriod['startDate'] = (now + timedelta(minutes=2)).isoformat()
-    INITIAL_TENDER_DATA.data.enquiryPeriod['endDate'] = (now + timedelta(minutes=6)).isoformat()
-    INITIAL_TENDER_DATA.data.tenderPeriod['startDate'] = (now + timedelta(minutes=7)).isoformat()
-    INITIAL_TENDER_DATA.data.tenderPeriod['endDate'] = (now + timedelta(minutes=11)).isoformat()
-    return INITIAL_TENDER_DATA
+def merge_dicts(left, right):
+    new = {}
+    new.update(left)
+    new.update(right)
+    return new
+
+
+# GUI Frontends common
+def add_data_for_gui_frontends(tender_data):
+    now = datetime.now()
+    # tender_data.data.enquiryPeriod['startDate'] = (now + timedelta(minutes=2)).isoformat()
+    tender_data.data.enquiryPeriod['endDate'] = (now + timedelta(minutes=6)).isoformat()
+    tender_data.data.tenderPeriod['startDate'] = (now + timedelta(minutes=7)).isoformat()
+    tender_data.data.tenderPeriod['endDate'] = (now + timedelta(minutes=11)).isoformat()
+    return tender_data
+
+
+def convert_date_to_slash_format(isodate):
+    iso_dt = parse_date(isodate)
+    date_string = iso_dt.strftime("%d/%m/%Y")
+    return date_string
+
+
+def convert_datetime_to_dot_format(isodate):
+    iso_dt = parse_date(isodate)
+    day_string = iso_dt.strftime("%d.%m.%Y %H:%M")
+    return day_string
+
 
 def local_path_to_file(file_name):
     return os.path.join(os.path.dirname(__file__), 'documents', file_name)
-
-## E-Tender
-def convert_date_to_etender_format(isodate):
-    iso_dt=parse_date(isodate)
-    date_string = iso_dt.strftime("%d-%m-%Y")
-    return  date_string
-
-def convert_date_for_delivery(isodate):
-    iso_dt=parse_date(isodate)
-    date_string = iso_dt.strftime("%Y-%m-%d %H:%M")
-    return  date_string
-
-def convert_time_to_etender_format(isodate):
-    iso_dt=parse_date(isodate)
-    time_string = iso_dt.strftime("%H:%M")
-    return  time_string
-
-def procuringEntity_name(INITIAL_TENDER_DATA):
-    INITIAL_TENDER_DATA.data.procuringEntity['name'] = u"Повна назва невідомо чого"
-    return INITIAL_TENDER_DATA
-
-##Newtend
-def newtend_date_picker_index(isodate):
-    now = datetime.today()
-    date_str = '01' + str(now.month) + str(now.year)
-    first_day_of_month = datetime.strptime(date_str, "%d%m%Y")
-    mod = first_day_of_month.isoweekday() - 2
-    iso_dt=parse_date(isodate)
-    last_day_of_month = calendar.monthrange(now.year, now.month)[1] 
-    #LOGGER.log_message(Message("last_day_of_month: {}".format(last_day_of_month), "INFO")) 
-    if now.day>iso_dt.day:
-        mod = calendar.monthrange(now.year, now.month)[1] + mod
-    return mod + iso_dt.day
-
-def Update_data_for_Newtend(INITIAL_TENDER_DATA):
-    #INITIAL_TENDER_DATA.data.items[0].classification['description'] = u"Картонки"
-    INITIAL_TENDER_DATA.data.procuringEntity['name'] = u"openprocurement"
-    return INITIAL_TENDER_DATA
-
-def subtract_from_time(date_time,substr_min,substr_sec):
-    now = datetime.strptime(date_time,"%d.%m.%Y %H:%M")
-    now = (now - timedelta(minutes=int(substr_min), seconds = int (substr_sec) )).isoformat()
-    return now

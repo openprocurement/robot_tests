@@ -20,9 +20,11 @@ ${PASSWORD}     1234
   [Arguments]  ${username}
   log many  @{ARGUMENTS}
   log  ${username}
-  [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
-  ${url}=  Get Broker Property By Username  ${ARGUMENTS[0]}  url
-  Open Browser  ${url}  ${USERS.users['${username}'].browser}  alias=${username}
+  [Documentation]  Відкрити браузер, створити об’єкт api wrapper, тощо
+  Open Browser
+  ...      ${USERS.users['${username}'].homepage}
+  ...      ${USERS.users['${username}'].browser}
+  ...      alias=${username}
   Set Window Position   @{USERS.users['${username}'].position}
   #Set Window Size       @{USERS.users['${username}'].size}
   Log Variables
@@ -46,11 +48,11 @@ Login
     Login
 
     ${start_date}=    Get From Dictionary  ${ARGUMENTS[1].data.tenderPeriod}   startDate
-    ${start_date}=   convert_date_to_prom_format   ${start_date}
+    ${start_date}=   convert_datetime_to_dot_format  ${start_date}
     ${end_date}=      Get From Dictionary  ${ARGUMENTS[1].data.tenderPeriod}   endDate
-    ${end_date}=   convert_date_to_prom_format   ${end_date}
+    ${end_date}=   convert_datetime_to_dot_format  ${end_date}
     ${enquiry_end_date}=      Get From Dictionary  ${ARGUMENTS[1].data.enquiryPeriod}   endDate
-    ${enquiry_end_date}=   convert_date_to_prom_format   ${enquiry_end_date}
+    ${enquiry_end_date}=   convert_datetime_to_dot_format  ${enquiry_end_date}
 
     ${items}=  Get From Dictionary    ${ARGUMENTS[1].data}   items
     ${delivery_date}=  Get From Dictionary    ${items[0].deliveryDate}   endDate
@@ -100,9 +102,9 @@ Get tender id
   ...      ${ARGUMENTS[2]} ==  id
   Switch browser   ${ARGUMENTS[0]}
   ${current_location}=   Get Location
-  ${url}=  Get Broker Property By Username  ${ARGUMENTS[0]}  url
-  Run Keyword If  '${url}/#/tenderDetailes/${ARGUMENTS[2]}'=='${current_location}'  Reload Page
-  Go to  ${url}
+  ${homepage}=  Set Variable  ${USERS.users['${ARGUMENTS[0]}'].homepage}
+  Run Keyword If  '${homepage}/#/tenderDetailes/${ARGUMENTS[2]}'=='${current_location}'  Reload Page
+  Go To  ${homepage}
   Wait Until Page Contains   Допороговые закупки Украины   10
   sleep  1
   Input Text   id=search  ${ARGUMENTS[1]}

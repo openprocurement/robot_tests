@@ -1,28 +1,35 @@
 Default:
     # These values are used by default unless a
     # specific broker entry overrides them.
+    intervals:
+        enquiry:        11
+        tender:         18
+        auction:        0
+        qualification:  0
+        award:          0
+        complaint:      0
     timeout_on_wait: 300
-    period_interval: 3
 Quinta:
+    intervals:
+        enquiry:        2
+        tender:         5
     keywords_file: openprocurement_client
-    timeout_on_wait: 15
     roles:
         tender_owner:   Tender_Owner
         provider:       Tender_User
         provider1:      Tender_User1
         viewer:         Tender_Viewer
+    timeout_on_wait: 15
 E-tender:
     keywords_file: etender
-    url: http://bid.uat.e-tender.biz/
-    timeout_on_wait: 60
     roles:
         tender_owner:   E-tender_Owner
         provider:       E-tender_Provider1
         provider1:      E-tender_Provider2
         viewer:         E-tender_Viewer
+    timeout_on_wait: 60
 Netcast:
     keywords_file: netcast
-    url: http://dz2.byustudio.in.ua
     login: admin
     password: uStudio
     roles:
@@ -31,26 +38,24 @@ Netcast:
         viewer:         Netcast_Viewer
 Newtend:
     keywords_file: newtend
-    url: http://openprocurement:test@dev23.newtend.com
     roles:
         tender_owner:   Newtend_Owner
         provider:       Newtend_Provider1
         viewer:         Newtend_Viewer
 Prom:
+    intervals:
+        enquiry:        5
+        tender:         31
     keywords_file: prom
-    url: http://dz.dz-test.net/
-    period_interval: 31
     roles:
         tender_owner:   Prom_Owner
         viewer:         Prom_Viewer
 Publicbid:
     keywords_file: publicbid
-    url: https://public-bid.com.ua/
     roles:
         tender_owner:   Publicbid_Owner
         viewer:         Publicbid_Viewer
 SmartTender:
     keywords_file: smarttender
-    url: http://smarttender.biz/tenders
     roles:
         viewer:         SmartTender_Viewer

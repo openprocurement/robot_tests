@@ -1,7 +1,8 @@
-*** Setting ***
+*** Settings ***
 Library  Selenium2Screenshots
 Library  String
 Library  DateTime
+Library  newtend_service.py
 
 *** Variables ***
 ${locator.title}                     xpath=//div[@ng-bind="tender.title"]
@@ -40,10 +41,12 @@ ${locator.QUESTIONS[0].date}          xpath=//span[@class="date ng-binding"]
 
 Підготувати клієнт для користувача
   [Arguments]  @{ARGUMENTS}
-  [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
+  [Documentation]  Відкрити браузер, створити об’єкт api wrapper, тощо
   ...      ${ARGUMENTS[0]} ==  username
-  ${url}=  Get Broker Property By Username  ${ARGUMENTS[0]}  url
-  Open Browser  ${url}  ${USERS.users['${username}'].browser}  alias=${ARGUMENTS[0]}
+  Open Browser
+  ...      ${USERS.users['${ARGUMENTS[0]}'].homepage}
+  ...      ${USERS.users['${ARGUMENTS[0]}'].browser}
+  ...      alias=${ARGUMENTS[0]}
   Set Window Size   @{USERS.users['${ARGUMENTS[0]}'].size}
   Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
   Run Keyword If   '${username}' != 'Newtend_Viewer'   Login
@@ -63,20 +66,19 @@ Login
   [Arguments]  @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  initial_tender_data
-## Inicialisation
-  #${prepared_tender_data}=   Add_data_for_GUI_FrontEnds   ${ARGUMENTS[1]}
-  ${INITIAL_TENDER_DATA}=  Add_data_for_GUI_FrontEnds  ${INITIAL_TENDER_DATA}
-  ${INITIAL_TENDER_DATA}=  Update_data_for_Newtend  ${INITIAL_TENDER_DATA}
-  ${items}=         Get From Dictionary   ${INITIAL_TENDER_DATA.data}               items
-  ${title}=         Get From Dictionary   ${INITIAL_TENDER_DATA.data}               title
-  ${description}=   Get From Dictionary   ${INITIAL_TENDER_DATA.data}               description
-  ${budget}=        Get From Dictionary   ${INITIAL_TENDER_DATA.data.value}         amount
-  ${step_rate}=     Get From Dictionary   ${INITIAL_TENDER_DATA.data.minimalStep}   amount
-  ${start_date}=           Get From Dictionary   ${INITIAL_TENDER_DATA.data.tenderPeriod}    startDate
-  ${end_date}=             Get From Dictionary   ${INITIAL_TENDER_DATA.data.tenderPeriod}    endDate
-  ${enquiry_start_date}=   Get From Dictionary   ${INITIAL_TENDER_DATA.data.enquiryPeriod}   startDate
-  ${enquiry_end_date}=     Get From Dictionary   ${INITIAL_TENDER_DATA.data.enquiryPeriod}   endDate
+  ...      ${ARGUMENTS[1]} ==  tender_data
+## Initialisation
+  ${prepared_tender_data}=  Add_data_for_GUI_FrontEnds  ${ARGUMENTS[1]}
+  ${prepared_tender_data}=  Update_data_for_Newtend  ${prepared_tender_data}
+  ${items}=         Get From Dictionary   ${prepared_tender_data.data}               items
+  ${title}=         Get From Dictionary   ${prepared_tender_data.data}               title
+  ${description}=   Get From Dictionary   ${prepared_tender_data.data}               description
+  ${budget}=        Get From Dictionary   ${prepared_tender_data.data.value}         amount
+  ${step_rate}=     Get From Dictionary   ${prepared_tender_data.data.minimalStep}   amount
+  ${start_date}=           Get From Dictionary   ${prepared_tender_data.data.tenderPeriod}    startDate
+  ${end_date}=             Get From Dictionary   ${prepared_tender_data.data.tenderPeriod}    endDate
+  ${enquiry_start_date}=   Get From Dictionary   ${prepared_tender_data.data.enquiryPeriod}   startDate
+  ${enquiry_end_date}=     Get From Dictionary   ${prepared_tender_data.data.enquiryPeriod}   endDate
 
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
   Go To                              ${USERS.users['${username}'].homepage}

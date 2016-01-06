@@ -1,7 +1,8 @@
-*** Setting ***
+*** Settings ***
 Library  Selenium2Screenshots
 Library  String
 Library  DateTime
+Library  netcast_service.py
 
 *** Variables ***
 ${locator.tenderId}                  xpath=//td[./text()='TenderID']/following-sibling::td[1]
@@ -29,10 +30,12 @@ ${locator.questions[0].answer}       xpath=//div[@class = 'answer relative']//di
 *** Keywords ***
 Підготувати клієнт для користувача
   [Arguments]  @{ARGUMENTS}
-  [Documentation]  Відкрити брaузер, створити обєкт api wrapper, тощо
+  [Documentation]  Відкрити браузер, створити об’єкт api wrapper, тощо
   ...      ${ARGUMENTS[0]} ==  username
-  ${url}=  Get Broker Property By Username  ${ARGUMENTS[0]}  url
-  Open Browser  ${url}  ${USERS.users['${ARGUMENTS[0]}'].browser}  alias=${ARGUMENTS[0]}
+  Open Browser
+  ...      ${USERS.users['${ARGUMENTS[0]}'].homepage}
+  ...      ${USERS.users['${ARGUMENTS[0]}'].browser}
+  ...      alias=${ARGUMENTS[0]}
   Set Window Size       @{USERS.users['${ARGUMENTS[0]}'].size}
   Set Window Position   @{USERS.users['${ARGUMENTS[0]}'].position}
   Run Keyword And Ignore Error       Pre Login   ${ARGUMENTS[0]}
@@ -53,7 +56,7 @@ Login
 Pre Login
   [Arguments]  @{ARGUMENTS}
   [Documentation]
-  ...    ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[0]} ==  username
   ${login}=     Get Broker Property By Username  ${ARGUMENTS[0]}  login
   ${password}=  Get Broker Property By Username  ${ARGUMENTS[0]}  password
   Wait Until Page Contains Element  name=siteLogin  10
@@ -233,8 +236,7 @@ Set Multi Ids
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tenderId
   Switch browser   ${ARGUMENTS[0]}
-  ${url}=  Get Broker Property By Username  ${ARGUMENTS[0]}  url
-  Go To  ${url}
+  Go To  ${USERS.users['${ARGUMENTS[0]}'].homepage}
   Wait Until Page Contains            Держзакупівлі.онлайн   10
   Click Element                       xpath=//a[text()='Закупівлі']
   sleep  1

@@ -21,7 +21,8 @@ ${question_id}  0
 Можливість оголосити однопредметний тендер
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   [Documentation]   Створення закупівлі замовником, обовязково має повертати UAID закупівлі (номер тендера),
-  ${TENDER_UAID}=  Викликати для учасника     ${tender_owner}    Створити тендер  ${INITIAL_TENDER_DATA}
+  ${tender_data}=  Підготовка початкових даних
+  ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${tender_data}
   ${LAST_MODIFICATION_DATE}=  Get Current Date
   Set To Dictionary  ${TENDER}   TENDER_UAID             ${TENDER_UAID}
   Set To Dictionary  ${TENDER}   LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
@@ -289,7 +290,7 @@ ${question_id}  0
   [Documentation]
   ...    "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість задати запитання
-  ${resp}=  Викликати для учасника   ${provider}  Задати питання   shouldfail   ${TENDER['TENDER_UAID']}    ${questions[${question_id}]}
+  ${resp}=  Викликати для учасника   ${provider}  Задати питання   shouldfail   ${TENDER['TENDER_UAID']}    ${QUESTIONS[${question_id}]}
 
 Подати цінову пропозицію другим учасником
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію

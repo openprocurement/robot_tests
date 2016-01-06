@@ -1,7 +1,8 @@
-*** Setting ***
+*** Settings ***
 Library  Selenium2Screenshots
 Library  String
 Library  DateTime
+Library  etender_service.py
 
 *** Variables ***
 ${locator.tenderId}                                            jquery=h3
@@ -44,7 +45,7 @@ ${locator.questions[0].answer}                                 xpath=(//div[@tex
 
 Підготувати клієнт для користувача
   [Arguments]  @{ARGUMENTS}
-  [Documentation]  Відкрити брaвзер, створити обєкт api wrapper, тощо
+  [Documentation]  Відкрити браузер, створити об’єкт api wrapper, тощо
   ...      ${ARGUMENTS[0]} ==  username
   Open Browser   ${USERS.users['${ARGUMENTS[0]}'].homepage}   ${USERS.users['${username}'].browser}   alias=${ARGUMENTS[0]}
   Set Window Size   @{USERS.users['${ARGUMENTS[0]}'].size}
@@ -63,8 +64,8 @@ Login
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  tender_data
-  ${INITIAL_TENDER_DATA}=  procuringEntity_name   ${INITIAL_TENDER_DATA}
-  ${tender_data}=   Add_data_for_GUI_FrontEnds   ${ARGUMENTS[1]}
+  ${tender_data}=  Add_data_for_GUI_FrontEnds  ${ARGUMENTS[1]}
+  ${tender_data}=  procuring_entity_name  ${tender_data}
   ${items}=         Get From Dictionary   ${tender_data.data}               items
   ${title}=         Get From Dictionary   ${tender_data.data}               title
   ${description}=   Get From Dictionary   ${tender_data.data}               description
@@ -201,8 +202,7 @@ Set Multi Ids
   ...      ${ARGUMENTS[0]} ==  username
   ...      ${ARGUMENTS[1]} ==  ${TENDER_UAID}
   Switch browser   ${ARGUMENTS[0]}
-  ${url}=  Get Broker Property By Username  ${ARGUMENTS[0]}  url
-  Go To  ${url}
+  Go To  ${USERS.users['${ARGUMENTS[0]}'].homepage}
   Wait Until Page Contains   Прозорі закупівлі    10
   sleep  1
   Input Text  jquery=input[ng-change='searchChange()']  ${ARGUMENTS[1]}
