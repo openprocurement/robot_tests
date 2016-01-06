@@ -180,6 +180,13 @@ def wait_to_date(date_stamp):
     return wait_seconds
 
 
+def merge_dicts(left, right):
+    new = {}
+    new.update(left)
+    new.update(right)
+    return new
+
+
 # GUI Frontends common
 def add_data_for_gui_frontends(tender_data):
     now = datetime.now()
