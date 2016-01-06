@@ -402,7 +402,7 @@ def auction_bid():
             "value": {
                 "amount": 200,
                 "currency": "UAH",
-                "valueAddedTaxIncluded": true
+                "valueAddedTaxIncluded": "true"
             }
         }
     })
