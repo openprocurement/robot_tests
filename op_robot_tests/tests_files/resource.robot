@@ -1,3 +1,3 @@
 *** Variables ***
-${API_HOST_URL}  https://api-sandbox.openprocurement.org
-${api_version}   0.9
+${API_HOST_URL}  https://lb.api-sandbox.openprocurement.org
+${api_version}   0.10
