@@ -32,7 +32,8 @@ setup(name='op_robot_tests',
           'dateutils',
           'pytz',
           'parse',
-          'chromedriver'
+          'chromedriver',
+          'barbecue'
       ],
       entry_points={
           'console_scripts': [
