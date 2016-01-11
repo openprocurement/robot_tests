@@ -405,3 +405,47 @@ def auction_bid():
 
 def test_award_data():
     return munchify({'data': {}})
+
+
+def test_item_data():
+    now = get_now()
+    return  {
+                "description": fake.catch_phrase(),
+                "deliveryDate": {
+                    "endDate": (now + timedelta(days=5)).isoformat()
+                },
+                "deliveryLocation": {
+                    "latitude": 49.8500,
+                    "longitude": 24.0167
+                },
+                "deliveryAddress": {
+                    "countryName": u"Україна",
+                    "countryName_ru": u"Украина",
+                    "countryName_en": "Ukraine",
+                    "postalCode": fake.postalcode(),
+                    "region": u"м. Київ",
+                    "locality": u"м. Київ",
+                    "streetAddress": fake.street_address()
+                },
+                "classification": {
+                    "scheme": u"CPV",
+                    "id": u"44617100-9",
+                    "description": u"Картонки",
+                    "description_ru": u"Большие картонные коробки",
+                    "description_en": u"Cartons"
+                },
+                "additionalClassifications": [
+                    {
+                        "scheme": u"ДКПП",
+                        "id": u"17.21.1",
+                        "description": u"Папір і картон гофровані, паперова й картонна тара"
+                    }
+                ],
+                "unit": {
+                    "name": u"кілограм",
+                    "name_ru": u"килограмм",
+                    "name_en": "kilogram",
+                    "code": u"KGM"
+                },
+                "quantity": fake.pyint()
+            }
