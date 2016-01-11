@@ -282,6 +282,59 @@ def test_tender_data_multiple_lots(intervals):
     return t_data
 
 
+def test_meat_tender_data(tender):
+    item_id = "edd0032574bf4402877ad5f362df225a"
+    tender.data['items'][0].id = item_id
+    tender.data.features = [
+        {
+            "code": "ee3e24bc17234a41bd3e3a04cc28e9c6",
+            "featureOf": "tenderer",
+            "title": "Термін оплати",
+            "description": "Умови відстрочки платежу після поставки товару",
+            "enum": [
+                {
+                    "value": 0.15,
+                    "title": "180 днів та більше"
+                },
+                {
+                    "value": 0.1,
+                    "title": "90-179 днів",
+                },
+                {
+                    "value": 0.05,
+                    "title": "30-89 днів"
+                },
+                {
+                    "value": 0,
+                    "title": "Менше 30 днів"
+                }
+            ]
+        },
+        {
+            "code": "48cfd91612c04125ab406374d7cc8d93",
+            "featureOf": "item",
+            "relatedItem": item_id,
+            "title": "Сорт",
+            "description": "Сорт продукції",
+            "enum": [
+                {
+                    "value": 0.05,
+                    "title": "Вищий"
+                },
+                {
+                    "value": 0.01,
+                    "title": "Перший",
+                },
+                {
+                    "value": 0,
+                    "title": "Другий"
+                }
+            ]
+        }
+    ]
+    return tender
+
+
 def test_question_data():
     return munchify({
         "data": {
@@ -390,6 +443,46 @@ def test_bid_data():
     })
 
 
+def test_bid_data_meat_tender():
+    return munchify({
+        "data": {
+            "tenderers": [
+                {
+                    "address": {
+                        "countryName": "Україна",
+                        "locality": "м. Вінниця",
+                        "postalCode": "21100",
+                        "region": "м. Вінниця",
+                        "streetAddress": fake.street_address()
+                    },
+                    "contactPoint": {
+                        "name": fake.name(),
+                        "telephone": fake.phone_number()
+                    },
+                    "identifier": {
+                        "scheme": u"UA-EDR",
+                        "id": u"{:08d}".format(fake.pyint()),
+                    },
+                    "name": fake.company()
+                }
+            ],
+            "parameters": [
+                {
+                    "code": "ee3e24bc17234a41bd3e3a04cc28e9c6",
+                    "value": fake.random_element(elements=(0.15, 0.1, 0.05, 0))
+                },
+                {
+                    "code": "48cfd91612c04125ab406374d7cc8d93",
+                    "value": fake.random_element(elements=(0.05, 0.01, 0))
+                }
+            ],
+            "value": {
+                "amount": 500
+            }
+        }
+    })
+
+
 def auction_bid():
     return munchify({
         "data": {
@@ -448,3 +541,53 @@ def test_item_data():
                 },
                 "quantity": fake.pyint()
             }
+
+
+def test_invalid_features_data():
+    return [
+      {
+          "code": "ee3e24bc17234a41bd3e3a04cc28e9c6",
+          "featureOf": "tenderer",
+          "title": "Термін оплати",
+          "description": "Умови відстрочки платежу після поставки товару",
+          "enum": [
+              {
+                  "value": 0.35,
+                  "title":"180 днів та більше"
+              },
+              {
+                  "value": 0.1,
+                  "title": "90-179 днів",
+              },
+              {
+                  "value": 0.05,
+                  "title": "30-89 днів"
+              },
+              {
+                  "value": 0,
+                  "title": "Менше 30 днів"
+              }
+          ]
+      },
+      {
+          "code": "48cfd91612c04125ab406374d7cc8d93",
+          "featureOf": "item",
+          "relatedItem": "edd0032574bf4402877ad5f362df225a",
+          "title": "Сорт",
+          "description": "Сорт продукції",
+          "enum":[
+              {
+                  "value": 0.35,
+                  "title": "Вищий"
+              },
+              {
+                  "value": 0.01,
+                  "title": "Перший",
+              },
+              {
+                  "value": 0,
+                  "title": "Другий"
+              }
+          ]
+      }
+]
