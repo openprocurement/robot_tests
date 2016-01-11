@@ -23,6 +23,8 @@ from .initial_data import (
     test_question_answer_data, test_tender_data, test_tender_data_multiple_lots,
 )
 import os
+import calendar
+from barbecue import chef
 
 
 TZ = timezone(os.environ['TZ'] if 'TZ' in os.environ else 'Europe/Kiev')
