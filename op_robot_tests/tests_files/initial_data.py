@@ -112,8 +112,7 @@ def test_tender_data(intervals):
         }
     }
 
-
-def test_tender_data_multiple_lots(intervals):
+def test_tender_data_multiple_items(intervals):
     now = get_now()
     t_data = test_tender_data(intervals)
     t_data.update({
@@ -282,6 +281,29 @@ def test_tender_data_multiple_lots(intervals):
     })
     return t_data
 
+def test_tender_data_multiple_lots(intervals):
+    t_data = test_tender_data_multiple_items(intervals)
+    for i in range(3):
+        t_data['items'][i]['relatedLot'] = "3c8f387879de4c38957402dbdb8b31af"
+    t_data['items'][3]['relatedLot'] = "bcac8d2ceb5f4227b841a2211f5cb646"
+    t_data['lots'] = [
+    {
+      "id": "3c8f387879de4c38957402dbdb8b31af",
+      "title": "Lot #1: Kyiv stationery",
+      "description": "Items for Kyiv office",
+      "value": {"currency": "UAH", "amount": 34000.0, "valueAddedTaxIncluded": "true"},
+      "minimalStep": {"currency": "UAH", "amount": 30.0, "valueAddedTaxIncluded": "true"},
+      "status": "active"
+    }, {
+      "id": "bcac8d2ceb5f4227b841a2211f5cb646",
+      "title": "Lot #2: Lviv stationery",
+      "description": "Items for Lviv office",
+      "value": {"currency": "UAH", "amount": 9000.0, "valueAddedTaxIncluded": "true"},
+      "minimalStep": {"currency": "UAH", "amount": 35.0, "valueAddedTaxIncluded": "true"},
+      "status": "active"
+    }
+    ]
+    return t_data
 
 def test_meat_tender_data(tender):
     item_id = "edd0032574bf4402877ad5f362df225a"
@@ -484,6 +506,48 @@ def test_bid_data_meat_tender():
     })
 
 
+def test_lots_bid_data():
+    return munchify({
+        "data": {
+            "tenderers": [
+                {
+                    "address": {
+                        "countryName": "Україна",
+                        "locality": "м. Вінниця",
+                        "postalCode": "21100",
+                        "region": "м. Вінниця",
+                        "streetAddress": fake.street_address()
+                    },
+                    "contactPoint": {
+                        "name": fake.name(),
+                        "telephone": fake.phone_number()
+                    },
+                    "identifier": {
+                        "scheme": u"UA-EDR",
+                        "id": u"{:08d}".format(fake.pyint()),
+                    },
+                    "name": fake.company()
+                }
+            ],
+            "lotValues": [
+                    {
+                    "value": {"currency": "UAH",
+                              "amount": 1000 + fake.pyfloat(left_digits=3, right_digits=0, positive=True),
+                              "valueAddedTaxIncluded": "true"},
+                    "relatedLot": "3c8f387879de4c38957402dbdb8b31af",
+                    "date": "2015-11-01T12:43:12.482645+02:00"
+                    },
+                    {
+                    "value": {"currency": "UAH",
+                              "amount": 1000 + fake.pyfloat(left_digits=3, right_digits=0, positive=True),
+                              "valueAddedTaxIncluded": "true"},
+                    "relatedLot": "bcac8d2ceb5f4227b841a2211f5cb646",
+                    "date": "2015-11-01T12:43:12.482645+02:00"
+                    }
+            ]
+        }
+    })
+
 def auction_bid():
     return munchify({
         "data": {
@@ -592,3 +656,36 @@ def test_invalid_features_data():
           ]
       }
 ]
+
+
+def test_lot_data():
+    return munchify(
+        {'data':
+            {
+              "description": fake.sentence(nb_words=10, variable_nb_words=True),
+              "title": fake.sentence(nb_words=6, variable_nb_words=True),
+                        "value": {"currency": "UAH",
+                        "amount": fake.pyfloat(left_digits=4, right_digits=1, positive=True),
+                        "valueAddedTaxIncluded": "true"},
+              "minimalStep": {"currency": "UAH", "amount": 30.0, "valueAddedTaxIncluded": "true"},
+              "status": "active"
+            }
+        })
+
+
+def test_lot_document_data(document, lot_id="3c8f387879de4c38957402dbdb8b31af"):
+    lot_document = {"documentOf":"lot", "relatedItem": lot_id}
+    lot_document.update(document.data)
+    return munchify({"data": lot_document})
+
+
+def test_lot_question_data(question, lot_id="3c8f387879de4c38957402dbdb8b31af"):
+    lot_question = {"questionOf":"lot", "relatedItem": lot_id}
+    lot_question.update(question.data)
+    return munchify({"data": lot_question})
+
+
+def test_lot_complaint_data(complaint, lot_id="3c8f387879de4c38957402dbdb8b31af"):
+    lot_complaint = {"complaintOf":"lot", "relatedItem": lot_id}
+    lot_complaint.update(complaint.data)
+    return munchify({"data": lot_complaint})
