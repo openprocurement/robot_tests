@@ -16,7 +16,7 @@ from robot.output.loggerhelper import Message
 from .initial_data import (
     auction_bid, create_fake_doc,
     test_award_data, test_bid_data, test_complaint_data,
-    test_complaint_reply_data, test_question_answer_data,
+    test_complaint_reply_data, test_item_data, test_question_answer_data,
     test_question_data, test_tender_data, test_tender_data_multiple_lots
 )
 from .local_time import get_now, TZ
