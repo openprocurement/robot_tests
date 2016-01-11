@@ -348,3 +348,52 @@ Library  openprocurement_client_helper.py
   ${contents}  ${filename}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_file   ${tender}   ${ARGUMENTS[2]}   ${token}
   log   ${filename}
   [return]   ${contents}  ${filename}
+
+
+Створити лот
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  tender
+  ...      ${ARGUMENTS[2]} ==  lot
+  [Arguments]  @{ARGUMENTS}
+  ${TENDER_LOT}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}   create_lot   ${ARGUMENTS[1]}    ${ARGUMENTS[2]}
+  Log   ${TENDER_LOT}
+  [return]  ${TENDER_LOT}
+
+Змінити лот
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  tender
+  ...      ${ARGUMENTS[2]} ==  lot
+  [Arguments]  @{ARGUMENTS}
+  ${TENDER_LOT}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}   patch_lot   ${ARGUMENTS[1]}    ${ARGUMENTS[2]}
+  Log   ${TENDER_LOT}
+  [return]  ${TENDER_LOT}
+
+Завантажити документ в лот
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  filepath
+  ...      ${ARGUMENTS[2]} ==  tenderUAID
+  ...      ${ARGUMENTS[3]} ==  lot_id
+  [Arguments]  @{ARGUMENTS}
+  log many  @{ARGUMENTS}
+  ${tenderID}=  openprocurement_client.Отримати internal id по UAid  ${ARGUMENTS[0]}   ${ARGUMENTS[2]}
+  ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${tenderID}
+  ${tender}=  set_access_key  ${tender}   ${USERS.users['${ARGUMENTS[0]}'].access_token}
+  ${doc}=  Завантажити документ  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}  ${ARGUMENTS[2]}
+  ${lot_doc}=  test_lot_document_data  ${doc}  ${ARGUMENTS[3]}
+  ${reply}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_document   ${tender}   ${lot_doc}
+  Log object data   ${reply}  reply
+  [return]   ${reply}
+
+Видалити лот
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  tender
+  ...      ${ARGUMENTS[2]} ==  lot
+  [Arguments]  @{ARGUMENTS}
+  log many  @{ARGUMENTS}
+  ${TENDER_LOT}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}   delete_lot   ${ARGUMENTS[1]}    ${ARGUMENTS[2]}
+  Log   ${TENDER_LOT}
+  [return]  ${TENDER_LOT}
