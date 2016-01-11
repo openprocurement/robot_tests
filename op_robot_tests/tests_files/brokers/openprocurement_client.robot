@@ -121,10 +121,9 @@ Library  openprocurement_client_helper.py
   ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
   Отримати тендер   ${ARGUMENTS[0]}    ${internalid}
   @{items}=  Get From Object   ${TENDER_DATA.data}    items
-  ${item}=  get variable value   ${items[1]}
-  Run Keyword And Continue On Failure  Remove From Dictionary  ${item}  id
   Log Many  @{items}
   :FOR    ${INDEX}    IN RANGE    ${ARGUMENTS[2]}
+  \    ${item}=  test_item_data
   \    Append To List  ${items}  ${item}
   Log Many  @{items}
   Set_To_Object    ${TENDER_DATA.data}   items  ${items}
