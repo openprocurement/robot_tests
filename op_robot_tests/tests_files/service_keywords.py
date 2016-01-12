@@ -110,7 +110,7 @@ def prepare_test_tender_data(period_intervals, mode):
     if mode == 'single':
         return munchify({'data': test_tender_data(period_intervals)})
     elif mode == 'multi':
-        return munchify({'data': test_tender_data_multiple_lots(period_intervals)})
+        return munchify({'data': test_tender_data_multiple_items(period_intervals)})
     raise ValueError('Invalid mode for test_tender_data')
 
 

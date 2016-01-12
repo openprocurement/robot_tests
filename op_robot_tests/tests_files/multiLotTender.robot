@@ -22,6 +22,7 @@ ${complaint_id}  1
 Можливість оголосити мультилотовий тендер
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити мультилотовий тендер
   ${tender_data}=  Підготовка початкових даних
+  ${tender_data}=  test_tender_data_multiple_lots  ${tender_data}
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${tender_data}
   ${LAST_MODIFICATION_DATE}=  Get Current Date
   Set To Dictionary  ${TENDER}   TENDER_UAID             ${TENDER_UAID}
