@@ -82,7 +82,7 @@ Get Broker Property By Username
   ${complaint_lot}=  test_lot_complaint_data  ${complaint}
   Append to list   ${COMPLAINTS}   ${complaint}   ${complaint_lot}
   Set Global Variable  @{COMPLAINTS}
-  @{REPLIES} =  Create list
+  @{REPLIES}=  Create list
   ${reply}=  test_complaint_reply_data
   Append to list  ${REPLIES}  ${reply}
   Set Global Variable  @{REPLIES}
