@@ -21,6 +21,7 @@ from .initial_data import (
     test_lot_data, test_lot_document_data, test_lot_complaint_data,
     test_lot_question_data, test_meat_tender_data, test_question_data,
     test_question_answer_data, test_tender_data, test_tender_data_multiple_lots,
+    test_tender_data_multiple_items
 )
 import os
 from barbecue import chef
@@ -116,7 +117,7 @@ def prepare_test_tender_data(period_intervals, mode):
     if mode == 'single':
         return munchify({'data': test_tender_data(period_intervals)})
     elif mode == 'multi':
-        return munchify({'data': test_tender_data_multiple_lots(period_intervals)})
+        return munchify({'data': test_tender_data_multiple_items(period_intervals)})
     raise ValueError('Invalid mode for test_tender_data')
 
 
