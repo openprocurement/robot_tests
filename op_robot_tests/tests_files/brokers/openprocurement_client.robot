@@ -171,6 +171,8 @@ Library  openprocurement_client_helper.py
   ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
   ${complaint}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  _create_tender_resource_item  ${tender}  ${ARGUMENTS[2]}   complaints
+  ${access_token}=  Get Variable Value  ${complaint.access.token}
+  Set To Dictionary  ${USERS.users['${ARGUMENTS[0]}']}   access_token   ${access_token}
   Log object data   ${complaint}  complaint
 
 Порівняти скаргу
