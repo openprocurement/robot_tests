@@ -104,7 +104,7 @@ Get Broker Property By Username
   [Documentation]
   ...      Get ${wait_timeout} for specified user and wait
   ...      until that timeout runs out.
-  ${now}=  Get Current Date
+  ${now}=  Get Current TZdate
   ${delta}=  Subtract Date From Date  ${now}  ${TENDER['LAST_MODIFICATION_DATE']}
   ${timeout_on_wait}=  Get Broker Property By Username  ${username}  timeout_on_wait
   ${wait_timeout}=  Subtract Time From Time  ${timeout_on_wait}  ${delta}

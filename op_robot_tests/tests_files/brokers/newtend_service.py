@@ -1,10 +1,11 @@
 from datetime import datetime
 from iso8601 import parse_date
+from op_robot_tests.tests_files.service_keywords import get_now
 from calendar import monthrange
 
 
 def newtend_date_picker_index(isodate):
-    now = datetime.today()
+    now = get_now()
     date_str = '01' + str(now.month) + str(now.year)
     first_day_of_month = datetime.strptime(date_str, "%d%m%Y")
     mod = first_day_of_month.isoweekday() - 2
