@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -
-from datetime import datetime, timedelta
+from datetime import timedelta
 from dateutil.parser import parse
 from dpath.util import set as xpathset
 from iso8601 import parse_date
 from json import load
 from jsonpath_rw import parse as parse_path
 from munch import fromYAML, Munch, munchify
-from pytz import timezone
 from robot.errors import HandlerExecutionFailed
 from robot.libraries.BuiltIn import BuiltIn
 from robot.output import LOGGER
@@ -20,14 +19,8 @@ from .initial_data import (
     test_complaint_reply_data, test_question_answer_data,
     test_question_data, test_tender_data, test_tender_data_multiple_lots
 )
+from .local_time import get_now, TZ
 import os
-
-
-TZ = timezone(os.environ['TZ'] if 'TZ' in os.environ else 'Europe/Kiev')
-
-
-def get_now():
-    return datetime.now(TZ)
 
 
 def get_date():
@@ -189,7 +182,7 @@ def merge_dicts(left, right):
 
 # GUI Frontends common
 def add_data_for_gui_frontends(tender_data):
-    now = datetime.now()
+    now = get_now()
     # tender_data.data.enquiryPeriod['startDate'] = (now + timedelta(minutes=2)).isoformat()
     tender_data.data.enquiryPeriod['endDate'] = (now + timedelta(minutes=6)).isoformat()
     tender_data.data.tenderPeriod['startDate'] = (now + timedelta(minutes=7)).isoformat()
