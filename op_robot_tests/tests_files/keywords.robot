@@ -141,7 +141,7 @@ Get Broker Property By Username
   ${len_of_items}=   Get Length   ${items}
   :FOR   ${index}    IN RANGE   ${len_of_items}
     \    Log   ${index}
-    \    Звірити поле тендера   ${viewer}  items[${index}].${field}
+    \    Звірити поле тендера  ${viewer}  ${tender_data}  items[${index}].${field}
 
 Звірити дату предметів закупівлі багатопредметного тендера
   [Arguments]  ${username}  ${tender_data}  ${field}
@@ -150,7 +150,7 @@ Get Broker Property By Username
   ${len_of_items}=   Get Length   ${items}
   :FOR   ${index}    IN RANGE   ${len_of_items}
     \    Log   ${index}
-    \    Звірити дату тендера   ${viewer}  items[${index}].${field}
+    \    Звірити дату тендера  ${viewer}  ${tender_data}  items[${index}].${field}
 
 Викликати для учасника
   [Documentation]
