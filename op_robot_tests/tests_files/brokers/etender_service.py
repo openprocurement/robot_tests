@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -
 from iso8601 import parse_date
 
 
