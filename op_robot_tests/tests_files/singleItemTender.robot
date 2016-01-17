@@ -307,8 +307,9 @@ ${question_id}  0
 
 Неможливість побачити цінові пропозиції учасників під час прийому пропозицій
   [Tags]   ${USERS.users['${viewer}'].broker}: Можливість подати цінову пропозицію
-  ${bids}=  Викликати для учасника    ${viewer}   Отримати інформацію із тендера  bids
-  Should Be Equal    ${bids}   ${None}
+  ${bids}=  Викликати для учасника  ${viewer}  Отримати інформацію із тендера  bids
+  ${bool}=  Convert To Boolean  ${bids}
+  Should Be Equal  ${bool}  ${False}
 
 Завантажити документ другим учасником
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість прийняти пропозицію переможця
