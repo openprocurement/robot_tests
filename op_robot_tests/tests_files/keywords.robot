@@ -9,7 +9,9 @@ Library  DebugLibrary
 
 *** Keywords ***
 TestSuiteSetup
-    Завантажуємо дані про користувачів і майданчики
+  Set Selenium Implicit Wait  5 s
+  Set Selenium Timeout  10 s
+  Завантажуємо дані про користувачів і майданчики
 
 Set Suite Variable With Default Value
   [Arguments]  ${suite_var}  ${def_value}
