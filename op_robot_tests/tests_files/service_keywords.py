@@ -53,15 +53,15 @@ def prepare_prom_test_tender_data(period_intervals, mode):
     return munchify({'data': t_data})
 
 
-def compare_date(data1, data2):
-    data1 = parse(data1)
-    data2 = parse(data2)
-    if data1.tzinfo is None:
-        data1 = TZ.localize(data1)
-    if data2.tzinfo is None:
-        data2 = TZ.localize(data2)
+def compare_date(date1, date2):
+    date1 = parse(date1)
+    date2 = parse(date2)
+    if date1.tzinfo is None:
+        date1 = TZ.localize(date1)
+    if date2.tzinfo is None:
+        date2 = TZ.localize(date2)
 
-    delta = (data1 - data2).total_seconds()
+    delta = (date1 - date2).total_seconds()
     if abs(delta) > 60:
         return False
     return True
