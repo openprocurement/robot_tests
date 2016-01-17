@@ -5,7 +5,6 @@ Library  String
 Library  Collections
 Library  Selenium2Library
 Library  DateTime
-Library  Selenium2Screenshots
 Library  DebugLibrary
 
 *** Keywords ***
