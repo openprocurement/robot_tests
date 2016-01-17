@@ -183,15 +183,15 @@ ${question_id}  0
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповідей
   Дочекатись синхронізації з майданчиком    ${viewer}
   Викликати для учасника   ${viewer}   Оновити сторінку з тендером    ${TENDER['TENDER_UAID']}
-  Звірити поле  ${viewer}   questions[${question_id}].title   ${QUESTIONS[${question_id}].data.title}
+  Звірити поле тендера із значенням  ${viewer}  ${QUESTIONS[${question_id}].data.title}  questions[${question_id}].title
 
 Відображення опису анонімного питання без відповіді
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповідей
-  Звірити поле  ${viewer}  questions[${question_id}].description    ${QUESTIONS[${question_id}].data.description}
+  Звірити поле тендера із значенням  ${viewer}  ${QUESTIONS[${question_id}].data.description}  questions[${question_id}].description
 
 Відображення дати анонімного питання без відповіді
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповідей
-  Звірити дату  ${viewer}  questions[${question_id}].date   ${QUESTIONS[${question_id}].data.date}
+  Звірити дату тендера із значенням  ${viewer}  ${QUESTIONS[${question_id}].data.date}  questions[${question_id}].date
 
 Неможливість подати цінову пропозицію до початку періоду подачі пропозицій першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
@@ -216,7 +216,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення відповіді на запитання
   Дочекатись синхронізації з майданчиком    ${viewer}
   Викликати для учасника   ${viewer}   Оновити сторінку з тендером   ${TENDER['TENDER_UAID']}
-  Звірити поле  ${viewer}   questions[${question_id}].answer    ${ANSWERS[${question_id}].data.answer}
+  Звірити поле тендера із значенням  ${viewer}  ${ANSWERS[${question_id}].data.answer}  questions[${question_id}].answer
 
 Подати цінову пропозицію першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
