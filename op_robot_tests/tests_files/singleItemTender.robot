@@ -63,8 +63,7 @@ ${question_id}  0
 
 Відображення tenderID оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
-  ${field_response}=  Викликати для учасника    ${viewer}   Отримати інформацію із тендера  tenderID
-  Should Be Equal   ${TENDER['TENDER_UAID']}   ${field_response}   Майданчик ${USERS.users['${viewer}'].broker}
+  Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}  tenderID
 
 Відображення procuringEntity.name оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
