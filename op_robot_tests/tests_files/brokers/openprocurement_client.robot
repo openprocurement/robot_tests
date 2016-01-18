@@ -1,5 +1,5 @@
 *** Settings ***
-Library  op_robot_tests.tests_files.brokers.openprocurement_client_helper
+Library  openprocurement_client_helper.py
 
 *** Keywords ***
 Отримати internal id по UAid
