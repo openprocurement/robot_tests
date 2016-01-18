@@ -311,15 +311,18 @@ Normal
   Run Keyword And Return  ${keywords_file}.${command}  ${username}  @{arguments}
 
 
-SwitchState
+Require Failure
   [Arguments]  ${username}  ${command}  @{arguments}
+  [Documentation]
+  ...      Sometimes we need to make sure that the given keyword fails.
+  ...
+  ...      This keyword works just like `Run As`, but it passes only
+  ...      if ``command`` with ``arguments`` fails and vice versa.
   Log  ${username}
   Log  ${command}
-  Log Many  @{arguments}
-  Remove From List  ${arguments}  0
-  Log Many  @{arguments}
+  Log Many  ${command}  @{arguments}
   ${keywords_file}=  Get Broker Property By Username  ${username}  keywords_file
-  ${status}  ${value}=  run_keyword_and_ignore_keyword_definitions  ${keywords_file}.${command}  ${username}  @{arguments}
+  ${status}  ${value}=  Run keyword and ignore keyword definitions  ${keywords_file}.${command}  ${username}  @{arguments}
   Run keyword if  '${status}' == 'PASS'  Fail  Користувач ${username} зміг виконати "${command}"
   [return]  ${value}
 
