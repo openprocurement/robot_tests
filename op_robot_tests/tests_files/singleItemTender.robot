@@ -24,9 +24,10 @@ ${question_id}  0
   ${tender_data}=  Підготовка початкових даних
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${tender_data}
   ${LAST_MODIFICATION_DATE}=  Get Current Date
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data  ${tender_data}
   Set To Dictionary  ${TENDER}   TENDER_UAID             ${TENDER_UAID}
   Set To Dictionary  ${TENDER}   LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
-  log  ${TENDER}
+  Log  ${TENDER}
 
 Можливість додати тендерну документацію
   [Tags]    ${USERS.users['${tender_owner}'].broker}: Можливість завантажити документ
@@ -50,15 +51,15 @@ ${question_id}  0
 
 Відображення заголовку оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
-  Звірити поле тендера   ${viewer}  title
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  title
 
 Відображення опису оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
-  Звірити поле тендера   ${viewer}  description
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  description
 
 Відображення бюджету оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
-  Звірити поле тендера   ${viewer}  value.amount
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  value.amount
 
 Відображення tenderID оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
@@ -67,27 +68,27 @@ ${question_id}  0
 
 Відображення procuringEntity.name оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
-  Звірити поле тендера   ${viewer}  procuringEntity.name
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  procuringEntity.name
 
 Відображення початку періоду уточнення оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
-  Звірити дату тендера  ${viewer}  enquiryPeriod.startDate
+  Звірити дату тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  enquiryPeriod.startDate
 
 Відображення закінчення періоду уточнення оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
-  Звірити дату тендера  ${viewer}  enquiryPeriod.endDate
+  Звірити дату тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  enquiryPeriod.endDate
 
 Відображення початку періоду прийому пропозицій оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
-  Звірити дату тендера   ${viewer}  tenderPeriod.startDate
+  Звірити дату тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.startDate
 
 Відображення закінчення періоду прийому пропозицій оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
-  Звірити дату тендера  ${viewer}  tenderPeriod.endDate
+  Звірити дату тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.endDate
 
 Відображення мінімального кроку оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
-  Звірити поле тендера   ${viewer}  minimalStep.amount
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  minimalStep.amount
 
 Можливість редагувати однопредметний тендер
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
@@ -99,75 +100,75 @@ ${question_id}  0
 
 Відображення опису позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[0].description
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].description
 
 Відображення дати доставки позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити дату тендера  ${viewer}  items[0].deliveryDate.endDate
+  Звірити дату тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryDate.endDate
 
 Відображення координат широти доставки позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[0].deliveryLocation.latitude
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryLocation.latitude
 
 Відображення координат довготи доставки позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[0].deliveryLocation.longitude
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryLocation.longitude
 
 Відображення назви нас. пункту доставки позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[0].deliveryAddress.countryName
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.countryName
 
 Відображення пошт. коду доставки позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[0].deliveryAddress.postalCode
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.postalCode
 
 Відображення регіону доставки позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[0].deliveryAddress.region
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.region
 
 Відображення locality адреси доставки позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[0].deliveryAddress.locality
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.locality
 
 Відображення вулиці доставки позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[0].deliveryAddress.streetAddress
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.streetAddress
 
 Відображення схеми класифікації позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[0].classification.scheme
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].classification.scheme
 
 Відображення ідентифікатора класифікації позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[0].classification.id
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].classification.id
 
 Відображення опису класифікації позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[0].classification.description
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].classification.description
 
 Відображення схеми додаткової класифікації позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[0].additionalClassifications[0].scheme
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].additionalClassifications[0].scheme
 
 Відображення ідентифікатора додаткової класифікації позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[0].additionalClassifications[0].id
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].additionalClassifications[0].id
 
 Відображення опису додаткової класифікації позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[0].additionalClassifications[0].description
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].additionalClassifications[0].description
 
 Відображення назви одиниці позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[0].unit.name
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].unit.name
 
 Відображення коду одиниці позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[0].unit.code
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].unit.code
 
 Відображення кількості позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  Звірити поле тендера   ${viewer}  items[0].quantity
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].quantity
 
 #######
 #Відображення анонімного питання без відповідей
@@ -182,15 +183,15 @@ ${question_id}  0
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповідей
   Дочекатись синхронізації з майданчиком    ${viewer}
   Викликати для учасника   ${viewer}   Оновити сторінку з тендером    ${TENDER['TENDER_UAID']}
-  Звірити поле  ${viewer}   questions[${question_id}].title   ${QUESTIONS[${question_id}].data.title}
+  Звірити поле тендера із значенням  ${viewer}  ${QUESTIONS[${question_id}].data.title}  questions[${question_id}].title
 
 Відображення опису анонімного питання без відповіді
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповідей
-  Звірити поле  ${viewer}  questions[${question_id}].description    ${QUESTIONS[${question_id}].data.description}
+  Звірити поле тендера із значенням  ${viewer}  ${QUESTIONS[${question_id}].data.description}  questions[${question_id}].description
 
 Відображення дати анонімного питання без відповіді
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповідей
-  Звірити дату  ${viewer}  questions[${question_id}].date   ${QUESTIONS[${question_id}].data.date}
+  Звірити дату тендера із значенням  ${viewer}  ${QUESTIONS[${question_id}].data.date}  questions[${question_id}].date
 
 Неможливість подати цінову пропозицію до початку періоду подачі пропозицій першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
@@ -215,7 +216,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення відповіді на запитання
   Дочекатись синхронізації з майданчиком    ${viewer}
   Викликати для учасника   ${viewer}   Оновити сторінку з тендером   ${TENDER['TENDER_UAID']}
-  Звірити поле  ${viewer}   questions[${question_id}].answer    ${ANSWERS[${question_id}].data.answer}
+  Звірити поле тендера із значенням  ${viewer}  ${ANSWERS[${question_id}].data.answer}  questions[${question_id}].answer
 
 Подати цінову пропозицію першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію

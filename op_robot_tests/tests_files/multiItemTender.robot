@@ -21,6 +21,7 @@ ${broker}       Quinta
   ${tender_data}=  Підготовка початкових даних
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${tender_data}
   ${LAST_MODIFICATION_DATE}=  Get Current Date
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data  ${tender_data}
   Set To Dictionary  ${TENDER}   TENDER_UAID             ${TENDER_UAID}
   Set To Dictionary  ${TENDER}   LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
   log  ${TENDER}
@@ -32,75 +33,75 @@ ${broker}       Quinta
 
 Відображення опису позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
-  Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  description
+  Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  description
 
 Відображення дати доставки позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
-  Звірити дату предметів закупівлі багатопредметного тендера  ${viewer}  deliveryDate.endDate
+  Звірити дату предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  deliveryDate.endDate
 
 Відображення координат широти доставки позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
-  Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  deliveryLocation.latitude
+  Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  deliveryLocation.latitude
 
 Відображення координат довготи доставки позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
-  Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  deliveryLocation.longitude
+  Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  deliveryLocation.longitude
 
 Відображення назви нас. пункту доставки позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
-  Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  deliveryAddress.countryName
+  Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  deliveryAddress.countryName
 
 Відображення пошт. коду доставки позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
-  Звірити поля предметів закупівлі багатопредметного тендера   ${viewer}  deliveryAddress.postalCode
+  Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  deliveryAddress.postalCode
 
 Відображення регіону доставки позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
-  Звірити поля предметів закупівлі багатопредметного тендера   ${viewer}  deliveryAddress.region
+  Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  deliveryAddress.region
 
 Відображення locality адреси доставки позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
-  Звірити поля предметів закупівлі багатопредметного тендера   ${viewer}  deliveryAddress.locality
+  Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  deliveryAddress.locality
 
 Відображення вулиці доставки позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
-  Звірити поля предметів закупівлі багатопредметного тендера   ${viewer}  deliveryAddress.streetAddress
+  Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  deliveryAddress.streetAddress
 
 Відображення схеми класифікації позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
-  Звірити поля предметів закупівлі багатопредметного тендера   ${viewer}  classification.scheme
+  Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  classification.scheme
 
 Відображення ідентифікатора класифікації позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
-  Звірити поля предметів закупівлі багатопредметного тендера   ${viewer}  classification.id
+  Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  classification.id
 
 Відображення опису класифікації позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
-  Звірити поля предметів закупівлі багатопредметного тендера   ${viewer}  classification.description
+  Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  classification.description
 
 Відображення схеми додаткової класифікації позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
-  Звірити поля предметів закупівлі багатопредметного тендера   ${viewer}  additionalClassifications[0].scheme
+  Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  additionalClassifications[0].scheme
 
 Відображення ідентифікатора додаткової класифікації позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
-  Звірити поля предметів закупівлі багатопредметного тендера   ${viewer}  additionalClassifications[0].id
+  Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  additionalClassifications[0].id
 
 Відображення опису додаткової класифікації позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
-  Звірити поля предметів закупівлі багатопредметного тендера   ${viewer}  additionalClassifications[0].description
+  Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  additionalClassifications[0].description
 
 Відображення назви одиниці позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
-  Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  unit.name
+  Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  unit.name
 
 Відображення коду одиниці позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
-  Звірити поля предметів закупівлі багатопредметного тендера   ${viewer}  unit.code
+  Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  unit.code
 
 Відображення кількості позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
-  Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  quantity
+  Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  quantity
 
 Можливість редагувати багатопредметний тендер
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
