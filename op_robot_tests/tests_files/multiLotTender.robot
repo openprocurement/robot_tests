@@ -129,13 +129,13 @@ ${complaint_id}  1
 
 Неможливість видалення лоту з прив’язаними предметами закупівлі
   [Documentation]
-  ...      "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
+  ...      `Видалити лот` should not pass in this test case.
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ${tender_data}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data}
   ${lot}=  Get Variable Value  ${USERS.users['${tender_owner}'].lotresponses['resp']}
-  Викликати для учасника   ${tender_owner}  Видалити лот  shouldfail   ${tender_data}  ${lot}
+  Require Failure  ${tender_owner}  Видалити лот  ${tender_data}  ${lot}
 
 Можливість видалити позиції закупівлі тендера
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
@@ -270,7 +270,7 @@ ${complaint_id}  1
 
 Неможливість подати цінову пропозицію до початку періоду подачі пропозицій
   [Documentation]
-  ...      "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
+  ...      `Подати цінову пропозицію` should not pass in this test case.
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
@@ -280,13 +280,13 @@ ${complaint_id}  1
   ${bidresponses}=  Create Dictionary
   Set To Dictionary  ${bidresponses}                 bid  ${bid}
   Set To Dictionary  ${USERS.users['${provider}']}   bidresponses  ${bidresponses}
-  ${bid_before_bidperiod_resp}=  Викликати для учасника   ${provider}   Подати цінову пропозицію  shouldfail  ${TENDER['TENDER_UAID']}   ${bid}
+  ${bid_before_bidperiod_resp}=  Require Failure  ${provider}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   bid_before_bidperiod_resp  ${bid_before_bidperiod_resp}
   log   ${USERS.users['${provider}']}
 
 Неможливість подати цінову пропозицію без прив’язки до лоту
   [Documentation]
-  ...      "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
+  ...      `Подати цінову пропозицію` should not pass in this test case.
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
@@ -297,7 +297,7 @@ ${complaint_id}  1
   ${bidresponses}=  Create Dictionary
   Set To Dictionary  ${bidresponses}                 bid  ${bid}
   Set To Dictionary  ${USERS.users['${provider}']}   bidresponses  ${bidresponses}
-  ${no_lot_bid_resp}=  Викликати для учасника   ${provider}   Подати цінову пропозицію  shouldfail  ${TENDER['TENDER_UAID']}   ${bid}
+  ${no_lot_bid_resp}=  Require Failure  ${provider}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   no_lot_bid_resp  ${no_lot_bid_resp}
   log   ${USERS.users['${provider}']}
 
@@ -383,30 +383,30 @@ ${complaint_id}  1
 
 Неможливість змінити цінову пропозицію до 2000 після закінчення прийому пропозицій
   [Documentation]
-  ...      "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
+  ...      `Змінити цінову пропозицію` should not pass in this test case.
   [Tags]   ${USERS.users['${provider1}'].broker}: Неможливість змінити цінову пропозицію до 2000 після закінчення прийому пропозицій
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider1}
   Дочекатись дати закінчення прийому пропозицій  ${provider1}
-  ${failfixbidto2000resp}=  Викликати для учасника   ${provider1}   Змінити цінову пропозицію  shouldfail  ${TENDER['TENDER_UAID']}   lotValues.0.value.amount  2000
+  ${failfixbidto2000resp}=  Require Failure  ${provider1}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  lotValues.0.value.amount  2000
   Set To Dictionary  ${USERS.users['${provider1}'].bidresponses}   failfixbidto2000resp   ${failfixbidto2000resp}
   log  ${failfixbidto2000resp}
 
 Неможливість змінити цінову пропозицію до 1 після закінчення прийому пропозицій
   [Documentation]
-  ...      "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
+  ...      `Змінити цінову пропозицію` should not pass in this test case.
   [Tags]   ${USERS.users['${provider1}'].broker}: Неможливість змінити цінову пропозицію до 1 після закінчення прийому пропозицій
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
-  ${failfixbidto1resp}=  Викликати для учасника   ${provider1}   Змінити цінову пропозицію  shouldfail  ${TENDER['TENDER_UAID']}   lotValues.0.value.amount  1
+  ${failfixbidto1resp}=  Require Failure  ${provider1}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  lotValues.0.value.amount  1
   Set To Dictionary  ${USERS.users['${provider1}'].bidresponses}   failfixbidto1resp   ${failfixbidto1resp}
   log  ${failfixbidto1resp}
 
 Неможливість скасувати цінову пропозицію
   [Documentation]
-  ...      "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
+  ...      `Скасувати цінову пропозицію` should not pass in this test case.
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість скасувати цінову пропозицію
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
-  ${biddingresponse}=  Викликати для учасника   ${provider1}   Скасувати цінову пропозицію  shouldfail   ${TENDER['TENDER_UAID']}   ${USERS.users['${provider1}'].bidresponses['resp']}
+  ${biddingresponse}=  Require Failure  ${provider1}  Скасувати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${USERS.users['${provider1}'].bidresponses['resp']}

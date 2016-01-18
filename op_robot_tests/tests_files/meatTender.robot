@@ -44,14 +44,14 @@ ${broker}       Quinta
 
 Неможливість перевищити ліміт для нецінових критеріїв
   [Documentation]
-  ...      "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
+  ...      `Внести зміни в тендер` should not pass in this test case.
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${invalid_features}=  test_invalid_features_data
-  ${fail}=  Викликати для учасника   ${tender_owner}  Внести зміни в тендер  shouldfail   ${TENDER['TENDER_UAID']}   features   ${invalid_features}
+  ${fail}=  Require Failure  ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  features  ${invalid_features}
   Log   ${fail}
 
 ######
@@ -70,7 +70,7 @@ ${broker}       Quinta
 
 Неможливість подати цінову пропозицію без нецінового показника
   [Documentation]
-  ...      "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
+  ...      `Подати цінову пропозицію` should not pass in this test case.
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
@@ -79,7 +79,7 @@ ${broker}       Quinta
   sleep  90
   ${bid}=  test bid data
   Log  ${bid}
-  ${failbid}=  Викликати для учасника   ${provider}   Подати цінову пропозицію   shouldfail   ${TENDER['TENDER_UAID']}   ${bid}
+  ${failbid}=  Require Failure  ${provider}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}
   log  ${failbid}
 
 

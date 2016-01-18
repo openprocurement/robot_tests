@@ -181,7 +181,7 @@ Cкасувати цінову пропозицію другого учасни�
   ...      ${USERS.users['${tender_owner}'].broker}
   ${no_edit_time}=  add_minutes_to_date  ${USERS.users['${tender_owner}'].tender_data.data.tenderPeriod.endDate}  -6
   Дочекатись дати  ${no_edit_time}
-  Викликати для учасника   ${tender_owner}  Внести зміни в тендер  shouldfail  ${TENDER['TENDER_UAID']}   description     description
+  Require Failure  ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  description  description
 
 Неможливість подати вимогу на умови менше ніж за 10 днів до завершення періоду подання пропозицій
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати вимогу на умови
@@ -199,9 +199,8 @@ Cкасувати цінову пропозицію другого учасни�
 
   ${confrimation_data}=  test_submit_claim_data  ${USERS.users['${provider}']['claim_data']['claim_resp']['data']['id']}
   Log  ${confrimation_data}
-  Викликати для учасника  ${provider}
+  Require Failure  ${provider}
   ...      Подати вимогу
-  ...      shouldfail
   ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${provider}']['claim_data2']['claim_resp']}
   ...      ${confrimation_data}
@@ -322,9 +321,8 @@ Cкасувати цінову пропозицію другого учасни�
 
   ${escalation_data}=  test_escalate_claim_data  ${USERS.users['${provider}']['claim_data4']['claim_resp']['data']['id']}
   Log  ${escalation_data}
-  Викликати для учасника  ${tender_owner}
+  Require Failure  ${tender_owner}
   ...      Перетворити вимогу в скаргу
-  ...      shouldfail
   ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${provider}']['claim_data4']['claim_resp']}
   ...      ${escalation_data}

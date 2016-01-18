@@ -464,9 +464,8 @@ Resource           resource.robot
 Неможливість укласти угоду для закупівлі поки не пройде stand-still період
   ${CONTR_NUM}=  Set variable  0
   Set suite variable  ${CONTR_NUM}
-  Викликати для учасника  ${tender_owner}
+  Require Failure  ${tender_owner}
   ...      Підтвердити підписання контракту
-  ...      shouldfail
   ...      ${TENDER['TENDER_UAID']}
   ...      ${CONTR_NUM}
 

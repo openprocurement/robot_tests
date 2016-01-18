@@ -316,7 +316,7 @@ ${question_id}  0
   ${bidresponses}=  Create Dictionary
   Set To Dictionary  ${bidresponses}   bid   ${bid}
   Set To Dictionary  ${USERS.users['${provider}']}   bidresponses   ${bidresponses}
-  ${bid_before_bidperiod_resp}=  Викликати для учасника   ${provider}   Подати цінову пропозицію  shouldfail  ${TENDER['TENDER_UAID']}   ${bid}
+  ${bid_before_bidperiod_resp}=  Require Failure  ${provider}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   bid_before_bidperiod_resp  ${bid_before_bidperiod_resp}
   log   ${USERS.users['${provider}']}
 
@@ -429,12 +429,12 @@ ${question_id}  0
 
 Неможливість задати запитання після закінчення періоду уточнень
   [Documentation]
-  ...      "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
+  ...      `Задати питання` should not pass in this test case.
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість задати запитання
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ${question}=  Підготовка даних для запитання
-  Викликати для учасника   ${provider}   Задати питання  shouldfail  ${TENDER['TENDER_UAID']}   ${question}
+  Require Failure  ${provider}  Задати питання  ${TENDER['TENDER_UAID']}  ${question}
 
 Можливість подати цінову пропозицію другим учасником
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
@@ -479,7 +479,7 @@ ${question_id}  0
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   Дочекатись дати закінчення прийому пропозицій  ${provider1}
-  ${failfixbidto50000resp}=  Викликати для учасника   ${provider1}   Змінити цінову пропозицію  shouldfail  ${TENDER['TENDER_UAID']}   value.amount  50000
+  ${failfixbidto50000resp}=  Require Failure  ${provider1}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  value.amount  50000
   Set To Dictionary  ${USERS.users['${provider1}'].bidresponses}   failfixbidto50000resp   ${failfixbidto50000resp}
   log  ${failfixbidto50000resp}
 
@@ -487,7 +487,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${provider1}'].broker}: Неможливість змінити цінову пропозицію до 1 після закінчення прийому пропозицій
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
-  ${failfixbidto1resp}=  Викликати для учасника   ${provider1}   Змінити цінову пропозицію  shouldfail  ${TENDER['TENDER_UAID']}   value.amount  1
+  ${failfixbidto1resp}=  Require Failure  ${provider1}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  value.amount  1
   Set To Dictionary  ${USERS.users['${provider1}'].bidresponses}   failfixbidto1resp   ${failfixbidto1resp}
   log  ${failfixbidto1resp}
 
@@ -495,14 +495,14 @@ ${question_id}  0
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість скасувати цінову пропозицію
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
-  ${biddingresponse}=  Викликати для учасника   ${provider1}   Скасувати цінову пропозицію  shouldfail   ${TENDER['TENDER_UAID']}   ${USERS.users['${provider1}'].bidresponses['resp']}
+  ${biddingresponse}=  Require Failure  ${provider1}  Скасувати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${USERS.users['${provider1}'].bidresponses['resp']}
 
 Неможливість завантажити документ другим учасником після закінчення прийому пропозицій
   [Tags]   ${USERS.users['${provider1}'].broker}: Неможливість завантажити документ першим учасником після закінчення прийому пропозицій
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ${filepath}=   create_fake_doc
-  ${bid_doc_upload_fail}=  Викликати для учасника   ${provider1}   Завантажити документ в ставку   shouldfail   ${filepath}   ${TENDER['TENDER_UAID']}
+  ${bid_doc_upload_fail}=  Require Failure  ${provider1}  Завантажити документ в ставку  ${filepath}  ${TENDER['TENDER_UAID']}
   Set To Dictionary  ${USERS.users['${provider1}'].bidresponses}   bid_doc_upload_fail   ${bid_doc_upload_fail}
 
 Неможливість змінити існуючу документацію цінової пропозиції після закінчення прийому пропозицій
@@ -512,7 +512,7 @@ ${question_id}  0
   ${filepath}=   create_fake_doc
   ${bidid}=  Get Variable Value  ${USERS.users['${provider1}'].bidresponses['resp'].data.id}
   ${docid}=  Get Variable Value  ${USERS.users['${provider1}'].bidresponses['bid_doc_upload']['upload_response'].data.id}
-  ${bid_doc_modified_failed}=  Викликати для учасника   ${provider1}   Змінити документ в ставці  shouldfail  ${filepath}  ${bidid}  ${docid}
+  ${bid_doc_modified_failed}=  Require Failure  ${provider1}  Змінити документ в ставці  ${filepath}  ${bidid}  ${docid}
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   bid_doc_modified_failed   ${bid_doc_modified_failed}
 
 Можливість вичитати посилання на аукціон для глядача
