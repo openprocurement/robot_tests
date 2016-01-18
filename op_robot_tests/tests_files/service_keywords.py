@@ -23,8 +23,8 @@ from .local_time import get_now, TZ
 import os
 
 
-def get_date():
-    return get_now().isoformat()
+def get_current_tzdate():
+    return get_now().strftime('%Y-%m-%d %H:%M:%S.%f')
 
 
 def get_file_contents(path):
