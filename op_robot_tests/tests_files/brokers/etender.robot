@@ -192,6 +192,10 @@ Set Multi Ids
 
 Клацнути і дочекатися
   [Arguments]  ${click_locator}  ${wanted_locator}  ${timeout}
+  [Documentation]
+  ...      click_locator: Where to click
+  ...      wanted_locator: What are we waiting for
+  ...      timeout: Timeout
   Click Link  ${click_locator}
   Wait Until Page Contains Element  ${wanted_locator}  ${timeout}
 
