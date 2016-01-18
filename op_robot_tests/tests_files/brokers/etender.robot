@@ -54,8 +54,10 @@ ${locator.questions[0].answer}                                 xpath=(//div[@tex
 
 Login
   Wait Until Page Contains Element   id=inputUsername   10
+  Sleep  1
   Input text   id=inputUsername      ${USERS.users['${username}'].login}
   Wait Until Page Contains Element   id=inputPassword   10
+  Sleep  1
   Input text   id=inputPassword      ${USERS.users['${username}'].password}
   Click Button   id=btn_submit
 
@@ -98,8 +100,8 @@ Login
   Wait Until Page Contains          Мої закупівлі   10
   Sleep  1
   Click Element                     xpath=//a[contains(@class, 'ng-binding')][./text()='Мої закупівлі']
+  Sleep  5
   Wait Until Page Contains Element  xpath=//a[contains(@class, 'btn btn-info')]
-  Sleep  1
   Click Element                     xpath=//a[contains(@class, 'btn btn-info')]
   Wait Until Page Contains Element  id=title
   Input text    id=title                  ${title}
