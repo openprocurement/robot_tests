@@ -312,18 +312,14 @@ Library  openprocurement_client_helper.py
   Log object data   ${reply}  reply
   [return]   ${reply}
 
-Отримати пропозиції
-  [Documentation]
-  ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  tender_uid
-  ...      ${ARGUMENTS[2]} ==  bid_id
-  ...      ${ARGUMENTS[3]} ==  token
-  [Arguments]  @{ARGUMENTS}
-  ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
-  ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
-  ${bids}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_bid    ${tender}   ${ARGUMENTS[2]}  ${ARGUMENTS[3]}
-  Log  ${bids}
-  [return]   ${bids}
+Отримати пропозицію
+  [Arguments]  ${username}  ${tender_uid}
+  ${internalid}=  Отримати internal id по UAid  ${username}  ${tender_uid}
+  ${bid_id}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['resp'].data.id}
+  ${token}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['resp'].access.token}
+  ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
+  ${bid}=  Call Method  ${USERS.users['${username}'].client}  get_bid  ${tender}  ${bid_id}  ${token}
+  [return]  ${bid}
 
 Отримати документ
   [Documentation]
