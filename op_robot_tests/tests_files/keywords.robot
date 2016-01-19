@@ -5,12 +5,13 @@ Library  String
 Library  Collections
 Library  Selenium2Library
 Library  DateTime
-Library  Selenium2Screenshots
 Library  DebugLibrary
 
 *** Keywords ***
 TestSuiteSetup
-    Завантажуємо дані про користувачів і майданчики
+  Set Selenium Implicit Wait  5 s
+  Set Selenium Timeout  10 s
+  Завантажуємо дані про користувачів і майданчики
 
 Set Suite Variable With Default Value
   [Arguments]  ${suite_var}  ${def_value}
@@ -103,7 +104,7 @@ Get Broker Property By Username
   [Documentation]
   ...      Get ${wait_timeout} for specified user and wait
   ...      until that timeout runs out.
-  ${now}=  Get Current Date
+  ${now}=  Get Current TZdate
   ${delta}=  Subtract Date From Date  ${now}  ${TENDER['LAST_MODIFICATION_DATE']}
   ${timeout_on_wait}=  Get Broker Property By Username  ${username}  timeout_on_wait
   ${wait_timeout}=  Subtract Time From Time  ${timeout_on_wait}  ${delta}

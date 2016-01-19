@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -
-from datetime import datetime, timedelta
+from datetime import timedelta
 from dateutil.parser import parse
 from dpath.util import set as xpathset
 from iso8601 import parse_date
 from json import load
 from jsonpath_rw import parse as parse_path
 from munch import fromYAML, Munch, munchify
-from pytz import timezone
 from robot.errors import HandlerExecutionFailed
 from robot.libraries.BuiltIn import BuiltIn
 from robot.output import LOGGER
@@ -20,18 +19,12 @@ from .initial_data import (
     test_complaint_reply_data, test_question_answer_data,
     test_question_data, test_tender_data, test_tender_data_multiple_lots
 )
+from .local_time import get_now, TZ
 import os
 
 
-TZ = timezone(os.environ['TZ'] if 'TZ' in os.environ else 'Europe/Kiev')
-
-
-def get_now():
-    return datetime.now(TZ)
-
-
-def get_date():
-    return get_now().isoformat()
+def get_current_tzdate():
+    return get_now().strftime('%Y-%m-%d %H:%M:%S.%f')
 
 
 def get_file_contents(path):
@@ -53,15 +46,15 @@ def prepare_prom_test_tender_data(period_intervals, mode):
     return munchify({'data': t_data})
 
 
-def compare_date(data1, data2):
-    data1 = parse(data1)
-    data2 = parse(data2)
-    if data1.tzinfo is None:
-        data1 = TZ.localize(data1)
-    if data2.tzinfo is None:
-        data2 = TZ.localize(data2)
+def compare_date(date1, date2):
+    date1 = parse(date1)
+    date2 = parse(date2)
+    if date1.tzinfo is None:
+        date1 = TZ.localize(date1)
+    if date2.tzinfo is None:
+        date2 = TZ.localize(date2)
 
-    delta = (data1 - data2).total_seconds()
+    delta = (date1 - date2).total_seconds()
     if abs(delta) > 60:
         return False
     return True
@@ -189,7 +182,7 @@ def merge_dicts(left, right):
 
 # GUI Frontends common
 def add_data_for_gui_frontends(tender_data):
-    now = datetime.now()
+    now = get_now()
     # tender_data.data.enquiryPeriod['startDate'] = (now + timedelta(minutes=2)).isoformat()
     tender_data.data.enquiryPeriod['endDate'] = (now + timedelta(minutes=6)).isoformat()
     tender_data.data.tenderPeriod['startDate'] = (now + timedelta(minutes=7)).isoformat()

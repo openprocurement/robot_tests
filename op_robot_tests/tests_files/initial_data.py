@@ -1,20 +1,13 @@
 # -*- coding: utf-8 -
-from datetime import datetime, timedelta
+from datetime import timedelta
 from faker import Factory
 from munch import munchify
-from pytz import timezone
 from tempfile import NamedTemporaryFile
-import os
+from .local_time import get_now
 
 fake = Factory.create('uk_UA')
 fake_ru = Factory.create('ru')
 fake_en = Factory.create()
-
-TZ = timezone(os.environ['TZ'] if 'TZ' in os.environ else 'Europe/Kiev')
-
-
-def get_now():
-    return datetime.now(TZ)
 
 
 def create_fake_doc():

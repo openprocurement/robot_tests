@@ -21,7 +21,7 @@ ${broker}       Quinta
   [Documentation]   Створення закупівлі замовником, обовязково має повертати UAID закупівлі (номер тендера),
   ${tender_data}=  Підготовка початкових даних
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${tender_data}
-  ${LAST_MODIFICATION_DATE}=  Get Current Date
+  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
   Set To Dictionary  ${TENDER}   TENDER_UAID             ${TENDER_UAID}
   Set To Dictionary  ${TENDER}   LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
   log  ${TENDER}
@@ -35,7 +35,7 @@ ${broker}       Quinta
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати скаргу на умови
   [Documentation]    Користувач  ${USERS.users['${provider}'].broker}  намагається подати скаргу на умови оголошеної  закупівлі
   Викликати для учасника   ${provider}   Подати скаргу    ${TENDER['TENDER_UAID']}   ${COMPLAINTS[0]}
-  ${LAST_MODIFICATION_DATE}=  Get Current Date
+  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
   Set Global Variable   ${LAST_MODIFICATION_DATE}
 
 Можливість побачити скаргу користувачем
@@ -56,24 +56,24 @@ ${broker}       Quinta
 Можливість відкинути скаргу на умови
   [Tags]    ${USERS.users['${tender_owner}'].broker}: Можливість відкинути скаргу на умови
   Викликати для учасника   ${provider}   Подати скаргу    ${TENDER['TENDER_UAID']}   ${COMPLAINTS[0]}
-  ${LAST_MODIFICATION_DATE}=  Get Current Date
+  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
   Set Global Variable   ${LAST_MODIFICATION_DATE}
   Викликати для учасника   ${viewer}   Оновити сторінку з тендером   ${TENDER['TENDER_UAID']}
   Set To Dictionary  ${COMPLAINTS[0].data}   status   invalid
   Викликати для учасника   ${tender_owner}   Обробити скаргу    ${TENDER['TENDER_UAID']}  1  ${COMPLAINTS[0]}
   log many   ${COMPLAINTS[0]}
-  ${LAST_MODIFICATION_DATE}=  Get Current Date
+  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
   Set Global Variable   ${LAST_MODIFICATION_DATE}
   Викликати для учасника   ${viewer}   Оновити сторінку з тендером   ${TENDER['TENDER_UAID']}
 
 Можливість задовільнити скаргу на умови
   [Tags]    ${USERS.users['${provider}'].broker}: Можливість відповісти на запитання
   Викликати для учасника   ${provider}   Подати скаргу    ${TENDER['TENDER_UAID']}   ${COMPLAINTS[0]}
-  ${LAST_MODIFICATION_DATE}=  Get Current Date
+  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
   Set Global Variable   ${LAST_MODIFICATION_DATE}
   Викликати для учасника   ${viewer}   Оновити сторінку з тендером   ${TENDER['TENDER_UAID']}
   Set To Dictionary  ${COMPLAINTS[0].data}   status   resolved
   Викликати для учасника   ${tender_owner}   Обробити скаргу    ${TENDER['TENDER_UAID']}  2  ${COMPLAINTS[0]}
   log many   ${COMPLAINTS[0]}
-  ${LAST_MODIFICATION_DATE}=  Get Current Date
+  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
   Set Global Variable   ${LAST_MODIFICATION_DATE}

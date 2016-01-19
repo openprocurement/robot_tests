@@ -23,7 +23,7 @@ ${question_id}  0
   [Documentation]   Створення закупівлі замовником, обовязково має повертати UAID закупівлі (номер тендера),
   ${tender_data}=  Підготовка початкових даних
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${tender_data}
-  ${LAST_MODIFICATION_DATE}=  Get Current Date
+  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
   Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data  ${tender_data}
   Set To Dictionary  ${TENDER}   TENDER_UAID             ${TENDER_UAID}
   Set To Dictionary  ${TENDER}   LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
@@ -63,8 +63,7 @@ ${question_id}  0
 
 Відображення tenderID оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
-  ${field_response}=  Викликати для учасника    ${viewer}   Отримати інформацію із тендера  tenderID
-  Should Be Equal   ${TENDER['TENDER_UAID']}   ${field_response}   Майданчик ${USERS.users['${viewer}'].broker}
+  Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}  tenderID
 
 Відображення procuringEntity.name оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
@@ -176,7 +175,7 @@ ${question_id}  0
 Задати питання
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість задати запитання
   Викликати для учасника   ${provider}   Задати питання  ${TENDER['TENDER_UAID']}   ${QUESTIONS[${question_id}]}
-  ${now}=  Get Current Date
+  ${now}=  Get Current TZdate
   Set To Dictionary  ${QUESTIONS[${question_id}].data}   date   ${now}
 
 Відображення заголовку анонімного питання без відповіді
@@ -209,7 +208,7 @@ ${question_id}  0
 Відповісти на запитання
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість відповісти на запитання
   Викликати для учасника   ${tender_owner}   Відповісти на питання    ${TENDER['TENDER_UAID']}  0  ${ANSWERS[0]}
-  ${now}=  Get Current Date
+  ${now}=  Get Current TZdate
   Set To Dictionary  ${ANSWERS[${question_id}].data}   date   ${now}
 
 Відображення відповіді на запитання
@@ -307,8 +306,9 @@ ${question_id}  0
 
 Неможливість побачити цінові пропозиції учасників під час прийому пропозицій
   [Tags]   ${USERS.users['${viewer}'].broker}: Можливість подати цінову пропозицію
-  ${bids}=  Викликати для учасника    ${viewer}   Отримати інформацію із тендера  bids
-  Should Be Equal    ${bids}   ${None}
+  ${bids}=  Викликати для учасника  ${viewer}  Отримати інформацію із тендера  bids
+  ${bool}=  Convert To Boolean  ${bids}
+  Should Be Equal  ${bool}  ${False}
 
 Завантажити документ другим учасником
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість прийняти пропозицію переможця
