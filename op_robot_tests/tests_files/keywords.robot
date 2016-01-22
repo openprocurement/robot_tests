@@ -96,7 +96,10 @@ Get Broker Property By Username
   [return]  ${tender_data}
 
 Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
-  Import Resource  ${CURDIR}/brokers/${keywords_file}.robot
+  ${bundled_st}=  Run Keyword And Return Status  Import Resource  ${CURDIR}/brokers/${keywords_file}.robot
+  ${external_st}=  Run Keyword And Return Status  Import Resource  ${CURDIR}/../../src/robot_tests.broker.${keywords_file}/${keywords_file}.robot
+  Should Be True  ${bundled_st} or ${external_st}
+  Should Not Be True  ${bundled_st} and ${external_st}
 
 ##################################################################################
 Дочекатись синхронізації з майданчиком
