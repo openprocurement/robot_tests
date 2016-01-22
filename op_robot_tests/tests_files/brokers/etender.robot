@@ -109,20 +109,20 @@ Login
   Input text    id=value                  ${budget}
   Click Element                     xpath=//div[contains(@class, 'form-group col-sm-6')]//input[@type='checkbox']
   Input text    id=minimalStep            ${step_rate}
-  Input text    id=itemsDescription       ${items_description}
-  Input text    id=itemsQuantity          ${quantity}
-  Input text    name=delStartDate         ${deliveryDate}
+  Input text    id=itemsDescription0      ${items_description}
+  Input text    id=itemsQuantity0         ${quantity}
+  Input text    name=delStartDate0        ${deliveryDate}
   Sleep  2
-  Input text    xpath=//input[@ng-model='data.items[0].deliveryDate.endDate']         ${deliveryDate}
-  Input text    name=latitude             ${latitude}
-  Input text    name=longitude            ${longitude}
+  Input text    name=delEndDate0          ${deliveryDate}
+#  Input text    name=latitude             ${latitude}
+#  Input text    name=longitude            ${longitude}
   Click Element   xpath=//select[@name='region']//option[@label='Київська']
   Sleep  2
   Click Element   xpath=//select[@name='city']//option[@label='Київ']
   Input text    name=addressStr   ${streetAddress}
   Input text    name=postIndex    ${postalCode}
-  Wait Until Page Contains Element    xpath=//select[@name="itemsUnit"]/option[@value='kilogram']
-  Click Element  xpath=//select[@name="itemsUnit"]/option[@value='kilogram']
+  Wait Until Page Contains Element  xpath=//select[@name="itemsUnit0"]/option[@value='kilogram']
+  Click Element  xpath=//select[@name="itemsUnit0"]/option[@value='kilogram']
   Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//input[@name='enqPEndDate']   ${enquiry_end_date}
   Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//div[contains(@class, 'col-sm-2')]//input[@ng-model='data.enquiryPeriod.endDate']   ${enquiry_end_time}
   Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//input[@name='startDate']   ${start_date}
@@ -130,14 +130,14 @@ Login
   Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//input[@name='endDate']   ${end_date}
   Input text    xpath=//div[contains(@class, 'form-group col-sm-8')]//div[contains(@class, 'col-sm-2')]//input[@ng-model='data.tenderPeriod.endDate']   ${end_time}
   Sleep  2
-  Click Element   xpath=//div[contains(@class, 'col-sm-2')]//input[@data-target='#classification']
+  Click Element  xpath=//input[starts-with(@ng-click, 'openClassificationModal')]
   Sleep  1
-  Input text      xpath=//div[contains(@class, 'modal-content')]//input[@ng-model='searchstring']   ${cpv}
+  Input text     xpath=//div[contains(@class, 'modal-content')]//input[@ng-model='searchstring']  ${cpv}
+  Wait Until Element Is Visible  xpath=//td[contains(., '${cpv}')]
   Sleep  2
-  Wait Until Page Contains    ${cpv}
-  Click Element   xpath=//td[contains(., '${cpv}')]
+  Click Element  xpath=//td[contains(., '${cpv}')]
   Sleep  1
-  Click Element   xpath=//div[contains(@class, 'modal-content')]//button[@ng-click='choose()']
+  Click Element  xpath=//div[@id='classification']//button[starts-with(@ng-click, 'choose(')]
   Sleep  1
   Додати предмет   ${items[0]}   0
   Run Keyword if   '${mode}' == 'multi'   Додати багато предметів   items
@@ -171,14 +171,14 @@ Set Multi Ids
   ${dkpp_desc}=     Get From Dictionary   ${ARGUMENTS[0].additionalClassifications[0]}   description
   ${dkpp_id}=       Get From Dictionary   ${ARGUMENTS[0].additionalClassifications[0]}   id
   Sleep  2
-  Click Element                      xpath=(//div[contains(@class, 'col-sm-2')]//input[@data-target='#addClassification'])[${ARGUMENTS[1]}+1]
+  Click Element                      xpath=(//input[starts-with(@ng-click, 'openAddClassificationModal')])[${ARGUMENTS[1]}+1]
   Wait Until Element Is Visible      xpath=//div[contains(@id,'addClassification')]
-  Sleep  2
-  Input text                         xpath=//div[contains(@class, 'modal fade ng-scope in')]//input[@ng-model='searchstring']    ${dkpp_desc}
-  Wait Until Page Contains   ${dkpp_id}
   Sleep  1
-  Click Element   xpath=//td[contains(., '${dkpp_id}')]
-  Click Element                      xpath=//div[contains(@class, 'modal fade ng-scope in')]//button[@ng-click='choose()']
+  Input text                         xpath=//div[contains(@class, 'modal fade ng-scope in')]//input[@ng-model='searchstring']    ${dkpp_desc}
+  Wait Until Element Is Visible      xpath=//td[contains(., '${dkpp_id}')]
+  Sleep  2
+  Click Element                      xpath=//td[contains(., '${dkpp_id}')]
+  Click Element                      xpath=//div[@id='addClassification']//button[starts-with(@ng-click, 'choose(')]
   Sleep  2
 
 Додати багато предметів
