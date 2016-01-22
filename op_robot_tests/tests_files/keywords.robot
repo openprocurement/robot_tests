@@ -145,7 +145,6 @@ Get Broker Property By Username
   [Return]  ${claim}
 
 
-
 Підготовка даних для подання скарги
   [Arguments]  ${lot}=${False}
   ${complaint}=  test_complaint_data  ${lot}
@@ -187,8 +186,22 @@ Get Broker Property By Username
 
 
 Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
+  [Documentation]
+  ...      Load broker's driver (keyword library).
+  ...
+  ...      `Import Resource` is called twice:
+  ...
+  ...      1) It tries to read from  ``brokers/`` directory
+  ...      (located next to ``keywords.robot``).
+  ...      This is an old feature which will be removed in the future.
+  ...
+  ...      2) It looks for a given filename in ``sys.path``
+  ...      (``PYTHONPATH`` environment variable).
+  ...
+  ...      This keyword will fail if ``keywords_file`` was found
+  ...      in both locations.
   ${bundled_st}=  Run Keyword And Return Status  Import Resource  ${CURDIR}${/}brokers${/}${keywords_file}.robot
-  ${external_st}=  Run Keyword And Return Status  Import Resource  ${CURDIR}${/}..${/}..${/}src${/}robot_tests.broker.${keywords_file}${/}${keywords_file}.robot
+  ${external_st}=  Run Keyword And Return Status  Import Resource  ${keywords_file}.robot
   Run Keyword If  ${bundled_st} == ${external_st} == ${False}  Fail  Resource file ${keywords_file}.robot not found
   Run Keyword If  ${bundled_st} == ${external_st} == ${True}  Fail  Resource file ${keywords_file}.robot found in both brokers${/} and src${/}
 
