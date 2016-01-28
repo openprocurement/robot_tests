@@ -71,6 +71,9 @@ users:
         position: [0, 0]
         size:     [600, 800]
     Newtend_Owner:
+    # Users are going to be refactored
+    # Home pages should be changed to dev23.newtend.com/opc/tenders
+    # Login procedure should be refactored
         broker:   Newtend
         username: Newtendtest
         homepage: "http://openprocurement:test@dev23.newtend.com/"
