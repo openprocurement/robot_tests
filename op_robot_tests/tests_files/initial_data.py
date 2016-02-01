@@ -33,7 +33,7 @@ def test_tender_data(intervals):
             "name_en": fake_en.company(),
             "identifier": {
                 "scheme": u"UA-EDR",
-                "id": u"0000{}".format(fake.pyint()),
+                "id": u"{:08d}".format(fake.pyint()),
                 "uri": fake.image_url(width=None, height=None)
             },
             "address": {
@@ -302,7 +302,7 @@ def test_question_data():
                 },
                 "identifier": {
                     "scheme": u"UA-EDR",
-                    "id": u"0000{}".format(fake.pyint()),
+                    "id": u"{:08d}".format(fake.pyint()),
                     "uri": fake.image_url(width=None, height=None)
                 },
                 "name": fake.company()
@@ -340,7 +340,7 @@ def test_complaint_data():
                 },
                 "identifier": {
                     "scheme": u"UA-EDR",
-                    "id": u"0000{}".format(fake.pyint()),
+                    "id": u"{:08d}".format(fake.pyint()),
                     "uri": fake.image_url(width=None, height=None)
                 },
                 "name": fake.company()
@@ -379,7 +379,7 @@ def test_bid_data():
                     },
                     "identifier": {
                         "scheme": u"UA-EDR",
-                        "id": u"0000{}".format(fake.pyint()),
+                        "id": u"{:08d}".format(fake.pyint()),
                     },
                     "name": fake.company()
                 }
