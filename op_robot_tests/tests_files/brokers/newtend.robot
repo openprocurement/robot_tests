@@ -5,11 +5,11 @@ Library  DateTime
 Library  newtend_service.py
 
 *** Variables ***
-${locator.title}                     xpath=//div[@ng-bind="tender.title"]
-${locator.description}               xpath=//div[@ng-bind="tender.description"]
+${locator.title}                     id=tender-title        # xpath=//div[@ng-bind="tender.title"]
+${locator.description}               id=tender-description        # xpath=//div[@ng-bind="tender.description"]
 ${locator.edit.description}          name=tenderDescription
-${locator.value.amount}              xpath=//div[@ng-bind="tender.value.amount"]
-${locator.minimalStep.amount}        xpath=//div[@ng-bind="tender.minimalStep.amount"]
+${locator.value.amount}              id=budget        # xpath=//div[@ng-bind="tender.value.amount"]
+${locator.minimalStep.amount}        id=step        # xpath=//div[@ng-bind="tender.minimalStep.amount"]
 ${locator.tenderId}                  xpath=//a[@class="ng-binding ng-scope"]
 ${locator.procuringEntity.name}      xpath=//div[@ng-bind="tender.procuringEntity.name"]
 ${locator.enquiryPeriod.StartDate}   id=start-date-qualification
@@ -52,14 +52,15 @@ ${locator.QUESTIONS[0].date}          xpath=//span[@class="date ng-binding"]
   Run Keyword If   '${username}' != 'Newtend_Viewer'   Login
 
 Login
-  Wait Until Page Contains Element   id=indexpage_login   20
-  Click Element   id=indexpage_login
+  Wait Until Page Contains Element   id=login-dz    20        # indexpage_login   20
+  Click Element   id=login-dz       # indexpage_login (old vrsion)
   Wait Until Page Contains Element   id=password   20
   Input text   id=login-email   ${USERS.users['${username}'].login}
   Input text   id=password   ${USERS.users['${username}'].password}
   Click Element   id=submit-login-button
-  Wait Until Page Contains Element   xpath =//a[@class="close-modal-dialog"]  20
-  Go to   ${USERS.users['${ARGUMENTS[0]}'].homepage}
+#  New login path moves user exectly to Government part of Newtend
+#  Wait Until Page Contains Element   xpath =//a[@class="close-modal-dialog"]  20
+#  Go to   ${USERS.users['${ARGUMENTS[0]}'].homepage}
 #  Wait Until Page Contains Element   xpath=//div[@class="introjs-overlay"]   20
 
 Створити тендер
