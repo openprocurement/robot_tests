@@ -90,8 +90,10 @@ Library  openprocurement_client_helper.py
   ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
   Отримати тендер   ${ARGUMENTS[0]}   ${internalid}
   Set_To_Object  ${TENDER_DATA.data}   ${ARGUMENTS[2]}   ${ARGUMENTS[3]}
+  Remove From Dictionary  ${TENDER_DATA.data}  enquiryPeriod
   ${TENDER_DATA}=  set_access_key  ${TENDER_DATA}  ${USERS.users['${ARGUMENTS[0]}'].access_token}
   ${TENDER_DATA}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_tender  ${TENDER_DATA}
+  Log  ${TENDER_DATA}
   Set Global Variable  ${TENDER_DATA}
 
 

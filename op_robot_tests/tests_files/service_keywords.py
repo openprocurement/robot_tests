@@ -21,7 +21,7 @@ from .initial_data import (
     test_lots_bid_data, test_meat_tender_data, test_question_answer_data,
     test_question_data, test_supplier_data, test_tender_data,
     test_tender_data_limited, test_tender_data_multiple_items,
-    test_tender_data_multiple_lots
+    test_tender_data_multiple_lots, test_open_ua_tender_data
 )
 from .local_time import get_now, TZ
 import os
@@ -30,6 +30,9 @@ from barbecue import chef
 
 def get_current_tzdate():
     return get_now().strftime('%Y-%m-%d %H:%M:%S.%f')
+
+def get_future_date(date, minutes):
+    return (parse_date(date) + timedelta(minutes=int(minutes))).isoformat()
 
 
 def get_file_contents(path):

@@ -787,3 +787,15 @@ def test_lot_complaint_data(complaint, lot_id="3c8f387879de4c38957402dbdb8b31af"
     lot_complaint = {"complaintOf": "lot", "relatedItem": lot_id}
     lot_complaint.update(complaint.data)
     return munchify({"data": lot_complaint})
+
+
+def test_open_ua_tender_data(t_data):
+    now = get_now()
+    t_data['data']['procurementMethodType'] = 'aboveThresholdUA'
+    t_data['data']['procurementMethodDetails'] = 'quick, accelerator=1440'
+    t_data['data']["tenderPeriod"] = {
+        "startDate": (now).isoformat(),
+        "endDate": (now + timedelta(minutes=15)).isoformat()
+    }
+    del t_data['data']["enquiryPeriod"]
+    return t_data
