@@ -77,6 +77,9 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uid}  ${fieldname}  ${fieldvalue}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
   Set_To_Object  ${tender.data}   ${fieldname}   ${fieldvalue}
+  ${procurementMethodType}=  Get From Object  ${tender.data}  procurementMethodType
+  Run Keyword If  '${procurementMethodType}' == 'aboveThresholdUA'
+  ...      Remove From Dictionary  ${tender.data}  enquiryPeriod
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
   Set_To_Object   ${USERS.users['${username}'].tender_data}   ${fieldname}   ${fieldvalue}
