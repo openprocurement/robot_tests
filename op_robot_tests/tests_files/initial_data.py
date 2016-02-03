@@ -20,7 +20,7 @@ def create_fake_doc():
 
 def test_tender_data(intervals):
     now = get_now()
-    return {
+    t_data = {
         "title": u"[ТЕСТУВАННЯ] " + fake.catch_phrase(),
         "mode": "test",
         "submissionMethodDetails": "quick",
@@ -99,18 +99,17 @@ def test_tender_data(intervals):
                 },
                 "quantity": fake.pyint()
             }
-        ],
-        "enquiryPeriod": {
-            "startDate": (now).isoformat(),
-            "endDate": (now + timedelta(minutes=(
-                intervals['enquiry']))).isoformat()
-        },
-        "tenderPeriod": {
-            "startDate": (now + timedelta(minutes=2)).isoformat(),
-            "endDate": (now + timedelta(minutes=(
-                intervals['tender']))).isoformat()
-        }
+        ]
     }
+    period_dict = {}
+    inc_dt = now
+    for period_name in ("enquiry", "tender"):
+        period_dict[period_name + "Period"] = {}
+        for i, j in zip(range(2), ("start", "end")):
+            inc_dt += timedelta(minutes=intervals[period_name][i])
+            period_dict[period_name + "Period"][j + "Date"] = inc_dt.isoformat()
+    t_data.update(period_dict)
+    return t_data
 
 
 def test_tender_data_multiple_lots(intervals):
