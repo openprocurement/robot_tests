@@ -4,10 +4,6 @@ Default:
     intervals:
         enquiry:        11
         tender:         31
-        auction:        0
-        qualification:  0
-        award:          0
-        complaint:      0
     timeout_on_wait: 300
 Quinta:
 #    intervals:
