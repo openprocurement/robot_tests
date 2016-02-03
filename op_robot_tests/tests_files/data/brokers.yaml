@@ -2,13 +2,21 @@ Default:
     # These values are used by default unless a
     # specific broker entry overrides them.
     intervals:
-        enquiry:        11
-        tender:         31
+        enquiry:
+            - 0  # Delay before period starts (for startDate)
+            - 11 # Duration of period (for endDate)
+        tender:
+            - 0
+            - 31
     timeout_on_wait: 300
 Quinta:
 #    intervals:
-#        enquiry:        2
-#        tender:         5
+#        enquiry:
+#            - 0
+#            - 2
+#        tender:
+#            - 0
+#            - 5
     keywords_file: openprocurement_client
     roles:
         tender_owner:   Tender_Owner
@@ -40,8 +48,12 @@ Newtend:
         viewer:         Newtend_Viewer
 Prom:
 #    intervals:
-#        enquiry:        5
-#        tender:         31
+#        enquiry:
+#            - 0
+#            - 5
+#        tender:
+#            - 0
+#            - 31
     keywords_file: prom
     roles:
         tender_owner:   Prom_Owner
