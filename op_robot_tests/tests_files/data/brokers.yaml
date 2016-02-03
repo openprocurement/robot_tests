@@ -3,16 +3,16 @@ Default:
     # specific broker entry overrides them.
     intervals:
         enquiry:        11
-        tender:         18
+        tender:         31
         auction:        0
         qualification:  0
         award:          0
         complaint:      0
     timeout_on_wait: 300
 Quinta:
-    intervals:
-        enquiry:        2
-        tender:         5
+#    intervals:
+#        enquiry:        2
+#        tender:         5
     keywords_file: openprocurement_client
     roles:
         tender_owner:   Tender_Owner
@@ -43,9 +43,9 @@ Newtend:
         provider:       Newtend_Provider1
         viewer:         Newtend_Viewer
 Prom:
-    intervals:
-        enquiry:        5
-        tender:         31
+#    intervals:
+#        enquiry:        5
+#        tender:         31
     keywords_file: prom
     roles:
         tender_owner:   Prom_Owner
