@@ -441,6 +441,15 @@ Library  openprocurement_client_helper.py
   [Return]  ${tender}
 
 
+Модифікувати закупівлю
+  [Arguments]  ${username}
+  ${tender}=  Викликати для учасника  ${username}  Отримати тендер [modified]
+  ${data}=  modify_tender  ${tender['data']['id']}  ${tender['access']['token']}
+  Log  ${data}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${data}
+  Log  ${reply}
+
+
 Додати постачальника
   [Arguments]  ${username}
   ${tender}=  Викликати для учасника  ${username}  Отримати тендер [modified]
