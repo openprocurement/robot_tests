@@ -353,6 +353,18 @@ Library  openprocurement_client_helper.py
   log   ${filename}
   [return]   ${contents}  ${filename}
 
+Модифікувати закупівлю
+  [Arguments]  ${username}   ${tenderUAID}
+  Log  ${username}
+  Log  ${tenderUAID}
+  ${tenderID}=  openprocurement_client.Отримати internal id по UAid  ${username}   ${tenderUAID}
+  ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${tenderID}
+  ${tender}=  set_access_key  ${tender}   ${USERS.users['${username}'].access_token}
+  ${data}=  modificate_tender  ${tender['data']['id']}  ${tender['access']['token']}
+  log  ${data}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${data}
+  log  ${tender}
+  [return]   ${reply}
 
 Створити лот
   [Documentation]
@@ -417,7 +429,6 @@ Library  openprocurement_client_helper.py
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${tenderID}
   ${tender}=  set_access_key  ${tender}   ${USERS.users['${username}'].access_token}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_award  ${tender}  ${supplier_data}
-  Log  ${reply}
   [return]   ${reply}
 
 
@@ -432,7 +443,6 @@ Library  openprocurement_client_helper.py
   ${award_data}=  Confirm supplier  ${tender['data']['awards'][0]['id']}
   log  ${award_data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_award  ${tender}  ${award_data}
-  Log object data   ${reply}  reply
   [return]   ${reply}
 
 
@@ -471,7 +481,6 @@ Library  openprocurement_client_helper.py
   ${data}=  change_cancellation_document_field  description  test_description
   log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_cancellation_document  ${tender}  ${data}
-  Log  ${reply}
   [return]   ${reply}
 
 Завантажити нову версію документа до запиту на скасування
@@ -480,7 +489,6 @@ Library  openprocurement_client_helper.py
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
   ${tender}=  set_access_key  ${tender}   ${USERS.users['${username}'].access_token}
   ${response}=  Call Method  ${USERS.users['${username}'].client}  update_cancellation_document  ${path}  ${tender}   ${tender['data']['cancellations'][0]['id']}   ${tender['data']['cancellations'][0]['documents'][0]['id']}
-  log  ${response}
   ${uploaded_file} =  Create Dictionary   filepath  ${path}   upload_response  ${response}
   Log  ${uploaded_file}
   [return]  ${uploaded_file}
@@ -495,7 +503,6 @@ Library  openprocurement_client_helper.py
   ${data}=  Confirm cancellation  ${tender['data']['cancellations'][0]['id']}
   log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_cancellation  ${tender}  ${data}
-  Log object data   ${reply}  reply
   [return]   ${reply}
 
 Підтвердити підписання контракту
@@ -508,5 +515,4 @@ Library  openprocurement_client_helper.py
   ${data}=  confirm contract  ${tender['data']['contracts'][0]['id']}
   log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract  ${tender}  ${data}
-  Log object data   ${reply}  reply
   [return]   ${reply}

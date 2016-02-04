@@ -27,6 +27,9 @@ ${broker}       Quinta
   log  ${TENDER}
   log  ${tender_data}
 
+Можливість модифікації закупівлі
+  ${tender_modification_response}=  Викликати для учасника  ${tender_owner}  Модифікувати закупівлю  ${TENDER['TENDER_UAID']}
+  log  ${tender_modification_response}
 Пошук прямої закупівлі по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
   Дочекатись синхронізації з майданчиком    ${viewer}

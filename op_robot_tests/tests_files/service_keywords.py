@@ -230,6 +230,9 @@ def confirm_contract(contract_id):
     }
     return data
 
+def modificate_tender(tender_id, access_token):
+    data = {"access": {"token": access_token}, "data": {"id": tender_id, "items": [{"unit": {"code": "MON",  "name": "month" }, "quantity": 9}]}}
+    return data
 # GUI Frontends common
 def add_data_for_gui_frontends(tender_data):
     now = get_now()
