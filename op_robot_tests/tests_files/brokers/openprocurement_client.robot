@@ -448,7 +448,7 @@ Library  openprocurement_client_helper.py
 
 
 Завантажити документацію до запиту на скасування
-  [Arguments]  ${username}  ${path}  ${tenderid}  ${cancellationid}
+  [Arguments]  ${username}  ${path}  ${tenderid}
   log  ${username}
   log  ${path}
   log  ${tenderid}
@@ -492,8 +492,8 @@ Library  openprocurement_client_helper.py
   ${tenderID}=  openprocurement_client.Отримати internal id по UAid  ${username}   ${tenderUAID}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${tenderID}
   ${tender}=  set_access_key  ${tender}   ${USERS.users['${username}'].access_token}
-  ${data}=  Confirm cancellation  ${tender_data_local['data']['cancellations'][0]['id']}
-  log  ${cancellation_confirmation_data}
+  ${data}=  Confirm cancellation  ${tender['data']['cancellations'][0]['id']}
+  log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_cancellation  ${tender}  ${data}
   Log object data   ${reply}  reply
   [return]   ${reply}
@@ -505,7 +505,7 @@ Library  openprocurement_client_helper.py
   ${tenderID}=  openprocurement_client.Отримати internal id по UAid  ${username}   ${tenderUAID}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${tenderID}
   ${tender}=  set_access_key  ${tender}   ${USERS.users['${username}'].access_token}
-  ${data}=  confirm contract  ${tender_data_local['data']['contracts'][0]['id']}
+  ${data}=  confirm contract  ${tender['data']['contracts'][0]['id']}
   log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract  ${tender}  ${data}
   Log object data   ${reply}  reply

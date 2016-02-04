@@ -55,7 +55,7 @@ ${broker}       Quinta
   log  ${contract_confirmation_response}
 
 Можливість сформувати запит на скасування
-  ${cancellation_response}=  Викликати для учасника  ${tender_owner}   Додати запит на скасування   ${cancel_data}  ${TENDER['TENDER_UAID']}
+  ${cancellation_response}=  Викликати для учасника  ${tender_owner}   Додати запит на скасування    ${TENDER['TENDER_UAID']}
   log  ${cancellation_response}
   Set To Dictionary  ${USERS.users['${tender_owner}']}   cancellation_response_field  ${cancellation_response}
   log  ${USERS.users['${tender_owner}']['cancellation_response_field']}
