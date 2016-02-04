@@ -13,7 +13,7 @@ ${PASSWORD}     1234
 
 *** Keywords ***
 Підготувати дані для оголошення тендера
-  ${INITIAL_TENDER_DATA}=  prepare_prom_test_tender_data
+  ${INITIAL_TENDER_DATA}=  prepare_test_tender_data
   [return]   ${INITIAL_TENDER_DATA}
 
 Підготувати клієнт для користувача

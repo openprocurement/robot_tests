@@ -41,11 +41,6 @@ def change_state(arguments):
         return "pass"
 
 
-def prepare_prom_test_tender_data(period_intervals, mode):
-    t_data = prepare_test_tender_data(period_intervals, mode)
-    return munchify({'data': t_data})
-
-
 def compare_date(date1, date2):
     date1 = parse(date1)
     date2 = parse(date2)
