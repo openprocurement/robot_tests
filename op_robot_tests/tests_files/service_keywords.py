@@ -19,7 +19,8 @@ from .initial_data import (
     test_invalid_features_data, test_item_data, test_lot_complaint_data,
     test_lot_data, test_lot_document_data, test_lot_question_data,
     test_lots_bid_data, test_meat_tender_data, test_question_answer_data,
-    test_question_data, test_tender_data, test_tender_data_multiple_items,
+    test_question_data, test_supplier_data, test_tender_data,
+    test_tender_data_limited, test_tender_data_multiple_items,
     test_tender_data_multiple_lots
 )
 from .local_time import get_now, TZ
@@ -106,7 +107,13 @@ def prepare_test_tender_data(period_intervals, mode):
         return munchify({'data': test_tender_data(period_intervals)})
     elif mode == 'multi':
         return munchify({'data': test_tender_data_multiple_items(period_intervals)})
+    elif mode == 'limited':
+        return munchify({'data': test_tender_data_limited(period_intervals)})
     raise ValueError('Invalid mode for test_tender_data')
+
+
+def add_test_supplier_data():
+    return test_supplier_data()
 
 
 def run_keyword_and_ignore_keyword_definitions(name, *args):
@@ -148,6 +155,7 @@ def set_access_key(tender, access_token):
 
 def set_to_object(obj, attribute, value):
     xpathset(obj, attribute.replace('.', '/'), value)
+    log_object_data(obj)
     return obj
 
 
@@ -178,6 +186,50 @@ def merge_dicts(left, right):
     new.update(right)
     return new
 
+
+def cancel_tender(cancellation_reason):
+    data = {
+    'data': {
+    'reason': cancellation_reason
+    }
+    }
+    return data
+
+
+def confirm_supplier(supplier_id):
+    data = {
+    "data": {
+    "status": "active",
+    "id": supplier_id }
+    }
+    return data
+
+def change_cancellation_document_field(key, value):
+    data = {
+    "data": {
+    key: value
+    }
+    }
+    return data
+
+
+def confirm_cancellation(cancellation_id):
+    data = {
+    "data": {
+    "status": "active",
+    "id": cancellation_id
+    }
+    }
+    return data
+
+def confirm_contract(contract_id):
+    data = {
+    "data": {
+    "id": contract_id,
+    "status": "active"
+    }
+    }
+    return data
 
 # GUI Frontends common
 def add_data_for_gui_frontends(tender_data):
