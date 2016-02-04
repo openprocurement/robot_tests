@@ -44,7 +44,6 @@ ${broker}       Quinta
   Log  ${USERS.users['${tender_owner}']}
 
 Можливість зареєструвати і підтвердити постачальника
-
   ${award_response}=  Викликати для учасника  ${tender_owner}   Додати постачальника  ${TENDER['TENDER_UAID']}
   Log  ${award_response}
   ${award_confirmation_response}=  Викликати для учасника  ${tender_owner}   Підтвердити постачальника  ${TENDER['TENDER_UAID']}
@@ -52,95 +51,32 @@ ${broker}       Quinta
 
 
 Можливість укласти угоду
-  ${tender_data_local}=  Викликати для учасника   ${viewer}   Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
-  log  ${tender_data_local}
-  ${contract_confirmation_data}=  confirm contract  ${tender_data_local['data']['contracts'][0]['id']}
-  log  ${contract_confirmation_data}
-  ${contract_confirmation_response}=  Викликати для учасника  ${tender_owner}  Підтвердити підписання контракту  shouldfail  ${contract_confirmation_data}  ${TENDER['TENDER_UAID']}
+  ${contract_confirmation_response}=  Викликати для учасника  ${tender_owner}  Підтвердити підписання контракту  shouldfail   ${TENDER['TENDER_UAID']}
   log  ${contract_confirmation_response}
 
 Можливість сформувати запит на скасування
-  ${cancel_data}=  Cancel tender  prost :))
-  log  ${cancel_data}
   ${cancellation_response}=  Викликати для учасника  ${tender_owner}   Додати запит на скасування   ${cancel_data}  ${TENDER['TENDER_UAID']}
   log  ${cancellation_response}
   Set To Dictionary  ${USERS.users['${tender_owner}']}   cancellation_response_field  ${cancellation_response}
   log  ${USERS.users['${tender_owner}']['cancellation_response_field']}
 
 Можливість додати документацію до запиту на скасування
-  ${tender_data_local}=  Викликати для учасника   ${viewer}   Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
-  Log  ${tender_data_local}
   ${filepath}=   create_fake_doc
-  ${doc_upload_reply}=  Викликати для учасника   ${tender_owner}   Завантажити документацію до запиту на скасування  ${filepath}  ${TENDER['TENDER_UAID']}  ${tender_data_local['data']['cancellations'][0]['id']}
+  ${doc_upload_reply}=  Викликати для учасника   ${tender_owner}   Завантажити документацію до запиту на скасування  ${filepath}  ${TENDER['TENDER_UAID']}
   log  ${doc_upload_reply}
   ${file_upload_process_data}=  Create Dictionary   filepath=${filepath}  doc_upload_reply=${doc_upload_reply}
   log  ${file_upload_process_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}   file_upload_process_data   ${file_upload_process_data}
 
 Можливість змінити опис процедури і інші поля
-  ${tender_data_local}=  Викликати для учасника   ${viewer}   Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
-  Log  ${tender_data_local}
-  ${document_changed_data}=  change_cancellation_document_field  description  test_description
-  log  ${document_changed_data}
-  ${cancellation_document_updated_data}=  Викликати для учасника  ${tender_owner}  Змінити опис документа в скасуванні  ${document_changed_data}  ${TENDER['TENDER_UAID']}
+  ${cancellation_document_updated_data}=  Викликати для учасника  ${tender_owner}  Змінити опис документа в скасуванні   ${TENDER['TENDER_UAID']}
   log  ${cancellation_document_updated_data}
 
 Можливість завантажити нову версію документа до запиту на скасування
-  ${tender_data_local}=  Викликати для учасника   ${viewer}   Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
-  Log  ${tender_data_local}
   ${filepath}=   create_fake_doc
-  ${doc_upload_reply}=  Викликати для учасника   ${tender_owner}  Завантажити нову версію документа до запиту на скасування  ${filepath}  ${tender_data_local['data']['cancellations'][0]['id']}  ${tender_data_local['data']['cancellations'][0]['documents'][0]['id']}
+  ${doc_upload_reply}=  Викликати для учасника   ${tender_owner}  Завантажити нову версію документа до запиту на скасування  ${filepath}
+  log  ${doc_upload_reply}
 
 Можливість активувати скасування закупівлі
-  ${tender_data_local}=  Викликати для учасника   ${viewer}   Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
-  Log  ${tender_data_local}
-  ${cancellation_confirmation_data}=  Confirm cancellation  ${tender_data_local['data']['cancellations'][0]['id']}
-  log  ${cancellation_confirmation_data}
-  ${cancellation_confirmation_response}=  Викликати для учасника  ${tender_owner}  Підтвердити скасування закупівлі    ${cancellation_confirmation_data}   ${TENDER['TENDER_UAID']}
+  ${cancellation_confirmation_response}=  Викликати для учасника  ${tender_owner}  Підтвердити скасування закупівлі    ${TENDER['TENDER_UAID']}
   log  ${cancellation_confirmation_response}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-***НЕ ПОТРІБНО НА ДАНИЙ МОМЕНТ***
-
-
-
-

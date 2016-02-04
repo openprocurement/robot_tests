@@ -155,7 +155,6 @@ def set_access_key(tender, access_token):
 
 def set_to_object(obj, attribute, value):
     xpathset(obj, attribute.replace('.', '/'), value)
-    log_object_data(obj)
     return obj
 
 

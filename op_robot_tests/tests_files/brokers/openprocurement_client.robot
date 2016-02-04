@@ -437,107 +437,76 @@ Library  openprocurement_client_helper.py
 
 
 Додати запит на скасування
-  [Documentation]
-  ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  cancelation- data
-  ...      ${ARGUMENTS[2]} ==  tenderUAID
-  [Arguments]  @{ARGUMENTS}
-  log  ${ARGUMENTS[0]}
-  log  ${ARGUMENTS[1]}
-  log  ${ARGUMENTS[2]}
-  ${tenderID}=  openprocurement_client.Отримати internal id по UAid  ${ARGUMENTS[0]}   ${ARGUMENTS[2]}
-  ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${tenderID}
-  ${tender}=  set_access_key  ${tender}   ${USERS.users['${ARGUMENTS[0]}'].access_token}
-  ${reply}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_cancellation  ${tender}  ${ARGUMENTS[1]}
-  Log object data   ${reply}  reply
+  [Arguments]  ${username}  ${tenderUAID}
+  ${tenderID}=  openprocurement_client.Отримати internal id по UAid  ${username}   ${tenderUAID}
+  ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${tenderID}
+  ${tender}=  set_access_key  ${tender}   ${USERS.users['${username}'].access_token}
+  ${cancel_data}=  Cancel tender  prost :))
+  log  ${cancel_data}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_cancellation  ${tender}  ${cancel_data}
   [return]   ${reply}
 
 
 Завантажити документацію до запиту на скасування
-  [Documentation]
-  ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  path
-  ...      ${ARGUMENTS[2]} ==  tenderid
   [Arguments]  ${username}  ${path}  ${tenderid}  ${cancellationid}
   log  ${username}
   log  ${path}
   log  ${tenderid}
-  log  ${cancellationid}
   ${internalid}=  Отримати internal id по UAid  ${username}  ${tenderid}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
-  log  ${USERS.users}
-  log  ${USERS.users['${username}']}
-  log  ${USERS.users['${username}'].cancellation_response_field}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
-  log  ${tender}
-  ${response}=  Call Method  ${USERS.users['${username}'].client}  upload_cancellation_document  ${path}  ${tender}  ${cancellationid}
-  ${uploaded_file} =  Create Dictionary   filepath  ${path}   upload_response  ${response}
+  ${response}=  Call Method  ${USERS.users['${username}'].client}  upload_cancellation_document  ${path}  ${tender}  ${tender['data']['cancellations'][0]['id']}
   log  ${response}
-  Log object data   ${uploaded_file}
+  ${uploaded_file} =  Create Dictionary   filepath  ${path}   upload_response  ${response}
   [return]  ${uploaded_file}
 
 
 Змінити опис документа в скасуванні
-  [Documentation]
-  ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  data
-  ...      ${ARGUMENTS[2]} ==  tenderUAID
-  [Arguments]  @{ARGUMENTS}
-  [Arguments]  ${username}  ${data}  ${tenderUAID}
+  [Arguments]  ${username}   ${tenderUAID}
   Log  ${username}
-  Log  ${data}
   Log  ${tenderUAID}
   ${tenderID}=  openprocurement_client.Отримати internal id по UAid  ${username}   ${tenderUAID}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${tenderID}
   ${tender}=  set_access_key  ${tender}   ${USERS.users['${username}'].access_token}
-  log  ${tender}
-  log  ${tender['data']['id']}
-  log  ${tender['data']['cancellations'][0]['id']}
-  log  ${tender['data']['cancellations'][0]['documents'][0]['id']}
+  ${data}=  change_cancellation_document_field  description  test_description
   log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_cancellation_document  ${tender}  ${data}
   Log  ${reply}
   [return]   ${reply}
 
 Завантажити нову версію документа до запиту на скасування
-  [Documentation]
-  ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  path
-  ...      ${ARGUMENTS[2]} ==  bidid
-  ...      ${ARGUMENTS[3]} ==  docid
-  [Arguments]  ${username}  ${path}  ${cancellation_id}  ${document_id}
+  [Arguments]  ${username}  ${path}
   ${internalid}=  Отримати internal id по UAid  ${username}  ${TENDER['TENDER_UAID']}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
-  log  ${tender}
   ${tender}=  set_access_key  ${tender}   ${USERS.users['${username}'].access_token}
-  log  ${tender}
-  ${response}=  Call Method  ${USERS.users['${username}'].client}  update_cancellation_document  ${path}  ${tender}   ${cancellation_id}   ${document_id}
+  ${response}=  Call Method  ${USERS.users['${username}'].client}  update_cancellation_document  ${path}  ${tender}   ${tender['data']['cancellations'][0]['id']}   ${tender['data']['cancellations'][0]['documents'][0]['id']}
   log  ${response}
   ${uploaded_file} =  Create Dictionary   filepath  ${path}   upload_response  ${response}
-  Log object data   ${uploaded_file}
-  Log  ${tender}
+  Log  ${uploaded_file}
   [return]  ${uploaded_file}
 
 Підтвердити скасування закупівлі
-  [Arguments]  ${username}  ${data}  ${tenderUAID}
+  [Arguments]  ${username}   ${tenderUAID}
   log  ${username}
-  log  ${data}
   log  ${tenderUAID}
   ${tenderID}=  openprocurement_client.Отримати internal id по UAid  ${username}   ${tenderUAID}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${tenderID}
   ${tender}=  set_access_key  ${tender}   ${USERS.users['${username}'].access_token}
+  ${data}=  Confirm cancellation  ${tender_data_local['data']['cancellations'][0]['id']}
+  log  ${cancellation_confirmation_data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_cancellation  ${tender}  ${data}
   Log object data   ${reply}  reply
   [return]   ${reply}
 
 Підтвердити підписання контракту
-  [Arguments]  ${username}  ${data}  ${tenderUAID}
+  [Arguments]  ${username}  ${tenderUAID}
   log  ${username}
-  log  ${data}
   log  ${tenderUAID}
   ${tenderID}=  openprocurement_client.Отримати internal id по UAid  ${username}   ${tenderUAID}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${tenderID}
   ${tender}=  set_access_key  ${tender}   ${USERS.users['${username}'].access_token}
+  ${data}=  confirm contract  ${tender_data_local['data']['contracts'][0]['id']}
+  log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract  ${tender}  ${data}
   Log object data   ${reply}  reply
   [return]   ${reply}
