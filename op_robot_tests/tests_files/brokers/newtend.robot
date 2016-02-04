@@ -19,11 +19,11 @@ ${locator.tenderPeriod.endDate}      id=end-date-registration
 ${locator.items[0].deliveryAddress}                             id=deliveryAddress
 ${locator.items[0].deliveryDate.endDate}                        id=end-date-delivery
 ${locator.items[0].description}                                 xpath=//div[@ng-bind="item.description"]
-${locator.items[0].classification.scheme}                       id=classifier
+${locator.items[0].classification.scheme}                       id=classifier10     # changed from None to 10
 ${locator.items[0].classification.scheme.title}                 xpath=//label[contains(., "Классификатор CPV")]
-${locator.items[0].additional_classification[0].scheme}         id=classifier2
+${locator.items[0].additional_classification[0].scheme}         id=classifier20     # changed from 2 to 20
 ${locator.items[0].additional_classification[0].scheme.title}   xpath=//label[@for="classifier2"]
-${locator.items[0].quantity}                                    id=quantity
+${locator.items[0].quantity}                                    id=quantity0        # changed from None to 0
 ${locator.items[0].unit.name}                                   xpath=//span[@class="unit ng-binding"]
 ${locator.edit_tender}     xpath=//button[@ng-if="actions.can_edit_tender"]
 ${locator.edit.add_item}   xpath=//a[@class="icon-black plus-black remove-field ng-scope"]
