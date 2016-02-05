@@ -121,10 +121,9 @@ Library  openprocurement_client_helper.py
   ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
   Отримати тендер   ${ARGUMENTS[0]}    ${internalid}
   @{items}=  Get From Object   ${TENDER_DATA.data}    items
-  ${item}=  get variable value   ${items[1]}
-  Run Keyword And Continue On Failure  Remove From Dictionary  ${item}  id
   Log Many  @{items}
   :FOR    ${INDEX}    IN RANGE    ${ARGUMENTS[2]}
+  \    ${item}=  test_item_data
   \    Append To List  ${items}  ${item}
   Log Many  @{items}
   Set_To_Object    ${TENDER_DATA.data}   items  ${items}
@@ -349,3 +348,57 @@ Library  openprocurement_client_helper.py
   ${contents}  ${filename}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_file   ${tender}   ${ARGUMENTS[2]}   ${token}
   log   ${filename}
   [return]   ${contents}  ${filename}
+
+
+Створити лот
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  tender
+  ...      ${ARGUMENTS[2]} ==  lot
+  [Arguments]  @{ARGUMENTS}
+  log many  @{ARGUMENTS}
+  ${tender}=  set_access_key  ${ARGUMENTS[1]}  ${USERS.users['${ARGUMENTS[0]}'].access_token}
+  ${tender_lot}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}   create_lot   ${tender}    ${ARGUMENTS[2]}
+  Log   ${tender_lot}
+  [return]  ${tender_lot}
+
+Змінити лот
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  tender
+  ...      ${ARGUMENTS[2]} ==  lot
+  [Arguments]  @{ARGUMENTS}
+  log many  @{ARGUMENTS}
+  ${tender}=  set_access_key  ${ARGUMENTS[1]}   ${USERS.users['${ARGUMENTS[0]}'].access_token}
+  ${tender_lot}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}   patch_lot   ${tender}    ${ARGUMENTS[2]}
+  Log   ${tender_lot}
+  [return]  ${tender_lot}
+
+Завантажити документ в лот
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  filepath
+  ...      ${ARGUMENTS[2]} ==  tenderUAID
+  ...      ${ARGUMENTS[3]} ==  lot_id
+  [Arguments]  @{ARGUMENTS}
+  log many  @{ARGUMENTS}
+  ${tenderID}=  openprocurement_client.Отримати internal id по UAid  ${ARGUMENTS[0]}   ${ARGUMENTS[2]}
+  ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${tenderID}
+  ${tender}=  set_access_key  ${tender}   ${USERS.users['${ARGUMENTS[0]}'].access_token}
+  ${doc}=  Завантажити документ  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}  ${ARGUMENTS[2]}
+  ${lot_doc}=  test_lot_document_data  ${doc}  ${ARGUMENTS[3]}
+  ${reply}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_document   ${tender}   ${lot_doc}
+  Log object data   ${reply}  reply
+  [return]   ${reply}
+
+Видалити лот
+  [Documentation]
+  ...      ${ARGUMENTS[0]} ==  username
+  ...      ${ARGUMENTS[1]} ==  tender
+  ...      ${ARGUMENTS[2]} ==  lot
+  [Arguments]  @{ARGUMENTS}
+  log many  @{ARGUMENTS}
+  ${tender}=  set_access_key  ${ARGUMENTS[1]}   ${USERS.users['${ARGUMENTS[0]}'].access_token}
+  ${tender_lot}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}   delete_lot   ${tender}   ${ARGUMENTS[2]}
+  Log   ${tender_lot}
+  [return]  ${tender_lot}
