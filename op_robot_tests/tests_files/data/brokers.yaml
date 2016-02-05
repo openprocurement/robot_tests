@@ -47,13 +47,13 @@ Newtend:
         provider:       Newtend_Provider1
         viewer:         Newtend_Viewer
 Prom:
-#    intervals:
-#        enquiry:
-#            - 0
-#            - 5
-#        tender:
-#            - 0
-#            - 31
+   intervals:
+       enquiry:
+           - 8
+           - 8
+       tender:
+           - 0
+           - 31
     keywords_file: prom
     roles:
         tender_owner:   Prom_Owner
