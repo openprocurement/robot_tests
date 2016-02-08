@@ -63,6 +63,10 @@ Publicbid:
     roles:
         tender_owner:   Publicbid_Owner
         viewer:         Publicbid_Viewer
+    timeout_on_wait: 20
+    intervals:
+        equiry:      5
+        tender:      10
 SmartTender:
     keywords_file: smarttender
     roles:

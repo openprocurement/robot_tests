@@ -116,19 +116,28 @@ users:
     Publicbid_Owner:
         broker:   Publicbid
         username: Publicbid
-        homepage: "https://public-bid.com.ua/"
+        homepage: "https://public-bid.com.ua/test"
         login:    yaroslav1boyko@gmail.com
         password: Password1
         browser:  chrome
         position: [0, 0]
-        size:     [740, 550]
+        size:     [1000, 720]
     Publicbid_Viewer:
         broker:   Publicbid
         username: Publicbid
-        homepage: "https://public-bid.com.ua/"
+        homepage: "https://public-bid.com.ua/test"
         browser:  chrome
         position: [0, 450]
-        size:     [640, 450]
+        size:     [1000, 720]
+    Publicbid_Provider1:
+        broker:   Publicbid
+        username: Publicbid
+        homepage: "https://public-bid.com.ua/test"
+        login:    provider_pb@yopmail.com
+        password: P@ssw0rd
+        browser:  chrome
+        position: [450, 0]
+        size:     [1000, 720]
     SmartTender_Viewer:
         broker:   SmartTender
         username: SmartTendertest
