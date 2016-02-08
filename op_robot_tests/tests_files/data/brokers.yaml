@@ -47,7 +47,7 @@ Newtend:
         provider:       Newtend_Provider1
         viewer:         Newtend_Viewer
 Prom:
-   intervals:
+    intervals:
        enquiry:
            - 8
            - 8
