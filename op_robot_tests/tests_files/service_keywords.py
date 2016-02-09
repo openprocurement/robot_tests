@@ -193,27 +193,23 @@ def prepare_test_tender_data(procedure_intervals, mode):
     raise ValueError("Invalid mode for prepare_test_tender_data")
 
 
-def run_keyword_and_ignore_keyword_definitions(name, *args):
-    """Runs the given keyword with given arguments and returns the status as a Boolean value.
+def run_keyword_and_ignore_keyword_definitions(name, *args, **kwargs):
+    """This keyword is pretty similar to `Run Keyword And Ignore Error`,
+    which, unfortunately, does not suppress the error when you try
+    to use it to run a keyword which is not defined.
+    As a result, the execution of its parent keyword / test case is aborted.
 
-    This keyword returns `True` if the keyword that is executed succeeds and
-    `False` if it fails. This is useful, for example, in combination with
-    `Run Keyword If`. If you are interested in the error message or return
-    value, use `Run Keyword And Ignore Error` instead.
+    How this works:
 
-    The keyword name and arguments work as in `Run Keyword`.
-
-    Example:
-    | ${passed} = | `Run Keyword And Return Status` | Keyword | args |
-    | `Run Keyword If` | ${passed} | Another keyword |
-
-    New in Robot Framework 2.7.6.
+    This is a simple wrapper for `Run Keyword And Ignore Error`.
+    It handles the error mentioned above and additionally provides
+    a meaningful error message.
     """
     try:
-        status, _ = BuiltIn().run_keyword_and_ignore_error(name, *args)
+        status, _ = BuiltIn().run_keyword_and_ignore_error(name, *args, **kwargs)
     except HandlerExecutionFailed:
-        LOGGER.log_message(Message("Keyword {} not implemented", "ERROR"))
-        return "FAIL", ""
+        LOGGER.log_message(Message("Keyword is not implemented: {}".format(name), "ERROR"))
+        status, _ = "FAIL", None
     return status, _
 
 
