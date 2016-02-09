@@ -70,15 +70,6 @@ def get_file_contents(path):
         return unicode(f.read()) or u''
 
 
-def change_state(arguments):
-    try:
-        if arguments[0] == "shouldfail":
-            return "shouldfail"
-        return "pass"
-    except IndexError:
-        return "pass"
-
-
 def compare_date(date1, date2, accuracy):
     date1 = parse(date1)
     date2 = parse(date2)

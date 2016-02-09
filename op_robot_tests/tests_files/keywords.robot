@@ -12,6 +12,7 @@ Documentation
 
 *** Keywords ***
 Test Suite Setup
+  Set Suite Variable  ${WARN_RUN_AS}  ${False}
   Set Selenium Implicit Wait  5 s
   Set Selenium Timeout  10 s
   Завантажуємо дані про користувачів і майданчики
@@ -289,21 +290,24 @@ Get Broker Property By Username
 
 
 Викликати для учасника
+  [Arguments]  ${username}  ${command}  @{arguments}
+  Run keyword unless  '${WARN_RUN_AS}' == '${True}'
+  ...      Run keywords
+  ...
+  ...      Set Suite Variable  ${WARN_RUN_AS}  ${True}
+  ...
+  ...      AND
+  ...
+  ...      Log  Keyword 'Викликати для учасника' is deprecated. Please use 'Run As' and 'Require Failure' instead.
+  ...      WARN
+  Run Keyword And Return  Run As  ${username}  ${command}  @{arguments}
+
+
+Run As
+  [Arguments]  ${username}  ${command}  @{arguments}
   [Documentation]
-  ...      Cause sometimes keyword SHOULD fail to pass the testcase,
-  ...      this keyword takes "shouldfail" argument as first one in @{arguments}
-  ...      and switches the behaviour of keyword and "shouldfail"
-  [Arguments]  ${username}  ${command}  @{arguments}
-  Log  ${username}
-  Log  ${command}
-  Log Many  @{arguments}
-  ${state}=  change_state  ${arguments}
-  Run Keyword And Return If  '${state}' == 'shouldfail'  SwitchState  ${username}  ${command}  @{arguments}
-  Run Keyword And Return If  '${state}' == 'pass'  Normal  ${username}  ${command}  @{arguments}
-
-
-Normal
-  [Arguments]  ${username}  ${command}  @{arguments}
+  ...      Run the given keyword (``command``) with given ``arguments``
+  ...      using driver (keyword library) of user ``username``.
   Log  ${username}
   Log  ${command}
   Log Many  @{arguments}
