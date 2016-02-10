@@ -112,6 +112,58 @@ def test_tender_data(intervals):
     return t_data
 
 
+def test_tender_data_limited(intervals):
+    return {
+        "items": [
+            {
+                "additionalClassifications": [
+                    {
+                        "description": u"Послуги шкільних їдалень",
+                        "id": "55.51.10.300",
+                        "scheme": u"ДКПП"
+                    }
+                ],
+                "classification": {
+                    "description": u"Послуги з харчування у школах",
+                    "id": "55523100-3",
+                    "scheme": "CPV"
+                },
+                "description": u"Послуги шкільних їдалень",
+                "id": "2dc54675d6364e2baffbc0f8e74432ac"
+            }
+        ],
+        "owner": "test.quintagroup.com",
+        "procurementMethod": "limited",
+        "procurementMethodType": "reporting",
+        "procuringEntity": {
+            "address": {
+                "countryName": u"Україна",
+                "locality": u"м. Вінниця",
+                "postalCode": "21027",
+                "region": u"м. Вінниця",
+                "streetAddress": u"вул. Стахурського. 22"
+            },
+            "contactPoint": {
+                "name": u"Куца Світлана Валентинівна",
+                "telephone": "+380 (432) 46-53-02",
+                "url": "http://sch10.edu.vn.ua/"
+            },
+            "identifier": {
+                "id": "21725150",
+                "legalName": u"Заклад \"Загальноосвітня школа І-ІІІ ступенів № 10 Вінницької міської ради\"",
+                "scheme": u"UA-EDR"
+            },
+            "name": u"ЗОСШ #10 м.Вінниці"
+        },
+        "value": {
+            "amount": 500000,
+            "currency": "UAH",
+            "valueAddedTaxIncluded": True
+        },
+        "title": u"Послуги шкільних їдалень",
+    }
+
+
 def test_tender_data_multiple_items(intervals):
     now = get_now()
     t_data = test_tender_data(intervals)
@@ -564,6 +616,41 @@ def auction_bid():
             }
         }
     })
+
+
+def test_supplier_data():
+    return {
+        "data": {
+            "suppliers": [
+                {
+                    "address": {
+                        "countryName": u"Україна",
+                        "locality": u"м. Вінниця",
+                        "postalCode": "21100",
+                        "region": u"м. Вінниця",
+                        "streetAddress": u"вул. Островського, 33"
+                    },
+                    "contactPoint": {
+                        "email": "soleksuk@gmail.com",
+                        "name": u"Сергій Олексюк",
+                        "telephone": "+380 (432) 21-69-30"
+                    },
+                    "identifier": {
+                        "id": "13313462",
+                        "legalName": u"Державне комунальне підприємство громадського харчування «Школяр»",
+                        "scheme": "UA-EDR",
+                        "uri": "http://sch10.edu.vn.ua/"
+                    },
+                    "name": u"ДКП «Школяр»"
+                }
+            ],
+            "value": {
+                "amount": 475000,
+                "currency": "UAH",
+                "valueAddedTaxIncluded": True
+            }
+        }
+    }
 
 
 def test_award_data():

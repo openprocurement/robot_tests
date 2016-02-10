@@ -7,16 +7,19 @@ Library  Selenium2Library
 Library  DateTime
 Library  DebugLibrary
 
+
 *** Keywords ***
 TestSuiteSetup
   Set Selenium Implicit Wait  5 s
   Set Selenium Timeout  10 s
   Завантажуємо дані про користувачів і майданчики
 
+
 Set Suite Variable With Default Value
   [Arguments]  ${suite_var}  ${def_value}
   ${tmp}=  Get Variable Value  ${${suite_var}}  ${def_value}
   Set Suite Variable  ${${suite_var}}  ${tmp}
+
 
 Завантажуємо дані про користувачів і майданчики
   Log  ${broker}
@@ -47,6 +50,7 @@ Set Suite Variable With Default Value
   \  Run Keyword If  '${status}' == 'True'  Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
   \  Run Keyword If  '${status}' == 'True'  Викликати для учасника  ${username}  Підготувати клієнт для користувача
 
+
 Get Broker Property
   [Arguments]  ${broker_name}  ${property}
   [Documentation]
@@ -59,6 +63,7 @@ Get Broker Property
   Should Contain  ${BROKERS['Default']}  ${property}
   [return]  ${BROKERS['Default'].${property}}
 
+
 Get Broker Property By Username
   [Documentation]
   ...      This keyword gets the corresponding broker name
@@ -67,6 +72,7 @@ Get Broker Property By Username
   [Arguments]  ${username}  ${property}
   ${broker_name}=  Get Variable Value  ${USERS.users['${username}'].broker}
   Run Keyword And Return  Get Broker Property  ${broker_name}  ${property}
+
 
 Підготовка початкових даних
   @{QUESTIONS}=  Create list
@@ -97,13 +103,14 @@ Get Broker Property By Username
   Log  ${tender_data}
   [return]  ${tender_data}
 
+
 Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
   ${bundled_st}=  Run Keyword And Return Status  Import Resource  ${CURDIR}/brokers/${keywords_file}.robot
   ${external_st}=  Run Keyword And Return Status  Import Resource  ${CURDIR}/../../src/robot_tests.broker.${keywords_file}/${keywords_file}.robot
   Run Keyword If  ${bundled_st} == ${external_st} == ${False}  Fail  Resource file ${keywords_file}.robot not found
   Run Keyword If  ${bundled_st} == ${external_st} == ${True}  Fail  Resource file ${keywords_file}.robot found in both brokers/ and src/
 
-##################################################################################
+
 Дочекатись синхронізації з майданчиком
   [Arguments]  ${username}
   [Documentation]
@@ -115,16 +122,19 @@ Get Broker Property By Username
   ${wait_timeout}=  Subtract Time From Time  ${timeout_on_wait}  ${delta}
   Run Keyword If   ${wait_timeout}>0   Sleep  ${wait_timeout}
 
+
 Звірити поле тендера
   [Arguments]  ${username}  ${tender_data}  ${field}
   ${left}=  Get_From_Object  ${tender_data.data}  ${field}
   ${right}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field}
   Порівняти об'єкти  ${left}  ${right}
 
+
 Звірити поле тендера із значенням
   [Arguments]  ${username}  ${left}  ${field}
   ${right}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field}
   Порівняти об'єкти  ${left}  ${right}
+
 
 Порівняти об'єкти
   [Arguments]  ${left}  ${right}
@@ -132,16 +142,19 @@ Get Broker Property By Username
   Should Not Be Equal  ${right}  ${None}
   Should Be Equal  ${left}  ${right}
 
+
 Звірити дату тендера
   [Arguments]  ${username}  ${tender_data}  ${field}
   ${left}=  Get_From_Object  ${tender_data.data}  ${field}
   ${right}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field}
   Звірити дату  ${left}  ${right}
 
+
 Звірити дату тендера із значенням
   [Arguments]  ${username}  ${left}  ${field}
   ${right}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field}
   Звірити дату  ${left}  ${right}
+
 
 Звірити дату
   [Arguments]  ${left}  ${right}
@@ -149,6 +162,7 @@ Get Broker Property By Username
   Should Not Be Equal  ${right}  ${None}
   ${status}=  compare_date  ${left}  ${right}
   Should Be True  ${status}
+
 
 Звірити поля предметів закупівлі багатопредметного тендера
   [Arguments]  ${username}  ${tender_data}  ${field}
@@ -159,6 +173,7 @@ Get Broker Property By Username
     \    Log   ${index}
     \    Звірити поле тендера  ${viewer}  ${tender_data}  items[${index}].${field}
 
+
 Звірити дату предметів закупівлі багатопредметного тендера
   [Arguments]  ${username}  ${tender_data}  ${field}
   Дочекатись синхронізації з майданчиком    ${username}
@@ -167,6 +182,7 @@ Get Broker Property By Username
   :FOR   ${index}    IN RANGE   ${len_of_items}
     \    Log   ${index}
     \    Звірити дату тендера  ${viewer}  ${tender_data}  items[${index}].${field}
+
 
 Викликати для учасника
   [Documentation]
@@ -181,6 +197,7 @@ Get Broker Property By Username
   Run Keyword And Return If  '${state}' == 'shouldfail'  SwitchState  ${username}  ${command}  @{arguments}
   Run Keyword And Return If  '${state}' == 'pass'  Normal  ${username}  ${command}  @{arguments}
 
+
 Normal
   [Arguments]  ${username}  ${command}  @{arguments}
   Log  ${username}
@@ -188,6 +205,7 @@ Normal
   Log Many  @{arguments}
   ${keywords_file}=  Get Broker Property By Username  ${username}  keywords_file
   Run Keyword And Return  ${keywords_file}.${command}  ${username}  @{arguments}
+
 
 SwitchState
   [Arguments]  ${username}  ${command}  @{arguments}
@@ -201,19 +219,24 @@ SwitchState
   Run keyword if  '${status}' == 'PASS'   Log   Учасник ${username} зміг виконати "${command}"   WARN
   [return]   ${value}
 
+
 Дочекатись дати
   [Arguments]  ${date}
   ${wait_timeout}=  wait_to_date  ${date}
   Run Keyword If   ${wait_timeout}>0   Sleep  ${wait_timeout}
 
+
 Дочекатись дати початку прийому пропозицій
   Дочекатись дати  ${tender_data.data.tenderPeriod.startDate}
+
 
 Дочекатись дати закінчення прийому пропозицій
   Дочекатись дати  ${tender_data.data.tenderPeriod.endDate}
 
+
 Дочекатись дати початку аукціону
   Дочекатись дати  ${tender_data.data.auctionPeriod.startDate}
+
 
 Дочекатись дати закінчення аукціону
   Дочекатись дати  ${tender_data.data.auctionPeriod.endDate}
