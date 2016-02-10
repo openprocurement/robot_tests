@@ -116,23 +116,23 @@ users:
     Publicbid_Owner:
         broker:   Publicbid
         username: Publicbid
-        homepage: "https://public-bid.com.ua/test"
-        login:    yaroslav1boyko@gmail.com
-        password: Password1
+        homepage: "http://217.20.164.228:446/"
+        login:    owner_pb@yopmail.com
+        password: P@ssw0rd
         browser:  chrome
         position: [0, 0]
         size:     [1000, 720]
     Publicbid_Viewer:
         broker:   Publicbid
         username: Publicbid
-        homepage: "https://public-bid.com.ua/test"
+        homepage: "http://217.20.164.228:446/"
         browser:  chrome
         position: [0, 450]
         size:     [1000, 720]
     Publicbid_Provider1:
         broker:   Publicbid
         username: Publicbid
-        homepage: "https://public-bid.com.ua/test"
+        homepage: "http://217.20.164.228:446/"
         login:    provider_pb@yopmail.com
         password: P@ssw0rd
         browser:  chrome

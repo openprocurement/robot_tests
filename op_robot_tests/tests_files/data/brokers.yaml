@@ -65,8 +65,12 @@ Publicbid:
         viewer:         Publicbid_Viewer
     timeout_on_wait: 20
     intervals:
-        equiry:      5
-        tender:      10
+        enquiry:
+            - 0  # Delay before period starts (for startDate)
+            - 20 # Duration of period (for endDate)
+        tender:
+            - 1
+            - 15
 SmartTender:
     keywords_file: smarttender
     roles:
