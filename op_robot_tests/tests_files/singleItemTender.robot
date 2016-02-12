@@ -263,20 +263,6 @@ ${question_id}  0
   ${bid_doc_upload}=  Викликати для учасника   ${provider}   Завантажити документ в ставку  ${filepath}   ${TENDER['TENDER_UAID']}
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   bid_doc_upload   ${bid_doc_upload}
 
-Порівняти документ
-  [Tags]   ${USERS.users['${provider}'].broker}: Порівняти документ
-  ${url}=      Get Variable Value   ${USERS.users['${provider}'].bidresponses['bid_doc_upload']['upload_response'].data.url}
-  ${doc}  ${flnnm}=   Викликати для учасника   ${provider}  Отримати документ   ${TENDER['TENDER_UAID']}  ${url}
-  ${flpth}=  Get Variable Value   ${USERS.users['${provider}'].bidresponses['bid_doc_upload']['upload_response'].data.title}
-  ${flcntnt} =  get file contents  ${flpth}
-  log  ${flcntnt}
-  log  ${flpth}
-  log  ${doc}
-  log  ${flnnm}
-
-  Should Be Equal  ${flcntnt}   ${doc}
-  Should Be Equal  ${flpth}   ${flnnm}
-
 Можливість змінити документацію цінової пропозиції
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця
   log   ${USERS.users['${provider}'].broker}
