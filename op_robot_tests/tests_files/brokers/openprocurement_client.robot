@@ -307,7 +307,7 @@ Library  openprocurement_client_helper.py
   ...      ${ARGUMENTS[3]} ==  docid
   [Arguments]  @{ARGUMENTS}
   Log many  @{ARGUMENTS}
-  ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${TENDER['TENDER['TENDER_UAID']']}
+  ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${TENDER['TENDER_UAID']}
   ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${ARGUMENTS[0]}'].bidresponses['resp'].access.token}
   ${response}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  update_bid_document  ${ARGUMENTS[1]}  ${tender}   ${ARGUMENTS[2]}   ${ARGUMENTS[3]}
