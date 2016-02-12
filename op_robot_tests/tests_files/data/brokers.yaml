@@ -63,6 +63,10 @@ Publicbid:
     roles:
         tender_owner:   Publicbid_Owner
         viewer:         Publicbid_Viewer
+PublicPortal:
+    keywords_file: publicportal
+    roles:
+        viewer:         PublicPortal_Viewer
 SmartTender:
     keywords_file: smarttender
     roles:

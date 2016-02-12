@@ -129,6 +129,12 @@ users:
         browser:  chrome
         position: [0, 450]
         size:     [640, 450]
+    PublicPortal_Viewer:
+        broker:   PublicPortal
+        homepage: "http://dev.prozorro.org/"
+        browser:  chrome
+        position: [0, 0]
+        size:     [640, 480]
     SmartTender_Viewer:
         broker:   SmartTender
         username: SmartTendertest
