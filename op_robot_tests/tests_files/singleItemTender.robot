@@ -39,7 +39,7 @@ ${question_id}  0
   Set To Dictionary  ${USERS.users['${tender_owner}']}   file_upload_process_data   ${file_upload_process_data}
   Log  ${USERS.users['${tender_owner}']}
 
-Пошук однопредметного тендера по ідентифікатору
+Можливість знайти однопредметний тендер по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
   Дочекатись синхронізації з майданчиком    ${viewer}
   Викликати для учасника   ${viewer}   Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
@@ -172,7 +172,7 @@ ${question_id}  0
 #######
 #Відображення анонімного питання без відповідей
 
-Задати питання
+Можливість задати питання
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість задати запитання
   Викликати для учасника   ${provider}   Задати питання  ${TENDER['TENDER_UAID']}   ${QUESTIONS[${question_id}]}
   ${now}=  Get Current TZdate
@@ -205,7 +205,7 @@ ${question_id}  0
 #######
 #Відображення відповіді на запитання
 
-Відповісти на запитання
+Можливість відповісти на запитання
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість відповісти на запитання
   Викликати для учасника   ${tender_owner}   Відповісти на питання    ${TENDER['TENDER_UAID']}  0  ${ANSWERS[0]}
   ${now}=  Get Current TZdate
@@ -217,7 +217,7 @@ ${question_id}  0
   Викликати для учасника   ${viewer}   Оновити сторінку з тендером   ${TENDER['TENDER_UAID']}
   Звірити поле тендера із значенням  ${viewer}  ${ANSWERS[${question_id}].data.answer}  questions[${question_id}].answer
 
-Подати цінову пропозицію першим учасником
+Можливість подати цінову пропозицію першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   Дочекатись дати початку прийому пропозицій
   ${bid}=  test bid data
@@ -230,7 +230,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість скасувати цінову пропозицію
   ${biddingresponse_0}=  Викликати для учасника   ${provider}   Скасувати цінову пропозицію   ${TENDER['TENDER_UAID']}   ${biddingresponse0}
 
-Подати повторно цінову пропозицію першим учасником
+Можливість подати повторно цінову пропозицію першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   Дочекатись дати початку прийому пропозицій
   ${bid}=  test bid data
@@ -256,7 +256,7 @@ ${question_id}  0
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   fixbidto10resp   ${fixbidto10resp}
   log  ${fixbidto10resp}
 
-Завантажити документ першим учасником в повторну пропозицію
+Можливість завантажити документ першим учасником в повторну пропозицію
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця
   log   ${USERS.users['${provider}'].broker}
   ${filepath}=   create_fake_doc
@@ -292,7 +292,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість задати запитання
   ${resp}=  Викликати для учасника   ${provider}  Задати питання   shouldfail   ${TENDER['TENDER_UAID']}    ${QUESTIONS[${question_id}]}
 
-Подати цінову пропозицію другим учасником
+Можливість подати цінову пропозицію другим учасником
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
   Дочекатись дати початку прийому пропозицій
   ${bid}=  test bid data
@@ -310,7 +310,7 @@ ${question_id}  0
   ${bool}=  Convert To Boolean  ${bids}
   Should Be Equal  ${bool}  ${False}
 
-Завантажити документ другим учасником
+Можливість завантажити документ другим учасником
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість прийняти пропозицію переможця
   log   ${USERS.users['${provider1}'].broker}
   ${filepath}=   create_fake_doc
@@ -352,16 +352,16 @@ ${question_id}  0
   ${bid_doc_modified_failed}=  Викликати для учасника   ${provider1}   Змінити документ в ставці  shouldfail  ${filepath}  ${bidid}  ${docid}
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   bid_doc_modified_failed   ${bid_doc_modified_failed}
 
-Вичитати посилання на аукціон для глядача
+Можливість вичитати посилання на аукціон для глядача
   [Tags]  ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   Sleep  120
   ${url}=  Викликати для учасника  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
   Log  URL аукціону для глядача: ${url}
 
-Вичитати посилання на участь в аукціоні для першого учасника
+Можливість вичитати посилання на участь в аукціоні для першого учасника
   ${url}=  Викликати для учасника  ${provider}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
   Log  URL аукціону для першого учасника: ${url}
 
-Вичитати посилання на участь в аукціоні для другого учасника
+Можливість вичитати посилання на участь в аукціоні для другого учасника
   ${url}=  Викликати для учасника  ${provider1}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
   Log  URL аукціону для другого учасника: ${url}
