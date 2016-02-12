@@ -24,7 +24,8 @@ Library  openprocurement_client_helper.py
 Підготувати клієнт для користувача
   [Arguments]  @{ARGUMENTS}
   [Documentation]  Відкрити браузер, створити об’єкт api wrapper, тощо
-  ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${ARGUMENTS[0]}'].api_key}  ${API_HOST_URL}  ${api_version}
+  Log Many  ${api_host_url}  ${api_version}
+  ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${ARGUMENTS[0]}'].api_key}  ${api_host_url}  ${api_version}
   Set To Dictionary  ${USERS.users['${ARGUMENTS[0]}']}  client  ${api_wrapper}
   ${ID_MAP}=  Create Dictionary
   Set Suite Variable  ${ID_MAP}
