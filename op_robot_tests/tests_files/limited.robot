@@ -25,7 +25,7 @@ ${broker}       Quinta
   Log  ${TENDER}
 
 
-Можливість модифікації закупівлі
+Можливість модифікації прямої закупівлі
   Викликати для учасника  ${tender_owner}  Модифікувати закупівлю  ${TENDER['TENDER_UAID']}
 
 
@@ -35,7 +35,7 @@ ${broker}       Quinta
   Викликати для учасника  ${tender_owner}  Завантажити документ  ${TENDER_DOCUMENT_FILEPATH}  ${TENDER['TENDER_UAID']}
 
 
-Можливість зареєструвати і підтвердити постачальника
+Можливість зареєструвати і підтвердити постачальника до прямої закупівлі
   Викликати для учасника  ${tender_owner}  Додати постачальника  ${TENDER['TENDER_UAID']}
   Викликати для учасника  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}
 
@@ -48,96 +48,96 @@ ${broker}       Quinta
 #             MAIN DATA
 ##############################################################################################
 
-Відображення title
+Відображення заголовку прямої закупівлі
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  title
 
 
-Відображення owner
+Відображення власника прямої закупівлі
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  owner
 
 
-Відображення procurement method
+Відображення методу прямої закупівлі
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  procurementMethod
 
 
-Відображення procurement method type
+Відображення типу методу прямої закупівлі
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  procurementMethodType
 
 
-Відображення tenderID
+Відображення ідентифікатора прямої закупівлі
   Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}  tenderID
 
 ##############################################################################################
 #             MAIN DATA.VALUE
 ##############################################################################################
 
-Відображення value.amount
+Відображення бюджету прямої закупівлі
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  value.amount
 
 
-Відображення value.currency
+Відображення валюти прямої закупівлі
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  value.currency
 
 
-Відображення value.valueAddedTaxIncluded
+Відображення врахування податку в бюджет прямої закупівлі
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  value.valueAddedTaxIncluded
 
 ##############################################################################################
 #             MAIN DATA.PROCURING ENTITY
 ##############################################################################################
 
-Відображення procuringEntity.address.countryName
+Відображення країни замовника прямої закупівлі
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  procuringEntity.address.countryName
 
 
-Відображення procuringEntity.address.locality
+Відображення міста замовника прямої закупівлі
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  procuringEntity.address.locality
 
 
-Відображення procuringEntity.address.postalCode
+Відображення поштового коду замовника прямої закупівлі
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  procuringEntity.address.postalCode
 
 
-Відображення procuringEntity.address.region
+Відображення області замовника прямої закупівлі
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  procuringEntity.address.region
 
 
-Відображення procuringEntity.address.streetAddress
+Відображення вулиці замовника прямої закупівлі
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  procuringEntity.address.streetAddress
 
 
-Відображення procuringEntity.contactPoint.name
+Відображення контактного імені замовника прямої закупівлі
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  procuringEntity.contactPoint.name
 
 
-Відображення procuringEntity.contactPoint.telephone
+Відображення контактного телефону замовника прямої закупівлі
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  procuringEntity.contactPoint.telephone
 
 
-Відображення procuringEntity.contactPoint.url
+Відображення сайту замовника прямої закупівлі
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  procuringEntity.contactPoint.url
 
 
-Відображення procuringEntity.identifier.id
+Відображення ідентифікатора замовника прямої закупівлі
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  procuringEntity.identifier.id
 
 
-Відображення procuringEntity.identifier.legalName
+Відображення офіційного імені замовника прямої закупівлі
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  procuringEntity.identifier.legalName
 
 
-Відображення procuringEntity.identifier.scheme
+Відображення схеми замовника прямої закупівлі
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  procuringEntity.identifier.scheme
 
 
-Відображення procuringEntity.name
+Відображення імені замовника прямої закупівлі
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  procuringEntity.name
 
 ##############################################################################################
 #             MAIN DATA.ITEMS
 ##############################################################################################
 
-Відображення items[0].additionalClassifications.[0].description
+Відображення опису додаткової класифікації номенклатури прямої закупівлі
   ${ITEMS_NUM}  Set variable  0
   Set Suite Variable  ${ITEMS_NUM}
   ${ADDITIONAL_CLASS_NUM}  Set variable  0
@@ -145,49 +145,49 @@ ${broker}       Quinta
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].additionalClassifications.[${ADDITIONAL_CLASS_NUM}].description
 
 
-Відображення items[0].additionalClassifications.[0].id
+Відображення ідентифікатора додаткової класифікації номенклатури прямої закупівлі
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].additionalClassifications.[${ADDITIONAL_CLASS_NUM}].id
 
 
-Відображення items[0].additionalClassifications.[0].scheme
+Відображення схеми додаткової класифікації номенклатури прямої закупівлі
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].additionalClassifications.[${ADDITIONAL_CLASS_NUM}].scheme
 
 
-Відображення items[0].classification.scheme
+Відображення схеми класифікації номенклатури прямої закупівлі
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].classification.scheme
 
 
-Відображення items[0].classification.id
+Відображення ідентифікатора класифікації номенклатури прямої закупівлі
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].classification.id
 
 
-Відображення items[0].classification.description
+Відображення опису класифікації номенклатури прямої закупівлі
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].classification.description
 
 
-Відображення items[0].description
+Відображення опису номенклатури прямої закупівлі
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].description
 
 
-Відображення items[0].id
+Відображення ідентифікатора номенклатури прямої закупівлі
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].id
 
 
-Відображення items[0].quantity
+Відображення кількості номенклатури прямої закупівлі
   ${foo_id}  Set variable  0
   ${foo_token}  Set variable  0
   ${data}=  modify_tender  ${foo_id}  ${foo_token}
   Звірити поле тендера із значенням  ${viewer}  ${data['data']['items'][${ITEMS_NUM}]['quantity']}  items[${ITEMS_NUM}].quantity
 
 
-Відображення items[0].unit.name
+Відображення назви одиниці номенклатури прямої закупівлі
   ${foo_id}  Set variable  0
   ${foo_token}  Set variable  0
   ${data}=  modify_tender  ${foo_id}  ${foo_token}
   Звірити поле тендера із значенням  ${viewer}  ${data['data']['items'][${ITEMS_NUM}]['unit']['name']}  items[${ITEMS_NUM}].unit.name
 
 
-Відображення items[0].unit.code
+Відображення коду одиниці номенклатури прямої закупівлі
   ${foo_id}  Set variable  0
   ${foo_token}  Set variable  0
   ${data}=  modify_tender  ${foo_id}  ${foo_token}
@@ -197,7 +197,7 @@ ${broker}       Quinta
 #             DOCUMENTS
 ##############################################################################################
 
-Відображення documents[0].title
+Відображення заголовку документа прямої закупівлі
   ${doc_num}  Set variable  0
   Звірити поле тендера із значенням  ${viewer}  ${tender_document_filepath}  documents[${doc_num}].title
 
@@ -205,122 +205,119 @@ ${broker}       Quinta
 #             AWARDS
 ##############################################################################################
 
-Відображення awards[0].status (active)
+Відображення підтвердженого постачальника прямої закупівлі
   ${AWARD_NUM}  Set variable  0
   Set Suite Variable  ${AWARD_NUM}
   ${SUPP_NUM}  Set variable  0
   Set Suite Variable  ${SUPP_NUM}
   ${supp_data}=  test_supplier_data
   Set Suite Variable  ${supp_data}
-  ${award_status}  Set variable  active
-  Звірити поле тендера із значенням  ${viewer}  ${award_status}  awards[${AWARD_NUM}].status
+  Звірити поле тендера із значенням  ${viewer}  active  awards[${AWARD_NUM}].status
 
 
-Відображення awards[0].suppliers[0].address.countryName
+Відображення країни постачальника прямої закупівлі
   Звірити поле тендера із значенням  ${viewer}  ${supp_data['data']['suppliers'][${SUPP_NUM}]['address']['countryName']}  awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].address.countryName
 
 
-Відображення awards[0].suppliers[0].address.locality
+Відображення міста постачальника прямої закупівлі
   Звірити поле тендера із значенням  ${viewer}  ${supp_data['data']['suppliers'][${SUPP_NUM}]['address']['locality']}  awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].address.locality
 
 
-Відображення awards[0].suppliers[0].address.postalCode
+Відображення поштового коду постачальника прямої закупівлі
   Звірити поле тендера із значенням  ${viewer}  ${supp_data['data']['suppliers'][${SUPP_NUM}]['address']['postalCode']}  awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].address.postalCode
 
 
-Відображення awards[0].suppliers[0].address.region
+Відображення області постачальника прямої закупівлі
   Звірити поле тендера із значенням  ${viewer}  ${supp_data['data']['suppliers'][${SUPP_NUM}]['address']['region']}  awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].address.region
 
 
-Відображення awards[0].suppliers[0].address.streetAddress
+Відображення вулиці постачальника прямої закупівлі
   Звірити поле тендера із значенням  ${viewer}  ${supp_data['data']['suppliers'][${SUPP_NUM}]['address']['streetAddress']}  awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].address.streetAddress
 
 
-Відображення awards[0].suppliers[0].contactPoint.telephone
+Відображення контактного телефону постачальника прямої закупівлі
   Звірити поле тендера із значенням  ${viewer}  ${supp_data['data']['suppliers'][${SUPP_NUM}]['contactPoint']['telephone']}  awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].contactPoint.telephone
 
 
-Відображення awards[0].suppliers[0].contactPoint.name
+Відображення контактного імені постачальника прямої закупівлі
   Звірити поле тендера із значенням  ${viewer}  ${supp_data['data']['suppliers'][${SUPP_NUM}]['contactPoint']['name']}  awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].contactPoint.name
 
 
-Відображення awards[0].suppliers[0].contactPoint.email
+Відображення контактного імейлу постачальника прямої закупівлі
   Звірити поле тендера із значенням  ${viewer}  ${supp_data['data']['suppliers'][${SUPP_NUM}]['contactPoint']['email']}  awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].contactPoint.email
 
 
-Відображення awards[0].suppliers[0].identifier.scheme
+Відображення схеми постачальника прямої закупівлі
   Звірити поле тендера із значенням  ${viewer}  ${supp_data['data']['suppliers'][${SUPP_NUM}]['identifier']['scheme']}  awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].identifier.scheme
 
 
-Відображення awards[0].suppliers[0].identifier.legalName
+Відображення офіційного імені постачальника прямої закупівлі
   Звірити поле тендера із значенням  ${viewer}  ${supp_data['data']['suppliers'][${SUPP_NUM}]['identifier']['legalName']}  awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].identifier.legalName
 
 
-Відображення awards[0].suppliers[0].identifier.id
+Відображення ідентифікатора постачальника прямої закупівлі
   Звірити поле тендера із значенням  ${viewer}  ${supp_data['data']['suppliers'][${SUPP_NUM}]['identifier']['id']}  awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].identifier.id
 
 
-Відображення awards[0].suppliers[0].name
+Відображення імені постачальника прямої закупівлі
   Звірити поле тендера із значенням  ${viewer}  ${supp_data['data']['suppliers'][${SUPP_NUM}]['name']}  awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].name
 
 
-Відображення awards[0].value.valueAddedTaxIncluded
+Відображення врахованого податку до ціни номенклатури постачальника прямої закупівлі
   Звірити поле тендера із значенням  ${viewer}  ${supp_data['data']['value']['valueAddedTaxIncluded']}  awards[${AWARD_NUM}].value.valueAddedTaxIncluded
 
 
-Відображення awards[0].value.currency
+Відображення валюти ціни номенклатури постачальника прямої закупівлі
   Звірити поле тендера із значенням  ${viewer}  ${supp_data['data']['value']['currency']}  awards[${AWARD_NUM}].value.currency
 
 
-Відображення awards[0].value.amount
+Відображення вартості номенклатури постачальника прямої закупівлі
   Звірити поле тендера із значенням  ${viewer}  ${supp_data['data']['value']['amount']}  awards[${AWARD_NUM}].value.amount
 
 ##############################################################################################
 #             CONTRACTS
 ##############################################################################################
 
-Неможливість укласти угоду доки не пройде stand-still period
+Неможливість укласти угоду доки не пройде stand-still period прямої закупівлі
   Викликати для учасника  ${tender_owner}  Підтвердити підписання контракту  shouldfail    ${TENDER['TENDER_UAID']}
 
 
-Відображення contracts.status (pending)
+Відображення непідписаної угоди з постачальником прямої закупівлі
   ${contr_num}  Set Variable  0
-  ${contract_status}  Set variable  pending
-  Звірити поле тендера із значенням  ${viewer}  ${contract_status}  contracts[${contr_num}].status
+  Звірити поле тендера із значенням  ${viewer}  pending  contracts[${contr_num}].status
 
 ##############################################################################################
 #             CANCELLATIONS
 ##############################################################################################
 
-Можливість сформувати запит на скасування
+Можливість сформувати запит на скасування прямої закупівлі
   Викликати для учасника  ${tender_owner}  Додати запит на скасування  ${TENDER['TENDER_UAID']}
   Викликати для учасника  ${tender_owner}  Завантажити документацію до запиту на скасування  ${TENDER['TENDER_UAID']}
 
 
-Можливість змінити опис документа в скасуванні
+Можливість змінити опис документа в скасуванні прямої закупівлі
   Викликати для учасника  ${tender_owner}  Змінити опис документа в скасуванні  ${TENDER['TENDER_UAID']}
 
 
-Можливість завантажити нову версію документа до запиту на скасування
+Можливість завантажити нову версію документа до запиту на скасування прямої закупівлі
   Викликати для учасника  ${tender_owner}  Завантажити нову версію документа до запиту на скасування  ${TENDER['TENDER_UAID']}
   Дочекатись синхронізації з майданчиком  ${viewer}
   Викликати для учасника  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
 
 
-Можливість активувати скасування закупівлі
+Можливість активувати скасування прямої закупівлі
   Викликати для учасника  ${tender_owner}  Підтвердити скасування закупівлі  ${TENDER['TENDER_UAID']}
   Дочекатись синхронізації з майданчиком  ${viewer}
   Викликати для учасника  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
 
 
-Відображення cancellations[0].status (active)
+Відображення активного статусу скасування прямої закупівлі
   ${CANCEL_NUM}=  Set variable  0
   Set suite variable  ${CANCEL_NUM}
-  ${cancellation_status}  Set variable  active
-  Звірити поле тендера із значенням  ${viewer}  ${cancellation_status}  cancellations[${CANCEL_NUM}].status
+  Звірити поле тендера із значенням  ${viewer}  active  cancellations[${CANCEL_NUM}].status
 
 
-Відображення cancellations[0].cancellationOf
+Відображення причини скасування прямої закупівлі
   ${CANCEL_NUM}  Set Variable  0
   ${FIRST_DOC}  Set Variable  0
   ${SECOND_DOC}  Set Variable  1
@@ -330,13 +327,13 @@ ${broker}       Quinta
   Звірити поле тендера із значенням  ${viewer}  ${CANCELLATION_REASON}  cancellations[${CANCEL_NUM}].reason
 
 
-Відображення cancellations[0].documents[0].description
+Відображення опису документа скасування прямої закупівлі
   Звірити поле тендера із значенням  ${viewer}  ${CANCELLATION_DOCUMENT_DESCRIPTION}  cancellations[${CANCEL_NUM}].documents[${FIRST_DOC}].description
 
 
-Відображення cancellations[0].documents[0].title
+Відображення заголовку першого документа скасування прямої закупівлі
   Звірити поле тендера із значенням  ${viewer}  ${FIRST_CANCELLATION_DOCUMENT}  cancellations[${CANCEL_NUM}].documents[${FIRST_DOC}].title
 
 
-Відображення cancellations[0].documents[1].title
+Відображення заголовку другого документа скасування прямої закупівлі
   Звірити поле тендера із значенням  ${viewer}  ${SECOND_CANCELLATION_DOCUMENT}  cancellations[${CANCEL_NUM}].documents[${SECOND_DOC}].title
