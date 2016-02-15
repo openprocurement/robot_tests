@@ -36,8 +36,10 @@ ${broker}       Quinta
 
 
 Можливість зареєструвати і підтвердити постачальника до прямої закупівлі
+  ${SUPP_NUM}  Set variable  0
+  Set Suite Variable  ${SUPP_NUM}
   Викликати для учасника  ${tender_owner}  Додати постачальника  ${TENDER['TENDER_UAID']}
-  Викликати для учасника  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}
+  Викликати для учасника  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  ${SUPP_NUM}
 
 
 Пошук прямої закупівлі по ідентифікатору
@@ -208,8 +210,6 @@ ${broker}       Quinta
 Відображення підтвердженого постачальника прямої закупівлі
   ${AWARD_NUM}  Set variable  0
   Set Suite Variable  ${AWARD_NUM}
-  ${SUPP_NUM}  Set variable  0
-  Set Suite Variable  ${SUPP_NUM}
   ${supp_data}=  test_supplier_data
   Set Suite Variable  ${supp_data}
   Звірити поле тендера із значенням  ${viewer}  active  awards[${AWARD_NUM}].status
@@ -279,51 +279,50 @@ ${broker}       Quinta
 ##############################################################################################
 
 Неможливість укласти угоду доки не пройде stand-still period прямої закупівлі
-  Викликати для учасника  ${tender_owner}  Підтвердити підписання контракту  shouldfail    ${TENDER['TENDER_UAID']}
+  ${CONTR_NUM}  Set Variable  0
+  Set suite variable  ${CONTR_NUM}
+  Викликати для учасника  ${tender_owner}  Підтвердити підписання контракту  shouldfail    ${TENDER['TENDER_UAID']}  ${CONTR_NUM}
 
 
 Відображення непідписаної угоди з постачальником прямої закупівлі
-  ${contr_num}  Set Variable  0
-  Звірити поле тендера із значенням  ${viewer}  pending  contracts[${contr_num}].status
+  Звірити поле тендера із значенням  ${viewer}  pending  contracts[${CONTR_NUM}].status
 
 ##############################################################################################
 #             CANCELLATIONS
 ##############################################################################################
 
 Можливість сформувати запит на скасування прямої закупівлі
+  ${CANCEL_NUM}  Set variable  0
+  Set suite variable  ${CANCEL_NUM}
   Викликати для учасника  ${tender_owner}  Додати запит на скасування  ${TENDER['TENDER_UAID']}
-  Викликати для учасника  ${tender_owner}  Завантажити документацію до запиту на скасування  ${TENDER['TENDER_UAID']}
+  Викликати для учасника  ${tender_owner}  Завантажити документацію до запиту на скасування  ${TENDER['TENDER_UAID']}  ${CANCEL_NUM}
 
 
 Можливість змінити опис документа в скасуванні прямої закупівлі
-  Викликати для учасника  ${tender_owner}  Змінити опис документа в скасуванні  ${TENDER['TENDER_UAID']}
+  ${FIRST_DOC}  Set Variable  0
+  Set Suite Variable  ${FIRST_DOC}
+  Викликати для учасника  ${tender_owner}  Змінити опис документа в скасуванні  ${TENDER['TENDER_UAID']}  ${CANCEL_NUM}  ${FIRST_DOC}
 
 
 Можливість завантажити нову версію документа до запиту на скасування прямої закупівлі
-  Викликати для учасника  ${tender_owner}  Завантажити нову версію документа до запиту на скасування  ${TENDER['TENDER_UAID']}
+  Викликати для учасника  ${tender_owner}  Завантажити нову версію документа до запиту на скасування  ${TENDER['TENDER_UAID']}  ${CANCEL_NUM}  ${FIRST_DOC}
+  ${SECOND_DOC}  Set Variable  1
+  Set Suite Variable  ${SECOND_DOC}
   Дочекатись синхронізації з майданчиком  ${viewer}
   Викликати для учасника  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
 
 
 Можливість активувати скасування прямої закупівлі
-  Викликати для учасника  ${tender_owner}  Підтвердити скасування закупівлі  ${TENDER['TENDER_UAID']}
+  Викликати для учасника  ${tender_owner}  Підтвердити скасування закупівлі  ${TENDER['TENDER_UAID']}  ${CANCEL_NUM}
   Дочекатись синхронізації з майданчиком  ${viewer}
   Викликати для учасника  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
 
 
 Відображення активного статусу скасування прямої закупівлі
-  ${CANCEL_NUM}=  Set variable  0
-  Set suite variable  ${CANCEL_NUM}
   Звірити поле тендера із значенням  ${viewer}  active  cancellations[${CANCEL_NUM}].status
 
 
 Відображення причини скасування прямої закупівлі
-  ${CANCEL_NUM}  Set Variable  0
-  ${FIRST_DOC}  Set Variable  0
-  ${SECOND_DOC}  Set Variable  1
-  Set Suite Variable  ${CANCEL_NUM}
-  Set Suite Variable  ${FIRST_DOC}
-  Set Suite Variable  ${SECOND_DOC}
   Звірити поле тендера із значенням  ${viewer}  ${CANCELLATION_REASON}  cancellations[${CANCEL_NUM}].reason
 
 
