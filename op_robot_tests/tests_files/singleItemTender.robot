@@ -22,6 +22,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  ...      minimal
   [Documentation]   Створення закупівлі замовником, обовязково має повертати UAID закупівлі (номер тендера),
   ${tender_data}=  Підготовка початкових даних
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${tender_data}
@@ -47,6 +48,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
+  ...      minimal
   Дочекатись синхронізації з майданчиком    ${viewer}
   Викликати для учасника   ${viewer}   Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
 
@@ -59,6 +61,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
+  ...      minimal
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  title
 
 Відображення опису оголошеного тендера
@@ -95,18 +98,21 @@ ${question_id}  0
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
+  ...      minimal
   Звірити дату тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  enquiryPeriod.endDate
 
 Відображення початку періоду прийому пропозицій оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
+  ...      minimal
   Звірити дату тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.startDate
 
 Відображення закінчення періоду прийому пропозицій оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
+  ...      minimal
   Звірити дату тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.endDate
 
 Відображення мінімального кроку оголошеного тендера
@@ -316,6 +322,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  ...      minimal
   Дочекатись дати початку прийому пропозицій
   ${bid}=  test bid data
   Log  ${bid}
@@ -376,6 +383,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
+  ...      minimal
   Дочекатись дати початку прийому пропозицій
   ${bid}=  test bid data
   Log  ${bid}
@@ -452,6 +460,7 @@ ${question_id}  0
   [Tags]  ${USERS.users['${viewer}'].broker}: Можливість подати цінову пропозицію
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
+  ...     minimal
   Sleep  120
   ${url}=  Викликати для учасника  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
   Log  URL аукціону для глядача: ${url}
@@ -460,6 +469,7 @@ ${question_id}  0
   [Tags]  ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   ...     provider
   ...     ${USERS.users['${provider}'].broker}
+  ...     minimal
   ${url}=  Викликати для учасника  ${provider}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
   Log  URL аукціону для першого учасника: ${url}
 
@@ -467,5 +477,6 @@ ${question_id}  0
   [Tags]  ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
   ...     provider1
   ...     ${USERS.users['${provider1}'].broker}
+  ...     minimal
   ${url}=  Викликати для учасника  ${provider1}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
   Log  URL аукціону для другого учасника: ${url}
