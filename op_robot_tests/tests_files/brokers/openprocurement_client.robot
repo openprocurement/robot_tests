@@ -443,7 +443,7 @@ Library  openprocurement_client_helper.py
 
 Модифікувати закупівлю
   [Arguments]  ${username}  ${tender_uaid}
-  ${tender}=  Викликати для учасника  ${username}  Отримати тендер [modified]  ${tender_uaid}
+  ${tender}=  Отримати тендер [modified]  ${username}  ${tender_uaid}
   ${data}=  modify_tender  ${tender['data']['id']}  ${tender['access']['token']}
   Log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${data}
@@ -452,7 +452,7 @@ Library  openprocurement_client_helper.py
 
 Додати постачальника
   [Arguments]  ${username}  ${tender_uaid}
-  ${tender}=  Викликати для учасника  ${username}  Отримати тендер [modified]  ${tender_uaid}
+  ${tender}=  Отримати тендер [modified]  ${username}  ${tender_uaid}
   ${supplier_data}=  test supplier data
   Log  ${supplier_data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_award  ${tender}  ${supplier_data}
@@ -461,7 +461,7 @@ Library  openprocurement_client_helper.py
 
 Підтвердити постачальника
   [Arguments]  ${username}  ${tender_uaid}
-  ${tender}=  Викликати для учасника  ${username}  Отримати тендер [modified]  ${tender_uaid}
+  ${tender}=  Отримати тендер [modified]  ${username}  ${tender_uaid}
   ${data}=  Confirm supplier  ${tender['data']['awards'][0]['id']}
   Log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_award  ${tender}  ${data}
@@ -470,7 +470,7 @@ Library  openprocurement_client_helper.py
 
 Додати запит на скасування
   [Arguments]  ${username}  ${tender_uaid}
-  ${tender}=  Викликати для учасника  ${username}  Отримати тендер [modified]  ${tender_uaid}
+  ${tender}=  Отримати тендер [modified]  ${username}  ${tender_uaid}
   ${CANCELLATION_REASON}  Set variable  prost :))
   Set suite variable  ${CANCELLATION_REASON}
   ${data}=  Cancel tender  ${CANCELLATION_REASON}
@@ -481,7 +481,7 @@ Library  openprocurement_client_helper.py
 
 Завантажити документацію до запиту на скасування
   [Arguments]  ${username}  ${tender_uaid}
-  ${tender}=  Викликати для учасника  ${username}  Отримати тендер [modified]  ${tender_uaid}
+  ${tender}=  Отримати тендер [modified]  ${username}  ${tender_uaid}
   ${FIRST_CANCELLATION_DOCUMENT}=  create_fake_doc
   Set suite variable  ${FIRST_CANCELLATION_DOCUMENT}
   ${cancel_num}  Set variable  0
@@ -492,7 +492,7 @@ Library  openprocurement_client_helper.py
 
 Змінити опис документа в скасуванні
   [Arguments]  ${username}  ${tender_uaid}
-  ${tender}=  Викликати для учасника  ${username}  Отримати тендер [modified]  ${tender_uaid}
+  ${tender}=  Отримати тендер [modified]  ${username}  ${tender_uaid}
   ${CANCELLATION_DOCUMENT_DESCRIPTION}  Set variable  test description
   Set suite variable  ${CANCELLATION_DOCUMENT_DESCRIPTION}
   ${cancellation_document_field}  Set variable  description
@@ -506,7 +506,7 @@ Library  openprocurement_client_helper.py
 
 Завантажити нову версію документа до запиту на скасування
   [Arguments]  ${username}  ${tender_uaid}
-  ${tender}=  Викликати для учасника  ${username}  Отримати тендер [modified]  ${tender_uaid}
+  ${tender}=  Отримати тендер [modified]  ${username}  ${tender_uaid}
   ${SECOND_CANCELLATION_DOCUMENT}=  create_fake_doc
   Set suite variable  ${SECOND_CANCELLATION_DOCUMENT}
   Log  ${SECOND_CANCELLATION_DOCUMENT}
@@ -518,7 +518,7 @@ Library  openprocurement_client_helper.py
 
 Підтвердити скасування закупівлі
   [Arguments]  ${username}  ${tender_uaid}
-  ${tender}=  Викликати для учасника  ${username}  Отримати тендер [modified]  ${tender_uaid}
+  ${tender}=  Отримати тендер [modified]  ${username}  ${tender_uaid}
   ${cancel_num}  Set variable  0
   Log  ${cancel_num}
   ${data}=  Confirm cancellation  ${tender['data']['cancellations'][${cancel_num}]['id']}
