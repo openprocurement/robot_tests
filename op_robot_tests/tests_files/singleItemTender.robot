@@ -314,8 +314,8 @@ ${question_id}  0
 
 Можливість скасувати цінову пропозицію
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість скасувати цінову пропозицію
-...        provider
-...        ${USERS.users['${provider}'].broker}
+  ...        provider
+  ...        ${USERS.users['${provider}'].broker}
   ${biddingresponse_0}=  Викликати для учасника   ${provider}   Скасувати цінову пропозицію   ${TENDER['TENDER_UAID']}   ${biddingresponse0}
 
 Можливість подати повторно цінову пропозицію першим учасником
