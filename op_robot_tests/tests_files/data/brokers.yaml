@@ -77,6 +77,13 @@ Publicbid:
     roles:
         tender_owner:   Publicbid_Owner
         viewer:         Publicbid_Viewer
+    intervals:
+        enquiry:
+            - 21 # Delay before period starts (for startDate)
+            - 15 # Duration of period (for endDate)
+        tender:
+            - 1
+            - 15
 PublicPortal:
     keywords_file: publicportal
     roles:
