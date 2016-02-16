@@ -85,6 +85,30 @@ users:
         browser:  chrome
         position: [800, 400]
         size:     [800, 700]
+    PrivatMarket_Viewer:
+        broker:   PrivatMarket
+        homepage: "https://pmarket-rc.privatbank.ua/app.php/business/tenders"
+        browser:  chrome
+        position: [-1500, 0]
+        size:     [1000, 1000]
+    PrivatMarket_Provider:
+        broker:   PrivatMarket
+        homepage: "https://pmarket-rc.privatbank.ua/app.php/business/tenders"
+        email:    pbecommercetest2@ukr.net
+        login:    +380639405094
+        password: password5094
+        browser:  chrome
+        position: [-1500, 0]
+        size:     [1000, 1000]
+    PrivatMarket_Provider1:
+        broker:   PrivatMarket
+        homepage: "https://pmarket-rc.privatbank.ua/app.php/business/tenders"
+        email:    pbecommercetest1@ukr.net
+        login:    +380980704168
+        password: password4168
+        browser:  chrome
+        position: [-1500, 0]
+        size:     [1000, 1000]
     Prom_Owner:
         broker:   Prom
         homepage: "http://my.dz-test.net/cabinet/purchases/state_purchase/list"

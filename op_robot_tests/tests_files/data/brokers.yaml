@@ -46,6 +46,20 @@ Newtend:
         tender_owner:   Newtend_Owner
         provider:       Newtend_Provider1
         viewer:         Newtend_Viewer
+PrivatMarket:
+    intervals:
+        enquiry:
+           - 0
+           - 2
+        tender:
+           - 0
+           - 5
+    keywords_file: privatmarket
+    roles:
+        viewer:         PrivatMarket_Viewer
+        provider:       PrivatMarket_Provider
+        provider1:      PrivatMarket_Provider1
+    timeout_on_wait: 30
 Prom:
     intervals:
        enquiry:
