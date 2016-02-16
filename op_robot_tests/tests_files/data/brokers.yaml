@@ -63,11 +63,10 @@ Publicbid:
     roles:
         tender_owner:   Publicbid_Owner
         viewer:         Publicbid_Viewer
-    timeout_on_wait: 20
     intervals:
         enquiry:
-            - 0  # Delay before period starts (for startDate)
-            - 20 # Duration of period (for endDate)
+            - 21  # Delay before period starts (for startDate)
+            - 15 # Duration of period (for endDate)
         tender:
             - 1
             - 15

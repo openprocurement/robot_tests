@@ -116,7 +116,7 @@ users:
     Publicbid_Owner:
         broker:   Publicbid
         username: Publicbid
-        homepage: "http://217.20.164.228:446/"
+        homepage: "http://217.76.194.185:56034/"
         login:    owner_pb@yopmail.com
         password: P@ssw0rd
         browser:  chrome
@@ -125,14 +125,14 @@ users:
     Publicbid_Viewer:
         broker:   Publicbid
         username: Publicbid
-        homepage: "http://217.20.164.228:446/"
+        homepage: "http://217.76.194.185:56034/"
         browser:  chrome
         position: [0, 450]
         size:     [1000, 720]
     Publicbid_Provider1:
         broker:   Publicbid
         username: Publicbid
-        homepage: "http://217.20.164.228:446/"
+        homepage: "http://217.76.194.185:56034/"
         login:    provider_pb@yopmail.com
         password: P@ssw0rd
         browser:  chrome
