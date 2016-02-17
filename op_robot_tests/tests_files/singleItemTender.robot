@@ -284,11 +284,8 @@ ${question_id}  0
   ...      ${USERS.users['${provider}'].broker}
   ${bid}=  test bid data
   Log   ${bid}
-  ${bidresponses}=  Create Dictionary
   ${bid_before_bidperiod_resp}=  Викликати для учасника   ${provider}   Подати цінову пропозицію  shouldfail  ${TENDER['TENDER_UAID']}   ${bid}
-  Set To Dictionary  ${bidresponses}                 bid_before_bidperiod_resp  ${bid_before_bidperiod_resp}
-  Set To Dictionary  ${USERS.users['${provider}']}   bidresponses  ${bidresponses}
-  log   ${USERS.users['${provider}']}
+  Log   ${bid_before_bidperiod_resp}
 
 #######
 #Відображення відповіді на запитання
@@ -313,7 +310,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  Дочекатись дати початку прийому пропозицій
+  Дочекатись дати початку прийому пропозицій  ${provider}
   ${bid}=  test bid data
   Log  ${bid}
   ${biddingresponse0}=  Викликати для учасника   ${provider}   Подати цінову пропозицію   ${TENDER['TENDER_UAID']}   ${bid}
@@ -331,12 +328,13 @@ ${question_id}  0
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      minimal
-  Дочекатись дати початку прийому пропозицій
+  Дочекатись дати початку прийому пропозицій  ${provider}
   ${bid}=  test bid data
   Log  ${bid}
+  ${bidresponses}=  Create Dictionary
   ${resp}=  Викликати для учасника   ${provider}   Подати цінову пропозицію   ${TENDER['TENDER_UAID']}   ${bid}
-  Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   resp   ${resp}
-  log  ${resp}
+  Set To Dictionary  ${bidresponses}   resp   ${resp}
+  Set To Dictionary  ${USERS.users['${provider}']}   bidresponses   ${bidresponses}
   log  ${USERS.users['${provider}'].bidresponses}
 
 Можливість змінити повторну цінову пропозицію до 50000
@@ -392,7 +390,7 @@ ${question_id}  0
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      minimal
-  Дочекатись дати початку прийому пропозицій
+  Дочекатись дати початку прийому пропозицій  ${provider1}
   ${bid}=  test bid data
   Log  ${bid}
   ${bidresponses}=  Create Dictionary
@@ -423,7 +421,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${provider1}'].broker}: Неможливість змінити цінову пропозицію до 50000 після закінчення прийому пропозицій
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
-  Дочекатись дати закінчення прийому пропозицій
+  Дочекатись дати закінчення прийому пропозицій  ${provider1}
   Set To Dictionary  ${USERS.users['${provider1}'].bidresponses['resp'].data.value}  amount   50000
   Log   ${USERS.users['${provider1}'].bidresponses['resp'].data.value}
   ${failfixbidto50000resp}=  Викликати для учасника   ${provider1}   Змінити цінову пропозицію  shouldfail  ${TENDER['TENDER_UAID']}   ${USERS.users['${provider1}'].bidresponses['resp']}
@@ -469,6 +467,8 @@ ${question_id}  0
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
   ...     minimal
+  Дочекатись дати закінчення прийому пропозицій  ${viewer}
+  Дочекатись синхронізації з майданчиком    ${viewer}
   Sleep  120
   ${url}=  Викликати для учасника  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
   Log  URL аукціону для глядача: ${url}
