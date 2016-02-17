@@ -126,8 +126,7 @@ Get Broker Property By Username
 Звірити поле тендера
   [Arguments]  ${username}  ${tender_data}  ${field}
   ${left}=  Get_From_Object  ${tender_data.data}  ${field}
-  ${right}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field}
-  Порівняти об'єкти  ${left}  ${right}
+  Звірити поле тендера із значенням  ${username}  ${left}  ${field}
 
 
 Звірити поле тендера із значенням
@@ -146,8 +145,7 @@ Get Broker Property By Username
 Звірити дату тендера
   [Arguments]  ${username}  ${tender_data}  ${field}
   ${left}=  Get_From_Object  ${tender_data.data}  ${field}
-  ${right}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field}
-  Звірити дату  ${left}  ${right}
+  Звірити дату тендера із значенням  ${username}  ${left}  ${field}
 
 
 Звірити дату тендера із значенням
