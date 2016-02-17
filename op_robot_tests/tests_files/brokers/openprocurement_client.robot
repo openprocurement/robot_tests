@@ -145,20 +145,11 @@ Library  openprocurement_client_helper.py
 
 
 Відповісти на питання
-  [Documentation]
-  ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  tender_uid
-  ...      ${ARGUMENTS[2]} ==  question_id
-  ...      ${ARGUMENTS[3]} ==  answer_data
-  [Arguments]  @{ARGUMENTS}
-  Log many  @{ARGUMENTS}
-  ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
-  ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
-  Log many     ${USERS.users['${ARGUMENTS[0]}']}
-  ${tender}=  set_access_key  ${tender}  ${USERS.users['${ARGUMENTS[0]}'].access_token}
-  ${ARGUMENTS[3].data.id}=  Set Variable   ${tender.data.questions[${ARGUMENTS[2]}].id}
-  ${question_with_answer}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_question  ${tender}  ${ARGUMENTS[3]}
-  Log many   ${USERS.users['${ARGUMENTS[0]}'].client}  ${tender}  ${ARGUMENTS[3]}
+  [Arguments]  ${username}  ${tender_uid}  ${question}  ${answer_data}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
+  ${answer_data.data.id}=  Set Variable   ${tender.data.questions[${question_id}].id}
+  ${question_with_answer}=  Call Method  ${USERS.users['${username}'].client}  patch_question  ${tender}  ${answer_data}
   Log object data   ${question_with_answer}  question_with_answer
 
 
