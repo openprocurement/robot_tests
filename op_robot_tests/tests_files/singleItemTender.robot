@@ -50,7 +50,9 @@ ${question_id}  0
   ...      ${USERS.users['${viewer}'].broker}
   ...      minimal
   Дочекатись синхронізації з майданчиком    ${viewer}
-  Викликати для учасника   ${viewer}   Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
+  ${usernames}=  Create List  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  :FOR  ${username}  IN  @{usernames}
+  \  Викликати для учасника  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
 
 ######
 #Відображення основних  даних оголошеного тендера:
@@ -62,7 +64,9 @@ ${question_id}  0
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      minimal
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  title
+  ${usernames}=  Create List  ${viewer}  ${provider}
+  :FOR  ${username}  IN  @{usernames}
+  \  Звірити поле тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  title
 
 Відображення опису оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
@@ -106,14 +110,18 @@ ${question_id}  0
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      minimal
-  Звірити дату тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.startDate
+  ${usernames}=  Create List  ${viewer}  ${provider}  ${provider1}
+  :FOR  ${username}  IN  @{usernames}
+  \  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.startDate
 
 Відображення закінчення періоду прийому пропозицій оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      minimal
-  Звірити дату тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.endDate
+  ${usernames}=  Create List  ${viewer}  ${provider}  ${provider1}
+  :FOR  ${username}  IN  @{usernames}
+  \  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.endDate
 
 Відображення мінімального кроку оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
