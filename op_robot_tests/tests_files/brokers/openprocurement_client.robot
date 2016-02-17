@@ -140,16 +140,10 @@ Library  openprocurement_client_helper.py
 
 
 Задати питання
-  [Documentation]
-  ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  tender_uid
-  ...      ${ARGUMENTS[2]} ==  question
-  [Arguments]  @{ARGUMENTS}
-  Log many  @{ARGUMENTS}
-  ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
-  ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
-  Log   ${USERS.users['${ARGUMENTS[0]}']}
-  ${biddingresponse}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_question  ${tender}  ${ARGUMENTS[2]}
+  [Arguments]  ${username}  ${tender_uid}  ${question}
+  Log  ${question}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  ${biddingresponse}=  Call Method  ${USERS.users['${username}'].client}  create_question  ${tender}  ${question}
   [return]  ${biddingresponse}
 
 
