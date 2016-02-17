@@ -62,11 +62,8 @@ Library  openprocurement_client_helper.py
 
 
 Оновити сторінку з тендером
-  [Arguments]  @{ARGUMENTS}
-  [Documentation]
-  ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  tenderId
-  ${tender_data}=  openprocurement_client.Пошук тендера по ідентифікатору    @{ARGUMENTS}
+  [Arguments]  ${username}  ${tenderid}
+  ${tender_data}=  openprocurement_client.Пошук тендера по ідентифікатору    ${username}  ${tenderid}
   Log  ${tender_data}
 
 
