@@ -242,18 +242,12 @@ Library  openprocurement_client_helper.py
 
 
 Завантажити документ в ставку
-  [Documentation]
-  ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  path
-  ...      ${ARGUMENTS[2]} ==  tenderid
-  [Arguments]  @{ARGUMENTS}
-  Log many  @{ARGUMENTS}
-  ${bid_id}=  Get Variable Value   ${USERS.users['${ARGUMENTS[0]}'].bidresponses['resp'].data.id}
-  ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[2]}
-  ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
+  [Arguments]  ${username}  ${path}  ${tenderid}
+  ${bid_id}=  Get Variable Value   ${USERS.users['${username}'].bidresponses['resp'].data.id}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tenderid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${ARGUMENTS[0]}'].bidresponses['resp'].access.token}
-  ${response}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  upload_bid_document  ${ARGUMENTS[1]}  ${tender}  ${bid_id}
-  ${uploaded_file} =  Create Dictionary   filepath  ${ARGUMENTS[1]}   upload_response  ${response}
+  ${response}=  Call Method  ${USERS.users['${username}'].client}  upload_bid_document  ${path}  ${tender}  ${bid_id}
+  ${uploaded_file} =  Create Dictionary   filepath  ${path}   upload_response  ${response}
   Log  ${response}
   Log object data   ${uploaded_file}
   [return]  ${uploaded_file}
@@ -265,13 +259,11 @@ Library  openprocurement_client_helper.py
   ...      ${ARGUMENTS[1]} ==  path
   ...      ${ARGUMENTS[2]} ==  bidid
   ...      ${ARGUMENTS[3]} ==  docid
-  [Arguments]  @{ARGUMENTS}
-  Log many  @{ARGUMENTS}
-  ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${TENDER['TENDER_UAID']}
-  ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
-  ${tender}=  set_access_key  ${tender}  ${USERS.users['${ARGUMENTS[0]}'].bidresponses['resp'].access.token}
-  ${response}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  update_bid_document  ${ARGUMENTS[1]}  ${tender}   ${ARGUMENTS[2]}   ${ARGUMENTS[3]}
-  ${uploaded_file} =  Create Dictionary   filepath  ${ARGUMENTS[1]}   upload_response  ${response}
+  [Arguments]  ${username}  ${path}  ${bidid}  ${docid}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${TENDER['TENDER_UAID']}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
+  ${response}=  Call Method  ${USERS.users['${username}'].client}  update_bid_document  ${path}  ${tender}   ${bidid}   ${docid}
+  ${uploaded_file} =  Create Dictionary   filepath  ${path}   upload_response  ${response}
   Log  ${response}
   Log object data   ${uploaded_file}
   [return]  ${uploaded_file}
