@@ -113,42 +113,66 @@ def test_tender_data(intervals):
 
 
 def test_tender_data_limited(intervals):
+    now = get_now()
     return {
-        "items": [
+        "items":
+        [
             {
-                "additionalClassifications": [
+                "additionalClassifications":
+                [
                     {
                         "description": u"Послуги шкільних їдалень",
                         "id": "55.51.10.300",
                         "scheme": u"ДКПП"
                     }
                 ],
-                "classification": {
+                "classification":
+                {
                     "description": u"Послуги з харчування у школах",
                     "id": "55523100-3",
                     "scheme": "CPV"
                 },
                 "description": u"Послуги шкільних їдалень",
-                "id": "2dc54675d6364e2baffbc0f8e74432ac"
+                "id": "2dc54675d6364e2baffbc0f8e74432ac",
+                "deliveryDate": {
+                    "endDate": (now + timedelta(days=5)).isoformat()
+                },
+                "deliveryLocation": {
+                    "latitude": 49.8500,
+                    "longitude": 24.0167
+                },
+                "deliveryAddress": {
+                    "countryName": u"Україна",
+                    "countryName_ru": u"Украина",
+                    "countryName_en": "Ukraine",
+                    "postalCode": fake.postalcode(),
+                    "region": u"м. Київ",
+                    "locality": u"м. Київ",
+                    "streetAddress": fake.street_address()
+                }
             }
         ],
         "owner": "test.quintagroup.com",
         "procurementMethod": "limited",
         "procurementMethodType": "reporting",
-        "procuringEntity": {
-            "address": {
+        "procuringEntity":
+        {
+            "address":
+            {
                 "countryName": u"Україна",
                 "locality": u"м. Вінниця",
                 "postalCode": "21027",
                 "region": u"м. Вінниця",
                 "streetAddress": u"вул. Стахурського. 22"
             },
-            "contactPoint": {
+            "contactPoint":
+            {
                 "name": u"Куца Світлана Валентинівна",
                 "telephone": "+380 (432) 46-53-02",
                 "url": "http://sch10.edu.vn.ua/"
             },
-            "identifier": {
+            "identifier":
+            {
                 "id": "21725150",
                 "legalName": u"Заклад \"Загальноосвітня школа І-ІІІ ступенів № 10 Вінницької міської ради\"",
                 "scheme": u"UA-EDR"

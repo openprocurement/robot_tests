@@ -195,6 +195,46 @@ ${broker}       Quinta
   ${data}=  modify_tender  ${foo_id}  ${foo_token}
   Звірити поле тендера із значенням  ${viewer}  ${data['data']['items'][${ITEMS_NUM}]['unit']['code']}  items[${ITEMS_NUM}].unit.code
 
+
+Відображення дати доставки позицій закупівлі однопредметного тендера
+  Звірити дату тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].deliveryDate.endDate
+
+
+Відображення координат широти доставки позицій закупівлі однопредметного тендера
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].deliveryLocation.latitude
+
+
+Відображення координат довготи доставки позицій закупівлі однопредметного тендера
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].deliveryLocation.longitude
+
+
+Відображення назви нас. пункту доставки позицій закупівлі однопредметного тендера
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].deliveryAddress.countryName
+
+
+Відображення назви нас. пункту російською мовою доставки позицій закупівлі однопредметного тендера
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].deliveryAddress.countryName_ru
+
+
+Відображення назви нас. пункту англійською мовою доставки позицій закупівлі однопредметного тендера
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].deliveryAddress.countryName_en
+
+
+Відображення пошт. коду доставки позицій закупівлі однопредметного тендера
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].deliveryAddress.postalCode
+
+
+Відображення регіону доставки позицій закупівлі однопредметного тендера
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].deliveryAddress.region
+
+
+Відображення locality адреси доставки позицій закупівлі однопредметного тендера
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].deliveryAddress.locality
+
+
+Відображення вулиці доставки позицій закупівлі однопредметного тендера
+  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].deliveryAddress.streetAddress
+
 ##############################################################################################
 #             DOCUMENTS
 ##############################################################################################
