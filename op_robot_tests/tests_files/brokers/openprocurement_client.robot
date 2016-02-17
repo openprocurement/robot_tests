@@ -204,43 +204,25 @@ Library  openprocurement_client_helper.py
 
 
 Подати цінову пропозицію
-  [Documentation]
-  ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  tender_uid
-  ...      ${ARGUMENTS[2]} ==  bid
-  [Arguments]  @{ARGUMENTS}
-  Log many  @{ARGUMENTS}
-  ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
-  ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
-  Log  ${tender}
-  ${biddingresponse}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  create_bid  ${tender}  ${ARGUMENTS[2]}
+  [Arguments]  ${username}  ${tender_uid}  ${bid}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  ${biddingresponse}=  Call Method  ${USERS.users['${username}'].client}  create_bid  ${tender}  ${bid}
+  Log  ${biddingresponse}
   [return]  ${biddingresponse}
 
 
 Змінити цінову пропозицію
-  [Documentation]
-  ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  tender_uid
-  ...      ${ARGUMENTS[2]} ==  bid
-  [Arguments]  @{ARGUMENTS}
-  ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
-  ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
-  ${changed_bid}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  patch_bid  ${tender}  ${ARGUMENTS[2]}
+  [Arguments]  ${username}  ${tender_uid}  ${bid}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  ${changed_bid}=  Call Method  ${USERS.users['${username}'].client}  patch_bid  ${tender}  ${bid}
   Log  ${changed_bid}
   [return]   ${changed_bid}
 
 
 Скасувати цінову пропозицію
-  [Documentation]
-  ...      ${ARGUMENTS[0]} ==  username
-  ...      ${ARGUMENTS[1]} ==  tender_uid
-  ...      ${ARGUMENTS[2]} ==  bid
-  [Arguments]  @{ARGUMENTS}
-  Log many  @{ARGUMENTS}
-  ${internalid}=  Отримати internal id по UAid  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
-  ${tender}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  get_tender  ${internalid}
-  Log   ${tender}
-  ${changed_bid}=  Call Method  ${USERS.users['${ARGUMENTS[0]}'].client}  delete_bid   ${tender}  ${ARGUMENTS[2]}
+  [Arguments]  ${username}  ${tender_uid}  ${bid}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  ${changed_bid}=  Call Method  ${USERS.users['${username}'].client}  delete_bid   ${tender}  ${bid}
   Log  ${changed_bid}
   [return]   ${changed_bid}
 
