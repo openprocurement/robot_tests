@@ -227,16 +227,24 @@ SwitchState
 
 
 Дочекатись дати початку прийому пропозицій
-  Дочекатись дати  ${tender_data.data.tenderPeriod.startDate}
+  [Arguments]  ${username}
+  log  ${username}
+  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.tenderPeriod.startDate}
 
 
 Дочекатись дати закінчення прийому пропозицій
-  Дочекатись дати  ${tender_data.data.tenderPeriod.endDate}
+  [Arguments]  ${username}
+  log  ${username}
+  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.tenderPeriod.endDate}
 
 
 Дочекатись дати початку аукціону
-  Дочекатись дати  ${tender_data.data.auctionPeriod.startDate}
+  [Arguments]  ${username}
+  log  ${username}
+  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.auctionPeriod.startDate}
 
 
 Дочекатись дати закінчення аукціону
-  Дочекатись дати  ${tender_data.data.auctionPeriod.endDate}
+  [Arguments]  ${username}
+  log  ${username}
+  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.auctionPeriod.endDate}
