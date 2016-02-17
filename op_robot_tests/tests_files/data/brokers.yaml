@@ -31,7 +31,7 @@ E-tender:
         provider:       E-tender_Provider1
         provider1:      E-tender_Provider2
         viewer:         E-tender_Viewer
-    timeout_on_wait: 60
+    timeout_on_wait: 600
 Netcast:
     keywords_file: netcast
     login: admin
