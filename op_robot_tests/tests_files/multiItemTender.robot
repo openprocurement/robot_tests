@@ -29,7 +29,9 @@ ${broker}       Quinta
 Отримати багатопредметний тендер по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
   Дочекатись синхронізації з майданчиком    ${viewer}
-  Викликати для учасника   ${viewer}   Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
+  ${usernames}=  Create List  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  :FOR  ${username}  IN  @{usernames}
+  \  Викликати для учасника  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
 
 Відображення опису позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
