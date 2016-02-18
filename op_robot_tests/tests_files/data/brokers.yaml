@@ -1,14 +1,14 @@
 Default:
     # These values are used by default unless a
     # specific broker entry overrides them.
-    intervals:
+    intervals:   # Time in minutes
         enquiry:
             - 0  # Delay before period starts (for startDate)
             - 11 # Duration of period (for endDate)
         tender:
             - 0
             - 31
-    timeout_on_wait: 300
+    timeout_on_wait: 300 # Time in seconds
 Quinta:
 #    intervals:
 #        enquiry:
@@ -31,7 +31,7 @@ E-tender:
         provider:       E-tender_Provider1
         provider1:      E-tender_Provider2
         viewer:         E-tender_Viewer
-    timeout_on_wait: 60
+    timeout_on_wait: 600
 Netcast:
     keywords_file: netcast
     login: admin
@@ -46,6 +46,20 @@ Newtend:
         tender_owner:   Newtend_Owner
         provider:       Newtend_Provider1
         viewer:         Newtend_Viewer
+PrivatMarket:
+    intervals:
+        enquiry:
+           - 0
+           - 2
+        tender:
+           - 0
+           - 5
+    keywords_file: privatmarket
+    roles:
+        viewer:         PrivatMarket_Viewer
+        provider:       PrivatMarket_Provider
+        provider1:      PrivatMarket_Provider1
+    timeout_on_wait: 30
 Prom:
     intervals:
        enquiry:
@@ -63,6 +77,17 @@ Publicbid:
     roles:
         tender_owner:   Publicbid_Owner
         viewer:         Publicbid_Viewer
+    intervals:
+        enquiry:
+            - 21 # Delay before period starts (for startDate)
+            - 15 # Duration of period (for endDate)
+        tender:
+            - 1
+            - 15
+PublicPortal:
+    keywords_file: publicportal
+    roles:
+        viewer:         PublicPortal_Viewer
 SmartTender:
     keywords_file: smarttender
     roles:

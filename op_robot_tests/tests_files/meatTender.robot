@@ -21,16 +21,22 @@ ${broker}       Quinta
   [Documentation]   Створення закупівлі замовником, обовязково має повертати UAID закупівлі (номер тендера),
   ${base_tender_data}=  Підготовка початкових даних
   ${tender_data}=  test_meat_tender_data  ${base_tender_data}
-  ${TENDER_UAID}=  Викликати для учасника     ${tender_owner}    Створити тендер  ${tender_data}
-  ${LAST_MODIFICATION_DATE}=  Get Current Date
+  ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${tender_data}
+  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data  ${tender_data}
   Set To Dictionary  ${TENDER}   TENDER_UAID             ${TENDER_UAID}
   Set To Dictionary  ${TENDER}   LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
-  log  ${TENDER}
+  Log  ${TENDER}
 
-Пошук однопредметного тендера по ідентифікатору
+Можливість знайти однопредметний тендер по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      minimal
   Дочекатись синхронізації з майданчиком    ${viewer}
-  Викликати для учасника   ${viewer}   Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
+  ${usernames}=  Create List  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  :FOR  ${username}  IN  @{usernames}
+  \  Викликати для учасника  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
 
 Неможливість перевищити ліміт для нецінових критеріїв
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
@@ -41,9 +47,18 @@ ${broker}       Quinta
 ######
 #Подання пропозицій
 
+Відображення початку періоду прийому пропозицій оголошеного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      minimal
+  ${usernames}=  Create List  ${viewer}  ${provider}  ${provider1}
+  :FOR  ${username}  IN  @{usernames}
+  \  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.startDate
+
 Неможливість подати цінову пропозицію без нецінового показника
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
-  Дочекатись дати початку прийому пропозицій
+  Дочекатись дати початку прийому пропозицій  ${provider}
   sleep  90
   ${bid}=  test bid data
   Log  ${bid}
@@ -78,7 +93,7 @@ ${broker}       Quinta
 
 Подати цінову пропозицію з неціновим показником другим учасником
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
-  Дочекатись дати початку прийому пропозицій
+  Дочекатись дати початку прийому пропозицій  ${provider1}
   ${bid}=  test bid data meat tender
   Log  ${bid}
   ${bidresponses}=  Create Dictionary
@@ -91,11 +106,16 @@ ${broker}       Quinta
 ######
 #Аукціон
 
+Відображення дати початку аукціону
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      minimal
+  Викликати для учасника  ${viewer}  Отримати інформацію із тендера  auctionPeriod.startDate
+
+
 Очікування аукціону
-  Дочекатись синхронізації з майданчиком    ${tender_owner}
-  ${tender_data}=  Викликати для учасника   ${tender_owner}   Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
-  log    ${tender_data.data.auctionPeriod.startDate}
-  Дочекатись дати початку аукціону
+  Дочекатись дати початку аукціону  ${viewer}
   sleep  1500
 
 Завершення аукціону

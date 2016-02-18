@@ -233,6 +233,14 @@ def modify_tender(tender_id, access_token):
     return data
 
 
+def munch_dict(arg=None, data=False):
+    if arg is None:
+        arg = {}
+    if data:
+        arg['data'] = {}
+    return munchify(arg)
+
+
 # GUI Frontends common
 def add_data_for_gui_frontends(tender_data):
     now = get_now()

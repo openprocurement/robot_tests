@@ -12,7 +12,8 @@ fake_en = Factory.create()
 
 def create_fake_doc():
     content = fake.text()
-    tf = NamedTemporaryFile(delete=False)
+    suffix = fake.random_element(('.txt', '.doc', '.docx', '.pdf'))
+    tf = NamedTemporaryFile(delete=False, suffix=suffix)
     tf.write(content)
     tf.close()
     return tf.name

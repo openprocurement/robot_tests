@@ -45,10 +45,13 @@ Set Suite Variable With Default Value
   :FOR  ${username}  ${user_data}   IN  @{users_list}
   \  log  ${active_users}
   \  log  ${username}
+  \  ${munch_dict}=  munch_dict  data=${True}
+  \  Log Many  ${munch_dict}
   \  ${status}=  Run Keyword And Return Status   Dictionary Should Contain Value  ${active_users}   ${username}
   \  ${keywords_file}=  Get Broker Property By Username  ${username}  keywords_file
   \  Run Keyword If  '${status}' == 'True'  Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
   \  Run Keyword If  '${status}' == 'True'  Викликати для учасника  ${username}  Підготувати клієнт для користувача
+  \  Run Keyword If  '${status}' == 'True'  Set To Dictionary  ${USERS.users['${username}']}  tender_data  ${munch_dict}
 
 
 Get Broker Property
@@ -126,14 +129,14 @@ Get Broker Property By Username
 Звірити поле тендера
   [Arguments]  ${username}  ${tender_data}  ${field}
   ${left}=  Get_From_Object  ${tender_data.data}  ${field}
-  ${right}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field}
-  Порівняти об'єкти  ${left}  ${right}
+  Звірити поле тендера із значенням  ${username}  ${left}  ${field}
 
 
 Звірити поле тендера із значенням
   [Arguments]  ${username}  ${left}  ${field}
   ${right}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field}
   Порівняти об'єкти  ${left}  ${right}
+  Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${left}
 
 
 Порівняти об'єкти
@@ -146,14 +149,14 @@ Get Broker Property By Username
 Звірити дату тендера
   [Arguments]  ${username}  ${tender_data}  ${field}
   ${left}=  Get_From_Object  ${tender_data.data}  ${field}
-  ${right}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field}
-  Звірити дату  ${left}  ${right}
+  Звірити дату тендера із значенням  ${username}  ${left}  ${field}
 
 
 Звірити дату тендера із значенням
   [Arguments]  ${username}  ${left}  ${field}
   ${right}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field}
   Звірити дату  ${left}  ${right}
+  Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${left}
 
 
 Звірити дату
@@ -216,8 +219,8 @@ SwitchState
   Log Many  @{arguments}
   ${keywords_file}=  Get Broker Property By Username  ${username}  keywords_file
   ${status}  ${value}=  run_keyword_and_ignore_keyword_definitions  ${keywords_file}.${command}  ${username}  @{arguments}
-  Run keyword if  '${status}' == 'PASS'   Log   Учасник ${username} зміг виконати "${command}"   WARN
-  [return]   ${value}
+  Run keyword if  '${status}' == 'PASS'  Fail  Користувач ${username} зміг виконати "${command}"
+  [return]  ${value}
 
 
 Дочекатись дати
@@ -227,16 +230,24 @@ SwitchState
 
 
 Дочекатись дати початку прийому пропозицій
-  Дочекатись дати  ${tender_data.data.tenderPeriod.startDate}
+  [Arguments]  ${username}
+  log  ${username}
+  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.tenderPeriod.startDate}
 
 
 Дочекатись дати закінчення прийому пропозицій
-  Дочекатись дати  ${tender_data.data.tenderPeriod.endDate}
+  [Arguments]  ${username}
+  log  ${username}
+  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.tenderPeriod.endDate}
 
 
 Дочекатись дати початку аукціону
-  Дочекатись дати  ${tender_data.data.auctionPeriod.startDate}
+  [Arguments]  ${username}
+  log  ${username}
+  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.auctionPeriod.startDate}
 
 
 Дочекатись дати закінчення аукціону
-  Дочекатись дати  ${tender_data.data.auctionPeriod.endDate}
+  [Arguments]  ${username}
+  log  ${username}
+  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.auctionPeriod.endDate}
