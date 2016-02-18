@@ -1,14 +1,14 @@
 Default:
     # These values are used by default unless a
     # specific broker entry overrides them.
-    intervals:
+    intervals:   # Time in minutes
         enquiry:
             - 0  # Delay before period starts (for startDate)
             - 11 # Duration of period (for endDate)
         tender:
             - 0
             - 31
-    timeout_on_wait: 300
+    timeout_on_wait: 300 # Time in seconds
 Quinta:
 #    intervals:
 #        enquiry:
