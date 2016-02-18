@@ -45,10 +45,13 @@ Set Suite Variable With Default Value
   :FOR  ${username}  ${user_data}   IN  @{users_list}
   \  log  ${active_users}
   \  log  ${username}
+  \  ${munch_dict}=  munch_dict  data=${True}
+  \  Log Many  ${munch_dict}
   \  ${status}=  Run Keyword And Return Status   Dictionary Should Contain Value  ${active_users}   ${username}
   \  ${keywords_file}=  Get Broker Property By Username  ${username}  keywords_file
   \  Run Keyword If  '${status}' == 'True'  Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
   \  Run Keyword If  '${status}' == 'True'  Викликати для учасника  ${username}  Підготувати клієнт для користувача
+  \  Run Keyword If  '${status}' == 'True'  Set To Dictionary  ${USERS.users['${username}']}  tender_data  ${munch_dict}
 
 
 Get Broker Property
