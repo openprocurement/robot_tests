@@ -129,14 +129,14 @@ Get Broker Property By Username
 Звірити поле тендера
   [Arguments]  ${username}  ${tender_data}  ${field}
   ${left}=  Get_From_Object  ${tender_data.data}  ${field}
-  ${right}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field}
-  Порівняти об'єкти  ${left}  ${right}
+  Звірити поле тендера із значенням  ${username}  ${left}  ${field}
 
 
 Звірити поле тендера із значенням
   [Arguments]  ${username}  ${left}  ${field}
   ${right}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field}
   Порівняти об'єкти  ${left}  ${right}
+  Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${left}
 
 
 Порівняти об'єкти
@@ -149,14 +149,14 @@ Get Broker Property By Username
 Звірити дату тендера
   [Arguments]  ${username}  ${tender_data}  ${field}
   ${left}=  Get_From_Object  ${tender_data.data}  ${field}
-  ${right}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field}
-  Звірити дату  ${left}  ${right}
+  Звірити дату тендера із значенням  ${username}  ${left}  ${field}
 
 
 Звірити дату тендера із значенням
   [Arguments]  ${username}  ${left}  ${field}
   ${right}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field}
   Звірити дату  ${left}  ${right}
+  Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${left}
 
 
 Звірити дату
@@ -230,16 +230,24 @@ SwitchState
 
 
 Дочекатись дати початку прийому пропозицій
-  Дочекатись дати  ${tender_data.data.tenderPeriod.startDate}
+  [Arguments]  ${username}
+  log  ${username}
+  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.tenderPeriod.startDate}
 
 
 Дочекатись дати закінчення прийому пропозицій
-  Дочекатись дати  ${tender_data.data.tenderPeriod.endDate}
+  [Arguments]  ${username}
+  log  ${username}
+  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.tenderPeriod.endDate}
 
 
 Дочекатись дати початку аукціону
-  Дочекатись дати  ${tender_data.data.auctionPeriod.startDate}
+  [Arguments]  ${username}
+  log  ${username}
+  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.auctionPeriod.startDate}
 
 
 Дочекатись дати закінчення аукціону
-  Дочекатись дати  ${tender_data.data.auctionPeriod.endDate}
+  [Arguments]  ${username}
+  log  ${username}
+  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.auctionPeriod.endDate}
