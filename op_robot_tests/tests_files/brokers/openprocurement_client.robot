@@ -388,7 +388,7 @@ Library  openprocurement_client_helper.py
   ${cancellation_document_field}  Set variable  description
   ${data}=  change_cancellation_document_field  ${cancellation_document_field}  ${CANCELLATION_DOCUMENT_DESCRIPTION}
   Log  ${data}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_cancellation_document  ${tender}  ${data}  ${cancel_num}  ${doc_num}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_cancellation_document  ${tender}  ${data}  ${tender['data']['cancellations'][${cancel_num}]['id']}  ${tender['data']['cancellations'][${cancel_num}]['documents'][${doc_num}]['id']}
   Log  ${reply}
 
 
