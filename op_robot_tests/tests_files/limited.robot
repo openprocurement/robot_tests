@@ -54,7 +54,7 @@ ${broker}       Quinta
   Викликати для учасника  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  ${SUPP_NUM}
 
 
-Пошук прямої закупівлі по ідентифікатору
+Можливість знайти пряму закупівлю по ідентифікатору
   [Tags]  ${USERS.users['${viewer}'].broker}: Пошук прямої закупівлі по ідентифікатору
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
@@ -304,71 +304,71 @@ ${broker}       Quinta
   Звірити поле тендера із значенням  ${viewer}  ${data['data']['items'][${ITEMS_NUM}]['unit']['code']}  items[${ITEMS_NUM}].unit.code
 
 
-Відображення дати доставки позицій закупівлі однопредметного тендера
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення дати доставки позицій закупівлі однопредметного тендера
+Відображення дати доставки номенклатури прямої закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення дати доставки номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити дату тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].deliveryDate.endDate
 
 
-Відображення координат широти доставки позицій закупівлі однопредметного тендера
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення координат широти доставки позицій закупівлі однопредметного тендера
+Відображення координат широти доставки номенклатури прямої закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення координат широти доставки номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].deliveryLocation.latitude
 
 
-Відображення координат довготи доставки позицій закупівлі однопредметного тендера
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення координат довготи доставки позицій закупівлі однопредметного тендера
+Відображення координат довготи доставки номенклатури прямої закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення координат довготи доставки номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].deliveryLocation.longitude
 
 
-Відображення назви нас. пункту доставки позицій закупівлі однопредметного тендера
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення назви нас. пункту доставки позицій закупівлі однопредметного тендера
+Відображення назви нас. пункту доставки номенклатури прямої закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення назви нас. пункту доставки номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].deliveryAddress.countryName
 
 
-Відображення назви нас. пункту російською мовою доставки позицій закупівлі однопредметного тендера
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення назви нас. пункту російською мовою доставки позицій закупівлі однопредметного тендера
+Відображення назви нас. пункту російською мовою доставки номенклатури прямої закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення назви нас. пункту російською мовою доставки номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].deliveryAddress.countryName_ru
 
 
-Відображення назви нас. пункту англійською мовою доставки позицій закупівлі однопредметного тендера
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення назви нас. пункту англійською мовою доставки позицій закупівлі однопредметного тендера
+Відображення назви нас. пункту англійською мовою доставки номенклатури прямої закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення назви нас. пункту англійською мовою доставки номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].deliveryAddress.countryName_en
 
 
-Відображення пошт. коду доставки позицій закупівлі однопредметного тендера
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення пошт. коду доставки позицій закупівлі однопредметного тендера
+Відображення пошт. коду доставки номенклатури прямої закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення пошт. коду доставки номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].deliveryAddress.postalCode
 
 
-Відображення регіону доставки позицій закупівлі однопредметного тендера
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення регіону доставки позицій закупівлі однопредметного тендера
+Відображення регіону доставки номенклатури прямої закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення регіону доставки номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].deliveryAddress.region
 
 
-Відображення locality адреси доставки позицій закупівлі однопредметного тендера
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення locality адреси доставки позицій закупівлі однопредметного тендера
+Відображення locality адреси доставки номенклатури прямої закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення locality адреси доставки номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].deliveryAddress.locality
 
 
-Відображення вулиці доставки позицій закупівлі однопредметного тендера
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення вулиці доставки позицій закупівлі однопредметного тендера
+Відображення вулиці доставки номенклатури прямої закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення вулиці доставки номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${ITEMS_NUM}].deliveryAddress.streetAddress

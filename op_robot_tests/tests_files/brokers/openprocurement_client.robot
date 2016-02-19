@@ -4,24 +4,26 @@ Library  openprocurement_client_helper.py
 
 *** Keywords ***
 Отримати internal id по UAid
-  [Arguments]  ${username}  ${tender_uid}
-  Log Many  @{ARGUMENTS}
+  [Arguments]  ${username}  ${tender_uaid}
+  Log  ${username}
+  Log  ${tender_uaid}
   Log Many  ${ID_MAP}
-  ${status}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${ID_MAP}  ${tender_uid}
-  Run Keyword And Return If  ${status}  Get From Dictionary  ${ID_MAP}  ${tender_uid}
+  ${status}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${ID_MAP}  ${tender_uaid}
+  Run Keyword And Return If  ${status}  Get From Dictionary  ${ID_MAP}  ${tender_uaid}
   ${tenders}=  get_tenders  ${USERS.users['${username}'].client}
   Log Many  @{tenders}
   :FOR  ${tender}  IN  @{tenders}
   \  Set To Dictionary  ${ID_MAP}  ${tender.tenderID}  ${tender.id}
   Log Many  ${ID_MAP}
-  Dictionary Should Contain Key  ${ID_MAP}  ${tender_uid}
-  Run Keyword And Return  Get From Dictionary  ${ID_MAP}  ${tender_uid}
+  Dictionary Should Contain Key  ${ID_MAP}  ${tender_uaid}
+  Run Keyword And Return  Get From Dictionary  ${ID_MAP}  ${tender_uaid}
 
 
 Підготувати клієнт для користувача
   [Arguments]  ${username}
   [Documentation]  Відкрити браузер, створити об’єкт api wrapper, тощо
-  Log Many  ${api_host_url}  ${api_version}
+  Log  ${api_host_url}
+  Log  ${api_version}
   ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${api_host_url}  ${api_version}
   Set To Dictionary  ${USERS.users['${username}']}  client  ${api_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  access_token  ${EMPTY}
@@ -49,21 +51,22 @@ Library  openprocurement_client_helper.py
 
 
 Пошук тендера по ідентифікатору
-  [Arguments]  ${username}  ${tender_uid}
-  ${internalid}=  Отримати internal id по UAid  ${username}  ${tender_uid}
+  [Arguments]  ${username}  ${tender_uaid}
+  ${internalid}=  Отримати internal id по UAid  ${username}  ${tender_uaid}
   ${tender}=  Отримати тендер   ${username}   ${internalid}
   [return]   ${tender}
 
 
 Оновити сторінку з тендером
-  [Arguments]  ${username}  ${tender_uid}
-  ${tender_data}=  openprocurement_client.Пошук тендера по ідентифікатору    ${username}  ${tender_uid}
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender_data}=  openprocurement_client.Пошук тендера по ідентифікатору    ${username}  ${tender_uaid}
   Log  ${tender_data}
 
 
 Отримати інформацію із тендера
   [Arguments]  ${username}  ${fieldname}
-  Log Many  @{ARGUMENTS}
+  Log  ${username}
+  Log  ${fieldname}
   ${status}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${USERS.users['${username}'].tender_data.data}  ${fieldname}
   Run Keyword Unless
   ...      ${status}
@@ -74,8 +77,8 @@ Library  openprocurement_client_helper.py
 
 
 Внести зміни в тендер
-  [Arguments]  ${username}  ${tender_uid}  ${fieldname}  ${fieldvalue}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  [Arguments]  ${username}  ${tender_uaid}  ${fieldname}  ${fieldvalue}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   Set_To_Object  ${tender.data}   ${fieldname}   ${fieldvalue}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
@@ -94,8 +97,8 @@ Library  openprocurement_client_helper.py
 
 
 Відняти предмети закупівлі
-  [Arguments]  ${username}  ${tender_uid}  ${number}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  [Arguments]  ${username}  ${tender_uaid}  ${number}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   @{items}=  Get From Object   ${tender.data}    items
   Log Many  @{items}
   :FOR    ${INDEX}    IN RANGE    ${number}
@@ -106,8 +109,8 @@ Library  openprocurement_client_helper.py
 
 
 Додати предмети закупівлі
-  [Arguments]  ${username}  ${tender_uid}  ${number}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  [Arguments]  ${username}  ${tender_uaid}  ${number}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   @{items}=  Get From Object   ${tender.data}    items
   Log Many  @{items}
   :FOR    ${INDEX}    IN RANGE    ${number}
@@ -120,16 +123,16 @@ Library  openprocurement_client_helper.py
 
 
 Задати питання
-  [Arguments]  ${username}  ${tender_uid}  ${question}
+  [Arguments]  ${username}  ${tender_uaid}  ${question}
   Log  ${question}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${biddingresponse}=  Call Method  ${USERS.users['${username}'].client}  create_question  ${tender}  ${question}
   [return]  ${biddingresponse}
 
 
 Відповісти на питання
-  [Arguments]  ${username}  ${tender_uid}  ${question_id}  ${answer_data}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  [Arguments]  ${username}  ${tender_uaid}  ${question_id}  ${answer_data}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   ${answer_data.data.id}=  Set Variable   ${tender.data.questions[${question_id}].id}
   ${question_with_answer}=  Call Method  ${USERS.users['${username}'].client}  patch_question  ${tender}  ${answer_data}
@@ -137,8 +140,8 @@ Library  openprocurement_client_helper.py
 
 
 Подати скаргу
-  [Arguments]  ${username}  ${tender_uid}  ${complaint}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  [Arguments]  ${username}  ${tender_uaid}  ${complaint}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${complaint}=  Call Method  ${USERS.users['${username}'].client}  _create_tender_resource_item  ${tender}  ${complaint}   complaints
   ${access_token}=  Get Variable Value  ${complaint.access.token}
   Set To Dictionary  ${USERS.users['${username}']}   access_token   ${access_token}
@@ -146,9 +149,11 @@ Library  openprocurement_client_helper.py
 
 
 Порівняти скаргу
-  [Arguments]  ${username}  ${tender_uid}  ${complaint}
-  Log many  @{ARGUMENTS}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  [Arguments]  ${username}  ${tender_uaid}  ${complaint}
+  Log  ${username}
+  Log  ${tender_uaid}
+  Log  ${complaint}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${complaint}=   Get Variable Value  ${tender.data.complaints[0]}
   Log   ${complaint}
   #TODO: COMPARE
@@ -159,8 +164,8 @@ Library  openprocurement_client_helper.py
 
 
 Обробити скаргу
-  [Arguments]  ${username}  ${tender_uid}  ${complaint_id}  ${answer_data}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  [Arguments]  ${username}  ${tender_uaid}  ${complaint_id}  ${answer_data}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   ${answer_data.data.id}=  Set Variable   ${tender.data.complaints[${complaint_id}].id}
   ${complaint_with_answer}=  Call Method  ${USERS.users['${username}'].client}  _patch_tender_resource_item  ${tender}  ${answer_data}  complaints
@@ -169,32 +174,32 @@ Library  openprocurement_client_helper.py
 
 
 Подати цінову пропозицію
-  [Arguments]  ${username}  ${tender_uid}  ${bid}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  [Arguments]  ${username}  ${tender_uaid}  ${bid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${biddingresponse}=  Call Method  ${USERS.users['${username}'].client}  create_bid  ${tender}  ${bid}
   Log  ${biddingresponse}
   [return]  ${biddingresponse}
 
 
 Змінити цінову пропозицію
-  [Arguments]  ${username}  ${tender_uid}  ${bid}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  [Arguments]  ${username}  ${tender_uaid}  ${bid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${changed_bid}=  Call Method  ${USERS.users['${username}'].client}  patch_bid  ${tender}  ${bid}
   Log  ${changed_bid}
   [return]   ${changed_bid}
 
 
 Скасувати цінову пропозицію
-  [Arguments]  ${username}  ${tender_uid}  ${bid}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  [Arguments]  ${username}  ${tender_uaid}  ${bid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${changed_bid}=  Call Method  ${USERS.users['${username}'].client}  delete_bid   ${tender}  ${bid}
   Log  ${changed_bid}
   [return]   ${changed_bid}
 
 
 Прийняти цінову пропозицію
-  [Arguments]  ${username}  ${tender_uid}  ${award}
-  ${internalid}=  Отримати internal id по UAid  ${username}  ${tender_uid}
+  [Arguments]  ${username}  ${tender_uaid}  ${award}
+  ${internalid}=  Отримати internal id по UAid  ${username}  ${tender_uaid}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   ${award_activeted_response}=  Call Method  ${USERS.users['${username}'].client}  patch_award  ${tender}  ${award}
@@ -203,9 +208,9 @@ Library  openprocurement_client_helper.py
 
 
 Завантажити документ в ставку
-  [Arguments]  ${username}  ${path}  ${tender_uid}
+  [Arguments]  ${username}  ${path}  ${tender_uaid}
   ${bid_id}=  Get Variable Value   ${USERS.users['${username}'].bidresponses['resp'].data.id}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
   ${response}=  Call Method  ${USERS.users['${username}'].client}  upload_bid_document  ${path}  ${tender}  ${bid_id}
   ${uploaded_file} =  Create Dictionary   filepath  ${path}   upload_response  ${response}
@@ -226,9 +231,11 @@ Library  openprocurement_client_helper.py
 
 
 Завантажити документ
-  [Arguments]  ${username}  ${filepath}  ${tender_uid}
-  Log many  @{ARGUMENTS}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  [Arguments]  ${username}  ${filepath}  ${tender_uaid}
+  Log  ${username}
+  Log  ${tender_uaid}
+  Log  ${filepath}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${tender}=  set_access_key  ${tender}   ${USERS.users['${username}'].access_token}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  upload_document  ${filepath}  ${tender}
   Log object data   ${reply}  reply
@@ -236,20 +243,20 @@ Library  openprocurement_client_helper.py
 
 
 Отримати посилання на аукціон для глядача
-  [Arguments]  ${username}  ${tender_uid}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   [return]  ${tender.data.auctionUrl}
 
 
 Отримати посилання на аукціон для учасника
-  [Arguments]  ${username}  ${tender_uid}
-  ${bid}=  Викликати для учасника  ${username}  Отримати пропозицію  ${tender_uid}
+  [Arguments]  ${username}  ${tender_uaid}
+  ${bid}=  Викликати для учасника  ${username}  Отримати пропозицію  ${tender_uaid}
   [return]  ${bid.data.participationUrl}
 
 
 Отримати пропозицію
-  [Arguments]  ${username}  ${tender_uid}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${bid_id}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['resp'].data.id}
   ${token}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['resp'].access.token}
   ${bid}=  Call Method  ${USERS.users['${username}'].client}  get_bid  ${tender}  ${bid_id}  ${token}
@@ -257,8 +264,8 @@ Library  openprocurement_client_helper.py
 
 
 Отримати документ
-  [Arguments]  ${username}  ${tender_uid}  ${url}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  [Arguments]  ${username}  ${tender_uaid}  ${url}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${token}=    Get Variable Value  ${USERS.users['${username}'].bidresponses['resp'].access.token}
   ${contents}  ${filename}=  Call Method  ${USERS.users['${username}'].client}  get_file   ${tender}   ${url}   ${token}
   Log   ${filename}
@@ -267,14 +274,16 @@ Library  openprocurement_client_helper.py
 
 Створити лот
   [Arguments]  ${username}  ${tender}  ${lot}
-  Log many  @{ARGUMENTS}
+  Log  ${username}
+  Log  ${tender}
+  Log  ${lot}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   ${tender_lot}=  Call Method  ${USERS.users['${username}'].client}   create_lot   ${tender}    ${lot}
   Log   ${tender_lot}
   [return]  ${tender_lot}
   #TODO:
-  #[Arguments]  ${username}  ${tender_uid}  ${lot}
-  #${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  #[Arguments]  ${username}  ${tender_uaid}  ${lot}
+  #${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
 
 
 Змінити лот
@@ -284,15 +293,15 @@ Library  openprocurement_client_helper.py
   Log   ${tender_lot}
   [return]  ${tender_lot}
   #TODO:
-  #[Arguments]  ${username}  ${tender_uid}  ${lot}
-  #${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  #[Arguments]  ${username}  ${tender_uaid}  ${lot}
+  #${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
 
 
 Завантажити документ в лот
-  [Arguments]  ${username}  ${filepath}  ${tender_uid}  ${lot_id}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  [Arguments]  ${username}  ${filepath}  ${tender_uaid}  ${lot_id}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${tender}=  set_access_key  ${tender}   ${USERS.users['${username}'].access_token}
-  ${doc}=  Завантажити документ  ${username}  ${filepath}  ${tender_uid}
+  ${doc}=  Завантажити документ  ${username}  ${filepath}  ${tender_uaid}
   ${lot_doc}=  test_lot_document_data  ${doc}  ${lot_id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_document   ${tender}   ${lot_doc}
   Log object data   ${reply}  reply
@@ -306,8 +315,8 @@ Library  openprocurement_client_helper.py
   Log   ${tender_lot}
   [return]  ${tender_lot}
   #TODO:
-  #[Arguments]  ${username}  ${tender_uid}  ${lot}
-  #${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  #[Arguments]  ${username}  ${tender_uaid}  ${lot}
+  #${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
 
 ##############################################################################
 #             Limited procurement
@@ -336,7 +345,7 @@ Library  openprocurement_client_helper.py
 Додати постачальника
   [Arguments]  ${username}  ${tender_uaid}
   ${tender}=  Отримати тендер [modified]  ${username}  ${tender_uaid}
-  ${supplier_data}=  test supplier data
+  ${supplier_data}=  test_supplier_data
   Log  ${supplier_data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_award  ${tender}  ${supplier_data}
   Log  ${reply}
@@ -345,7 +354,7 @@ Library  openprocurement_client_helper.py
 Підтвердити постачальника
   [Arguments]  ${username}  ${tender_uaid}  ${award_num}
   ${tender}=  Отримати тендер [modified]  ${username}  ${tender_uaid}
-  ${data}=  Confirm supplier  ${tender['data']['awards'][${award_num}]['id']}
+  ${data}=  confirm_supplier  ${tender['data']['awards'][${award_num}]['id']}
   Log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_award  ${tender}  ${data}
   Log  ${reply}
@@ -356,7 +365,7 @@ Library  openprocurement_client_helper.py
   ${tender}=  Отримати тендер [modified]  ${username}  ${tender_uaid}
   ${CANCELLATION_REASON}  Set variable  prost :))
   Set suite variable  ${CANCELLATION_REASON}
-  ${data}=  Cancel tender  ${CANCELLATION_REASON}
+  ${data}=  cancel_tender  ${CANCELLATION_REASON}
   Log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_cancellation  ${tender}  ${data}
   Log  ${reply}
@@ -396,7 +405,7 @@ Library  openprocurement_client_helper.py
 Підтвердити скасування закупівлі
   [Arguments]  ${username}  ${tender_uaid}  ${cancel_num}
   ${tender}=  Отримати тендер [modified]  ${username}  ${tender_uaid}
-  ${data}=  Confirm cancellation  ${tender['data']['cancellations'][${cancel_num}]['id']}
+  ${data}=  confirm_cancellation  ${tender['data']['cancellations'][${cancel_num}]['id']}
   Log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_cancellation  ${tender}  ${data}
   Log  ${reply}
@@ -405,7 +414,7 @@ Library  openprocurement_client_helper.py
 Підтвердити підписання контракту
   [Arguments]  ${username}  ${tender_uaid}  ${contract_num}
   ${tender}=  Викликати для учасника  ${username}  Отримати тендер [modified]  ${tender_uaid}
-  ${data}=  confirm contract  ${tender['data']['contracts'][${contract_num}]['id']}
+  ${data}=  confirm_contract  ${tender['data']['contracts'][${contract_num}]['id']}
   Log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract  ${tender}  ${data}
   Log  ${reply}
