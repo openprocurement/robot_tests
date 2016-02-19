@@ -331,6 +331,7 @@ Library  openprocurement_client_helper.py
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${data}=  modify_tender  ${tender['data']['id']}  ${tender['access']['token']}
   Log  ${data}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  modified_items  ${data['data']['items']}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${data}
   Log  ${reply}
 
@@ -344,6 +345,7 @@ Library  openprocurement_client_helper.py
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${supplier_data}=  test_supplier_data
   Log  ${supplier_data}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  supplier_data  ${supplier_data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_award  ${tender}  ${supplier_data}
   Log  ${reply}
 
@@ -369,10 +371,10 @@ Library  openprocurement_client_helper.py
   ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${CANCELLATION_REASON}  Set variable  prost :))
-  Set suite variable  ${CANCELLATION_REASON}
-  ${data}=  cancel_tender  ${CANCELLATION_REASON}
+  ${cancellation_reason}  Set variable  prost :))
+  ${data}=  cancel_tender  ${cancellation_reason}
   Log  ${data}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  cancellation_reason  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_cancellation  ${tender}  ${data}
   Log  ${reply}
 
@@ -384,9 +386,9 @@ Library  openprocurement_client_helper.py
   ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}  ${cancel_num}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${FIRST_CANCELLATION_DOCUMENT}=  create_fake_doc
-  Set suite variable  ${FIRST_CANCELLATION_DOCUMENT}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  upload_cancellation_document  ${FIRST_CANCELLATION_DOCUMENT}  ${tender}  ${tender['data']['cancellations'][${cancel_num}]['id']}
+  ${first_cancel_doc}=  create_fake_doc
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  first_cancel_doc  ${first_cancel_doc}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  upload_cancellation_document  ${first_cancel_doc}  ${tender}  ${tender['data']['cancellations'][${cancel_num}]['id']}
   Log  ${reply}
 
 
@@ -398,10 +400,10 @@ Library  openprocurement_client_helper.py
   ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}  ${cancel_num}  ${doc_num}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${CANCELLATION_DOCUMENT_DESCRIPTION}  Set variable  test description
-  Set suite variable  ${CANCELLATION_DOCUMENT_DESCRIPTION}
   ${cancellation_document_field}  Set variable  description
-  ${data}=  change_cancellation_document_field  ${cancellation_document_field}  ${CANCELLATION_DOCUMENT_DESCRIPTION}
+  ${cancellation_document_description}  Set variable  test description
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  cancellation_document_description  ${cancellation_document_description}
+  ${data}=  change_cancellation_document_field  ${cancellation_document_field}  ${cancellation_document_description}
   Log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_cancellation_document  ${tender}  ${data}  ${tender['data']['cancellations'][${cancel_num}]['id']}  ${tender['data']['cancellations'][${cancel_num}]['documents'][${doc_num}]['id']}
   Log  ${reply}
@@ -414,10 +416,10 @@ Library  openprocurement_client_helper.py
   ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}  ${cancel_num}  ${doc_num}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${SECOND_CANCELLATION_DOCUMENT}=  create_fake_doc
-  Set suite variable  ${SECOND_CANCELLATION_DOCUMENT}
-  Log  ${SECOND_CANCELLATION_DOCUMENT}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  update_cancellation_document  ${SECOND_CANCELLATION_DOCUMENT}  ${tender}  ${tender['data']['cancellations'][${cancel_num}]['id']}  ${tender['data']['cancellations'][${cancel_num}]['documents'][${doc_num}]['id']}
+  ${second_cancel_doc}=  create_fake_doc
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  second_cancel_doc  ${second_cancel_doc}
+  Log  ${second_cancel_doc}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  update_cancellation_document  ${second_cancel_doc}  ${tender}  ${tender['data']['cancellations'][${cancel_num}]['id']}  ${tender['data']['cancellations'][${cancel_num}]['documents'][${doc_num}]['id']}
   Log  ${reply}
 
 
