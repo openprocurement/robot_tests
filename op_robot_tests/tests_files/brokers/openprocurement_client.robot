@@ -322,20 +322,9 @@ Library  openprocurement_client_helper.py
 #             Limited procurement
 ##############################################################################
 
-Отримати тендер [modified]
-  [Arguments]  ${username}  ${tender_uaid}
-  Log  ${username}
-  Log  ${tender_uaid}
-  ${tenderID}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
-  ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${tenderID}
-  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
-  Log  ${tender}
-  [Return]  ${tender}
-
-
 Модифікувати закупівлю
   [Arguments]  ${username}  ${tender_uaid}
-  ${tender}=  Отримати тендер [modified]  ${username}  ${tender_uaid}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${data}=  modify_tender  ${tender['data']['id']}  ${tender['access']['token']}
   Log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${data}
@@ -344,7 +333,7 @@ Library  openprocurement_client_helper.py
 
 Додати постачальника
   [Arguments]  ${username}  ${tender_uaid}
-  ${tender}=  Отримати тендер [modified]  ${username}  ${tender_uaid}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${supplier_data}=  test_supplier_data
   Log  ${supplier_data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_award  ${tender}  ${supplier_data}
@@ -353,7 +342,7 @@ Library  openprocurement_client_helper.py
 
 Підтвердити постачальника
   [Arguments]  ${username}  ${tender_uaid}  ${award_num}
-  ${tender}=  Отримати тендер [modified]  ${username}  ${tender_uaid}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${data}=  confirm_supplier  ${tender['data']['awards'][${award_num}]['id']}
   Log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_award  ${tender}  ${data}
@@ -362,7 +351,7 @@ Library  openprocurement_client_helper.py
 
 Додати запит на скасування
   [Arguments]  ${username}  ${tender_uaid}
-  ${tender}=  Отримати тендер [modified]  ${username}  ${tender_uaid}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${CANCELLATION_REASON}  Set variable  prost :))
   Set suite variable  ${CANCELLATION_REASON}
   ${data}=  cancel_tender  ${CANCELLATION_REASON}
@@ -373,7 +362,7 @@ Library  openprocurement_client_helper.py
 
 Завантажити документацію до запиту на скасування
   [Arguments]  ${username}  ${tender_uaid}  ${cancel_num}
-  ${tender}=  Отримати тендер [modified]  ${username}  ${tender_uaid}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${FIRST_CANCELLATION_DOCUMENT}=  create_fake_doc
   Set suite variable  ${FIRST_CANCELLATION_DOCUMENT}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  upload_cancellation_document  ${FIRST_CANCELLATION_DOCUMENT}  ${tender}  ${tender['data']['cancellations'][${cancel_num}]['id']}
@@ -382,7 +371,7 @@ Library  openprocurement_client_helper.py
 
 Змінити опис документа в скасуванні
   [Arguments]  ${username}  ${tender_uaid}  ${cancel_num}  ${doc_num}
-  ${tender}=  Отримати тендер [modified]  ${username}  ${tender_uaid}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${CANCELLATION_DOCUMENT_DESCRIPTION}  Set variable  test description
   Set suite variable  ${CANCELLATION_DOCUMENT_DESCRIPTION}
   ${cancellation_document_field}  Set variable  description
@@ -394,7 +383,7 @@ Library  openprocurement_client_helper.py
 
 Завантажити нову версію документа до запиту на скасування
   [Arguments]  ${username}  ${tender_uaid}  ${cancel_num}  ${doc_num}
-  ${tender}=  Отримати тендер [modified]  ${username}  ${tender_uaid}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${SECOND_CANCELLATION_DOCUMENT}=  create_fake_doc
   Set suite variable  ${SECOND_CANCELLATION_DOCUMENT}
   Log  ${SECOND_CANCELLATION_DOCUMENT}
@@ -404,7 +393,7 @@ Library  openprocurement_client_helper.py
 
 Підтвердити скасування закупівлі
   [Arguments]  ${username}  ${tender_uaid}  ${cancel_num}
-  ${tender}=  Отримати тендер [modified]  ${username}  ${tender_uaid}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${data}=  confirm_cancellation  ${tender['data']['cancellations'][${cancel_num}]['id']}
   Log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_cancellation  ${tender}  ${data}
@@ -413,7 +402,7 @@ Library  openprocurement_client_helper.py
 
 Підтвердити підписання контракту
   [Arguments]  ${username}  ${tender_uaid}  ${contract_num}
-  ${tender}=  Викликати для учасника  ${username}  Отримати тендер [modified]  ${tender_uaid}
+  ${tender}=  Викликати для учасника  ${username}  Пошук тендера по ідентифікатору  ${tender_uaid}
   ${data}=  confirm_contract  ${tender['data']['contracts'][${contract_num}]['id']}
   Log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract  ${tender}  ${data}
