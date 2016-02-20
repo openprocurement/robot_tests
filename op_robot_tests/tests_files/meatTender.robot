@@ -17,7 +17,10 @@ ${broker}       Quinta
 
 *** Test Cases ***
 Можливість оголосити однопредметний тендер з неціновим показником
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер з неціновим показником
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      minimal
   [Documentation]   Створення закупівлі замовником, обовязково має повертати UAID закупівлі (номер тендера),
   ${base_tender_data}=  Підготовка початкових даних
   ${tender_data}=  test_meat_tender_data  ${base_tender_data}
@@ -30,16 +33,22 @@ ${broker}       Quinta
 
 Можливість знайти однопредметний тендер по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      minimal
-  Дочекатись синхронізації з майданчиком    ${viewer}
   ${usernames}=  Create List  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
   :FOR  ${username}  IN  @{usernames}
+  \  Дочекатись синхронізації з майданчиком    ${username}
   \  Викликати для учасника  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
 
 Неможливість перевищити ліміт для нецінових критеріїв
+  [Documentation]
+  ...    "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком    ${tender_owner}
   ${invalid_features}=  test_invalid_features_data
   ${fail}=  Викликати для учасника   ${tender_owner}  Внести зміни в тендер  shouldfail   ${TENDER['TENDER_UAID']}   features   ${invalid_features}
   Log   ${fail}
@@ -48,16 +57,23 @@ ${broker}       Quinta
 #Подання пропозицій
 
 Відображення початку періоду прийому пропозицій оголошеного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
+  ...      viewer  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${provider}'].broker}
+  ...      ${USERS.users['${provider1}'].broker}
   ...      minimal
   ${usernames}=  Create List  ${viewer}  ${provider}  ${provider1}
   :FOR  ${username}  IN  @{usernames}
+  \  Дочекатись синхронізації з майданчиком    ${username}
   \  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.startDate
 
 Неможливість подати цінову пропозицію без нецінового показника
+  [Documentation]
+  ...    "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком    ${provider}
   Дочекатись дати початку прийому пропозицій  ${provider}
   sleep  90
   ${bid}=  test bid data
@@ -67,6 +83,8 @@ ${broker}       Quinta
 
 Подати цінову пропозицію з неціновим показником
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
   ${bid}=  test bid data meat tender
   Log  ${bid}
   ${bidresponses}=  Create Dictionary
@@ -78,6 +96,8 @@ ${broker}       Quinta
 
 Можливість змінити неціновий показник повторної цінової пропозиції до 0
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
   ${fixbidparamsto0resp}=  create_data_dict   data.parameters[0].value  0
   ${fixbidparamsto0resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   ${fixbidparamsto0resp}
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   fixbidparamsto0resp   ${fixbidparamsto0resp}
@@ -85,6 +105,8 @@ ${broker}       Quinta
 
 Можливість змінити неціновий показник повторної цінової пропозиції до 0.15
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
   ${fixbidparamsto015resp}=  create_data_dict   data.parameters[0].value  0.15
   ${fixbidparamsto015resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   ${fixbidparamsto015resp}
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   fixbidparamsto015resp   ${fixbidparamsto015resp}
@@ -92,6 +114,9 @@ ${broker}       Quinta
 
 Подати цінову пропозицію з неціновим показником другим учасником
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
+  ...      provider1
+  ...      ${USERS.users['${provider1}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком    ${provider1}
   Дочекатись дати початку прийому пропозицій  ${provider1}
   ${bid}=  test bid data meat tender
   Log  ${bid}
@@ -111,15 +136,22 @@ ${broker}       Quinta
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      minimal
+  [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
   Викликати для учасника  ${viewer}  Отримати інформацію із тендера  auctionPeriod.startDate
 
 
 Очікування аукціону
+  [Tags]   ${USERS.users['${viewer}'].broker}: Очікування аукціону
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
   Дочекатись дати початку аукціону  ${viewer}
   sleep  1500
 
 Завершення аукціону
-  Дочекатись синхронізації з майданчиком    ${tender_owner}
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Результати аукціону
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком    ${tender_owner}
   ${tender_data}=  Викликати для учасника   ${tender_owner}   Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
   ${result}=    chef  ${tender_data.data.bids}  ${tender_data.data.features}
   Log Many  ${result[0]}  ${tender_data.data.awards[0]}
