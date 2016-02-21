@@ -33,7 +33,7 @@ ${complaint_id}  1
   Set To Dictionary  ${TENDER}   LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
   Log  ${TENDER}
 
-Пошук мультилотового тендера по ідентифікатору
+Можливість знайти мультилотовий тендер по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
   ...      viewer  tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
@@ -47,7 +47,7 @@ ${complaint_id}  1
 #######
 #Операції з лотом
 
-Створення лоту
+Можливість створення лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
@@ -69,7 +69,7 @@ ${complaint_id}  1
   ${lotdelete}=  Викликати для учасника   ${tender_owner}  Видалити лот  ${tender_data}  ${lot}
   Log  ${lotdelete}
 
-Повторне створення лоту
+Можливість повторого створення лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
@@ -111,7 +111,7 @@ ${complaint_id}  1
   ...      ${USERS.users['${tender_owner}'].broker}
   Викликати для учасника   ${tender_owner}   Додати предмети закупівлі    ${TENDER['TENDER_UAID']}   1
 
-Добавити предмет закупівлі до лоту
+Можливість добавити предмет закупівлі до лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
@@ -159,7 +159,7 @@ ${complaint_id}  1
 #######
 #Запитання до лоту
 
-Задати питання
+Можливість задати питання
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість задати запитання
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
@@ -169,7 +169,7 @@ ${complaint_id}  1
   ${now}=  Get Current TZdate
   Set To Dictionary  ${QUESTIONS[${question_id}].data}   date   ${now}
 
-Відповісти на запитання
+Можливість відповісти на запитання
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість відповісти на запитання
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
@@ -291,7 +291,7 @@ ${complaint_id}  1
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   no_lot_bid_resp  ${no_lot_bid_resp}
   log   ${USERS.users['${provider}']}
 
-Подати цінову пропозицію першим учасником
+Можливість подати цінову пропозицію першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   ...      prvider
   ...      ${USERS.users['${provider}'].broker}
@@ -311,7 +311,7 @@ ${complaint_id}  1
   ${canceledbidresp}=  Викликати для учасника   ${provider}   Скасувати цінову пропозицію   ${TENDER['TENDER_UAID']}   ${USERS.users['${provider}'].bidresponses['resp']}
   Log  ${canceledbidresp}
 
-Подати повторно цінову пропозицію першим учасником
+Можливість подати повторно цінову пропозицію першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   ...      prvider
   ...      ${USERS.users['${provider}'].broker}
@@ -343,7 +343,7 @@ ${complaint_id}  1
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   fixbidto10resp   ${fixbidto10resp}
   log  ${fixbidto10resp}
 
-Подати цінову пропозицію другим учасником
+Можливість подати цінову пропозицію другим учасником
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
   ...      prvider1
   ...      ${USERS.users['${provider1}'].broker}

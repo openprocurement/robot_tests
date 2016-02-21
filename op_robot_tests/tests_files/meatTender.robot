@@ -81,7 +81,7 @@ ${broker}       Quinta
   ${failbid}=  Викликати для учасника   ${provider}   Подати цінову пропозицію   shouldfail   ${TENDER['TENDER_UAID']}   ${bid}
   log  ${failbid}
 
-Подати цінову пропозицію з неціновим показником
+Можливість подати цінову пропозицію з неціновим показником
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
@@ -112,7 +112,7 @@ ${broker}       Quinta
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   fixbidparamsto015resp   ${fixbidparamsto015resp}
   log  ${fixbidparamsto015resp}
 
-Подати цінову пропозицію з неціновим показником другим учасником
+Можливість подати цінову пропозицію з неціновим показником другим учасником
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
@@ -147,7 +147,7 @@ ${broker}       Quinta
   Дочекатись дати початку аукціону  ${viewer}
   sleep  1500
 
-Завершення аукціону
+Можливість отримати результати аукціону
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Результати аукціону
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}

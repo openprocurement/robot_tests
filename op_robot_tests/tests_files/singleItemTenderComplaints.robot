@@ -28,7 +28,7 @@ ${broker}       Quinta
   Set To Dictionary  ${TENDER}   LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
   log  ${TENDER}
 
-Пошук однопредметного тендера по ідентифікатору
+Можливість знайти однопредметний тендер по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
   ...        viewer
   ...        ${USERS.users['${viewer}'].broker}
