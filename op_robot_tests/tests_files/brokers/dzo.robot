@@ -2,7 +2,7 @@
 Library  Selenium2Screenshots
 Library  String
 Library  DateTime
-Library  netcast_service.py
+Library  dzo_service.py
 
 *** Variables ***
 ${locator.tenderId}                  xpath=//td[./text()='TenderID']/following-sibling::td[1]
@@ -41,7 +41,7 @@ ${locator.questions[0].answer}       xpath=//div[@class = 'answer relative']//di
   Run Keyword And Ignore Error       Pre Login   ${ARGUMENTS[0]}
   Wait Until Page Contains Element   jquery=a[href="/cabinet"]
   Click Element                      jquery=a[href="/cabinet"]
-  Run Keyword If                     '${username}' != 'Netcast_Viewer'   Login
+  Run Keyword If                     '${username}' != 'DZO_Viewer'   Login
 
 Login
   [Arguments]  @{ARGUMENTS}
@@ -211,7 +211,7 @@ Set Multi Ids
   Run keyword if   '${TEST NAME}' != 'Можливість додати позицію закупівлі в тендер'   видалити позиції
 
 додати позицію
-  netcast.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+  dzo.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
   Wait Until Page Contains Element           xpath=//a[./text()='Редагувати']   30
   Click Element                              xpath=//a[./text()='Редагувати']
   Додати багато предметів     ${ARGUMENTS[2]}
@@ -219,7 +219,7 @@ Set Multi Ids
   Click Element                              xpath=//button[./text()='Зберегти']
 
 видалити позиції
-  netcast.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+  dzo.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
   Wait Until Page Contains Element           xpath=//a[./text()='Редагувати']   30
   Click Element                              xpath=//a[./text()='Редагувати']
   : FOR    ${INDEX}    IN RANGE    1    ${ARGUMENTS[2]}-1
@@ -258,7 +258,7 @@ Set Multi Ids
   ${description}=  Get From Dictionary  ${ARGUMENTS[2].data}  description
 
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
-  netcast.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+  dzo.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
   sleep  1
   Execute Javascript                  window.scroll(2500,2500)
   Wait Until Page Contains Element    xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]    20
@@ -281,7 +281,7 @@ Set Multi Ids
   ${answer}=     Get From Dictionary  ${ARGUMENTS[3].data}  answer
   Selenium2Library.Switch Browser     ${ARGUMENTS[0]}
 
-  netcast.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+  dzo.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
   Execute Javascript                  window.scroll(1500,1500)
   Wait Until Page Contains Element    xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]    20
   Click Element                       xpath=//a[@class='reverse openCPart'][span[text()='Обговорення']]
@@ -301,7 +301,7 @@ Set Multi Ids
   ${description}=      Get From Dictionary  ${ARGUMENTS[2].data}  description
 
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
-  netcast.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+  dzo.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
   sleep  1
   Execute Javascript                 window.scroll(1500,1500)
   Click Element                      xpath=//a[@class='reverse openCPart'][span[text()='Скарги']]
@@ -322,7 +322,7 @@ Set Multi Ids
   ${description}=      Get From Dictionary  ${ARGUMENTS[2].data}  description
 
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
-  netcast.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+  dzo.Пошук тендера по ідентифікатору   ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
   sleep  1
   Execute Javascript                 window.scroll(1500,1500)
   Click Element                      xpath=//a[@class='reverse openCPart'][span[text()='Скарги']]
@@ -358,7 +358,7 @@ Set Multi Ids
   ...      ${ARGUMENTS[1]} = tenderUaId
 
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
-  netcast.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
+  dzo.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}   ${ARGUMENTS[1]}
   Reload Page
 
 отримати інформацію із тендера
@@ -479,31 +479,31 @@ Set Multi Ids
   [return]  ${unitCode}
 
 отримати інформацію про procuringEntity.name
-  Log       | Viewer can't see this information on Netcast        console=yes
+  Log       | Viewer can't see this information on DZO        console=yes
 
 отримати інформацію про enquiryPeriod.startDate
-  Log       | Viewer can't see this information on Netcast        console=yes
+  Log       | Viewer can't see this information on DZO        console=yes
 
 отримати інформацію про tenderPeriod.startDate
-  Log       | Viewer can't see this information on Netcast        console=yes
+  Log       | Viewer can't see this information on DZO        console=yes
 
 отримати інформацію про items[0].deliveryLocation.longitude
-  Log       | Viewer can't see this information on Netcast        console=yes
+  Log       | Viewer can't see this information on DZO        console=yes
 
 отримати інформацію про items[0].deliveryLocation.latitude
-  Log       | Viewer can't see this information on Netcast        console=yes
+  Log       | Viewer can't see this information on DZO        console=yes
 
 отримати інформацію про items[0].deliveryAddress.postalCode
-  Log       | Viewer can't see this information on Netcast        console=yes
+  Log       | Viewer can't see this information on DZO        console=yes
 
 отримати інформацію про items[0].deliveryAddress.locality
-  Log       | Viewer can't see this information on Netcast        console=yes
+  Log       | Viewer can't see this information on DZO        console=yes
 
 отримати інформацію про items[0].deliveryAddress.streetAddress
-  Log       | Viewer can't see this information on Netcast        console=yes
+  Log       | Viewer can't see this information on DZO        console=yes
 
 отримати інформацію про items[0].deliveryAddress.region
-  Log       | Viewer can't see this information on Netcast        console=yes
+  Log       | Viewer can't see this information on DZO        console=yes
 
 отримати інформацію про items[0].unit.name
-  Log       | Viewer can't see this information on Netcast        console=yes
+  Log       | Viewer can't see this information on DZO        console=yes

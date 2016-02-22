@@ -41,24 +41,24 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [640, 450]
-    Netcast_Owner:
-        broker:   Netcast
+    DZO_Owner:
+        broker:   DZO
         homepage: "http://dz2.byustudio.in.ua"
         login:    ovramet.s@gmail.com
         password: Password1
         browser:  chrome
         position: [0, 0]
         size:     [700, 800]
-    Netcast_Provider1:
-        broker:   Netcast
+    DZO_Provider1:
+        broker:   DZO
         homepage: "http://dz2.byustudio.in.ua"
         login:    halyna.khimka@gmail.com
         password: JHO5VUp5n
         browser:  chrome
         position: [0, 0]
         size:     [600, 800]
-    Netcast_Viewer:
-        broker:   Netcast
+    DZO_Viewer:
+        broker:   DZO
         homepage: "http://dz2.byustudio.in.ua"
         browser:  chrome
         position: [0, 0]

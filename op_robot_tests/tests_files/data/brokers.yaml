@@ -32,14 +32,14 @@ E-tender:
         provider1:      E-tender_Provider2
         viewer:         E-tender_Viewer
     timeout_on_wait: 600
-Netcast:
-    keywords_file: netcast
+DZO:
+    keywords_file: dzo
     login: admin
     password: uStudio
     roles:
-        tender_owner:   Netcast_Owner
-        provider:       Netcast_Provider1
-        viewer:         Netcast_Viewer
+        tender_owner:   DZO_Owner
+        provider:       DZO_Provider1
+        viewer:         DZO_Viewer
 Newtend:
     keywords_file: newtend
     roles:
