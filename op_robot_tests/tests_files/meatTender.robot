@@ -62,33 +62,32 @@ ${broker}       Quinta
   sleep  90
   ${bid}=  test bid data
   Log  ${bid}
-  ${biddingresponse0}=  Викликати для учасника   ${provider}   Подати цінову пропозицію   shouldfail   ${TENDER['TENDER_UAID']}   ${bid}
-  log  ${biddingresponse0}
+  ${failbid}=  Викликати для учасника   ${provider}   Подати цінову пропозицію   shouldfail   ${TENDER['TENDER_UAID']}   ${bid}
+  log  ${failbid}
 
 Подати цінову пропозицію з неціновим показником
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   ${bid}=  test bid data meat tender
   Log  ${bid}
+  ${bidresponses}=  Create Dictionary
+  Set To Dictionary  ${bidresponses}                 bid   ${bid}
+  Set To Dictionary  ${USERS.users['${provider}']}   bidresponses  ${bidresponses}
   ${resp}=  Викликати для учасника   ${provider}   Подати цінову пропозицію   ${TENDER['TENDER_UAID']}   ${bid}
-  ${biddingresponse0}=  Create Dictionary
-  Set To Dictionary  ${biddingresponse0}                 resp  ${resp}
-  Set To Dictionary  ${USERS.users['${provider}']}   biddingresponse0  ${biddingresponse0}
+  Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   resp  ${resp}
   log  ${resp}
 
 Можливість змінити неціновий показник повторної цінової пропозиції до 0
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
-  Set To Dictionary  ${USERS.users['${provider}'].biddingresponse0['resp'].data.parameters[0]}  value   0
-  Log   ${USERS.users['${provider}'].biddingresponse0['resp'].data.parameters[0]}
-  ${fixbidparamsto0resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   ${USERS.users['${provider}'].biddingresponse0['resp']}
-  Set To Dictionary  ${USERS.users['${provider}'].biddingresponse0}   fixbidparamsto0resp   ${fixbidparamsto0resp}
+  ${fixbidparamsto0resp}=  create_data_dict   data.parameters[0].value  0
+  ${fixbidparamsto0resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   ${fixbidparamsto0resp}
+  Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   fixbidparamsto0resp   ${fixbidparamsto0resp}
   log  ${fixbidparamsto0resp}
 
 Можливість змінити неціновий показник повторної цінової пропозиції до 0.15
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
-  Set To Dictionary  ${USERS.users['${provider}'].biddingresponse0['resp'].data.parameters[0]}  value   0.15
-  Log   ${USERS.users['${provider}'].biddingresponse0['resp'].data.parameters[0]}
-  ${fixbidparamsto015resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   ${USERS.users['${provider}'].biddingresponse0['resp']}
-  Set To Dictionary  ${USERS.users['${provider}'].biddingresponse0}   fixbidparamsto015resp   ${fixbidparamsto015resp}
+  ${fixbidparamsto015resp}=  create_data_dict   data.parameters[0].value  0.15
+  ${fixbidparamsto015resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   ${fixbidparamsto015resp}
+  Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   fixbidparamsto015resp   ${fixbidparamsto015resp}
   log  ${fixbidparamsto015resp}
 
 Подати цінову пропозицію з неціновим показником другим учасником
@@ -97,9 +96,10 @@ ${broker}       Quinta
   ${bid}=  test bid data meat tender
   Log  ${bid}
   ${bidresponses}=  Create Dictionary
-  ${resp}=  Викликати для учасника   ${provider1}   Подати цінову пропозицію   ${TENDER['TENDER_UAID']}   ${bid}
-  Set To Dictionary  ${bidresponses}                 resp  ${resp}
+  Set To Dictionary  ${bidresponses}                 bid  ${bid}
   Set To Dictionary  ${USERS.users['${provider1}']}   bidresponses  ${bidresponses}
+  ${resp}=  Викликати для учасника   ${provider1}   Подати цінову пропозицію   ${TENDER['TENDER_UAID']}   ${bid}
+  Set To Dictionary  ${USERS.users['${provider1}'].bidresponses}   resp  ${resp}
   log  ${resp}
   log  ${USERS.users['${provider1}'].bidresponses}
 

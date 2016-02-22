@@ -182,6 +182,13 @@ def merge_dicts(left, right):
     return new
 
 
+def create_data_dict(path_to_key=None, value=None):
+    data_dict = munchify({'data': {}})
+    if isinstance(path_to_key, basestring) and isinstance(value, basestring):
+        data_dict = set_to_object(data_dict, path_to_key, value)
+    return data_dict
+
+
 def cancel_tender(cancellation_reason):
     return {
         'data': {
