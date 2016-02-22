@@ -76,6 +76,7 @@ Publicbid:
     keywords_file: publicbid
     roles:
         tender_owner:   Publicbid_Owner
+        provider:       Publicbid_Provider1
         viewer:         Publicbid_Viewer
     intervals:
         enquiry:
