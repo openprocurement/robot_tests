@@ -323,6 +323,10 @@ Library  openprocurement_client_helper.py
 ##############################################################################
 
 Модифікувати закупівлю
+  [Documentation]
+  ...      [Arguments] Username and tender uaid
+  ...      Find tender using uaid, get data from modify_tender and call patch_tender
+  ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${data}=  modify_tender  ${tender['data']['id']}  ${tender['access']['token']}
@@ -332,6 +336,10 @@ Library  openprocurement_client_helper.py
 
 
 Додати постачальника
+  [Documentation]
+  ...      [Arguments] Username and tender uaid
+  ...      Find tender using uaid, get data from test_supplier_data and call create_award
+  ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${supplier_data}=  test_supplier_data
@@ -341,6 +349,10 @@ Library  openprocurement_client_helper.py
 
 
 Підтвердити постачальника
+  [Documentation]
+  ...      [Arguments] Username, tender uaid and number of the award to confirm
+  ...      Find tender using uaid, get data from confirm_supplier and call patch_award
+  ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}  ${award_num}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${data}=  confirm_supplier  ${tender['data']['awards'][${award_num}]['id']}
@@ -350,6 +362,11 @@ Library  openprocurement_client_helper.py
 
 
 Додати запит на скасування
+  [Documentation]
+  ...      [Arguments] Username and tender uaid
+  ...      Find tender using uaid, set cancellation reason, get data from cancel_tender
+  ...      and call create_cancellation
+  ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${CANCELLATION_REASON}  Set variable  prost :))
@@ -361,6 +378,10 @@ Library  openprocurement_client_helper.py
 
 
 Завантажити документацію до запиту на скасування
+  [Documentation]
+  ...      [Arguments] Username, tender uaid and number of cancellation
+  ...      Find tender using uaid, create fake documentation and call upload_cancellation_document
+  ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}  ${cancel_num}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${FIRST_CANCELLATION_DOCUMENT}=  create_fake_doc
@@ -370,6 +391,11 @@ Library  openprocurement_client_helper.py
 
 
 Змінити опис документа в скасуванні
+  [Documentation]
+  ...      [Arguments] Username, tender uaid, cancellation number and cancellation document number
+  ...      Find tender using uaid, get data from change_cancellation_document_field and call
+  ...      patch_cancellation_document
+  ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}  ${cancel_num}  ${doc_num}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${CANCELLATION_DOCUMENT_DESCRIPTION}  Set variable  test description
@@ -382,6 +408,10 @@ Library  openprocurement_client_helper.py
 
 
 Завантажити нову версію документа до запиту на скасування
+  [Documentation]
+  ...      [Arguments] Username, tender uaid, cancallation number and cancellation document number
+  ...      Find tender using uaid, create fake documentation and call update_cancellation_document
+  ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}  ${cancel_num}  ${doc_num}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${SECOND_CANCELLATION_DOCUMENT}=  create_fake_doc
@@ -392,6 +422,10 @@ Library  openprocurement_client_helper.py
 
 
 Підтвердити скасування закупівлі
+  [Documentation]
+  ...      [Arguments] Username, tender uaid, cancellation number
+  ...      Find tender using uaid, get cancellation confirmation data and call patch_cancellation
+  ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}  ${cancel_num}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${data}=  confirm_cancellation  ${tender['data']['cancellations'][${cancel_num}]['id']}
@@ -401,6 +435,10 @@ Library  openprocurement_client_helper.py
 
 
 Підтвердити підписання контракту
+  [Documentation]
+  ...      [Arguments] Username, tender uaid, contract number
+  ...      Find tender using uaid, get contract confirmation data and call patch_contract
+  ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}  ${contract_num}
   ${tender}=  Викликати для учасника  ${username}  Пошук тендера по ідентифікатору  ${tender_uaid}
   ${data}=  confirm_contract  ${tender['data']['contracts'][${contract_num}]['id']}
