@@ -93,3 +93,14 @@ SmartTender:
     keywords_file: smarttender
     roles:
         viewer:         SmartTender_Viewer
+        provider:       SmartTender_Provider1
+        provider1:      SmartTender_Provider2
+        tender_owner:   SmartTender_Owner
+    intervals:
+        enquiry:
+            - 5
+            - 10
+        tender:
+            - 0
+            - 15
+    timeout_on_wait: 300

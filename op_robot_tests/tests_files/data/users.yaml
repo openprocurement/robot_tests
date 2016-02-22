@@ -155,7 +155,31 @@ users:
         size:     [640, 480]
     SmartTender_Viewer:
         broker:   SmartTender
-        homepage: "http://smarttender.biz/tenders"
+        homepage: "https://m.it.ua/cp_smart/test-tenders?allcat=1"
         browser:  chrome
         position: [0, 450]
         size:     [640, 450]
+    SmartTender_Provider1:
+        broker:   SmartTender
+        homepage: "https://m.it.ua/cp_smart/test-tenders?allcat=1"
+        login:    bened@it.ua
+        password: 111111
+        browser:  chrome
+        position: [0, 450]
+        size:     [640, 450]
+    SmartTender_Provider2:
+        broker:   SmartTender
+        homepage: "https://m.it.ua/cp_smart/test-tenders?allcat=1"
+        login:    my.mail.rudenko@gmail.com
+        password: qwerty123
+        browser:  chrome
+        position: [0, 450]
+        size:     [640, 450]
+    SmartTender_Owner:
+        broker:   SmartTender
+        homepage: "https://m.it.ua/cp_smart/"
+        login:    PPR_BV
+        password: 123321
+        browser:  chrome
+        position: [0, 0]
+        size:     [1400, 900]
