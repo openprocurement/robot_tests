@@ -26,6 +26,7 @@ from .initial_data import (
 from .local_time import get_now, TZ
 import os
 from barbecue import chef
+import re
 
 
 def get_current_tzdate():
@@ -185,7 +186,12 @@ def merge_dicts(left, right):
 def create_data_dict(path_to_key=None, value=None):
     data_dict = munchify({'data': {}})
     if isinstance(path_to_key, basestring) and isinstance(value, basestring):
-        data_dict = set_to_object(data_dict, path_to_key, value)
+        list_len = re.search('\d+', path_to_key).group(0)
+        if list_len:
+            path_to_key = path_to_key.replace('[', '').replace('].', '').split(list_len)
+            data_dict = set_to_object(data_dict, path_to_key[0] + list_len, set_to_object({}, path_to_key[1], value))
+        else:
+            data_dict = set_to_object(data_dict, path_to_key, value)
     return data_dict
 
 
