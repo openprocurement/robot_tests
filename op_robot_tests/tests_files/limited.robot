@@ -18,6 +18,7 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість створити пряму закупівлю
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
+  ...  minimal
   ${tender_data}=  Підготовка початкових даних
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}
   ...      Створити тендер
@@ -30,11 +31,11 @@ ${broker}       Quinta
   Log  ${TENDER}
 
 
-
 Можливість модифікації прямої закупівлі
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість модифікації прямої закупівлі
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
+  ...  critical level 2
   Викликати для учасника  ${tender_owner}
   ...      Модифікувати закупівлю
   ...      ${TENDER['TENDER_UAID']}
@@ -44,6 +45,7 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість додати тендерну документацію до прямої закупівлі
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
+  ...  critical level 2
   ${filepath}=  create_fake_doc
   Викликати для учасника  ${tender_owner}
   ...      Завантажити документ
@@ -57,6 +59,7 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість зареєструвати і підтвердити постачальника до прямої закупівлі
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
+  ...  minimal
   ${SUPP_NUM}  Set variable  0
   Set Suite Variable  ${SUPP_NUM}
   Викликати для учасника  ${tender_owner}
@@ -72,6 +75,7 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Пошук прямої закупівлі по ідентифікатору
   ...  viewer
   ...  ${USERS.users['${tender_owner}'].broker}
+  ...  minimal
   Викликати для учасника  ${viewer}
   ...      Пошук тендера по ідентифікатору
   ...      ${TENDER['TENDER_UAID']}
@@ -659,6 +663,7 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість сформувати запит на скасування прямої закупівлі
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
+  ...  critical level 2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   ${CANCEL_NUM}  Set variable  0
   Set suite variable  ${CANCEL_NUM}
@@ -695,6 +700,7 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість активувати скасування прямої закупівлі
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
+  ...  critical level 2
   Викликати для учасника  ${tender_owner}
   ...      Підтвердити скасування закупівлі
   ...      ${TENDER['TENDER_UAID']}  ${CANCEL_NUM}
