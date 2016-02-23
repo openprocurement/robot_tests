@@ -71,13 +71,8 @@ ${broker}       Quinta
 Можливість знайти пряму закупівлю по ідентифікатору
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Пошук прямої закупівлі по ідентифікатору
   ...  viewer
-  ...  tender_owner
-  ...  provider
   ...  ${USERS.users['${tender_owner}'].broker}
-  ${usernames}=  Create List  ${viewer}  ${tender_owner}  ${provider}
-  :FOR  ${username}  IN  @{usernames}
-  \  Дочекатись синхронізації з майданчиком  ${username}
-  \  Викликати для учасника  ${username}
+  Викликати для учасника  ${viewer}
   ...      Пошук тендера по ідентифікатору
   ...      ${TENDER['TENDER_UAID']}
 
