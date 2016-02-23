@@ -185,7 +185,11 @@ def merge_dicts(left, right):
 def create_data_dict(path_to_key=None, value=None):
     data_dict = munchify({'data': {}})
     if isinstance(path_to_key, basestring) and isinstance(value, basestring):
-        data_dict = set_to_object(data_dict, path_to_key, value)
+        if '[0]' in path_to_key:
+            path_to_key.split('[0].')
+            data_dict = set_to_object(data_dict, path_to_key[0] + '.0', set_to_object({}, path_to_key[1], value))
+        else:
+            data_dict = set_to_object(data_dict, path_to_key, value)
     return data_dict
 
 
