@@ -28,6 +28,7 @@ ${broker}       Quinta
   Log  ${TENDER}
 
 
+
 Можливість модифікації прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Можливість модифікації прямої закупівлі
   ...  tender_owner
@@ -339,7 +340,7 @@ ${broker}       Quinta
   ...  ${USERS.users['${viewer}'].broker}
   ${usernames}=  Create List  ${viewer}  ${provider}  ${tender_owner}
   :FOR  ${username}  IN  @{usernames}
-  \  Звірити поле тендера із значенням  ${username}  ${USERS.users['${tender_owner}'].modified_items[${ITEMS_NUM}]['quantity']}  items[${ITEMS_NUM}].quantity
+  \  Звірити поле тендера із значенням  ${username}  ${USERS.users['${tender_owner}'].additional_items[${ITEMS_NUM}]['quantity']}  items[${ITEMS_NUM}].quantity
 
 
 Відображення назви одиниці номенклатури прямої закупівлі
@@ -348,7 +349,7 @@ ${broker}       Quinta
   ...  ${USERS.users['${viewer}'].broker}
   ${usernames}=  Create List  ${viewer}  ${provider}  ${tender_owner}
   :FOR  ${username}  IN  @{usernames}
-  \  Звірити поле тендера із значенням  ${username}  ${USERS.users['${tender_owner}'].modified_items[${ITEMS_NUM}]['unit']['name']}  items[${ITEMS_NUM}].unit.name
+  \  Звірити поле тендера із значенням  ${username}  ${USERS.users['${tender_owner}'].additional_items[${ITEMS_NUM}]['unit']['name']}  items[${ITEMS_NUM}].unit.name
 
 
 Відображення коду одиниці номенклатури прямої закупівлі
@@ -357,7 +358,7 @@ ${broker}       Quinta
   ...  ${USERS.users['${viewer}'].broker}
   ${usernames}=  Create List  ${viewer}  ${provider}  ${tender_owner}
   :FOR  ${username}  IN  @{usernames}
-  \  Звірити поле тендера із значенням  ${username}  ${USERS.users['${tender_owner}'].modified_items[${ITEMS_NUM}]['unit']['code']}  items[${ITEMS_NUM}].unit.code
+  \  Звірити поле тендера із значенням  ${username}  ${USERS.users['${tender_owner}'].additional_items[${ITEMS_NUM}]['unit']['code']}  items[${ITEMS_NUM}].unit.code
 
 
 Відображення дати доставки номенклатури прямої закупівлі

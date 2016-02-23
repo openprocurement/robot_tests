@@ -325,13 +325,13 @@ Library  openprocurement_client_helper.py
 Модифікувати закупівлю
   [Documentation]
   ...      [Arguments] Username and tender uaid
-  ...      Find tender using uaid, get data from modify_tender and call patch_tender
+  ...      Find tender using uaid, get data from additional_items_data and call patch_tender
   ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${data}=  modify_tender  ${tender['data']['id']}  ${tender['access']['token']}
+  ${data}=  additional_items_data  ${tender['data']['id']}  ${tender['access']['token']}
   Log  ${data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  modified_items  ${data['data']['items']}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  additional_items  ${data['data']['items']}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${data}
   Log  ${reply}
 

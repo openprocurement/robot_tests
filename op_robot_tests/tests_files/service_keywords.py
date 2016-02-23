@@ -228,7 +228,7 @@ def confirm_contract(contract_id):
     return data
 
 
-def modify_tender(tender_id, access_token):
+def additional_items_data(tender_id, access_token):
     data = {"access": {"token": access_token}, "data": {"id": tender_id, "items": [{"unit": {"code": "MON", "name": "month"}, "quantity": 9}]}}
     return data
 
