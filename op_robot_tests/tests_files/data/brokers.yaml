@@ -49,11 +49,11 @@ Newtend:
 Prom:
     intervals:
        enquiry:
-           - 8
-           - 8
+           - 10
+           - 10
        tender:
            - 0
-           - 31
+           - 45
     keywords_file: prom
     roles:
         tender_owner:   Prom_Owner
