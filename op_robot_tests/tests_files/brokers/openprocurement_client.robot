@@ -339,13 +339,11 @@ Library  openprocurement_client_helper.py
 Додати постачальника
   [Documentation]
   ...      [Arguments] Username and tender uaid
-  ...      Find tender using uaid, get data from test_supplier_data and call create_award
+  ...      Find tender using uaid, get data from Підготувати дані про постачальника and call create_award
   ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${supplier_data}=  test_supplier_data
-  Log  ${supplier_data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  supplier_data  ${supplier_data}
+  ${supplier_data}=  Підготувати дані про постачальника  ${username}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_award  ${tender}  ${supplier_data}
   Log  ${reply}
 
@@ -365,13 +363,12 @@ Library  openprocurement_client_helper.py
 
 Додати запит на скасування
   [Documentation]
-  ...      [Arguments] Username and tender uaid
+  ...      [Arguments] Username, tender uaid and cancellation reason
   ...      Find tender using uaid, set cancellation reason, get data from cancel_tender
   ...      and call create_cancellation
   ...      [Return] Nothing
-  [Arguments]  ${username}  ${tender_uaid}
+  [Arguments]  ${username}  ${tender_uaid}  ${cancellation_reason}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${cancellation_reason}  Set variable  prost :))
   ${data}=  cancel_tender  ${cancellation_reason}
   Log  ${data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  cancellation_reason  ${data}
@@ -400,8 +397,8 @@ Library  openprocurement_client_helper.py
   ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}  ${cancel_num}  ${doc_num}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${cancellation_document_field}  Set variable  description
-  ${cancellation_document_description}  Set variable  test description
+  ${cancellation_document_field}=  Set variable  description
+  ${cancellation_document_description}=  Set variable  test description
   Set To Dictionary  ${USERS.users['${tender_owner}']}  cancellation_document_description  ${cancellation_document_description}
   ${data}=  change_cancellation_document_field  ${cancellation_document_field}  ${cancellation_document_description}
   Log  ${data}

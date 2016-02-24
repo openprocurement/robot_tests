@@ -107,6 +107,14 @@ Get Broker Property By Username
   [return]  ${tender_data}
 
 
+Підготувати дані про постачальника
+  [Arguments]  ${username}
+  ${supplier_data}=  test_supplier_data
+  Set To Dictionary  ${USERS.users['${username}']}  supplier_data  ${supplier_data}
+  Log  ${supplier_data}
+  [Return]  ${supplier_data}
+
+
 Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
   ${bundled_st}=  Run Keyword And Return Status  Import Resource  ${CURDIR}/brokers/${keywords_file}.robot
   ${external_st}=  Run Keyword And Return Status  Import Resource  ${CURDIR}/../../src/robot_tests.broker.${keywords_file}/${keywords_file}.robot

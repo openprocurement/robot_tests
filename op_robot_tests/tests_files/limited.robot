@@ -60,7 +60,7 @@ ${broker}       Quinta
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  minimal
-  ${SUPP_NUM}  Set variable  0
+  ${SUPP_NUM}=  Set variable  0
   Set Suite Variable  ${SUPP_NUM}
   Викликати для учасника  ${tender_owner}
   ...      Додати постачальника
@@ -151,7 +151,7 @@ ${broker}       Quinta
   ...      value.currency
 
 
-Відображення врахування податку в бюджет прямої закупівлі
+Відображення врахованого податку в бюджет прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення врахування податку в бюджет прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
@@ -235,15 +235,6 @@ ${broker}       Quinta
   ...      procuringEntity.contactPoint.url
 
 
-Відображення ідентифікатора замовника прямої закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення ідентифікатора замовника прямої закупівлі
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      procuringEntity.identifier.id
-
-
 Відображення офіційного імені замовника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення офіційного імені замовника прямої закупівлі
   ...  viewer
@@ -253,13 +244,22 @@ ${broker}       Quinta
   ...      procuringEntity.identifier.legalName
 
 
-Відображення схеми замовника прямої закупівлі
+Відображення схеми ідентифікації замовника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення схеми замовника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера  ${viewer}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      procuringEntity.identifier.scheme
+
+
+Відображення ідентифікатора замовника прямої закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення ідентифікатора замовника прямої закупівлі
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  Звірити поле тендера  ${viewer}
+  ...      ${USERS.users['${tender_owner}'].initial_data}
+  ...      procuringEntity.identifier.id
 
 
 Відображення імені замовника прямої закупівлі
@@ -278,9 +278,9 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення опису додаткової класифікації номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ${ITEMS_NUM}  Set variable  0
+  ${ITEMS_NUM}=  Set variable  0
   Set Suite Variable  ${ITEMS_NUM}
-  ${ADDITIONAL_CLASS_NUM}  Set variable  0
+  ${ADDITIONAL_CLASS_NUM}=  Set variable  0
   Set Suite Variable  ${ADDITIONAL_CLASS_NUM}
   Звірити поле тендера  ${viewer}
   ...      ${USERS.users['${tender_owner}'].initial_data}
@@ -474,7 +474,7 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення заголовку документа прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ${doc_num}  Set variable  0
+  ${doc_num}=  Set variable  0
   Звірити поле тендера із значенням  ${viewer}
   ...      ${USERS.users['${tender_owner}']['documents']['filepath']}
   ...      documents[${doc_num}].title
@@ -487,7 +487,7 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення підтвердженого постачальника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ${AWARD_NUM}  Set variable  0
+  ${AWARD_NUM}=  Set variable  0
   Set Suite Variable  ${AWARD_NUM}
   Звірити поле тендера із значенням  ${viewer}
   ...      active
@@ -566,7 +566,7 @@ ${broker}       Quinta
   ...      awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].contactPoint.email
 
 
-Відображення схеми постачальника прямої закупівлі
+Відображення схеми ідентифікації постачальника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення контактного імейлу постачальника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
@@ -637,7 +637,7 @@ ${broker}       Quinta
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  ${CONTR_NUM}  Set Variable  0
+  ${CONTR_NUM}=  Set variable  0
   Set suite variable  ${CONTR_NUM}
   Викликати для учасника  ${tender_owner}
   ...      Підтвердити підписання контракту
@@ -665,11 +665,13 @@ ${broker}       Quinta
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  critical level 2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  ${CANCEL_NUM}  Set variable  0
+  ${CANCEL_NUM}=  Set variable  0
   Set suite variable  ${CANCEL_NUM}
+  ${cancellation_reason}=  Set variable  prosto tak :)
   Викликати для учасника  ${tender_owner}
   ...      Додати запит на скасування
   ...      ${TENDER['TENDER_UAID']}
+  ...      ${cancellation_reason}
   Викликати для учасника  ${tender_owner}
   ...      Завантажити документацію до запиту на скасування
   ...      ${TENDER['TENDER_UAID']}
@@ -680,7 +682,7 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість змінити опис документа в скасуванні прямої закупівлі
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ${FIRST_DOC}  Set Variable  0
+  ${FIRST_DOC}=  Set variable  0
   Set Suite Variable  ${FIRST_DOC}
   Викликати для учасника  ${tender_owner}
   ...      Змінити опис документа в скасуванні
@@ -747,7 +749,7 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення заголовку другого документа скасування прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ${second_doc_num}  Set Variable  1
+  ${second_doc_num}=  Set variable  1
   Звірити поле тендера із значенням  ${viewer}
   ...      ${USERS.users['${tender_owner}']['second_cancel_doc']}
   ...      cancellations[${CANCEL_NUM}].documents[${second_doc_num}].title
