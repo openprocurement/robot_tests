@@ -504,6 +504,87 @@ def test_complaint_data():
     })
 
 
+def test_complaint_answer_data(complaint_id):
+    return {
+        "data": {
+            "id": complaint_id,
+            "status": "answered",
+            "resolutionType": "resolved",
+            "resolution": fake.sentence(nb_words=40, variable_nb_words=True)
+        }
+    }
+
+
+def test_complaint_answer_confirmation_data(complaint_id):
+    return {
+        "data": {
+            "id": complaint_id,
+            "status": "resolved",
+            "satisfied": True
+        }
+    }
+
+
+def test_cancel_tender_data(cancellation_reason):
+    return {
+        'data': {
+            'reason': cancellation_reason
+        }
+    }
+
+
+def test_change_cancellation_document_field_data(key, value):
+    data = {
+        "data": {
+            key: value
+        }
+    }
+    return data
+
+
+def test_confirm_supplier_data(supplier_id):
+    return {
+        "data": {
+            "status": "active",
+            "id": supplier_id
+        }
+    }
+
+
+def test_confirm_cancellation_data(cancellation_id):
+    data = {
+        "data": {
+            "status": "active",
+            "id": cancellation_id
+        }
+    }
+    return data
+
+
+def test_confirm_contract_data(contract_id):
+    data = {
+        "data": {
+            "id": contract_id,
+            "status": "active"
+        }
+    }
+    return data
+
+
+def test_confirm_complaint_data(complaint_id):
+    return {
+        "data": {
+            "id": complaint_id,
+            "status": "claim"
+        }
+    }
+
+
+def test_additional_items_data(tender_id, access_token):
+    data = {"access": {"token": access_token}, "data": {"id": tender_id, "items": [{"unit": {"code": "MON", "name": "month"}, "quantity": 9}]}}
+    return data
+
+
 def test_complaint_reply_data():
     return munchify({
         "data": {

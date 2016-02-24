@@ -14,13 +14,36 @@ from robot.output.loggerhelper import Message
 # can access them by simply importing library "service_keywords".
 # Please ignore the warning given by Flake8 or other linter.
 from .initial_data import (
-    auction_bid, create_fake_doc, test_award_data, test_bid_data,
-    test_bid_data_meat_tender, test_complaint_data, test_complaint_reply_data,
-    test_invalid_features_data, test_item_data, test_lot_complaint_data,
-    test_lot_data, test_lot_document_data, test_lot_question_data,
-    test_lots_bid_data, test_meat_tender_data, test_question_answer_data,
-    test_question_data, test_supplier_data, test_tender_data,
-    test_tender_data_limited, test_tender_data_multiple_items,
+    auction_bid,
+    create_fake_doc,
+    test_additional_items_data,
+    test_award_data,
+    test_bid_data,
+    test_bid_data_meat_tender,
+    test_cancel_tender_data,
+    test_change_cancellation_document_field_data,
+    test_confirm_cancellation_data,
+    test_confirm_complaint_data,
+    test_confirm_contract_data,
+    test_confirm_supplier_data,
+    test_complaint_answer_confirmation_data,
+    test_complaint_answer_data,
+    test_complaint_data,
+    test_complaint_reply_data,
+    test_invalid_features_data,
+    test_item_data,
+    test_lot_complaint_data,
+    test_lot_data,
+    test_lot_document_data,
+    test_lot_question_data,
+    test_lots_bid_data,
+    test_meat_tender_data,
+    test_question_answer_data,
+    test_question_data,
+    test_supplier_data,
+    test_tender_data,
+    test_tender_data_limited,
+    test_tender_data_multiple_items,
     test_tender_data_multiple_lots
 )
 from .local_time import get_now, TZ
@@ -180,58 +203,6 @@ def merge_dicts(left, right):
     new.update(left)
     new.update(right)
     return new
-
-
-def cancel_tender(cancellation_reason):
-    return {
-        'data': {
-            'reason': cancellation_reason
-        }
-    }
-
-
-def confirm_supplier(supplier_id):
-    return {
-        "data": {
-            "status": "active",
-            "id": supplier_id
-        }
-    }
-
-
-def change_cancellation_document_field(key, value):
-    data = {
-        "data": {
-            key: value
-        }
-    }
-    return data
-
-
-def confirm_cancellation(cancellation_id):
-    data = {
-        "data": {
-            "status": "active",
-            "id": cancellation_id
-        }
-    }
-    return data
-
-
-def confirm_contract(contract_id):
-    data = {
-        "data": {
-            "id": contract_id,
-            "status": "active"
-        }
-    }
-    return data
-
-
-def additional_items_data(tender_id, access_token):
-    data = {"access": {"token": access_token}, "data": {"id": tender_id, "items": [{"unit": {"code": "MON", "name": "month"}, "quantity": 9}]}}
-    return data
-
 
 def munch_dict(arg=None, data=False):
     if arg is None:
