@@ -449,7 +449,7 @@ ${broker}       Quinta
   ...      items[${ITEMS_NUM}].deliveryAddress.region
 
 
-Відображення locality адреси доставки номенклатури прямої закупівлі
+Відображення міста адреси доставки номенклатури прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення locality адреси доставки номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
@@ -705,7 +705,8 @@ ${broker}       Quinta
   ...  critical level 2
   Викликати для учасника  ${tender_owner}
   ...      Підтвердити скасування закупівлі
-  ...      ${TENDER['TENDER_UAID']}  ${CANCEL_NUM}
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${CANCEL_NUM}
 
 
 Відображення активного статусу скасування прямої закупівлі
