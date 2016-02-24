@@ -143,6 +143,8 @@ Get Broker Property By Username
 Звірити поле тендера із значенням
   [Arguments]  ${username}  ${left}  ${field}
   ${right}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field}
+  Log  ${left}
+  Log  ${right}
   Порівняти об'єкти  ${left}  ${right}
   Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${left}
 
