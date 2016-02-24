@@ -19,6 +19,7 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
+  ...  можливість
   ${tender_data}=  Підготовка початкових даних
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}
   ...      Створити тендер
@@ -29,98 +30,521 @@ ${broker}       Quinta
   Log  ${TENDER}
 
 
-Можливість знайти однопредметний тендер по ідентифікатору
+Можливість знайти однопредметний тендер по ідентифікатору для глядача
   [Tags]  ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Дочекатись синхронізації з майданчиком  ${viewer}
+  ...  можливість
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Викликати для учасника  ${viewer}
   ...      Пошук тендера по ідентифікатору
   ...      ${TENDER['TENDER_UAID']}
 
 
-Можливість подати скаргу на умови
-  [Tags]  ${USERS.users['${provider}'].broker}: Можливість подати скаргу на умови
+Можливість знайти однопредметний тендер по ідентифікатору для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Пошук тендера по ідентифікатору
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
-  [Documentation]  Користувач  ${USERS.users['${provider}'].broker}  намагається подати скаргу на умови оголошеної закупівлі
+  ...  можливість
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   Викликати для учасника  ${provider}
-  ...      Подати скаргу
+  ...      Пошук тендера по ідентифікатору
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${COMPLAINTS[0]}
-  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
-  Set Global Variable  ${LAST_MODIFICATION_DATE}
 
 
-Можливість побачити скаргу користувачем
-  [Tags]  ${USERS.users['${provider}'].broker}: Відображення основних даних оголошеного тендера
+Можливість створити вимогу про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${provider}'].broker}: Можливість подати вимогу про виправлення умов закупівлі
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
+  ...  можливість
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   Викликати для учасника  ${provider}
-  ...      Порівняти скаргу
+  ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${COMPLAINTS[0]}
 
 
-Можливість побачити скаргу анонімом
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+Можливість додати документацію до вимоги про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${provider}'].broker}: Можливість додати документацію до вимоги про виправлення умов закупівлі
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  можливість
+  ${COMPLAINT_NUM}=  Set variable  0
+  Set suite variable  ${COMPLAINT_NUM}
+  Викликати для учасника  ${provider}
+  ...      Завантажити документацію до вимоги
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${COMPLAINT_NUM}
+
+##############################################################################################
+#             ВІДОБРАЖЕННЯ ДЛЯ ГЛЯДАЧА
+##############################################################################################
+
+Відображення назви країни адреси автора вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення назви країни адреси автора вимоги для глядача
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Викликати для учасника  ${viewer}
-  ...      Порівняти скаргу
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}'].complaints.data.author.address.countryName}
+  ...      complaints[${COMPLAINT_NUM}].author.address.countryName
+
+
+Відображення назви рос. мовою країни адреси автора вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення назви рос. мовою країни адреси автора вимоги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}'].complaints.data.author.address.countryName_ru}
+  ...      complaints[${COMPLAINT_NUM}].author.address.countryName_ru
+
+
+Відображення назви англ. мовою країни адреси автора вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення назви англ. мовою країни адреси автора вимоги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}'].complaints.data.author.address.countryName_en}
+  ...      complaints[${COMPLAINT_NUM}].author.address.countryName_en
+
+
+Відображення міста адреси автора вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення міста адреси автора вимоги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}'].complaints.data.author.address.locality}
+  ...      complaints[${COMPLAINT_NUM}].author.address.locality
+
+
+Відображення поштового коду адреси автора вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення поштового коду адреси автора вимоги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}'].complaints.data.author.address.postalCode}
+  ...      complaints[${COMPLAINT_NUM}].author.address.postalCode
+
+
+Відображення області адреси автора вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення області адреси автора вимоги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}'].complaints.data.author.address.region}
+  ...      complaints[${COMPLAINT_NUM}].author.address.region
+
+
+Відображення вулиці адреси автора вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення вулиці адреси автора вимоги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}'].complaints.data.author.address.streetAddress}
+  ...      complaints[${COMPLAINT_NUM}].author.address.streetAddress
+
+
+Відображення контактного імені автора вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення контактного імені автора вимоги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}'].complaints.data.author.contactPoint.name}
+  ...      complaints[${COMPLAINT_NUM}].author.contactPoint.name
+
+
+Відображення контактного телефону автора вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення контактного телефону автора вимоги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}'].complaints.data.author.contactPoint.telephone}
+  ...      complaints[${COMPLAINT_NUM}].author.contactPoint.telephone
+
+
+Відображення ідентифікатора автора вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення ідентифікатора автора вимоги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}'].complaints.data.author.identifier.id}
+  ...      complaints[${COMPLAINT_NUM}].author.identifier.id
+
+
+Відображення схеми ідентифікації автора вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення схеми ідентифікації автора вимоги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}'].complaints.data.author.identifier.scheme}
+  ...      complaints[${COMPLAINT_NUM}].author.identifier.scheme
+
+
+Відображення uri ідентифікатора автора вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення uriідентифікатора автора вимоги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}'].complaints.data.author.identifier.uri}
+  ...      complaints[${COMPLAINT_NUM}].author.identifier.uri
+
+
+Відображення імені автора вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення імені автора вимоги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}'].complaints.data.author.name}
+  ...      complaints[${COMPLAINT_NUM}].author.name
+
+
+Відображення опису вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: опису Відображення вимоги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}'].complaints.data.description}
+  ...      complaints[${COMPLAINT_NUM}].description
+
+
+Відображення заголовку вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення заголовку вимоги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}'].complaints.data.title}
+  ...      complaints[${COMPLAINT_NUM}].title
+
+
+Відображення заголовку документації вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення заголовку документації для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ${doc_num}=  Set variable  0
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}'].compl_doc}
+  ...      complaints[${COMPLAINT_NUM}].documents[${doc_num}].title
+
+##############################################################################################
+#             ВІДОБРАЖЕННЯ ДЛЯ КОРИСТУВАЧА
+##############################################################################################
+
+Відображення назви країни адреси автора вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення назви країни адреси автора вимоги для користувача
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  Звірити поле тендера із значенням  ${provider}
+  ...      ${USERS.users['${provider}'].complaints.data.author.address.countryName}
+  ...      complaints[${COMPLAINT_NUM}].author.address.countryName
+
+
+Відображення назви рос. мовою країни адреси автора вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення назви рос. мовою країни адреси автора вимоги для користувача
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  Звірити поле тендера із значенням  ${provider}
+  ...      ${USERS.users['${provider}'].complaints.data.author.address.countryName_ru}
+  ...      complaints[${COMPLAINT_NUM}].author.address.countryName_ru
+
+
+Відображення назви англ. мовою країни адреси автора вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення назви англ. мовою країни адреси автора вимоги для користувача
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  Звірити поле тендера із значенням  ${provider}
+  ...      ${USERS.users['${provider}'].complaints.data.author.address.countryName_en}
+  ...      complaints[${COMPLAINT_NUM}].author.address.countryName_en
+
+
+Відображення міста адреси автора вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення міста адреси автора вимоги для користувача
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  Звірити поле тендера із значенням  ${provider}
+  ...      ${USERS.users['${provider}'].complaints.data.author.address.locality}
+  ...      complaints[${COMPLAINT_NUM}].author.address.locality
+
+
+Відображення поштового коду адреси автора вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення поштового коду адреси автора вимоги для користувача
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  Звірити поле тендера із значенням  ${provider}
+  ...      ${USERS.users['${provider}'].complaints.data.author.address.postalCode}
+  ...      complaints[${COMPLAINT_NUM}].author.address.postalCode
+
+
+Відображення області адреси автора вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення області адреси автора вимоги для користувача
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  Звірити поле тендера із значенням  ${provider}
+  ...      ${USERS.users['${provider}'].complaints.data.author.address.region}
+  ...      complaints[${COMPLAINT_NUM}].author.address.region
+
+
+Відображення вулиці адреси автора вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення вулиці адреси автора вимоги для користувача
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  Звірити поле тендера із значенням  ${provider}
+  ...      ${USERS.users['${provider}'].complaints.data.author.address.streetAddress}
+  ...      complaints[${COMPLAINT_NUM}].author.address.streetAddress
+
+
+Відображення контактного імені автора вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення контактного імені автора вимоги для користувача
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  Звірити поле тендера із значенням  ${provider}
+  ...      ${USERS.users['${provider}'].complaints.data.author.contactPoint.name}
+  ...      complaints[${COMPLAINT_NUM}].author.contactPoint.name
+
+
+Відображення контактного телефону автора вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення контактного телефону автора вимоги для користувача
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  Звірити поле тендера із значенням  ${provider}
+  ...      ${USERS.users['${provider}'].complaints.data.author.contactPoint.telephone}
+  ...      complaints[${COMPLAINT_NUM}].author.contactPoint.telephone
+
+
+Відображення ідентифікатора автора вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення ідентифікатора автора вимоги для користувача
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  Звірити поле тендера із значенням  ${provider}
+  ...      ${USERS.users['${provider}'].complaints.data.author.identifier.id}
+  ...      complaints[${COMPLAINT_NUM}].author.identifier.id
+
+
+Відображення схеми ідентифікації автора вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення схеми ідентифікації автора вимоги для користувача
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  Звірити поле тендера із значенням  ${provider}
+  ...      ${USERS.users['${provider}'].complaints.data.author.identifier.scheme}
+  ...      complaints[${COMPLAINT_NUM}].author.identifier.scheme
+
+
+Відображення uri ідентифікатора автора вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення uriідентифікатора автора вимоги для користувача
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  Звірити поле тендера із значенням  ${provider}
+  ...      ${USERS.users['${provider}'].complaints.data.author.identifier.uri}
+  ...      complaints[${COMPLAINT_NUM}].author.identifier.uri
+
+
+Відображення імені автора вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення імені автора вимоги для користувача
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  Звірити поле тендера із значенням  ${provider}
+  ...      ${USERS.users['${provider}'].complaints.data.author.name}
+  ...      complaints[${COMPLAINT_NUM}].author.name
+
+
+Відображення опису вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: опису Відображення вимоги для користувача
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  Звірити поле тендера із значенням  ${provider}
+  ...      ${USERS.users['${provider}'].complaints.data.description}
+  ...      complaints[${COMPLAINT_NUM}].description
+
+
+Відображення заголовку вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення заголовку вимоги для користувача
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  Звірити поле тендера із значенням  ${provider}
+  ...      ${USERS.users['${provider}'].complaints.data.title}
+  ...      complaints[${COMPLAINT_NUM}].title
+
+
+Відображення заголовку документації вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення заголовку документації для користувача
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ${doc_num}=  Set variable  0
+  Звірити поле тендера із значенням  ${provider}
+  ...      ${USERS.users['${provider}'].compl_doc}
+  ...      complaints[${COMPLAINT_NUM}].documents[${doc_num}].title
+
+##############################################################################################
+#             МОЖЛИВІСТЬ
+##############################################################################################
+
+Можливість подати вимогу про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${provider}'].broker}: Можливість подати вимогу про виправлення умов закупівлі
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  можливість
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  Викликати для учасника  ${provider}
+  ...      Подати вимогу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${COMPLAINTS[0]}
+  ...      ${COMPLAINT_NUM}
 
+##############################################################################################
+#             ВІДОБРАЖЕННЯ ДЛЯ ГЛЯДАЧА
+##############################################################################################
 
-Можливість скасувати скаргу на умови
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість скасувати скаргу на умови
+Відображення поданого статусу вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення поданого статусу вимоги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити поле тендера із значенням  ${provider}
+  ...      claim
+  ...      complaints[${COMPLAINT_NUM}].status
+
+##############################################################################################
+#             ВІДОБРАЖЕННЯ ДЛЯ КОРИСТУВАЧА
+##############################################################################################
+
+Відображення поданого статусу вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення поданого статусу вимоги для користувача
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  Звірити поле тендера із значенням  ${provider}
+  ...      claim
+  ...      complaints[${COMPLAINT_NUM}].status
+
+##############################################################################################
+#             МОЖЛИВІСТЬ
+##############################################################################################
+
+Можливість відповісти на вирішену вимогу про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${tender_owner}'].broker}:Можливість відповісти на вирішену вимогу про виправлення умов закупівлі
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  Set To Dictionary  ${COMPLAINTS[0].data}  status  cancelled
-  Set To Dictionary  ${COMPLAINTS[0].data}  cancellationReason  test_draft_cancellation
+  ...  можливість
+  Викликати для учасника  ${tender_owner}
+  ...      Відповісти на вирішену вимогу
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${COMPLAINT_NUM}
+
+##############################################################################################
+#             ВІДОБРАЖЕННЯ ДЛЯ ГЛЯДАЧА
+##############################################################################################
+
+Відображення статусу 'answered' вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу 'answered' вимоги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${tender_owner}'].compl_answer['data']['status']}
+  ...      complaints[${COMPLAINT_NUM}].status
+
+Відображення типу вирішення вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення типу вирішення вимоги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${tender_owner}'].compl_answer['data']['resolutionType']}
+  ...      complaints[${COMPLAINT_NUM}].resolutionType
+
+
+Відображення вирішення вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення вирішення вимоги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${tender_owner}'].compl_answer['data']['resolution']}
+  ...      complaints[${COMPLAINT_NUM}].resolution
+
+##############################################################################################
+#             ВІДОБРАЖЕННЯ ДЛЯ КОРИСТУВАЧА
+##############################################################################################
+
+Відображення статусу 'answered' вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення статусу 'answered' вимоги для користувача
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  Звірити поле тендера із значенням  ${provider}
+  ...      ${USERS.users['${tender_owner}'].compl_answer['data']['status']}
+  ...      complaints[${COMPLAINT_NUM}].status
+
+
+Відображення типу вирішення вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення типу вирішення вимоги для користувача
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  Звірити поле тендера із значенням  ${provider}
+  ...      ${USERS.users['${tender_owner}'].compl_answer['data']['resolutionType']}
+  ...      complaints[${COMPLAINT_NUM}].resolutionType
+
+
+Відображення вирішення вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення вирішення вимоги для користувача
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  Звірити поле тендера із значенням  ${provider}
+  ...      ${USERS.users['${tender_owner}'].compl_answer['data']['resolution']}
+  ...      complaints[${COMPLAINT_NUM}].resolution
+
+##############################################################################################
+#             МОЖЛИВІСТЬ
+##############################################################################################
+
+Можливість підтвердити задоволення вимоги про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${provider}'].broker}:Можливість підтвердити вирішення вимоги про виправлення умов закупівлі
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  можливість
   Викликати для учасника  ${provider}
-  ...      Обробити скаргу
+  ...      Підтвердити вирішення вимоги
   ...      ${TENDER['TENDER_UAID']}
-  ...      0
-  ...      ${COMPLAINTS[0]}
-  log many  ${COMPLAINTS[0]}
-  Викликати для учасника  ${viewer}
-  ...      Оновити сторінку з тендером
-  ...      ${TENDER['TENDER_UAID']}
+  ...      ${COMPLAINT_NUM}
+
+##############################################################################################
+#             ВІДОБРАЖЕННЯ ДЛЯ ГЛЯДАЧА
+##############################################################################################
+
+Відображення статусу 'resolved' вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу 'answered' вимоги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}'].compl_answer_confirm['data']['status']}
+  ...      complaints[${COMPLAINT_NUM}].status
 
 
-#Можливість відхилити скаргу на умови
-#  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість відхилити скаргу на умови
-#  Викликати для учасника  ${provider}  Подати скаргу  ${TENDER['TENDER_UAID']}  ${COMPLAINTS[0]}
-#  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
-#  Set Global Variable  ${LAST_MODIFICATION_DATE}
-#  Викликати для учасника  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
-#  Set To Dictionary  ${COMPLAINTS[0].data}  status  declined
-#  Викликати для учасника  ${tender_owner}  Обробити скаргу  ${TENDER['TENDER_UAID']}  0  ${COMPLAINTS[0]}
-#  log many  ${COMPLAINTS[0]}
-#  викликати для учасника  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
-#
-#Можливість відкинути скаргу на умови
-#  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість відкинути скаргу на умови
-#  Викликати для учасника  ${provider}  Подати скаргу  ${TENDER['TENDER_UAID']}  ${COMPLAINTS[0]}
-#  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
-#  Set Global Variable  ${LAST_MODIFICATION_DATE}
-#  Викликати для учасника  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
-#  Set To Dictionary  ${COMPLAINTS[0].data}  status  invalid
-#  Викликати для учасника  ${tender_owner}  Обробити скаргу  ${TENDER['TENDER_UAID']}  1  ${COMPLAINTS[0]}
-#  log many  ${COMPLAINTS[0]}
-#  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
-#  Set Global Variable  ${LAST_MODIFICATION_DATE}
-#  Викликати для учасника  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
-#
-#Можливість задовільнити скаргу на умови
-#  [Tags]  ${USERS.users['${provider}'].broker}: Можливість відповісти на запитання
-#  Викликати для учасника  ${provider}  Подати скаргу  ${TENDER['TENDER_UAID']}  ${COMPLAINTS[0]}
-#  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
-#  Set Global Variable  ${LAST_MODIFICATION_DATE}
-#  Викликати для учасника  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
-#  Set To Dictionary  ${COMPLAINTS[0].data}  status  resolved
-#  Викликати для учасника  ${tender_owner}  Обробити скаргу  ${TENDER['TENDER_UAID']}  2  ${COMPLAINTS[0]}
-#  log many  ${COMPLAINTS[0]}
-#  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
-#  Set Global Variable  ${LAST_MODIFICATION_DATE}
+Відображення задоволення вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу 'answered' вимоги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}'].compl_answer_confirm['data']['satisfied']}
+  ...      complaints[${COMPLAINT_NUM}].satisfied
+
+##############################################################################################
+#             ВІДОБРАЖЕННЯ ДЛЯ КОРИСТУВАЧА
+##############################################################################################
+
+Відображення статусу 'resolved' вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення статусу 'answered' вимоги для користувача
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  Звірити поле тендера із значенням  ${provider}
+  ...      ${USERS.users['${provider}'].compl_answer_confirm['data']['status']}
+  ...      complaints[${COMPLAINT_NUM}].status
+
+
+Відображення задоволення вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення статусу 'answered' вимоги для користувача
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  Звірити поле тендера із значенням  ${provider}
+  ...      ${USERS.users['${provider}'].compl_answer_confirm['data']['satisfied']}
+  ...      complaints[${COMPLAINT_NUM}].satisfied
