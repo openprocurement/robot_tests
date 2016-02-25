@@ -117,13 +117,41 @@ Get Broker Property By Username
 Дочекатись синхронізації з майданчиком
   [Arguments]  ${username}
   [Documentation]
-  ...      Get ${wait_timeout} for specified user and wait
-  ...      until that timeout runs out.
+  ...      Find out how much time has passed since the procurement was modified
+  ...      and store the result in `delta`,
+  ...      then get `timeout_on_wait` for ``username``,
+  ...      then wait for `sleep` seconds, where:
+  ...
+  ...      sleep = timeout_on_wait - delta
+  ...
+  ...      Thus, when this keyword is executed several times in a row,
+  ...      it will wait for as long as really needed.
+  ...
+  ...      Example:
+  ...
+  ...      The procurement is modified.
+  ...      In 5 seconds, this keyword is called for `viewer`.
+  ...      Immediately, this keyword is called for `provider`.
+  ...      Timeout for `viewer` is 60.
+  ...      Timeout for `provider` is 300.
+  ...      First call (for `viewer`) will trigger `Sleep 55`.
+  ...      Second call (for `provider`) will trigger `Sleep 235`.
+  ...      As a result, the delay will end in 300 seconds
+  ...      since last modification date.
+  ...
+  ...      Another example (a variation of previous one):
+  ...
+  ...      Timeout for `viewer` is 120.
+  ...      Timeout for `provider` is 30.
+  ...      First call will trigger `Sleep 115`.
+  ...      Second call will trigger `Sleep 0`,
+  ...      since we have already slept for 120 seconds
+  ...      and there is no need to sleep any longer.
   ${now}=  Get Current TZdate
   ${delta}=  Subtract Date From Date  ${now}  ${TENDER['LAST_MODIFICATION_DATE']}
   ${timeout_on_wait}=  Get Broker Property By Username  ${username}  timeout_on_wait
-  ${wait_timeout}=  Subtract Time From Time  ${timeout_on_wait}  ${delta}
-  Run Keyword If   ${wait_timeout}>0   Sleep  ${wait_timeout}
+  ${sleep}=  Subtract Time From Time  ${timeout_on_wait}  ${delta}
+  Run Keyword If  ${sleep} > 0  Sleep  ${sleep}
 
 
 Звірити поле тендера
