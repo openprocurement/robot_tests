@@ -628,6 +628,8 @@ ${broker}       Quinta
   Set To Dictionary  ${USERS.users['${provider}']}  complaint_data2  ${complaint_data2}
   ${COMPLAINT_NUM}=  Set variable  1
   Set suite variable  ${COMPLAINT_NUM}
+
+
   ${cancellation_reason}=  Set variable  prosto tak :)
   ${cancellation_data}=  test_cancel_complaint_data  ${USERS.users['${provider}']['complaint_data2']['complaint_resp']['data']['id']}  ${cancellation_reason}
   Викликати для учасника  ${provider}
@@ -687,3 +689,69 @@ ${broker}       Quinta
 
 
 
+##############################################################################################
+#             МОЖЛИВІСТЬ
+##############################################################################################
+
+Можливість створити, подати і скасувати вимогу про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити, подати і скасувати вимогу про виправлення умов закупівлі
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  from-0.12
+  ${complaint}=  test_complaint_data
+  ${complaint_resp}=  Викликати для учасника  ${provider}
+  ...      Створити вимогу
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${complaint}
+  ${complaint_data3}=  Create Dictionary  complaint=${complaint}  complaint_resp=${complaint_resp}
+  Log  ${complaint_data3}
+  Set To Dictionary  ${USERS.users['${provider}']}  complaint_data3  ${complaint_data3}
+  ${COMPLAINT_NUM}=  Set variable  2
+  Set suite variable  ${COMPLAINT_NUM}
+
+
+  ${confrimation_data}=  test_confirm_complaint_data  ${USERS.users['${provider}']['complaint_data3']['complaint_resp']['data']['id']}
+  Log  ${confrimation_data}
+  Викликати для учасника  ${provider}
+  ...      Подати вимогу
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}']['complaint_data3']['complaint_resp']}
+  ...      ${confrimation_data}
+
+
+  ${cancellation_reason}=  Set variable  prosto tak :)
+  ${cancellation_data}=  test_cancel_complaint_data  ${USERS.users['${provider}']['complaint_data3']['complaint_resp']['data']['id']}  ${cancellation_reason}
+  Викликати для учасника  ${provider}
+  ...      Скасувати вимогу
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}']['complaint_data3']['complaint_resp']}
+  ...      ${cancellation_data}
+  Set To Dictionary  ${USERS.users['${provider}'].complaint_data3}  cancellation  ${cancellation_data}
+
+##############################################################################################
+#             ВІДОБРАЖЕННЯ ДЛЯ ГЛЯДАЧА
+##############################################################################################
+
+Відображення статусу 'cancelled' після 'claim' вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу 'cancelled' вимоги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  from-0.12
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}'].complaint_data3['cancellation']['data']['status']}
+  ...      complaints[${COMPLAINT_NUM}].status
+
+##############################################################################################
+#             ВІДОБРАЖЕННЯ ДЛЯ КОРИСТУВАЧА
+##############################################################################################
+
+Відображення статусу 'cancelled' після 'claim' вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення статусу 'cancelled' вимоги для користувача
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  from-0.12
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  Звірити поле тендера із значенням  ${provider}
+  ...      ${USERS.users['${provider}'].complaint_data3['cancellation']['data']['status']}
+  ...      complaints[${COMPLAINT_NUM}].status
