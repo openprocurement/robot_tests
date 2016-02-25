@@ -51,8 +51,7 @@ ${question_id}  0
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      minimal
-  ${usernames}=  Create List  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
-  :FOR  ${username}  IN  @{usernames}
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
   \  Дочекатись синхронізації з майданчиком    ${username}
   \  Викликати для учасника  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
 
@@ -66,8 +65,7 @@ ${question_id}  0
   ...      viewer  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      minimal
-  ${usernames}=  Create List  ${viewer}  ${provider}  ${provider1}
-  :FOR  ${username}  IN  @{usernames}
+  :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}
   \  Дочекатись синхронізації з майданчиком    ${username}
   \  Звірити поле тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  title
 
@@ -117,8 +115,7 @@ ${question_id}  0
   ...      viewer  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      minimal
-  ${usernames}=  Create List  ${viewer}  ${provider}  ${provider1}
-  :FOR  ${username}  IN  @{usernames}
+  :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}
   \  Дочекатись синхронізації з майданчиком    ${username}
   \  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.startDate
 
@@ -127,8 +124,7 @@ ${question_id}  0
   ...      viewer  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      minimal
-  ${usernames}=  Create List  ${viewer}  ${provider}  ${provider1}
-  :FOR  ${username}  IN  @{usernames}
+  :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}
   \  Дочекатись синхронізації з майданчиком    ${username}
   \  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.endDate
 
