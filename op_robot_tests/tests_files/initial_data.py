@@ -532,6 +532,14 @@ def test_cancel_tender_data(cancellation_reason):
         }
     }
 
+def test_cancel_complaint_data(complaint_id, cancellation_reason):
+    return {
+        'data': {
+            'cancellationReason': cancellation_reason,
+            'status': 'cancelled',
+            'id': complaint_id
+        }
+    }
 
 def test_change_cancellation_document_field_data(key, value):
     data = {

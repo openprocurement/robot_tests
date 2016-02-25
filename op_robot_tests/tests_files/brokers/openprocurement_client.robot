@@ -434,7 +434,7 @@ Library  openprocurement_client_helper.py
 Завантажити документацію до вимоги
   [Arguments]  ${username}  ${tender_uaid}  ${complaint}  ${document}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}']['complaint_data']['complaint_resp'].access.token}
+  ${tender}=  set_access_key  ${tender}  ${complaint.access.token}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  upload_complaint_document  ${document}  ${tender}  ${complaint['data']['id']}
   Log  ${reply}
 
@@ -443,7 +443,7 @@ Library  openprocurement_client_helper.py
   [Documentation]  Переводить вимогу зі статусу "draft" у статус "claim"
   [Arguments]  ${username}  ${tender_uaid}  ${complaint}  ${confirmation_data}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}']['complaint_data']['complaint_resp'].access.token}
+  ${tender}=  set_access_key  ${tender}  ${complaint.access.token}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${confirmation_data}
   Log  ${reply}
 
@@ -460,6 +460,16 @@ Library  openprocurement_client_helper.py
   [Documentation]  Переводить вимогу зі статусу "answered" у статус "resolved"
   [Arguments]  ${username}  ${tender_uaid}  ${complaint}  ${confirmation_data}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${tender}=  set_access_key  ${tender}  ${USERS.users['${provider}']['complaint_data']['complaint_resp'].access.token}
+  ${tender}=  set_access_key  ${tender}  ${complaint.access.token}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${confirmation_data}
   Log  ${reply}
+
+
+Скасувати вимогу
+  [Documentation]  Переводить вимогу в статус "canceled"
+  [Arguments]  ${username}  ${tender_uaid}  ${complaint}  ${cancellation_data}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${tender}=  set_access_key  ${tender}  ${complaint.access.token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${cancellation_data}
+  Log  ${reply}
+
