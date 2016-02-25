@@ -48,6 +48,7 @@ from .initial_data import (
     test_tender_data_limited,
     test_tender_data_multiple_items,
     test_tender_data_multiple_lots,
+    test_tender_data_openeu,
     test_tender_data_openua
 )
 from .local_time import get_now, TZ
@@ -161,6 +162,8 @@ def prepare_test_tender_data(procedure_intervals, mode):
         return munchify({'data': test_tender_data_limited(intervals)})
     elif mode == 'openua':
         return munchify({'data': test_tender_data_openua(intervals)})
+    elif mode == 'openeu':
+        return munchify({'data': test_tender_data_openeu(intervals)})
     raise ValueError("Invalid mode for prepare_test_tender_data")
 
 
