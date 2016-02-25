@@ -1,5 +1,4 @@
 *** Settings ***
-Resource  resource.robot
 Library  op_robot_tests.tests_files.service_keywords
 Library  String
 Library  Collections
@@ -7,6 +6,9 @@ Library  Selenium2Library
 Library  DateTime
 Library  DebugLibrary
 
+Documentation
+...  This resource file contains keywords that are used directly by
+...  test suites or by brokers' keyword libraries (also known as drivers).
 
 *** Keywords ***
 TestSuiteSetup
@@ -27,8 +29,8 @@ Set Suite Variable With Default Value
 
   ${file_path}=  Get Variable Value  ${BROKERS_FILE}  brokers.yaml
   ${BROKERS}=  load_initial_data_from  ${file_path}
-  log  ${BROKERS}
-  Set Global Variable  ${BROKERS}
+  Log  ${BROKERS}
+  Set Suite Variable  ${BROKERS}
 
   ${file_path}=  Get Variable Value  ${USERS_FILE}  users.yaml
   ${USERS}=  load_initial_data_from  ${file_path}
@@ -39,19 +41,19 @@ Set Suite Variable With Default Value
   Set Suite Variable With Default Value  provider      Tender_User
   Set Suite Variable With Default Value  provider1     Tender_User1
   Set Suite Variable With Default Value  viewer        Tender_Viewer
-  ${active_users}=  Create Dictionary  tender_owner  ${tender_owner}  provider  ${provider}  provider1  ${provider1}  viewer  ${viewer}
+  ${active_users}=  Create Dictionary  tender_owner=${tender_owner}  provider=${provider}  provider1=${provider1}  viewer=${viewer}
 
-  ${users_list}=    Get Dictionary Items    ${USERS.users}
-  :FOR  ${username}  ${user_data}   IN  @{users_list}
-  \  log  ${active_users}
-  \  log  ${username}
+  ${users_list}=  Get Dictionary Items  ${USERS.users}
+  :FOR  ${username}  ${user_data}  IN  @{users_list}
+  \  Log  ${active_users}
+  \  Log  ${username}
   \  ${munch_dict}=  munch_dict  data=${True}
   \  Log Many  ${munch_dict}
-  \  ${status}=  Run Keyword And Return Status   Dictionary Should Contain Value  ${active_users}   ${username}
+  \  ${status}=  Run Keyword And Return Status  Dictionary Should Contain Value  ${active_users}  ${username}
   \  ${keywords_file}=  Get Broker Property By Username  ${username}  keywords_file
-  \  Run Keyword If  '${status}' == 'True'  Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
-  \  Run Keyword If  '${status}' == 'True'  Викликати для учасника  ${username}  Підготувати клієнт для користувача
-  \  Run Keyword If  '${status}' == 'True'  Set To Dictionary  ${USERS.users['${username}']}  tender_data  ${munch_dict}
+  \  Run Keyword If  ${status}  Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
+  \  Run Keyword If  ${status}  Викликати для учасника  ${username}  Підготувати клієнт для користувача
+  \  Run Keyword If  ${status}  Set To Dictionary  ${USERS.users['${username}']}  tender_data=${munch_dict}
 
 
 Get Broker Property
@@ -81,7 +83,7 @@ Get Broker Property By Username
   @{QUESTIONS}=  Create list
   ${question}=  test question data
   ${question_lot}=  test_lot_question_data  ${question}
-  Append to list   ${QUESTIONS}  ${question}  ${question_lot}
+  Append to list  ${QUESTIONS}  ${question}  ${question_lot}
   Set Global Variable  @{QUESTIONS}
   @{ANSWERS}=  Create list
   ${answer}=  test_question_answer_data
@@ -90,7 +92,7 @@ Get Broker Property By Username
   @{COMPLAINTS}=  Create list
   ${complaint}=  test_complaint_data
   ${complaint_lot}=  test_lot_complaint_data  ${complaint}
-  Append to list   ${COMPLAINTS}  ${complaint}  ${complaint_lot}
+  Append to list  ${COMPLAINTS}  ${complaint}  ${complaint_lot}
   Set Global Variable  @{COMPLAINTS}
   @{REPLIES}=  Create list
   ${reply}=  test_complaint_reply_data
@@ -197,22 +199,20 @@ Get Broker Property By Username
 
 Звірити поля предметів закупівлі багатопредметного тендера
   [Arguments]  ${username}  ${tender_data}  ${field}
-  Дочекатись синхронізації з майданчиком    ${username}
   @{items}=  Get_From_Object  ${tender_data.data}  items
-  ${len_of_items}=   Get Length   ${items}
-  :FOR   ${index}    IN RANGE   ${len_of_items}
-    \    Log   ${index}
-    \    Звірити поле тендера  ${viewer}  ${tender_data}  items[${index}].${field}
+  ${len_of_items}=  Get Length  ${items}
+  :FOR  ${index}  IN RANGE  ${len_of_items}
+  \  Log  ${index}
+  \  Звірити поле тендера  ${viewer}  ${tender_data}  items[${index}].${field}
 
 
 Звірити дату предметів закупівлі багатопредметного тендера
   [Arguments]  ${username}  ${tender_data}  ${field}
-  Дочекатись синхронізації з майданчиком    ${username}
   @{items}=  Get_From_Object  ${tender_data.data}  items
-  ${len_of_items}=   Get Length   ${items}
-  :FOR   ${index}    IN RANGE   ${len_of_items}
-    \    Log   ${index}
-    \    Звірити дату тендера  ${viewer}  ${tender_data}  items[${index}].${field}
+  ${len_of_items}=  Get Length  ${items}
+  :FOR  ${index}  IN RANGE  ${len_of_items}
+  \  Log  ${index}
+  \  Звірити дату тендера  ${viewer}  ${tender_data}  items[${index}].${field}
 
 
 Викликати для учасника
@@ -253,29 +253,29 @@ SwitchState
 
 Дочекатись дати
   [Arguments]  ${date}
-  ${wait_timeout}=  wait_to_date  ${date}
-  Run Keyword If   ${wait_timeout}>0   Sleep  ${wait_timeout}
+  ${sleep}=  wait_to_date  ${date}
+  Run Keyword If  ${sleep} > 0  Sleep  ${sleep}
 
 
 Дочекатись дати початку прийому пропозицій
   [Arguments]  ${username}
-  log  ${username}
+  Log  ${username}
   Дочекатись дати  ${USERS.users['${username}'].tender_data.data.tenderPeriod.startDate}
 
 
 Дочекатись дати закінчення прийому пропозицій
   [Arguments]  ${username}
-  log  ${username}
+  Log  ${username}
   Дочекатись дати  ${USERS.users['${username}'].tender_data.data.tenderPeriod.endDate}
 
 
 Дочекатись дати початку аукціону
   [Arguments]  ${username}
-  log  ${username}
+  Log  ${username}
   Дочекатись дати  ${USERS.users['${username}'].tender_data.data.auctionPeriod.startDate}
 
 
 Дочекатись дати закінчення аукціону
   [Arguments]  ${username}
-  log  ${username}
+  Log  ${username}
   Дочекатись дати  ${USERS.users['${username}'].tender_data.data.auctionPeriod.endDate}
