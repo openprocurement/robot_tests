@@ -95,7 +95,7 @@ def log_object_data(data, file_name=None, format="yaml"):
 
 def load_initial_data_from(file_name):
     if not os.path.exists(file_name):
-        file_name = os.path.join(os.path.dirname(__file__), 'data/{}'.format(file_name))
+        file_name = os.path.join(os.path.dirname(__file__), 'data', file_name)
     with open(file_name) as file_obj:
         if file_name.endswith(".json"):
             return Munch.fromDict(load(file_obj))
