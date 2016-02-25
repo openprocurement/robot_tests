@@ -416,9 +416,8 @@ Library  openprocurement_client_helper.py
 ##############################################################################
 
 Створити вимогу
-  [Arguments]  ${username}  ${tender_uaid}
-  ${complaint_num}=  Set variable  0
-  ${complaint}=  Set variable  ${COMPLAINTS[${complaint_num}]}
+  [Documentation]  Створює вимогу у статусі "draft"
+  [Arguments]  ${username}  ${tender_uaid}  ${complaint}
   Log  ${complaint}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору
   ...      ${username}
@@ -429,44 +428,38 @@ Library  openprocurement_client_helper.py
   ...      ${tender}
   ...      ${complaint}
   Log  ${reply}
-  ${access_token}=  Get Variable Value  ${reply.access.token}
-  Set To Dictionary  ${USERS.users['${username}']}  access_token  ${access_token}
-  Set To Dictionary  ${USERS.users['${username}']}  complaints  ${complaint}
+  [return]  ${reply}
 
 
 Завантажити документацію до вимоги
-  [Arguments]  ${username}  ${tender_uaid}  ${complaint_num}
+  [Arguments]  ${username}  ${tender_uaid}  ${complaint}  ${document}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${compl_doc}=  create_fake_doc
-  Set To Dictionary  ${USERS.users['${username}']}  compl_doc  ${compl_doc}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  upload_complaint_document  ${compl_doc}  ${tender}  ${tender['data']['complaints'][${complaint_num}]['id']}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}']['complaint_data']['complaint_resp'].access.token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  upload_complaint_document  ${document}  ${tender}  ${complaint['data']['id']}
   Log  ${reply}
 
 
 Подати вимогу
-  [Arguments]  ${username}  ${tender_uaid}  ${complaint_num}
+  [Documentation]  Переводить вимогу зі статусу "draft" у статус "claim"
+  [Arguments]  ${username}  ${tender_uaid}  ${complaint}  ${confirmation_data}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${data}=  test_confirm_complaint_data  ${tender['data']['complaints'][${complaint_num}]['id']}
-  Log  ${data}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${data}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}']['complaint_data']['complaint_resp'].access.token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${confirmation_data}
   Log  ${reply}
 
 
 Відповісти на вирішену вимогу
-  [Arguments]  ${username}  ${tender_uaid}  ${complaint_num}
+  [Documentation]  Переводить вимогу зі статусу "claim" у статус "answered"
+  [Arguments]  ${username}  ${tender_uaid}  ${complaint}  ${answer_data}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${data}=  test_complaint_answer_data  ${tender['data']['complaints'][${complaint_num}]['id']}
-  Log  ${data}
-  Set To Dictionary  ${USERS.users['${username}']}  compl_answer  ${data}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${data}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${answer_data}
   Log  ${reply}
 
 
 Підтвердити вирішення вимоги
-  [Arguments]  ${username}  ${tender_uaid}  ${complaint_num}
+  [Documentation]  Переводить вимогу зі статусу "answered" у статус "resolved"
+  [Arguments]  ${username}  ${tender_uaid}  ${complaint}  ${confirmation_data}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${data}=  test_complaint_answer_confirmation_data  ${tender['data']['complaints'][${complaint_num}]['id']}
-  Log  ${data}
-  Set To Dictionary  ${USERS.users['${username}']}  compl_answer_confirm  ${data}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${data}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${provider}']['complaint_data']['complaint_resp'].access.token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${confirmation_data}
   Log  ${reply}

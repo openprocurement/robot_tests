@@ -54,21 +54,29 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
-  Викликати для учасника  ${provider}
+  ${complaint}=  test_complaint_data
+  ${complaint_resp}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
+  ...      ${complaint}
+  ${complaint_data}=  Create Dictionary  complaint=${complaint}  complaint_resp=${complaint_resp}
+  Set To Dictionary  ${USERS.users['${provider}']}  complaint_data  ${complaint_data}
+  Log  ${USERS.users['${provider}']}
+  ${COMPLAINT_NUM}=  Set variable  0
+  Set suite variable  ${COMPLAINT_NUM}
 
 
 Можливість додати документацію до вимоги про виправлення умов закупівлі
   [Tags]  ${USERS.users['${provider}'].broker}: Можливість додати документацію до вимоги про виправлення умов закупівлі
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
-  ${COMPLAINT_NUM}=  Set variable  0
-  Set suite variable  ${COMPLAINT_NUM}
+  ${document}=  create_fake_doc
   Викликати для учасника  ${provider}
   ...      Завантажити документацію до вимоги
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${COMPLAINT_NUM}
+  ...      ${USERS.users['${provider}']['complaint_data']['complaint_resp']}
+  ...      ${document}
+  Set To Dictionary  ${USERS.users['${provider}']['complaint_data']}  document  ${document}
 
 ##############################################################################################
 #             ВІДОБРАЖЕННЯ ДЛЯ ГЛЯДАЧА
@@ -80,7 +88,7 @@ ${broker}       Quinta
   ...  ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${provider}'].complaints.data.author.address.countryName}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.author.address.countryName}
   ...      complaints[${COMPLAINT_NUM}].author.address.countryName
 
 
@@ -89,7 +97,7 @@ ${broker}       Quinta
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${provider}'].complaints.data.author.address.countryName_ru}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.author.address.countryName_ru}
   ...      complaints[${COMPLAINT_NUM}].author.address.countryName_ru
 
 
@@ -98,7 +106,7 @@ ${broker}       Quinta
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${provider}'].complaints.data.author.address.countryName_en}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.author.address.countryName_en}
   ...      complaints[${COMPLAINT_NUM}].author.address.countryName_en
 
 
@@ -107,7 +115,7 @@ ${broker}       Quinta
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${provider}'].complaints.data.author.address.locality}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.author.address.locality}
   ...      complaints[${COMPLAINT_NUM}].author.address.locality
 
 
@@ -116,7 +124,7 @@ ${broker}       Quinta
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${provider}'].complaints.data.author.address.postalCode}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.author.address.postalCode}
   ...      complaints[${COMPLAINT_NUM}].author.address.postalCode
 
 
@@ -125,7 +133,7 @@ ${broker}       Quinta
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${provider}'].complaints.data.author.address.region}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.author.address.region}
   ...      complaints[${COMPLAINT_NUM}].author.address.region
 
 
@@ -134,7 +142,7 @@ ${broker}       Quinta
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${provider}'].complaints.data.author.address.streetAddress}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.author.address.streetAddress}
   ...      complaints[${COMPLAINT_NUM}].author.address.streetAddress
 
 
@@ -143,7 +151,7 @@ ${broker}       Quinta
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${provider}'].complaints.data.author.contactPoint.name}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.author.contactPoint.name}
   ...      complaints[${COMPLAINT_NUM}].author.contactPoint.name
 
 
@@ -152,7 +160,7 @@ ${broker}       Quinta
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${provider}'].complaints.data.author.contactPoint.telephone}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.author.contactPoint.telephone}
   ...      complaints[${COMPLAINT_NUM}].author.contactPoint.telephone
 
 
@@ -161,7 +169,7 @@ ${broker}       Quinta
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${provider}'].complaints.data.author.identifier.id}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.author.identifier.id}
   ...      complaints[${COMPLAINT_NUM}].author.identifier.id
 
 
@@ -170,7 +178,7 @@ ${broker}       Quinta
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${provider}'].complaints.data.author.identifier.scheme}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.author.identifier.scheme}
   ...      complaints[${COMPLAINT_NUM}].author.identifier.scheme
 
 
@@ -179,7 +187,7 @@ ${broker}       Quinta
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${provider}'].complaints.data.author.identifier.uri}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.author.identifier.uri}
   ...      complaints[${COMPLAINT_NUM}].author.identifier.uri
 
 
@@ -188,7 +196,7 @@ ${broker}       Quinta
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${provider}'].complaints.data.author.name}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.author.name}
   ...      complaints[${COMPLAINT_NUM}].author.name
 
 
@@ -197,7 +205,7 @@ ${broker}       Quinta
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${provider}'].complaints.data.description}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.description}
   ...      complaints[${COMPLAINT_NUM}].description
 
 
@@ -206,7 +214,7 @@ ${broker}       Quinta
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${provider}'].complaints.data.title}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.title}
   ...      complaints[${COMPLAINT_NUM}].title
 
 
@@ -216,7 +224,7 @@ ${broker}       Quinta
   ...  ${USERS.users['${viewer}'].broker}
   ${doc_num}=  Set variable  0
   Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${provider}'].compl_doc}
+  ...      ${USERS.users['${provider}'].complaint_data['document']}
   ...      complaints[${COMPLAINT_NUM}].documents[${doc_num}].title
 
 ##############################################################################################
@@ -229,7 +237,7 @@ ${broker}       Quinta
   ...  ${USERS.users['${provider}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${provider}'].complaints.data.author.address.countryName}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.author.address.countryName}
   ...      complaints[${COMPLAINT_NUM}].author.address.countryName
 
 
@@ -238,7 +246,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${provider}'].complaints.data.author.address.countryName_ru}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.author.address.countryName_ru}
   ...      complaints[${COMPLAINT_NUM}].author.address.countryName_ru
 
 
@@ -247,7 +255,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${provider}'].complaints.data.author.address.countryName_en}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.author.address.countryName_en}
   ...      complaints[${COMPLAINT_NUM}].author.address.countryName_en
 
 
@@ -256,7 +264,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${provider}'].complaints.data.author.address.locality}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.author.address.locality}
   ...      complaints[${COMPLAINT_NUM}].author.address.locality
 
 
@@ -265,7 +273,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${provider}'].complaints.data.author.address.postalCode}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.author.address.postalCode}
   ...      complaints[${COMPLAINT_NUM}].author.address.postalCode
 
 
@@ -274,7 +282,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${provider}'].complaints.data.author.address.region}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.author.address.region}
   ...      complaints[${COMPLAINT_NUM}].author.address.region
 
 
@@ -283,7 +291,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${provider}'].complaints.data.author.address.streetAddress}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.author.address.streetAddress}
   ...      complaints[${COMPLAINT_NUM}].author.address.streetAddress
 
 
@@ -292,7 +300,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${provider}'].complaints.data.author.contactPoint.name}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.author.contactPoint.name}
   ...      complaints[${COMPLAINT_NUM}].author.contactPoint.name
 
 
@@ -301,7 +309,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${provider}'].complaints.data.author.contactPoint.telephone}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.author.contactPoint.telephone}
   ...      complaints[${COMPLAINT_NUM}].author.contactPoint.telephone
 
 
@@ -310,7 +318,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${provider}'].complaints.data.author.identifier.id}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.author.identifier.id}
   ...      complaints[${COMPLAINT_NUM}].author.identifier.id
 
 
@@ -319,7 +327,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${provider}'].complaints.data.author.identifier.scheme}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.author.identifier.scheme}
   ...      complaints[${COMPLAINT_NUM}].author.identifier.scheme
 
 
@@ -328,7 +336,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${provider}'].complaints.data.author.identifier.uri}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.author.identifier.uri}
   ...      complaints[${COMPLAINT_NUM}].author.identifier.uri
 
 
@@ -337,7 +345,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${provider}'].complaints.data.author.name}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.author.name}
   ...      complaints[${COMPLAINT_NUM}].author.name
 
 
@@ -346,7 +354,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${provider}'].complaints.data.description}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.description}
   ...      complaints[${COMPLAINT_NUM}].description
 
 
@@ -355,7 +363,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${provider}'].complaints.data.title}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint'].data.title}
   ...      complaints[${COMPLAINT_NUM}].title
 
 
@@ -365,7 +373,7 @@ ${broker}       Quinta
   ...  ${USERS.users['${provider}'].broker}
   ${doc_num}=  Set variable  0
   Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${provider}'].compl_doc}
+  ...      ${USERS.users['${provider}'].complaint_data['document']}
   ...      complaints[${COMPLAINT_NUM}].documents[${doc_num}].title
 
 ##############################################################################################
@@ -377,10 +385,13 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  ${confrimation_data}=  test_confirm_complaint_data  ${USERS.users['${provider}']['complaint_data']['complaint_resp']['data']['id']}
+  Log  ${confrimation_data}
   Викликати для учасника  ${provider}
   ...      Подати вимогу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${COMPLAINT_NUM}
+  ...      ${USERS.users['${provider}']['complaint_data']['complaint_resp']}
+  ...      ${confrimation_data}
 
 ##############################################################################################
 #             ВІДОБРАЖЕННЯ ДЛЯ ГЛЯДАЧА
@@ -416,10 +427,15 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${tender_owner}'].broker}:Можливість відповісти на вирішену вимогу про виправлення умов закупівлі
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
+  ${answer_data}=  test_complaint_answer_data  ${USERS.users['${provider}']['complaint_data']['complaint_resp']['data']['id']}
+  Log  ${answer_data}
   Викликати для учасника  ${tender_owner}
   ...      Відповісти на вирішену вимогу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${COMPLAINT_NUM}
+  ...      ${USERS.users['${provider}']['complaint_data']['complaint_resp']}
+  ...      ${answer_data}
+  ${complaint_data}=  Create Dictionary  complaint_answer=${answer_data}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  complaint_data  ${complaint_data}
 
 ##############################################################################################
 #             ВІДОБРАЖЕННЯ ДЛЯ ГЛЯДАЧА
@@ -431,15 +447,16 @@ ${broker}       Quinta
   ...  ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].compl_answer['data']['status']}
+  ...      ${USERS.users['${tender_owner}'].complaint_data['complaint_answer']['data']['status']}
   ...      complaints[${COMPLAINT_NUM}].status
+
 
 Відображення типу вирішення вимоги для глядача
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення типу вирішення вимоги для глядача
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].compl_answer['data']['resolutionType']}
+  ...      ${USERS.users['${tender_owner}'].complaint_data['complaint_answer']['data']['resolutionType']}
   ...      complaints[${COMPLAINT_NUM}].resolutionType
 
 
@@ -448,7 +465,7 @@ ${broker}       Quinta
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].compl_answer['data']['resolution']}
+  ...      ${USERS.users['${tender_owner}'].complaint_data['complaint_answer']['data']['resolution']}
   ...      complaints[${COMPLAINT_NUM}].resolution
 
 ##############################################################################################
@@ -461,7 +478,7 @@ ${broker}       Quinta
   ...  ${USERS.users['${provider}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${tender_owner}'].compl_answer['data']['status']}
+  ...      ${USERS.users['${tender_owner}'].complaint_data['complaint_answer']['data']['status']}
   ...      complaints[${COMPLAINT_NUM}].status
 
 
@@ -470,7 +487,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${tender_owner}'].compl_answer['data']['resolutionType']}
+  ...      ${USERS.users['${tender_owner}'].complaint_data['complaint_answer']['data']['resolutionType']}
   ...      complaints[${COMPLAINT_NUM}].resolutionType
 
 
@@ -479,7 +496,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${tender_owner}'].compl_answer['data']['resolution']}
+  ...      ${USERS.users['${tender_owner}'].complaint_data['complaint_answer']['data']['resolution']}
   ...      complaints[${COMPLAINT_NUM}].resolution
 
 ##############################################################################################
@@ -490,10 +507,15 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${provider}'].broker}:Можливість підтвердити вирішення вимоги про виправлення умов закупівлі
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
+  ${confirmation_data}=  test_complaint_answer_confirmation_data
+  ...      ${USERS.users['${provider}']['complaint_data']['complaint_resp']['data']['id']}
+  Log  ${confirmation_data}
   Викликати для учасника  ${provider}
   ...      Підтвердити вирішення вимоги
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${COMPLAINT_NUM}
+  ...      ${USERS.users['${provider}']['complaint_data']['complaint_resp']}
+  ...      ${confirmation_data}
+  Set To Dictionary  ${USERS.users['${provider}']['complaint_data']}  complaint_answer_confirm  ${confirmation_data}
 
 ##############################################################################################
 #             ВІДОБРАЖЕННЯ ДЛЯ ГЛЯДАЧА
@@ -505,7 +527,7 @@ ${broker}       Quinta
   ...  ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${provider}'].compl_answer_confirm['data']['status']}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint_answer_confirm']['data']['status']}
   ...      complaints[${COMPLAINT_NUM}].status
 
 
@@ -515,7 +537,7 @@ ${broker}       Quinta
   ...  ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${provider}'].compl_answer_confirm['data']['satisfied']}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint_answer_confirm']['data']['satisfied']}
   ...      complaints[${COMPLAINT_NUM}].satisfied
 
 ##############################################################################################
@@ -528,7 +550,7 @@ ${broker}       Quinta
   ...  ${USERS.users['${provider}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${provider}'].compl_answer_confirm['data']['status']}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint_answer_confirm']['data']['status']}
   ...      complaints[${COMPLAINT_NUM}].status
 
 
@@ -538,5 +560,10 @@ ${broker}       Quinta
   ...  ${USERS.users['${provider}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${provider}'].compl_answer_confirm['data']['satisfied']}
+  ...      ${USERS.users['${provider}'].complaint_data['complaint_answer_confirm']['data']['satisfied']}
   ...      complaints[${COMPLAINT_NUM}].satisfied
+
+
+
+
+
