@@ -47,7 +47,7 @@ def change_state(arguments):
         return "pass"
 
 
-def compare_date(date1, date2):
+def compare_date(date1, date2, accuracy):
     date1 = parse(date1)
     date2 = parse(date2)
     if date1.tzinfo is None:
@@ -56,7 +56,7 @@ def compare_date(date1, date2):
         date2 = TZ.localize(date2)
 
     delta = (date1 - date2).total_seconds()
-    if abs(delta) > 60:
+    if abs(delta) > accuracy:
         return False
     return True
 

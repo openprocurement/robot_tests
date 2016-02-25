@@ -185,15 +185,22 @@ Get Broker Property By Username
 Звірити дату тендера із значенням
   [Arguments]  ${username}  ${left}  ${field}
   ${right}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field}
-  Звірити дату  ${left}  ${right}
+  Порівняти дати  ${left}  ${right}
   Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${left}
 
 
-Звірити дату
-  [Arguments]  ${left}  ${right}
+Порівняти дати
+  [Documentation]
+  ...      Compare dates with specified ``accuracy`` (in seconds).
+  ...      Default is `60`.
+  ...
+  ...      The keyword will fail if the difference between
+  ...      ``left`` and ``right`` dates is more than ``accuracy``,
+  ...      otherwise it will pass.
+  [Arguments]  ${left}  ${right}  ${accuracy}=60
   Should Not Be Equal  ${left}  ${None}
   Should Not Be Equal  ${right}  ${None}
-  ${status}=  compare_date  ${left}  ${right}
+  ${status}=  compare_date  ${left}  ${right}  ${accuracy}
   Should Be True  ${status}
 
 
