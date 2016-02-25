@@ -19,7 +19,6 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ...  можливість
   ${tender_data}=  Підготовка початкових даних
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}
   ...      Створити тендер
@@ -34,7 +33,6 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  можливість
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Викликати для учасника  ${viewer}
   ...      Пошук тендера по ідентифікатору
@@ -45,7 +43,6 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${provider}'].broker}: Пошук тендера по ідентифікатору
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
-  ...  можливість
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   Викликати для учасника  ${provider}
   ...      Пошук тендера по ідентифікатору
@@ -56,7 +53,6 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${provider}'].broker}: Можливість подати вимогу про виправлення умов закупівлі
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
-  ...  можливість
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   Викликати для учасника  ${provider}
   ...      Створити вимогу
@@ -67,7 +63,6 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${provider}'].broker}: Можливість додати документацію до вимоги про виправлення умов закупівлі
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
-  ...  можливість
   ${COMPLAINT_NUM}=  Set variable  0
   Set suite variable  ${COMPLAINT_NUM}
   Викликати для учасника  ${provider}
@@ -381,7 +376,6 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${provider}'].broker}: Можливість подати вимогу про виправлення умов закупівлі
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
-  ...  можливість
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   Викликати для учасника  ${provider}
   ...      Подати вимогу
@@ -422,7 +416,6 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${tender_owner}'].broker}:Можливість відповісти на вирішену вимогу про виправлення умов закупівлі
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ...  можливість
   Викликати для учасника  ${tender_owner}
   ...      Відповісти на вирішену вимогу
   ...      ${TENDER['TENDER_UAID']}
@@ -497,7 +490,6 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${provider}'].broker}:Можливість підтвердити вирішення вимоги про виправлення умов закупівлі
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
-  ...  можливість
   Викликати для учасника  ${provider}
   ...      Підтвердити вирішення вимоги
   ...      ${TENDER['TENDER_UAID']}
