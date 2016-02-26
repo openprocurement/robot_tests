@@ -684,9 +684,14 @@ ${broker}       Quinta
   ...  ${USERS.users['${tender_owner}'].broker}
   ${FIRST_DOC}=  Set variable  0
   Set Suite Variable  ${FIRST_DOC}
+  ${field}=  Set variable  description
+  ${value}=  Set variable  test description
   Викликати для учасника  ${tender_owner}
   ...      Змінити опис документа в скасуванні
   ...      ${TENDER['TENDER_UAID']}  ${CANCEL_NUM}  ${FIRST_DOC}
+  ...      ${field}
+  ...      ${value}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  cancellation_document_description  ${value}
 
 
 Можливість завантажити нову версію документа до запиту на скасування прямої закупівлі

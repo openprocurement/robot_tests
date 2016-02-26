@@ -361,12 +361,9 @@ Library  openprocurement_client_helper.py
   ...      Find tender using uaid, get data from test_change_cancellation_document_field and call
   ...      patch_cancellation_document
   ...      [Return] Nothing
-  [Arguments]  ${username}  ${tender_uaid}  ${cancel_num}  ${doc_num}
+  [Arguments]  ${username}  ${tender_uaid}  ${cancel_num}  ${doc_num}  ${field}  ${value}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${cancellation_document_field}=  Set variable  description
-  ${cancellation_document_description}=  Set variable  test description
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  cancellation_document_description  ${cancellation_document_description}
-  ${data}=  test_change_cancellation_document_field_data  ${cancellation_document_field}  ${cancellation_document_description}
+  ${data}=  test_change_cancellation_document_field_data  ${field}  ${value}
   Log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_cancellation_document  ${tender}  ${data}  ${tender['data']['cancellations'][${cancel_num}]['id']}  ${tender['data']['cancellations'][${cancel_num}]['documents'][${doc_num}]['id']}
   Log  ${reply}
