@@ -476,3 +476,11 @@ Library  openprocurement_client_helper.py
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${cancellation_data}
   Log  ${reply}
 
+
+Перетворити вимогу в скаргу
+  [Documentation]  Переводить вимогу зі статусу "answered" у статус "pending"
+  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${escalating_data}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${tender}=  set_access_key  ${tender}  ${claim.access.token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${escalating_data}
+  Log  ${reply}

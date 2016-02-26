@@ -566,6 +566,15 @@ def test_claim_answer_data(claim_id):
         }
     }
 
+def test_escalate_claim_data(claim_id):
+    return {
+        "data": {
+            "status": "pending",
+            "satisfied": False,
+            "id": claim_id
+        }
+    }
+
 
 def test_cancel_tender_data(cancellation_reason):
     return {

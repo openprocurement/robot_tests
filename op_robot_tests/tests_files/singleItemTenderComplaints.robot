@@ -611,6 +611,9 @@ ${broker}       Quinta
   ...      ${USERS.users['${provider}'].claim_data['claim_answer_confirm']['data']['satisfied']}
   ...      complaints[${CLAIM_NUM}].satisfied
 
+##############################################################################################
+#             МОЖЛИВІСТЬ
+##############################################################################################
 
 Можливість створити і скасувати вимогу про виправлення умов закупівлі
   [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити і скасувати вимогу про виправлення умов закупівлі
@@ -686,8 +689,6 @@ ${broker}       Quinta
   ...      ${USERS.users['${provider}'].claim_data2['cancellation']['data']['cancellationReason']}
   ...      complaints[${CLAIM_NUM}].cancellationReason
 
-
-
 ##############################################################################################
 #             МОЖЛИВІСТЬ
 ##############################################################################################
@@ -755,8 +756,9 @@ ${broker}       Quinta
   ...      ${USERS.users['${provider}'].claim_data3['cancellation']['data']['status']}
   ...      complaints[${CLAIM_NUM}].status
 
-
-
+##############################################################################################
+#             МОЖЛИВІСТЬ
+##############################################################################################
 
 Можливість створити, подати, відповісти і після того скасувати вимогу про виправлення умов закупівлі
   [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити, подати, відповісти і після того скасувати вимогу про виправлення умов закупівлі
@@ -828,5 +830,102 @@ ${broker}       Quinta
   ...  from-0.12
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${provider}'].claim_data3['cancellation']['data']['status']}
+  ...      ${USERS.users['${provider}'].claim_data4['cancellation']['data']['status']}
   ...      complaints[${CLAIM_NUM}].status
+
+##############################################################################################
+#             МОЖЛИВІСТЬ
+##############################################################################################
+
+Можливість створити, подати, відповісти на вимогу і перетворити її в скаргу
+  [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити, подати, відповісти і після того скасувати вимогу про виправлення умов закупівлі
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  from-0.12
+  ${claim}=  test_claim_data
+  ${claim_resp}=  Викликати для учасника  ${provider}
+  ...      Створити вимогу
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${claim}
+  ${claim_data5}=  Create Dictionary  claim=${claim}  claim_resp=${claim_resp}
+  Log  ${claim_data5}
+  Set To Dictionary  ${USERS.users['${provider}']}  claim_data5  ${claim_data5}
+  ${CLAIM_NUM}=  Set variable  4
+  Set suite variable  ${CLAIM_NUM}
+
+
+  ${confrimation_data}=  test_submit_claim_data  ${USERS.users['${provider}']['claim_data5']['claim_resp']['data']['id']}
+  Log  ${confrimation_data}
+  Викликати для учасника  ${provider}
+  ...      Подати вимогу
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}']['claim_data5']['claim_resp']}
+  ...      ${confrimation_data}
+
+
+  ${answer_data}=  test_claim_answer_data  ${USERS.users['${provider}']['claim_data5']['claim_resp']['data']['id']}
+  Log  ${answer_data}
+  Викликати для учасника  ${tender_owner}
+  ...      Відповісти на вирішену вимогу
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}']['claim_data5']['claim_resp']}
+  ...      ${answer_data}
+
+
+  ${escalation_data}=  test_escalate_claim_data  ${USERS.users['${provider}']['claim_data5']['claim_resp']['data']['id']}
+  Log  ${escalation_data}
+  Викликати для учасника  ${tender_owner}
+  ...      Перетворити вимогу в скаргу
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}']['claim_data5']['claim_resp']}
+  ...      ${escalation_data}
+  Set To Dictionary  ${USERS.users['${provider}'].claim_data5}  escalation  ${escalation_data}
+
+##############################################################################################
+#             ВІДОБРАЖЕННЯ ДЛЯ ГЛЯДАЧА
+##############################################################################################
+
+Відображення статусу 'pending' після 'draft -> claim -> answered' вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу 'cancelled' після 'draft -> claim -> answered' вимоги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  from-0.12
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Log  ${USERS.users['${viewer}'].tender_data}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}'].claim_data5['escalation']['data']['status']}
+  ...      complaints[${CLAIM_NUM}].status
+
+
+Відображення незадоволення вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення незадоволення вимоги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  from-0.12
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}'].claim_data5['escalation']['data']['satisfied']}
+  ...      complaints[${CLAIM_NUM}].satisfied
+
+##############################################################################################
+#             ВІДОБРАЖЕННЯ ДЛЯ КОРИСТУВАЧА
+##############################################################################################
+
+Відображення статусу 'pending' після 'draft -> claim -> answered' вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення статусу 'cancelled' після 'draft -> claim -> answered' вимоги для користувача
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  from-0.12
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  Звірити поле тендера із значенням  ${provider}
+  ...      ${USERS.users['${provider}'].claim_data5['escalation']['data']['status']}
+  ...      complaints[${CLAIM_NUM}].status
+
+
+Відображення незадоволення вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення незадоволення вимоги для користувача
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  from-0.12
+  Звірити поле тендера із значенням  ${provider}
+  ...      ${USERS.users['${provider}'].claim_data5['escalation']['data']['satisfied']}
+  ...      complaints[${CLAIM_NUM}].satisfied
