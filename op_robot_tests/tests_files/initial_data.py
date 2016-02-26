@@ -504,6 +504,36 @@ def test_complaint_data():
     })
 
 
+def test_claim_data():
+    return munchify({
+        "data": {
+            "author": {
+                "address": {
+                    "countryName": u"Україна",
+                    "countryName_ru": u"Украина",
+                    "countryName_en": "Ukraine",
+                    "locality": u"м. Вінниця",
+                    "postalCode": "21100",
+                    "region": u"Вінницька область",
+                    "streetAddress": fake.street_address()
+                },
+                "contactPoint": {
+                    "name": fake.name(),
+                    "telephone": fake.phone_number()
+                },
+                "identifier": {
+                    "scheme": u"UA-EDR",
+                    "id": u"{:08d}".format(fake.pyint()),
+                    "uri": fake.image_url(width=None, height=None)
+                },
+                "name": fake.company()
+            },
+            "description": fake.sentence(nb_words=10, variable_nb_words=True),
+            "title": fake.sentence(nb_words=6, variable_nb_words=True)
+        }
+    })
+
+
 def test_complaint_answer_data(complaint_id):
     return {
         "data": {
@@ -515,12 +545,24 @@ def test_complaint_answer_data(complaint_id):
     }
 
 
-def test_complaint_answer_confirmation_data(complaint_id):
+def test_claim_answer_satisfying_data(claim_id):
     return {
         "data": {
-            "id": complaint_id,
+            "id": claim_id,
             "status": "resolved",
             "satisfied": True
+        }
+    }
+
+
+def test_claim_answer_data(claim_id):
+    return {
+        "data": {
+            "status": "answered",
+            "resolutionType": "resolved",
+            "tendererAction": fake.sentence(nb_words=10, variable_nb_words=True),
+            "resolution": fake.sentence(nb_words=15, variable_nb_words=True),
+            "id": claim_id
         }
     }
 
@@ -532,14 +574,16 @@ def test_cancel_tender_data(cancellation_reason):
         }
     }
 
-def test_cancel_complaint_data(complaint_id, cancellation_reason):
+
+def test_cancel_claim_data(claim_id, cancellation_reason):
     return {
         'data': {
             'cancellationReason': cancellation_reason,
             'status': 'cancelled',
-            'id': complaint_id
+            'id': claim_id
         }
     }
+
 
 def test_change_cancellation_document_field_data(key, value):
     data = {
@@ -579,10 +623,10 @@ def test_confirm_contract_data(contract_id):
     return data
 
 
-def test_confirm_complaint_data(complaint_id):
+def test_submit_claim_data(claim_id):
     return {
         "data": {
-            "id": complaint_id,
+            "id": claim_id,
             "status": "claim"
         }
     }
