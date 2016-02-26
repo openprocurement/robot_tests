@@ -929,3 +929,69 @@ ${broker}       Quinta
   Звірити поле тендера із значенням  ${provider}
   ...      ${USERS.users['${provider}'].claim_data5['escalation']['data']['satisfied']}
   ...      complaints[${CLAIM_NUM}].satisfied
+
+##############################################################################################
+#             МОЖЛИВІСТЬ
+##############################################################################################
+
+Можливість скасувати скаргу
+  [Tags]  ${USERS.users['${provider}'].broker}: Можливість скасувати скаргу
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  from-0.12
+  ${cancellation_reason}=  Set variable  prosto tak :)
+  ${cancellation_data}=  test_cancel_claim_data  ${USERS.users['${provider}']['claim_data5']['claim_resp']['data']['id']}  ${cancellation_reason}
+  Викликати для учасника  ${provider}
+  ...      Скасувати вимогу
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}']['claim_data5']['claim_resp']}
+  ...      ${cancellation_data}
+  Set To Dictionary  ${USERS.users['${provider}'].claim_data5}  cancellation  ${cancellation_data}
+
+##############################################################################################
+#             ВІДОБРАЖЕННЯ ДЛЯ ГЛЯДАЧА
+##############################################################################################
+
+Відображення статусу 'cancelled' скарги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу 'cancelled' скарги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  from-0.12
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}'].claim_data5['cancellation']['data']['status']}
+  ...      complaints[${CLAIM_NUM}].status
+
+
+Відображення причини скасування скарги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення причини скасування скарги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  from-0.12
+  Звірити поле тендера із значенням  ${provider}
+  ...      ${USERS.users['${provider}'].claim_data5['cancellation']['data']['cancellationReason']}
+  ...      complaints[${CLAIM_NUM}].cancellationReason
+
+##############################################################################################
+#             ВІДОБРАЖЕННЯ ДЛЯ КОРИСТУВАЧА
+##############################################################################################
+
+Відображення статусу 'cancelled' скарги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення статусу 'cancelled' скарги для користувача
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  from-0.12
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  Звірити поле тендера із значенням  ${provider}
+  ...      ${USERS.users['${provider}'].claim_data5['cancellation']['data']['status']}
+  ...      complaints[${CLAIM_NUM}].status
+
+
+Відображення причини скасування скарги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення причини скасування скарги для користувача
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  from-0.12
+  Звірити поле тендера із значенням  ${provider}
+  ...      ${USERS.users['${provider}'].claim_data2['cancellation']['data']['cancellationReason']}
+  ...      complaints[${CLAIM_NUM}].cancellationReason
