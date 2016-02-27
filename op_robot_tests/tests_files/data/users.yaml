@@ -13,7 +13,7 @@ users:
         broker:   Quinta
     E-tender_Owner:
         broker:   E-tender
-        homepage: "http://bid.uat.e-tender.biz/#/profile"
+        homepage: "http://bid.uat.e-tender.biz/#"
         login:    Misha2
         password: Password1
         browser:  chrome
@@ -21,7 +21,7 @@ users:
         size:     [800, 800]
     E-tender_Provider1:
         broker:   E-tender
-        homepage: "http://bid.uat.e-tender.biz/#/profile"
+        homepage: "http://bid.uat.e-tender.biz/#"
         login:    st_org
         password: 12345678
         browser:  chrome
@@ -29,7 +29,7 @@ users:
         size:     [700, 800]
     E-tender_Provider2:
         broker:   E-tender
-        homepage: "http://bid.uat.e-tender.biz/#/profile"
+        homepage: "http://bid.uat.e-tender.biz/#"
         login:    provider2
         password: Qa123456
         browser:  chrome
