@@ -445,7 +445,7 @@ Library  openprocurement_client_helper.py
   Log  ${reply}
 
 
-Відповісти на вирішену вимогу
+Відповісти на вимогу
   [Documentation]  Переводить вимогу зі статусу "claim" у статус "answered"
   [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${answer_data}
   Log  ${claim}

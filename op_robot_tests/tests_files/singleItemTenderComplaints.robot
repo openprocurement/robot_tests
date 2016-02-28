@@ -461,7 +461,7 @@ ${broker}       Quinta
 #             МОЖЛИВІСТЬ
 ##############################################################################################
 
-Можливість відповісти на вирішену вимогу про виправлення умов закупівлі
+Можливість відповісти на вимогу про виправлення умов закупівлі
   [Tags]  ${USERS.users['${tender_owner}'].broker}:Можливість відповісти на вирішену вимогу про виправлення умов закупівлі
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
@@ -469,7 +469,7 @@ ${broker}       Quinta
   ${answer_data}=  test_claim_answer_data  ${USERS.users['${provider}']['claim_data']['claim_resp']['data']['id']}
   Log  ${answer_data}
   Викликати для учасника  ${tender_owner}
-  ...      Відповісти на вирішену вимогу
+  ...      Відповісти на вимогу
   ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${provider}']['claim_data']['claim_resp']}
   ...      ${answer_data}
@@ -789,7 +789,7 @@ ${broker}       Quinta
   ${answer_data}=  test_claim_answer_data  ${USERS.users['${provider}']['claim_data4']['claim_resp']['data']['id']}
   Log  ${answer_data}
   Викликати для учасника  ${tender_owner}
-  ...      Відповісти на вирішену вимогу
+  ...      Відповісти на вимогу
   ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${provider}']['claim_data4']['claim_resp']}
   ...      ${answer_data}
@@ -866,7 +866,7 @@ ${broker}       Quinta
   ${answer_data}=  test_claim_answer_data  ${USERS.users['${provider}']['claim_data5']['claim_resp']['data']['id']}
   Log  ${answer_data}
   Викликати для учасника  ${tender_owner}
-  ...      Відповісти на вирішену вимогу
+  ...      Відповісти на вимогу
   ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${provider}']['claim_data5']['claim_resp']}
   ...      ${answer_data}
