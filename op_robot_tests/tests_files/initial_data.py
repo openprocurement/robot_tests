@@ -504,6 +504,142 @@ def test_complaint_data():
     })
 
 
+def test_claim_data():
+    return munchify({
+        "data": {
+            "author": {
+                "address": {
+                    "countryName": u"Україна",
+                    "countryName_ru": u"Украина",
+                    "countryName_en": "Ukraine",
+                    "locality": u"м. Вінниця",
+                    "postalCode": "21100",
+                    "region": u"Вінницька область",
+                    "streetAddress": fake.street_address()
+                },
+                "contactPoint": {
+                    "name": fake.name(),
+                    "telephone": fake.phone_number()
+                },
+                "identifier": {
+                    "scheme": u"UA-EDR",
+                    "id": u"{:08d}".format(fake.pyint()),
+                    "uri": fake.image_url(width=None, height=None)
+                },
+                "name": fake.company()
+            },
+            "description": fake.sentence(nb_words=10, variable_nb_words=True),
+            "title": fake.sentence(nb_words=6, variable_nb_words=True)
+        }
+    })
+
+
+def test_complaint_answer_data(complaint_id):
+    return munchify({
+        "data": {
+            "id": complaint_id,
+            "status": "answered",
+            "resolutionType": "resolved",
+            "resolution": fake.sentence(nb_words=40, variable_nb_words=True)
+        }
+    })
+
+
+def test_claim_answer_satisfying_data(claim_id):
+    return munchify({
+        "data": {
+            "id": claim_id,
+            "status": "resolved",
+            "satisfied": True
+        }
+    })
+
+
+def test_claim_answer_data(claim_id):
+    return munchify({
+        "data": {
+            "status": "answered",
+            "resolutionType": "resolved",
+            "tendererAction": fake.sentence(nb_words=10, variable_nb_words=True),
+            "resolution": fake.sentence(nb_words=15, variable_nb_words=True),
+            "id": claim_id
+        }
+    })
+
+
+def test_escalate_claim_data(claim_id):
+    return munchify({
+        "data": {
+            "status": "pending",
+            "satisfied": False,
+            "id": claim_id
+        }
+    })
+
+
+def test_cancel_tender_data(cancellation_reason):
+    return munchify({
+        'data': {
+            'reason': cancellation_reason
+        }
+    })
+
+
+def test_cancel_claim_data(claim_id, cancellation_reason):
+    return munchify({
+        'data': {
+            'cancellationReason': cancellation_reason,
+            'status': 'cancelled',
+            'id': claim_id
+        }
+    })
+
+
+def test_change_cancellation_document_field_data(key, value):
+    return munchify({
+        "data": {
+            key: value
+        }
+    })
+
+
+
+def test_confirm_data(ID):
+    return munchify({
+        "data": {
+            "status": "active",
+            "id": ID
+        }
+    })
+
+
+def test_submit_claim_data(claim_id):
+    return munchify({
+        "data": {
+            "id": claim_id,
+            "status": "claim"
+        }
+    })
+
+
+def test_additional_items_data(tender_id, access_token):
+    return munchify({
+        "access": {
+            "token": access_token
+            },
+        "data": {
+            "id": tender_id,
+             "items": [{
+                "unit": {
+                    "code": "MON",
+                    "name": "month"
+                    },
+                "quantity": 9
+            }]
+        }
+    })
+
+
 def test_complaint_reply_data():
     return munchify({
         "data": {
@@ -644,7 +780,7 @@ def auction_bid():
 
 
 def test_supplier_data():
-    return {
+    return munchify({
         "data": {
             "suppliers": [
                 {
@@ -675,7 +811,7 @@ def test_supplier_data():
                 "valueAddedTaxIncluded": True
             }
         }
-    }
+    })
 
 
 def test_award_data():
