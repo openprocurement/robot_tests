@@ -355,7 +355,7 @@ Library  openprocurement_client_helper.py
   ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}  ${award_num}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${data}=  confirm_supplier  ${tender['data']['awards'][${award_num}]['id']}
+  ${data}=  test_confirm_data  ${tender['data']['awards'][${award_num}]['id']}
   Log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_award  ${tender}  ${data}
   Log  ${reply}
@@ -397,7 +397,8 @@ Library  openprocurement_client_helper.py
   ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}  ${cancel_num}  ${doc_num}  ${field}  ${value}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${data}=  test_change_cancellation_document_field_data  ${field}  ${value}
+  ${temp}=  Create Dictionary  ${field}  ${value}
+  ${data}=  Create Dictionary  data  ${temp}
   Log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_cancellation_document  ${tender}  ${data}  ${tender['data']['cancellations'][${cancel_num}]['id']}  ${tender['data']['cancellations'][${cancel_num}]['documents'][${doc_num}]['id']}
   Log  ${reply}
@@ -424,7 +425,7 @@ Library  openprocurement_client_helper.py
   ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}  ${cancel_num}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${data}=  confirm_cancellation  ${tender['data']['cancellations'][${cancel_num}]['id']}
+  ${data}=  test_confirm_data  ${tender['data']['cancellations'][${cancel_num}]['id']}
   Log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_cancellation  ${tender}  ${data}
   Log  ${reply}
@@ -437,7 +438,7 @@ Library  openprocurement_client_helper.py
   ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}  ${contract_num}
   ${tender}=  Викликати для учасника  ${username}  Пошук тендера по ідентифікатору  ${tender_uaid}
-  ${data}=  confirm_contract  ${tender['data']['contracts'][${contract_num}]['id']}
+  ${data}=  test_confirm_data  ${tender['data']['contracts'][${contract_num}]['id']}
   Log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract  ${tender}  ${data}
   Log  ${reply}
