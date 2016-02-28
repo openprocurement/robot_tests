@@ -285,6 +285,82 @@ Library  openprocurement_client_helper.py
   #${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
 
 ##############################################################################
+#             singleItemTenderclaims
+##############################################################################
+
+Створити вимогу
+  [Documentation]  Створює вимогу у статусі "draft"
+  [Arguments]  ${username}  ${tender_uaid}  ${claim}
+  Log  ${claim}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору
+  ...      ${username}
+  ...      ${tender_uaid}
+  ${reply}=  Call Method
+  ...      ${USERS.users['${username}'].client}
+  ...      create_complaint
+  ...      ${tender}
+  ...      ${claim}
+  Log  ${reply}
+  [return]  ${reply}
+
+
+Завантажити документацію до вимоги
+  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${document}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${tender}=  set_access_key  ${tender}  ${claim.access.token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  upload_complaint_document  ${document}  ${tender}  ${claim['data']['id']}
+  Log  ${tender}
+  Log  ${reply}
+
+
+Подати вимогу
+  [Documentation]  Переводить вимогу зі статусу "draft" у статус "claim"
+  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${confirmation_data}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${tender}=  set_access_key  ${tender}  ${claim.access.token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${confirmation_data}
+  Log  ${tender}
+  Log  ${reply}
+
+
+Відповісти на вимогу
+  [Documentation]  Переводить вимогу зі статусу "claim" у статус "answered"
+  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${answer_data}
+  Log  ${claim}
+  Log  ${answer_data}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  log  ${tender}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${answer_data}
+  Log  ${reply}
+
+
+Підтвердити вирішення вимоги
+  [Documentation]  Переводить вимогу зі статусу "answered" у статус "resolved"
+  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${confirmation_data}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${tender}=  set_access_key  ${tender}  ${claim.access.token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${confirmation_data}
+  Log  ${reply}
+
+
+Скасувати вимогу
+  [Documentation]  Переводить вимогу в статус "canceled"
+  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${cancellation_data}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${tender}=  set_access_key  ${tender}  ${claim.access.token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${cancellation_data}
+  Log  ${reply}
+
+
+Перетворити вимогу в скаргу
+  [Documentation]  Переводить вимогу зі статусу "answered" у статус "pending"
+  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${escalating_data}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${tender}=  set_access_key  ${tender}  ${claim.access.token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${escalating_data}
+  Log  ${reply}
+
+##############################################################################
 #             Limited procurement
 ##############################################################################
 
@@ -406,78 +482,4 @@ Library  openprocurement_client_helper.py
   ${data}=  test_confirm_contract_data  ${tender['data']['contracts'][${contract_num}]['id']}
   Log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract  ${tender}  ${data}
-  Log  ${reply}
-
-##############################################################################
-#             singleItemTenderclaims
-##############################################################################
-
-Створити вимогу
-  [Documentation]  Створює вимогу у статусі "draft"
-  [Arguments]  ${username}  ${tender_uaid}  ${claim}
-  Log  ${claim}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору
-  ...      ${username}
-  ...      ${tender_uaid}
-  ${reply}=  Call Method
-  ...      ${USERS.users['${username}'].client}
-  ...      create_complaint
-  ...      ${tender}
-  ...      ${claim}
-  Log  ${reply}
-  [return]  ${reply}
-
-
-Завантажити документацію до вимоги
-  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${document}
-  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${tender}=  set_access_key  ${tender}  ${claim.access.token}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  upload_complaint_document  ${document}  ${tender}  ${claim['data']['id']}
-  Log  ${reply}
-
-
-Подати вимогу
-  [Documentation]  Переводить вимогу зі статусу "draft" у статус "claim"
-  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${confirmation_data}
-  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${tender}=  set_access_key  ${tender}  ${claim.access.token}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${confirmation_data}
-  Log  ${reply}
-
-
-Відповісти на вимогу
-  [Documentation]  Переводить вимогу зі статусу "claim" у статус "answered"
-  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${answer_data}
-  Log  ${claim}
-  Log  ${answer_data}
-  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  log  ${tender}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${answer_data}
-  Log  ${reply}
-
-
-Підтвердити вирішення вимоги
-  [Documentation]  Переводить вимогу зі статусу "answered" у статус "resolved"
-  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${confirmation_data}
-  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${tender}=  set_access_key  ${tender}  ${claim.access.token}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${confirmation_data}
-  Log  ${reply}
-
-
-Скасувати вимогу
-  [Documentation]  Переводить вимогу в статус "canceled"
-  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${cancellation_data}
-  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${tender}=  set_access_key  ${tender}  ${claim.access.token}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${cancellation_data}
-  Log  ${reply}
-
-
-Перетворити вимогу в скаргу
-  [Documentation]  Переводить вимогу зі статусу "answered" у статус "pending"
-  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${escalating_data}
-  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${tender}=  set_access_key  ${tender}  ${claim.access.token}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${escalating_data}
   Log  ${reply}
