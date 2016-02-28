@@ -535,28 +535,28 @@ def test_claim_data():
 
 
 def test_complaint_answer_data(complaint_id):
-    return {
+    return munchify({
         "data": {
             "id": complaint_id,
             "status": "answered",
             "resolutionType": "resolved",
             "resolution": fake.sentence(nb_words=40, variable_nb_words=True)
         }
-    }
+    })
 
 
 def test_claim_answer_satisfying_data(claim_id):
-    return {
+    return munchify({
         "data": {
             "id": claim_id,
             "status": "resolved",
             "satisfied": True
         }
-    }
+    })
 
 
 def test_claim_answer_data(claim_id):
-    return {
+    return munchify({
         "data": {
             "status": "answered",
             "resolutionType": "resolved",
@@ -564,86 +564,80 @@ def test_claim_answer_data(claim_id):
             "resolution": fake.sentence(nb_words=15, variable_nb_words=True),
             "id": claim_id
         }
-    }
+    })
+
 
 def test_escalate_claim_data(claim_id):
-    return {
+    return munchify({
         "data": {
             "status": "pending",
             "satisfied": False,
             "id": claim_id
         }
-    }
+    })
 
 
 def test_cancel_tender_data(cancellation_reason):
-    return {
+    return munchify({
         'data': {
             'reason': cancellation_reason
         }
-    }
+    })
 
 
 def test_cancel_claim_data(claim_id, cancellation_reason):
-    return {
+    return munchify({
         'data': {
             'cancellationReason': cancellation_reason,
             'status': 'cancelled',
             'id': claim_id
         }
-    }
+    })
 
 
 def test_change_cancellation_document_field_data(key, value):
-    data = {
+    return munchify({
         "data": {
             key: value
         }
-    }
-    return data
+    })
 
 
-def test_confirm_supplier_data(supplier_id):
-    return {
+
+def test_confirm_data(ID):
+    return munchify({
         "data": {
             "status": "active",
-            "id": supplier_id
+            "id": ID
         }
-    }
-
-
-def test_confirm_cancellation_data(cancellation_id):
-    data = {
-        "data": {
-            "status": "active",
-            "id": cancellation_id
-        }
-    }
-    return data
-
-
-def test_confirm_contract_data(contract_id):
-    data = {
-        "data": {
-            "id": contract_id,
-            "status": "active"
-        }
-    }
-    return data
+    })
 
 
 def test_submit_claim_data(claim_id):
-    return {
+    return munchify({
         "data": {
             "id": claim_id,
             "status": "claim"
         }
-    }
+    })
 
 
 def test_additional_items_data(tender_id, access_token):
-    data = {"access": {"token": access_token}, "data": {"id": tender_id, "items": [{"unit": {"code": "MON", "name": "month"}, "quantity": 9}]}}
-    return data
+    return munchify({
+        "access": {
+            "token": access_token
+            },
+        "data": {
+            "id": tender_id,
+             "items": [{
+                "unit": {
+                    "code": "MON",
+                    "name": "month"
+                    },
+                "quantity": 9
+            }]
+        }
+    })
 
 
 def test_complaint_reply_data():
@@ -786,7 +780,7 @@ def auction_bid():
 
 
 def test_supplier_data():
-    return {
+    return munchify({
         "data": {
             "suppliers": [
                 {
@@ -817,7 +811,7 @@ def test_supplier_data():
                 "valueAddedTaxIncluded": True
             }
         }
-    }
+    })
 
 
 def test_award_data():
