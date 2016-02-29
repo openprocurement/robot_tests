@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -
 from datetime import timedelta
 from dateutil.parser import parse
-from dpath.util import set as xpathset
+from dpath.util import new as xpathnew
 from iso8601 import parse_date
 from json import load
 from jsonpath_rw import parse as parse_path
@@ -26,6 +26,7 @@ from .initial_data import (
 from .local_time import get_now, TZ
 import os
 from barbecue import chef
+import re
 
 
 def get_current_tzdate():
@@ -150,7 +151,7 @@ def set_access_key(tender, access_token):
 
 
 def set_to_object(obj, attribute, value):
-    xpathset(obj, attribute.replace('.', '/'), value)
+    xpathnew(obj, attribute, value, separator='.')
     return obj
 
 
@@ -182,10 +183,19 @@ def merge_dicts(left, right):
     return new
 
 
-def create_data_dict(path_to_key=None, value=None):
+def create_data_dict(path_to_value=None, value=None):
     data_dict = munchify({'data': {}})
-    if isinstance(path_to_key, basestring) and isinstance(value, basestring):
-        data_dict = set_to_object(data_dict, path_to_key, value)
+    if isinstance(path_to_value, basestring) and value:
+        list_items = re.search('\d+', path_to_value)
+        if list_items:
+            list_items = list_items.group(0)
+            path_to_value = path_to_value.split('[' + list_items + ']')
+            path_to_value.insert(1, '.' + list_items)
+            set_to_object(data_dict, path_to_value[0], [])
+            set_to_object(data_dict, ''.join(path_to_value[:2]), {})
+            set_to_object(data_dict, ''.join(path_to_value), value)
+        else:
+            data_dict = set_to_object(data_dict, path_to_value, value)
     return data_dict
 
 
