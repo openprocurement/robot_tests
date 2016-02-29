@@ -255,8 +255,8 @@ def test_meat_tender_data(tender):
     return tender
 
 
-def test_question_data():
-    return munchify({
+def test_question_data(lot=False):
+    data = munchify({
         "data": {
             "author": {
                 "address": {
@@ -283,6 +283,9 @@ def test_question_data():
             "title": fake.sentence(nb_words=6, variable_nb_words=True)
         }
     })
+    if lot:
+        data = test_lot_question_data(data)
+    return data
 
 
 def test_question_answer_data():
@@ -293,8 +296,8 @@ def test_question_answer_data():
     })
 
 
-def test_complaint_data():
-    return munchify({
+def test_complaint_data(lot=False):
+    data = munchify({
         "data": {
             "author": {
                 "address": {
@@ -321,6 +324,9 @@ def test_complaint_data():
             "title": fake.sentence(nb_words=6, variable_nb_words=True)
         }
     })
+    if lot:
+        data = test_lot_complaint_data(data)
+    return data
 
 
 def test_complaint_reply_data():
