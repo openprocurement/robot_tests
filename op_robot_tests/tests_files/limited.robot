@@ -170,7 +170,7 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість модифікації прямої закупівлі
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ...  critical level 2
+  ...  level2
   Викликати для учасника  ${tender_owner}
   ...      Модифікувати закупівлю
   ...      ${TENDER['TENDER_UAID']}
@@ -180,7 +180,7 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість додати тендерну документацію до прямої закупівлі
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ...  critical level 2
+  ...  level2
   ${filepath}=  create_fake_doc
   Викликати для учасника  ${tender_owner}
   ...      Завантажити документ
