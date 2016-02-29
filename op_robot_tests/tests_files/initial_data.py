@@ -168,187 +168,30 @@ def test_tender_data_limited(intervals):
 def test_tender_data_multiple_items(intervals):
     now = get_now()
     t_data = test_tender_data(intervals)
-    t_data.update({
-        "items": [
-            {
-                "description": fake.catch_phrase(),
-                "deliveryDate": {
-                    "endDate": (now + timedelta(days=5)).isoformat()
-                },
-                "deliveryLocation": {
-                    "latitude": 49.8500,
-                    "longitude": 24.0167
-                },
-                "deliveryAddress": {
-                    "countryName": u"Україна",
-                    "countryName_ru": u"Украина",
-                    "countryName_en": "Ukraine",
-                    "postalCode": "01008",
-                    "region": u"м. Київ",
-                    "locality": u"м. Київ",
-                    "streetAddress": u"ул. Грушевского, 12/2"
-                },
-                "classification": {
-                    "scheme": u"CPV",
-                    "id": u"44617100-9",
-                    "description": u"Картонки",
-                    "description_ru": u"Большие картонные коробки",
-                    "description_en": u"Cartons"
-                },
-                "additionalClassifications": [
-                    {
-                        "scheme": u"ДКПП",
-                        "id": u"17.29.12-00.00",
-                        "description": u"Блоки, плити та пластини фільтрувальні, з паперової маси"
-                    }
-                ],
-                "unit": {
-                    "name": u"кілограм",
-                    "name_ru": u"килограмм",
-                    "name_en": "kilogram",
-                    "code": u"KGM"
-                },
-                "quantity": fake.pyint()
-            },
-            {
-                "description": fake.catch_phrase(),
-                "deliveryDate": {
-                    "endDate": (now + timedelta(days=5)).isoformat()
-                },
-                "deliveryLocation": {
-                    "latitude": 49.8500,
-                    "longitude": 24.0167
-                },
-                "deliveryAddress": {
-                    "countryName": u"Україна",
-                    "countryName_ru": u"Украина",
-                    "countryName_en": "Ukraine",
-                    "postalCode": fake.postalcode(),
-                    "region": u"м. Київ",
-                    "locality": u"м. Київ",
-                    "streetAddress": fake.street_address()
-                },
-                "classification": {
-                    "scheme": u"CPV",
-                    "id": u"44617100-9",
-                    "description": u"Картонки",
-                    "description_ru": u"Большие картонные коробки",
-                    "description_en": u"Cartons"
-                },
-                "additionalClassifications": [
-                    {
-                        "scheme": u"ДКПП",
-                        "id": u"17.21.99-00.00",
-                        "description": u"Роботи субпідрядні як частина виробництва гофрованих паперу й картону, паперової та картонної тари"
-                    }
-                ],
-                "unit": {
-                    "name": u"кілограм",
-                    "name_ru": u"килограмм",
-                    "name_en": "kilogram",
-                    "code": u"KGM"
-                },
-                "quantity": fake.pyint()
-            },
-            {
-                "description": fake.catch_phrase(),
-                "deliveryDate": {
-                    "endDate": (now + timedelta(days=5)).isoformat()
-                },
-                "deliveryLocation": {
-                    "latitude": 49.3418,
-                    "longitude": 39.1829
-                },
-                "deliveryAddress": {
-                    "countryName": u"Україна",
-                    "countryName_ru": u"Украина",
-                    "countryName_en": "Ukraine",
-                    "postalCode": fake.postalcode(),
-                    "region": u"Луганська область",
-                    "locality": u"м. Луганськ",
-                    "streetAddress": u"Вул. Оборонна 28"
-                },
-                "classification": {
-                    "scheme": u"CPV",
-                    "id": u"44617100-9",
-                    "description": u"Картонки",
-                    "description_ru": u"Большие картонные коробки",
-                    "description_en": u"Cartons"
-                },
-                "additionalClassifications": [
-                    {
-                        "scheme": u"ДКПП",
-                        "id": u"17.22.12-40.00",
-                        "description": u"Вата; вироби з вати, інші"
-                    }
-                ],
-                "unit": {
-                    "name": u"кілограм",
-                    "name_ru": u"килограмм",
-                    "name_en": "kilogram",
-                    "code": u"KGM"
-                },
-                "quantity": fake.pyint()
-            },
-            {
-                "description": fake.catch_phrase(),
-                "deliveryDate": {
-                    "endDate": (now + timedelta(days=5)).isoformat()
-                },
-                "deliveryLocation": {
-                    "latitude": 49.8500,
-                    "longitude": 24.0167
-                },
-                "deliveryAddress": {
-                    "countryName": u"Україна",
-                    "countryName_ru": u"Украина",
-                    "countryName_en": "Ukraine",
-                    "postalCode": fake.postalcode(),
-                    "region": u"м. Київ",
-                    "locality": u"м. Київ",
-                    "streetAddress": fake.street_address()
-                },
-                "classification": {
-                    "scheme": u"CPV",
-                    "id": u"44617100-9",
-                    "description": u"Картонки",
-                    "description_ru": u"Большие картонные коробки",
-                    "description_en": u"Cartons"
-                },
-                "additionalClassifications": [
-                    {
-                        "scheme": u"ДКПП",
-                        "id": u"17.22.12-50.00",
-                        "description": u"Одяг і речі до одягу з паперової маси, паперу, целюлозної вати чи полотна з целюлозного волокна (крім носових хусточок, наголовних уборів)"
-                    }
-                ],
-                "unit": {
-                    "name": u"кілограм",
-                    "name_ru": u"килограмм",
-                    "name_en": "kilogram",
-                    "code": u"KGM"
-                },
-                "quantity": fake.pyint()
-            }
-        ]
-    })
+    for _ in range(4):
+        new_item = test_item_data()
+        t_data['items'].append(new_item)
     return t_data
 
 
 def test_tender_data_multiple_lots(t_data):
-    for i in range(3):
-        t_data['data']['items'][i]['relatedLot'] = "3c8f387879de4c38957402dbdb8b31af"
-    t_data['data']['items'][3]['relatedLot'] = "bcac8d2ceb5f4227b841a2211f5cb646"
+    first_lot_id = "3c8f387879de4c38957402dbdb8b31af"
+    second_lot_id = "bcac8d2ceb5f4227b841a2211f5cb646"
+
+    for item in t_data['data']['items'][:-1]:
+        item['relatedLot'] = first_lot_id
+    t_data['data']['items'][-1]['relatedLot'] = second_lot_id
+
     t_data['data']['lots'] = [
         {
-            "id": "3c8f387879de4c38957402dbdb8b31af",
+            "id": first_lot_id,
             "title": "Lot #1: Kyiv stationery",
             "description": "Items for Kyiv office",
             "value": {"currency": "UAH", "amount": 34000.0, "valueAddedTaxIncluded": "true"},
             "minimalStep": {"currency": "UAH", "amount": 30.0, "valueAddedTaxIncluded": "true"},
             "status": "active"
         }, {
-            "id": "bcac8d2ceb5f4227b841a2211f5cb646",
+            "id": second_lot_id,
             "title": "Lot #2: Lviv stationery",
             "description": "Items for Lviv office",
             "value": {"currency": "UAH", "amount": 9000.0, "valueAddedTaxIncluded": "true"},
@@ -514,97 +357,57 @@ def test_bid_data():
                 }
             ],
             "value": {
-                "amount": 500
+                "currency": "UAH",
+                "amount": 500,
+                "valueAddedTaxIncluded": "true"
             }
         }
     })
 
 
 def test_bid_data_meat_tender():
-    return munchify({
-        "data": {
-            "tenderers": [
-                {
-                    "address": {
-                        "countryName": "Україна",
-                        "locality": "м. Вінниця",
-                        "postalCode": "21100",
-                        "region": "м. Вінниця",
-                        "streetAddress": fake.street_address()
-                    },
-                    "contactPoint": {
-                        "name": fake.name(),
-                        "telephone": fake.phone_number()
-                    },
-                    "identifier": {
-                        "scheme": u"UA-EDR",
-                        "id": u"{:08d}".format(fake.pyint()),
-                    },
-                    "name": fake.company()
-                }
-            ],
-            "parameters": [
-                {
-                    "code": "ee3e24bc17234a41bd3e3a04cc28e9c6",
-                    "value": fake.random_element(elements=(0.15, 0.1, 0.05, 0))
-                },
-                {
-                    "code": "48cfd91612c04125ab406374d7cc8d93",
-                    "value": fake.random_element(elements=(0.05, 0.01, 0))
-                }
-            ],
-            "value": {
-                "amount": 500
+    bid = test_bid_data()
+    bid.data.update({
+        "parameters": [
+            {
+                "code": "ee3e24bc17234a41bd3e3a04cc28e9c6",
+                "value": fake.random_element(elements=(0.15, 0.1, 0.05, 0))
+            },
+            {
+                "code": "48cfd91612c04125ab406374d7cc8d93",
+                "value": fake.random_element(elements=(0.05, 0.01, 0))
             }
-        }
+        ]
     })
+    return bid
 
 
 def test_lots_bid_data():
-    return munchify({
-        "data": {
-            "tenderers": [
-                {
-                    "address": {
-                        "countryName": "Україна",
-                        "locality": "м. Вінниця",
-                        "postalCode": "21100",
-                        "region": "м. Вінниця",
-                        "streetAddress": fake.street_address()
-                    },
-                    "contactPoint": {
-                        "name": fake.name(),
-                        "telephone": fake.phone_number()
-                    },
-                    "identifier": {
-                        "scheme": u"UA-EDR",
-                        "id": u"{:08d}".format(fake.pyint()),
-                    },
-                    "name": fake.company()
-                }
-            ],
-            "lotValues": [
-                {
-                    "value": {
-                        "currency": "UAH",
-                        "amount": 1000 + fake.pyfloat(left_digits=3, right_digits=0, positive=True),
-                        "valueAddedTaxIncluded": "true"
-                    },
-                    "relatedLot": "3c8f387879de4c38957402dbdb8b31af",
-                    "date": "2015-11-01T12:43:12.482645+02:00"
+    bid = test_bid_data()
+    del bid.data.value
+    bid.data.update({
+        "lotValues": [
+            {
+                "value": {
+                    "currency": "UAH",
+                    "amount": 1000 + fake.pyfloat(left_digits=3, right_digits=0, positive=True),
+                    "valueAddedTaxIncluded": "true"
                 },
-                {
-                    "value": {
-                        "currency": "UAH",
-                        "amount": 1000 + fake.pyfloat(left_digits=3, right_digits=0, positive=True),
-                        "valueAddedTaxIncluded": "true"
-                    },
-                    "relatedLot": "bcac8d2ceb5f4227b841a2211f5cb646",
-                    "date": "2015-11-01T12:43:12.482645+02:00"
-                }
-            ]
-        }
+                "relatedLot": "3c8f387879de4c38957402dbdb8b31af",
+                "date": "2015-11-01T12:43:12.482645+02:00"
+            },
+            {
+                "value": {
+                    "currency": "UAH",
+                    "amount": 1000 + fake.pyfloat(left_digits=3, right_digits=0, positive=True),
+                    "valueAddedTaxIncluded": "true"
+                },
+                "relatedLot": "bcac8d2ceb5f4227b841a2211f5cb646",
+                "date": "2015-11-01T12:43:12.482645+02:00"
+            }
+        ]
     })
+    return bid
 
 
 def auction_bid():
@@ -715,14 +518,6 @@ def test_invalid_features_data():
                     "title": "180 днів та більше"
                 },
                 {
-                    "value": 0.1,
-                    "title": "90-179 днів",
-                },
-                {
-                    "value": 0.05,
-                    "title": "30-89 днів"
-                },
-                {
                     "value": 0,
                     "title": "Менше 30 днів"
                 }
@@ -738,10 +533,6 @@ def test_invalid_features_data():
                 {
                     "value": 0.35,
                     "title": "Вищий"
-                },
-                {
-                    "value": 0.01,
-                    "title": "Перший",
                 },
                 {
                     "value": 0,

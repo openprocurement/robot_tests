@@ -21,6 +21,9 @@ ${complaint_id}  1
 *** Test Cases ***
 Можливість оголосити мультилотовий тендер
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити мультилотовий тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      minimal
   ${tender_data}=  Підготовка початкових даних
   ${tender_data}=  test_tender_data_multiple_lots  ${tender_data}
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${tender_data}
@@ -30,21 +33,25 @@ ${complaint_id}  1
   Set To Dictionary  ${TENDER}   LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
   Log  ${TENDER}
 
-Пошук мультилотового тендера по ідентифікатору
+Можливість знайти мультилотовий тендер по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
-  Дочекатись синхронізації з майданчиком    ${viewer}
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      minimal
   ${usernames}=  Create List  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
   :FOR  ${username}  IN  @{usernames}
+  \  Дочекатись синхронізації з майданчиком    ${username}
   \  Викликати для учасника  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
-
-Отримання тендера
-  Дочекатись синхронізації з майданчиком    ${tender_owner}
-  Викликати для учасника   ${tender_owner}   Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
 
 #######
 #Операції з лотом
 
-Створення лоту
+Можливість створення лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком    ${tender_owner}
   ${tender_data}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data}
   ${lot}=  test lot data
   ${lotcreate}=  Викликати для учасника   ${tender_owner}  Створити лот  ${tender_data}  ${lot}
@@ -54,12 +61,18 @@ ${complaint_id}  1
   log  ${lotcreate}
 
 Можливість видалення лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
   ${tender_data}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data}
   ${lot}=  Get Variable Value  ${USERS.users['${tender_owner}'].lotresponses['resp0']}
   ${lotdelete}=  Викликати для учасника   ${tender_owner}  Видалити лот  ${tender_data}  ${lot}
   Log  ${lotdelete}
 
-Повторне створення лоту
+Можливість повторого створення лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
   ${tender_data}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data}
   ${lot}=  test lot data
   ${lotcreate}=  Викликати для учасника   ${tender_owner}  Створити лот  ${tender_data}  ${lot}
@@ -69,6 +82,9 @@ ${complaint_id}  1
   log  ${lotcreate}
 
 Можливість змінити цінову пропозицію у новому лоті до 8000
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
   ${tender_data}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data}
   Set To Dictionary  ${USERS.users['${tender_owner}'].lotresponses['resp'].data.value}  amount   8000
   ${fixlotto8000resp}=   Викликати для учасника   ${tender_owner}  Змінити лот  ${tender_data}  ${USERS.users['${tender_owner}'].lotresponses['resp']}
@@ -76,6 +92,9 @@ ${complaint_id}  1
   log  ${fixlotto8000resp}
 
 Можливість змінити цінову пропозицію у новому лоті до 100
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
   ${tender_data}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data}
   Set To Dictionary  ${USERS.users['${tender_owner}'].lotresponses['resp'].data.value}  amount   8000
   ${fixlotto100resp}=   Викликати для учасника   ${tender_owner}  Змінити лот  ${tender_data}  ${USERS.users['${tender_owner}'].lotresponses['resp']}
@@ -88,9 +107,14 @@ ${complaint_id}  1
 
 Можливість додати позицію закупівлі в тендер
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
   Викликати для учасника   ${tender_owner}   Додати предмети закупівлі    ${TENDER['TENDER_UAID']}   1
 
-Добавити предмет закупівлі до лоту
+Можливість добавити предмет закупівлі до лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
   ${items}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data['items']}
   Log   ${items}
   ${lot_id}=   Get Variable Value  ${USERS.users['${tender_owner}'].lotresponses['resp'].data.id}
@@ -99,11 +123,19 @@ ${complaint_id}  1
   Викликати для учасника   ${tender_owner}  Внести зміни в тендер    ${TENDER['TENDER_UAID']}   items     ${items}
 
 Неможливість видалення лоту з прив’язаними предметами закупівлі
+  [Documentation]
+  ...    "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
   ${tender_data}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data}
   ${lot}=  Get Variable Value  ${USERS.users['${tender_owner}'].lotresponses['resp']}
   Викликати для учасника   ${tender_owner}  Видалити лот  shouldfail   ${tender_data}  ${lot}
 
 Можливість видалити позиції закупівлі тендера
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
   ${items}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data['items']}
   Log  ${items}
   ${resp}=  Викликати для учасника   ${tender_owner}  Внести зміни в тендер    ${TENDER['TENDER_UAID']}   items     ${items[:-1]}
@@ -111,6 +143,8 @@ ${complaint_id}  1
 
 Можливість додати тендерну документацію лоту
   [Tags]    ${USERS.users['${tender_owner}'].broker}: Можливість завантажити документ
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
   [Documentation]   Закупівельник   ${USERS.users['${tender_owner}'].broker}  завантажує документацію  до  оголошеної закупівлі
   ${filepath}=   create_fake_doc
   ${lot_id}=   Get Variable Value  ${USERS.users['${tender_owner}'].lotresponses['resp'].data.id}
@@ -125,15 +159,21 @@ ${complaint_id}  1
 #######
 #Запитання до лоту
 
-Задати питання
+Можливість задати питання
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість задати запитання
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком    ${provider}
   ${question}=   Викликати для учасника   ${provider}   Задати питання  ${TENDER['TENDER_UAID']}   ${QUESTIONS[${question_id}]}
   log   ${question}
   ${now}=  Get Current TZdate
   Set To Dictionary  ${QUESTIONS[${question_id}].data}   date   ${now}
 
-Відповісти на запитання
+Можливість відповісти на запитання
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість відповісти на запитання
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком    ${tender_owner}
   Викликати для учасника   ${tender_owner}   Відповісти на питання    ${TENDER['TENDER_UAID']}  0  ${ANSWERS[0]}
   ${now}=  Get Current TZdate
   Set To Dictionary  ${ANSWERS[${question_id}-1].data}   date   ${now}
@@ -198,24 +238,33 @@ ${complaint_id}  1
 
 Відображення початку періоду прийому пропозицій оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
-  ...      viewer
+  ...      viewer  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      minimal
   ${usernames}=  Create List  ${viewer}  ${provider}  ${provider1}
   :FOR  ${username}  IN  @{usernames}
+  \  Дочекатись синхронізації з майданчиком    ${username}
   \  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.startDate
 
 Відображення закінчення періоду прийому пропозицій оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
-  ...      viewer
+  ...      viewer  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      minimal
   ${usernames}=  Create List  ${viewer}  ${provider}  ${provider1}
   :FOR  ${username}  IN  @{usernames}
+  \  Дочекатись синхронізації з майданчиком    ${username}
   \  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.endDate
 
 Неможливість подати цінову пропозицію до початку періоду подачі пропозицій
+  [Documentation]
+  ...    "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
+  ...      prvider
+  ...      ${USERS.users['${provider}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком    ${provider}
   ${bid}=  test lots bid data
   Log   ${bid}
   ${bidresponses}=  Create Dictionary
@@ -226,7 +275,12 @@ ${complaint_id}  1
   log   ${USERS.users['${provider}']}
 
 Неможливість подати цінову пропозицію без прив’язки до лоту
+  [Documentation]
+  ...    "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
+  ...      prvider
+  ...      ${USERS.users['${provider}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком    ${provider}
   Дочекатись дати початку прийому пропозицій  ${provider}
   ${bid}=  test bid data
   Log   ${bid}
@@ -237,8 +291,10 @@ ${complaint_id}  1
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   no_lot_bid_resp  ${no_lot_bid_resp}
   log   ${USERS.users['${provider}']}
 
-Подати цінову пропозицію першим учасником
+Можливість подати цінову пропозицію першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
+  ...      prvider
+  ...      ${USERS.users['${provider}'].broker}
   ${bid}=  test lots bid data
   Log  ${bid}
   ${bidresponses}=  Create Dictionary
@@ -250,11 +306,15 @@ ${complaint_id}  1
 
 Можливість скасувати цінову пропозицію
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість скасувати цінову пропозицію
+  ...      prvider
+  ...      ${USERS.users['${provider}'].broker}
   ${canceledbidresp}=  Викликати для учасника   ${provider}   Скасувати цінову пропозицію   ${TENDER['TENDER_UAID']}   ${USERS.users['${provider}'].bidresponses['resp']}
   Log  ${canceledbidresp}
 
-Подати повторно цінову пропозицію першим учасником
+Можливість подати повторно цінову пропозицію першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
+  ...      prvider
+  ...      ${USERS.users['${provider}'].broker}
   Дочекатись дати початку прийому пропозицій  ${provider}
   ${bid}=  test lots bid data
   Log  ${bid}
@@ -267,6 +327,8 @@ ${complaint_id}  1
 
 Можливість змінити повторну цінову пропозицію до 2000
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
+  ...      prvider
+  ...      ${USERS.users['${provider}'].broker}
   ${fixbidto2000resp}=  create_data_dict   data.lotValues[0].value.amount  2000
   ${fixbidto2000resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   ${fixbidto2000resp}
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   fixbidto2000resp   ${fixbidto2000resp}
@@ -274,13 +336,17 @@ ${complaint_id}  1
 
 Можливість змінити повторну цінову пропозицію до 10
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
+  ...      prvider
+  ...      ${USERS.users['${provider}'].broker}
   ${fixbidto10resp}=  create_data_dict   data.lotValues[0].value.amount  10
   ${fixbidto10resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   ${fixbidto10resp}
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   fixbidto10resp   ${fixbidto10resp}
   log  ${fixbidto10resp}
 
-Подати цінову пропозицію другим учасником
+Можливість подати цінову пропозицію другим учасником
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
+  ...      prvider1
+  ...      ${USERS.users['${provider1}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider1}
   Дочекатись дати початку прийому пропозицій  ${provider1}
   ${bid}=  test lots bid data
@@ -295,6 +361,9 @@ ${complaint_id}  1
 
 Неможливість побачити цінові пропозиції учасників під час прийому пропозицій
   [Tags]   ${USERS.users['${viewer}'].broker}: Можливість подати цінову пропозицію
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
   ${bids}=  Викликати для учасника    ${viewer}   Отримати інформацію із тендера  bids
   Should Be Equal    ${bids}   ${None}
 
@@ -302,6 +371,9 @@ ${complaint_id}  1
   [Documentation]
   ...    "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
   [Tags]   ${USERS.users['${provider1}'].broker}: Неможливість змінити цінову пропозицію до 2000 після закінчення прийому пропозицій
+  ...      provider1
+  ...      ${USERS.users['${provider1}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком    ${provider1}
   Дочекатись дати закінчення прийому пропозицій  ${provider1}
   ${failfixbidto2000resp}=  create_data_dict   data.lotValues[0].value.amount  2000
   ${failfixbidto2000resp}=  Викликати для учасника   ${provider1}   Змінити цінову пропозицію  shouldfail  ${TENDER['TENDER_UAID']}   ${failfixbidto2000resp}
@@ -320,9 +392,9 @@ ${complaint_id}  1
   log  ${failfixbidto1resp}
 
 Неможливість скасувати цінову пропозицію
+  [Documentation]
+  ...    "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість скасувати цінову пропозицію
+  ...      provider1
+  ...      ${USERS.users['${provider1}'].broker}
   ${biddingresponse}=  Викликати для учасника   ${provider1}   Скасувати цінову пропозицію  shouldfail   ${TENDER['TENDER_UAID']}   ${USERS.users['${provider1}'].bidresponses['resp']}
-
-Отримання тендера після закінчення прийому пропозицій
-  Дочекатись синхронізації з майданчиком    ${viewer}
-  Викликати для учасника   ${viewer}   Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
