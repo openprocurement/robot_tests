@@ -443,8 +443,7 @@ ${question_id}  0
   ...      ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
   ${bids}=  Викликати для учасника  ${viewer}  Отримати інформацію із тендера  bids
-  ${bool}=  Convert To Boolean  ${bids}
-  Should Be Equal  ${bool}  ${False}
+  Should Not Be True  ${bids}
 
 Можливість завантажити документ другим учасником
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість прийняти пропозицію переможця
