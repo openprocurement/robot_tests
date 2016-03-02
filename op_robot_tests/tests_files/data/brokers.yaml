@@ -1,22 +1,55 @@
 Default:
-    # These values are used by default unless a
-    # specific broker entry overrides them.
-    intervals:   # Time in minutes
-        enquiry:
-            - 0  # Delay before period starts (for startDate)
-            - 11 # Duration of period (for endDate)
-        tender:
-            - 0
-            - 31
-    timeout_on_wait: 300 # Time in seconds
+    # Default dictionary:
+    # These values are used unless a
+    # specific broker entry overrides them
+    intervals:
+        # intervals: Interval values for each "mode"
+        #
+        # Each field is a mode name
+        # Current modes are:
+        # single, multi, limited, openua, openeu
+        #
+        # See `prepare_test_tender_data()`
+        # in `service_keywords.py` for more details
+        #
+        # If some mode is not specified,
+        # time values are taken from "default"
+        default:
+            # default: Used for modes that are not present in `intervals`
+            #
+            # enquiry, tender: Period names with corresponding time values
+            #
+            # Other mode-specific fields are allowed too
+            #
+            # First number in list:  Delay before period starts (for startDate)
+            # Second number in list: Duration of period (for endDate)
+            enquiry: [0, 11]
+            tender:  [0, 31]
+        openua:
+            # accelerator: Integer value
+            # This is not a name of period
+            # Please refer to API documentation to find out what's this
+            accelerator: 1440
+            tender: [0, 15]
+            # Please remember that openUA and openEU procedures
+            # forbid anyone to set or modify enquiryPeriod
+            # (it is set automatically)
+        openeu:
+            accelerator: 1440
+            tender: [0, 15]
+    # Synchronization delay, in seconds
+    timeout_on_wait: 300
 Quinta:
-#    intervals:
-#        enquiry:
-#            - 0
-#            - 2
-#        tender:
-#            - 0
-#            - 5
+    intervals:
+        default:
+            enquiry: [0, 2]
+            tender:  [0, 5]
+        openua:
+            accelerator: 1440
+            tender: [0, 15]
+        openeu:
+            accelerator: 1440
+            tender: [0, 15]
     keywords_file: openprocurement_client
     roles:
         tender_owner:   Tender_Owner
@@ -48,12 +81,8 @@ Newtend:
         viewer:         Newtend_Viewer
 PrivatMarket:
     intervals:
-        enquiry:
-           - 0
-           - 2
-        tender:
-           - 0
-           - 5
+        enquiry: [0, 2]
+        tender:  [0, 5]
     keywords_file: privatmarket
     roles:
         viewer:         PrivatMarket_Viewer
@@ -62,12 +91,8 @@ PrivatMarket:
     timeout_on_wait: 30
 Prom:
     intervals:
-       enquiry:
-           - 8
-           - 8
-       tender:
-           - 0
-           - 31
+       enquiry: [8, 8]
+       tender:  [0, 31]
     keywords_file: prom
     roles:
         tender_owner:   Prom_Owner
@@ -79,12 +104,8 @@ Publicbid:
         provider:       Publicbid_Provider1
         viewer:         Publicbid_Viewer
     intervals:
-        enquiry:
-            - 21 # Delay before period starts (for startDate)
-            - 15 # Duration of period (for endDate)
-        tender:
-            - 1
-            - 15
+        enquiry: [21, 15]
+        tender:  [1,  15]
 PublicPortal:
     keywords_file: publicportal
     roles:
@@ -97,10 +118,6 @@ SmartTender:
         provider1:      SmartTender_Provider2
         tender_owner:   SmartTender_Owner
     intervals:
-        enquiry:
-            - 5
-            - 10
-        tender:
-            - 0
-            - 15
+        enquiry: [5, 10]
+        tender:  [0, 15]
     timeout_on_wait: 300
