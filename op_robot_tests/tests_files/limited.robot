@@ -3,7 +3,7 @@ Library            op_robot_tests.tests_files.service_keywords
 Library            Collections
 Resource           keywords.robot
 Resource           resource.robot
-Suite Setup        TestSuiteSetup
+Suite Setup        Test Suite Setup
 Suite Teardown     Close all browsers
 
 

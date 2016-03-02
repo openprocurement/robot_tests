@@ -6,7 +6,7 @@ Library         Selenium2Library
 Library         DebugLibrary
 Resource        keywords.robot
 Resource        resource.robot
-Suite Setup     TestSuiteSetup
+Suite Setup     Test Suite Setup
 Suite Teardown  Close all browsers
 
 *** Variables ***

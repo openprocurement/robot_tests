@@ -11,7 +11,7 @@ Documentation
 ...  test suites or by brokers' keyword libraries (also known as drivers).
 
 *** Keywords ***
-TestSuiteSetup
+Test Suite Setup
   Set Selenium Implicit Wait  5 s
   Set Selenium Timeout  10 s
   Завантажуємо дані про користувачів і майданчики
