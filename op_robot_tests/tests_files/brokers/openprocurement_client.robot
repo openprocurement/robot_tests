@@ -178,9 +178,10 @@ Library  openprocurement_client_helper.py
 
 
 Змінити цінову пропозицію
-  [Arguments]  ${username}  ${tender_uid}  ${bid}
+  [Arguments]  ${username}  ${tender_uid}  ${fieldname}  ${fieldvalue}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
-  Set To Dictionary   ${bid.data}  id  ${USERS.users['${username}'].bidresponses['bid'].data.id}
+  ${bid}=  Отримати пропозицію  ${username}  ${tender_uid}
+  Set_To_Object  ${bid.data}   ${fieldname}   ${fieldvalue}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
   ${changed_bid}=  Call Method  ${USERS.users['${username}'].client}  patch_bid  ${tender}  ${bid}
   Log  ${changed_bid}
