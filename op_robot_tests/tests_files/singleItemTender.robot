@@ -377,8 +377,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ${fixbidto50000resp}=  create_data_dict   data.value.amount  50000
-  ${fixbidto50000resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   ${fixbidto50000resp}
+  ${fixbidto50000resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   value.amount  50000
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   fixbidto50000resp   ${fixbidto50000resp}
   log  ${fixbidto50000resp}
 
@@ -386,8 +385,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ${fixbidto10resp}=  create_data_dict   data.value.amount  10
-  ${fixbidto10resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   ${fixbidto10resp}
+  ${fixbidto10resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   value.amount  10
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   fixbidto10resp   ${fixbidto10resp}
   log  ${fixbidto10resp}
 
@@ -461,8 +459,7 @@ ${question_id}  0
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   Дочекатись дати закінчення прийому пропозицій  ${provider1}
-  ${failfixbidto50000resp}=  create_data_dict   data.value.amount  50000
-  ${failfixbidto50000resp}=  Викликати для учасника   ${provider1}   Змінити цінову пропозицію  shouldfail  ${TENDER['TENDER_UAID']}   ${failfixbidto50000resp}
+  ${failfixbidto50000resp}=  Викликати для учасника   ${provider1}   Змінити цінову пропозицію  shouldfail  ${TENDER['TENDER_UAID']}   value.amount  50000
   Set To Dictionary  ${USERS.users['${provider1}'].bidresponses}   failfixbidto50000resp   ${failfixbidto50000resp}
   log  ${failfixbidto50000resp}
 
@@ -470,8 +467,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${provider1}'].broker}: Неможливість змінити цінову пропозицію до 1 після закінчення прийому пропозицій
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
-  ${failfixbidto1resp}=  create_data_dict   data.value.amount  1
-  ${failfixbidto1resp}=  Викликати для учасника   ${provider1}   Змінити цінову пропозицію  shouldfail  ${TENDER['TENDER_UAID']}   ${failfixbidto1resp}
+  ${failfixbidto1resp}=  Викликати для учасника   ${provider1}   Змінити цінову пропозицію  shouldfail  ${TENDER['TENDER_UAID']}   value.amount  1
   Set To Dictionary  ${USERS.users['${provider1}'].bidresponses}   failfixbidto1resp   ${failfixbidto1resp}
   log  ${failfixbidto1resp}
 
