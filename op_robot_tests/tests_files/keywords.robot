@@ -267,18 +267,37 @@ SwitchState
 Дочекатись дати початку прийому пропозицій
   [Arguments]  ${username}
   Log  ${username}
-  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.tenderPeriod.startDate}
+  # This tries to get the date from current user's procurement data cache.
+  # On failure, it reads from tender_owner's cached initial_data.
+  # XXX: This is a dirty hack!
+  # HACK: It was left here only for backward compatibiliy.
+  # HACK: Before caching was implemented, this keyword used to look into
+  # HACK: tender_owner's initial_data.
+  # HACK: This should be cleaned up as soon as each broker implements reading
+  # HACK: of the needed dates from tender's page.
+  Run Keyword And Ignore Error
+  ...      ${date}=  ${USERS.users['${username}'].tender_data.data.tenderPeriod.startDate}
+  Run Keyword Unless  ${date}
+  ...      ${date}=  ${USERS.users['${tender_owner}'].initial_data.data.tenderPeriod.startDate}
+  Дочекатись дати  ${date}
 
 
 Дочекатись дати закінчення прийому пропозицій
   [Arguments]  ${username}
   Log  ${username}
-  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.tenderPeriod.endDate}
+  # XXX: HACK: Same as above
+  Run Keyword And Ignore Error
+  ...      ${date}=  ${USERS.users['${username}'].tender_data.data.tenderPeriod.endDate}
+  Run Keyword Unless  ${date}
+  ...      ${date}=  ${USERS.users['${tender_owner}'].initial_data.data.tenderPeriod.endDate}
+  Дочекатись дати  ${date}
 
 
 Дочекатись дати початку аукціону
   [Arguments]  ${username}
   Log  ${username}
+  # Can't use that dirty hack here since we don't know
+  # the date of auction when creating the procurement :)
   Дочекатись дати  ${USERS.users['${username}'].tender_data.data.auctionPeriod.startDate}
 
 
