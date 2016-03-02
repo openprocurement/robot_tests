@@ -275,10 +275,15 @@ SwitchState
   # HACK: tender_owner's initial_data.
   # HACK: This should be cleaned up as soon as each broker implements reading
   # HACK: of the needed dates from tender's page.
-  Run Keyword And Ignore Error
-  ...      ${date}=  ${USERS.users['${username}'].tender_data.data.tenderPeriod.startDate}
-  Run Keyword Unless  ${date}
-  ...      ${date}=  ${USERS.users['${tender_owner}'].initial_data.data.tenderPeriod.startDate}
+  ${status}  ${date}=  Run Keyword And Ignore Error
+  ...      Set Variable
+  ...      ${USERS.users['${username}'].tender_data.data.tenderPeriod.startDate}
+  # By default if condition is not satisfied, variable is set to None.
+  # The third argument sets the variable to itself instead of None.
+  ${date}=  Set Variable If
+  ...      '${status}' == 'FAIL'
+  ...      ${USERS.users['${tender_owner}'].initial_data.data.tenderPeriod.startDate}
+  ...      ${date}
   Дочекатись дати  ${date}
 
 
@@ -286,10 +291,13 @@ SwitchState
   [Arguments]  ${username}
   Log  ${username}
   # XXX: HACK: Same as above
-  Run Keyword And Ignore Error
-  ...      ${date}=  ${USERS.users['${username}'].tender_data.data.tenderPeriod.endDate}
-  Run Keyword Unless  ${date}
-  ...      ${date}=  ${USERS.users['${tender_owner}'].initial_data.data.tenderPeriod.endDate}
+  ${status}  ${date}=  Run Keyword And Ignore Error
+  ...      Set Variable
+  ...      ${USERS.users['${username}'].tender_data.data.tenderPeriod.endDate}
+  ${date}=  Set Variable If
+  ...      '${status}' == 'FAIL'
+  ...      ${USERS.users['${tender_owner}'].initial_data.data.tenderPeriod.endDate}
+  ...      ${date}
   Дочекатись дати  ${date}
 
 
