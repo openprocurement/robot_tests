@@ -19,7 +19,7 @@ def create_fake_doc():
     return tf.name
 
 
-def test_tender_data(intervals):
+def test_tender_data(intervals, periods=("enquiry", "tender")):
     now = get_now()
     t_data = {
         "title": u"[ТЕСТУВАННЯ] " + fake.catch_phrase(),
@@ -104,7 +104,7 @@ def test_tender_data(intervals):
     }
     period_dict = {}
     inc_dt = now
-    for period_name in ("enquiry", "tender"):
+    for period_name in periods:
         period_dict[period_name + "Period"] = {}
         for i, j in zip(range(2), ("start", "end")):
             inc_dt += timedelta(minutes=intervals[period_name][i])
@@ -166,7 +166,6 @@ def test_tender_data_limited(intervals):
 
 
 def test_tender_data_multiple_items(intervals):
-    now = get_now()
     t_data = test_tender_data(intervals)
     for _ in range(4):
         new_item = test_item_data()
@@ -581,14 +580,16 @@ def test_lot_complaint_data(complaint, lot_id="3c8f387879de4c38957402dbdb8b31af"
     return munchify({"data": lot_complaint})
 
 
-def test_tender_data_openua(intervals, accelerator=0):
-    t_data = test_tender_data(intervals)
-    now = get_now()
+def test_tender_data_openua(intervals):
+    accelerator = intervals['accelerator']
+    # Since `accelerator` field is not really a list containing timings
+    # for a period called `acceleratorPeriod`, let's remove it :)
+    del intervals['accelerator']
+    # We should not provide any values for `enquiryPeriod` when creating
+    # an openUA or openEU procedure. That field should not be present at all.
+    # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
+    t_data = test_tender_data(intervals, periods=('tender',))
     t_data['procurementMethodType'] = 'aboveThresholdUA'
-    t_data['procurementMethodDetails'] = 'quick, accelerator={}'.format(accelerator)
-    t_data["tenderPeriod"] = {
-        "startDate": (now).isoformat(),
-        "endDate": (now + timedelta(minutes=15)).isoformat()
-    }
-    del t_data["enquiryPeriod"]
+    t_data['procurementMethodDetails'] = 'quick, ' \
+        'accelerator={}'.format(accelerator)
     return t_data

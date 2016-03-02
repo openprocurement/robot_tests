@@ -107,14 +107,34 @@ def load_initial_data_from(file_name):
             return fromYAML(file_obj)
 
 
-def prepare_test_tender_data(period_intervals, mode):
+def prepare_test_tender_data(procedure_intervals, mode):
+    # Get actual intervals by mode name
+    if mode in procedure_intervals:
+        intervals = procedure_intervals[mode]
+    else:
+        intervals = procedure_intervals['default']
+    LOGGER.log_message(Message(intervals))
+
+    # Set acceleration value for certain modes
+    if mode in ['openua', 'openeu']:
+        assert isinstance(intervals['accelerator'], int), \
+            "Accelerator should be an 'int', " \
+            "not '{}'".format(type(intervals['accelerator']).__name__)
+        assert intervals['accelerator'] >= 0, \
+            "Accelerator should not be less than 0"
+    else:
+        assert 'accelerator' not in intervals.keys(), \
+               "Accelerator is not available for mode '{0}'".format(mode)
+
     if mode == 'single':
-        return munchify({'data': test_tender_data(period_intervals)})
+        return munchify({'data': test_tender_data(intervals)})
     elif mode == 'multi':
-        return munchify({'data': test_tender_data_multiple_items(period_intervals)})
+        return munchify({'data': test_tender_data_multiple_items(intervals)})
     elif mode == 'limited':
-        return munchify({'data': test_tender_data_limited(period_intervals)})
-    raise ValueError('Invalid mode for test_tender_data')
+        return munchify({'data': test_tender_data_limited(intervals)})
+    elif mode == 'openua':
+        return munchify({'data': test_tender_data_openua(intervals)})
+    raise ValueError("Invalid mode for prepare_test_tender_data")
 
 
 def run_keyword_and_ignore_keyword_definitions(name, *args):
