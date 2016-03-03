@@ -182,33 +182,6 @@ ${broker}       Quinta
   ...      title
 
 
-Відображення власника прямої закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення власника прямої закупівлі
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      owner
-
-
-Відображення методу прямої закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення методу прямої закупівлі
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      procurementMethod
-
-
-Відображення типу методу прямої закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення типу методу прямої закупівлі
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      procurementMethodType
-
-
 Відображення ідентифікатора прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення ідентифікатора прямої закупівлі
   ...  viewer
