@@ -22,7 +22,7 @@ ${broker}       Quinta
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      minimal
   [Documentation]   Створення закупівлі замовником, обовязково має повертати UAID закупівлі (номер тендера),
-  ${base_tender_data}=  Підготовка початкових даних
+  ${base_tender_data}=  Підготовка даних для створення тендера
   ${tender_data}=  test_meat_tender_data  ${base_tender_data}
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${tender_data}
   ${LAST_MODIFICATION_DATE}=  Get Current TZdate
@@ -30,6 +30,7 @@ ${broker}       Quinta
   Set To Dictionary  ${TENDER}   TENDER_UAID             ${TENDER_UAID}
   Set To Dictionary  ${TENDER}   LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
   Log  ${TENDER}
+
 
 Можливість знайти однопредметний тендер по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
@@ -40,6 +41,7 @@ ${broker}       Quinta
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
   \  Дочекатись синхронізації з майданчиком    ${username}
   \  Викликати для учасника  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
+
 
 Неможливість перевищити ліміт для нецінових критеріїв
   [Documentation]
@@ -65,6 +67,7 @@ ${broker}       Quinta
   \  Дочекатись синхронізації з майданчиком    ${username}
   \  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.startDate
 
+
 Неможливість подати цінову пропозицію без нецінового показника
   [Documentation]
   ...      "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
@@ -79,6 +82,7 @@ ${broker}       Quinta
   ${failbid}=  Викликати для учасника   ${provider}   Подати цінову пропозицію   shouldfail   ${TENDER['TENDER_UAID']}   ${bid}
   log  ${failbid}
 
+
 Можливість подати цінову пропозицію з неціновим показником
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   ...      provider
@@ -92,6 +96,7 @@ ${broker}       Quinta
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   resp  ${resp}
   log  ${resp}
 
+
 Можливість змінити неціновий показник повторної цінової пропозиції до 0
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
   ...      provider
@@ -100,6 +105,7 @@ ${broker}       Quinta
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   fixbidparamsto0resp   ${fixbidparamsto0resp}
   log  ${fixbidparamsto0resp}
 
+
 Можливість змінити неціновий показник повторної цінової пропозиції до 0.15
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
   ...      provider
@@ -107,6 +113,7 @@ ${broker}       Quinta
   ${fixbidparamsto015resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   parameters.0.value  0.15
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   fixbidparamsto015resp   ${fixbidparamsto015resp}
   log  ${fixbidparamsto015resp}
+
 
 Можливість подати цінову пропозицію з неціновим показником другим учасником
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
@@ -142,6 +149,7 @@ ${broker}       Quinta
   ...      ${USERS.users['${viewer}'].broker}
   Дочекатись дати початку аукціону  ${viewer}
   sleep  1500
+
 
 Можливість отримати результати аукціону
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Результати аукціону
