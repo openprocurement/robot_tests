@@ -29,6 +29,10 @@ from barbecue import chef
 import re
 
 
+def count_sleep_time(number_of_bids):
+    return (9 + 6*number_of_bids) * 60
+
+
 def get_current_tzdate():
     return get_now().strftime('%Y-%m-%d %H:%M:%S.%f')
 

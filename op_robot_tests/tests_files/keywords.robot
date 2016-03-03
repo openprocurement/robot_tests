@@ -313,3 +313,10 @@ SwitchState
   [Arguments]  ${username}
   Log  ${username}
   Дочекатись дати  ${USERS.users['${username}'].tender_data.data.auctionPeriod.endDate}
+
+
+Дочекатись дати закінчення аукціону [modified]
+  [Arguments]  ${username}
+  ${bids_num}=  Set variable  ${USERS.users['${username}'].tender_data.data.numberOfBids}
+  ${time}=  count_sleep_time  ${bids_num}
+  Sleep  ${time}
