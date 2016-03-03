@@ -24,7 +24,7 @@ ${complaint_id}  1
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      minimal
-  ${tender_data}=  Підготовка початкових даних
+  ${tender_data}=  Підготовка даних для створення тендера
   ${tender_data}=  test_tender_data_multiple_lots  ${tender_data}
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${tender_data}
   ${LAST_MODIFICATION_DATE}=  Get Current TZdate
@@ -164,20 +164,23 @@ ${complaint_id}  1
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider}
-  ${question}=   Викликати для учасника   ${provider}   Задати питання  ${TENDER['TENDER_UAID']}   ${QUESTIONS[${question_id}]}
-  log   ${question}
+  ${question}=  Підготовка даних для запитання
+  ${question_resp}=  Викликати для учасника   ${provider}   Задати питання  ${TENDER['TENDER_UAID']}   ${question}
   ${now}=  Get Current TZdate
-  Set To Dictionary  ${QUESTIONS[${question_id}].data}   date   ${now}
-
+  ${question.data.date}=  Set variable  ${now}
+  ${question_data}=  Create Dictionary  question=${question}  question_resp=${question_resp}
+  Set To Dictionary  ${USERS.users['${provider}']}  question_data  ${question_data}
 Можливість відповісти на запитання
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість відповісти на запитання
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${tender_owner}
-  Викликати для учасника   ${tender_owner}   Відповісти на питання    ${TENDER['TENDER_UAID']}  0  ${ANSWERS[0]}
+  ${answer}=  Підготовка даних для відповіді на запитання
+  ${answer_resp}=  Викликати для учасника   ${tender_owner}   Відповісти на питання    ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}']['question_data']['question_resp']}  ${answer}
   ${now}=  Get Current TZdate
-  Set To Dictionary  ${ANSWERS[${question_id}-1].data}   date   ${now}
-
+  ${answer.data.date}=  Set variable  ${now}
+  ${answer_data}=  Create Dictionary  answer=${answer}  answer_resp=${answer_resp}
+  Set To Dictionary  ${USERS.users['${provider}']}  answer_data  ${answer_data}
 
 ######
 #Cкарга на лот
