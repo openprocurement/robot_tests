@@ -123,7 +123,7 @@ ${complaint_id}  1
 
 Неможливість видалення лоту з прив’язаними предметами закупівлі
   [Documentation]
-  ...    "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
+  ...      "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
@@ -257,7 +257,7 @@ ${complaint_id}  1
 
 Неможливість подати цінову пропозицію до початку періоду подачі пропозицій
   [Documentation]
-  ...    "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
+  ...      "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   ...      prvider
   ...      ${USERS.users['${provider}'].broker}
@@ -273,7 +273,7 @@ ${complaint_id}  1
 
 Неможливість подати цінову пропозицію без прив’язки до лоту
   [Documentation]
-  ...    "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
+  ...      "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   ...      prvider
   ...      ${USERS.users['${provider}'].broker}
@@ -364,7 +364,7 @@ ${complaint_id}  1
 
 Неможливість змінити цінову пропозицію до 2000 після закінчення прийому пропозицій
   [Documentation]
-  ...    "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
+  ...      "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
   [Tags]   ${USERS.users['${provider1}'].broker}: Неможливість змінити цінову пропозицію до 2000 після закінчення прийому пропозицій
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
@@ -376,7 +376,7 @@ ${complaint_id}  1
 
 Неможливість змінити цінову пропозицію до 1 після закінчення прийому пропозицій
   [Documentation]
-  ...    "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
+  ...      "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
   [Tags]   ${USERS.users['${provider1}'].broker}: Неможливість змінити цінову пропозицію до 1 після закінчення прийому пропозицій
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
@@ -386,7 +386,7 @@ ${complaint_id}  1
 
 Неможливість скасувати цінову пропозицію
   [Documentation]
-  ...    "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
+  ...      "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість скасувати цінову пропозицію
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}

@@ -43,7 +43,7 @@ ${broker}       Quinta
 
 Неможливість перевищити ліміт для нецінових критеріїв
   [Documentation]
-  ...    "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
+  ...      "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
@@ -67,7 +67,7 @@ ${broker}       Quinta
 
 Неможливість подати цінову пропозицію без нецінового показника
   [Documentation]
-  ...    "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
+  ...      "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}

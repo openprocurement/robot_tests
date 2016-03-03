@@ -33,10 +33,10 @@ ${question_id}  0
   Log  ${TENDER}
 
 Можливість додати тендерну документацію
-  [Tags]    ${USERS.users['${tender_owner}'].broker}: Можливість завантажити документ
-  ...       tender_owner
-  ...       ${USERS.users['${tender_owner}'].broker}
-  ...       critical level 2
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість завантажити документ
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      critical level 2
   [Documentation]   Закупівельник   ${USERS.users['${tender_owner}'].broker}  завантажує документацію  до  оголошеної закупівлі
   ${filepath}=   create_fake_doc
   ${doc_upload_reply}=  Викликати для учасника   ${tender_owner}   Завантажити документ  ${filepath}  ${TENDER['TENDER_UAID']}
@@ -353,8 +353,8 @@ ${question_id}  0
 
 Можливість скасувати цінову пропозицію
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість скасувати цінову пропозицію
-  ...        provider
-  ...        ${USERS.users['${provider}'].broker}
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
   ${canceledbidresp}=  Викликати для учасника   ${provider}   Скасувати цінову пропозицію   ${TENDER['TENDER_UAID']}   ${USERS.users['${provider}'].bidresponses['resp']}
   Log  ${canceledbidresp}
 
@@ -412,7 +412,7 @@ ${question_id}  0
 
 Неможливість задати запитання після закінчення періоду уточнень
   [Documentation]
-  ...    "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
+  ...      "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість задати запитання
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
@@ -496,10 +496,10 @@ ${question_id}  0
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   bid_doc_modified_failed   ${bid_doc_modified_failed}
 
 Можливість вичитати посилання на аукціон для глядача
-  [Tags]  ${USERS.users['${viewer}'].broker}: Можливість подати цінову пропозицію
-  ...     viewer
-  ...     ${USERS.users['${viewer}'].broker}
-  ...     minimal
+  [Tags]   ${USERS.users['${viewer}'].broker}: Можливість подати цінову пропозицію
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      minimal
   [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
   Дочекатись дати закінчення прийому пропозицій  ${viewer}
   Sleep  120
@@ -507,19 +507,19 @@ ${question_id}  0
   Log  URL аукціону для глядача: ${url}
 
 Можливість вичитати посилання на участь в аукціоні для першого учасника
-  [Tags]  ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
-  ...     provider
-  ...     ${USERS.users['${provider}'].broker}
-  ...     minimal
+  [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      minimal
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider}
   ${url}=  Викликати для учасника  ${provider}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
   Log  URL аукціону для першого учасника: ${url}
 
 Можливість вичитати посилання на участь в аукціоні для другого учасника
-  [Tags]  ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
-  ...     provider1
-  ...     ${USERS.users['${provider1}'].broker}
-  ...     minimal
+  [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
+  ...      provider1
+  ...      ${USERS.users['${provider1}'].broker}
+  ...      minimal
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider1}
   ${url}=  Викликати для учасника  ${provider1}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
   Log  URL аукціону для другого учасника: ${url}
