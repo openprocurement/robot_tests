@@ -336,16 +336,17 @@ Library  openprocurement_client_helper.py
   Log  ${reply}
 
 
-Додати постачальника
+Додати і підтвердити постачальника
   [Documentation]
   ...      [Arguments] Username and tender uaid
   ...      Find tender using uaid, get data from Підготувати дані про постачальника and call create_award
   ...      [Return] Nothing
-  [Arguments]  ${username}  ${tender_uaid}
+  [Arguments]  ${username}  ${tender_uaid}  ${supplier_data}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${supplier_data}=  Підготувати дані про постачальника  ${username}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_award  ${tender}  ${supplier_data}
   Log  ${reply}
+  ${supplier_number}=  Set variable  0
+  Підтвердити постачальника  ${username}  ${tender_uaid}  ${supplier_number}
 
 
 Підтвердити постачальника
