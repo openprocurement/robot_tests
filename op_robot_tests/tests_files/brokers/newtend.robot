@@ -1,15 +1,16 @@
 *** Settings ***
 Library  Selenium2Screenshots
+Library  Selenium2Library
 Library  String
 Library  DateTime
 Library  newtend_service.py
 
 *** Variables ***
-${locator.title}                     id=tender-title        # xpath=//div[@ng-bind="tender.title"]
-${locator.description}               id=tender-description        # xpath=//div[@ng-bind="tender.description"]
+${locator.title}                     id=tender-title
+${locator.description}               id=tender-description
 ${locator.edit.description}          name=tenderDescription
-${locator.value.amount}              id=budget        # xpath=//div[@ng-bind="tender.value.amount"]
-${locator.minimalStep.amount}        id=step        # xpath=//div[@ng-bind="tender.minimalStep.amount"]
+${locator.value.amount}              id=budget
+${locator.minimalStep.amount}        id=step
 ${locator.tenderId}                  xpath=//a[@class="ng-binding ng-scope"]
 ${locator.procuringEntity.name}      xpath=//div[@ng-bind="tender.procuringEntity.name"]
 ${locator.enquiryPeriod.StartDate}   id=start-date-qualification
@@ -18,16 +19,16 @@ ${locator.tenderPeriod.startDate}    id=start-date-registration
 ${locator.tenderPeriod.endDate}      id=end-date-registration
 ${locator.items[0].deliveryAddress}                             id=deliveryAddress
 ${locator.items[0].deliveryDate.endDate}                        id=end-date-delivery
-${locator.items[0].description}                                 xpath=//div[@ng-bind="item.description"]
-${locator.items[0].classification.scheme}                       id=classifier10     # changed from None to 10
+${locator.items[0].description}                                 id=itemDescription0
+${locator.items[0].classification.scheme}                       id=classifier
 ${locator.items[0].classification.scheme.title}                 xpath=//label[contains(., "Классификатор CPV")]
-${locator.items[0].additional_classification[0].scheme}         id=classifier20     # changed from 2 to 20
+${locator.items[0].additional_classification[0].scheme}         id=classifier2
 ${locator.items[0].additional_classification[0].scheme.title}   xpath=//label[@for="classifier2"]
-${locator.items[0].quantity}                                    id=quantity0        # changed from None to 0
-${locator.items[0].unit.name}                                   xpath=//span[@class="unit ng-binding"]
-${locator.edit_tender}     xpath=//button[@ng-if="actions.can_edit_tender"]
-${locator.edit.add_item}   xpath=//a[@class="icon-black plus-black remove-field ng-scope"]
-${locator.save}            xpath=//button[@class="btn btn-lg btn-default cancel pull-right ng-binding"]
+${locator.items[0].quantity}                                    id=quantity
+${locator.items[0].unit.name}                                   id=measure-list
+${locator.edit_tender}     id=edit-tender-btn       # xpath=//button[@ng-if="actions.can_edit_tender"]
+${locator.edit.add_item}   id=add-item0
+${locator.save}            id=submit-btn        # xpath=//button[@class="btn btn-lg btn-default cancel pull-right ng-binding"]
 ${locator.QUESTIONS[0].title}         xpath=//span[@class="user ng-binding"]
 ${locator.QUESTIONS[0].description}   xpath=//span[@class="question-description ng-binding"]
 ${locator.QUESTIONS[0].date}          xpath=//span[@class="date ng-binding"]
@@ -52,13 +53,12 @@ ${locator.QUESTIONS[0].date}          xpath=//span[@class="date ng-binding"]
   Run Keyword If   '${username}' != 'Newtend_Viewer'   Login
 
 Login
-  Wait Until Page Contains Element   id=login-dz    20        # indexpage_login   20
-  Click Element   id=login-dz       # indexpage_login (old vrsion)
-  Wait Until Page Contains Element   id=password   20
-  Input text   id=login-email   ${USERS.users['${username}'].login}
+  # Wait Until Page Contains Element   title=Login    20  # id=indexpage_login   20
+  # Click Element   id=indexpage_login
+  # Wait Until Page Contains Element   id=password   20
+  Input text   id=email   ${USERS.users['${username}'].login}
   Input text   id=password   ${USERS.users['${username}'].password}
-  Click Element   id=submit-login-button
-#  New login path moves user exectly to Government part of Newtend
+  Click Element   id=dz-signin-btn
 #  Wait Until Page Contains Element   xpath =//a[@class="close-modal-dialog"]  20
 #  Go to   ${USERS.users['${ARGUMENTS[0]}'].homepage}
 #  Wait Until Page Contains Element   xpath=//div[@class="introjs-overlay"]   20
@@ -83,9 +83,18 @@ Login
 
   Selenium2Library.Switch Browser    ${ARGUMENTS[0]}
   Go To                              ${USERS.users['${username}'].homepage}
-  Wait Until Page Contains Element   xpath=//a[@href="#/create-tender"]   100
-  Click Link                         xpath=//a[@href="#/create-tender"]
-  Wait Until Page Contains           Новый тендер   100
+  # need to fix zoom out to make tests more stable
+  # Execute JavaScript                 document.body.style.zoom='80%'
+
+  # Wait Until Page Contains Element   xpath=//a[@href="#/create-tender"]   100
+  # Selecting Ukrainian language
+  Click Element                      xpath=//a[@onclick="changeLanguage('uk')"]
+  Wait Until Page Contains Element   xpath=//a[@ui-sref="createTender"]   100
+  Click Link                         xpath=//a[@href="#/create-tender/singlelot"]
+# Selecting Lotless tender
+  Wait Until Page Contains Element   id=attach-docs-modal    100
+  Click Element                      id=no-docs-btn
+  # Wait Until Page Contains           Новый тендер   100
 # Input fields tender
   Input text   name=tenderName       ${title}
   Input text   ${locator.edit.description}   ${description}
@@ -95,6 +104,10 @@ Login
 # Add Item(s)
   Додати придмет   ${items[0]}   0
   Run Keyword If   '${mode}' == 'multi'     Додати багато придметів   items
+
+  ${enquiry_start_date}=   Get From Dictionary   ${prepared_tender_data.data.enquiryPeriod}   startDate
+  ${enquiry_end_date}=     Get From Dictionary   ${prepared_tender_data.data.enquiryPeriod}   endDate
+
 # Set tender datatimes
   Set datetime   start-date-registration    ${start_date}
   Set datetime   end-date-registration      ${end_date}
@@ -124,7 +137,7 @@ Set datetime
   [Documentation]
   ...      ${ARGUMENTS[0]} ==  control_id
   ...      ${ARGUMENTS[1]} ==  date
-#Pick Date
+# Pick Date
   Click Element       xpath=//input[@id="${ARGUMENTS[0]}"]/../span[@class="calendar-btn"]
   Wait Until Page Contains Element            xpath=//td[@class="text-center ng-scope"]   30
   ${datapicker_id}=   Get Element Attribute   xpath=//input[@id="${ARGUMENTS[0]}"]/..//td[@class="text-center ng-scope"]@id
@@ -132,7 +145,7 @@ Set datetime
   ${date_index}=      newtend_date_picker_index   ${ARGUMENTS[1]}
   ${datapicker_id}=   Convert To String       ${datapicker_id}${date_index}
   Click Element       xpath=//input[@id="${ARGUMENTS[0]}"]/..//td[@id="${datapicker_id}"]/button
-#Set time
+# Set time
   ${hous}=   Get Substring   ${ARGUMENTS[1]}   11   13
   ${minutes}=   Get Substring   ${ARGUMENTS[1]}   14   16
   Input text   xpath=//input[@id="${ARGUMENTS[0]}"]/../..//input[@ng-model="hours"]   ${hous}
@@ -157,35 +170,36 @@ Set datetime
   ${locality}=        Get From Dictionary   ${ARGUMENTS[0].deliveryAddress}   locality
   ${streetAddress}=   Get From Dictionary   ${ARGUMENTS[0].deliveryAddress}   streetAddress
 
-  Set datetime   end-date-delivery${ARGUMENTS[1]}         ${deliverydate_end_date}
+  # Set datetime   end-date-delivery${ARGUMENTS[1]}         ${deliverydate_end_date}
+# Add item main info
+  Input text   id=quantity${ARGUMENTS[1]}          ${quantity}
+  Input text   id=itemDescription${ARGUMENTS[1]}   ${items_description}
+  Click Element                      id=measure-list        # xpath=//a[contains(text(), "единицы измерения")]
+  Click Element                      xpath=//a[contains(text(), "одиниці виміру")]/..//a[contains(text(), '${unit}')]
 # Set CPV
   Wait Until Page Contains Element   id=classifier1${ARGUMENTS[1]}
   Click Element                      id=classifier1${ARGUMENTS[1]}
-  Wait Until Page Contains Element   xpath=//input[@class="ng-pristine ng-untouched ng-valid"]   100
+  # Wait Until Page Contains Element   xpath=//input[@class="ng-pristine ng-untouched ng-valid"]   100
   Input text                         xpath=//input[@class="ng-pristine ng-untouched ng-valid"]   ${cpv}
   Wait Until Page Contains Element   xpath=//span[contains(text(),'${cpv}')]   20
-  Click Element                      xpath=//input[@class="ng-pristine ng-untouched ng-valid"]
-  Click Element                      xpath=//button[@class="btn btn-default btn-lg pull-right choose ng-binding"]
+  Click Element                      xpath=//input[@type="checkbox"]      # [@class="ng-pristine ng-untouched ng-valid"]
+  Click Element                      id=select-classifier-btn       # xpath=//button[@class="btn btn-default btn-lg pull-right choose ng-binding"]
 # Set ДКПП
   Click Element                      id=classifier2${ARGUMENTS[1]}
-  Wait Until Page Contains Element   xpath=//input[@class="ng-pristine ng-untouched ng-valid"]   100
+  # Wait Until Page Contains Element   xpath=//input[@class="ng-pristine ng-untouched ng-valid"]   100
   Input text                         xpath=//input[@class="ng-pristine ng-untouched ng-valid"]   ${dkpp_desc}
-  Wait Until Page Contains Element   xpath=//span[contains(text(),'${dkpp_id}')]   100
-  Click Element                      xpath=//span[contains(text(),'${dkpp_id}')]/../..//input[@class="ng-pristine ng-untouched ng-valid"]
-  Click Element                      xpath=//button[@class="btn btn-default btn-lg pull-right choose ng-binding"]
+  # Wait Until Page Contains Element   xpath=//span[contains(text(),'${dkpp_id}')]   100
+  Click Element                      xpath=//span[contains(text(),'${dkpp_id}')]/../..//input[@type="checkbox"]       # [@class="ng-pristine ng-untouched ng-valid"]
+  Click Element                      id=select-classifier-btn       # xpath=//button[@class="btn btn-default btn-lg pull-right choose ng-binding"]
 # Set Delivery Address
   Click Element                      id=deliveryAddress${ARGUMENTS[1]}
-  Wait Until Page Contains Element   xpath=//input[@ng-model="deliveryAddress.postalCode"]   20
+  # Wait Until Page Contains Element   xpath=//input[@ng-model="deliveryAddress.postalCode"]   20
   Input text                         xpath=//input[@ng-model="deliveryAddress.postalCode"]   ${ZIP}
   Input text                         xpath=//input[@ng-model="deliveryAddress.region"]   ${region}
   Input text                         xpath=//input[@ng-model="deliveryAddress.locality"]   ${locality}
   Input text                         xpath=//input[@ng-model="deliveryAddress.streetAddress"]   ${streetAddress}
   Click Element                      xpath=//button[@class="btn btn-lg single-btn ng-binding"]
-# Add item main info
-  Click Element                      xpath=//a[contains(text(), "единицы измерения")]
-  Click Element                      xpath=//a[contains(text(), "единицы измерения")]/..//a[contains(text(), '${unit}')]
-  Input text   id=quantity${ARGUMENTS[1]}          ${quantity}
-  Input text   id=itemDescription${ARGUMENTS[1]}   ${items_description}
+
 
 Додати багато придметів
   [Arguments]  @{ARGUMENTS}
@@ -290,10 +304,10 @@ Set datetime
   ...      ${ARGUMENTS[3]} ==  fieldvalue
   Switch browser   ${ARGUMENTS[0]}
   Click button     ${locator.edit_tender}
-  Wait Until Page Contains Element   ${locator.edit.${ARGUMENTS[2]}}   20
-  Input Text       ${locator.edit.${ARGUMENTS[2]}}   ${ARGUMENTS[3]}
+  Wait Until Page Contains Element   ${locator.edit.description.${ARGUMENTS[2]}}   20
+  Input Text       ${locator.edit.description.${ARGUMENTS[2]}}   ${ARGUMENTS[3]}
   Click Element    ${locator.save}
-  Wait Until Page Contains Element   ${locator.${ARGUMENTS[2]}}    20
+  Wait Until Page Contains Element   ${locator.edit_tender.${ARGUMENTS[2]}}    20
   ${result_field}=   отримати текст із поля і показати на сторінці   ${ARGUMENTS[2]}
   Should Be Equal   ${result_field}   ${ARGUMENTS[3]}
 
@@ -424,7 +438,7 @@ Set datetime
   Додати придмет   ${items[1]}   1
 
 забрати позицію
-  Click Element   xpath=//a[@title="Добавить лот"]/preceding-sibling::a
+  Click Element   id=remove-item0       # xpath=//a[@title="Добавить лот"]/preceding-sibling::a
 
 Задати питання
   [Arguments]  @{ARGUMENTS}
@@ -444,6 +458,9 @@ Set datetime
   Input text    xpath=//textarea[@ng-model="message"]   ${description}
   Click Element   xpath=//div[@ng-click="sendQuestion()"]
   Wait Until Page Contains    ${description}   20
+
+Відповісти на питання
+# not implemented
 
 обновити сторінку з тендером
   [Arguments]  @{ARGUMENTS}
