@@ -364,44 +364,51 @@ Library  openprocurement_client_helper.py
 
 Додати запит на скасування
   [Documentation]
-  ...      [Arguments] Username, tender uaid and cancellation reason
-  ...      Find tender using uaid, set cancellation reason, get data from cancel_tender
+  ...      [Arguments] Username, tender uaid, cancellation reason,
+  ...      document and new description of document
+  ...      [Description] Find tender using uaid, set cancellation reason, get data from cancel_tender
   ...      and call create_cancellation
+  ...      After that add document to cancellation and change description of document
   ...      [Return] Nothing
-  [Arguments]  ${username}  ${tender_uaid}  ${cancellation_reason}
+  [Arguments]  ${username}  ${tender_uaid}  ${cancellation_reason}  ${document}  ${new_description}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${data}=  cancel_tender  ${cancellation_reason}
   Log  ${data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  cancellation_reason  ${data}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_cancellation  ${tender}  ${data}
-  Log  ${reply}
+  ${cancel_reply}=  Call Method  ${USERS.users['${username}'].client}  create_cancellation  ${tender}  ${data}
+  Log  ${cancel_reply}
+  ${cancellation_id}=  Set variable  ${cancel_reply.data.id}
+
+
+  ${document_id}=  Завантажити документацію до запиту на скасування  ${username}  ${tender_uaid}  ${cancellation_id}  ${document}
+
+
+  Змінити опис документа в скасуванні  ${username}  ${tender_uaid}  ${cancellation_id}  ${document_id}  ${new_description}
 
 
 Завантажити документацію до запиту на скасування
   [Documentation]
-  ...      [Arguments] Username, tender uaid and number of cancellation
-  ...      Find tender using uaid, create fake documentation and call upload_cancellation_document
-  ...      [Return] Nothing
-  [Arguments]  ${username}  ${tender_uaid}  ${cancel_num}
+  ...      [Arguments] Username, tender uaid, cancellation id and document to upload
+  ...      [Description] Find tender using uaid, and call upload_cancellation_document
+  ...      [Return] ID of added document
+  [Arguments]  ${username}  ${tender_uaid}  ${cancellation_id}  ${document}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${first_cancel_doc}=  create_fake_doc
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  first_cancel_doc  ${first_cancel_doc}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  upload_cancellation_document  ${first_cancel_doc}  ${tender}  ${tender['data']['cancellations'][${cancel_num}]['id']}
-  Log  ${reply}
+  ${doc_reply}=  Call Method  ${USERS.users['${username}'].client}  upload_cancellation_document  ${document}  ${tender}  ${cancellation_id}
+  Log  ${doc_reply}
+  [Return]  ${doc_reply.data.id}
 
 
 Змінити опис документа в скасуванні
   [Documentation]
-  ...      [Arguments] Username, tender uaid, cancellation number and cancellation document number
-  ...      Find tender using uaid, get data from change_cancellation_document_field and call
+  ...      [Arguments] Username, tender uaid, cancellation id, document id and new description of document
+  ...      [Description] Find tender using uaid, create dict with data about description and call
   ...      patch_cancellation_document
   ...      [Return] Nothing
-  [Arguments]  ${username}  ${tender_uaid}  ${cancel_num}  ${doc_num}  ${field}  ${value}
+  [Arguments]  ${username}  ${tender_uaid}  ${cancellation_id}  ${document_id}  ${new_description}
+  ${field}=  Set variable  description
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${temp}=  Create Dictionary  ${field}  ${value}
+  ${temp}=  Create Dictionary  ${field}  ${new_description}
   ${data}=  Create Dictionary  data  ${temp}
-  Log  ${data}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_cancellation_document  ${tender}  ${data}  ${tender['data']['cancellations'][${cancel_num}]['id']}  ${tender['data']['cancellations'][${cancel_num}]['documents'][${doc_num}]['id']}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_cancellation_document  ${tender}  ${data}  ${cancellation_id}  ${document_id}
   Log  ${reply}
 
 

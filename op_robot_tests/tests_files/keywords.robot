@@ -115,6 +115,16 @@ Get Broker Property By Username
   [Return]  ${supplier_data}
 
 
+Підготувати дані про скасування
+  [Arguments]  ${username}
+  ${cancellation_reason}=  create_fake_sentence
+  ${document}=  create_fake_doc
+  ${new_description}=  create_fake_sentence
+  ${cancellation_data}=  Create Dictionary  cancellation_reason=${cancellation_reason}  document=${document}  description=${new_description}
+  Set To Dictionary  ${USERS.users['${username}']}  cancellation_data  ${cancellation_data}
+  [Return]  ${cancellation_data}
+
+
 Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
   ${bundled_st}=  Run Keyword And Return Status  Import Resource  ${CURDIR}/brokers/${keywords_file}.robot
   ${external_st}=  Run Keyword And Return Status  Import Resource  ${CURDIR}/../../src/robot_tests.broker.${keywords_file}/${keywords_file}.robot
