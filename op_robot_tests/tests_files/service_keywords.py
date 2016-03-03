@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -
 from datetime import timedelta
 from dateutil.parser import parse
-from dpath.util import set as xpathset
+from dpath.util import new as xpathnew
 from iso8601 import parse_date
 from json import load
 from jsonpath_rw import parse as parse_path
@@ -14,17 +14,27 @@ from robot.output.loggerhelper import Message
 # can access them by simply importing library "service_keywords".
 # Please ignore the warning given by Flake8 or other linter.
 from .initial_data import (
-    auction_bid, create_fake_doc,
-    test_award_data, test_bid_data, test_complaint_data,
-    test_complaint_reply_data, test_question_answer_data,
-    test_question_data, test_tender_data, test_tender_data_multiple_lots
+    auction_bid, create_fake_doc, test_award_data, test_bid_data,
+    test_bid_data_meat_tender, test_complaint_data, test_complaint_reply_data,
+    test_invalid_features_data, test_item_data, test_lot_complaint_data,
+    test_lot_data, test_lot_document_data, test_lot_question_data,
+    test_lots_bid_data, test_meat_tender_data, test_question_answer_data,
+    test_question_data, test_supplier_data, test_tender_data,
+    test_tender_data_limited, test_tender_data_multiple_items,
+    test_tender_data_multiple_lots, test_tender_data_openua
 )
 from .local_time import get_now, TZ
 import os
+from barbecue import chef
+import re
 
 
 def get_current_tzdate():
     return get_now().strftime('%Y-%m-%d %H:%M:%S.%f')
+
+
+def add_minutes_to_date(date, minutes):
+    return (parse_date(date) + timedelta(minutes=int(minutes))).isoformat()
 
 
 def get_file_contents(path):
@@ -41,12 +51,7 @@ def change_state(arguments):
         return "pass"
 
 
-def prepare_prom_test_tender_data(period_intervals, mode):
-    t_data = prepare_test_tender_data(period_intervals, mode)
-    return munchify({'data': t_data})
-
-
-def compare_date(date1, date2):
+def compare_date(date1, date2, accuracy):
     date1 = parse(date1)
     date2 = parse(date2)
     if date1.tzinfo is None:
@@ -55,7 +60,7 @@ def compare_date(date1, date2):
         date2 = TZ.localize(date2)
 
     delta = (date1 - date2).total_seconds()
-    if abs(delta) > 60:
+    if abs(delta) > accuracy:
         return False
     return True
 
@@ -94,7 +99,7 @@ def log_object_data(data, file_name=None, format="yaml"):
 
 def load_initial_data_from(file_name):
     if not os.path.exists(file_name):
-        file_name = os.path.join(os.path.dirname(__file__), 'data/{}'.format(file_name))
+        file_name = os.path.join(os.path.dirname(__file__), 'data', file_name)
     with open(file_name) as file_obj:
         if file_name.endswith(".json"):
             return Munch.fromDict(load(file_obj))
@@ -102,12 +107,34 @@ def load_initial_data_from(file_name):
             return fromYAML(file_obj)
 
 
-def prepare_test_tender_data(period_intervals, mode):
+def prepare_test_tender_data(procedure_intervals, mode):
+    # Get actual intervals by mode name
+    if mode in procedure_intervals:
+        intervals = procedure_intervals[mode]
+    else:
+        intervals = procedure_intervals['default']
+    LOGGER.log_message(Message(intervals))
+
+    # Set acceleration value for certain modes
+    if mode in ['openua', 'openeu']:
+        assert isinstance(intervals['accelerator'], int), \
+            "Accelerator should be an 'int', " \
+            "not '{}'".format(type(intervals['accelerator']).__name__)
+        assert intervals['accelerator'] >= 0, \
+            "Accelerator should not be less than 0"
+    else:
+        assert 'accelerator' not in intervals.keys(), \
+               "Accelerator is not available for mode '{0}'".format(mode)
+
     if mode == 'single':
-        return munchify({'data': test_tender_data(period_intervals)})
+        return munchify({'data': test_tender_data(intervals)})
     elif mode == 'multi':
-        return munchify({'data': test_tender_data_multiple_lots(period_intervals)})
-    raise ValueError('Invalid mode for test_tender_data')
+        return munchify({'data': test_tender_data_multiple_items(intervals)})
+    elif mode == 'limited':
+        return munchify({'data': test_tender_data_limited(intervals)})
+    elif mode == 'openua':
+        return munchify({'data': test_tender_data_openua(intervals)})
+    raise ValueError("Invalid mode for prepare_test_tender_data")
 
 
 def run_keyword_and_ignore_keyword_definitions(name, *args):
@@ -148,7 +175,7 @@ def set_access_key(tender, access_token):
 
 
 def set_to_object(obj, attribute, value):
-    xpathset(obj, attribute.replace('.', '/'), value)
+    xpathnew(obj, attribute, value, separator='.')
     return obj
 
 
@@ -178,6 +205,81 @@ def merge_dicts(left, right):
     new.update(left)
     new.update(right)
     return new
+
+
+def create_data_dict(path_to_value=None, value=None):
+    data_dict = munchify({'data': {}})
+    if isinstance(path_to_value, basestring) and value:
+        list_items = re.search('\d+', path_to_value)
+        if list_items:
+            list_items = list_items.group(0)
+            path_to_value = path_to_value.split('[' + list_items + ']')
+            path_to_value.insert(1, '.' + list_items)
+            set_to_object(data_dict, path_to_value[0], [])
+            set_to_object(data_dict, ''.join(path_to_value[:2]), {})
+            set_to_object(data_dict, ''.join(path_to_value), value)
+        else:
+            data_dict = set_to_object(data_dict, path_to_value, value)
+    return data_dict
+
+
+def cancel_tender(cancellation_reason):
+    return {
+        'data': {
+            'reason': cancellation_reason
+        }
+    }
+
+
+def confirm_supplier(supplier_id):
+    return {
+        "data": {
+            "status": "active",
+            "id": supplier_id
+        }
+    }
+
+
+def change_cancellation_document_field(key, value):
+    data = {
+        "data": {
+            key: value
+        }
+    }
+    return data
+
+
+def confirm_cancellation(cancellation_id):
+    data = {
+        "data": {
+            "status": "active",
+            "id": cancellation_id
+        }
+    }
+    return data
+
+
+def confirm_contract(contract_id):
+    data = {
+        "data": {
+            "id": contract_id,
+            "status": "active"
+        }
+    }
+    return data
+
+
+def modify_tender(tender_id, access_token):
+    data = {"access": {"token": access_token}, "data": {"id": tender_id, "items": [{"unit": {"code": "MON", "name": "month"}, "quantity": 9}]}}
+    return data
+
+
+def munch_dict(arg=None, data=False):
+    if arg is None:
+        arg = {}
+    if data:
+        arg['data'] = {}
+    return munchify(arg)
 
 
 # GUI Frontends common

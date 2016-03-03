@@ -13,8 +13,7 @@ users:
         broker:   Quinta
     E-tender_Owner:
         broker:   E-tender
-        username: E-tendertest
-        homepage: "http://bid.uat.e-tender.biz/#/profile"
+        homepage: "http://bid.uat.e-tender.biz/#"
         login:    Misha2
         password: Password1
         browser:  chrome
@@ -22,8 +21,7 @@ users:
         size:     [800, 800]
     E-tender_Provider1:
         broker:   E-tender
-        username: E-tendertest
-        homepage: "http://bid.uat.e-tender.biz/#/profile"
+        homepage: "http://bid.uat.e-tender.biz/#"
         login:    st_org
         password: 12345678
         browser:  chrome
@@ -31,8 +29,7 @@ users:
         size:     [700, 800]
     E-tender_Provider2:
         broker:   E-tender
-        username: E-tendertest
-        homepage: "http://bid.uat.e-tender.biz/#/profile"
+        homepage: "http://bid.uat.e-tender.biz/#"
         login:    provider2
         password: Qa123456
         browser:  chrome
@@ -40,32 +37,28 @@ users:
         size:     [640, 450]
     E-tender_Viewer:
         broker:   E-tender
-        username: E-tendertest
         homepage: "http://bid.uat.e-tender.biz/#"
         browser:  chrome
         position: [0, 0]
         size:     [640, 450]
-    Netcast_Owner:
-        broker:   Netcast
-        username: Netcasttest
+    DZO_Owner:
+        broker:   DZO
         homepage: "http://dz2.byustudio.in.ua"
         login:    ovramet.s@gmail.com
         password: Password1
         browser:  chrome
         position: [0, 0]
         size:     [700, 800]
-    Netcast_Provider1:
-        broker:   Netcast
-        username: Netcasttest
+    DZO_Provider1:
+        broker:   DZO
         homepage: "http://dz2.byustudio.in.ua"
         login:    halyna.khimka@gmail.com
         password: JHO5VUp5n
         browser:  chrome
         position: [0, 0]
         size:     [600, 800]
-    Netcast_Viewer:
-        broker:   Netcast
-        username: Netcasttest
+    DZO_Viewer:
+        broker:   DZO
         homepage: "http://dz2.byustudio.in.ua"
         browser:  chrome
         position: [0, 0]
@@ -98,40 +91,103 @@ users:
         browser:  chrome
         position: [800, 400]
         size:     [800, 700]
+    PrivatMarket_Viewer:
+        broker:   PrivatMarket
+        homepage: "https://pmarket-rc.privatbank.ua/app.php/business/tenders"
+        browser:  chrome
+        position: [-1500, 0]
+        size:     [1000, 1000]
+    PrivatMarket_Provider:
+        broker:   PrivatMarket
+        homepage: "https://pmarket-rc.privatbank.ua/app.php/business/tenders"
+        email:    pbecommercetest2@ukr.net
+        login:    +380639405094
+        password: password5094
+        browser:  chrome
+        position: [-1500, 0]
+        size:     [1000, 1000]
+    PrivatMarket_Provider1:
+        broker:   PrivatMarket
+        homepage: "https://pmarket-rc.privatbank.ua/app.php/business/tenders"
+        email:    pbecommercetest1@ukr.net
+        login:    +380980704168
+        password: password4168
+        browser:  chrome
+        position: [-1500, 0]
+        size:     [1000, 1000]
     Prom_Owner:
         broker:   Prom
-        username: Promtest
-        homepage: "http://zakupki.dz-test.net"
+        homepage: "http://zakupki.dz-test.net/"
+        default_page: "http://my.dz-test.net/cabinet/purchases/state_purchase/list"
+        login:    test@test12.com
+        password: 1234
         browser:  chrome
         position: [0, 0]
-        size:     [640, 450]
+        size:     [1280, 1024]
     Prom_Viewer:
         broker:   Prom
-        username: Promtest
-        homepage: "http://zakupki.dz-test.net"
+        homepage: "http://zakupki.dz-test.net/"
+        default_page: "http://my.dz-test.net/cabinet/purchases/state_purchase/list"
+        login:  test@test13.com
+        password: 1234
         browser:  chrome
         position: [640, 0]
-        size:     [640, 450]
+        size:     [1280, 1024]
     Publicbid_Owner:
         broker:   Publicbid
-        username: Publicbid
-        homepage: "https://public-bid.com.ua/"
-        login:    yaroslav1boyko@gmail.com
-        password: Password1
+        homepage: "http://217.76.194.185:56034/"
+        login:    owner_pb@yopmail.com
+        password: P@ssw0rd
         browser:  chrome
         position: [0, 0]
-        size:     [740, 550]
+        size:     [1000, 720]
     Publicbid_Viewer:
         broker:   Publicbid
-        username: Publicbid
-        homepage: "https://public-bid.com.ua/"
+        homepage: "http://217.76.194.185:56034/"
         browser:  chrome
         position: [0, 450]
-        size:     [640, 450]
+        size:     [1000, 720]
+    Publicbid_Provider1:
+        broker:   Publicbid
+        homepage: "http://217.76.194.185:56034/"
+        login:    provider_pb@yopmail.com
+        password: P@ssw0rd
+        browser:  chrome
+        position: [450, 0]
+        size:     [1000, 720]
+    PublicPortal_Viewer:
+        broker:   PublicPortal
+        homepage: "http://dev.prozorro.org/"
+        browser:  chrome
+        position: [0, 0]
+        size:     [640, 480]
     SmartTender_Viewer:
         broker:   SmartTender
-        username: SmartTendertest
-        homepage: "http://smarttender.biz/tenders"
+        homepage: "https://m.it.ua/cp_smart/test-tenders?allcat=1"
         browser:  chrome
         position: [0, 450]
         size:     [640, 450]
+    SmartTender_Provider1:
+        broker:   SmartTender
+        homepage: "https://m.it.ua/cp_smart/test-tenders?allcat=1"
+        login:    bened@it.ua
+        password: 111111
+        browser:  chrome
+        position: [0, 450]
+        size:     [640, 450]
+    SmartTender_Provider2:
+        broker:   SmartTender
+        homepage: "https://m.it.ua/cp_smart/test-tenders?allcat=1"
+        login:    my.mail.rudenko@gmail.com
+        password: qwerty123
+        browser:  chrome
+        position: [0, 450]
+        size:     [640, 450]
+    SmartTender_Owner:
+        broker:   SmartTender
+        homepage: "https://m.it.ua/cp_smart/"
+        login:    PPR_BV
+        password: 123321
+        browser:  chrome
+        position: [0, 0]
+        size:     [1400, 900]
