@@ -77,9 +77,6 @@ Get Broker Property By Username
   Run Keyword And Return  Get Broker Property  ${broker_name}  ${property}
 
 
-Підготовка початкових даних
-
-
 Підготовка даних для створення тендера
   ${custom_intervals}=  Get Broker Property By Username  ${tender_owner}  intervals
   ${default_intervals}=  Get Broker Property  Default  intervals
