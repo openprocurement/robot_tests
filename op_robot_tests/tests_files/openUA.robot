@@ -132,8 +132,7 @@ ${broker}       Quinta
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ${activestatusresp}=  create_data_dict  data.status  active
-  ${activestatusresp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   ${activestatusresp}
+  ${activestatusresp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   status  active
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   activestatusresp   ${activestatusresp}
   log  ${activestatusresp}
 
@@ -230,9 +229,7 @@ Cкасувати цінову пропозицію другого учасни�
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ${activestatusresp}=  create_data_dict  data.status  active
-  Log   ${USERS.users['${provider}'].bidresponses['resp'].data.status}
-  ${activestatusresp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   ${activestatusresp}
+  ${activestatusresp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   status  active
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   activestatusresp   ${activestatusresp}
   log  ${activestatusresp}
 
