@@ -311,5 +311,7 @@ SwitchState
 
 Дочекатись дати закінчення аукціону
   [Arguments]  ${username}
-  Log  ${username}
-  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.auctionPeriod.endDate}
+  ${bids_num}=  Set variable  ${USERS.users['${username}'].tender_data.data.numberOfBids}
+  ${auction_duration}=  calculate_auction_duration  ${bids_num}
+  ${end_date}=  add_minutes_to_date  ${USERS.users['${username}'].tender_data.data.auctionPeriod.startDate}  ${auction_duration}
+  Дочекатись дати  ${end_date}
