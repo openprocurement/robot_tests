@@ -10,6 +10,10 @@ fake_ru = Factory.create('ru')
 fake_en = Factory.create()
 
 
+def create_fake_sentence():
+    return fake.sentence(nb_words=10, variable_nb_words=True)
+
+
 def create_fake_doc():
     content = fake.text()
     suffix = fake.random_element(('.txt', '.doc', '.docx', '.pdf'))
