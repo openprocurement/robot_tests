@@ -40,42 +40,17 @@ ${broker}       Quinta
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  ${CANCEL_NUM}=  Set variable  0
-  Set suite variable  ${CANCEL_NUM}
-  ${cancellation_reason}=  Set variable  prosto tak :)
+  ${cancellation_data}=  Підготувати дані про скасування  ${tender_owner}
   Викликати для учасника  ${tender_owner}
   ...      Додати запит на скасування
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${cancellation_reason}
-  Викликати для учасника  ${tender_owner}
-  ...      Завантажити документацію до запиту на скасування
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${CANCEL_NUM}
-
-
-Можливість змінити опис документа в скасуванні прямої закупівлі
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість змінити опис документа в скасуванні прямої закупівлі
-  ...  tender_owner
-  ...  ${USERS.users['${tender_owner}'].broker}
-  ${FIRST_DOC}=  Set variable  0
-  Set Suite Variable  ${FIRST_DOC}
-  ${field}=  Set variable  description
-  ${value}=  Set variable  test description
-  Викликати для учасника  ${tender_owner}
-  ...      Змінити опис документа в скасуванні
-  ...      ${TENDER['TENDER_UAID']}  ${CANCEL_NUM}  ${FIRST_DOC}
-  ...      ${field}
-  ...      ${value}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  cancellation_document_description  ${value}
-
-
-Можливість завантажити нову версію документа до запиту на скасування прямої закупівлі
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість завантажити нову версію документа до запиту на скасування прямої закупівлі
-  ...  tender_owner
-  ...  ${USERS.users['${tender_owner}'].broker}
-  Викликати для учасника  ${tender_owner}
-  ...      Завантажити нову версію документа до запиту на скасування
-  ...      ${TENDER['TENDER_UAID']}  ${CANCEL_NUM}  ${FIRST_DOC}
+  ...      ${cancellation_data['cancellation_reason']}
+  ...      ${cancellation_data['document']}
+  ...      ${cancellation_data['description']}
+  ${CANCEL_NUM}=  Set variable  0
+  Set suite variable  ${CANCEL_NUM}
+  ${DOC_NUM}=  Set variable  0
+  Set suite variable  ${DOC_NUM}
 
 
 Можливість активувати скасування прямої закупівлі
@@ -104,7 +79,7 @@ ${broker}       Quinta
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}']['cancellation_reason']['data']['reason']}
+  ...      ${USERS.users['${tender_owner}']['cancellation_data']['cancellation_reason']}
   ...      cancellations[${CANCEL_NUM}].reason
 
 
@@ -113,27 +88,17 @@ ${broker}       Quinta
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}']['cancellation_document_description']}
-  ...      cancellations[${CANCEL_NUM}].documents[${FIRST_DOC}].description
+  ...      ${USERS.users['${tender_owner}']['cancellation_data']['description']}
+  ...      cancellations[${CANCEL_NUM}].documents[${DOC_NUM}].description
 
 
-Відображення заголовку першого документа скасування прямої закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення заголовку першого документа скасування прямої закупівлі
+Відображення заголовку документа скасування прямої закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення заголовку документа скасування прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}']['first_cancel_doc']}
-  ...      cancellations[${CANCEL_NUM}].documents[${FIRST_DOC}].title
-
-
-Відображення заголовку другого документа скасування прямої закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення заголовку другого документа скасування прямої закупівлі
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ${second_doc_num}=  Set variable  1
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}']['second_cancel_doc']}
-  ...      cancellations[${CANCEL_NUM}].documents[${second_doc_num}].title
+  ...      ${USERS.users['${tender_owner}']['cancellation_data']['document']}
+  ...      cancellations[${CANCEL_NUM}].documents[${DOC_NUM}].title
 
 ##############################################################################################
 #             MAIN
