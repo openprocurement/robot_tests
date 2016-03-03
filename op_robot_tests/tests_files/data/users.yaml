@@ -111,7 +111,8 @@ users:
         size:     [1000, 1000]
     Prom_Owner:
         broker:   Prom
-        homepage: "http://my.dz-test.net/cabinet/purchases/state_purchase/list"
+        homepage: "http://zakupki.dz-test.net/"
+        default_page: "http://my.dz-test.net/cabinet/purchases/state_purchase/list"
         login:    test@test12.com
         password: 1234
         browser:  chrome
@@ -119,8 +120,9 @@ users:
         size:     [1280, 1024]
     Prom_Viewer:
         broker:   Prom
-        homepage: "http://my.dz-test.net/cabinet/purchases/state_purchase/list"
-        login:    r.zaporozhets@smartweb.com.ua
+        homepage: "http://zakupki.dz-test.net/"
+        default_page: "http://my.dz-test.net/cabinet/purchases/state_purchase/list"
+        login:  test@test13.com
         password: 1234
         browser:  chrome
         position: [640, 0]

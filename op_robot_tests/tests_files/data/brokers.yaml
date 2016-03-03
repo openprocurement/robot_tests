@@ -91,8 +91,8 @@ PrivatMarket:
     timeout_on_wait: 30
 Prom:
     intervals:
-       enquiry: [8, 8]
-       tender:  [0, 31]
+       enquiry: [10, 10]
+       tender:  [0,  45]
     keywords_file: prom
     roles:
         tender_owner:   Prom_Owner
