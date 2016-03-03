@@ -197,13 +197,11 @@ ${broker}       Quinta
   ...  minimal
   ${SUPP_NUM}=  Set variable  0
   Set Suite Variable  ${SUPP_NUM}
+  ${supplier_data}=  Підготувати дані про постачальника  ${tender_owner}
   Викликати для учасника  ${tender_owner}
-  ...      Додати постачальника
+  ...      Додати і підтвердити постачальника
   ...      ${TENDER['TENDER_UAID']}
-  Викликати для учасника  ${tender_owner}
-  ...      Підтвердити постачальника
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${SUPP_NUM}
+  ...      ${supplier_data}
 
 ##############################################################################################
 #             MAIN DATA
