@@ -42,7 +42,7 @@ ${broker}       Quinta
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   ${cancellation_data}=  Підготувати дані про скасування  ${tender_owner}
   Викликати для учасника  ${tender_owner}
-  ...      Скасувати процедуру
+  ...      Скасувати закупівлю
   ...      ${TENDER['TENDER_UAID']}
   ...      ${cancellation_data['cancellation_reason']}
   ...      ${cancellation_data['document']}
@@ -222,8 +222,8 @@ ${broker}       Quinta
   ...      procuringEntity.address.countryName
 
 
-Відображення міста замовника прямої закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення міста замовника прямої закупівлі
+Відображення населеного пункту замовника прямої закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення населеного пункту замовника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера  ${viewer}
@@ -295,7 +295,7 @@ ${broker}       Quinta
 
 
 Відображення схеми ідентифікації замовника прямої закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення схеми замовника прямої закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення схеми ідентифікації замовника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера  ${viewer}
@@ -499,8 +499,8 @@ ${broker}       Quinta
   ...      items[${ITEMS_NUM}].deliveryAddress.region
 
 
-Відображення міста адреси доставки номенклатури прямої закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення locality адреси доставки номенклатури прямої закупівлі
+Відображення населеного пункту адреси доставки номенклатури прямої закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення населеного пункту адреси доставки номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера  ${viewer}
@@ -617,7 +617,7 @@ ${broker}       Quinta
 
 
 Відображення схеми ідентифікації постачальника прямої закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення контактного імейлу постачальника прямої закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення схеми ідентифікації постачальника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера із значенням  ${viewer}
