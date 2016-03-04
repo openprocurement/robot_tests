@@ -90,7 +90,7 @@ Get Broker Property By Username
 
 
 Підготовка даних для подання скарги
-  [Arguments]  ${lot}=${EMPTY}
+  [Arguments]  ${lot}=${NONE}
   ${complaint}=  test_complaint_data  ${lot}
   [Return]  ${complaint}
 
@@ -101,7 +101,7 @@ Get Broker Property By Username
 
 
 Підготовка даних для запитання
-  [Arguments]  ${lot}=${EMPTY}
+  [Arguments]  ${lot}=${NONE}
   ${question}=  test_question_data  ${lot}
   [Return]  ${question}
 
@@ -145,9 +145,11 @@ Get Broker Property By Username
 
 Порівняти об'єкти
   [Arguments]  ${left}  ${right}
+  Log  ${left}
+  Log  ${right}
   Should Not Be Equal  ${left}  ${None}
   Should Not Be Equal  ${right}  ${None}
-  Should Be Equal  ${left}  ${right}
+  Should Be Equal  ${left}  ${right}  msg=Objects are not equal
 
 
 Звірити дату тендера
@@ -165,10 +167,12 @@ Get Broker Property By Username
 
 Звірити дату
   [Arguments]  ${left}  ${right}
+  Log  ${left}
+  Log  ${right}
   Should Not Be Equal  ${left}  ${None}
   Should Not Be Equal  ${right}  ${None}
   ${status}=  compare_date  ${left}  ${right}
-  Should Be True  ${status}
+  Should Be True  ${status}  msg=Dates are not equal: ${left} != ${right}
 
 
 Звірити поля предметів закупівлі багатопредметного тендера
