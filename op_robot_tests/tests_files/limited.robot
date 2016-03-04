@@ -34,15 +34,15 @@ ${broker}       Quinta
   Log  ${TENDER}
 
 
-Можливість сформувати запит на скасування прямої закупівлі
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість сформувати запит на скасування прямої закупівлі
+Можливість скасувати пряму закупівлю
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість скасувати пряму закупівлю
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   ${cancellation_data}=  Підготувати дані про скасування  ${tender_owner}
   Викликати для учасника  ${tender_owner}
-  ...      Додати запит на скасування
+  ...      Скасувати процедуру
   ...      ${TENDER['TENDER_UAID']}
   ...      ${cancellation_data['cancellation_reason']}
   ...      ${cancellation_data['document']}
@@ -51,17 +51,6 @@ ${broker}       Quinta
   Set suite variable  ${CANCEL_NUM}
   ${DOC_NUM}=  Set variable  0
   Set suite variable  ${DOC_NUM}
-
-
-Можливість активувати скасування прямої закупівлі
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість активувати скасування прямої закупівлі
-  ...  tender_owner
-  ...  ${USERS.users['${tender_owner}'].broker}
-  ...  level2
-  Викликати для учасника  ${tender_owner}
-  ...      Підтвердити скасування закупівлі
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${CANCEL_NUM}
 
 
 Відображення активного статусу скасування прямої закупівлі
