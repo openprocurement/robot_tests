@@ -362,7 +362,7 @@ Library  openprocurement_client_helper.py
   Log  ${reply}
 
 
-Додати запит на скасування
+Скасувати процедуру
   [Documentation]
   ...      [Arguments] Username, tender uaid, cancellation reason,
   ...      document and new description of document
@@ -383,6 +383,9 @@ Library  openprocurement_client_helper.py
 
 
   Змінити опис документа в скасуванні  ${username}  ${tender_uaid}  ${cancellation_id}  ${document_id}  ${new_description}
+
+
+  Підтвердити скасування закупівлі  ${username}  ${tender_uaid}  ${cancellation_id}
 
 
 Завантажити документацію до запиту на скасування
@@ -431,9 +434,9 @@ Library  openprocurement_client_helper.py
   ...      [Arguments] Username, tender uaid, cancellation number
   ...      Find tender using uaid, get cancellation confirmation data and call patch_cancellation
   ...      [Return] Nothing
-  [Arguments]  ${username}  ${tender_uaid}  ${cancel_num}
+  [Arguments]  ${username}  ${tender_uaid}  ${cancel_id}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${data}=  test_confirm_data  ${tender['data']['cancellations'][${cancel_num}]['id']}
+  ${data}=  test_confirm_data  ${cancel_id}
   Log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_cancellation  ${tender}  ${data}
   Log  ${reply}
