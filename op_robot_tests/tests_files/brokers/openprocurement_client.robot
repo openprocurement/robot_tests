@@ -338,8 +338,8 @@ Library  openprocurement_client_helper.py
 
 Додати і підтвердити постачальника
   [Documentation]
-  ...      [Arguments] Username and tender uaid
-  ...      Find tender using uaid, get data from Підготувати дані про постачальника and call create_award
+  ...      [Arguments] Username, tender uaid and supplier data
+  ...      Find tender using uaid and call create_award
   ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}  ${supplier_data}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
