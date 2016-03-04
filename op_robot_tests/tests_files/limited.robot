@@ -15,7 +15,7 @@ ${broker}       Quinta
 
 *** Test Cases ***
 Можливість створити пряму закупівлю
-  ${tender_data}=  Підготовка початкових даних
+  ${tender_data}=  Підготовка даних для створення тендера
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${tender_data}
   Log  ${tender_data}
   ${LAST_MODIFICATION_DATE}=  Get Current TZdate
