@@ -10,6 +10,10 @@ fake_ru = Factory.create('ru')
 fake_en = Factory.create()
 
 
+def create_fake_sentence():
+    return fake.sentence(nb_words=10, variable_nb_words=True)
+
+
 def create_fake_doc():
     content = fake.text()
     suffix = fake.random_element(('.txt', '.doc', '.docx', '.pdf'))
@@ -114,42 +118,66 @@ def test_tender_data(intervals, periods=("enquiry", "tender")):
 
 
 def test_tender_data_limited(intervals):
+    now = get_now()
     return {
-        "items": [
+        "items":
+        [
             {
-                "additionalClassifications": [
+                "additionalClassifications":
+                [
                     {
                         "description": u"Послуги шкільних їдалень",
                         "id": "55.51.10.300",
                         "scheme": u"ДКПП"
                     }
                 ],
-                "classification": {
+                "classification":
+                {
                     "description": u"Послуги з харчування у школах",
                     "id": "55523100-3",
                     "scheme": "CPV"
                 },
                 "description": u"Послуги шкільних їдалень",
-                "id": "2dc54675d6364e2baffbc0f8e74432ac"
+                "id": "2dc54675d6364e2baffbc0f8e74432ac",
+                "deliveryDate": {
+                    "endDate": (now + timedelta(days=5)).isoformat()
+                },
+                "deliveryLocation": {
+                    "latitude": 49.8500,
+                    "longitude": 24.0167
+                },
+                "deliveryAddress": {
+                    "countryName": u"Україна",
+                    "countryName_ru": u"Украина",
+                    "countryName_en": "Ukraine",
+                    "postalCode": fake.postalcode(),
+                    "region": u"м. Київ",
+                    "locality": u"м. Київ",
+                    "streetAddress": fake.street_address()
+                }
             }
         ],
         "owner": "test.quintagroup.com",
         "procurementMethod": "limited",
         "procurementMethodType": "reporting",
-        "procuringEntity": {
-            "address": {
+        "procuringEntity":
+        {
+            "address":
+            {
                 "countryName": u"Україна",
                 "locality": u"м. Вінниця",
                 "postalCode": "21027",
                 "region": u"м. Вінниця",
                 "streetAddress": u"вул. Стахурського. 22"
             },
-            "contactPoint": {
+            "contactPoint":
+            {
                 "name": u"Куца Світлана Валентинівна",
                 "telephone": "+380 (432) 46-53-02",
                 "url": "http://sch10.edu.vn.ua/"
             },
-            "identifier": {
+            "identifier":
+            {
                 "id": "21725150",
                 "legalName": u"Заклад \"Загальноосвітня школа І-ІІІ ступенів № 10 Вінницької міської ради\"",
                 "scheme": u"UA-EDR"
@@ -328,6 +356,142 @@ def test_complaint_data(lot=False):
     return data
 
 
+def test_claim_data():
+    return munchify({
+        "data": {
+            "author": {
+                "address": {
+                    "countryName": u"Україна",
+                    "countryName_ru": u"Украина",
+                    "countryName_en": "Ukraine",
+                    "locality": u"м. Вінниця",
+                    "postalCode": "21100",
+                    "region": u"Вінницька область",
+                    "streetAddress": fake.street_address()
+                },
+                "contactPoint": {
+                    "name": fake.name(),
+                    "telephone": fake.phone_number()
+                },
+                "identifier": {
+                    "scheme": u"UA-EDR",
+                    "id": u"{:08d}".format(fake.pyint()),
+                    "uri": fake.image_url(width=None, height=None)
+                },
+                "name": fake.company()
+            },
+            "description": fake.sentence(nb_words=10, variable_nb_words=True),
+            "title": fake.sentence(nb_words=6, variable_nb_words=True)
+        }
+    })
+
+
+def test_complaint_answer_data(complaint_id):
+    return munchify({
+        "data": {
+            "id": complaint_id,
+            "status": "answered",
+            "resolutionType": "resolved",
+            "resolution": fake.sentence(nb_words=40, variable_nb_words=True)
+        }
+    })
+
+
+def test_claim_answer_satisfying_data(claim_id):
+    return munchify({
+        "data": {
+            "id": claim_id,
+            "status": "resolved",
+            "satisfied": True
+        }
+    })
+
+
+def test_claim_answer_data(claim_id):
+    return munchify({
+        "data": {
+            "status": "answered",
+            "resolutionType": "resolved",
+            "tendererAction": fake.sentence(nb_words=10, variable_nb_words=True),
+            "resolution": fake.sentence(nb_words=15, variable_nb_words=True),
+            "id": claim_id
+        }
+    })
+
+
+def test_escalate_claim_data(claim_id):
+    return munchify({
+        "data": {
+            "status": "pending",
+            "satisfied": False,
+            "id": claim_id
+        }
+    })
+
+
+def test_cancel_tender_data(cancellation_reason):
+    return munchify({
+        'data': {
+            'reason': cancellation_reason
+        }
+    })
+
+
+def test_cancel_claim_data(claim_id, cancellation_reason):
+    return munchify({
+        'data': {
+            'cancellationReason': cancellation_reason,
+            'status': 'cancelled',
+            'id': claim_id
+        }
+    })
+
+
+def test_change_cancellation_document_field_data(key, value):
+    return munchify({
+        "data": {
+            key: value
+        }
+    })
+
+
+
+def test_confirm_data(ID):
+    return munchify({
+        "data": {
+            "status": "active",
+            "id": ID
+        }
+    })
+
+
+def test_submit_claim_data(claim_id):
+    return munchify({
+        "data": {
+            "id": claim_id,
+            "status": "claim"
+        }
+    })
+
+
+def test_additional_items_data(tender_id, access_token):
+    return munchify({
+        "access": {
+            "token": access_token
+            },
+        "data": {
+            "id": tender_id,
+             "items": [{
+                "unit": {
+                    "code": "MON",
+                    "name": "month"
+                    },
+                "quantity": 9
+            }]
+        }
+    })
+
+
 def test_complaint_reply_data():
     return munchify({
         "data": {
@@ -428,7 +592,7 @@ def auction_bid():
 
 
 def test_supplier_data():
-    return {
+    return munchify({
         "data": {
             "suppliers": [
                 {
@@ -459,7 +623,7 @@ def test_supplier_data():
                 "valueAddedTaxIncluded": True
             }
         }
-    }
+    })
 
 
 def test_award_data():

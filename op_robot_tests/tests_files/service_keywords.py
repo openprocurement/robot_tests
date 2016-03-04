@@ -14,14 +14,41 @@ from robot.output.loggerhelper import Message
 # can access them by simply importing library "service_keywords".
 # Please ignore the warning given by Flake8 or other linter.
 from .initial_data import (
-    auction_bid, create_fake_doc, test_award_data, test_bid_data,
-    test_bid_data_meat_tender, test_complaint_data, test_complaint_reply_data,
-    test_invalid_features_data, test_item_data, test_lot_complaint_data,
-    test_lot_data, test_lot_document_data, test_lot_question_data,
-    test_lots_bid_data, test_meat_tender_data, test_question_answer_data,
-    test_question_data, test_supplier_data, test_tender_data,
-    test_tender_data_limited, test_tender_data_multiple_items,
-    test_tender_data_multiple_lots, test_tender_data_openua
+    auction_bid,
+    create_fake_doc,
+    create_fake_sentence,
+    test_additional_items_data,
+    test_award_data,
+    test_bid_data,
+    test_bid_data_meat_tender,
+    test_cancel_claim_data,
+    test_cancel_tender_data,
+    test_change_cancellation_document_field_data,
+    test_claim_answer_data,
+    test_claim_answer_satisfying_data,
+    test_claim_data,
+    test_complaint_answer_data,
+    test_complaint_data,
+    test_complaint_reply_data,
+    test_confirm_data,
+    test_escalate_claim_data,
+    test_invalid_features_data,
+    test_item_data,
+    test_lot_complaint_data,
+    test_lot_data,
+    test_lot_document_data,
+    test_lot_question_data,
+    test_lots_bid_data,
+    test_meat_tender_data,
+    test_question_answer_data,
+    test_question_data,
+    test_submit_claim_data,
+    test_supplier_data,
+    test_tender_data,
+    test_tender_data_limited,
+    test_tender_data_multiple_items,
+    test_tender_data_multiple_lots,
+    test_tender_data_openua
 )
 from .local_time import get_now, TZ
 import os
@@ -269,7 +296,7 @@ def confirm_contract(contract_id):
     return data
 
 
-def modify_tender(tender_id, access_token):
+def additional_items_data(tender_id, access_token):
     data = {"access": {"token": access_token}, "data": {"id": tender_id, "items": [{"unit": {"code": "MON", "name": "month"}, "quantity": 9}]}}
     return data
 

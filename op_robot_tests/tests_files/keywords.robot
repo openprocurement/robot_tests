@@ -113,6 +113,24 @@ Get Broker Property By Username
   [Return]  ${answer}
 
 
+Підготувати дані про постачальника
+  [Arguments]  ${username}
+  ${supplier_data}=  test_supplier_data
+  Set To Dictionary  ${USERS.users['${username}']}  supplier_data  ${supplier_data}
+  Log  ${supplier_data}
+  [Return]  ${supplier_data}
+
+
+Підготувати дані про скасування
+  [Arguments]  ${username}
+  ${cancellation_reason}=  create_fake_sentence
+  ${document}=  create_fake_doc
+  ${new_description}=  create_fake_sentence
+  ${cancellation_data}=  Create Dictionary  cancellation_reason=${cancellation_reason}  document=${document}  description=${new_description}
+  Set To Dictionary  ${USERS.users['${username}']}  cancellation_data  ${cancellation_data}
+  [Return]  ${cancellation_data}
+
+
 Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
   ${bundled_st}=  Run Keyword And Return Status  Import Resource  ${CURDIR}${/}brokers${/}${keywords_file}.robot
   ${external_st}=  Run Keyword And Return Status  Import Resource  ${CURDIR}${/}..${/}..${/}src${/}robot_tests.broker.${keywords_file}${/}${keywords_file}.robot
@@ -169,6 +187,8 @@ Get Broker Property By Username
 Звірити поле тендера із значенням
   [Arguments]  ${username}  ${left}  ${field}
   ${right}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field}
+  Log  ${left}
+  Log  ${right}
   Порівняти об'єкти  ${left}  ${right}
   Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${left}
 
