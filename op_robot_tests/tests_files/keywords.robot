@@ -79,25 +79,7 @@ Get Broker Property By Username
   Run Keyword And Return  Get Broker Property  ${broker_name}  ${property}
 
 
-Підготовка початкових даних
-  @{QUESTIONS}=  Create list
-  ${question}=  test question data
-  ${question_lot}=  test_lot_question_data  ${question}
-  Append to list  ${QUESTIONS}  ${question}  ${question_lot}
-  Set Global Variable  @{QUESTIONS}
-  @{ANSWERS}=  Create list
-  ${answer}=  test_question_answer_data
-  Append to list  ${ANSWERS}  ${answer}
-  Set Global Variable  @{ANSWERS}
-  @{COMPLAINTS}=  Create list
-  ${complaint}=  test_complaint_data
-  ${complaint_lot}=  test_lot_complaint_data  ${complaint}
-  Append to list  ${COMPLAINTS}  ${complaint}  ${complaint_lot}
-  Set Global Variable  @{COMPLAINTS}
-  @{REPLIES}=  Create list
-  ${reply}=  test_complaint_reply_data
-  Append to list  ${REPLIES}  ${reply}
-  Set Global Variable  @{REPLIES}
+Підготовка даних для створення тендера
   ${custom_intervals}=  Get Broker Property By Username  ${tender_owner}  intervals
   ${default_intervals}=  Get Broker Property  Default  intervals
   ${period_intervals}=  merge_dicts  ${default_intervals}  ${custom_intervals}
@@ -107,6 +89,28 @@ Get Broker Property By Username
   Log  ${TENDER}
   Log  ${tender_data}
   [return]  ${tender_data}
+
+
+Підготовка даних для подання скарги
+  [Arguments]  ${lot}=${False}
+  ${complaint}=  test_complaint_data  ${lot}
+  [Return]  ${complaint}
+
+
+Підготовка даних для відповіді на скаргу
+  ${reply}=  test_complaint_reply_data
+  [Return]  ${reply}
+
+
+Підготовка даних для запитання
+  [Arguments]  ${lot}=${False}
+  ${question}=  test_question_data  ${lot}
+  [Return]  ${question}
+
+
+Підготовка даних для відповіді на запитання
+  ${answer}=  test_question_answer_data
+  [Return]  ${answer}
 
 
 Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
@@ -171,9 +175,11 @@ Get Broker Property By Username
 
 Порівняти об'єкти
   [Arguments]  ${left}  ${right}
+  Log  ${left}
+  Log  ${right}
   Should Not Be Equal  ${left}  ${None}
   Should Not Be Equal  ${right}  ${None}
-  Should Be Equal  ${left}  ${right}
+  Should Be Equal  ${left}  ${right}  msg=Objects are not equal
 
 
 Звірити дату тендера
@@ -198,10 +204,12 @@ Get Broker Property By Username
   ...      ``left`` and ``right`` dates is more than ``accuracy``,
   ...      otherwise it will pass.
   [Arguments]  ${left}  ${right}  ${accuracy}=60
+  Log  ${left}
+  Log  ${right}
   Should Not Be Equal  ${left}  ${None}
   Should Not Be Equal  ${right}  ${None}
   ${status}=  compare_date  ${left}  ${right}  ${accuracy}
-  Should Be True  ${status}
+  Should Be True  ${status}  msg=Dates are not equal: ${left} != ${right}
 
 
 Звірити поля предметів закупівлі багатопредметного тендера

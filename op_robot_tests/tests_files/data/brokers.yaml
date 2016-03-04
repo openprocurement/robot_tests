@@ -30,13 +30,13 @@ Default:
             # This is not a name of period
             # Please refer to API documentation to find out what's this
             accelerator: 1440
-            tender: [0, 15]
+            tender:  [0, 15]
             # Please remember that openUA and openEU procedures
             # forbid anyone to set or modify enquiryPeriod
             # (it is set automatically)
         openeu:
             accelerator: 1440
-            tender: [0, 15]
+            tender:  [0, 15]
     # Synchronization delay, in seconds
     timeout_on_wait: 300
 Quinta:
@@ -46,23 +46,23 @@ Quinta:
             tender:  [0, 5]
         openua:
             accelerator: 1440
-            tender: [0, 15]
+            tender:  [0, 15]
         openeu:
             accelerator: 1440
-            tender: [0, 15]
+            tender:  [0, 15]
     keywords_file: openprocurement_client
     roles:
-        tender_owner:   Tender_Owner
         provider:       Tender_User
         provider1:      Tender_User1
+        tender_owner:   Tender_Owner
         viewer:         Tender_Viewer
     timeout_on_wait: 15
 E-tender:
     keywords_file: etender
     roles:
-        tender_owner:   E-tender_Owner
         provider:       E-tender_Provider1
         provider1:      E-tender_Provider2
+        tender_owner:   E-tender_Owner
         viewer:         E-tender_Viewer
     timeout_on_wait: 600
 DZO:
@@ -70,54 +70,58 @@ DZO:
     login: admin
     password: uStudio
     roles:
-        tender_owner:   DZO_Owner
         provider:       DZO_Provider1
+        tender_owner:   DZO_Owner
         viewer:         DZO_Viewer
 Newtend:
     keywords_file: newtend
     roles:
-        tender_owner:   Newtend_Owner
         provider:       Newtend_Provider1
+        tender_owner:   Newtend_Owner
         viewer:         Newtend_Viewer
 PrivatMarket:
     intervals:
-        enquiry: [0, 2]
-        tender:  [0, 5]
+        default:
+            enquiry: [0, 2]
+            tender:  [0, 5]
     keywords_file: privatmarket
     roles:
-        viewer:         PrivatMarket_Viewer
         provider:       PrivatMarket_Provider
         provider1:      PrivatMarket_Provider1
+        viewer:         PrivatMarket_Viewer
     timeout_on_wait: 30
 Prom:
     intervals:
-       enquiry: [10, 10]
-       tender:  [0,  45]
+        default:
+            enquiry: [10, 10]
+            tender:  [0,  45]
     keywords_file: prom
     roles:
         tender_owner:   Prom_Owner
         viewer:         Prom_Viewer
 Publicbid:
+    intervals:
+        default:
+            enquiry: [21, 15]
+            tender:  [1,  15]
     keywords_file: publicbid
     roles:
-        tender_owner:   Publicbid_Owner
         provider:       Publicbid_Provider1
+        tender_owner:   Publicbid_Owner
         viewer:         Publicbid_Viewer
-    intervals:
-        enquiry: [21, 15]
-        tender:  [1,  15]
 PublicPortal:
     keywords_file: publicportal
     roles:
         viewer:         PublicPortal_Viewer
 SmartTender:
+    intervals:
+        default:
+            enquiry: [5, 10]
+            tender:  [0, 15]
     keywords_file: smarttender
     roles:
-        viewer:         SmartTender_Viewer
         provider:       SmartTender_Provider1
         provider1:      SmartTender_Provider2
         tender_owner:   SmartTender_Owner
-    intervals:
-        enquiry: [5, 10]
-        tender:  [0, 15]
+        viewer:         SmartTender_Viewer
     timeout_on_wait: 300

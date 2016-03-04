@@ -18,7 +18,7 @@ ${broker}       Quinta
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      minimal
   [Documentation]   Створення закупівлі замовником, обовязково має повертати UAID закупівлі (номер тендера)
-  ${tender_data}=  Підготовка початкових даних
+  ${tender_data}=  Підготовка даних для створення тендера
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${tender_data}
   ${LAST_MODIFICATION_DATE}=  Get Current TZdate
   Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data  ${tender_data}
@@ -66,7 +66,7 @@ ${broker}       Quinta
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Documentation]    Користувач  ${USERS.users['${provider}'].broker}  намагається подати скаргу на умови оголошеної  закупівлі
-  ${claim}=  Get From List  ${COMPLAINTS}  0
+  ${claim}=  Підготовка даних для подання скарги
   Set To Dictionary  ${claim.data}   status   claim
   Викликати для учасника   ${provider}   Подати скаргу    ${TENDER['TENDER_UAID']}   ${claim}
   ${complaints}=  Create Dictionary
@@ -169,7 +169,7 @@ Cкасувати цінову пропозицію другого учасни�
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Documentation]    Користувач  ${USERS.users['${provider}'].broker}  намагається подати скаргу на умови оголошеної  закупівлі
-  ${claim}=  Get From List  ${COMPLAINTS}  0
+  ${claim}=  Підготовка даних для подання скарги
   Set To Dictionary  ${claim.data}   status   claim
   Викликати для учасника   ${provider}   Подати скаргу   shouldfail   ${TENDER['TENDER_UAID']}   ${claim}
 
@@ -188,7 +188,7 @@ Cкасувати цінову пропозицію другого учасни�
   ...      ${USERS.users['${provider}'].broker}
   [Documentation]    Користувач  ${USERS.users['${provider}'].broker}  намагається подати скаргу на умови оголошеної  закупівлі
   Дочекатись синхронізації з майданчиком    ${provider}
-  ${complaint}=  Get From List  ${COMPLAINTS}  0
+  ${complaint}=  Підготовка даних для подання скарги
   Set To Dictionary  ${complaint.data}   status   pending
   Викликати для учасника   ${provider}   Подати скаргу   ${TENDER['TENDER_UAID']}   ${complaint}
   Set To Dictionary  ${USERS.users['${provider}'].complaints}  complaint  ${complaint}
@@ -256,6 +256,6 @@ Cкасувати цінову пропозицію другого учасни�
   Log  ${USERS.users['${provider}'].tender_data.data.complaintPeriod.endDate}
   Дочекатись Дати   ${USERS.users['${provider}'].tender_data.data.complaintPeriod.endDate}
   Дочекатись синхронізації з майданчиком    ${provider}
-  ${complaint}=  Get From List  ${COMPLAINTS}  0
+  ${complaint}=  Підготовка даних для подання скарги
   Set To Dictionary  ${complaint.data}   status   pending
-  Викликати для учасника   ${provider}   Подати скаргу   shouldfail   ${TENDER['TENDER_UAID']}   ${COMPLAINTS[0]}
+  Викликати для учасника   ${provider}   Подати скаргу   shouldfail   ${TENDER['TENDER_UAID']}   ${complaint}

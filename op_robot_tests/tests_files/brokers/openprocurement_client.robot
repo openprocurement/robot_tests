@@ -131,12 +131,13 @@ Library  openprocurement_client_helper.py
 
 
 Відповісти на питання
-  [Arguments]  ${username}  ${tender_uid}  ${question_id}  ${answer_data}
+  [Arguments]  ${username}  ${tender_uid}  ${question}  ${answer_data}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
-  ${answer_data.data.id}=  Set Variable   ${tender.data.questions[${question_id}].id}
+  ${answer_data.data.id}=  Set Variable   ${question.data.id}
   ${question_with_answer}=  Call Method  ${USERS.users['${username}'].client}  patch_question  ${tender}  ${answer_data}
   Log object data   ${question_with_answer}  question_with_answer
+  [return]  ${question_with_answer}
 
 
 Подати скаргу
