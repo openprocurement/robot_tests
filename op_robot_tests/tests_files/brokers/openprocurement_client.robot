@@ -427,3 +427,9 @@ Library  openprocurement_client_helper.py
   Log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract  ${tender}  ${data}
   Log  ${reply}
+
+
+Оновити LAST_MODIFICATION_DATE
+  Run keyword if  '${TEST_STATUS}' == 'PASS'  Run keywords
+  ...      ${LAST_MODIFICATION_DATE}=  Get Current TZdate
+  ...      Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
