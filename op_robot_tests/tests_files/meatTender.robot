@@ -148,7 +148,7 @@ ${broker}       Quinta
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   Дочекатись дати початку аукціону  ${viewer}
-  sleep  1500
+  Дочекатись дати закінчення аукціону  ${viewer}  ${tender_uaid}
 
 
 Можливість отримати результати аукціону

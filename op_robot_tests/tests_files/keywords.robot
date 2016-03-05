@@ -338,6 +338,6 @@ SwitchState
 
 
 Дочекатись дати закінчення аукціону
-  [Arguments]  ${username}
-  Log  ${username}
-  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.auctionPeriod.endDate}
+  [Arguments]  ${username}  ${tender_uaid}
+  ${status}  ${endDate}=  Run Keyword And Ignore Keyword Definitions  Wait Until Keyword Succeeds  20x  15s  Викликати для учасника  ${username}  Отримати дату кінця аукціону  ${tender_uaid}
+  Run keyword if  ${status} == 'FAIL'  Sleep  1500
