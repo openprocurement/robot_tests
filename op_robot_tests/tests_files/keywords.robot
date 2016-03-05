@@ -341,3 +341,8 @@ SwitchState
   [Arguments]  ${username}
   Log  ${username}
   Дочекатись дати  ${USERS.users['${username}'].tender_data.data.auctionPeriod.endDate}
+
+Дочекатись дати закінчення періоду подання скарг
+  [Arguments]  ${username}
+  log  ${username}
+  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.complaintPeriod.endDate}

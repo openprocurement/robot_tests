@@ -81,7 +81,7 @@ Library  openprocurement_client_helper.py
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   Set_To_Object  ${tender.data}   ${fieldname}   ${fieldvalue}
   ${procurementMethodType}=  Get From Object  ${tender.data}  procurementMethodType
-  Run Keyword If  '${procurementMethodType}' == 'aboveThresholdUA'
+  Run Keyword If  '${procurementMethodType}' == 'aboveThresholdUA' or '${procurementMethodType}' == 'aboveThresholdEU'
   ...      Remove From Dictionary  ${tender.data}  enquiryPeriod
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
@@ -218,11 +218,11 @@ Library  openprocurement_client_helper.py
 
 
 Завантажити документ в ставку
-  [Arguments]  ${username}  ${path}  ${tender_uaid}
+  [Arguments]  ${username}  ${path}  ${tender_uaid}  ${doc_type}=documents
   ${bid_id}=  Get Variable Value   ${USERS.users['${username}'].bidresponses['resp'].data.id}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
-  ${response}=  Call Method  ${USERS.users['${username}'].client}  upload_bid_document  ${path}  ${tender}  ${bid_id}
+  ${response}=  Call Method  ${USERS.users['${username}'].client}  upload_bid_document  ${path}  ${tender}  ${bid_id}  ${doc_type}
   ${uploaded_file} =  Create Dictionary   filepath  ${path}   upload_response  ${response}
   Log  ${response}
   Log object data   ${uploaded_file}
@@ -239,6 +239,13 @@ Library  openprocurement_client_helper.py
   Log object data   ${uploaded_file}
   [return]  ${uploaded_file}
 
+Змінити документацію в ставці
+  [Arguments]  ${username}  ${doc_data}  ${bidid}  ${docid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${TENDER['TENDER_UAID']}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
+  ${response}=  Call Method  ${USERS.users['${username}'].client}  patch_bid_document   ${tender}   ${doc_data}   ${bidid}   ${docid}
+  Log  ${response}
+  [return]  ${response}
 
 Завантажити документ
   [Arguments]  ${username}  ${filepath}  ${tender_uaid}
@@ -463,3 +470,57 @@ Library  openprocurement_client_helper.py
   Log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract  ${tender}  ${data}
   Log  ${reply}
+
+##############################################################################
+#             OpenUA procedure
+##############################################################################
+
+Підтвердити кваліфікацію
+  [Documentation]
+  ...      [Arguments] Username, tender uaid and qualification number
+  ...      [Description] Find tender using uaid, create data dict with active status and call patch_qualification
+  ...      [Return] Reply of API
+  [Arguments]  ${username}  ${tender_uid}  ${qualification_num}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  ${qualification}=  create_data_dict   data.status  active
+  Set To Dictionary  ${qualification.data}  id  ${tender.data.qualifications[${qualification_num}].id}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_qualification  ${tender}  ${qualification}
+  Log  ${reply}
+  [Return]  ${reply}
+
+Відхилити кваліфікацію
+  [Documentation]
+  ...      [Arguments] Username, tender uaid and qualification number
+  ...      [Description] Find tender using uaid, create data dict with unsuccessful status and call patch_qualification
+  ...      [Return] Reply of API
+  [Arguments]  ${username}  ${tender_uid}  ${qualification_num}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  ${qualification}=  create_data_dict   data.status  unsuccessful
+  Set To Dictionary  ${qualification.data}  id  ${tender.data.qualifications[${qualification_num}].id}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_qualification  ${tender}  ${qualification}
+  Log  ${reply}
+  [Return]  ${reply}
+
+Завантажити документ у кваліфікацію
+  [Documentation]
+  ...      [Arguments] Username, tender uaid, qualification number and document to upload
+  ...      [Description] Find tender using uaid,  and call upload_qualification_document
+  ...      [Return] Reply of API
+  [Arguments]  ${username}  ${document}  ${tender_uaid}  ${qualification_num}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${doc_reply}=  Call Method  ${USERS.users['${username}'].client}  upload_qualification_document  ${document}  ${tender}  ${tender.data.qualifications[${qualification_num}].id}
+  Log  ${doc_reply}
+  [Return]  ${doc_reply}
+
+Скасувати кваліфікацію
+  [Documentation]
+  ...      [Arguments] Username, tender uaid and qualification number
+  ...      [Description] Find tender using uaid, create data dict with cancelled status and call patch_qualification
+  ...      [Return] Reply of API
+  [Arguments]  ${username}  ${tender_uid}  ${qualification_num}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  ${qualification}=  create_data_dict   data.status  cancelled
+  Set To Dictionary  ${qualification.data}  id  ${tender.data.qualifications[${qualification_num}].id}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_qualification  ${tender}  ${qualification}
+  Log  ${reply}
+  [Return]  ${reply}
