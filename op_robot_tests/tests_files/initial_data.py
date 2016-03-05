@@ -774,18 +774,8 @@ def test_tender_data_openeu(intervals):
     # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
     t_data = test_tender_data(intervals, periods=('tender',))
     t_data['procurementMethodType'] = 'aboveThresholdEU'
-
     t_data['procurementMethodDetails'] = 'quick, ' \
         'accelerator={}'.format(accelerator)
-
-    # now = get_now()
-    # t_data["tenderPeriod"] = {
-    #     "startDate": (now).isoformat(),
-    #     "endDate": (now + timedelta(minutes=7, seconds=30)).isoformat()
-    # }
-    # t_data['procurementMethodDetails'] = 'quick, accelerator=5760'
-
-
     t_data['title_en'] = "[TESTING]"
     for item_number, item in enumerate(t_data['items']):
         item['description_en'] = "Test item #{}".format(item_number)
