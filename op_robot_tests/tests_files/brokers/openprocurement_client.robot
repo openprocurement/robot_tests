@@ -318,6 +318,15 @@ Library  openprocurement_client_helper.py
   #[Arguments]  ${username}  ${tender_uid}  ${lot}
   #${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
 
+
+Отримати дату кінця аукціону
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  Log  ${tender}
+  [Return]  ${tender.data.auctionPeriod.endDate}
+
+
+
 ##############################################################################
 #             Limited procurement
 ##############################################################################

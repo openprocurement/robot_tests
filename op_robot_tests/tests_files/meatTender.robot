@@ -141,7 +141,7 @@ ${broker}       Quinta
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   Дочекатись дати початку аукціону  ${viewer}
-  Дочекатись дати закінчення аукціону  ${viewer}
+  Дочекатись дати закінчення аукціону  ${viewer}  ${tender_uaid}
 
 Можливість отримати результати аукціону
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Результати аукціону
