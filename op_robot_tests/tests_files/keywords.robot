@@ -16,6 +16,11 @@ Test Suite Setup
   Set Selenium Timeout  10 s
   Завантажуємо дані про користувачів і майданчики
 
+Test Suite Teardown
+  Close all browsers
+  ${artifact}=  Create Dictionary  tender_uaid=${TENDER['TENDER_UAID']}  access_token=${USERS.users['${tender_owner}'].access_token}
+  log_object_data  ${artifact}  arctifact
+
 
 Set Suite Variable With Default Value
   [Arguments]  ${suite_var}  ${def_value}

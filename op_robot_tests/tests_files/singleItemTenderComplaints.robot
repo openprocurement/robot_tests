@@ -7,7 +7,7 @@ Library         DebugLibrary
 Resource        keywords.robot
 Resource        resource.robot
 Suite Setup     Test Suite Setup
-Suite Teardown  Close all browsers
+Suite Teardown  Test Suite Teardown
 
 *** Variables ***
 ${mode}         single
