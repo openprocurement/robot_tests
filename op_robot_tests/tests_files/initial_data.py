@@ -559,7 +559,7 @@ def test_lots_bid_data():
             {
                 "value": {
                     "currency": "UAH",
-                    "amount": 1000 + fake.pyfloat(left_digits=3, right_digits=0, positive=True),
+                    "amount": fake.random_int(max=1999),
                     "valueAddedTaxIncluded": "true"
                 },
                 "relatedLot": "3c8f387879de4c38957402dbdb8b31af",
@@ -568,7 +568,7 @@ def test_lots_bid_data():
             {
                 "value": {
                     "currency": "UAH",
-                    "amount": 1000 + fake.pyfloat(left_digits=3, right_digits=0, positive=True),
+                    "amount": fake.random_int(max=1999),
                     "valueAddedTaxIncluded": "true"
                 },
                 "relatedLot": "bcac8d2ceb5f4227b841a2211f5cb646",
