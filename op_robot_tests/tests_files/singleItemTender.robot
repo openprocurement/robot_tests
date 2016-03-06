@@ -423,7 +423,8 @@ ${question_id}  0
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість задати запитання
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ${resp}=  Викликати для учасника   ${provider}  Задати питання   shouldfail   ${TENDER['TENDER_UAID']}    ${QUESTIONS[${question_id}]}
+  ${question}=  Підготовка даних для запитання
+  Викликати для учасника   ${provider}   Задати питання  shouldfail  ${TENDER['TENDER_UAID']}   ${question}
 
 Можливість подати цінову пропозицію другим учасником
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
