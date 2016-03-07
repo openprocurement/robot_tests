@@ -10,7 +10,7 @@ ${broker}       Quinta
 
 
 *** Test Cases ***
-Пошук позапорогового однопредметного тендера по ідентифікатору
+Можливість знайти тендер по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
   ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
