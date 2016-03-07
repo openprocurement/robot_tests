@@ -57,7 +57,6 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
-  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   ${claim}=  Підготовка даних для подання вимоги
   ${claim_resp}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
@@ -82,19 +81,23 @@ ${broker}       Quinta
   ...      ${document}
   Set To Dictionary  ${USERS.users['${provider}']['claim_data']}  document  ${document}
 
+
+Можливість подати вимогу про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${provider}'].broker}: Можливість подати вимогу про виправлення умов закупівлі
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  from-0.12
+  ${confrimation_data}=  test_submit_claim_data  ${USERS.users['${provider}']['claim_data']['claim_resp']['data']['id']}
+  Log  ${confrimation_data}
+  Викликати для учасника  ${provider}
+  ...      Подати вимогу
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}']['claim_data']['claim_resp']}
+  ...      ${confrimation_data}
+
 ##############################################################################################
 #             ВІДОБРАЖЕННЯ ДЛЯ ГЛЯДАЧА
 ##############################################################################################
-
-Відображення опису вимоги для глядача
-  [Tags]  ${USERS.users['${viewer}'].broker}: опису Відображення вимоги для глядача
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  from-0.12
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${provider}'].claim_data['claim'].data.description}
-  ...      complaints[${CLAIM_NUM}].description
-
 
 Відображення заголовку вимоги для глядача
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення заголовку вимоги для глядача
@@ -116,6 +119,28 @@ ${broker}       Quinta
   ...      ${USERS.users['${provider}'].claim_data['document']}
   ...      complaints[${CLAIM_NUM}].documents[${doc_num}].title
 
+
+Відображення опису вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: опису Відображення вимоги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  from-0.12
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}'].claim_data['claim'].data.description}
+  ...      complaints[${CLAIM_NUM}].description
+
+
+Відображення поданого статусу вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення поданого статусу вимоги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  from-0.12
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити поле тендера із значенням  ${provider}
+  ...      claim
+  ...      complaints[${CLAIM_NUM}].status
+
 ##############################################################################################
 #             ВІДОБРАЖЕННЯ ДЛЯ КОРИСТУВАЧА
 ##############################################################################################
@@ -125,6 +150,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   Звірити поле тендера із значенням  ${provider}
   ...      ${USERS.users['${provider}'].claim_data['claim'].data.description}
   ...      complaints[${CLAIM_NUM}].description
@@ -150,40 +176,6 @@ ${broker}       Quinta
   ...      ${USERS.users['${provider}'].claim_data['document']}
   ...      complaints[${CLAIM_NUM}].documents[${doc_num}].title
 
-##############################################################################################
-#             МОЖЛИВІСТЬ
-##############################################################################################
-
-Можливість подати вимогу про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${provider}'].broker}: Можливість подати вимогу про виправлення умов закупівлі
-  ...  provider
-  ...  ${USERS.users['${provider}'].broker}
-  ...  from-0.12
-  ${confrimation_data}=  test_submit_claim_data  ${USERS.users['${provider}']['claim_data']['claim_resp']['data']['id']}
-  Log  ${confrimation_data}
-  Викликати для учасника  ${provider}
-  ...      Подати вимогу
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['claim_resp']}
-  ...      ${confrimation_data}
-
-##############################################################################################
-#             ВІДОБРАЖЕННЯ ДЛЯ ГЛЯДАЧА
-##############################################################################################
-
-Відображення поданого статусу вимоги для глядача
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення поданого статусу вимоги для глядача
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  from-0.12
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити поле тендера із значенням  ${provider}
-  ...      claim
-  ...      complaints[${CLAIM_NUM}].status
-
-##############################################################################################
-#             ВІДОБРАЖЕННЯ ДЛЯ КОРИСТУВАЧА
-##############################################################################################
 
 Відображення поданого статусу вимоги для користувача
   [Tags]  ${USERS.users['${provider}'].broker}: Відображення поданого статусу вимоги для користувача
