@@ -143,40 +143,6 @@ Library  openprocurement_client_helper.py
   [return]  ${question_with_answer}
 
 
-Подати скаргу
-  [Arguments]  ${username}  ${tender_uaid}  ${complaint}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${complaint}=  Call Method  ${USERS.users['${username}'].client}  _create_tender_resource_item  ${tender}  ${complaint}   complaints
-  ${access_token}=  Get Variable Value  ${complaint.access.token}
-  Set To Dictionary  ${USERS.users['${username}']}   access_token   ${access_token}
-  Log object data   ${complaint}  complaint
-
-
-Порівняти скаргу
-  [Arguments]  ${username}  ${tender_uaid}  ${complaint}
-  Log  ${username}
-  Log  ${tender_uaid}
-  Log  ${complaint}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${complaint}=   Get Variable Value  ${tender.data.complaints[0]}
-  Log   ${complaint}
-  #TODO: COMPARE
-  #Dictionary Should Contain Sub Dictionary   ${complaint}   ${complaint.data}
-  #:FOR  ${element}  IN  ${complaint.data}
-  #\  Log  ${element}
-  #\  Dictionary Should Contain Value  ${complaint}  ${element}
-
-
-Обробити скаргу
-  [Arguments]  ${username}  ${tender_uaid}  ${complaint_id}  ${answer_data}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
-  ${answer_data.data.id}=  Set Variable   ${tender.data.complaints[${complaint_id}].id}
-  ${complaint_with_answer}=  Call Method  ${USERS.users['${username}'].client}  _patch_tender_resource_item  ${tender}  ${answer_data}  complaints
-  Log many   ${USERS.users['${username}'].client}  ${tender}  ${answer_data}
-  Log object data   ${complaint_with_answer}  complaint_with_answer
-
-
 Подати цінову пропозицію
   [Arguments]  ${username}  ${tender_uaid}  ${bid}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
@@ -335,6 +301,83 @@ Library  openprocurement_client_helper.py
   #[Arguments]  ${username}  ${tender_uaid}  ${lot}
   #${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
 
+
+##############################################################################
+#             singleItemTenderclaims
+##############################################################################
+
+Створити вимогу
+  [Documentation]  Створює вимогу у статусі "draft"
+  [Arguments]  ${username}  ${tender_uaid}  ${claim}
+  Log  ${claim}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору
+  ...      ${username}
+  ...      ${tender_uaid}
+  ${reply}=  Call Method
+  ...      ${USERS.users['${username}'].client}
+  ...      create_complaint
+  ...      ${tender}
+  ...      ${claim}
+  Log  ${reply}
+  [return]  ${reply}
+
+
+Завантажити документацію до вимоги
+  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${document}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${tender}=  set_access_key  ${tender}  ${claim.access.token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  upload_complaint_document  ${document}  ${tender}  ${claim['data']['id']}
+  Log  ${tender}
+  Log  ${reply}
+
+
+Подати вимогу
+  [Documentation]  Переводить вимогу зі статусу "draft" у статус "claim"
+  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${confirmation_data}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${tender}=  set_access_key  ${tender}  ${claim.access.token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${confirmation_data}
+  Log  ${tender}
+  Log  ${reply}
+
+
+Відповісти на вимогу
+  [Documentation]  Переводить вимогу зі статусу "claim" у статус "answered"
+  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${answer_data}
+  Log  ${claim}
+  Log  ${answer_data}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  log  ${tender}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${answer_data}
+  Log  ${reply}
+
+
+Підтвердити вирішення вимоги
+  [Documentation]  Переводить вимогу зі статусу "answered" у статус "resolved"
+  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${confirmation_data}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${tender}=  set_access_key  ${tender}  ${claim.access.token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${confirmation_data}
+  Log  ${reply}
+
+
+Скасувати вимогу
+  [Documentation]  Переводить вимогу в статус "canceled"
+  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${cancellation_data}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${tender}=  set_access_key  ${tender}  ${claim.access.token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${cancellation_data}
+  Log  ${reply}
+
+
+Перетворити вимогу в скаргу
+  [Documentation]  Переводить вимогу зі статусу "answered" у статус "pending"
+  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${escalating_data}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${tender}=  set_access_key  ${tender}  ${claim.access.token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${escalating_data}
+  Log  ${reply}
+
 ##############################################################################
 #             Qualification Operations
 ##############################################################################
@@ -395,11 +438,11 @@ Library  openprocurement_client_helper.py
 Модифікувати закупівлю
   [Documentation]
   ...      [Arguments] Username and tender uaid
-  ...      Find tender using uaid, get data from additional_items_data and call patch_tender
+  ...      Find tender using uaid, get data from test_additional_items_data and call patch_tender
   ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${data}=  additional_items_data  ${tender['data']['id']}  ${tender['access']['token']}
+  ${data}=  test_additional_items_data  ${tender['data']['id']}  ${tender['access']['token']}
   Log  ${data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  additional_items  ${data['data']['items']}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${data}
@@ -418,6 +461,7 @@ Library  openprocurement_client_helper.py
   ${supplier_number}=  Set variable  0
   Підтвердити постачальника  ${username}  ${tender_uaid}  ${supplier_number}
 
+
 Скасувати закупівлю
   [Documentation]
   ...      [Arguments] Username, tender uaid, cancellation reason,
@@ -428,7 +472,7 @@ Library  openprocurement_client_helper.py
   ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}  ${cancellation_reason}  ${document}  ${new_description}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${data}=  cancel_tender  ${cancellation_reason}
+  ${data}=  test_cancel_tender_data  ${cancellation_reason}
   Log  ${data}
   ${cancel_reply}=  Call Method  ${USERS.users['${username}'].client}  create_cancellation  ${tender}  ${data}
   Log  ${cancel_reply}
@@ -488,7 +532,7 @@ Library  openprocurement_client_helper.py
 Підтвердити скасування закупівлі
   [Documentation]
   ...      [Arguments] Username, tender uaid, cancellation number
-  ...      Find tender using uaid, get cancellation confirmation data and call patch_cancellation
+  ...      Find tender using uaid, get cancellation test_confirmation data and call patch_cancellation
   ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}  ${cancel_id}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
@@ -501,7 +545,7 @@ Library  openprocurement_client_helper.py
 Підтвердити підписання контракту
   [Documentation]
   ...      [Arguments] Username, tender uaid, contract number
-  ...      Find tender using uaid, get contract confirmation data and call patch_contract
+  ...      Find tender using uaid, get contract test_confirmation data and call patch_contract
   ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}  ${contract_num}
   ${tender}=  Викликати для учасника  ${username}  Пошук тендера по ідентифікатору  ${tender_uaid}

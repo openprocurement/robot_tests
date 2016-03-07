@@ -109,6 +109,12 @@ Get Broker Property By Username
   [return]  ${tender_data}
 
 
+Підготовка даних для подання вимоги
+  ${claim}=  test_claim_data
+  [Return]  ${claim}
+
+
+
 Підготовка даних для подання скарги
   [Arguments]  ${lot}=${False}
   ${complaint}=  test_complaint_data  ${lot}
@@ -147,7 +153,6 @@ Get Broker Property By Username
   ${cancellation_data}=  Create Dictionary  cancellation_reason=${cancellation_reason}  document=${document}  description=${new_description}
   Set To Dictionary  ${USERS.users['${username}']}  cancellation_data  ${cancellation_data}
   [Return]  ${cancellation_data}
-
 
 Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
   ${bundled_st}=  Run Keyword And Return Status  Import Resource  ${CURDIR}${/}brokers${/}${keywords_file}.robot

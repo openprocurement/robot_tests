@@ -359,34 +359,7 @@ def test_complaint_data(lot=False):
     return data
 
 
-def test_claim_data():
-    return munchify({
-        "data": {
-            "author": {
-                "address": {
-                    "countryName": u"Україна",
-                    "countryName_ru": u"Украина",
-                    "countryName_en": "Ukraine",
-                    "locality": u"м. Вінниця",
-                    "postalCode": "21100",
-                    "region": u"Вінницька область",
-                    "streetAddress": fake.street_address()
-                },
-                "contactPoint": {
-                    "name": fake.name(),
-                    "telephone": fake.phone_number()
-                },
-                "identifier": {
-                    "scheme": u"UA-EDR",
-                    "id": u"{:08d}".format(fake.pyint()),
-                    "uri": fake.image_url(width=None, height=None)
-                },
-                "name": fake.company()
-            },
-            "description": fake.sentence(nb_words=10, variable_nb_words=True),
-            "title": fake.sentence(nb_words=6, variable_nb_words=True)
-        }
-    })
+test_claim_data = test_complaint_data
 
 
 def test_complaint_answer_data(complaint_id):
