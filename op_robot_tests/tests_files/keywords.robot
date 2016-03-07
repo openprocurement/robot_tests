@@ -18,8 +18,13 @@ Test Suite Setup
 
 Test Suite Teardown
   Close all browsers
-  ${artifact}=  Create Dictionary  tender_uaid=${TENDER['TENDER_UAID']}  access_token=${USERS.users['${tender_owner}'].access_token}
-  log_object_data  ${artifact}  arctifact
+  ${artifact}=  Create Dictionary
+  ...      api_version=${api_version}
+  ...      tender_uaid=${TENDER['TENDER_UAID']}
+  ...      tender_owner=${USERS.users['${tender_owner}'].broker}
+  Run Keyword If  '${USERS.users['${tender_owner}'].broker}' == 'Quinta'
+  ...      Set To Dictionary  ${artifact}   access_token=${USERS.users['${tender_owner}'].access_token}
+  log_object_data  ${artifact}  artifact
 
 
 Set Suite Variable With Default Value
@@ -82,6 +87,14 @@ Get Broker Property By Username
   [Arguments]  ${username}  ${property}
   ${broker_name}=  Get Variable Value  ${USERS.users['${username}'].broker}
   Run Keyword And Return  Get Broker Property  ${broker_name}  ${property}
+
+Завантажити дані про тендер
+  ${file_path}=  Get Variable Value  ${ARTIFACT_FILE}  artifact.yaml
+  ${ARTIFACT}=  load_initial_data_from  ${file_path}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token  ${ARTIFACT.access_token}
+  ${TENDER}=  Create Dictionary
+  Set To Dictionary  ${TENDER}   TENDER_UAID             ${ARTIFACT.tender_uaid}
+  Set Global Variable  ${TENDER}
 
 
 Підготовка даних для створення тендера

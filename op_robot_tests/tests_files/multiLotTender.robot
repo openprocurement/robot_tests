@@ -262,7 +262,7 @@ ${complaint_id}  1
   [Documentation]
   ...      "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
-  ...      prvider
+  ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider}
   ${bid}=  test lots bid data
@@ -278,7 +278,7 @@ ${complaint_id}  1
   [Documentation]
   ...      "shouldfail" argument as first switches the behaviour of keyword and "Викликати для учасника" to "fail if passed"
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
-  ...      prvider
+  ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider}
   Дочекатись дати початку прийому пропозицій  ${provider}
@@ -293,7 +293,7 @@ ${complaint_id}  1
 
 Можливість подати цінову пропозицію першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
-  ...      prvider
+  ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ${bid}=  test lots bid data
   Log  ${bid}
@@ -306,14 +306,14 @@ ${complaint_id}  1
 
 Можливість скасувати цінову пропозицію
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість скасувати цінову пропозицію
-  ...      prvider
+  ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ${canceledbidresp}=  Викликати для учасника   ${provider}   Скасувати цінову пропозицію   ${TENDER['TENDER_UAID']}   ${USERS.users['${provider}'].bidresponses['resp']}
   Log  ${canceledbidresp}
 
 Можливість подати повторно цінову пропозицію першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
-  ...      prvider
+  ...      provider
   ...      ${USERS.users['${provider}'].broker}
   Дочекатись дати початку прийому пропозицій  ${provider}
   ${bid}=  test lots bid data
@@ -327,7 +327,7 @@ ${complaint_id}  1
 
 Можливість змінити повторну цінову пропозицію до 2000
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
-  ...      prvider
+  ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ${fixbidto2000resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   lotValues.0.value.amount  2000
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   fixbidto2000resp   ${fixbidto2000resp}
@@ -335,7 +335,7 @@ ${complaint_id}  1
 
 Можливість змінити повторну цінову пропозицію до 10
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
-  ...      prvider
+  ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ${fixbidto10resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   lotValues.0.value.amount  10
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   fixbidto10resp   ${fixbidto10resp}
@@ -343,7 +343,7 @@ ${complaint_id}  1
 
 Можливість подати цінову пропозицію другим учасником
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
-  ...      prvider1
+  ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider1}
   Дочекатись дати початку прийому пропозицій  ${provider1}
