@@ -157,8 +157,10 @@ def prepare_test_tender_data(procedure_intervals, mode):
         return munchify({'data': test_tender_data(intervals)})
     elif mode == 'multi':
         return munchify({'data': test_tender_data_multiple_items(intervals)})
-    elif mode == 'limited':
-        return munchify({'data': test_tender_data_limited(intervals)})
+    elif mode == 'reporting':
+        return munchify({'data': test_tender_data_limited(intervals, 'reporting')})
+    elif mode == 'negotiation':
+        return munchify({'data': test_tender_data_limited(intervals, 'negotiation')})
     elif mode == 'openua':
         return munchify({'data': test_tender_data_openua(intervals)})
     raise ValueError("Invalid mode for prepare_test_tender_data")

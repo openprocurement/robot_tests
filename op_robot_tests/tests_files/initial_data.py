@@ -117,9 +117,9 @@ def test_tender_data(intervals, periods=("enquiry", "tender")):
     return t_data
 
 
-def test_tender_data_limited(intervals):
+def test_tender_data_limited(intervals, procurement_method_type):
     now = get_now()
-    return {
+    data = {
         "items":
         [
             {
@@ -159,7 +159,7 @@ def test_tender_data_limited(intervals):
         ],
         "owner": "test.quintagroup.com",
         "procurementMethod": "limited",
-        "procurementMethodType": "reporting",
+        "procurementMethodType": procurement_method_type,
         "procuringEntity":
         {
             "address":
@@ -191,6 +191,9 @@ def test_tender_data_limited(intervals):
         },
         "title": u"Послуги шкільних їдалень",
     }
+    if procurement_method_type == "negotiation":
+        data.update({"procurementMethodDetails": "quick, accelerator=1440"})
+    return data
 
 
 def test_tender_data_multiple_items(intervals):
