@@ -490,7 +490,7 @@ Resource           resource.robot
 Можливість укласти угоду для закупівлі
   ${CONTR_NUM}=  Set variable  0
   Set suite variable  ${CONTR_NUM}
-  Run keyword if  '${mode}' == 'negotiation'
+  Run keyword if  '${mode}' == 'negotiation' or '${mode}' == 'negotiation.quick'
   ...      Дочекатись дати  ${USERS.users['${tender_owner}'].tender_data.data.awards[${CONTR_NUM}].complaintPeriod.endDate}
   Викликати для учасника  ${tender_owner}
   ...      Підтвердити підписання контракту

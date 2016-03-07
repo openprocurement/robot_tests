@@ -191,7 +191,7 @@ def test_tender_data_limited(intervals, procurement_method_type):
         },
         "title": u"Послуги шкільних їдалень",
     }
-    if procurement_method_type == "negotiation":
+    if procurement_method_type == "negotiation" or procurement_method_type == "negotiation.quick":
         data.update({"procurementMethodDetails": "quick, accelerator=1440"})
     return data
 
