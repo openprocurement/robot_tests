@@ -336,6 +336,59 @@ Library  openprocurement_client_helper.py
   #${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
 
 ##############################################################################
+#             Qualification Operations
+##############################################################################
+
+Завантажити документ рішення кваліфікаційної комісії
+  [Documentation]
+  ...      [Arguments] Username, tender uaid, qualification number and document to upload
+  ...      [Description] Find tender using uaid,  and call upload_qualification_document
+  ...      [Return] Reply of API
+  [Arguments]  ${username}  ${document}  ${tender_uaid}  ${award_num}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${doc_reply}=  Call Method  ${USERS.users['${username}'].client}  upload_award_document  ${document}  ${tender}  ${tender.data.awards[${award_num}].id}
+  Log  ${doc_reply}
+  [Return]  ${doc_reply}
+
+Підтвердити постачальника
+  [Documentation]
+  ...      [Arguments] Username, tender uaid and number of the award to confirm
+  ...      Find tender using uaid, get data from confirm_supplier and call patch_award
+  ...      [Return] Nothing
+  [Arguments]  ${username}  ${tender_uaid}  ${award_num}
+  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${award}=  create_data_dict  data.status  active
+  Set To Dictionary  ${award.data}  id  ${tender.data.awards[${award_num}].id}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_award  ${tender}  ${award}
+  Log  ${reply}
+
+Дискваліфікація постачальника
+  [Documentation]
+  ...      [Arguments] Username, tender uaid and award number
+  ...      [Description] Find tender using uaid, create data dict with unsuccessful status and call patch_award
+  ...      [Return] Reply of API
+  [Arguments]  ${username}  ${tender_uid}  ${award_num}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  ${award}=  create_data_dict   data.status  unsuccessful
+  Set To Dictionary  ${award.data}  id  ${tender.data.awards[${award_num}].id}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_award  ${tender}  ${award}
+  Log  ${reply}
+  [Return]  ${reply}
+
+Скасування рішення кваліфікаційної комісії
+  [Documentation]
+  ...      [Arguments] Username, tender uaid and award number
+  ...      [Description] Find tender using uaid, create data dict with unsuccessful status and call patch_award
+  ...      [Return] Reply of API
+  [Arguments]  ${username}  ${tender_uid}  ${award_num}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  ${award}=  create_data_dict   data.status  cancelled
+  Set To Dictionary  ${award.data}  id  ${tender.data.awards[${award_num}].id}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_award  ${tender}  ${award}
+  Log  ${reply}
+  [Return]  ${reply}
+
+##############################################################################
 #             Limited procurement
 ##############################################################################
 
@@ -364,20 +417,6 @@ Library  openprocurement_client_helper.py
   Log  ${reply}
   ${supplier_number}=  Set variable  0
   Підтвердити постачальника  ${username}  ${tender_uaid}  ${supplier_number}
-
-
-Підтвердити постачальника
-  [Documentation]
-  ...      [Arguments] Username, tender uaid and number of the award to confirm
-  ...      Find tender using uaid, get data from confirm_supplier and call patch_award
-  ...      [Return] Nothing
-  [Arguments]  ${username}  ${tender_uaid}  ${award_num}
-  ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${data}=  test_confirm_data  ${tender['data']['awards'][${award_num}]['id']}
-  Log  ${data}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_award  ${tender}  ${data}
-  Log  ${reply}
-
 
 Скасувати закупівлю
   [Documentation]
