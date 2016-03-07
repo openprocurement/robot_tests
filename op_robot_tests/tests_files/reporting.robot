@@ -1,8 +1,5 @@
 *** Settings ***
-Library            op_robot_tests.tests_files.service_keywords
-Library            Collections
-Resource           keywords.robot
-Resource           resource.robot
+Resource           limited_keywords.robot
 Suite Setup        Test Suite Setup
 Suite Teardown     Close all browsers
 
@@ -22,16 +19,7 @@ ${broker}       Quinta
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  minimal
-  ${tender_data}=  Підготовка даних для створення тендера
-  ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}
-  ...      Створити тендер
-  ...      ${tender_data}
-  Log  ${tender_data}
-  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
-  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
-  Set To Dictionary  ${TENDER}  TENDER_UAID  ${TENDER_UAID}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data  ${tender_data}
-  Log  ${TENDER}
+  Можливість створити закупівлю для тестування скасування
 
 
 Можливість скасувати пряму закупівлю
@@ -39,18 +27,7 @@ ${broker}       Quinta
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  level2
-  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  ${cancellation_data}=  Підготувати дані про скасування  ${tender_owner}
-  Викликати для учасника  ${tender_owner}
-  ...      Скасувати закупівлю
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${cancellation_data['cancellation_reason']}
-  ...      ${cancellation_data['document']}
-  ...      ${cancellation_data['description']}
-  ${CANCEL_NUM}=  Set variable  0
-  Set suite variable  ${CANCEL_NUM}
-  ${DOC_NUM}=  Set variable  0
-  Set suite variable  ${DOC_NUM}
+  Можливість скасувати закупівлю
 
 
 Відображення активного статусу скасування прямої закупівлі
@@ -58,36 +35,28 @@ ${broker}       Quinta
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      active
-  ...      cancellations[${CANCEL_NUM}].status
+  Відображення активного статусу скасування закупівлі
 
 
 Відображення причини скасування прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення причини скасування прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}']['cancellation_data']['cancellation_reason']}
-  ...      cancellations[${CANCEL_NUM}].reason
+  Відображення причини скасування закупівлі
 
 
 Відображення опису документа скасування прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення опису документа скасування прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}']['cancellation_data']['description']}
-  ...      cancellations[${CANCEL_NUM}].documents[${DOC_NUM}].description
+  Відображення опису документа скасування закупівлі
 
 
 Відображення заголовку документа скасування прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення заголовку документа скасування прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}']['cancellation_data']['document']}
-  ...      cancellations[${CANCEL_NUM}].documents[${DOC_NUM}].title
+  Відображення заголовку документа скасування закупівлі
 
 ##############################################################################################
 #             MAIN
@@ -98,26 +67,16 @@ ${broker}       Quinta
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  minimal
-  ${tender_data}=  Підготовка даних для створення тендера
-  ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}
-  ...      Створити тендер
-  ...      ${tender_data}
-  Log  ${tender_data}
-  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
-  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
-  Set To Dictionary  ${TENDER}  TENDER_UAID  ${TENDER_UAID}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data  ${tender_data}
-  Log  ${TENDER}
+  Можливість створити закупівлю
 
 
 Можливість знайти пряму закупівлю по ідентифікатору
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість знайти пряму закупівлю по ідентифікатору
+  [Tags]  ${USERS.users['${viewer}'].broker}: Можливість знайти пряму закупівлю по ідентифікатору
   ...  viewer
-  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  ${USERS.users['${viewer}'].broker}
   ...  minimal
-  Викликати для учасника  ${viewer}
-  ...      Пошук тендера по ідентифікатору
-  ...      ${TENDER['TENDER_UAID']}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Можливість знайти закупівлю по ідентифікатору
 
 
 Можливість модифікації прямої закупівлі
@@ -125,9 +84,7 @@ ${broker}       Quinta
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  level2
-  Викликати для учасника  ${tender_owner}
-  ...      Модифікувати закупівлю
-  ...      ${TENDER['TENDER_UAID']}
+  Можливість модифікації закупівлі
 
 
 Можливість додати документацію до прямої закупівлі
@@ -135,13 +92,7 @@ ${broker}       Quinta
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  level2
-  ${filepath}=  create_fake_doc
-  Викликати для учасника  ${tender_owner}
-  ...      Завантажити документ
-  ...      ${filepath}
-  ...      ${TENDER['TENDER_UAID']}
-  ${documents}=  Create Dictionary  filepath  ${filepath}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  documents  ${documents}
+  Можливість додати документацію до закупівлі
 
 
 Можливість зареєструвати і підтвердити постачальника до прямої закупівлі
@@ -149,13 +100,7 @@ ${broker}       Quinta
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  minimal
-  ${SUPP_NUM}=  Set variable  0
-  Set Suite Variable  ${SUPP_NUM}
-  ${supplier_data}=  Підготувати дані про постачальника  ${tender_owner}
-  Викликати для учасника  ${tender_owner}
-  ...      Додати і підтвердити постачальника
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${supplier_data}
+  Можливість зареєструвати і підтвердити постачальника до закупівлі
 
 ##############################################################################################
 #             MAIN DATA
@@ -166,18 +111,14 @@ ${broker}       Quinta
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      title
+  Відображення заголовку закупівлі
 
 
 Відображення ідентифікатора прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення ідентифікатора прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${TENDER['TENDER_UAID']}
-  ...      tenderID
+  Відображення ідентифікатора закупівлі
 
 ##############################################################################################
 #             MAIN DATA.VALUE
@@ -187,27 +128,21 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення бюджету прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      value.amount
+  Відображення бюджету закупівлі
 
 
 Відображення валюти прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення валюти прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      value.currency
+  Відображення валюти закупівлі
 
 
 Відображення врахованого податку в бюджет прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення врахування податку в бюджет прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      value.valueAddedTaxIncluded
+  Відображення врахованого податку в бюджет закупівлі
 
 ##############################################################################################
 #             MAIN DATA.PROCURING ENTITY
@@ -217,108 +152,84 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення країни замовника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      procuringEntity.address.countryName
+  Відображення країни замовника закупівлі
 
 
 Відображення населеного пункту замовника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення населеного пункту замовника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      procuringEntity.address.locality
+  Відображення населеного пункту замовника закупівлі
 
 
 Відображення поштового коду замовника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення поштового коду замовника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      procuringEntity.address.postalCode
+  Відображення поштового коду замовника закупівлі
 
 
 Відображення області замовника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення області замовника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      procuringEntity.address.region
+  Відображення області замовника закупівлі
 
 
 Відображення вулиці замовника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення вулиці замовника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      procuringEntity.address.streetAddress
+  Відображення вулиці замовника закупівлі
 
 
 Відображення контактного імені замовника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення контактного імені замовника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      procuringEntity.contactPoint.name
+  Відображення контактного імені замовника закупівлі
 
 
 Відображення контактного телефону замовника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення контактного телефону замовника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      procuringEntity.contactPoint.telephone
+  Відображення контактного телефону замовника закупівлі
 
 
 Відображення сайту замовника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення сайту замовника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      procuringEntity.contactPoint.url
+  Відображення сайту замовника закупівлі
 
 
 Відображення офіційного імені замовника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення офіційного імені замовника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      procuringEntity.identifier.legalName
+  Відображення офіційного імені замовника закупівлі
 
 
 Відображення схеми ідентифікації замовника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення схеми ідентифікації замовника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      procuringEntity.identifier.scheme
+  Відображення схеми ідентифікації замовника закупівлі
 
 
 Відображення ідентифікатора замовника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення ідентифікатора замовника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      procuringEntity.identifier.id
+  Відображення ідентифікатора замовника закупівлі
 
 
 Відображення імені замовника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення імені замовника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      procuringEntity.name
+  Відображення імені замовника закупівлі
 
 ##############################################################################################
 #             MAIN DATA.ITEMS
@@ -328,193 +239,147 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення опису додаткової класифікації номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ${ITEMS_NUM}=  Set variable  0
-  Set Suite Variable  ${ITEMS_NUM}
-  ${ADDITIONAL_CLASS_NUM}=  Set variable  0
-  Set Suite Variable  ${ADDITIONAL_CLASS_NUM}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      items[${ITEMS_NUM}].additionalClassifications.[${ADDITIONAL_CLASS_NUM}].description
+  Відображення опису додаткової класифікації номенклатури закупівлі
 
 
 Відображення ідентифікатора додаткової класифікації номенклатури прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення ідентифікатора додаткової класифікацій номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      items[${ITEMS_NUM}].additionalClassifications.[${ADDITIONAL_CLASS_NUM}].id
+  Відображення ідентифікатора додаткової класифікації номенклатури закупівлі
 
 
 Відображення схеми додаткової класифікації номенклатури прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення схеми додаткової класифікації номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      items[${ITEMS_NUM}].additionalClassifications.[${ADDITIONAL_CLASS_NUM}].scheme
+  Відображення схеми додаткової класифікації номенклатури закупівлі
 
 
 Відображення схеми класифікації номенклатури прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення схеми класифікації номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      items[${ITEMS_NUM}].classification.scheme
+  Відображення схеми класифікації номенклатури закупівлі
 
 
 Відображення ідентифікатора класифікації номенклатури прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення ідентифікатора класифікації номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      items[${ITEMS_NUM}].classification.id
+  Відображення ідентифікатора класифікації номенклатури закупівлі
 
 
 Відображення опису класифікації номенклатури прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення опису класифікації номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      items[${ITEMS_NUM}].classification.description
+  Відображення опису класифікації номенклатури закупівлі
 
 
 Відображення опису номенклатури прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення опису номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      items[${ITEMS_NUM}].description
+  Відображення опису номенклатури закупівлі
 
 
 Відображення ідентифікатора номенклатури прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення ідентифікатора номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      items[${ITEMS_NUM}].id
+  Відображення ідентифікатора номенклатури закупівлі
 
 
 Відображення кількості номенклатури прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення кількості номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].additional_items[${ITEMS_NUM}]['quantity']}
-  ...      items[${ITEMS_NUM}].quantity
+  Відображення кількості номенклатури закупівлі
 
 
 Відображення назви одиниці номенклатури прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення назви одиниці номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].additional_items[${ITEMS_NUM}]['unit']['name']}
-  ...      items[${ITEMS_NUM}].unit.name
+  Відображення назви одиниці номенклатури закупівлі
 
 
 Відображення коду одиниці номенклатури прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення коду одиниці номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].additional_items[${ITEMS_NUM}]['unit']['code']}
-  ...      items[${ITEMS_NUM}].unit.code
+  Відображення коду одиниці номенклатури закупівлі
 
 
 Відображення дати доставки номенклатури прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення дати доставки номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити дату тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      items[${ITEMS_NUM}].deliveryDate.endDate
+  Відображення дати доставки номенклатури закупівлі
 
 
 Відображення координат широти доставки номенклатури прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення координат широти доставки номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      items[${ITEMS_NUM}].deliveryLocation.latitude
+  Відображення координат широти доставки номенклатури закупівлі
 
 
 Відображення координат довготи доставки номенклатури прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення координат довготи доставки номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      items[${ITEMS_NUM}].deliveryLocation.longitude
+  Відображення координат довготи доставки номенклатури закупівлі
 
 
 Відображення назви нас. пункту доставки номенклатури прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення назви нас. пункту доставки номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      items[${ITEMS_NUM}].deliveryAddress.countryName
+  Відображення назви нас. пункту доставки номенклатури закупівлі
 
 
 Відображення назви нас. пункту російською мовою доставки номенклатури прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення назви нас. пункту російською мовою доставки номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      items[${ITEMS_NUM}].deliveryAddress.countryName_ru
+  Відображення назви нас. пункту російською мовою доставки номенклатури закупівлі
 
 
 Відображення назви нас. пункту англійською мовою доставки номенклатури прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення назви нас. пункту англійською мовою доставки номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      items[${ITEMS_NUM}].deliveryAddress.countryName_en
+  Відображення назви нас. пункту англійською мовою доставки номенклатури закупівлі
 
 
 Відображення пошт. коду доставки номенклатури прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення пошт. коду доставки номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      items[${ITEMS_NUM}].deliveryAddress.postalCode
+  Відображення пошт. коду доставки номенклатури закупівлі
 
 
 Відображення регіону доставки номенклатури прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення регіону доставки номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      items[${ITEMS_NUM}].deliveryAddress.region
+  Відображення регіону доставки номенклатури закупівлі
 
 
 Відображення населеного пункту адреси доставки номенклатури прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення населеного пункту адреси доставки номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      items[${ITEMS_NUM}].deliveryAddress.locality
+  Відображення населеного пункту адреси доставки номенклатури закупівлі
 
 
 Відображення вулиці доставки номенклатури прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення вулиці доставки номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      items[${ITEMS_NUM}].deliveryAddress.streetAddress
+  Відображення вулиці доставки номенклатури закупівлі
 
 ##############################################################################################
 #             DOCUMENTS
@@ -524,10 +389,7 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення заголовку документа прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ${doc_num}=  Set variable  0
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}']['documents']['filepath']}
-  ...      documents[${doc_num}].title
+  Відображення заголовку документа закупівлі
 
 ##############################################################################################
 #             AWARDS
@@ -537,162 +399,124 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення підтвердженого постачальника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ${AWARD_NUM}=  Set variable  0
-  Set Suite Variable  ${AWARD_NUM}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      active
-  ...      awards[${AWARD_NUM}].status
+  Відображення підтвердженого постачальника закупівлі
 
 
 Відображення країни постачальника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення країни постачальника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][${SUPP_NUM}]['address']['countryName']}
-  ...      awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].address.countryName
+  Відображення країни постачальника закупівлі
 
 
 Відображення міста постачальника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення міста постачальника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][${SUPP_NUM}]['address']['locality']}
-  ...      awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].address.locality
+  Відображення міста постачальника закупівлі
 
 
 Відображення поштового коду постачальника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення поштового коду постачальника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][${SUPP_NUM}]['address']['postalCode']}
-  ...      awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].address.postalCode
+  Відображення поштового коду постачальника закупівлі
 
 
 Відображення області постачальника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення області постачальника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][${SUPP_NUM}]['address']['region']}
-  ...      awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].address.region
+  Відображення області постачальника закупівлі
 
 
 Відображення вулиці постачальника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення вулиці постачальника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][${SUPP_NUM}]['address']['streetAddress']}
-  ...      awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].address.streetAddress
+  Відображення вулиці постачальника закупівлі
 
 
 Відображення контактного телефону постачальника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення контактного телефону постачальника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][${SUPP_NUM}]['contactPoint']['telephone']}
-  ...      awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].contactPoint.telephone
+  Відображення контактного телефону постачальника закупівлі
 
 
 Відображення контактного імені постачальника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення контактного імені постачальника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][${SUPP_NUM}]['contactPoint']['name']}
-  ...      awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].contactPoint.name
+  Відображення контактного імені постачальника закупівлі
 
 
 Відображення контактного імейлу постачальника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення контактного імейлу постачальника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][${SUPP_NUM}]['contactPoint']['email']}
-  ...      awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].contactPoint.email
+  Відображення контактного імейлу постачальника закупівлі
 
 
 Відображення схеми ідентифікації постачальника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення схеми ідентифікації постачальника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][${SUPP_NUM}]['identifier']['scheme']}
-  ...      awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].identifier.scheme
+  Відображення схеми ідентифікації постачальника закупівлі
 
 
 Відображення офіційного імені постачальника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення офіційного імені постачальника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][${SUPP_NUM}]['identifier']['legalName']}
-  ...      awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].identifier.legalName
+  Відображення офіційного імені постачальника закупівлі
 
 
 Відображення ідентифікатора постачальника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення ідентифікатора постачальника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][${SUPP_NUM}]['identifier']['id']}
-  ...      awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].identifier.id
+  Відображення ідентифікатора постачальника закупівлі
 
 
 Відображення імені постачальника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення імені постачальника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][${SUPP_NUM}]['name']}
-  ...      awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].name
+  Відображення імені постачальника закупівлі
 
 
 Відображення врахованого податку до ціни номенклатури постачальника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення врахованого податку до ціни номенклатури постачальника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['value']['valueAddedTaxIncluded']}
-  ...      awards[${AWARD_NUM}].value.valueAddedTaxIncluded
+  Відображення врахованого податку до ціни номенклатури постачальника закупівлі
 
 
 Відображення валюти ціни номенклатури постачальника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення валюти ціни номенклатури постачальника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['value']['currency']}
-  ...      awards[${AWARD_NUM}].value.currency
+  Відображення валюти ціни номенклатури постачальника закупівлі
 
 
 Відображення вартості номенклатури постачальника прямої закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення валюти ціни номенклатури постачальника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['value']['amount']}
-  ...      awards[${AWARD_NUM}].value.amount
+  Відображення вартості номенклатури постачальника закупівлі
 
 ##############################################################################################
 #             CONTRACTS
 ##############################################################################################
 
+
 Можливість укласти угоду для прямої закупівлі
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість укласти угоду для прямої закупівлі
-  ...  tender_owner
+  ...  ${tender_owner}
   ...  ${USERS.users['${tender_owner}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  ${CONTR_NUM}=  Set variable  0
-  Set suite variable  ${CONTR_NUM}
-  Викликати для учасника  ${tender_owner}
-  ...      Підтвердити підписання контракту
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${CONTR_NUM}
+  Можливість укласти угоду для закупівлі
 
 
 Відображення статусу підписаної угоди з постачальником прямої закупівлі
@@ -700,6 +524,4 @@ ${broker}       Quinta
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      active
-  ...      contracts[${CONTR_NUM}].status
+  Відображення статусу підписаної угоди з постачальником закупівлі
