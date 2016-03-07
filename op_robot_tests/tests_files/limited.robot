@@ -3,7 +3,7 @@ Library            op_robot_tests.tests_files.service_keywords
 Library            Collections
 Resource           keywords.robot
 Resource           resource.robot
-Suite Setup        TestSuiteSetup
+Suite Setup        Test Suite Setup
 Suite Teardown     Close all browsers
 
 
@@ -22,7 +22,7 @@ ${broker}       Quinta
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  minimal
-  ${tender_data}=  Підготовка початкових даних
+  ${tender_data}=  Підготовка даних для створення тендера
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}
   ...      Створити тендер
   ...      ${tender_data}
@@ -34,59 +34,23 @@ ${broker}       Quinta
   Log  ${TENDER}
 
 
-Можливість сформувати запит на скасування прямої закупівлі
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість сформувати запит на скасування прямої закупівлі
+Можливість скасувати пряму закупівлю
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість скасувати пряму закупівлю
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ...  critical level 2
+  ...  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${cancellation_data}=  Підготувати дані про скасування  ${tender_owner}
+  Викликати для учасника  ${tender_owner}
+  ...      Скасувати закупівлю
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${cancellation_data['cancellation_reason']}
+  ...      ${cancellation_data['document']}
+  ...      ${cancellation_data['description']}
   ${CANCEL_NUM}=  Set variable  0
   Set suite variable  ${CANCEL_NUM}
-  ${cancellation_reason}=  Set variable  prosto tak :)
-  Викликати для учасника  ${tender_owner}
-  ...      Додати запит на скасування
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${cancellation_reason}
-  Викликати для учасника  ${tender_owner}
-  ...      Завантажити документацію до запиту на скасування
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${CANCEL_NUM}
-
-
-Можливість змінити опис документа в скасуванні прямої закупівлі
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість змінити опис документа в скасуванні прямої закупівлі
-  ...  tender_owner
-  ...  ${USERS.users['${tender_owner}'].broker}
-  ${FIRST_DOC}=  Set variable  0
-  Set Suite Variable  ${FIRST_DOC}
-  ${field}=  Set variable  description
-  ${value}=  Set variable  test description
-  Викликати для учасника  ${tender_owner}
-  ...      Змінити опис документа в скасуванні
-  ...      ${TENDER['TENDER_UAID']}  ${CANCEL_NUM}  ${FIRST_DOC}
-  ...      ${field}
-  ...      ${value}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  cancellation_document_description  ${value}
-
-
-Можливість завантажити нову версію документа до запиту на скасування прямої закупівлі
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість завантажити нову версію документа до запиту на скасування прямої закупівлі
-  ...  tender_owner
-  ...  ${USERS.users['${tender_owner}'].broker}
-  Викликати для учасника  ${tender_owner}
-  ...      Завантажити нову версію документа до запиту на скасування
-  ...      ${TENDER['TENDER_UAID']}  ${CANCEL_NUM}  ${FIRST_DOC}
-
-
-Можливість активувати скасування прямої закупівлі
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість активувати скасування прямої закупівлі
-  ...  tender_owner
-  ...  ${USERS.users['${tender_owner}'].broker}
-  ...  critical level 2
-  Викликати для учасника  ${tender_owner}
-  ...      Підтвердити скасування закупівлі
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${CANCEL_NUM}
+  ${DOC_NUM}=  Set variable  0
+  Set suite variable  ${DOC_NUM}
 
 
 Відображення активного статусу скасування прямої закупівлі
@@ -104,7 +68,7 @@ ${broker}       Quinta
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}']['cancellation_reason']['data']['reason']}
+  ...      ${USERS.users['${tender_owner}']['cancellation_data']['cancellation_reason']}
   ...      cancellations[${CANCEL_NUM}].reason
 
 
@@ -113,27 +77,17 @@ ${broker}       Quinta
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}']['cancellation_document_description']}
-  ...      cancellations[${CANCEL_NUM}].documents[${FIRST_DOC}].description
+  ...      ${USERS.users['${tender_owner}']['cancellation_data']['description']}
+  ...      cancellations[${CANCEL_NUM}].documents[${DOC_NUM}].description
 
 
-Відображення заголовку першого документа скасування прямої закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення заголовку першого документа скасування прямої закупівлі
+Відображення заголовку документа скасування прямої закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення заголовку документа скасування прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}']['first_cancel_doc']}
-  ...      cancellations[${CANCEL_NUM}].documents[${FIRST_DOC}].title
-
-
-Відображення заголовку другого документа скасування прямої закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення заголовку другого документа скасування прямої закупівлі
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ${second_doc_num}=  Set variable  1
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}']['second_cancel_doc']}
-  ...      cancellations[${CANCEL_NUM}].documents[${second_doc_num}].title
+  ...      ${USERS.users['${tender_owner}']['cancellation_data']['document']}
+  ...      cancellations[${CANCEL_NUM}].documents[${DOC_NUM}].title
 
 ##############################################################################################
 #             MAIN
@@ -144,7 +98,7 @@ ${broker}       Quinta
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  minimal
-  ${tender_data}=  Підготовка початкових даних
+  ${tender_data}=  Підготовка даних для створення тендера
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}
   ...      Створити тендер
   ...      ${tender_data}
@@ -197,13 +151,11 @@ ${broker}       Quinta
   ...  minimal
   ${SUPP_NUM}=  Set variable  0
   Set Suite Variable  ${SUPP_NUM}
+  ${supplier_data}=  Підготувати дані про постачальника  ${tender_owner}
   Викликати для учасника  ${tender_owner}
-  ...      Додати постачальника
+  ...      Додати і підтвердити постачальника
   ...      ${TENDER['TENDER_UAID']}
-  Викликати для учасника  ${tender_owner}
-  ...      Підтвердити постачальника
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${SUPP_NUM}
+  ...      ${supplier_data}
 
 ##############################################################################################
 #             MAIN DATA
@@ -217,33 +169,6 @@ ${broker}       Quinta
   Звірити поле тендера  ${viewer}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      title
-
-
-Відображення власника прямої закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення власника прямої закупівлі
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      owner
-
-
-Відображення методу прямої закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення методу прямої закупівлі
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      procurementMethod
-
-
-Відображення типу методу прямої закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення типу методу прямої закупівлі
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      procurementMethodType
 
 
 Відображення ідентифікатора прямої закупівлі
@@ -297,8 +222,8 @@ ${broker}       Quinta
   ...      procuringEntity.address.countryName
 
 
-Відображення міста замовника прямої закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення міста замовника прямої закупівлі
+Відображення населеного пункту замовника прямої закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення населеного пункту замовника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера  ${viewer}
@@ -370,7 +295,7 @@ ${broker}       Quinta
 
 
 Відображення схеми ідентифікації замовника прямої закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення схеми замовника прямої закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення схеми ідентифікації замовника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера  ${viewer}
@@ -574,8 +499,8 @@ ${broker}       Quinta
   ...      items[${ITEMS_NUM}].deliveryAddress.region
 
 
-Відображення міста адреси доставки номенклатури прямої закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення locality адреси доставки номенклатури прямої закупівлі
+Відображення населеного пункту адреси доставки номенклатури прямої закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення населеного пункту адреси доставки номенклатури прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера  ${viewer}
@@ -692,7 +617,7 @@ ${broker}       Quinta
 
 
 Відображення схеми ідентифікації постачальника прямої закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення контактного імейлу постачальника прямої закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення схеми ідентифікації постачальника прямої закупівлі
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   Звірити поле тендера із значенням  ${viewer}

@@ -6,8 +6,8 @@ Library         Selenium2Library
 Library         DebugLibrary
 Resource        keywords.robot
 Resource        resource.robot
-Suite Setup     TestSuiteSetup
-Suite Teardown  Close all browsers
+Suite Setup     Test Suite Setup
+Suite Teardown  Test Suite Teardown
 
 *** Variables ***
 ${mode}         single
@@ -20,7 +20,7 @@ ${broker}       Quinta
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  from-0.12
-  ${tender_data}=  Підготовка початкових даних
+  ${tender_data}=  Підготовка даних для створення тендера
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}
   ...      Створити тендер
   ...      ${tender_data}
@@ -58,7 +58,7 @@ ${broker}       Quinta
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
-  ${claim}=  test_claim_data
+  ${claim}=  Підготовка даних для подання вимоги
   ${claim_resp}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
@@ -358,7 +358,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
-  ${claim}=  test_claim_data
+  ${claim}=  Підготовка даних для подання вимоги
   ${claim_resp}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
@@ -436,7 +436,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
-  ${claim}=  test_claim_data
+  ${claim}=  Підготовка даних для подання вимоги
   ${claim_resp}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
@@ -503,7 +503,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
-  ${claim}=  test_claim_data
+  ${claim}=  Підготовка даних для подання вимоги
   ${claim_resp}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
@@ -580,7 +580,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
-  ${claim}=  test_claim_data
+  ${claim}=  Підготовка даних для подання вимоги
   ${claim_resp}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}

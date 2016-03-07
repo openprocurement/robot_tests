@@ -1,5 +1,4 @@
 *** Settings ***
-Resource  resource.robot
 Library  op_robot_tests.tests_files.service_keywords
 Library  String
 Library  Collections
@@ -7,12 +6,20 @@ Library  Selenium2Library
 Library  DateTime
 Library  DebugLibrary
 
+Documentation
+...  This resource file contains keywords that are used directly by
+...  test suites or by brokers' keyword libraries (also known as drivers).
 
 *** Keywords ***
-TestSuiteSetup
+Test Suite Setup
   Set Selenium Implicit Wait  5 s
   Set Selenium Timeout  10 s
   Завантажуємо дані про користувачів і майданчики
+
+Test Suite Teardown
+  Close all browsers
+  ${artifact}=  Create Dictionary  tender_uaid=${TENDER['TENDER_UAID']}  access_token=${USERS.users['${tender_owner}'].access_token}
+  log_object_data  ${artifact}  arctifact
 
 
 Set Suite Variable With Default Value
@@ -27,8 +34,8 @@ Set Suite Variable With Default Value
 
   ${file_path}=  Get Variable Value  ${BROKERS_FILE}  brokers.yaml
   ${BROKERS}=  load_initial_data_from  ${file_path}
-  log  ${BROKERS}
-  Set Global Variable  ${BROKERS}
+  Log  ${BROKERS}
+  Set Suite Variable  ${BROKERS}
 
   ${file_path}=  Get Variable Value  ${USERS_FILE}  users.yaml
   ${USERS}=  load_initial_data_from  ${file_path}
@@ -39,19 +46,19 @@ Set Suite Variable With Default Value
   Set Suite Variable With Default Value  provider      Tender_User
   Set Suite Variable With Default Value  provider1     Tender_User1
   Set Suite Variable With Default Value  viewer        Tender_Viewer
-  ${active_users}=  Create Dictionary  tender_owner  ${tender_owner}  provider  ${provider}  provider1  ${provider1}  viewer  ${viewer}
+  ${active_users}=  Create Dictionary  tender_owner=${tender_owner}  provider=${provider}  provider1=${provider1}  viewer=${viewer}
 
-  ${users_list}=    Get Dictionary Items    ${USERS.users}
-  :FOR  ${username}  ${user_data}   IN  @{users_list}
-  \  log  ${active_users}
-  \  log  ${username}
+  ${users_list}=  Get Dictionary Items  ${USERS.users}
+  :FOR  ${username}  ${user_data}  IN  @{users_list}
+  \  Log  ${active_users}
+  \  Log  ${username}
   \  ${munch_dict}=  munch_dict  data=${True}
   \  Log Many  ${munch_dict}
-  \  ${status}=  Run Keyword And Return Status   Dictionary Should Contain Value  ${active_users}   ${username}
+  \  ${status}=  Run Keyword And Return Status  Dictionary Should Contain Value  ${active_users}  ${username}
   \  ${keywords_file}=  Get Broker Property By Username  ${username}  keywords_file
-  \  Run Keyword If  '${status}' == 'True'  Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
-  \  Run Keyword If  '${status}' == 'True'  Викликати для учасника  ${username}  Підготувати клієнт для користувача
-  \  Run Keyword If  '${status}' == 'True'  Set To Dictionary  ${USERS.users['${username}']}  tender_data  ${munch_dict}
+  \  Run Keyword If  ${status}  Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
+  \  Run Keyword If  ${status}  Викликати для учасника  ${username}  Підготувати клієнт для користувача
+  \  Run Keyword If  ${status}  Set To Dictionary  ${USERS.users['${username}']}  tender_data=${munch_dict}
 
 
 Get Broker Property
@@ -77,25 +84,7 @@ Get Broker Property By Username
   Run Keyword And Return  Get Broker Property  ${broker_name}  ${property}
 
 
-Підготовка початкових даних
-  @{QUESTIONS}=  Create list
-  ${question}=  test question data
-  ${question_lot}=  test_lot_question_data  ${question}
-  Append to list   ${QUESTIONS}  ${question}  ${question_lot}
-  Set Global Variable  @{QUESTIONS}
-  @{ANSWERS}=  Create list
-  ${answer}=  test_question_answer_data
-  Append to list  ${ANSWERS}  ${answer}
-  Set Global Variable  @{ANSWERS}
-  @{COMPLAINTS}=  Create list
-  ${complaint}=  test_complaint_data
-  ${complaint_lot}=  test_lot_complaint_data  ${complaint}
-  Append to list   ${COMPLAINTS}  ${complaint}  ${complaint_lot}
-  Set Global Variable  @{COMPLAINTS}
-  @{REPLIES}=  Create list
-  ${reply}=  test_complaint_reply_data
-  Append to list  ${REPLIES}  ${reply}
-  Set Global Variable  @{REPLIES}
+Підготовка даних для створення тендера
   ${custom_intervals}=  Get Broker Property By Username  ${tender_owner}  intervals
   ${default_intervals}=  Get Broker Property  Default  intervals
   ${period_intervals}=  merge_dicts  ${default_intervals}  ${custom_intervals}
@@ -107,6 +96,34 @@ Get Broker Property By Username
   [return]  ${tender_data}
 
 
+Підготовка даних для подання вимоги
+  ${claim}=  test_claim_data
+  [Return]  ${claim}
+
+
+
+Підготовка даних для подання скарги
+  [Arguments]  ${lot}=${False}
+  ${complaint}=  test_complaint_data  ${lot}
+  [Return]  ${complaint}
+
+
+Підготовка даних для відповіді на скаргу
+  ${reply}=  test_complaint_reply_data
+  [Return]  ${reply}
+
+
+Підготовка даних для запитання
+  [Arguments]  ${lot}=${False}
+  ${question}=  test_question_data  ${lot}
+  [Return]  ${question}
+
+
+Підготовка даних для відповіді на запитання
+  ${answer}=  test_question_answer_data
+  [Return]  ${answer}
+
+
 Підготувати дані про постачальника
   [Arguments]  ${username}
   ${supplier_data}=  test_supplier_data
@@ -115,23 +132,60 @@ Get Broker Property By Username
   [Return]  ${supplier_data}
 
 
+Підготувати дані про скасування
+  [Arguments]  ${username}
+  ${cancellation_reason}=  create_fake_sentence
+  ${document}=  create_fake_doc
+  ${new_description}=  create_fake_sentence
+  ${cancellation_data}=  Create Dictionary  cancellation_reason=${cancellation_reason}  document=${document}  description=${new_description}
+  Set To Dictionary  ${USERS.users['${username}']}  cancellation_data  ${cancellation_data}
+  [Return]  ${cancellation_data}
+
 Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
-  ${bundled_st}=  Run Keyword And Return Status  Import Resource  ${CURDIR}/brokers/${keywords_file}.robot
-  ${external_st}=  Run Keyword And Return Status  Import Resource  ${CURDIR}/../../src/robot_tests.broker.${keywords_file}/${keywords_file}.robot
+  ${bundled_st}=  Run Keyword And Return Status  Import Resource  ${CURDIR}${/}brokers${/}${keywords_file}.robot
+  ${external_st}=  Run Keyword And Return Status  Import Resource  ${CURDIR}${/}..${/}..${/}src${/}robot_tests.broker.${keywords_file}${/}${keywords_file}.robot
   Run Keyword If  ${bundled_st} == ${external_st} == ${False}  Fail  Resource file ${keywords_file}.robot not found
-  Run Keyword If  ${bundled_st} == ${external_st} == ${True}  Fail  Resource file ${keywords_file}.robot found in both brokers/ and src/
+  Run Keyword If  ${bundled_st} == ${external_st} == ${True}  Fail  Resource file ${keywords_file}.robot found in both brokers${/} and src${/}
 
 
 Дочекатись синхронізації з майданчиком
   [Arguments]  ${username}
   [Documentation]
-  ...      Get ${wait_timeout} for specified user and wait
-  ...      until that timeout runs out.
+  ...      Find out how much time has passed since the procurement was modified
+  ...      and store the result in `delta`,
+  ...      then get `timeout_on_wait` for ``username``,
+  ...      then wait for `sleep` seconds, where:
+  ...
+  ...      sleep = timeout_on_wait - delta
+  ...
+  ...      Thus, when this keyword is executed several times in a row,
+  ...      it will wait for as long as really needed.
+  ...
+  ...      Example:
+  ...
+  ...      The procurement is modified.
+  ...      In 5 seconds, this keyword is called for `viewer`.
+  ...      Immediately, this keyword is called for `provider`.
+  ...      Timeout for `viewer` is 60.
+  ...      Timeout for `provider` is 300.
+  ...      First call (for `viewer`) will trigger `Sleep 55`.
+  ...      Second call (for `provider`) will trigger `Sleep 235`.
+  ...      As a result, the delay will end in 300 seconds
+  ...      since last modification date.
+  ...
+  ...      Another example (a variation of previous one):
+  ...
+  ...      Timeout for `viewer` is 120.
+  ...      Timeout for `provider` is 30.
+  ...      First call will trigger `Sleep 115`.
+  ...      Second call will trigger `Sleep 0`,
+  ...      since we have already slept for 120 seconds
+  ...      and there is no need to sleep any longer.
   ${now}=  Get Current TZdate
   ${delta}=  Subtract Date From Date  ${now}  ${TENDER['LAST_MODIFICATION_DATE']}
   ${timeout_on_wait}=  Get Broker Property By Username  ${username}  timeout_on_wait
-  ${wait_timeout}=  Subtract Time From Time  ${timeout_on_wait}  ${delta}
-  Run Keyword If   ${wait_timeout}>0   Sleep  ${wait_timeout}
+  ${sleep}=  Subtract Time From Time  ${timeout_on_wait}  ${delta}
+  Run Keyword If  ${sleep} > 0  Sleep  ${sleep}
 
 
 Звірити поле тендера
@@ -151,9 +205,11 @@ Get Broker Property By Username
 
 Порівняти об'єкти
   [Arguments]  ${left}  ${right}
+  Log  ${left}
+  Log  ${right}
   Should Not Be Equal  ${left}  ${None}
   Should Not Be Equal  ${right}  ${None}
-  Should Be Equal  ${left}  ${right}
+  Should Be Equal  ${left}  ${right}  msg=Objects are not equal
 
 
 Звірити дату тендера
@@ -165,36 +221,43 @@ Get Broker Property By Username
 Звірити дату тендера із значенням
   [Arguments]  ${username}  ${left}  ${field}
   ${right}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field}
-  Звірити дату  ${left}  ${right}
+  Порівняти дати  ${left}  ${right}
   Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${left}
 
 
-Звірити дату
-  [Arguments]  ${left}  ${right}
+Порівняти дати
+  [Documentation]
+  ...      Compare dates with specified ``accuracy`` (in seconds).
+  ...      Default is `60`.
+  ...
+  ...      The keyword will fail if the difference between
+  ...      ``left`` and ``right`` dates is more than ``accuracy``,
+  ...      otherwise it will pass.
+  [Arguments]  ${left}  ${right}  ${accuracy}=60
+  Log  ${left}
+  Log  ${right}
   Should Not Be Equal  ${left}  ${None}
   Should Not Be Equal  ${right}  ${None}
-  ${status}=  compare_date  ${left}  ${right}
-  Should Be True  ${status}
+  ${status}=  compare_date  ${left}  ${right}  ${accuracy}
+  Should Be True  ${status}  msg=Dates are not equal: ${left} != ${right}
 
 
 Звірити поля предметів закупівлі багатопредметного тендера
   [Arguments]  ${username}  ${tender_data}  ${field}
-  Дочекатись синхронізації з майданчиком    ${username}
   @{items}=  Get_From_Object  ${tender_data.data}  items
-  ${len_of_items}=   Get Length   ${items}
-  :FOR   ${index}    IN RANGE   ${len_of_items}
-    \    Log   ${index}
-    \    Звірити поле тендера  ${viewer}  ${tender_data}  items[${index}].${field}
+  ${len_of_items}=  Get Length  ${items}
+  :FOR  ${index}  IN RANGE  ${len_of_items}
+  \  Log  ${index}
+  \  Звірити поле тендера  ${viewer}  ${tender_data}  items[${index}].${field}
 
 
 Звірити дату предметів закупівлі багатопредметного тендера
   [Arguments]  ${username}  ${tender_data}  ${field}
-  Дочекатись синхронізації з майданчиком    ${username}
   @{items}=  Get_From_Object  ${tender_data.data}  items
-  ${len_of_items}=   Get Length   ${items}
-  :FOR   ${index}    IN RANGE   ${len_of_items}
-    \    Log   ${index}
-    \    Звірити дату тендера  ${viewer}  ${tender_data}  items[${index}].${field}
+  ${len_of_items}=  Get Length  ${items}
+  :FOR  ${index}  IN RANGE  ${len_of_items}
+  \  Log  ${index}
+  \  Звірити дату тендера  ${viewer}  ${tender_data}  items[${index}].${field}
 
 
 Викликати для учасника
@@ -235,29 +298,61 @@ SwitchState
 
 Дочекатись дати
   [Arguments]  ${date}
-  ${wait_timeout}=  wait_to_date  ${date}
-  Run Keyword If   ${wait_timeout}>0   Sleep  ${wait_timeout}
+  ${sleep}=  wait_to_date  ${date}
+  Run Keyword If  ${sleep} > 0  Sleep  ${sleep}
 
 
 Дочекатись дати початку прийому пропозицій
   [Arguments]  ${username}
-  log  ${username}
-  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.tenderPeriod.startDate}
+  Log  ${username}
+  # This tries to get the date from current user's procurement data cache.
+  # On failure, it reads from tender_owner's cached initial_data.
+  # XXX: This is a dirty hack!
+  # HACK: It was left here only for backward compatibiliy.
+  # HACK: Before caching was implemented, this keyword used to look into
+  # HACK: tender_owner's initial_data.
+  # HACK: This should be cleaned up as soon as each broker implements reading
+  # HACK: of the needed dates from tender's page.
+  ${status}  ${date}=  Run Keyword And Ignore Error
+  ...      Set Variable
+  ...      ${USERS.users['${username}'].tender_data.data.tenderPeriod.startDate}
+  # By default if condition is not satisfied, variable is set to None.
+  # The third argument sets the variable to itself instead of None.
+  ${date}=  Set Variable If
+  ...      '${status}' == 'FAIL'
+  ...      ${USERS.users['${tender_owner}'].initial_data.data.tenderPeriod.startDate}
+  ...      ${date}
+  Дочекатись дати  ${date}
 
 
 Дочекатись дати закінчення прийому пропозицій
   [Arguments]  ${username}
-  log  ${username}
-  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.tenderPeriod.endDate}
+  Log  ${username}
+  # XXX: HACK: Same as above
+  ${status}  ${date}=  Run Keyword And Ignore Error
+  ...      Set Variable
+  ...      ${USERS.users['${username}'].tender_data.data.tenderPeriod.endDate}
+  ${date}=  Set Variable If
+  ...      '${status}' == 'FAIL'
+  ...      ${USERS.users['${tender_owner}'].initial_data.data.tenderPeriod.endDate}
+  ...      ${date}
+  Дочекатись дати  ${date}
 
 
 Дочекатись дати початку аукціону
   [Arguments]  ${username}
-  log  ${username}
+  Log  ${username}
+  # Can't use that dirty hack here since we don't know
+  # the date of auction when creating the procurement :)
   Дочекатись дати  ${USERS.users['${username}'].tender_data.data.auctionPeriod.startDate}
 
 
 Дочекатись дати закінчення аукціону
   [Arguments]  ${username}
-  log  ${username}
+  Log  ${username}
   Дочекатись дати  ${USERS.users['${username}'].tender_data.data.auctionPeriod.endDate}
+
+Дочекатись дати закінчення періоду подання скарг
+  [Arguments]  ${username}
+  log  ${username}
+  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.complaintPeriod.endDate}
