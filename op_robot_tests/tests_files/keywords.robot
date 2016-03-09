@@ -21,10 +21,12 @@ Test Suite Teardown
   ${artifact}=  Create Dictionary
   ...      api_version=${api_version}
   ...      tender_uaid=${TENDER['TENDER_UAID']}
+  ...      last_modification_date=${TENDER['LAST_MODIFICATION_DATE']}
   ...      tender_owner=${USERS.users['${tender_owner}'].broker}
   Run Keyword If  '${USERS.users['${tender_owner}'].broker}' == 'Quinta'
-  ...      Set To Dictionary  ${artifact}   access_token=${USERS.users['${tender_owner}'].access_token}
-  ...      Set To Dictionary  ${artifact}   tender_id=${USERS.users['${tender_owner}'].tender_data.data.id}
+  ...      Set To Dictionary  ${artifact}   access_token  ${USERS.users['${tender_owner}'].access_token}
+  ...                                       tender_id  ${USERS.users['${tender_owner}'].tender_data.data.id}
+  Log   ${artifact}
   log_object_data  ${artifact}  artifact
 
 
@@ -95,6 +97,7 @@ Get Broker Property By Username
   Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token  ${ARTIFACT.access_token}
   ${TENDER}=  Create Dictionary
   Set To Dictionary  ${TENDER}   TENDER_UAID             ${ARTIFACT.tender_uaid}
+  Set To Dictionary  ${TENDER}   LAST_MODIFICATION_DATE             ${ARTIFACT.last_modification_date}
   Set Global Variable  ${TENDER}
 
 
