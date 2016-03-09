@@ -93,7 +93,7 @@ def compare_date(date1, date2, accuracy):
     return True
 
 
-def log_object_data(data, file_name=None, format="yaml"):
+def log_object_data(data, file_name=None, format="yaml", update=False):
     """Log object data in pretty format (JSON or YAML)
 
     Two output formats are supported: "yaml" and "json".
@@ -113,16 +113,34 @@ def log_object_data(data, file_name=None, format="yaml"):
     """
     if not isinstance(data, Munch):
         data = munchify(data)
-    if format.lower() == 'json':
-        data = data.toJSON(indent=2)
-    else:
-        data = data.toYAML(allow_unicode=True, default_flow_style=False)
-        format = 'yaml'
-    LOGGER.log_message(Message(data.decode('utf-8'), "INFO"))
     if file_name:
         output_dir = BuiltIn().get_variable_value("${OUTPUT_DIR}")
-        with open(os.path.join(output_dir, file_name + '.' + format), "w") as file_obj:
+        file_path = os.path.join(output_dir, file_name + '.' + format)
+        if update:
+            with open(file_path, "r+") as file_obj:
+                new_data = data.copy()
+                data = munch_from_object(file_obj.read())
+                data.update(new_data)
+                file_obj.seek(0)
+                file_obj.truncate()
+        data = munch_to_object(data, format)
+        with open(file_path, "w") as file_obj:
             file_obj.write(data)
+    if isinstance(data, Munch):
+        data = munch_to_object(data, format)
+    LOGGER.log_message(Message(data.decode('utf-8'), "INFO"))
+
+def munch_from_object(data, format="yaml"):
+    if format.lower() == 'json':
+        return data.fromJSON(data)
+    else:
+        return data.fromYAML(data)
+
+def munch_to_object(data, format="yaml"):
+    if format.lower() == 'json':
+        return data.toJSON(indent=2)
+    else:
+        return data.toYAML(allow_unicode=True, default_flow_style=False)
 
 
 def load_initial_data_from(file_name):
