@@ -131,9 +131,9 @@ def log_object_data(data, file_name=None, format="yaml", update=False):
 
 def munch_from_object(data, format="yaml"):
     if format.lower() == 'json':
-        return data.fromJSON(data)
+        return Munch.fromJSON(data)
     else:
-        return data.fromYAML(data)
+        return Munch.fromYAML(data)
 
 def munch_to_object(data, format="yaml"):
     if format.lower() == 'json':
