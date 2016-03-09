@@ -69,7 +69,7 @@ users:
     # Login procedure should be refactored
         broker:   Newtend
         username: Newtendtest
-        homepage: "http://openprocurement:test@dev23.newtend.com/opc/tenders"
+        homepage: "http://dev23.newtend.com/opc/tenders"
         login:    ten2312@mailinator.com
         password: 123123
         browser:  firefox   # chrome
@@ -78,7 +78,7 @@ users:
     Newtend_Provider1:
         broker:   Newtend
         username: Newtendtest
-        homepage: "http://openprocurement:test@dev23.newtend.com/opc/tenders"
+        homepage: "http://dev23.newtend.com/opc/tenders"
         login:    ten2316@mailinator.com
         password: 123123
         browser:  chrome
