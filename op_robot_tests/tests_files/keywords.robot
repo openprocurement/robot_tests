@@ -24,6 +24,7 @@ Test Suite Teardown
   ...      tender_owner=${USERS.users['${tender_owner}'].broker}
   Run Keyword If  '${USERS.users['${tender_owner}'].broker}' == 'Quinta'
   ...      Set To Dictionary  ${artifact}   access_token=${USERS.users['${tender_owner}'].access_token}
+  ...      Set To Dictionary  ${artifact}   tender_id=${USERS.users['${tender_owner}'].tender_data.data.id}
   log_object_data  ${artifact}  artifact
 
 
