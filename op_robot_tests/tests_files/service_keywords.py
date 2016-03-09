@@ -121,7 +121,15 @@ def log_object_data(data, file_name=None, format="yaml"):
     LOGGER.log_message(Message(data.decode('utf-8'), "INFO"))
     if file_name:
         output_dir = BuiltIn().get_variable_value("${OUTPUT_DIR}")
-        with open(os.path.join(output_dir, file_name + '.' + format), "w") as file_obj:
+        with open(os.path.join(output_dir, file_name + '.' + format), "r+") as file_obj:
+            if format == 'yaml':
+                old_data = Munch.fromYAML(file_obj.read())
+                if old_data:
+                    data = Munch.fromYAML(data)
+                    old_data.update(data)
+                    data = old_data.toYAML()
+                    file_obj.seek(0)
+                    file_obj.truncate()
             file_obj.write(data)
 
 

@@ -18,17 +18,7 @@ Test Suite Setup
 
 Test Suite Teardown
   Close all browsers
-  ${artifact}=  Create Dictionary
-  ...      api_version=${api_version}
-  ...      tender_uaid=${TENDER['TENDER_UAID']}
-  ...      last_modification_date=${TENDER['LAST_MODIFICATION_DATE']}
-  ...      tender_owner=${USERS.users['${tender_owner}'].broker}
-  Run Keyword If  '${USERS.users['${tender_owner}'].broker}' == 'Quinta'
-  ...      Set To Dictionary  ${artifact}   access_token  ${USERS.users['${tender_owner}'].access_token}
-  ...                                       tender_id  ${USERS.users['${tender_owner}'].tender_data.data.id}
-  Log   ${artifact}
-  log_object_data  ${artifact}  artifact
-
+  Run Keyword And Ignore Error  Створити артефакт
 
 Set Suite Variable With Default Value
   [Arguments]  ${suite_var}  ${def_value}
@@ -91,14 +81,28 @@ Get Broker Property By Username
   ${broker_name}=  Get Variable Value  ${USERS.users['${username}'].broker}
   Run Keyword And Return  Get Broker Property  ${broker_name}  ${property}
 
+Створити артефакт
+  ${artifact}=  Create Dictionary
+  ...      api_version=${api_version}
+  ...      tender_uaid=${TENDER['TENDER_UAID']}
+  ...      last_modification_date=${TENDER['LAST_MODIFICATION_DATE']}
+  ...      tender_owner=${USERS.users['${tender_owner}'].broker}
+  Run Keyword If  '${USERS.users['${tender_owner}'].broker}' == 'Quinta'
+  ...      Set To Dictionary  ${artifact}   access_token  ${USERS.users['${tender_owner}'].access_token}
+  ...                                       tender_id  ${USERS.users['${tender_owner}'].tender_data.data.id}
+  Log   ${artifact}
+  log_object_data  ${artifact}  artifact
+
 Завантажити дані про тендер
   ${file_path}=  Get Variable Value  ${ARTIFACT_FILE}  artifact.yaml
   ${ARTIFACT}=  load_initial_data_from  ${file_path}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token  ${ARTIFACT.access_token}
+  Run Keyword If  '${USERS.users['${tender_owner}'].broker}' == 'Quinta'
+  ...      Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token  ${ARTIFACT.access_token}
   ${TENDER}=  Create Dictionary
   Set To Dictionary  ${TENDER}   TENDER_UAID             ${ARTIFACT.tender_uaid}
   Set To Dictionary  ${TENDER}   LAST_MODIFICATION_DATE             ${ARTIFACT.last_modification_date}
   Set Global Variable  ${TENDER}
+  log_object_data  ${ARTIFACT}  artifact
 
 
 Підготовка даних для створення тендера
