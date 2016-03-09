@@ -88,8 +88,10 @@ Get Broker Property By Username
   ...      last_modification_date=${TENDER['LAST_MODIFICATION_DATE']}
   ...      tender_owner=${USERS.users['${tender_owner}'].broker}
   Run Keyword If  '${USERS.users['${tender_owner}'].broker}' == 'Quinta'
-  ...      Set To Dictionary  ${artifact}   access_token  ${USERS.users['${tender_owner}'].access_token}
-  ...                                       tender_id  ${USERS.users['${tender_owner}'].tender_data.data.id}
+  ...      Run Keyword And Ignore Error
+  ...      Set To Dictionary  ${artifact}
+  ...          access_token  ${USERS.users['${tender_owner}'].access_token}
+  ...          tender_id  ${USERS.users['${tender_owner}'].tender_data.data.id}
   Log   ${artifact}
   log_object_data  ${artifact}  artifact  update=${True}
 
