@@ -117,12 +117,17 @@ def log_object_data(data, file_name=None, format="yaml", update=False):
         output_dir = BuiltIn().get_variable_value("${OUTPUT_DIR}")
         file_path = os.path.join(output_dir, file_name + '.' + format)
         if update:
-            with open(file_path, "r+") as file_obj:
-                new_data = data.copy()
-                data = munch_from_object(file_obj.read(), format)
-                data.update(new_data)
-                file_obj.seek(0)
-                file_obj.truncate()
+            try:
+                with open(file_path, "r+") as file_obj:
+                    new_data = data.copy()
+                    data = munch_from_object(file_obj.read(), format)
+                    data.update(new_data)
+                    file_obj.seek(0)
+                    file_obj.truncate()
+            except IOError as e:
+                LOGGER.log_message(Message(e, "INFO"))
+                LOGGER.log_message(Message("Nothing to update, "\
+                                           "creating new file.", "INFO"))
         data_obj = munch_to_object(data, format)
         with open(file_path, "w") as file_obj:
             file_obj.write(data_obj)
