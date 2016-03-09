@@ -219,6 +219,7 @@ Library  openprocurement_client_helper.py
   Log object data   ${uploaded_file}
   [return]  ${uploaded_file}
 
+
 Змінити документацію в ставці
   [Arguments]  ${username}  ${doc_data}  ${bidid}  ${docid}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${TENDER['TENDER_UAID']}
@@ -226,6 +227,7 @@ Library  openprocurement_client_helper.py
   ${response}=  Call Method  ${USERS.users['${username}'].client}  patch_bid_document   ${tender}   ${doc_data}   ${bidid}   ${docid}
   Log  ${response}
   [return]  ${response}
+
 
 Завантажити документ
   [Arguments]  ${username}  ${filepath}  ${tender_uaid}
@@ -268,6 +270,9 @@ Library  openprocurement_client_helper.py
   Log   ${filename}
   [return]   ${contents}  ${filename}
 
+##############################################################################
+#             Lot operations
+##############################################################################
 
 Створити лот
   [Arguments]  ${username}  ${tender}  ${lot}
@@ -315,9 +320,8 @@ Library  openprocurement_client_helper.py
   #[Arguments]  ${username}  ${tender_uaid}  ${lot}
   #${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
 
-
 ##############################################################################
-#             singleItemTenderclaims
+#             Claims
 ##############################################################################
 
 Створити вимогу
@@ -393,7 +397,7 @@ Library  openprocurement_client_helper.py
   Log  ${reply}
 
 ##############################################################################
-#             Qualification Operations
+#             Qualification operations
 ##############################################################################
 
 Завантажити документ рішення кваліфікаційної комісії
@@ -407,6 +411,7 @@ Library  openprocurement_client_helper.py
   Log  ${doc_reply}
   [Return]  ${doc_reply}
 
+
 Підтвердити постачальника
   [Documentation]
   ...      [Arguments] Username, tender uaid and number of the award to confirm
@@ -418,6 +423,7 @@ Library  openprocurement_client_helper.py
   Set To Dictionary  ${award.data}  id  ${tender.data.awards[${award_num}].id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_award  ${tender}  ${award}
   Log  ${reply}
+
 
 Дискваліфікація постачальника
   [Documentation]
@@ -431,6 +437,7 @@ Library  openprocurement_client_helper.py
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_award  ${tender}  ${award}
   Log  ${reply}
   [Return]  ${reply}
+
 
 Скасування рішення кваліфікаційної комісії
   [Documentation]
@@ -492,12 +499,9 @@ Library  openprocurement_client_helper.py
   Log  ${cancel_reply}
   ${cancellation_id}=  Set variable  ${cancel_reply.data.id}
 
-
   ${document_id}=  Завантажити документацію до запиту на скасування  ${username}  ${tender_uaid}  ${cancellation_id}  ${document}
 
-
   Змінити опис документа в скасуванні  ${username}  ${tender_uaid}  ${cancellation_id}  ${document_id}  ${new_description}
-
 
   Підтвердити скасування закупівлі  ${username}  ${tender_uaid}  ${cancellation_id}
 
@@ -585,6 +589,7 @@ Library  openprocurement_client_helper.py
   Log  ${reply}
   [Return]  ${reply}
 
+
 Відхилити кваліфікацію
   [Documentation]
   ...      [Arguments] Username, tender uaid and qualification number
@@ -598,6 +603,7 @@ Library  openprocurement_client_helper.py
   Log  ${reply}
   [Return]  ${reply}
 
+
 Завантажити документ у кваліфікацію
   [Documentation]
   ...      [Arguments] Username, tender uaid, qualification number and document to upload
@@ -608,6 +614,7 @@ Library  openprocurement_client_helper.py
   ${doc_reply}=  Call Method  ${USERS.users['${username}'].client}  upload_qualification_document  ${document}  ${tender}  ${tender.data.qualifications[${qualification_num}].id}
   Log  ${doc_reply}
   [Return]  ${doc_reply}
+
 
 Скасувати кваліфікацію
   [Documentation]
