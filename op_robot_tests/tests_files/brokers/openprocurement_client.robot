@@ -64,16 +64,30 @@ Library  openprocurement_client_helper.py
 
 
 Отримати інформацію із тендера
-  [Arguments]  ${username}  ${fieldname}
+  [Arguments]  ${username}  ${field_name}
   Log  ${username}
-  Log  ${fieldname}
-  ${status}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${USERS.users['${username}'].tender_data.data}  ${fieldname}
-  Run Keyword Unless
-  ...      ${status}
-  ...      openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${TENDER['TENDER_UAID']}
-  ${field_value}=  Get_From_Object  ${USERS.users['${username}'].tender_data.data}  ${fieldname}
-  Log  ${field_value}
-  [return]  ${field_value}
+  Log  ${field_name}
+
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      Get from object
+  ...      ${USERS.users['${username}'].tender_data.data}
+  ...      ${field_name}
+  # If field is found, return its value
+  Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
+
+  # Else refresh cached data and try again
+  openprocurement_client.Пошук тендера по ідентифікатору
+  ...      ${username}
+  ...      ${TENDER['TENDER_UAID']}
+
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      Get from object
+  ...      ${USERS.users['${username}'].tender_data.data}
+  ...      ${field_name}
+  Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
+
+  # If field is still absent, trigger a failure
+  Fail  Field not found: ${field_name}
 
 
 Внести зміни в тендер
