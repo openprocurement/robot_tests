@@ -23,9 +23,10 @@ Test Suite Teardown
   ...      tender_uaid=${TENDER['TENDER_UAID']}
   ...      last_modification_date=${TENDER['LAST_MODIFICATION_DATE']}
   ...      tender_owner=${USERS.users['${tender_owner}'].broker}
-  Run Keyword If  '${USERS.users['${tender_owner}'].broker}' == 'Quinta'
+  ...      viewer=${USERS.users['${viewer}'].broker}
+  Run Keyword If  '${artifact.tender_owner}' == 'Quinta'  AND   '${artifact.viewer}' == 'Quinta'
   ...      Set To Dictionary  ${artifact}   access_token  ${USERS.users['${tender_owner}'].access_token}
-  ...                                       tender_id  ${USERS.users['${tender_owner}'].tender_data.data.id}
+  ...                                       tender_id  ${USERS.users['${viewer}'].tender_data.data.id}
   Log   ${artifact}
   log_object_data  ${artifact}  artifact
 
