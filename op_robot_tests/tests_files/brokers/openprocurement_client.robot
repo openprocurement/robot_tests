@@ -630,3 +630,19 @@ Library  openprocurement_client_helper.py
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_qualification  ${tender}  ${qualification}
   Log  ${reply}
   [Return]  ${reply}
+
+
+Затвердити остаточне рішення кваліфікації
+  [Documentation]
+  ...      [Arguments] Username and tender uaid
+  ...
+  ...      [Description] Find tender using uaid and call patch_tender
+  ...
+  ...      [Return] Reply of API
+  [Arguments]  ${username}  ${tender_uaid}
+  ${internal_id}=  Отримати internal id по UAid  ${username}  ${tender_uaid}
+  ${tender}=  create_data_dict  data.id  ${internal_id}
+  set_to_object  ${tender}  data.status  active.pre-qualification.stand-still
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+  Log  ${reply}
+  [Return]  ${reply}
