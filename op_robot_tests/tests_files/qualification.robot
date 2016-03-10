@@ -49,14 +49,6 @@ ${broker}       Quinta
   :FOR  ${username}  IN  @{usernames}
   \  Викликати для учасника  ${username}  Отримати інформацію із тендера  awards[0].suppliers[0].name
 
-Відображення офіційного імені постачальника
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних оголошеного тендера
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ${usernames}=  Create List  ${viewer}  ${tender_owner}
-  :FOR  ${username}  IN  @{usernames}
-  \  Викликати для учасника  ${username}  Отримати інформацію із тендера  awards[0].suppliers[0].identifier.legalName
-
 Відображення ідентифікатора постачальника
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних оголошеного тендера
   ...      tender_owner
