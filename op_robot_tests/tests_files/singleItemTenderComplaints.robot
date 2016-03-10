@@ -20,13 +20,12 @@ ${broker}       Quinta
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  from-0.12
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${tender_data}=  Підготовка даних для створення тендера
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}
   ...      Створити тендер
   ...      ${tender_data}
-  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
   Set To Dictionary  ${TENDER}  TENDER_UAID  ${TENDER_UAID}
-  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
   Log  ${TENDER}
 
 
@@ -57,6 +56,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${claim}=  Підготовка даних для подання вимоги
   ${claim_resp}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
@@ -73,6 +73,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${document}=  create_fake_doc
   Викликати для учасника  ${provider}
   ...      Завантажити документацію до вимоги
@@ -87,6 +88,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${confrimation_data}=  test_submit_claim_data  ${USERS.users['${provider}']['claim_data']['claim_resp']['data']['id']}
   Log  ${confrimation_data}
   Викликати для учасника  ${provider}
@@ -197,6 +199,7 @@ ${broker}       Quinta
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  from-0.12
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${answer_data}=  test_claim_answer_data  ${USERS.users['${provider}']['claim_data']['claim_resp']['data']['id']}
   Log  ${answer_data}
   Викликати для учасника  ${tender_owner}
@@ -284,6 +287,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${confirmation_data}=  test_claim_answer_satisfying_data
   ...      ${USERS.users['${provider}']['claim_data']['claim_resp']['data']['id']}
   Log  ${confirmation_data}
@@ -351,6 +355,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${claim}=  Підготовка даних для подання вимоги
   ${claim_resp}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
@@ -429,6 +434,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${claim}=  Підготовка даних для подання вимоги
   ${claim_resp}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
@@ -496,6 +502,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${claim}=  Підготовка даних для подання вимоги
   ${claim_resp}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
@@ -573,6 +580,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${claim}=  Підготовка даних для подання вимоги
   ${claim_resp}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
@@ -670,6 +678,7 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${cancellation_reason}=  Set variable  prosto tak :)
   ${cancellation_data}=  test_cancel_claim_data  ${USERS.users['${provider}']['claim_data5']['claim_resp']['data']['id']}  ${cancellation_reason}
   Викликати для учасника  ${provider}
