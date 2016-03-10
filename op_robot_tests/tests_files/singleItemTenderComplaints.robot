@@ -104,6 +104,7 @@ ${broker}       Quinta
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  from-0.12
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити поле тендера із значенням  ${viewer}
   ...      ${USERS.users['${provider}'].claim_data['claim'].data.title}
   ...      complaints[${CLAIM_NUM}].title
