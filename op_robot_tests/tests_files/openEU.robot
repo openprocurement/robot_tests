@@ -285,7 +285,8 @@ Cкасувати цінову пропозицію другого учасни�
   Log  ${claim_data3}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data3  ${claim_data3}
 
-  ${escalation_data}=  test_escalate_claim_data  ${USERS.users['${provider}']['claim_data3']['claim_resp']['data']['id']}
+  ${data}=  Create Dictionary  status=pending  satisfied=${False}
+  ${escalation_data}=  Create Dictionary  data=${data}
   Log  ${escalation_data}
   Викликати для учасника  ${tender_owner}
   ...      Перетворити вимогу в скаргу
@@ -367,7 +368,8 @@ Cкасувати цінову пропозицію другого учасни�
   Log  ${claim_data4}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data4  ${claim_data4}
 
-  ${escalation_data}=  test_escalate_claim_data  ${USERS.users['${provider}']['claim_data4']['claim_resp']['data']['id']}
+  ${data}=  Create Dictionary  status=pending  satisfied=${False}
+  ${escalation_data}=  Create Dictionary  data=${data}
   Log  ${escalation_data}
   Викликати для учасника  ${tender_owner}
   ...      Перетворити вимогу в скаргу
