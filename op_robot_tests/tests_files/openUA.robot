@@ -74,13 +74,14 @@ ${broker}       Quinta
   ${claim_data}=  Create Dictionary  claim=${claim}  claim_resp=${claim_resp}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data  ${claim_data}
 
-  ${confrimation_data}=  test_submit_claim_data  ${USERS.users['${provider}']['claim_data']['claim_resp']['data']['id']}
-  Log  ${confrimation_data}
+  ${data}=  Create Dictionary  status=claim
+  ${confirmation_data}=  Create Dictionary  data=${data}
+  Log  ${confirmation_data}
   Викликати для учасника  ${provider}
   ...      Подати вимогу
   ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${provider}']['claim_data']['claim_resp']}
-  ...      ${confrimation_data}
+  ...      ${confirmation_data}
 
 Можливість скасувати вимогу на умови
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість скасувати скаргу на умови
@@ -190,14 +191,15 @@ Cкасувати цінову пропозицію другого учасни�
   Log  ${claim_data2}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data2  ${claim_data2}
 
-  ${confrimation_data}=  test_submit_claim_data  ${USERS.users['${provider}']['claim_data']['claim_resp']['data']['id']}
-  Log  ${confrimation_data}
+  ${data}=  Create Dictionary  status=claim
+  ${confirmation_data}=  Create Dictionary  data=${data}
+  Log  ${confirmation_data}
   Викликати для учасника  ${provider}
   ...      Подати вимогу
   ...      shouldfail
   ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${provider}']['claim_data2']['claim_resp']}
-  ...      ${confrimation_data}
+  ...      ${confirmation_data}
 
 
 Продовжити період редагування подання пропозиції на 7 днів

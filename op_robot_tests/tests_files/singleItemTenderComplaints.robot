@@ -87,13 +87,14 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
-  ${confrimation_data}=  test_submit_claim_data  ${USERS.users['${provider}']['claim_data']['claim_resp']['data']['id']}
-  Log  ${confrimation_data}
+  ${data}=  Create Dictionary  status=claim
+  ${confirmation_data}=  Create Dictionary  data=${data}
+  Log  ${confirmation_data}
   Викликати для учасника  ${provider}
   ...      Подати вимогу
   ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${provider}']['claim_data']['claim_resp']}
-  ...      ${confrimation_data}
+  ...      ${confirmation_data}
 
 ##############################################################################################
 #             ВІДОБРАЖЕННЯ ДЛЯ ГЛЯДАЧА
@@ -440,13 +441,13 @@ ${broker}       Quinta
   Set suite variable  ${CLAIM_NUM}
 
 
-  ${confrimation_data}=  test_submit_claim_data  ${USERS.users['${provider}']['claim_data3']['claim_resp']['data']['id']}
-  Log  ${confrimation_data}
+  ${data}=  Create Dictionary  status=claim
+  ${confirmation_data}=  CreaTe dictIonary  data=${data}
   Викликати для учасника  ${provider}
   ...      Подати вимогу
   ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${provider}']['claim_data3']['claim_resp']}
-  ...      ${confrimation_data}
+  ...      ${confirmation_data}
 
 
   ${cancellation_reason}=  Set variable  prosto tak :)
@@ -507,13 +508,13 @@ ${broker}       Quinta
   Set suite variable  ${CLAIM_NUM}
 
 
-  ${confrimation_data}=  test_submit_claim_data  ${USERS.users['${provider}']['claim_data4']['claim_resp']['data']['id']}
-  Log  ${confrimation_data}
+  ${data}=  Create Dictionary  status=claim
+  ${confirmation_data}=  Create Dictionary  data=${data}
   Викликати для учасника  ${provider}
   ...      Подати вимогу
   ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${provider}']['claim_data4']['claim_resp']}
-  ...      ${confrimation_data}
+  ...      ${confirmation_data}
 
 
   ${answer_data}=  test_claim_answer_data  ${USERS.users['${provider}']['claim_data4']['claim_resp']['data']['id']}
@@ -584,13 +585,13 @@ ${broker}       Quinta
   Set suite variable  ${CLAIM_NUM}
 
 
-  ${confrimation_data}=  test_submit_claim_data  ${USERS.users['${provider}']['claim_data5']['claim_resp']['data']['id']}
-  Log  ${confrimation_data}
+  ${data}=  Create Dictionary  status=claim
+  ${confirmation_data}=  Create Dictionary  data=${data}
   Викликати для учасника  ${provider}
   ...      Подати вимогу
   ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${provider}']['claim_data5']['claim_resp']}
-  ...      ${confrimation_data}
+  ...      ${confirmation_data}
 
 
   ${answer_data}=  test_claim_answer_data  ${USERS.users['${provider}']['claim_data5']['claim_resp']['data']['id']}
