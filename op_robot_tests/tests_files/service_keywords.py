@@ -117,7 +117,7 @@ def log_object_data(data, file_name=None, format="yaml", update=False):
                     file_obj.truncate()
             except IOError as e:
                 LOGGER.log_message(Message(e, "INFO"))
-                LOGGER.log_message(Message("Nothing to update, "\
+                LOGGER.log_message(Message("Nothing to update, "
                                            "creating new file.", "INFO"))
         data_obj = munch_to_object(data, format)
         with open(file_path, "w") as file_obj:
@@ -125,11 +125,13 @@ def log_object_data(data, file_name=None, format="yaml", update=False):
     data_obj = munch_to_object(data, format)
     LOGGER.log_message(Message(data_obj.decode('utf-8'), "INFO"))
 
+
 def munch_from_object(data, format="yaml"):
     if format.lower() == 'json':
         return Munch.fromJSON(data)
     else:
         return Munch.fromYAML(data)
+
 
 def munch_to_object(data, format="yaml"):
     if format.lower() == 'json':

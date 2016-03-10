@@ -431,7 +431,6 @@ def test_change_cancellation_document_field_data(key, value):
     })
 
 
-
 def test_confirm_data(ID):
     return munchify({
         "data": {
@@ -454,14 +453,14 @@ def test_additional_items_data(tender_id, access_token):
     return munchify({
         "access": {
             "token": access_token
-            },
+        },
         "data": {
             "id": tender_id,
-             "items": [{
+            "items": [{
                 "unit": {
                     "code": "MON",
                     "name": "month"
-                    },
+                },
                 "quantity": 9
             }]
         }
@@ -739,6 +738,7 @@ def test_tender_data_openua(intervals):
     t_data['procurementMethodDetails'] = 'quick, ' \
         'accelerator={}'.format(accelerator)
     return t_data
+
 
 def test_tender_data_openeu(intervals):
     accelerator = intervals['accelerator']

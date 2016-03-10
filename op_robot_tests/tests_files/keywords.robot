@@ -10,6 +10,7 @@ Documentation
 ...  This resource file contains keywords that are used directly by
 ...  test suites or by brokers' keyword libraries (also known as drivers).
 
+
 *** Keywords ***
 Test Suite Setup
   Set Suite Variable  ${WARN_RUN_AS}  ${False}
@@ -17,9 +18,11 @@ Test Suite Setup
   Set Selenium Timeout  10 s
   Завантажуємо дані про користувачів і майданчики
 
+
 Test Suite Teardown
   Close all browsers
   Run Keyword And Ignore Error  Створити артефакт
+
 
 Set Suite Variable With Default Value
   [Arguments]  ${suite_var}  ${def_value}
@@ -82,6 +85,7 @@ Get Broker Property By Username
   ${broker_name}=  Get Variable Value  ${USERS.users['${username}'].broker}
   Run Keyword And Return  Get Broker Property  ${broker_name}  ${property}
 
+
 Створити артефакт
   ${artifact}=  Create Dictionary
   ...      api_version=${api_version}
@@ -95,6 +99,7 @@ Get Broker Property By Username
   ...          tender_id  ${USERS.users['${tender_owner}'].tender_data.data.id}
   Log   ${artifact}
   log_object_data  ${artifact}  artifact  update=${True}
+
 
 Завантажити дані про тендер
   ${file_path}=  Get Variable Value  ${ARTIFACT_FILE}  artifact.yaml
@@ -164,6 +169,7 @@ Get Broker Property By Username
   ${cancellation_data}=  Create Dictionary  cancellation_reason=${cancellation_reason}  document=${document}  description=${new_description}
   Set To Dictionary  ${USERS.users['${username}']}  cancellation_data  ${cancellation_data}
   [Return]  ${cancellation_data}
+
 
 Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
   ${bundled_st}=  Run Keyword And Return Status  Import Resource  ${CURDIR}${/}brokers${/}${keywords_file}.robot
@@ -386,6 +392,7 @@ Require Failure
   [Arguments]  ${username}
   Log  ${username}
   Дочекатись дати  ${USERS.users['${username}'].tender_data.data.auctionPeriod.endDate}
+
 
 Дочекатись дати закінчення періоду подання скарг
   [Arguments]  ${username}
