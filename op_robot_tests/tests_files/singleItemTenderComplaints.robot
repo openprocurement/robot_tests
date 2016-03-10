@@ -606,7 +606,8 @@ ${broker}       Quinta
   ...      ${answer_data}
 
 
-  ${escalation_data}=  test_escalate_claim_data  ${USERS.users['${provider}']['claim_data5']['claim_resp']['data']['id']}
+  ${data}=  Create Dictionary  status=pending  satisfied=${False}
+  ${escalation_data}=  Create Dictionary  data=${data}
   Log  ${escalation_data}
   Викликати для учасника  ${tender_owner}
   ...      Перетворити вимогу в скаргу
