@@ -24,12 +24,11 @@ ${question_id}  0
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      minimal
   [Documentation]   Створення закупівлі замовником, обовязково має повертати UAID закупівлі (номер тендера),
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${tender_data}=  Підготовка даних для створення тендера
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${tender_data}
-  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
   Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data  ${tender_data}
   Set To Dictionary  ${TENDER}   TENDER_UAID             ${TENDER_UAID}
-  Set To Dictionary  ${TENDER}   LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
   Log  ${TENDER}
 
 Можливість додати тендерну документацію
@@ -38,6 +37,7 @@ ${question_id}  0
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      critical level 2
   [Documentation]   Закупівельник   ${USERS.users['${tender_owner}'].broker}  завантажує документацію  до  оголошеної закупівлі
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${filepath}=   create_fake_doc
   ${doc_upload_reply}=  Викликати для учасника   ${tender_owner}   Завантажити документ  ${filepath}  ${TENDER['TENDER_UAID']}
   ${file_upload_process_data} =  Create Dictionary   filepath=${filepath}  doc_upload_reply=${doc_upload_reply}
@@ -140,6 +140,7 @@ ${question_id}  0
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      critical level 2
   [Setup]  Дочекатись синхронізації з майданчиком    ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Викликати для учасника   ${tender_owner}  Внести зміни в тендер    ${TENDER['TENDER_UAID']}   description     description
 
 #######
@@ -274,6 +275,7 @@ ${question_id}  0
   ...      ${USERS.users['${provider}'].broker}
   ...      critical level 2
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${question}=  Підготовка даних для запитання
   ${question_resp}=  Викликати для учасника   ${provider}   Задати питання  ${TENDER['TENDER_UAID']}   ${question}
   ${now}=  Get Current TZdate
@@ -327,6 +329,7 @@ ${question_id}  0
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      critical level 2
   [Setup]  Дочекатись синхронізації з майданчиком    ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${answer}=  Підготовка даних для відповіді на запитання
   ${answer_resp}=  Викликати для учасника   ${tender_owner}   Відповісти на питання    ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}']['question_data']['question_resp']}  ${answer}
   ${now}=  Get Current TZdate
@@ -348,6 +351,7 @@ ${question_id}  0
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати початку прийому пропозицій  ${provider}
   ${bid}=  test bid data
   Log  ${bid}
@@ -362,6 +366,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість скасувати цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${canceledbidresp}=  Викликати для учасника   ${provider}   Скасувати цінову пропозицію   ${TENDER['TENDER_UAID']}   ${USERS.users['${provider}'].bidresponses['resp']}
   Log  ${canceledbidresp}
 
@@ -370,6 +375,7 @@ ${question_id}  0
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      minimal
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати початку прийому пропозицій  ${provider}
   ${bid}=  test bid data
   Log  ${bid}
@@ -384,6 +390,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${fixbidto50000resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   value.amount  50000
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   fixbidto50000resp   ${fixbidto50000resp}
   log  ${fixbidto50000resp}
@@ -392,6 +399,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${fixbidto10resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   value.amount  10
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   fixbidto10resp   ${fixbidto10resp}
   log  ${fixbidto10resp}
@@ -401,6 +409,7 @@ ${question_id}  0
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      critical level 2
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   log   ${USERS.users['${provider}'].broker}
   ${filepath}=   create_fake_doc
   ${bid_doc_upload}=  Викликати для учасника   ${provider}   Завантажити документ в ставку  ${filepath}   ${TENDER['TENDER_UAID']}
@@ -410,6 +419,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   log   ${USERS.users['${provider}'].broker}
   ${filepath}=   create_fake_doc
   ${bidid}=  Get Variable Value  ${USERS.users['${provider}'].bidresponses['resp'].data.id}
@@ -432,6 +442,7 @@ ${question_id}  0
   ...      ${USERS.users['${provider1}'].broker}
   ...      minimal
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider1}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати початку прийому пропозицій  ${provider1}
   ${bid}=  test bid data
   Log  ${bid}
@@ -457,6 +468,7 @@ ${question_id}  0
   ...      ${USERS.users['${provider1}'].broker}
   ...      critical level 2
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider1}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   log   ${USERS.users['${provider1}'].broker}
   ${filepath}=   create_fake_doc
   ${bid_doc_upload}=  Викликати для учасника   ${provider1}   Завантажити документ в ставку  ${filepath}   ${TENDER['TENDER_UAID']}
@@ -509,6 +521,7 @@ ${question_id}  0
   ...      ${USERS.users['${viewer}'].broker}
   ...      minimal
   [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати закінчення прийому пропозицій  ${viewer}
   Sleep  120
   ${url}=  Викликати для учасника  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
@@ -520,6 +533,7 @@ ${question_id}  0
   ...      ${USERS.users['${provider}'].broker}
   ...      minimal
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${url}=  Викликати для учасника  ${provider}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
   Log  URL аукціону для першого учасника: ${url}
 
@@ -529,5 +543,6 @@ ${question_id}  0
   ...      ${USERS.users['${provider1}'].broker}
   ...      minimal
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider1}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${url}=  Викликати для учасника  ${provider1}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
   Log  URL аукціону для другого учасника: ${url}
