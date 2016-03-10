@@ -24,13 +24,12 @@ ${complaint_id}  1
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      minimal
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${tender_data}=  Підготовка даних для створення тендера
   ${tender_data}=  test_tender_data_multiple_lots  ${tender_data}
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${tender_data}
-  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
   Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data  ${tender_data}
   Set To Dictionary  ${TENDER}   TENDER_UAID             ${TENDER_UAID}
-  Set To Dictionary  ${TENDER}   LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
   Log  ${TENDER}
 
 Можливість знайти мультилотовий тендер по ідентифікатору
@@ -51,6 +50,7 @@ ${complaint_id}  1
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${tender_data}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data}
   ${lot}=  test lot data
   ${lotcreate}=  Викликати для учасника   ${tender_owner}  Створити лот  ${tender_data}  ${lot}
@@ -63,6 +63,7 @@ ${complaint_id}  1
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${tender_data}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data}
   ${lot}=  Get Variable Value  ${USERS.users['${tender_owner}'].lotresponses['resp0']}
   ${lotdelete}=  Викликати для учасника   ${tender_owner}  Видалити лот  ${tender_data}  ${lot}
@@ -72,6 +73,7 @@ ${complaint_id}  1
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${tender_data}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data}
   ${lot}=  test lot data
   ${lotcreate}=  Викликати для учасника   ${tender_owner}  Створити лот  ${tender_data}  ${lot}
@@ -84,6 +86,7 @@ ${complaint_id}  1
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${tender_data}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data}
   Set To Dictionary  ${USERS.users['${tender_owner}'].lotresponses['resp'].data.value}  amount   8000
   ${fixlotto8000resp}=   Викликати для учасника   ${tender_owner}  Змінити лот  ${tender_data}  ${USERS.users['${tender_owner}'].lotresponses['resp']}
@@ -94,6 +97,7 @@ ${complaint_id}  1
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${tender_data}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data}
   Set To Dictionary  ${USERS.users['${tender_owner}'].lotresponses['resp'].data.value}  amount   8000
   ${fixlotto100resp}=   Викликати для учасника   ${tender_owner}  Змінити лот  ${tender_data}  ${USERS.users['${tender_owner}'].lotresponses['resp']}
@@ -108,12 +112,14 @@ ${complaint_id}  1
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Викликати для учасника   ${tender_owner}   Додати предмети закупівлі    ${TENDER['TENDER_UAID']}   1
 
 Можливість добавити предмет закупівлі до лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${items}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data['items']}
   Log   ${items}
   ${lot_id}=   Get Variable Value  ${USERS.users['${tender_owner}'].lotresponses['resp'].data.id}
@@ -135,6 +141,7 @@ ${complaint_id}  1
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${items}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data['items']}
   Log  ${items}
   ${resp}=  Викликати для учасника   ${tender_owner}  Внести зміни в тендер    ${TENDER['TENDER_UAID']}   items     ${items[:-1]}
@@ -145,6 +152,7 @@ ${complaint_id}  1
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   [Documentation]   Закупівельник   ${USERS.users['${tender_owner}'].broker}  завантажує документацію  до  оголошеної закупівлі
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${filepath}=   create_fake_doc
   ${lot_id}=   Get Variable Value  ${USERS.users['${tender_owner}'].lotresponses['resp'].data.id}
   ${doc_upload_reply}=  Викликати для учасника   ${tender_owner}   Завантажити документ в лот  ${filepath}   ${TENDER['TENDER_UAID']}  ${lot_id}
@@ -163,6 +171,7 @@ ${complaint_id}  1
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${question}=  Підготовка даних для запитання
   ${question_resp}=  Викликати для учасника   ${provider}   Задати питання  ${TENDER['TENDER_UAID']}   ${question}
   ${now}=  Get Current TZdate
@@ -174,6 +183,7 @@ ${complaint_id}  1
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${answer}=  Підготовка даних для відповіді на запитання
   ${answer_resp}=  Викликати для учасника   ${tender_owner}   Відповісти на питання    ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}']['question_data']['question_resp']}  ${answer}
   ${now}=  Get Current TZdate
@@ -295,6 +305,7 @@ ${complaint_id}  1
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${bid}=  test lots bid data
   Log  ${bid}
   ${bidresponses}=  Create Dictionary
@@ -308,6 +319,7 @@ ${complaint_id}  1
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість скасувати цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${canceledbidresp}=  Викликати для учасника   ${provider}   Скасувати цінову пропозицію   ${TENDER['TENDER_UAID']}   ${USERS.users['${provider}'].bidresponses['resp']}
   Log  ${canceledbidresp}
 
@@ -315,6 +327,7 @@ ${complaint_id}  1
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати початку прийому пропозицій  ${provider}
   ${bid}=  test lots bid data
   Log  ${bid}
@@ -329,6 +342,7 @@ ${complaint_id}  1
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${fixbidto2000resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   lotValues.0.value.amount  2000
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   fixbidto2000resp   ${fixbidto2000resp}
   log  ${fixbidto2000resp}
@@ -337,6 +351,7 @@ ${complaint_id}  1
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${fixbidto10resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   lotValues.0.value.amount  10
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   fixbidto10resp   ${fixbidto10resp}
   log  ${fixbidto10resp}
@@ -346,6 +361,7 @@ ${complaint_id}  1
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider1}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати початку прийому пропозицій  ${provider1}
   ${bid}=  test lots bid data
   Log  ${bid}
