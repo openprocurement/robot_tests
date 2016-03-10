@@ -22,13 +22,12 @@ ${broker}       Quinta
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      minimal
   [Documentation]   Створення закупівлі замовником, обовязково має повертати UAID закупівлі (номер тендера),
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${base_tender_data}=  Підготовка даних для створення тендера
   ${tender_data}=  test_meat_tender_data  ${base_tender_data}
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${tender_data}
-  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
   Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data  ${tender_data}
   Set To Dictionary  ${TENDER}   TENDER_UAID             ${TENDER_UAID}
-  Set To Dictionary  ${TENDER}   LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
   Log  ${TENDER}
 
 
@@ -50,6 +49,7 @@ ${broker}       Quinta
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${invalid_features}=  test_invalid_features_data
   ${fail}=  Викликати для учасника   ${tender_owner}  Внести зміни в тендер  shouldfail   ${TENDER['TENDER_UAID']}   features   ${invalid_features}
   Log   ${fail}
@@ -87,6 +87,7 @@ ${broker}       Quinta
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${bid}=  test bid data meat tender
   Log  ${bid}
   ${bidresponses}=  Create Dictionary
@@ -101,6 +102,7 @@ ${broker}       Quinta
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${fixbidparamsto0resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   parameters.0.value  0
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   fixbidparamsto0resp   ${fixbidparamsto0resp}
   log  ${fixbidparamsto0resp}
@@ -110,6 +112,7 @@ ${broker}       Quinta
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${fixbidparamsto015resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   parameters.0.value  0.15
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   fixbidparamsto015resp   ${fixbidparamsto015resp}
   log  ${fixbidparamsto015resp}
@@ -120,6 +123,7 @@ ${broker}       Quinta
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider1}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати початку прийому пропозицій  ${provider1}
   ${bid}=  test bid data meat tender
   Log  ${bid}
@@ -156,6 +160,7 @@ ${broker}       Quinta
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${tender_data}=  Викликати для учасника   ${tender_owner}   Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
   ${result}=    chef  ${tender_data.data.bids}  ${tender_data.data.features}
   Log Many  ${result[0]}  ${tender_data.data.awards[0]}
