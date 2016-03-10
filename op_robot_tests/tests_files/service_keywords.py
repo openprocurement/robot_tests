@@ -25,7 +25,6 @@ from .initial_data import (
     test_cancel_tender_data,
     test_change_cancellation_document_field_data,
     test_claim_answer_data,
-    test_claim_answer_satisfying_data,
     test_claim_data,
     test_complaint_answer_data,
     test_complaint_data,
