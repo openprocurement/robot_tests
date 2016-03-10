@@ -241,7 +241,8 @@ def get_from_object(obj, attribute):
     return_list = [i.value for i in jsonpath_expr.find(obj)]
     if return_list:
         return return_list[0]
-    return None
+    else:
+        raise AttributeError('Attribute not found: {0}'.format(attribute))
 
 
 def wait_to_date(date_stamp):
