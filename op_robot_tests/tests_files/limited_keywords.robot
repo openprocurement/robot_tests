@@ -14,8 +14,6 @@ Resource           resource.robot
   ...      Створити тендер
   ...      ${tender_data}
   Log  ${tender_data}
-  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
-  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
   Set To Dictionary  ${TENDER}  TENDER_UAID  ${TENDER_UAID}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data  ${tender_data}
   Log  ${TENDER}
@@ -33,8 +31,6 @@ Resource           resource.robot
   Set suite variable  ${CANCEL_NUM}
   ${DOC_NUM}=  Set variable  0
   Set suite variable  ${DOC_NUM}
-  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
-  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
 
 
 Відображення активного статусу скасування закупівлі
@@ -70,8 +66,6 @@ Resource           resource.robot
   ...      Створити тендер
   ...      ${tender_data}
   Log  ${tender_data}
-  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
-  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
   Set To Dictionary  ${TENDER}  TENDER_UAID  ${TENDER_UAID}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data  ${tender_data}
   Log  ${TENDER}
@@ -107,8 +101,6 @@ Resource           resource.robot
   ...      Додати і підтвердити постачальника
   ...      ${TENDER['TENDER_UAID']}
   ...      ${supplier_data}
-  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
-  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
 
 ##############################################################################################
 #             MAIN DATA
@@ -477,8 +469,6 @@ Resource           resource.robot
   ...      shouldfail
   ...      ${TENDER['TENDER_UAID']}
   ...      ${CONTR_NUM}
-  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
-  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
 
 
 Відображення статусу непідписаної угоди з постачальником закупівлі
@@ -496,8 +486,6 @@ Resource           resource.robot
   ...      Підтвердити підписання контракту
   ...      ${TENDER['TENDER_UAID']}
   ...      ${CONTR_NUM}
-  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
-  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
 
 
 Відображення статусу підписаної угоди з постачальником закупівлі

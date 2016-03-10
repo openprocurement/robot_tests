@@ -27,6 +27,8 @@ Library  openprocurement_client_helper.py
   ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${api_host_url}  ${api_version}
   Set To Dictionary  ${USERS.users['${username}']}  client  ${api_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  access_token  ${EMPTY}
+  ${LAST_REFRESH_DATE}=  Get Current TZdate
+  Set To Dictionary  ${USERS.users['${username}']}  LAST_REFRESH_DATE  ${LAST_REFRESH_DATE}
   ${ID_MAP}=  Create Dictionary
   Set Suite Variable  ${ID_MAP}
   Log Variables

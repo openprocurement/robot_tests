@@ -19,6 +19,7 @@ ${broker}       Quinta
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  minimal
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість створити закупівлю для тестування скасування
 
 
@@ -27,6 +28,7 @@ ${broker}       Quinta
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  level2
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість скасувати закупівлю
 
 
@@ -67,6 +69,7 @@ ${broker}       Quinta
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  minimal
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість створити закупівлю
 
 
@@ -84,6 +87,7 @@ ${broker}       Quinta
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  level2
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість модифікації закупівлі
 
 
@@ -92,6 +96,7 @@ ${broker}       Quinta
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  level2
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість додати документацію до закупівлі
 
 
@@ -100,6 +105,7 @@ ${broker}       Quinta
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  minimal
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість зареєструвати і підтвердити постачальника до закупівлі
 
 ##############################################################################################
@@ -516,6 +522,7 @@ ${broker}       Quinta
   ...  ${tender_owner}
   ...  ${USERS.users['${tender_owner}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість укласти угоду для закупівлі
 
 

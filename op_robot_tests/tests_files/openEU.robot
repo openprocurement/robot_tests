@@ -18,12 +18,11 @@ ${broker}       Quinta
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      minimal
   [Documentation]   Створення закупівлі замовником, обовязково має повертати UAID закупівлі (номер тендера)
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${tender_data}=  Підготовка даних для створення тендера
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${tender_data}
-  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
   Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data  ${tender_data}
   Set To Dictionary  ${TENDER}   TENDER_UAID             ${TENDER_UAID}
-  Set To Dictionary  ${TENDER}   LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
   Log  ${TENDER}
 
 Пошук позапорогового однопредметного тендера по ідентифікатору
@@ -75,6 +74,7 @@ ${broker}       Quinta
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Documentation]  Користувач ${USERS.users['${provider}'].broker} намагається подати скаргу на умови оголошеної закупівлі
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${claim}=  Підготовка даних для подання вимоги
   ${claim_resp}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
@@ -95,6 +95,7 @@ ${broker}       Quinta
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість скасувати скаргу на умови
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${cancellation_reason}=  Set variable  create_fake_sentence
   ${cancellation_data}=  test_cancel_claim_data  ${USERS.users['${provider}']['claim_data']['claim_resp']['data']['id']}  ${cancellation_reason}
   Викликати для учасника  ${provider}
@@ -108,6 +109,7 @@ ${broker}       Quinta
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${bid}=  test bid data
   Log  ${bid}
   ${bidresponses}=  Create Dictionary
@@ -121,6 +123,7 @@ ${broker}       Quinta
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   log   ${USERS.users['${provider}'].broker}
   ${filepath}=   create_fake_doc
   ${bid_doc_upload}=  Викликати для учасника   ${provider}   Завантажити документ в ставку  ${filepath}   ${TENDER['TENDER_UAID']}
@@ -130,6 +133,7 @@ ${broker}       Quinta
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   log   ${USERS.users['${provider}'].broker}
   ${privat_doc}=   create_data_dict  data.confidentialityRationale  "Only our company sells badgers with pink hair."
   Set To Dictionary  ${privat_doc.data}  confidentiality  buyerOnly
@@ -142,6 +146,7 @@ ${broker}       Quinta
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   log   ${USERS.users['${provider}'].broker}
   ${filepath}=   create_fake_doc
   ${doc_type}=  Set variable  financial_documents
@@ -152,6 +157,7 @@ ${broker}       Quinta
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   log   ${USERS.users['${provider}'].broker}
   ${filepath}=   create_fake_doc
   ${doc_type}=   Set variable  eligibility_documents
@@ -162,6 +168,7 @@ ${broker}       Quinta
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   log   ${USERS.users['${provider}'].broker}
   ${filepath}=   create_fake_doc
   ${doc_type}=  Set variable  qualification_documents
@@ -172,6 +179,7 @@ ${broker}       Quinta
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${bid}=  test bid data
   Log  ${bid}
   ${bidresponses}=  Create Dictionary
@@ -185,6 +193,7 @@ ${broker}       Quinta
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Викликати для учасника   ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}   description     description
 
 Перевірити на зміну статус пропозицій після редагування інформації про закупівлю
@@ -204,6 +213,7 @@ ${broker}       Quinta
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${activestatusresp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   status  pending
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   activestatusresp   ${activestatusresp}
   log  ${activestatusresp}
@@ -212,6 +222,7 @@ Cкасувати цінову пропозицію другого учасни�
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість скасувати цінову пропозицію
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${bid}=  Get Variable Value  ${USERS.users['${provider1}'].bidresponses['resp']}
   ${bidresponses}=  Викликати для учасника   ${provider1}   Скасувати цінову пропозицію   ${TENDER['TENDER_UAID']}   ${bid}
 
@@ -219,6 +230,7 @@ Cкасувати цінову пропозицію другого учасни�
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${bid}=  test bid data
   Log  ${bid}
   ${bidresponses}=  Create Dictionary
@@ -263,6 +275,7 @@ Cкасувати цінову пропозицію другого учасни�
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${endDate}=  add_minutes_to_date   ${USERS.users['${tender_owner}'].tender_data.data.tenderPeriod.endDate}  7
   Викликати для учасника   ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}   tenderPeriod.endDate     ${endDate}
 
@@ -272,6 +285,7 @@ Cкасувати цінову пропозицію другого учасни�
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Documentation]  Користувач ${USERS.users['${provider}'].broker} намагається подати скаргу на умови оголошеної закупівлі
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком    ${provider}
   ${claim}=  Підготовка даних для подання вимоги
   ${claim_resp}=  Викликати для учасника  ${provider}
@@ -295,6 +309,7 @@ Cкасувати цінову пропозицію другого учасни�
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість скасувати скаргу на умови
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${cancellation_reason}=  Set variable  create_fake_sentence
   ${cancellation_data}=  test_cancel_claim_data  ${USERS.users['${provider}']['claim_data3']['claim_resp']['data']['id']}  ${cancellation_reason}
   Викликати для учасника  ${provider}
@@ -308,6 +323,7 @@ Cкасувати цінову пропозицію другого учасни�
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Викликати для учасника   ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}   description     description
 
 
@@ -328,6 +344,7 @@ Cкасувати цінову пропозицію другого учасни�
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${activestatusresp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   status  pending
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   activestatusresp   ${activestatusresp}
   log  ${activestatusresp}
@@ -337,6 +354,7 @@ Cкасувати цінову пропозицію другого учасни�
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${bid}=  test bid data
   Log  ${bid}
   ${bidresponses}=  Create Dictionary
@@ -395,6 +413,7 @@ Cкасувати цінову пропозицію другого учасни�
   [Tags]   ${USERS.users['${tender_owner}'].broker}:
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   log   ${USERS.users['${tender_owner}'].broker}
   ${filepath}=   create_fake_doc
   Викликати для учасника   ${tender_owner}   Завантажити документ у кваліфікацію  ${filepath}   ${TENDER['TENDER_UAID']}  0
@@ -403,12 +422,14 @@ Cкасувати цінову пропозицію другого учасни�
   [Tags]   ${USERS.users['${tender_owner}'].broker}:
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Викликати для учасника  ${tender_owner}  Підтвердити кваліфікацію  ${TENDER['TENDER_UAID']}  0
 
 Можливість завантажити документ у кваліфікацію пропозиції другого учасника
   [Tags]   ${USERS.users['${tender_owner}'].broker}:
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   log   ${USERS.users['${tender_owner}'].broker}
   ${filepath}=   create_fake_doc
   Викликати для учасника   ${tender_owner}   Завантажити документ у кваліфікацію  ${filepath}   ${TENDER['TENDER_UAID']}  1
@@ -417,16 +438,19 @@ Cкасувати цінову пропозицію другого учасни�
   [Tags]   ${USERS.users['${tender_owner}'].broker}:
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Викликати для учасника  ${tender_owner}  Відхилити кваліфікацію  ${TENDER['TENDER_UAID']}  1
 
 Можливість скасувати рішення кваліфікації для другої пропопозиції
   [Tags]   ${USERS.users['${tender_owner}'].broker}:
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Викликати для учасника  ${tender_owner}  Скасувати кваліфікацію  ${TENDER['TENDER_UAID']}  1
 
 Можливість підтвердити другу пропозицію кваліфікації
   [Tags]   ${USERS.users['${tender_owner}'].broker}:
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Викликати для учасника  ${tender_owner}  Підтвердити кваліфікацію  ${TENDER['TENDER_UAID']}  2
