@@ -39,6 +39,7 @@ ${broker}       Quinta
   [Tags]   ${USERS.users['${viewer}'].broker}: Очікування аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${auctionEnd}=  add_minutes_to_date  ${USERS.users['${viewer}'].tender_data.data.auctionPeriod.startDate}  21
   Дочекатись дати  ${auctionEnd}  # auction time for two bids
 
