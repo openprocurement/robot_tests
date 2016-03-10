@@ -284,8 +284,8 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
-  ${confirmation_data}=  test_claim_answer_satisfying_data
-  ...      ${USERS.users['${provider}']['claim_data']['claim_resp']['data']['id']}
+  ${data}=  Create Dictionary  status=resolved  satisfied=${True}
+  ${confirmation_data}=  Create Dictionary  data=${data}
   Log  ${confirmation_data}
   Викликати для учасника  ${provider}
   ...      Підтвердити вирішення вимоги
