@@ -88,7 +88,8 @@ ${broker}       Quinta
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ${cancellation_reason}=  Set variable  create_fake_sentence
-  ${cancellation_data}=  test_cancel_claim_data  ${USERS.users['${provider}']['claim_data']['claim_resp']['data']['id']}  ${cancellation_reason}
+  ${data}=  Create Dictionary  status=cancelled  cancellationReason=${cancellation_reason}
+  ${cancellation_data}=  Create Dictionary  data=${data}
   Викликати для учасника  ${provider}
   ...      Скасувати вимогу
   ...      ${TENDER['TENDER_UAID']}
@@ -239,7 +240,8 @@ Cкасувати цінову пропозицію другого учасни�
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ${cancellation_reason}=  Set variable  create_fake_sentence
-  ${cancellation_data}=  test_cancel_claim_data  ${USERS.users['${provider}']['claim_data3']['claim_resp']['data']['id']}  ${cancellation_reason}
+  ${data}=  Create Dictionary  status=cancelled  cancellationReason=${cancellation_reason}
+  ${cancellation_data}=  Create Dictionary  data=${data}
   Викликати для учасника  ${provider}
   ...      Скасувати вимогу
   ...      ${TENDER['TENDER_UAID']}

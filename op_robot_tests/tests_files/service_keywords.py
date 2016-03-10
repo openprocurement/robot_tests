@@ -21,7 +21,6 @@ from .initial_data import (
     test_award_data,
     test_bid_data,
     test_bid_data_meat_tender,
-    test_cancel_claim_data,
     test_cancel_tender_data,
     test_change_cancellation_document_field_data,
     test_claim_answer_data,
