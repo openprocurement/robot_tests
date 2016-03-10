@@ -210,6 +210,11 @@ Get Broker Property By Username
   ${sleep}=  Subtract Time From Time  ${timeout_on_wait}  ${delta}
   Run Keyword If  ${sleep} > 0  Sleep  ${sleep}
 
+  ${last_modification_date_corrected}=  Add Time To Date  ${TENDER['LAST_MODIFICATION_DATE']}  ${timeout_on_wait} s
+  ${time_diff}=  Subtract Date From Date  ${last_modification_date_corrected}  ${USERS.users['${username}']['LAST_REFRESH_DATE']}
+  Run Keyword If  ${time_diff} > 0  Викликати для учасника  ${username}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  ${LAST_REFRESH_DATE}=  Get Current TZdate
+  Run Keyword If  ${time_diff} > 0  Set To Dictionary  ${USERS.users['${username}']}  LAST_REFRESH_DATE  ${LAST_REFRESH_DATE}
 
 Звірити поле тендера
   [Arguments]  ${username}  ${tender_data}  ${field}

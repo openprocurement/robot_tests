@@ -101,12 +101,22 @@ ${broker}       Quinta
 #             ВІДОБРАЖЕННЯ ДЛЯ ГЛЯДАЧА
 ##############################################################################################
 
+Відображення опису вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: опису Відображення вимоги для глядача
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  from-0.12
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}'].claim_data['claim'].data.description}
+  ...      complaints[${CLAIM_NUM}].description
+
+
 Відображення заголовку вимоги для глядача
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення заголовку вимоги для глядача
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  from-0.12
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити поле тендера із значенням  ${viewer}
   ...      ${USERS.users['${provider}'].claim_data['claim'].data.title}
   ...      complaints[${CLAIM_NUM}].title
@@ -123,24 +133,12 @@ ${broker}       Quinta
   ...      complaints[${CLAIM_NUM}].documents[${doc_num}].title
 
 
-Відображення опису вимоги для глядача
-  [Tags]  ${USERS.users['${viewer}'].broker}: опису Відображення вимоги для глядача
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  from-0.12
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${provider}'].claim_data['claim'].data.description}
-  ...      complaints[${CLAIM_NUM}].description
-
-
 Відображення поданого статусу вимоги для глядача
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення поданого статусу вимоги для глядача
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  from-0.12
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити поле тендера із значенням  ${provider}
+  Звірити поле тендера із значенням  ${viewer}
   ...      claim
   ...      complaints[${CLAIM_NUM}].status
 
@@ -185,7 +183,6 @@ ${broker}       Quinta
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
-  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   Звірити поле тендера із значенням  ${provider}
   ...      claim
   ...      complaints[${CLAIM_NUM}].status
