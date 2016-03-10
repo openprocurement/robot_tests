@@ -10,7 +10,7 @@ ${broker}       Quinta
 
 
 *** Test Cases ***
-Можливість знайти тендер по ідентифікатору
+Можливість знайти закупівлю по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
   ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
