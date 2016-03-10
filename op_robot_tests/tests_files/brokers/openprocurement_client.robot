@@ -385,6 +385,7 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${cancellation_data}
   ${tender}=  Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${tender}=  set_access_key  ${tender}  ${claim.access.token}
+  Set To Dictionary  ${cancellation_data['data']}  id=${claim['data']['id']}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${cancellation_data}
   Log  ${reply}
 
