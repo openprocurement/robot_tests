@@ -197,7 +197,7 @@ ${broker}       Quinta
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  from-0.12
-  ${answer_data}=  test_claim_answer_data  ${USERS.users['${provider}']['claim_data']['claim_resp']['data']['id']}
+  ${answer_data}=  test_claim_answer_data
   Log  ${answer_data}
   Викликати для учасника  ${tender_owner}
   ...      Відповісти на вимогу
@@ -517,7 +517,7 @@ ${broker}       Quinta
   ...      ${confirmation_data}
 
 
-  ${answer_data}=  test_claim_answer_data  ${USERS.users['${provider}']['claim_data4']['claim_resp']['data']['id']}
+  ${answer_data}=  test_claim_answer_data
   Log  ${answer_data}
   Викликати для учасника  ${tender_owner}
   ...      Відповісти на вимогу
@@ -594,7 +594,7 @@ ${broker}       Quinta
   ...      ${confirmation_data}
 
 
-  ${answer_data}=  test_claim_answer_data  ${USERS.users['${provider}']['claim_data5']['claim_resp']['data']['id']}
+  ${answer_data}=  test_claim_answer_data
   Log  ${answer_data}
   Викликати для учасника  ${tender_owner}
   ...      Відповісти на вимогу
