@@ -39,7 +39,8 @@ ${broker}       Quinta
   [Tags]   ${USERS.users['${viewer}'].broker}: Очікування аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  sleep  1260  # auction time for two bids
+  ${auctionEnd}=  add_minutes_to_date  ${USERS.users['${viewer}'].tender_data.data.auctionPeriod.startDate}  21
+  Дочекатись дати  ${auctionEnd}  # auction time for two bids
 
 Відображення дати закінчення аукціону
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
