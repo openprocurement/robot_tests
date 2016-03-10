@@ -379,3 +379,8 @@ SwitchState
   [Arguments]  ${username}
   log  ${username}
   Дочекатись дати  ${USERS.users['${username}'].tender_data.data.complaintPeriod.endDate}
+
+
+Оновити LAST_MODIFICATION_DATE
+  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
+  Run keyword if  '${TEST_STATUS}' == 'PASS'  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
