@@ -95,8 +95,8 @@ Get Broker Property By Username
   Run Keyword If  '${USERS.users['${tender_owner}'].broker}' == 'Quinta'
   ...      Run Keyword And Ignore Error
   ...      Set To Dictionary  ${artifact}
-  ...          access_token  ${USERS.users['${tender_owner}'].access_token}
-  ...          tender_id  ${USERS.users['${tender_owner}'].tender_data.data.id}
+  ...          access_token=${USERS.users['${tender_owner}'].access_token}
+  ...          tender_id=${USERS.users['${tender_owner}'].tender_data.data.id}
   Log   ${artifact}
   log_object_data  ${artifact}  artifact  update=${True}
 
@@ -105,10 +105,10 @@ Get Broker Property By Username
   ${file_path}=  Get Variable Value  ${ARTIFACT_FILE}  artifact.yaml
   ${ARTIFACT}=  load_initial_data_from  ${file_path}
   Run Keyword If  '${USERS.users['${tender_owner}'].broker}' == 'Quinta'
-  ...      Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token  ${ARTIFACT.access_token}
+  ...      Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token=${ARTIFACT.access_token}
   ${TENDER}=  Create Dictionary
-  Set To Dictionary  ${TENDER}   TENDER_UAID             ${ARTIFACT.tender_uaid}
-  Set To Dictionary  ${TENDER}   LAST_MODIFICATION_DATE             ${ARTIFACT.last_modification_date}
+  Set To Dictionary  ${TENDER}  TENDER_UAID=${ARTIFACT.tender_uaid}
+  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE=${ARTIFACT.last_modification_date}
   Set Global Variable  ${TENDER}
   log_object_data  ${ARTIFACT}  artifact
 
@@ -156,7 +156,7 @@ Get Broker Property By Username
 Підготувати дані про постачальника
   [Arguments]  ${username}
   ${supplier_data}=  test_supplier_data
-  Set To Dictionary  ${USERS.users['${username}']}  supplier_data  ${supplier_data}
+  Set To Dictionary  ${USERS.users['${username}']}  supplier_data=${supplier_data}
   Log  ${supplier_data}
   [Return]  ${supplier_data}
 
@@ -167,7 +167,7 @@ Get Broker Property By Username
   ${document}=  create_fake_doc
   ${new_description}=  create_fake_sentence
   ${cancellation_data}=  Create Dictionary  cancellation_reason=${cancellation_reason}  document=${document}  description=${new_description}
-  Set To Dictionary  ${USERS.users['${username}']}  cancellation_data  ${cancellation_data}
+  Set To Dictionary  ${USERS.users['${username}']}  cancellation_data=${cancellation_data}
   [Return]  ${cancellation_data}
 
 
@@ -221,7 +221,7 @@ Get Broker Property By Username
   ${time_diff}=  Subtract Date From Date  ${last_modification_date_corrected}  ${USERS.users['${username}']['LAST_REFRESH_DATE']}
   Run Keyword If  ${time_diff} > 0  Викликати для учасника  ${username}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
   ${LAST_REFRESH_DATE}=  Get Current TZdate
-  Run Keyword If  ${time_diff} > 0  Set To Dictionary  ${USERS.users['${username}']}  LAST_REFRESH_DATE  ${LAST_REFRESH_DATE}
+  Run Keyword If  ${time_diff} > 0  Set To Dictionary  ${USERS.users['${username}']}  LAST_REFRESH_DATE=${LAST_REFRESH_DATE}
 
 Звірити поле тендера
   [Arguments]  ${username}  ${tender_data}  ${field}
@@ -402,4 +402,4 @@ Require Failure
 
 Оновити LAST_MODIFICATION_DATE
   ${LAST_MODIFICATION_DATE}=  Get Current TZdate
-  Run keyword if  '${TEST_STATUS}' == 'PASS'  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
+  Run keyword if  '${TEST_STATUS}' == 'PASS'  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE=${LAST_MODIFICATION_DATE}
