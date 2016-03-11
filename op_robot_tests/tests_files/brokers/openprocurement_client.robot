@@ -33,8 +33,9 @@ Library  openprocurement_client_helper.py
 
 
 Підготувати дані для оголошення тендера
-  ${INITIAL_TENDER_DATA}=  prepare_test_tender_data
-  [return]   ${INITIAL_TENDER_DATA}
+  [Documentation]  Це слово використовується в майданчиків, тому потрібно, щоб воно було і тут
+  [Arguments]  ${username}  ${tender_data}
+  [return]  ${tender_data}
 
 
 Створити тендер
