@@ -41,6 +41,7 @@ ${broker}       Quinta
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість укласти угоду для прямої закупівлі
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Викликати для учасника  ${tender_owner}  Підтвердити підписання контракту  ${TENDER['TENDER_UAID']}  1
 
 Відображення статусу підписаної угоди з постачальником закупівлі
