@@ -642,6 +642,7 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uaid}
   ${internal_id}=  Отримати internal id по UAid  ${username}  ${tender_uaid}
   ${tender}=  create_data_dict  data.id  ${internal_id}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   set_to_object  ${tender}  data.status  active.pre-qualification.stand-still
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
   Log  ${reply}
