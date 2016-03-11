@@ -40,8 +40,8 @@ ${broker}       Quinta
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${auctionEnd}=  add_minutes_to_date  ${USERS.users['${viewer}'].tender_data.data.auctionPeriod.startDate}  21
-  Дочекатись дати  ${auctionEnd}  # auction time for two bids
+  ${auctionEnd}=  add_minutes_to_date  ${USERS.users['${viewer}'].tender_data.data.auctionPeriod.startDate}  25
+  Дочекатись дати  ${auctionEnd}  # auction time for two bids plus 4 minutes for reliability
 
 Відображення дати закінчення аукціону
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
