@@ -459,8 +459,7 @@ ${question_id}  0
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
-  ${bids}=  Викликати для учасника  ${viewer}  Отримати інформацію із тендера  bids
-  Should Not Be True  ${bids}
+  Require Failure  ${viewer}  Отримати інформацію із тендера  bids
 
 Можливість завантажити документ другим учасником
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість прийняти пропозицію переможця
