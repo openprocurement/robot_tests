@@ -10,12 +10,20 @@ Resource           resource.robot
 ##############################################################################################
 Можливість створити закупівлю для тестування скасування
   ${tender_data}=  Підготовка даних для створення тендера
+  ${adapted_data}=  munchify  ${tender_data}
+  ${status}  ${adapted_data}=  Run Keyword And Ignore Error  Викликати для учасника  ${tender_owner}  Підготувати дані для оголошення тендера  ${adapted_data}
+  ${adapted_data_in_fail_case}=  Run keyword if  '${status}' == 'FAIL'  Run keyword  Copy Dictionary  ${tender_data}
+  ${adapted_data}=  Set variable if  '${status}' == 'FAIL'  ${adapted_data_in_fail_case}  ${adapted_data}
+  ${adapted_data}=  munchify  ${adapted_data}
+  Log  ${tender_data}
+  Log  ${adapted_data}
+  ${status}=  Run keyword and return status  Dictionaries Should Be Equal  ${adapted_data.data}  ${tender_data.data}
+  Run keyword if  ${status} == ${False}  Log  adapted_data and tender_data are not equal  WARN
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}
   ...      Створити тендер
-  ...      ${tender_data}
-  Log  ${tender_data}
+  ...      ${adapted_data}
   Set To Dictionary  ${TENDER}  TENDER_UAID  ${TENDER_UAID}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data  ${tender_data}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data  ${adapted_data}
   Log  ${TENDER}
 
 
@@ -62,12 +70,20 @@ Resource           resource.robot
 
 Можливість створити закупівлю
   ${tender_data}=  Підготовка даних для створення тендера
+  ${adapted_data}=  munchify  ${tender_data}
+  ${status}  ${adapted_data}=  Run Keyword And Ignore Error  Викликати для учасника  ${tender_owner}  Підготувати дані для оголошення тендера  ${adapted_data}
+  ${adapted_data_in_fail_case}=  Run keyword if  '${status}' == 'FAIL'  Run keyword  Copy Dictionary  ${tender_data}
+  ${adapted_data}=  Set variable if  '${status}' == 'FAIL'  ${adapted_data_in_fail_case}  ${adapted_data}
+  ${adapted_data}=  munchify  ${adapted_data}
+  Log  ${tender_data}
+  Log  ${adapted_data}
+  ${status}=  Run keyword and return status  Dictionaries Should Be Equal  ${adapted_data.data}  ${tender_data.data}
+  Run keyword if  ${status} == ${False}  Log  adapted_data and tender_data are not equal  WARN
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}
   ...      Створити тендер
-  ...      ${tender_data}
-  Log  ${tender_data}
+  ...      ${adapted_data}
   Set To Dictionary  ${TENDER}  TENDER_UAID  ${TENDER_UAID}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data  ${tender_data}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data  ${adapted_data}
   Log  ${TENDER}
 
 
