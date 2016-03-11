@@ -26,8 +26,9 @@ ${broker}       Quinta
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
-  Викликати для учасника  ${viewer}  Отримати інформацію із тендера  auctionPeriod.startDate
-
+  ${field}=  Set variable  auctionPeriod.startDate
+  ${value}=  Викликати для учасника  ${viewer}  Отримати інформацію із тендера  ${field}
+  Set_To_Object  ${USERS.users['${viewer}'].tender_data.data}  ${field}  ${value}
 
 Очікування початку аукціону
   [Tags]   ${USERS.users['${viewer}'].broker}: Очікування аукціону
@@ -47,4 +48,6 @@ ${broker}       Quinta
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
-  Викликати для учасника  ${viewer}  Отримати інформацію із тендера  auctionPeriod.endDate
+  ${field}=  Set variable  auctionPeriod.endDate
+  ${value}=  Викликати для учасника  ${viewer}  Отримати інформацію із тендера  ${field}
+  Set_To_Object  ${USERS.users['${viewer}'].tender_data.data}  ${field}  ${value}

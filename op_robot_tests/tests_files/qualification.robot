@@ -38,24 +38,30 @@ ${broker}       Quinta
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ${usernames}=  Create List  ${viewer}  ${tender_owner}
+  ${field}=  Set variable  awards[0].value.amount
   :FOR  ${username}  IN  @{usernames}
-  \  Викликати для учасника  ${username}  Отримати інформацію із тендера  awards[0].value.amount
+  \  ${value}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field}
+  \    Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${value}
 
 Відображення імені постачальника
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних оголошеного тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ${usernames}=  Create List  ${viewer}  ${tender_owner}
+  ${field}=  Set variable  awards[0].suppliers[0].name
   :FOR  ${username}  IN  @{usernames}
-  \  Викликати для учасника  ${username}  Отримати інформацію із тендера  awards[0].suppliers[0].name
+  \  ${value}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field}
+  \    Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${value}
 
 Відображення ідентифікатора постачальника
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних оголошеного тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ${usernames}=  Create List  ${viewer}  ${tender_owner}
+  ${field}=  Set variable  awards[0].suppliers[0].identifier.id
   :FOR  ${username}  IN  @{usernames}
-  \  Викликати для учасника  ${username}  Отримати інформацію із тендера  awards[0].suppliers[0].identifier.id
+  \  ${value}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field}
+  \    Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${value}
 
 
 ##############################################################################################
