@@ -30,3 +30,12 @@ ${broker}       Quinta_Plan
   Set To Dictionary  ${PLAN}   PLAN_UAID             ${PLAN_UAID}
   Set To Dictionary  ${PLAN}   LAST_MODIFICATION_DATE  ${LAST_MODIFICATION_DATE}
   Log  ${PLAN}
+
+Можливість знайти план по ідентифікатору
+  [Tags]   ${USERS.users['${viewer}'].broker}: Пошук плану по ідентифікатору
+  ...      viewer  plan_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${plan_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      minimal
+  :FOR  ${username}  IN  ${viewer}  ${plan_owner}  ${provider}  ${provider1}
+  \  Викликати для учасника  ${username}  Пошук плану по ідентифікатору   ${PLAN['PLAN_UAID']}

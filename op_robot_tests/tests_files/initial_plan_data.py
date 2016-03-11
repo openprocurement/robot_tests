@@ -33,7 +33,6 @@ def test_plan_data():
 					"name": "pieces"},
 					"quantity": 1}
 			],
-		"planID": "UA-P-2016-02-01-000001-1",
 		"budget":
 			{
 				"amountNet": 10000,
@@ -72,7 +71,6 @@ def test_plan_data():
 					{
 						"startDate": "2016-02-29T00:00:00+02:00"
 				}
-			},
-		"dateModified": "2016-02-01T11:00:47.174178+02:00"
+			}
 	}
     })
