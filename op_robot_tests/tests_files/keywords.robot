@@ -61,6 +61,8 @@ Set Suite Variable With Default Value
   \  Run Keyword If  ${status}  Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
   \  Run Keyword If  ${status}  Викликати для учасника  ${username}  Підготувати клієнт для користувача
   \  Run Keyword If  ${status}  Set To Dictionary  ${USERS.users['${username}']}  tender_data=${munch_dict}
+  \  ${LAST_REFRESH_DATE}=  Get Current TZdate
+  \  Set To Dictionary  ${USERS.users['${username}']}  LAST_REFRESH_DATE  ${LAST_REFRESH_DATE}
 
 
 Get Broker Property
