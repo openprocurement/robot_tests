@@ -66,8 +66,11 @@ ${broker}       Quinta
   ...      ${USERS.users['${viewer}'].broker}
   ...      minimal
   ${usernames}=  Create List  ${viewer}  ${provider}  ${provider1}
+  ${field}=  Set variable  complaintPeriod.endDate
   :FOR  ${username}  IN  @{usernames}
-  \  Викликати для учасника  ${username}  Отримати інформацію із тендера  complaintPeriod.endDate
+  \  ${value}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field}
+  \    Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${value}
+
 
 Можливість подати вимогу на умови більше ніж за 10 днів до завершення періоду подання пропозицій
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати вимогу на умови
