@@ -11,6 +11,18 @@ users:
     Tender_Viewer:
         api_key:  ""
         broker:   Quinta
+    Plan_Owner:
+        api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
+        broker:   Quinta_Plan
+    Plan_User:
+        api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
+        broker:   Quinta_Plan
+    Plan_User1:
+        api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
+        broker:   Quinta_Plan
+    Plan_Viewer:
+        api_key:  ""
+        broker:   Quinta_Plan
     E-tender_Owner:
         broker:   E-tender
         homepage: "http://bid.uat.e-tender.biz/#"
