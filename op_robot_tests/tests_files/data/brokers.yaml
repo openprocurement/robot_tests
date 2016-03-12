@@ -57,6 +57,18 @@ Quinta:
         tender_owner:   Tender_Owner
         viewer:         Tender_Viewer
     timeout_on_wait: 15
+Quinta_Plan:
+    intervals:
+        default:
+            enquiry: [0, 2]
+            tender:  [0, 5]
+    keywords_file: plan_client
+    roles:
+        tender_owner:   Plan_Owner
+        provider:       Plan_User
+        provider1:      Plan_User1
+        viewer:         Plan_Viewer
+    timeout_on_wait: 15
 E-tender:
     keywords_file: etender
     roles:
