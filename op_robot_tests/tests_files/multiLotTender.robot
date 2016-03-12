@@ -82,7 +82,7 @@ ${complaint_id}  1
   Set To Dictionary  ${USERS.users['${tender_owner}']}   lotresponses  ${lotresponses}
   log  ${lotcreate}
 
-Можливість змінити цінову пропозицію у новому лоті до 8000
+Можливість змінити бюджет нового лоту до 8000
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
@@ -93,7 +93,7 @@ ${complaint_id}  1
   Set To Dictionary  ${USERS.users['${tender_owner}'].lotresponses}   fixlotto8000resp   ${fixlotto8000resp}
   log  ${fixlotto8000resp}
 
-Можливість змінити цінову пропозицію у новому лоті до 100
+Можливість змінити бюджет нового лоту до 100
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
