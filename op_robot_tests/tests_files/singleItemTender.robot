@@ -524,6 +524,8 @@ ${question_id}  0
   Дочекатись дати закінчення прийому пропозицій  ${viewer}
   Sleep  120
   ${url}=  Викликати для учасника  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
+  Should Be True  ${url}
+  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.openprocurement\.org\/tenders\/([0-9A-Fa-f]{32})
   Log  URL аукціону для глядача: ${url}
 
 Можливість вичитати посилання на участь в аукціоні для першого учасника
@@ -534,6 +536,8 @@ ${question_id}  0
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${url}=  Викликати для учасника  ${provider}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
+  Should Be True  ${url}
+  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.openprocurement\.org\/tenders\/([0-9A-Fa-f]{32})
   Log  URL аукціону для першого учасника: ${url}
 
 Можливість вичитати посилання на участь в аукціоні для другого учасника
@@ -544,4 +548,6 @@ ${question_id}  0
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider1}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${url}=  Викликати для учасника  ${provider1}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
+  Should Be True  ${url}
+  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.openprocurement\.org\/tenders\/([0-9A-Fa-f]{32})
   Log  URL аукціону для другого учасника: ${url}
