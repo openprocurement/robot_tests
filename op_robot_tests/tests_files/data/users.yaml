@@ -64,24 +64,30 @@ users:
         position: [0, 0]
         size:     [600, 800]
     Newtend_Owner:
+    # Users are change to valid
+    # Home pages should be changed to dev23.newtend.com/opc/tenders
+    # Login procedure should be refactored
         broker:   Newtend
-        homepage: "http://openprocurement:test@dev23.newtend.com/"
-        login:    openprocurement@mailinator.com
+        username: Newtendtest
+        homepage: "http://dev23.newtend.com/opc/tenders"
+        login:    ten2312@mailinator.com
         password: 123123
-        browser:  chrome
+        browser:  firefox   # chrome
         position: [0, 0]
         size:     [1200, 1200]
     Newtend_Provider1:
         broker:   Newtend
-        homepage: "http://openprocurement:test@dev23.newtend.com/"
-        login:    openprocboss@mailinator.com
+        username: Newtendtest
+        homepage: "http://dev23.newtend.com/opc/tenders"
+        login:    ten2316@mailinator.com
         password: 123123
         browser:  chrome
         position: [700, 0]
         size:     [800, 700]
     Newtend_Viewer:
         broker:   Newtend
-        homepage: "http://openprocurement:test@dev23.newtend.com/openprocurement/tenders"
+        username: Newtendtest
+        homepage: "http://openprocurement:test@dev23.newtend.com/opc/tenders"
         browser:  chrome
         position: [800, 400]
         size:     [800, 700]

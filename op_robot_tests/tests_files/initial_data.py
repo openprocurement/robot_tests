@@ -97,7 +97,7 @@ def test_tender_data(intervals, periods=("enquiry", "tender")):
                     }
                 ],
                 "unit": {
-                    "name": u"кілограм",
+                    "name": u"кілограми",
                     "name_ru": u"килограмм",
                     "name_en": "kilogram",
                     "code": u"KGM"

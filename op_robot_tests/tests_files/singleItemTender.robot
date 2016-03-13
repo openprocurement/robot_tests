@@ -18,7 +18,7 @@ ${broker}       Quinta
 ${question_id}  0
 
 *** Test Cases ***
-Можливість оголосити однопредметний тендер
+Можливість оголосити однопредметний тендер      # Pass
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
@@ -31,7 +31,7 @@ ${question_id}  0
   Set To Dictionary  ${TENDER}   TENDER_UAID             ${TENDER_UAID}
   Log  ${TENDER}
 
-Можливість додати тендерну документацію
+Можливість додати тендерну документацію     # Pass
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість завантажити документ
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
