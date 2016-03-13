@@ -45,10 +45,8 @@ Quinta:
             enquiry: [0, 2]
             tender:  [0, 5]
         openua:
-            accelerator: 1440
             tender:  [0, 15]
         openeu:
-            accelerator: 1440
             tender:  [0, 30]
     keywords_file: openprocurement_client
     roles:
@@ -58,6 +56,9 @@ Quinta:
         viewer:         Tender_Viewer
     timeout_on_wait: 15
 E-tender:
+    intervals:
+        default:
+            enquiry: [0, 5]
     keywords_file: etender
     roles:
         provider:       E-tender_Provider1
