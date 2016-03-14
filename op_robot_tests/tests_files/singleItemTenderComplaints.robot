@@ -80,7 +80,7 @@ ${broker}       Quinta
   Викликати для учасника  ${provider}
   ...      Завантажити документацію до вимоги
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['claim_resp']}
+  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
   ...      ${document}
   Set To Dictionary  ${USERS.users['${provider}']['claim_data']}  document  ${document}
 
