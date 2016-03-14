@@ -357,14 +357,13 @@ def test_claim_answer_satisfying_data(claim_id):
     })
 
 
-def test_claim_answer_data(claim_id):
+def test_claim_answer_data():
     return munchify({
         "data": {
             "status": "answered",
             "resolutionType": "resolved",
             "tendererAction": fake.sentence(nb_words=10, variable_nb_words=True),
-            "resolution": fake.sentence(nb_words=15, variable_nb_words=True),
-            "id": claim_id
+            "resolution": fake.sentence(nb_words=15, variable_nb_words=True)
         }
     })
 
