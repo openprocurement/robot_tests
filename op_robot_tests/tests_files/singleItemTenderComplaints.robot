@@ -57,13 +57,14 @@ ${mode}         single
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${claim}=  Підготовка даних для подання вимоги
-  ${claim_resp}=  Викликати для учасника  ${provider}
+  ${complaintID}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
-  ${claim_data}=  Create Dictionary  claim=${claim}  claim_resp=${claim_resp}
+  ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data  ${claim_data}
   ${CLAIM_NUM}=  Set variable  0
   Set suite variable  ${CLAIM_NUM}
@@ -355,12 +356,11 @@ ${mode}         single
   ...  from-0.12
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${claim}=  Підготовка даних для подання вимоги
-  ${claim_resp}=  Викликати для учасника  ${provider}
+  ${complaintID}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
-  ${claim_data2}=  Create Dictionary  claim=${claim}  claim_resp=${claim_resp}
-  Log  ${claim_data2}
+  ${claim_data2}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data2  ${claim_data2}
   ${CLAIM_NUM}=  Set variable  1
   Set suite variable  ${CLAIM_NUM}
@@ -434,12 +434,11 @@ ${mode}         single
   ...  from-0.12
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${claim}=  Підготовка даних для подання вимоги
-  ${claim_resp}=  Викликати для учасника  ${provider}
+  ${complaintID}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
-  ${claim_data3}=  Create Dictionary  claim=${claim}  claim_resp=${claim_resp}
-  Log  ${claim_data3}
+  ${claim_data3}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data3  ${claim_data3}
   ${CLAIM_NUM}=  Set variable  2
   Set suite variable  ${CLAIM_NUM}
@@ -502,12 +501,11 @@ ${mode}         single
   ...  from-0.12
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${claim}=  Підготовка даних для подання вимоги
-  ${claim_resp}=  Викликати для учасника  ${provider}
+  ${complaintID}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
-  ${claim_data4}=  Create Dictionary  claim=${claim}  claim_resp=${claim_resp}
-  Log  ${claim_data4}
+  ${claim_data4}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data4  ${claim_data4}
   ${CLAIM_NUM}=  Set variable  3
   Set suite variable  ${CLAIM_NUM}
@@ -580,12 +578,11 @@ ${mode}         single
   ...  from-0.12
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${claim}=  Підготовка даних для подання вимоги
-  ${claim_resp}=  Викликати для учасника  ${provider}
+  ${complaintID}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
-  ${claim_data5}=  Create Dictionary  claim=${claim}  claim_resp=${claim_resp}
-  Log  ${claim_data5}
+  ${claim_data5}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data5  ${claim_data5}
   ${CLAIM_NUM}=  Set variable  4
   Set suite variable  ${CLAIM_NUM}
