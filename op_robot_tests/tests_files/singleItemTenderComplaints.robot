@@ -52,52 +52,24 @@ ${broker}       Quinta
   ...      ${TENDER['TENDER_UAID']}
 
 
-Можливість створити вимогу про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${provider}'].broker}: Можливість подати вимогу про виправлення умов закупівлі
+Можливість створити вимогу про виправлення умов закупівлі, додати до неї документацію і подати її
+  [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити вимогу про виправлення умов закупівлі, додати до неї документацію і подати її
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${claim}=  Підготовка даних для подання вимоги
+  ${document}=  create_fake_doc
   ${complaintID}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
-  ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}
+  ...      ${document}
+  ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}  document=${document}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data  ${claim_data}
   ${CLAIM_NUM}=  Set variable  0
   Set suite variable  ${CLAIM_NUM}
-
-
-Можливість додати документацію до вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${provider}'].broker}: Можливість додати документацію до вимоги про виправлення умов закупівлі
-  ...  provider
-  ...  ${USERS.users['${provider}'].broker}
-  ...  from-0.12
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${document}=  create_fake_doc
-  Викликати для учасника  ${provider}
-  ...      Завантажити документацію до вимоги
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
-  ...      ${document}
-  Set To Dictionary  ${USERS.users['${provider}']['claim_data']}  document  ${document}
-
-
-Можливість подати вимогу про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${provider}'].broker}: Можливість подати вимогу про виправлення умов закупівлі
-  ...  provider
-  ...  ${USERS.users['${provider}'].broker}
-  ...  from-0.12
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${data}=  Create Dictionary  status=claim
-  ${confirmation_data}=  Create Dictionary  data=${data}
-  Викликати для учасника  ${provider}
-  ...      Подати вимогу
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
-  ...      ${confirmation_data}
 
 ##############################################################################################
 #             ВІДОБРАЖЕННЯ ДЛЯ ГЛЯДАЧА
@@ -348,15 +320,15 @@ ${broker}       Quinta
 #             МОЖЛИВІСТЬ
 ##############################################################################################
 
-Можливість створити і скасувати вимогу про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити і скасувати вимогу про виправлення умов закупівлі
+Можливість створити чернетку вимоги про виправлення умов закупівлі і скасувати її
+  [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити чернетку вимоги про виправлення умов закупівлі і скасувати її
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${claim}=  Підготовка даних для подання вимоги
   ${complaintID}=  Викликати для учасника  ${provider}
-  ...      Створити вимогу
+  ...      Створити чернетку вимоги
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
   ${claim_data2}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}
@@ -379,8 +351,8 @@ ${broker}       Quinta
 #             ВІДОБРАЖЕННЯ ДЛЯ ГЛЯДАЧА
 ##############################################################################################
 
-Відображення статусу 'cancelled' вимоги для глядача
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу 'cancelled' вимоги для глядача
+Відображення статусу 'cancelled' чернетки вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу 'cancelled' чернетки вимоги для глядача
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  from-0.12
@@ -390,8 +362,8 @@ ${broker}       Quinta
   ...      complaints[${CLAIM_NUM}].status
 
 
-Відображення причини скасування вимоги для глядача
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення причини скасування вимоги для глядача
+Відображення причини скасування чернетки вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення причини скасування чернетки вимоги для глядача
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  from-0.12
@@ -403,8 +375,8 @@ ${broker}       Quinta
 #             ВІДОБРАЖЕННЯ ДЛЯ КОРИСТУВАЧА
 ##############################################################################################
 
-Відображення статусу 'cancelled' вимоги для користувача
-  [Tags]  ${USERS.users['${provider}'].broker}: Відображення статусу 'cancelled' вимоги для користувача
+Відображення статусу 'cancelled' чернетки вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення статусу 'cancelled' чернетки вимоги для користувача
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
@@ -414,8 +386,8 @@ ${broker}       Quinta
   ...      complaints[${CLAIM_NUM}].status
 
 
-Відображення причини скасування вимоги для користувача
-  [Tags]  ${USERS.users['${provider}'].broker}: Відображення причини скасування вимоги для користувача
+Відображення причини скасування чернетки вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення причини скасування чернетки вимоги для користувача
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
@@ -442,15 +414,6 @@ ${broker}       Quinta
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data3  ${claim_data3}
   ${CLAIM_NUM}=  Set variable  2
   Set suite variable  ${CLAIM_NUM}
-
-
-  ${data}=  Create Dictionary  status=claim
-  ${confirmation_data}=  Create Dictionary  data=${data}
-  Викликати для учасника  ${provider}
-  ...      Подати вимогу
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data3']['complaintID']}
-  ...      ${confirmation_data}
 
 
   ${cancellation_reason}=  create_fake_sentence
@@ -510,15 +473,6 @@ ${broker}       Quinta
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data4  ${claim_data4}
   ${CLAIM_NUM}=  Set variable  3
   Set suite variable  ${CLAIM_NUM}
-
-
-  ${data}=  Create Dictionary  status=claim
-  ${confirmation_data}=  Create Dictionary  data=${data}
-  Викликати для учасника  ${provider}
-  ...      Подати вимогу
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data4']['complaintID']}
-  ...      ${confirmation_data}
 
 
   ${answer_data}=  test_claim_answer_data
@@ -588,15 +542,6 @@ ${broker}       Quinta
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data5  ${claim_data5}
   ${CLAIM_NUM}=  Set variable  4
   Set suite variable  ${CLAIM_NUM}
-
-
-  ${data}=  Create Dictionary  status=claim
-  ${confirmation_data}=  Create Dictionary  data=${data}
-  Викликати для учасника  ${provider}
-  ...      Подати вимогу
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data5']['complaintID']}
-  ...      ${confirmation_data}
 
 
   ${answer_data}=  test_claim_answer_data

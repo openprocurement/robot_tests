@@ -323,7 +323,7 @@ Library  openprocurement_client_helper.py
   [Return]  ${complaint_internal_id}
 
 
-Створити вимогу
+Створити чернетку вимоги
   [Documentation]  Створює вимогу у статусі "draft"
   [Arguments]  ${username}  ${tender_uaid}  ${claim}
   Log  ${claim}
@@ -338,6 +338,34 @@ Library  openprocurement_client_helper.py
   Log  ${reply}
   Set To Dictionary  ${USERS.users['${username}']}  complaint_access_token=${reply.access.token}
   [return]  ${reply.data.complaintID}
+
+
+Створити вимогу
+  [Documentation]  Створює вимогу у статусі "claim"
+  ...      Можна створити вимогу як з документацією, так і без неї
+  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${document}=${None}
+  ${complaintID}=  Створити чернетку вимоги
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      ${claim}
+
+  ${status}=  Run keyword and return status  Should not be equal  ${document}  ${None}
+  Log  ${status}
+  Run keyword if  ${status} == ${True}  Завантажити документацію до вимоги
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      ${complaintID}
+  ...      ${document}
+
+  ${data}=  Create Dictionary  status=claim
+  ${confirmation_data}=  Create Dictionary  data=${data}
+  Подати вимогу
+  ...      ${username}
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${complaintID}
+  ...      ${confirmation_data}
+
+  [return]  ${complaintID}
 
 
 Завантажити документацію до вимоги
