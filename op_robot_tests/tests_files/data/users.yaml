@@ -72,7 +72,7 @@ users:
         homepage: "http://dev23.newtend.com/opc/tenders"
         login:    ten2312@mailinator.com
         password: 123123
-        browser:  firefox   # chrome
+        browser:  chrome
         position: [0, 0]
         size:     [1200, 1200]
     Newtend_Provider1:

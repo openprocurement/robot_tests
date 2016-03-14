@@ -163,7 +163,7 @@ ${broker}       Quinta
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      critical level 2
   [Setup]  Дочекатись синхронізації з майданчиком    ${tender_owner}
-  Викликати для учасника   ${tender_owner}  Внести зміни в тендер    ${TENDER['TENDER_UAID']}   description     description
+  Викликати для учасника   ${tender_owner}  Внести зміни в тендер    ${TENDER['TENDER_UAID']}    description     description
 
 Можливість додати позицію закупівлі в тендер
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
