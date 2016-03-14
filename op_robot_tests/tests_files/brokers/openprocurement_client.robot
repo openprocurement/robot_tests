@@ -375,10 +375,11 @@ Library  openprocurement_client_helper.py
 
 
 Завантажити документацію до вимоги
-  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${document}
+  [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${document}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${tender}=  set_access_key  ${tender}  ${claim.access.token}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  upload_complaint_document  ${document}  ${tender}  ${claim['data']['id']}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].complaint_access_token}
+  ${complaint_internal_id}=  Отримати internal id по UAid для скарги  ${tender}  ${complaintID}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  upload_complaint_document  ${document}  ${tender}  ${complaint_internal_id}
   Log  ${tender}
   Log  ${reply}
 
