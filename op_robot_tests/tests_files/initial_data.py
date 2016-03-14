@@ -372,16 +372,6 @@ def test_cancel_tender_data(cancellation_reason):
     })
 
 
-def test_cancel_claim_data(claim_id, cancellation_reason):
-    return munchify({
-        'data': {
-            'cancellationReason': cancellation_reason,
-            'status': 'cancelled',
-            'id': claim_id
-        }
-    })
-
-
 def test_change_cancellation_document_field_data(key, value):
     return munchify({
         "data": {
