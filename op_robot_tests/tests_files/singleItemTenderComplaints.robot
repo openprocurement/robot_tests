@@ -199,12 +199,12 @@ ${mode}         single
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  from-0.12
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${answer_data}=  test_claim_answer_data  ${USERS.users['${provider}']['claim_data']['claim_resp']['data']['id']}
+  ${answer_data}=  test_claim_answer_data
   Log  ${answer_data}
   Викликати для учасника  ${tender_owner}
   ...      Відповісти на вимогу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['claim_resp']}
+  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
   ...      ${answer_data}
   ${claim_data}=  Create Dictionary  claim_answer=${answer_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  claim_data  ${claim_data}
@@ -520,12 +520,12 @@ ${mode}         single
   ...      ${confirmation_data}
 
 
-  ${answer_data}=  test_claim_answer_data  ${USERS.users['${provider}']['claim_data4']['claim_resp']['data']['id']}
+  ${answer_data}=  test_claim_answer_data
   Log  ${answer_data}
   Викликати для учасника  ${tender_owner}
   ...      Відповісти на вимогу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data4']['claim_resp']}
+  ...      ${USERS.users['${provider}']['claim_data4']['complaintID']}
   ...      ${answer_data}
 
 
@@ -597,12 +597,12 @@ ${mode}         single
   ...      ${confirmation_data}
 
 
-  ${answer_data}=  test_claim_answer_data  ${USERS.users['${provider}']['claim_data5']['claim_resp']['data']['id']}
+  ${answer_data}=  test_claim_answer_data
   Log  ${answer_data}
   Викликати для учасника  ${tender_owner}
   ...      Відповісти на вимогу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data5']['claim_resp']}
+  ...      ${USERS.users['${provider}']['claim_data5']['complaintID']}
   ...      ${answer_data}
 
 
