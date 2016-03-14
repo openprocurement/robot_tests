@@ -370,7 +370,8 @@ Library  openprocurement_client_helper.py
   ...      ${tender}
   ...      ${claim}
   Log  ${reply}
-  [return]  ${reply}
+  Set To Dictionary  ${USERS.users['${username}']}  complaint_access_token=${reply.access.token}
+  [return]  ${reply.data.complaintID}
 
 
 Завантажити документацію до вимоги
