@@ -358,16 +358,6 @@ def test_claim_answer_data():
     })
 
 
-def test_escalate_claim_data(claim_id):
-    return munchify({
-        "data": {
-            "status": "pending",
-            "satisfied": False,
-            "id": claim_id
-        }
-    })
-
-
 def test_cancel_tender_data(cancellation_reason):
     return munchify({
         'data': {
