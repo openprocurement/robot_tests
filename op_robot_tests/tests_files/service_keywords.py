@@ -26,7 +26,6 @@ from .initial_data import (
     test_complaint_data,
     test_complaint_reply_data,
     test_confirm_data,
-    test_escalate_claim_data,
     test_invalid_features_data,
     test_item_data,
     test_lot_complaint_data,
