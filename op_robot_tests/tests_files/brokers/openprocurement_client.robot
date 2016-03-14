@@ -323,6 +323,11 @@ Library  openprocurement_client_helper.py
 ##############################################################################
 #             Claims
 ##############################################################################
+Отримати internal id по UAid для скарги
+  [Arguments]  ${tender}  ${complaintID}
+  ${complaint_internal_id}=  get_complaint_internal_id  ${tender}  ${complaintID}
+  [Return]  ${complaint_internal_id}
+
 
 Створити вимогу
   [Documentation]  Створює вимогу у статусі "draft"
