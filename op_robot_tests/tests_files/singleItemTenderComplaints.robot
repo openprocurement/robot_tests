@@ -364,12 +364,13 @@ ${broker}       Quinta
   Set suite variable  ${CLAIM_NUM}
 
 
-  ${cancellation_reason}=  Set variable  prosto tak :)
-  ${cancellation_data}=  test_cancel_claim_data  ${USERS.users['${provider}']['claim_data2']['claim_resp']['data']['id']}  ${cancellation_reason}
+  ${cancellation_reason}=  create_fake_sentence
+  ${data}=  Create Dictionary  status=cancelled  cancellationReason=${cancellation_reason}
+  ${cancellation_data}=  Create Dictionary  data=${data}
   Викликати для учасника  ${provider}
   ...      Скасувати вимогу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data2']['claim_resp']}
+  ...      ${USERS.users['${provider}']['claim_data2']['complaintID']}
   ...      ${cancellation_data}
   Set To Dictionary  ${USERS.users['${provider}'].claim_data2}  cancellation  ${cancellation_data}
 
@@ -451,12 +452,13 @@ ${broker}       Quinta
   ...      ${confirmation_data}
 
 
-  ${cancellation_reason}=  Set variable  prosto tak :)
-  ${cancellation_data}=  test_cancel_claim_data  ${USERS.users['${provider}']['claim_data3']['claim_resp']['data']['id']}  ${cancellation_reason}
+  ${cancellation_reason}=  create_fake_sentence
+  ${data}=  Create Dictionary  status=cancelled  cancellationReason=${cancellation_reason}
+  ${cancellation_data}=  Create Dictionary  data=${data}
   Викликати для учасника  ${provider}
   ...      Скасувати вимогу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data3']['claim_resp']}
+  ...      ${USERS.users['${provider}']['claim_data3']['complaintID']}
   ...      ${cancellation_data}
   Set To Dictionary  ${USERS.users['${provider}'].claim_data3}  cancellation  ${cancellation_data}
 
@@ -527,12 +529,13 @@ ${broker}       Quinta
   ...      ${answer_data}
 
 
-  ${cancellation_reason}=  Set variable  prosto tak :)
-  ${cancellation_data}=  test_cancel_claim_data  ${USERS.users['${provider}']['claim_data4']['claim_resp']['data']['id']}  ${cancellation_reason}
+  ${cancellation_reason}=  create_fake_sentence
+  ${data}=  Create Dictionary  status=cancelled  cancellationReason=${cancellation_reason}
+  ${cancellation_data}=  Create Dictionary  data=${data}
   Викликати для учасника  ${provider}
   ...      Скасувати вимогу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data4']['claim_resp']}
+  ...      ${USERS.users['${provider}']['claim_data4']['complaintID']}
   ...      ${cancellation_data}
   Set To Dictionary  ${USERS.users['${provider}'].claim_data4}  cancellation  ${cancellation_data}
 
@@ -672,12 +675,13 @@ ${broker}       Quinta
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${cancellation_reason}=  Set variable  prosto tak :)
-  ${cancellation_data}=  test_cancel_claim_data  ${USERS.users['${provider}']['claim_data5']['claim_resp']['data']['id']}  ${cancellation_reason}
+  ${cancellation_reason}=  create_fake_sentence
+  ${data}=  Create Dictionary  status=cancelled  cancellationReason=${cancellation_reason}
+  ${cancellation_data}=  Create Dictionary  data=${data}
   Викликати для учасника  ${provider}
   ...      Скасувати вимогу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data5']['claim_resp']}
+  ...      ${USERS.users['${provider}']['claim_data5']['complaintID']}
   ...      ${cancellation_data}
   Set To Dictionary  ${USERS.users['${provider}'].claim_data5}  cancellation  ${cancellation_data}
 
