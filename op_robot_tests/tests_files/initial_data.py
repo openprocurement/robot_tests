@@ -225,16 +225,6 @@ def test_complaint_data(lot=False):
 test_claim_data = test_complaint_data
 
 
-def test_claim_answer_satisfying_data(claim_id):
-    return munchify({
-        "data": {
-            "id": claim_id,
-            "status": "resolved",
-            "satisfied": True
-        }
-    })
-
-
 def test_claim_answer_data():
     return munchify({
         "data": {
