@@ -86,15 +86,6 @@ ${mode}         openeu
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data=${claim_data}
 
 
-  ${data}=  Create Dictionary  status=claim
-  ${confirmation_data}=  Create Dictionary  data=${data}
-  Викликати для учасника  ${provider}
-  ...      Подати вимогу
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
-  ...      ${confirmation_data}
-
-
 Можливість скасувати вимогу на умови
   [Tags]   ${USERS.users['${provider}'].broker}: Подання скарги
   ...      provider
@@ -282,20 +273,13 @@ ${mode}         openeu
   ...      ${USERS.users['${provider}'].broker}
   [Documentation]  Користувач ${USERS.users['${provider}'].broker} намагається подати скаргу на умови оголошеного тендера
   ${claim}=  Підготовка даних для подання вимоги
-  ${complaintID}=  Викликати для учасника  ${provider}
+  ${complaintID}=  Require failure  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
   ${claim_data2}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data2=${claim_data2}
 
-  ${confrimation_data}=  test_submit_claim_data  ${USERS.users['${provider}']['claim_data2']['claim_resp']['data']['id']}
-  Log  ${confrimation_data}
-  Require Failure  ${provider}
-  ...      Подати вимогу
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data2']['complaintID']}
-  ...      ${confirmation_data}
 
 
 Можливість продовжити період подання пропозиції на 7 днів
