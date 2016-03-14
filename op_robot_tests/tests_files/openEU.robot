@@ -80,15 +80,6 @@ ${mode}         openeu
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data  ${claim_data}
 
 
-  ${data}=  Create Dictionary  status=claim
-  ${confirmation_data}=  Create Dictionary  data=${data}
-  Викликати для учасника  ${provider}
-  ...      Подати вимогу
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
-  ...      ${confirmation_data}
-
-
 Можливість скасувати вимогу на умови
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість скасувати скаргу на умови
   ...      provider
@@ -252,21 +243,13 @@ Cкасувати цінову пропозицію другого учасни�
   ...      ${USERS.users['${provider}'].broker}
   [Documentation]  Користувач ${USERS.users['${provider}'].broker} намагається подати скаргу на умови оголошеної закупівлі
   ${claim}=  Підготовка даних для подання вимоги
-  ${complaintID}=  Викликати для учасника  ${provider}
+  ${complaintID}=  Require failure  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
   ${claim_data2}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data2  ${claim_data2}
 
-
-  ${data}=  Create Dictionary  status=claim
-  ${confirmation_data}=  Create Dictionary  data=${data}
-  Require Failure  ${provider}
-  ...      Подати вимогу
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data2']['complaintID']}
-  ...      ${confirmation_data}
 
 Продовжити період редагування подання пропозиції на 7 днів
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
@@ -379,7 +362,7 @@ Cкасувати цінову пропозицію другого учасни�
 
   ${data}=  Create Dictionary  status=pending  satisfied=${False}
   ${escalation_data}=  Create Dictionary  data=${data}
-  Викликати для учасника  ${provider}
+  Require failure  ${provider}
   ...      Перетворити вимогу в скаргу
   ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${provider}']['claim_data4']['complaintID']}
