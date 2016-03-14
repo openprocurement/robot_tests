@@ -287,13 +287,12 @@ ${broker}       Quinta
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${confirmation_data}=  test_claim_answer_satisfying_data
-  ...      ${USERS.users['${provider}']['claim_data']['claim_resp']['data']['id']}
-  Log  ${confirmation_data}
+  ${data}=  Create Dictionary  status=resolved  satisfied=${True}
+  ${confirmation_data}=  Create Dictionary  data=${data}
   Викликати для учасника  ${provider}
   ...      Підтвердити вирішення вимоги
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['claim_resp']}
+  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
   ...      ${confirmation_data}
   Set To Dictionary  ${USERS.users['${provider}']['claim_data']}  claim_answer_confirm  ${confirmation_data}
 
