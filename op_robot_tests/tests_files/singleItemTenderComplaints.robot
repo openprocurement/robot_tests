@@ -606,13 +606,12 @@ ${broker}       Quinta
   ...      ${USERS.users['${provider}']['claim_data5']['complaintID']}
   ...      ${answer_data}
 
-
-  ${escalation_data}=  test_escalate_claim_data  ${USERS.users['${provider}']['claim_data5']['claim_resp']['data']['id']}
-  Log  ${escalation_data}
-  Викликати для учасника  ${tender_owner}
+  ${data}=  Create Dictionary  status=pending  satisfied=${False}
+  ${escalation_data}=  Create Dictionary  data=${data}
+  Викликати для учасника  ${provider}
   ...      Перетворити вимогу в скаргу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data5']['claim_resp']}
+  ...      ${USERS.users['${provider}']['claim_data5']['complaintID']}
   ...      ${escalation_data}
   Set To Dictionary  ${USERS.users['${provider}'].claim_data5}  escalation  ${escalation_data}
 
@@ -730,5 +729,5 @@ ${broker}       Quinta
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
   Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${provider}'].claim_data2['cancellation']['data']['cancellationReason']}
+  ...      ${USERS.users['${provider}'].claim_data5['cancellation']['data']['cancellationReason']}
   ...      complaints[${CLAIM_NUM}].cancellationReason
