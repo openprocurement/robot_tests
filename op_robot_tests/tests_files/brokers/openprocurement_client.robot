@@ -397,12 +397,12 @@ Library  openprocurement_client_helper.py
 
 Відповісти на вимогу
   [Documentation]  Переводить вимогу зі статусу "claim" у статус "answered"
-  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${answer_data}
-  Log  ${claim}
-  Log  ${answer_data}
+  [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${answer_data}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  log  ${tender}
+  ${complaint_internal_id}=  Отримати internal id по UAid для скарги  ${tender}  ${complaintID}
+  Set To Dictionary  ${answer_data.data}  id=${complaint_internal_id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${answer_data}
+  log  ${tender}
   Log  ${reply}
 
 
