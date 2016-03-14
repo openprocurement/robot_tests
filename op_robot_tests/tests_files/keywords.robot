@@ -126,6 +126,10 @@ Get Broker Property By Username
   Log  ${tender_data}
   [return]  ${tender_data}
 
+Підготовка даних для створення лоту
+  ${lot}=  test_lot_data
+  ${reply}=  Create Dictionary  data=${lot}
+  [Return]  ${reply}
 
 Підготовка даних для подання вимоги
   ${claim}=  test_claim_data
