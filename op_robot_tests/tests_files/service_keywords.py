@@ -44,7 +44,6 @@ from .initial_data import (
     test_meat_tender_data,
     test_question_answer_data,
     test_question_data,
-    test_submit_claim_data,
     test_supplier_data,
     test_tender_data,
     test_tender_data_limited,

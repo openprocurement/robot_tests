@@ -418,15 +418,6 @@ def test_confirm_data(id):
     })
 
 
-def test_submit_claim_data(claim_id):
-    return munchify({
-        "data": {
-            "id": claim_id,
-            "status": "claim"
-        }
-    })
-
-
 def test_additional_items_data(tender_id, access_token):
     return munchify({
         "access": {
