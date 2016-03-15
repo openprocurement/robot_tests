@@ -3,6 +3,7 @@ Library  op_robot_tests.tests_files.service_keywords
 Library  String
 Library  Collections
 Library  Selenium2Library
+Library  OperatingSystem
 Library  DateTime
 Library  DebugLibrary
 
@@ -16,6 +17,7 @@ Test Suite Setup
   Set Suite Variable  ${WARN_RUN_AS}  ${False}
   Set Selenium Implicit Wait  5 s
   Set Selenium Timeout  10 s
+  Залогувати git-дані
   Завантажуємо дані про користувачів і майданчики
 
 
@@ -28,6 +30,13 @@ Set Suite Variable With Default Value
   [Arguments]  ${suite_var}  ${def_value}
   ${tmp}=  Get Variable Value  ${${suite_var}}  ${def_value}
   Set Suite Variable  ${${suite_var}}  ${tmp}
+
+
+Залогувати git-дані
+  ${commit}=  Run  git rev-parse HEAD
+  ${repo}=    Run  git remote -v
+  ${branch}=  Run  git branch -vva
+  Log many  ${commit}  ${repo}  ${branch}
 
 
 Завантажуємо дані про користувачів і майданчики
