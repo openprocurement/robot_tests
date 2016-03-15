@@ -13,6 +13,9 @@ fake_en = Factory.create()
 def create_fake_sentence():
     return fake.sentence(nb_words=10, variable_nb_words=True)
 
+def create_description_with_id():
+    return "{}: {}".format(fake.uuid4()[:8], fake.catch_phrase())
+
 
 def create_fake_doc():
     content = fake.text()
@@ -137,7 +140,7 @@ def test_tender_data_limited(intervals, procurement_method_type):
                     "id": "55523100-3",
                     "scheme": "CPV"
                 },
-                "description": u"Послуги шкільних їдалень",
+                "description": create_description_with_id(),
                 "id": "2dc54675d6364e2baffbc0f8e74432ac",
                 "deliveryDate": {
                     "endDate": (now + timedelta(days=5)).isoformat()
@@ -309,7 +312,7 @@ def test_question_data(lot=False):
                 },
                 "name": fake.company()
             },
-            "description": fake.sentence(nb_words=10, variable_nb_words=True),
+            "description": create_description_with_id(),
             "title": fake.sentence(nb_words=6, variable_nb_words=True)
         }
     })
@@ -350,7 +353,7 @@ def test_complaint_data(lot=False):
                 },
                 "name": fake.company()
             },
-            "description": fake.sentence(nb_words=10, variable_nb_words=True),
+            "description": create_description_with_id(),
             "title": fake.sentence(nb_words=6, variable_nb_words=True)
         }
     })
@@ -388,7 +391,7 @@ def test_claim_answer_data(claim_id):
         "data": {
             "status": "answered",
             "resolutionType": "resolved",
-            "tendererAction": fake.sentence(nb_words=10, variable_nb_words=True),
+            "tendererAction": create_fake_sentence(),
             "resolution": fake.sentence(nb_words=15, variable_nb_words=True),
             "id": claim_id
         }
@@ -608,7 +611,7 @@ def test_award_data():
 def test_item_data():
     now = get_now()
     return {
-        "description": fake.catch_phrase(),
+        "description": create_description_with_id(),
         "deliveryDate": {
             "endDate": (now + timedelta(days=5)).isoformat()
         },
@@ -691,7 +694,7 @@ def test_lot_data():
     return munchify(
         {'data':
             {
-                "description": fake.sentence(nb_words=10, variable_nb_words=True),
+                "description": create_description_with_id(),
                 "title": fake.sentence(nb_words=6, variable_nb_words=True),
                 "value": {
                     "currency": "UAH",
