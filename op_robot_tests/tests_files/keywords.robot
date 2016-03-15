@@ -239,6 +239,12 @@ Get Broker Property By Username
   Порівняти об'єкти  ${left}  ${right}
   Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${left}
 
+Звірити поле об’єкта тендера зі значенням
+  [Arguments]  ${username}  ${left}  ${object_type}  ${object_id}  ${field}
+  ${right}=  Run As  ${username}  Отримати інформацію із об’єкта тендера  ${object_type}  ${object_id}  ${field}
+  Порівняти об'єкти  ${left}  ${right}
+  Set_To_Object  ${USERS.users['${username}'].${object_type}['${object_id}']}  ${field}  ${right}
+  Log  ${USERS.users['${username}'].${object_type}}
 
 Порівняти об'єкти
   [Arguments]  ${left}  ${right}
@@ -260,6 +266,13 @@ Get Broker Property By Username
   ${right}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field}
   Порівняти дати  ${left}  ${right}
   Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${left}
+
+Звірити дату об’єкта тендера із значенням
+  [Arguments]  ${username}  ${left}  ${object_type}  ${object_id}  ${field}
+  ${right}=  Run As  ${username}  Отримати інформацію із об’єкта тендера  ${object_type}  ${object_id}  ${field}
+  Порівняти дати  ${left}  ${right}
+  Set_To_Object  ${USERS.users['${username}'].${object_type}['${object_id}']}  ${field}  ${right}
+  Log  ${USERS.users['${username}'].${object_type}}
 
 
 Порівняти дати
@@ -295,6 +308,10 @@ Get Broker Property By Username
   :FOR  ${index}  IN RANGE  ${len_of_items}
   \  Log  ${index}
   \  Звірити дату тендера  ${viewer}  ${tender_data}  items[${index}].${field}
+
+Отримати ідентифікатор об’єкту
+  [Arguments]  ${field}
+  Run Keyword And Return  get_id_from_field  ${field}
 
 
 Викликати для учасника

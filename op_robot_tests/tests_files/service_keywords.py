@@ -338,6 +338,19 @@ def munch_dict(arg=None, data=False):
     return munchify(arg)
 
 
+def get_id_from_field(field):
+    return field.split(":")[0]
+
+
+def get_object_by_id(data, object_id):
+    for element in data:
+        print element
+        element_id = get_id_from_field(element['description'])
+        print element_id
+        if element_id == object_id:
+            return element
+
+
 # GUI Frontends common
 def add_data_for_gui_frontends(tender_data):
     now = get_now()

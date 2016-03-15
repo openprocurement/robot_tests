@@ -90,6 +90,47 @@ Library  openprocurement_client_helper.py
   Fail  Field not found: ${field_name}
 
 
+Отримати об’єкт тендера
+  [Arguments]  ${username}  ${object_type}  ${object_id}
+  ${objects}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${object_type}
+  Log  ${objects}
+  ${object}=  get_object_by_id  ${objects}  ${object_id}
+  Log  ${object}
+  [return]   ${object}
+
+
+Отримати інформацію із об’єкта тендера
+  [Arguments]  ${username}  ${object_type}  ${object_id}  ${field_name}
+  Log  ${username}
+  Log  ${object_type}
+  Log  ${object_id}
+  Log  ${field_name}
+
+  ${object}=  Отримати об’єкт тендера  ${username}  ${object_type}  ${object_id}
+
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      Get from object
+  ...      ${object}
+  ...      ${field_name}
+  # If field is found, return its value
+  Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
+
+  # Else refresh cached data and try again
+  openprocurement_client.Пошук тендера по ідентифікатору
+  ...      ${username}
+  ...      ${TENDER['TENDER_UAID']}
+  ${object}=  Отримати об’єкт тендера  ${username}  ${object_type}  ${object_id}
+
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      Get from object
+  ...      ${object}
+  ...      ${field_name}
+  Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
+
+  # If field is still absent, trigger a failure
+  Fail  Field not found: ${field_name}
+
+
 Внести зміни в тендер
   [Arguments]  ${username}  ${tender_uaid}  ${fieldname}  ${fieldvalue}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
