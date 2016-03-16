@@ -14,8 +14,8 @@ Resource           resource.robot
   ...      Створити тендер
   ...      ${tender_data}
   Log  ${tender_data}
-  Set To Dictionary  ${TENDER}  TENDER_UAID  ${TENDER_UAID}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data  ${tender_data}
+  Set To Dictionary  ${TENDER}  TENDER_UAID=${TENDER_UAID}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data=${tender_data}
   Log  ${TENDER}
 
 
@@ -66,8 +66,8 @@ Resource           resource.robot
   ...      Створити тендер
   ...      ${tender_data}
   Log  ${tender_data}
-  Set To Dictionary  ${TENDER}  TENDER_UAID  ${TENDER_UAID}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data  ${tender_data}
+  Set To Dictionary  ${TENDER}  TENDER_UAID=${TENDER_UAID}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data=${tender_data}
   Log  ${TENDER}
 
 
@@ -89,8 +89,8 @@ Resource           resource.robot
   ...      Завантажити документ
   ...      ${filepath}
   ...      ${TENDER['TENDER_UAID']}
-  ${documents}=  Create Dictionary  filepath  ${filepath}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  documents  ${documents}
+  ${documents}=  Create Dictionary  filepath=${filepath}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  documents=${documents}
 
 
 Можливість зареєструвати і підтвердити постачальника до закупівлі
