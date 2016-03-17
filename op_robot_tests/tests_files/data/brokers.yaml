@@ -117,8 +117,14 @@ PublicPortal:
 SmartTender:
     intervals:
         default:
-            enquiry: [5, 10]
+            enquiry: [0, 10]
+            tender:  [0, 20]
+        openua:
+            accelerator: 1440
             tender:  [0, 15]
+        openeu:
+            tender:  [0, 30]
+            accelerator: 1440
     keywords_file: smarttender
     roles:
         provider:       SmartTender_Provider1
