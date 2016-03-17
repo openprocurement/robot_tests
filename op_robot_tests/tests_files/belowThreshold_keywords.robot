@@ -22,7 +22,7 @@ Resource           resource.robot
   Log  ${USERS.users['${tender_owner}']}
 
 
-Можливість знайти однопредметний тендер по ідентифікатору
+Можливість знайти тендер по ідентифікатору
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
   \  Дочекатись синхронізації з майданчиком  ${username}
   \  Викликати для учасника  ${username}  Пошук тендера по ідентифікатору  ${TENDER['TENDER_UAID']}

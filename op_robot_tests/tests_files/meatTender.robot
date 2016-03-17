@@ -43,9 +43,7 @@ ${broker}       Quinta
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      minimal
-  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
-  \  Дочекатись синхронізації з майданчиком    ${username}
-  \  Викликати для учасника  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
+  Можливість знайти тендер по ідентифікатору
 
 
 Неможливість перевищити ліміт для нецінових критеріїв
