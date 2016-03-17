@@ -28,8 +28,10 @@ Resource           resource.robot
   \  Викликати для учасника  ${username}  Пошук тендера по ідентифікатору  ${TENDER['TENDER_UAID']}
 
 
-Можливість редагувати однопредметний тендер
-  Викликати для учасника  ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  description  description
+Можливість редагувати тендер
+  ${field}=  Set variable  description
+  ${value}=  create_fake_sentence
+  Викликати для учасника  ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  ${field}  ${value}
 
 
 Можливість задати питання

@@ -266,13 +266,14 @@ ${broker}       Quinta
 ##############################################################################################
 
 Можливість редагувати багатопредметний тендер
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      critical level 2
-  [Setup]  Дочекатись синхронізації з майданчиком    ${tender_owner}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Викликати для учасника   ${tender_owner}  Внести зміни в тендер    ${TENDER['TENDER_UAID']}   description     description
+  Можливість редагувати тендер
+
 
 Можливість додати позицію закупівлі в тендер
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
