@@ -10,7 +10,7 @@ Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
 *** Variables ***
-${mode}         multi
+${mode}         multiItem
 @{used_roles}   tender_owner  provider  provider1  viewer
 
 

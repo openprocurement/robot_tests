@@ -194,26 +194,28 @@ def test_tender_data_multiple_items(intervals):
     return t_data
 
 
-def test_tender_data_multiple_lots(t_data):
+def test_tender_data_multiple_lots(intervals):
+    tender = test_tender_data_multiple_items(intervals)
     first_lot_id = "3c8f387879de4c38957402dbdb8b31af"
     second_lot_id = "bcac8d2ceb5f4227b841a2211f5cb646"
 
-    for item in t_data['data']['items'][:-1]:
+    for item in tender['items'][:-1]:
         item['relatedLot'] = first_lot_id
-    t_data['data']['items'][-1]['relatedLot'] = second_lot_id
-    t_data['data']['lots'] = []
+    tender['items'][-1]['relatedLot'] = second_lot_id
+    tender['lots'] = []
     for _ in range(2):
         new_lot = test_lot_data()
-        t_data['data']['lots'].append(new_lot)
-    t_data['data']['lots'][0]['id'] = first_lot_id
-    t_data['data']['lots'][1]['id'] = second_lot_id
-    return t_data
+        tender['lots'].append(new_lot)
+    tender['lots'][0]['id'] = first_lot_id
+    tender['lots'][1]['id'] = second_lot_id
+    return tender
 
 
-def test_meat_tender_data(tender):
+def test_tender_data_meat(intervals):
+    tender = munchify(test_tender_data(intervals))
     item_id = "edd0032574bf4402877ad5f362df225a"
-    tender.data['items'][0].id = item_id
-    tender.data.features = [
+    tender['items'][0].id = item_id
+    tender.features = [
         {
             "code": "ee3e24bc17234a41bd3e3a04cc28e9c6",
             "featureOf": "tenderer",
