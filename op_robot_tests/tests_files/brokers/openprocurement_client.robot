@@ -68,14 +68,6 @@ Library  openprocurement_client_helper.py
   Log  ${username}
   Log  ${field_name}
 
-  ${status}  ${field_value}=  Run keyword and ignore error
-  ...      Get from object
-  ...      ${USERS.users['${username}'].tender_data.data}
-  ...      ${field_name}
-  # If field is found, return its value
-  Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
-
-  # Else refresh cached data and try again
   openprocurement_client.Пошук тендера по ідентифікатору
   ...      ${username}
   ...      ${TENDER['TENDER_UAID']}
@@ -86,7 +78,6 @@ Library  openprocurement_client_helper.py
   ...      ${field_name}
   Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
 
-  # If field is still absent, trigger a failure
   Fail  Field not found: ${field_name}
 
 
