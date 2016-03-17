@@ -30,18 +30,13 @@ ${question_id}  0
 
 
 Можливість додати тендерну документацію
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість завантажити документ
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість додати тендерну документацію
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      critical level 2
   [Documentation]  Закупівельник ${USERS.users['${tender_owner}'].broker} завантажує документацію до оголошеної закупівлі
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${filepath}=  create_fake_doc
-  ${doc_upload_reply}=  Викликати для учасника  ${tender_owner}  Завантажити документ  ${filepath}  ${TENDER['TENDER_UAID']}
-  ${file_upload_process_data} =  Create Dictionary  filepath=${filepath}  doc_upload_reply=${doc_upload_reply}
-  Log  ${file_upload_process_data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  file_upload_process_data=${file_upload_process_data}
-  Log  ${USERS.users['${tender_owner}']}
+  Можливість додати тендерну документацію
 
 
 Можливість знайти однопредметний тендер по ідентифікатору

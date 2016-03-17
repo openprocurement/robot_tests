@@ -26,6 +26,17 @@ ${broker}       Quinta
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість оголосити тендер
 
+
+Можливість додати тендерну документацію
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість додати тендерну документацію
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      critical level 2
+  [Documentation]  Закупівельник ${USERS.users['${tender_owner}'].broker} завантажує документацію до оголошеної закупівлі
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість додати тендерну документацію
+
+
 Можливість знайти однопредметний тендер по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
   ...      viewer  tender_owner  provider  provider1
