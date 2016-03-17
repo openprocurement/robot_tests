@@ -14,6 +14,10 @@ def create_fake_sentence():
     return fake.sentence(nb_words=10, variable_nb_words=True)
 
 
+def description_with_id(prefix, sentence):
+    return "{}-{}: {}".format(prefix, fake.uuid4()[:8], sentence)
+
+
 def create_fake_doc():
     content = fake.text()
     suffix = fake.random_element(('.txt', '.doc', '.docx', '.pdf'))
@@ -98,7 +102,7 @@ def test_tender_data_limited(intervals, procurement_method_type):
                     "id": "55523100-3",
                     "scheme": "CPV"
                 },
-                "description": u"Послуги шкільних їдалень",
+                "description": description_with_id('i',  u"Послуги шкільних їдалень"),
                 "id": "2dc54675d6364e2baffbc0f8e74432ac",
                 "deliveryDate": {
                     "endDate": (now + timedelta(days=5)).isoformat()
@@ -189,7 +193,7 @@ def test_meat_tender_data(tender):
             "code": "ee3e24bc17234a41bd3e3a04cc28e9c6",
             "featureOf": "tenderer",
             "title": "Термін оплати",
-            "description": "Умови відстрочки платежу після поставки товару",
+            "description": description_with_id('f', "Умови відстрочки платежу після поставки товару"),
             "enum": [
                 {
                     "value": 0.15,
@@ -214,7 +218,7 @@ def test_meat_tender_data(tender):
             "featureOf": "item",
             "relatedItem": item_id,
             "title": "Сорт",
-            "description": "Сорт продукції",
+            "description": description_with_id('f', "Сорт продукції"),
             "enum": [
                 {
                     "value": 0.05,
@@ -258,7 +262,7 @@ def test_question_data(lot=False):
                 },
                 "name": fake.company()
             },
-            "description": fake.sentence(nb_words=10, variable_nb_words=True),
+            "description": description_with_id('q', fake.sentence(nb_words=10, variable_nb_words=True)),
             "title": fake.sentence(nb_words=6, variable_nb_words=True)
         }
     })
@@ -557,7 +561,7 @@ def test_award_data():
 def test_item_data():
     now = get_now()
     return {
-        "description": fake.catch_phrase(),
+        "description": description_with_id('i', fake.catch_phrase()),
         "deliveryDate": {
             "endDate": (now + timedelta(days=5)).isoformat()
         },
@@ -639,7 +643,7 @@ def test_invalid_features_data():
 def test_lot_data():
     return munchify(
         {
-            "description": fake.sentence(nb_words=10, variable_nb_words=True),
+            "description": description_with_id('l', fake.sentence(nb_words=10, variable_nb_words=True)),
             "title": fake.sentence(nb_words=6, variable_nb_words=True),
             "value": {
                 "currency": "UAH",
