@@ -18,7 +18,7 @@ Resource           resource.robot
   ${doc_upload_reply}=  Викликати для учасника  ${tender_owner}  Завантажити документ  ${filepath}  ${TENDER['TENDER_UAID']}
   ${file_upload_process_data} =  Create Dictionary  filepath=${filepath}  doc_upload_reply=${doc_upload_reply}
   Log  ${file_upload_process_data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  file_upload_process_data=${file_upload_process_data}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  documents=${file_upload_process_data}
   Log  ${USERS.users['${tender_owner}']}
 
 
@@ -201,121 +201,130 @@ Resource           resource.robot
 #             ВІДОБРАЖЕННЯ
 ##############################################################################################
 
-Відображення заголовку оголошеного тендера
+Відображення заголовку тендера
   :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}
   \  Дочекатись синхронізації з майданчиком  ${username}
   \  Звірити поле тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  title
 
 
-Відображення опису оголошеного тендера
+Відображення заголовку документа тендера
+  ${doc_num}=  Set variable  0
+  :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}
+  \  Дочекатись синхронізації з майданчиком  ${username}
+  \  Звірити поле тендера із значенням  ${username}
+  \  ...      ${USERS.users['${tender_owner}']['documents']['filepath']}
+  \  ...      documents[${doc_num}].title
+
+
+Відображення опису тендера
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  description
 
 
-Відображення бюджету оголошеного тендера
+Відображення бюджету тендера
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  value.amount
 
 
-Відображення tenderID оголошеного тендера
+Відображення ідентифікатора тендера
   Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}  tenderID
 
 
-Відображення procuringEntity.name оголошеного тендера
+Відображення імені замовника тендера
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  procuringEntity.name
 
 
-Відображення початку періоду уточнення оголошеного тендера
+Відображення початку періоду уточнення тендера
   Звірити дату тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  enquiryPeriod.startDate
 
 
-Відображення закінчення періоду уточнення оголошеного тендера
+Відображення закінчення періоду уточнення тендера
   Звірити дату тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  enquiryPeriod.endDate
 
 
-Відображення початку періоду прийому пропозицій оголошеного тендера
+Відображення початку періоду прийому пропозицій тендера
   :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}
   \  Дочекатись синхронізації з майданчиком  ${username}
   \  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.startDate
 
 
-Відображення закінчення періоду прийому пропозицій оголошеного тендера
+Відображення закінчення періоду прийому пропозицій тендера
   :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}
   \  Дочекатись синхронізації з майданчиком  ${username}
   \  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.endDate
 
 
-Відображення мінімального кроку оголошеного тендера
+Відображення мінімального кроку тендера
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  minimalStep.amount
 
 
-Відображення дати доставки позицій закупівлі однопредметного тендера
+Відображення дати доставки позицій закупівлі тендера
   Звірити дату тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryDate.endDate
 
 
-Відображення координат широти доставки позицій закупівлі однопредметного тендера
+Відображення координат широти доставки позицій закупівлі тендера
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryLocation.latitude
 
 
-Відображення координат довготи доставки позицій закупівлі однопредметного тендера
+Відображення координат довготи доставки позицій закупівлі тендера
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryLocation.longitude
 
 
-Відображення назви нас. пункту доставки позицій закупівлі однопредметного тендера
+Відображення назви нас. пункту доставки позицій закупівлі тендера
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.countryName
 
 
-Відображення пошт. коду доставки позицій закупівлі однопредметного тендера
+Відображення пошт. коду доставки позицій закупівлі тендера
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.postalCode
 
 
-Відображення регіону доставки позицій закупівлі однопредметного тендера
+Відображення регіону доставки позицій закупівлі тендера
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.region
 
 
-Відображення locality адреси доставки позицій закупівлі однопредметного тендера
+Відображення населеного пункту адреси доставки позицій закупівлі тендера
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.locality
 
 
-Відображення вулиці доставки позицій закупівлі однопредметного тендера
+Відображення вулиці доставки позицій закупівлі тендера
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.streetAddress
 
 
-Відображення схеми класифікації позицій закупівлі однопредметного тендера
+Відображення схеми класифікації позицій закупівлі тендера
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].classification.scheme
 
 
-Відображення ідентифікатора класифікації позицій закупівлі однопредметного тендера
+Відображення ідентифікатора класифікації позицій закупівлі тендера
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].classification.id
 
 
-Відображення опису класифікації позицій закупівлі однопредметного тендера
+Відображення опису класифікації позицій закупівлі тендера
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].classification.description
 
 
-Відображення схеми додаткової класифікації позицій закупівлі однопредметного тендера
+Відображення схеми додаткової класифікації позицій закупівлі тендера
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].additionalClassifications[0].scheme
 
 
-Відображення ідентифікатора додаткової класифікації позицій закупівлі однопредметного тендера
+Відображення ідентифікатора додаткової класифікації позицій закупівлі тендера
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].additionalClassifications[0].id
 
 
-Відображення опису додаткової класифікації позицій закупівлі однопредметного тендера
+Відображення опису додаткової класифікації позицій закупівлі тендера
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].additionalClassifications[0].description
 
 
-Відображення назви одиниці позицій закупівлі однопредметного тендера
+Відображення назви одиниці позицій закупівлі тендера
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].unit.name
 
 
-Відображення коду одиниці позицій закупівлі однопредметного тендера
+Відображення коду одиниці позицій закупівлі тендера
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].unit.code
 
 
-Відображення кількості позицій закупівлі однопредметного тендера
+Відображення кількості позицій закупівлі тендера
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].quantity
 
 
-Відображення опису позицій закупівлі однопредметного тендера
+Відображення опису позицій закупівлі тендера
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].description
 
 
