@@ -4,6 +4,7 @@ Library         String
 Library         Collections
 Library         Selenium2Library
 Library         DebugLibrary
+Resource        belowThreshold_keywords.robot
 Resource        keywords.robot
 Resource        resource.robot
 Suite Setup     Test Suite Setup
@@ -25,11 +26,7 @@ ${question_id}  0
   ...      minimal
   [Documentation]  Створення закупівлі замовником, обовязково має повертати UAID закупівлі (номер тендера),
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${tender_data}=  Підготовка даних для створення тендера
-  ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${tender_data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data=${tender_data}
-  Set To Dictionary  ${TENDER}  TENDER_UAID=${TENDER_UAID}
-  Log  ${TENDER}
+  Можливість оголосити тендер
 
 
 Можливість додати тендерну документацію

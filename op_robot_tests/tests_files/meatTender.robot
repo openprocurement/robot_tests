@@ -4,13 +4,14 @@ Library         String
 Library         Collections
 Library         Selenium2Library
 Library         DebugLibrary
+Resource        belowThreshold_keywords.robot
 Resource        keywords.robot
 Resource        resource.robot
 Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
 *** Variables ***
-${mode}         single
+${mode}         meat
 
 ${role}         viewer
 ${broker}       Quinta
@@ -23,13 +24,7 @@ ${broker}       Quinta
   ...      minimal
   [Documentation]   Створення закупівлі замовником, обовязково має повертати UAID закупівлі (номер тендера),
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${base_tender_data}=  Підготовка даних для створення тендера
-  ${tender_data}=  test_meat_tender_data  ${base_tender_data}
-  ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${tender_data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data  ${tender_data}
-  Set To Dictionary  ${TENDER}   TENDER_UAID             ${TENDER_UAID}
-  Log  ${TENDER}
-
+  Можливість оголосити тендер
 
 Можливість знайти однопредметний тендер по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору

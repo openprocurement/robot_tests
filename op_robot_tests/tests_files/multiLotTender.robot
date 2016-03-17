@@ -4,13 +4,14 @@ Library         String
 Library         Collections
 Library         Selenium2Library
 Library         DebugLibrary
+Resource        belowThreshold_keywords.robot
 Resource        keywords.robot
 Resource        resource.robot
 Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
 *** Variables ***
-${mode}         multi
+${mode}         multiLot
 
 ${role}         viewer
 ${broker}       Quinta
@@ -25,12 +26,7 @@ ${complaint_id}  1
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      minimal
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${tender_data}=  Підготовка даних для створення тендера
-  ${tender_data}=  test_tender_data_multiple_lots  ${tender_data}
-  ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${tender_data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data  ${tender_data}
-  Set To Dictionary  ${TENDER}   TENDER_UAID             ${TENDER_UAID}
-  Log  ${TENDER}
+  Можливість оголосити тендер
 
 Можливість знайти мультилотовий тендер по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
