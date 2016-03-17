@@ -32,7 +32,7 @@ Resource           resource.robot
   ${field}=  Set variable  description
   ${value}=  create_fake_sentence
   Викликати для учасника  ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  ${field}  ${value}
-
+  Set to object  ${USERS.users['${tender_owner}'].initial_data.data}  ${field}  ${value}
 
 Можливість задати питання
   ${question}=  Підготовка даних для запитання
