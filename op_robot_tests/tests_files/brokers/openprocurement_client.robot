@@ -425,7 +425,7 @@ Library  openprocurement_client_helper.py
   Log  ${reply}
 
 
-Дискваліфікація постачальника
+Дискваліфікувати постачальника
   [Documentation]
   ...      [Arguments] Username, tender uaid and award number
   ...      [Description] Find tender using uaid, create data dict with unsuccessful status and call patch_award
