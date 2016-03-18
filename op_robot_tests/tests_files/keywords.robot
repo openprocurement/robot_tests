@@ -18,6 +18,7 @@ Test Suite Setup
   Set Selenium Implicit Wait  5 s
   Set Selenium Timeout  10 s
   Залогувати git-дані
+  Порівняти системний і серверний час
   Завантажуємо дані про користувачів і майданчики
 
 
@@ -30,6 +31,17 @@ Set Suite Variable With Default Value
   [Arguments]  ${suite_var}  ${def_value}
   ${tmp}=  Get Variable Value  ${${suite_var}}  ${def_value}
   Set Suite Variable  ${${suite_var}}  ${tmp}
+
+
+Порівняти системний і серверний час
+  ${server_time}=  request  https://lb.api-sandbox.openprocurement.org/  HEAD
+  ${local_time}=  Get current TZdate
+  Log  ${server_time.headers['date']}
+  Log  ${local_time}
+  ${status}=  compare_date  ${server_time.headers['date']}  ${local_time}  5
+  ${status}=  Set variable  ${False}
+  Run keyword if  ${status} == ${False}
+  ...      Log  Час на сервері відрізняється від локального більше ніж на 5 секунд  WARN
 
 
 Залогувати git-дані
