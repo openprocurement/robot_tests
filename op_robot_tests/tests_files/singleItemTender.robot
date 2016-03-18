@@ -307,41 +307,59 @@ ${question_id}  0
   ...      critical level 2
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${question}=  Підготовка даних для запитання
-  ${question_resp}=  Викликати для учасника  ${provider}  Задати питання  ${TENDER['TENDER_UAID']}  ${question}
-  ${now}=  Get Current TZdate
-  ${question.data.date}=  Set variable  ${now}
-  ${question_data}=  Create Dictionary  question=${question}  question_resp=${question_resp}
-  ${question_data}=  munch_dict  arg=${question_data}
-  Set To Dictionary  ${USERS.users['${provider}']}  question_data=${question_data}
+  Можливість задати питання
 
 ##############################################################################################
 #             ВІДОБРАЖЕННЯ
 ##############################################################################################
 
 Відображення заголовку анонімного питання без відповіді
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповідей
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповіді
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      critical level 2
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Викликати для учасника  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
-  Звірити поле тендера із значенням  ${viewer}  ${USERS.users['${provider}'].question_data.question.data.title}  questions[${question_id}].title
+  Відображення заголовку анонімного питання без відповіді
 
 
 Відображення опису анонімного питання без відповіді
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповідей
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповіді
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      critical level 2
-  Звірити поле тендера із значенням  ${viewer}  ${USERS.users['${provider}'].question_data.question.data.description}  questions[${question_id}].description
+  Відображення опису анонімного питання без відповіді
 
 
 Відображення дати анонімного питання без відповіді
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповідей
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповіді
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити дату тендера із значенням  ${viewer}  ${USERS.users['${provider}'].question_data.question.data.date}  questions[${question_id}].date
+  Відображення дати анонімного питання без відповіді
+
+##############################################################################################
+#             МОЖЛИВІСТЬ
+##############################################################################################
+
+Можливість відповісти на питання
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість відповісти на питання
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      critical level 2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість відповісти на питання
+
+##############################################################################################
+#             ВІДОБРАЖЕННЯ
+##############################################################################################
+
+Відображення відповіді на запитання
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення відповіді на запитання
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      critical level 2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Відображення відповіді на запитання
 
 ##############################################################################################
 #             МОЖЛИВІСТЬ
@@ -360,37 +378,6 @@ ${question_id}  0
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}  bid_before_bidperiod_resp=${bid_before_bidperiod_resp}
   Log  ${USERS.users['${provider}']}
 
-
-Можливість відповісти на запитання
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість відповісти на запитання
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      critical level 2
-  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${answer}=  Підготовка даних для відповіді на запитання
-  ${answer_resp}=  Викликати для учасника  ${tender_owner}  Відповісти на питання  ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}']['question_data']['question_resp']}  ${answer}
-  ${now}=  Get Current TZdate
-  ${answer.data.date}=  Set variable  ${now}
-  ${answer_data}=  Create Dictionary  answer=${answer}  answer_resp=${answer_resp}
-  Set To Dictionary  ${USERS.users['${provider}']}  answer_data=${answer_data}
-
-##############################################################################################
-#             ВІДОБРАЖЕННЯ
-##############################################################################################
-
-Відображення відповіді на запитання
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення відповіді на запитання
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      critical level 2
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Викликати для учасника  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
-  Звірити поле тендера із значенням  ${viewer}  ${USERS.users['${provider}']['answer_data']['answer'].data.answer}  questions[${question_id}].answer
-
-##############################################################################################
-#             МОЖЛИВІСТЬ
-##############################################################################################
 
 Можливість подати цінову пропозицію першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію

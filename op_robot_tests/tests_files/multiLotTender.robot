@@ -16,7 +16,7 @@ ${mode}         multiLot
 ${role}         viewer
 ${broker}       Quinta
 
-${question_id}  1
+${question_id}  0
 ${complaint_id}  1
 
 *** Test Cases ***
@@ -280,12 +280,77 @@ ${complaint_id}  1
 #             ВІДОБРАЖЕННЯ
 ##############################################################################################
 
-Відображення редагованого опису мальтилотового тендера
+Відображення редагованого опису мультилотового тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Відображення опису тендера
+
+##############################################################################################
+#             МОЖЛИВІСТЬ
+##############################################################################################
+
+Можливість задати питання
+  [Tags]   ${USERS.users['${provider}'].broker}: Можливість задати запитання
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      critical level 2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість задати питання
+
+##############################################################################################
+#             ВІДОБРАЖЕННЯ
+##############################################################################################
+
+Відображення заголовку анонімного питання без відповіді
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповіді
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      critical level 2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Відображення заголовку анонімного питання без відповіді
+
+
+Відображення опису анонімного питання без відповіді
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповіді
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      critical level 2
+  Відображення опису анонімного питання без відповіді
+
+
+Відображення дати анонімного питання без відповіді
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповіді
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  Відображення дати анонімного питання без відповіді
+
+##############################################################################################
+#             МОЖЛИВІСТЬ
+##############################################################################################
+
+Можливість відповісти на питання
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість відповісти на питання
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      critical level 2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість відповісти на питання
+
+##############################################################################################
+#             ВІДОБРАЖЕННЯ
+##############################################################################################
+
+Відображення відповіді на запитання
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення відповіді на запитання
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      critical level 2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Відображення відповіді на запитання
 
 #######
 #Операції з лотом
@@ -406,35 +471,6 @@ ${complaint_id}  1
   Set To Dictionary  ${USERS.users['${tender_owner}']}   file_upload_process_data   ${file_upload_process_data}
   Log  ${lot_id}
   Log  ${USERS.users['${tender_owner}']}
-
-
-#######
-#Запитання до лоту
-
-Можливість задати питання
-  [Tags]   ${USERS.users['${provider}'].broker}: Можливість задати запитання
-  ...      provider
-  ...      ${USERS.users['${provider}'].broker}
-  [Setup]  Дочекатись синхронізації з майданчиком    ${provider}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${question}=  Підготовка даних для запитання
-  ${question_resp}=  Викликати для учасника   ${provider}   Задати питання  ${TENDER['TENDER_UAID']}   ${question}
-  ${now}=  Get Current TZdate
-  ${question.data.date}=  Set variable  ${now}
-  ${question_data}=  Create Dictionary  question=${question}  question_resp=${question_resp}
-  Set To Dictionary  ${USERS.users['${provider}']}  question_data  ${question_data}
-Можливість відповісти на запитання
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість відповісти на запитання
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  [Setup]  Дочекатись синхронізації з майданчиком    ${tender_owner}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${answer}=  Підготовка даних для відповіді на запитання
-  ${answer_resp}=  Викликати для учасника   ${tender_owner}   Відповісти на питання    ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}']['question_data']['question_resp']}  ${answer}
-  ${now}=  Get Current TZdate
-  ${answer.data.date}=  Set variable  ${now}
-  ${answer_data}=  Create Dictionary  answer=${answer}  answer_resp=${answer_resp}
-  Set To Dictionary  ${USERS.users['${provider}']}  answer_data  ${answer_data}
 
 ######
 #Cкарга на лот

@@ -34,6 +34,7 @@ Resource           resource.robot
   Викликати для учасника  ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  ${field}  ${value}
   Set to object  ${USERS.users['${tender_owner}'].initial_data.data}  ${field}  ${value}
 
+
 Можливість задати питання
   ${question}=  Підготовка даних для запитання
   ${question_resp}=  Викликати для учасника  ${provider}  Задати питання  ${TENDER['TENDER_UAID']}  ${question}
@@ -44,6 +45,15 @@ Resource           resource.robot
   Set To Dictionary  ${USERS.users['${provider}']}  question_data=${question_data}
 
 
+Можливість відповісти на питання
+  ${answer}=  Підготовка даних для відповіді на запитання
+  ${answer_resp}=  Викликати для учасника  ${tender_owner}  Відповісти на питання  ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}']['question_data']['question_resp']}  ${answer}
+  ${now}=  Get Current TZdate
+  ${answer.data.date}=  Set variable  ${now}
+  ${answer_data}=  Create Dictionary  answer=${answer}  answer_resp=${answer_resp}
+  Set To Dictionary  ${USERS.users['${provider}']}  answer_data=${answer_data}
+
+
 Неможливість подати цінову пропозицію до початку періоду подачі пропозицій першим учасником
   ${bid}=  test bid data
   Log  ${bid}
@@ -52,15 +62,6 @@ Resource           resource.robot
   ${bid_before_bidperiod_resp}=  Require Failure  ${provider}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}  bid_before_bidperiod_resp=${bid_before_bidperiod_resp}
   Log  ${USERS.users['${provider}']}
-
-
-Можливість відповісти на запитання
-  ${answer}=  Підготовка даних для відповіді на запитання
-  ${answer_resp}=  Викликати для учасника  ${tender_owner}  Відповісти на питання  ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}']['question_data']['question_resp']}  ${answer}
-  ${now}=  Get Current TZdate
-  ${answer.data.date}=  Set variable  ${now}
-  ${answer_data}=  Create Dictionary  answer=${answer}  answer_resp=${answer_resp}
-  Set To Dictionary  ${USERS.users['${provider}']}  answer_data=${answer_data}
 
 
 Можливість подати цінову пропозицію першим учасником
