@@ -7,6 +7,7 @@ from iso8601 import parse_date
 from json import load
 from jsonpath_rw import parse as parse_path
 from munch import fromYAML, Munch, munchify
+from restkit import request
 from robot.errors import HandlerExecutionFailed
 from robot.libraries.BuiltIn import BuiltIn
 from robot.output import LOGGER
