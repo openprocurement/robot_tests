@@ -4,6 +4,7 @@ Library         String
 Library         Collections
 Library         Selenium2Library
 Library         DebugLibrary
+Resource        belowThreshold_keywords.robot
 Resource        keywords.robot
 Resource        resource.robot
 Suite Setup     Test Suite Setup
@@ -25,26 +26,17 @@ ${question_id}  0
   ...      minimal
   [Documentation]  Створення закупівлі замовником, обовязково має повертати UAID закупівлі (номер тендера),
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${tender_data}=  Підготовка даних для створення тендера
-  ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${tender_data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data=${tender_data}
-  Set To Dictionary  ${TENDER}  TENDER_UAID=${TENDER_UAID}
-  Log  ${TENDER}
+  Можливість оголосити тендер
 
 
 Можливість додати тендерну документацію
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість завантажити документ
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість додати тендерну документацію
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      critical level 2
   [Documentation]  Закупівельник ${USERS.users['${tender_owner}'].broker} завантажує документацію до оголошеної закупівлі
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${filepath}=  create_fake_doc
-  ${doc_upload_reply}=  Викликати для учасника  ${tender_owner}  Завантажити документ  ${filepath}  ${TENDER['TENDER_UAID']}
-  ${file_upload_process_data} =  Create Dictionary  filepath=${filepath}  doc_upload_reply=${doc_upload_reply}
-  Log  ${file_upload_process_data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  file_upload_process_data=${file_upload_process_data}
-  Log  ${USERS.users['${tender_owner}']}
+  Можливість додати тендерну документацію
 
 
 Можливість знайти однопредметний тендер по ідентифікатору
@@ -53,241 +45,224 @@ ${question_id}  0
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      minimal
-  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
-  \  Дочекатись синхронізації з майданчиком  ${username}
-  \  Викликати для учасника  ${username}  Пошук тендера по ідентифікатору  ${TENDER['TENDER_UAID']}
+  Можливість знайти тендер по ідентифікатору
 
 ##############################################################################################
 #             ВІДОБРАЖЕННЯ
 ##############################################################################################
 
-Відображення заголовку оголошеного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+Відображення заголовку документа однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+  ...      viewer  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  Відображення заголовку документа тендера
+
+
+Відображення заголовку однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      minimal
-  :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}
-  \  Дочекатись синхронізації з майданчиком  ${username}
-  \  Звірити поле тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  title
+  Відображення заголовку тендера
 
 
-Відображення опису оголошеного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+Відображення опису однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  description
+  Відображення опису тендера
 
 
-Відображення бюджету оголошеного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+Відображення бюджету однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      critical level 2
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  value.amount
+  Відображення бюджету тендера
 
 
-Відображення tenderID оголошеного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+Відображення ідентифікатора однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      critical level 2
-  Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}  tenderID
+  Відображення ідентифікатора тендера
 
 
-Відображення procuringEntity.name оголошеного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+Відображення імені замовника однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      critical level 2
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  procuringEntity.name
+  Відображення імені замовника тендера
 
 
-Відображення початку періоду уточнення оголошеного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+Відображення початку періоду уточнення однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити дату тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  enquiryPeriod.startDate
+  Відображення початку періоду уточнення тендера
 
 
-Відображення закінчення періоду уточнення оголошеного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+Відображення закінчення періоду уточнення однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      minimal
-  Звірити дату тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  enquiryPeriod.endDate
+  Відображення закінчення періоду уточнення тендера
 
 
-Відображення початку періоду прийому пропозицій оголошеного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+Відображення початку періоду прийому пропозицій однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      minimal
-  :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}
-  \  Дочекатись синхронізації з майданчиком  ${username}
-  \  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.startDate
+  Відображення початку періоду прийому пропозицій тендера
 
 
-Відображення закінчення періоду прийому пропозицій оголошеного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+Відображення закінчення періоду прийому пропозицій однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      minimal
-  :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}
-  \  Дочекатись синхронізації з майданчиком  ${username}
-  \  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.endDate
+  Відображення закінчення періоду прийому пропозицій тендера
 
 
-Відображення мінімального кроку оголошеного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+Відображення мінімального кроку однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  minimalStep.amount
+  Відображення мінімального кроку тендера
 
 
 Відображення дати доставки позицій закупівлі однопредметного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      critical level 3
-  Звірити дату тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryDate.endDate
+  Відображення дати доставки позицій закупівлі тендера
 
 
 Відображення координат широти доставки позицій закупівлі однопредметного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryLocation.latitude
+  Відображення координат широти доставки позицій закупівлі тендера
 
 
 Відображення координат довготи доставки позицій закупівлі однопредметного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryLocation.longitude
+  Відображення координат довготи доставки позицій закупівлі тендера
 
 
 Відображення назви нас. пункту доставки позицій закупівлі однопредметного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      critical level 3
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.countryName
+  Відображення назви нас. пункту доставки позицій закупівлі тендера
 
 
 Відображення пошт. коду доставки позицій закупівлі однопредметного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.postalCode
+  Відображення пошт. коду доставки позицій закупівлі тендера
 
 
 Відображення регіону доставки позицій закупівлі однопредметного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      critical level 3
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.region
+  Відображення регіону доставки позицій закупівлі тендера
 
 
-Відображення locality адреси доставки позицій закупівлі однопредметного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
+Відображення населеного пункту адреси доставки позицій закупівлі однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.locality
+  Відображення населеного пункту адреси доставки позицій закупівлі тендера
 
 
 Відображення вулиці доставки позицій закупівлі однопредметного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.streetAddress
+  Відображення вулиці доставки позицій закупівлі тендера
 
 
 Відображення схеми класифікації позицій закупівлі однопредметного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].classification.scheme
+  Відображення схеми класифікації позицій закупівлі тендера
 
 
 Відображення ідентифікатора класифікації позицій закупівлі однопредметного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      critical level 3
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].classification.id
+  Відображення ідентифікатора класифікації позицій закупівлі тендера
 
 
 Відображення опису класифікації позицій закупівлі однопредметного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      critical level 3
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].classification.description
+  Відображення опису класифікації позицій закупівлі тендера
 
 
 Відображення схеми додаткової класифікації позицій закупівлі однопредметного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].additionalClassifications[0].scheme
+  Відображення схеми додаткової класифікації позицій закупівлі тендера
 
 
 Відображення ідентифікатора додаткової класифікації позицій закупівлі однопредметного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      critical level 3
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].additionalClassifications[0].id
+  Відображення ідентифікатора додаткової класифікації позицій закупівлі тендера
 
 
 Відображення опису додаткової класифікації позицій закупівлі однопредметного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      critical level 3
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].additionalClassifications[0].description
+  Відображення опису додаткової класифікації позицій закупівлі тендера
 
 
 Відображення назви одиниці позицій закупівлі однопредметного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      critical level 3
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].unit.name
+  Відображення назви одиниці позицій закупівлі тендера
 
 
 Відображення коду одиниці позицій закупівлі однопредметного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].unit.code
+  Відображення коду одиниці позицій закупівлі тендера
 
 
 Відображення кількості позицій закупівлі однопредметного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      critical level 3
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].quantity
+  Відображення кількості позицій закупівлі тендера
 
-##############################################################################################
-#             МОЖЛИВІСТЬ
-##############################################################################################
-
-Можливість редагувати однопредметний тендер
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      critical level 2
-  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Викликати для учасника  ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  description  description
-
-##############################################################################################
-#             ВІДОБРАЖЕННЯ
-##############################################################################################
 
 Відображення опису позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
@@ -295,7 +270,31 @@ ${question_id}  0
   ...      ${USERS.users['${viewer}'].broker}
   ...      critical level 2
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].description
+  Відображення опису позицій закупівлі тендера
+
+##############################################################################################
+#             МОЖЛИВІСТЬ
+##############################################################################################
+
+Можливість редагувати однопредметний тендер
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      critical level 2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість редагувати тендер
+
+##############################################################################################
+#             ВІДОБРАЖЕННЯ
+##############################################################################################
+
+Відображення редагованого опису однопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Відображення опису тендера
 
 ##############################################################################################
 #             МОЖЛИВІСТЬ
@@ -308,41 +307,59 @@ ${question_id}  0
   ...      critical level 2
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${question}=  Підготовка даних для запитання
-  ${question_resp}=  Викликати для учасника  ${provider}  Задати питання  ${TENDER['TENDER_UAID']}  ${question}
-  ${now}=  Get Current TZdate
-  ${question.data.date}=  Set variable  ${now}
-  ${question_data}=  Create Dictionary  question=${question}  question_resp=${question_resp}
-  ${question_data}=  munch_dict  arg=${question_data}
-  Set To Dictionary  ${USERS.users['${provider}']}  question_data=${question_data}
+  Можливість задати питання
 
 ##############################################################################################
 #             ВІДОБРАЖЕННЯ
 ##############################################################################################
 
 Відображення заголовку анонімного питання без відповіді
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповідей
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповіді
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      critical level 2
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Викликати для учасника  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
-  Звірити поле тендера із значенням  ${viewer}  ${USERS.users['${provider}'].question_data.question.data.title}  questions[${question_id}].title
+  Відображення заголовку анонімного питання без відповіді
 
 
 Відображення опису анонімного питання без відповіді
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповідей
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповіді
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      critical level 2
-  Звірити поле тендера із значенням  ${viewer}  ${USERS.users['${provider}'].question_data.question.data.description}  questions[${question_id}].description
+  Відображення опису анонімного питання без відповіді
 
 
 Відображення дати анонімного питання без відповіді
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповідей
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповіді
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити дату тендера із значенням  ${viewer}  ${USERS.users['${provider}'].question_data.question.data.date}  questions[${question_id}].date
+  Відображення дати анонімного питання без відповіді
+
+##############################################################################################
+#             МОЖЛИВІСТЬ
+##############################################################################################
+
+Можливість відповісти на питання
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість відповісти на питання
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      critical level 2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість відповісти на питання
+
+##############################################################################################
+#             ВІДОБРАЖЕННЯ
+##############################################################################################
+
+Відображення відповіді на запитання
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення відповіді на запитання
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      critical level 2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Відображення відповіді на запитання
 
 ##############################################################################################
 #             МОЖЛИВІСТЬ
@@ -361,37 +378,6 @@ ${question_id}  0
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}  bid_before_bidperiod_resp=${bid_before_bidperiod_resp}
   Log  ${USERS.users['${provider}']}
 
-
-Можливість відповісти на запитання
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість відповісти на запитання
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      critical level 2
-  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${answer}=  Підготовка даних для відповіді на запитання
-  ${answer_resp}=  Викликати для учасника  ${tender_owner}  Відповісти на питання  ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}']['question_data']['question_resp']}  ${answer}
-  ${now}=  Get Current TZdate
-  ${answer.data.date}=  Set variable  ${now}
-  ${answer_data}=  Create Dictionary  answer=${answer}  answer_resp=${answer_resp}
-  Set To Dictionary  ${USERS.users['${provider}']}  answer_data=${answer_data}
-
-##############################################################################################
-#             ВІДОБРАЖЕННЯ
-##############################################################################################
-
-Відображення відповіді на запитання
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення відповіді на запитання
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      critical level 2
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Викликати для учасника  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
-  Звірити поле тендера із значенням  ${viewer}  ${USERS.users['${provider}']['answer_data']['answer'].data.answer}  questions[${question_id}].answer
-
-##############################################################################################
-#             МОЖЛИВІСТЬ
-##############################################################################################
 
 Можливість подати цінову пропозицію першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію

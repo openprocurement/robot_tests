@@ -4,18 +4,19 @@ Library         String
 Library         Collections
 Library         Selenium2Library
 Library         DebugLibrary
+Resource        belowThreshold_keywords.robot
 Resource        keywords.robot
 Resource        resource.robot
 Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
 *** Variables ***
-${mode}         multi
+${mode}         multiLot
 
 ${role}         viewer
 ${broker}       Quinta
 
-${question_id}  1
+${question_id}  0
 ${complaint_id}  1
 
 *** Test Cases ***
@@ -25,12 +26,18 @@ ${complaint_id}  1
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      minimal
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${tender_data}=  Підготовка даних для створення тендера
-  ${tender_data}=  test_tender_data_multiple_lots  ${tender_data}
-  ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${tender_data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data  ${tender_data}
-  Set To Dictionary  ${TENDER}   TENDER_UAID             ${TENDER_UAID}
-  Log  ${TENDER}
+  Можливість оголосити тендер
+
+
+Можливість додати тендерну документацію
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість додати тендерну документацію
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      critical level 2
+  [Documentation]  Закупівельник ${USERS.users['${tender_owner}'].broker} завантажує документацію до оголошеної закупівлі
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість додати тендерну документацію
+
 
 Можливість знайти мультилотовий тендер по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
@@ -38,9 +45,312 @@ ${complaint_id}  1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      minimal
-  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
-  \  Дочекатись синхронізації з майданчиком    ${username}
-  \  Викликати для учасника  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
+  Можливість знайти тендер по ідентифікатору
+
+##############################################################################################
+#             ВІДОБРАЖЕННЯ
+##############################################################################################
+
+Відображення заголовку документа мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+  ...      viewer  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  Відображення заголовку документа тендера
+
+
+Відображення заголовку мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+  ...      viewer  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      minimal
+  Відображення заголовку тендера
+
+
+Відображення опису мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Відображення опису тендера
+
+
+Відображення бюджету мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      critical level 2
+  Відображення бюджету тендера
+
+
+Відображення ідентифікатора мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      critical level 2
+  Відображення ідентифікатора тендера
+
+
+Відображення імені замовника мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      critical level 2
+  Відображення імені замовника тендера
+
+
+Відображення початку періоду уточнення мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  Відображення початку періоду уточнення тендера
+
+
+Відображення закінчення періоду уточнення мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      minimal
+  Відображення закінчення періоду уточнення тендера
+
+
+Відображення початку періоду прийому пропозицій мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+  ...      viewer  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      minimal
+  Відображення початку періоду прийому пропозицій тендера
+
+
+Відображення закінчення періоду прийому пропозицій мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+  ...      viewer  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      minimal
+  Відображення закінчення періоду прийому пропозицій тендера
+
+
+Відображення мінімального кроку мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  Відображення мінімального кроку тендера
+
+
+Відображення дати доставки позицій закупівлі мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      critical level 3
+  Відображення дати доставки позицій закупівлі тендера
+
+
+Відображення координат широти доставки позицій закупівлі мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  Відображення координат широти доставки позицій закупівлі тендера
+
+
+Відображення координат довготи доставки позицій закупівлі мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  Відображення координат довготи доставки позицій закупівлі тендера
+
+
+Відображення назви нас. пункту доставки позицій закупівлі мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      critical level 3
+  Відображення назви нас. пункту доставки позицій закупівлі тендера
+
+
+Відображення пошт. коду доставки позицій закупівлі мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  Відображення пошт. коду доставки позицій закупівлі тендера
+
+
+Відображення регіону доставки позицій закупівлі мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      critical level 3
+  Відображення регіону доставки позицій закупівлі тендера
+
+
+Відображення населеного пункту адреси доставки позицій закупівлі мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  Відображення населеного пункту адреси доставки позицій закупівлі тендера
+
+
+Відображення вулиці доставки позицій закупівлі мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  Відображення вулиці доставки позицій закупівлі тендера
+
+
+Відображення схеми класифікації позицій закупівлі мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  Відображення схеми класифікації позицій закупівлі тендера
+
+
+Відображення ідентифікатора класифікації позицій закупівлі мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      critical level 3
+  Відображення ідентифікатора класифікації позицій закупівлі тендера
+
+
+Відображення опису класифікації позицій закупівлі мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      critical level 3
+  Відображення опису класифікації позицій закупівлі тендера
+
+
+Відображення схеми додаткової класифікації позицій закупівлі мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  Відображення схеми додаткової класифікації позицій закупівлі тендера
+
+
+Відображення ідентифікатора додаткової класифікації позицій закупівлі мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      critical level 3
+  Відображення ідентифікатора додаткової класифікації позицій закупівлі тендера
+
+
+Відображення опису додаткової класифікації позицій закупівлі мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      critical level 3
+  Відображення опису додаткової класифікації позицій закупівлі тендера
+
+
+Відображення назви одиниці позицій закупівлі мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      critical level 3
+  Відображення назви одиниці позицій закупівлі тендера
+
+
+Відображення коду одиниці позицій закупівлі мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  Відображення коду одиниці позицій закупівлі тендера
+
+
+Відображення кількості позицій закупівлі мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      critical level 3
+  Відображення кількості позицій закупівлі тендера
+
+##############################################################################################
+#             МОЖЛИВІСТЬ
+##############################################################################################
+
+Можливість редагувати мультилотовий тендер
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      critical level 2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість редагувати тендер
+
+##############################################################################################
+#             ВІДОБРАЖЕННЯ
+##############################################################################################
+
+Відображення редагованого опису мультилотового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Відображення опису тендера
+
+##############################################################################################
+#             МОЖЛИВІСТЬ
+##############################################################################################
+
+Можливість задати питання
+  [Tags]   ${USERS.users['${provider}'].broker}: Можливість задати запитання
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      critical level 2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість задати питання
+
+##############################################################################################
+#             ВІДОБРАЖЕННЯ
+##############################################################################################
+
+Відображення заголовку анонімного питання без відповіді
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповіді
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      critical level 2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Відображення заголовку анонімного питання без відповіді
+
+
+Відображення опису анонімного питання без відповіді
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповіді
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      critical level 2
+  Відображення опису анонімного питання без відповіді
+
+
+Відображення дати анонімного питання без відповіді
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповіді
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  Відображення дати анонімного питання без відповіді
+
+##############################################################################################
+#             МОЖЛИВІСТЬ
+##############################################################################################
+
+Можливість відповісти на питання
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість відповісти на питання
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      critical level 2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість відповісти на питання
+
+##############################################################################################
+#             ВІДОБРАЖЕННЯ
+##############################################################################################
+
+Відображення відповіді на запитання
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення відповіді на запитання
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      critical level 2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Відображення відповіді на запитання
 
 #######
 #Операції з лотом
@@ -162,35 +472,6 @@ ${complaint_id}  1
   Log  ${lot_id}
   Log  ${USERS.users['${tender_owner}']}
 
-
-#######
-#Запитання до лоту
-
-Можливість задати питання
-  [Tags]   ${USERS.users['${provider}'].broker}: Можливість задати запитання
-  ...      provider
-  ...      ${USERS.users['${provider}'].broker}
-  [Setup]  Дочекатись синхронізації з майданчиком    ${provider}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${question}=  Підготовка даних для запитання
-  ${question_resp}=  Викликати для учасника   ${provider}   Задати питання  ${TENDER['TENDER_UAID']}   ${question}
-  ${now}=  Get Current TZdate
-  ${question.data.date}=  Set variable  ${now}
-  ${question_data}=  Create Dictionary  question=${question}  question_resp=${question_resp}
-  Set To Dictionary  ${USERS.users['${provider}']}  question_data  ${question_data}
-Можливість відповісти на запитання
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість відповісти на запитання
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  [Setup]  Дочекатись синхронізації з майданчиком    ${tender_owner}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${answer}=  Підготовка даних для відповіді на запитання
-  ${answer_resp}=  Викликати для учасника   ${tender_owner}   Відповісти на питання    ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}']['question_data']['question_resp']}  ${answer}
-  ${now}=  Get Current TZdate
-  ${answer.data.date}=  Set variable  ${now}
-  ${answer_data}=  Create Dictionary  answer=${answer}  answer_resp=${answer_resp}
-  Set To Dictionary  ${USERS.users['${provider}']}  answer_data  ${answer_data}
-
 ######
 #Cкарга на лот
 #
@@ -247,26 +528,6 @@ ${complaint_id}  1
 #
 ######
 #Подання пропозицій
-
-Відображення початку періоду прийому пропозицій оголошеного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
-  ...      viewer  provider  provider1
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
-  ...      minimal
-  :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}
-  \  Дочекатись синхронізації з майданчиком    ${username}
-  \  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.startDate
-
-Відображення закінчення періоду прийому пропозицій оголошеного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
-  ...      viewer  provider  provider1
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
-  ...      minimal
-  :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}
-  \  Дочекатись синхронізації з майданчиком    ${username}
-  \  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.endDate
 
 Неможливість подати цінову пропозицію до початку періоду подачі пропозицій
   [Documentation]
