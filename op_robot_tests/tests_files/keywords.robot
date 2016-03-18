@@ -3,6 +3,7 @@ Library  op_robot_tests.tests_files.service_keywords
 Library  String
 Library  Collections
 Library  Selenium2Library
+Library  OperatingSystem
 Library  DateTime
 Library  DebugLibrary
 
@@ -16,6 +17,7 @@ Test Suite Setup
   Set Suite Variable  ${WARN_RUN_AS}  ${False}
   Set Selenium Implicit Wait  5 s
   Set Selenium Timeout  10 s
+  Залогувати git-дані
   Завантажуємо дані про користувачів і майданчики
 
 
@@ -28,6 +30,13 @@ Set Suite Variable With Default Value
   [Arguments]  ${suite_var}  ${def_value}
   ${tmp}=  Get Variable Value  ${${suite_var}}  ${def_value}
   Set Suite Variable  ${${suite_var}}  ${tmp}
+
+
+Залогувати git-дані
+  ${commit}=  Run  git log --graph --pretty --abbrev-commit --date=relative -n 30
+  ${repo}=    Run  git remote -v
+  ${branch}=  Run  git branch -vva
+  Log many  ${commit}  ${repo}  ${branch}
 
 
 Завантажуємо дані про користувачів і майданчики
@@ -183,13 +192,15 @@ Get Broker Property By Username
 Дочекатись синхронізації з майданчиком
   [Arguments]  ${username}
   [Documentation]
-  ...      Find out how much time has passed since the procurement was modified
-  ...      and store the result in `delta`,
-  ...      then get `timeout_on_wait` for ``username``,
-  ...      then wait for `sleep` seconds, where:
-  ...
-  ...      sleep = timeout_on_wait - delta
-  ...
+  ...      Synchronise with ``username`` and update cache
+  ...      First section
+  ...      Get `timeout_on_wait` for ``username``
+  ...      Add `timeout_on_wait` to `last_modification_date` in order to have
+  ...      correct time of data modification in CDB(every broker has different
+  ...      data synchronisation time with CDB).
+  ...      Find diff between `last_mofidication_date_corrected`
+  ...      and `now`. If that value is positive, sleep for `sleep` seconds,
+  ...      else go to next section.
   ...      Thus, when this keyword is executed several times in a row,
   ...      it will wait for as long as really needed.
   ...
@@ -212,18 +223,34 @@ Get Broker Property By Username
   ...      First call will trigger `Sleep 115`.
   ...      Second call will trigger `Sleep 0`,
   ...      since we have already slept for 120 seconds
-  ...      and there is no need to sleep any longer.
-  ${now}=  Get Current TZdate
-  ${delta}=  Subtract Date From Date  ${now}  ${TENDER['LAST_MODIFICATION_DATE']}
+  ...      and there is no need to sleep anymore.
+  ...
+  ...      Second section
+  ...      Find how much time passed from ``username``'s `last_refresh_date`
+  ...      to `last_modification_date_corrected`. If that value is positive, then
+  ...      cahce for ``username`` is not up-to-date. So, it will be refreshed and
+  ...      `last_refresh_date` will be updated.
+  ...      Else do nothing.
   ${timeout_on_wait}=  Get Broker Property By Username  ${username}  timeout_on_wait
-  ${sleep}=  Subtract Time From Time  ${timeout_on_wait}  ${delta}
+  ${last_modification_date_corrected}=  Add Time To Date
+  ...      ${TENDER['LAST_MODIFICATION_DATE']}
+  ...      ${timeout_on_wait} s
+  ${now}=  Get Current TZdate
+  ${sleep}=  Subtract Date From Date
+  ...      ${last_modification_date_corrected}
+  ...      ${now}
   Run Keyword If  ${sleep} > 0  Sleep  ${sleep}
 
-  ${last_modification_date_corrected}=  Add Time To Date  ${TENDER['LAST_MODIFICATION_DATE']}  ${timeout_on_wait} s
-  ${time_diff}=  Subtract Date From Date  ${last_modification_date_corrected}  ${USERS.users['${username}']['LAST_REFRESH_DATE']}
-  Run Keyword If  ${time_diff} > 0  Викликати для учасника  ${username}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+
+  ${time_diff}=  Subtract Date From Date
+  ...      ${last_modification_date_corrected}
+  ...      ${USERS.users['${username}']['LAST_REFRESH_DATE']}
   ${LAST_REFRESH_DATE}=  Get Current TZdate
-  Run Keyword If  ${time_diff} > 0  Set To Dictionary  ${USERS.users['${username}']}  LAST_REFRESH_DATE=${LAST_REFRESH_DATE}
+  Run Keyword If  ${time_diff} > 0  Run keywords
+  ...      Викликати для учасника  ${username}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  ...      AND
+  ...      Set To Dictionary  ${USERS.users['${username}']}  LAST_REFRESH_DATE=${LAST_REFRESH_DATE}
+
 
 Звірити поле тендера
   [Arguments]  ${username}  ${tender_data}  ${field}

@@ -13,7 +13,7 @@ Library  openprocurement_client_helper.py
   ${tenders}=  get_tenders  ${USERS.users['${username}'].client}
   Log Many  @{tenders}
   :FOR  ${tender}  IN  @{tenders}
-  \  Set To Dictionary  ${ID_MAP}  ${tender.tenderID}  ${tender.id}
+  \  Set To Dictionary  ${ID_MAP}  ${tender.tenderID}=${tender.id}
   Log Many  ${ID_MAP}
   Dictionary Should Contain Key  ${ID_MAP}  ${tender_uaid}
   Run Keyword And Return  Get From Dictionary  ${ID_MAP}  ${tender_uaid}
@@ -25,8 +25,8 @@ Library  openprocurement_client_helper.py
   Log  ${api_host_url}
   Log  ${api_version}
   ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${api_host_url}  ${api_version}
-  Set To Dictionary  ${USERS.users['${username}']}  client  ${api_wrapper}
-  Set To Dictionary  ${USERS.users['${username}']}  access_token  ${EMPTY}
+  Set To Dictionary  ${USERS.users['${username}']}  client=${api_wrapper}
+  Set To Dictionary  ${USERS.users['${username}']}  access_token=${EMPTY}
   ${ID_MAP}=  Create Dictionary
   Set Suite Variable  ${ID_MAP}
   Log Variables
@@ -42,8 +42,8 @@ Library  openprocurement_client_helper.py
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  create_tender  ${tender_data}
   Log object data  ${tender}  created_tender
   ${access_token}=  Get Variable Value  ${tender.access.token}
-  Set To Dictionary  ${USERS.users['${username}']}   access_token   ${access_token}
-  Set To Dictionary  ${USERS.users['${username}']}   tender_data   ${tender}
+  Set To Dictionary  ${USERS.users['${username}']}   access_token=${access_token}
+  Set To Dictionary  ${USERS.users['${username}']}   tender_data=${tender}
   Log   ${access_token}
   Log   ${tender.data.id}
   Log   ${USERS.users['${username}'].tender_data}
@@ -108,7 +108,7 @@ Library  openprocurement_client_helper.py
   Log  ${internalid}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
-  Set To Dictionary  ${USERS.users['${username}']}  tender_data  ${tender}
+  Set To Dictionary  ${USERS.users['${username}']}  tender_data=${tender}
   Log  ${tender}
   [Return]  ${tender}
 
@@ -161,7 +161,7 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uaid}  ${bid}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${biddingresponse}=  Call Method  ${USERS.users['${username}'].client}  create_bid  ${tender}  ${bid}
-  Set To Dictionary   ${USERS.users['${username}'].bidresponses['bid'].data}  id  ${biddingresponse['data']['id']}
+  Set To Dictionary   ${USERS.users['${username}'].bidresponses['bid'].data}  id=${biddingresponse['data']['id']}
   Log  ${biddingresponse}
   [return]  ${biddingresponse}
 
@@ -180,7 +180,7 @@ Library  openprocurement_client_helper.py
 Скасувати цінову пропозицію
   [Arguments]  ${username}  ${tender_uaid}  ${bid}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  Set To Dictionary   ${bid.data}  id  ${USERS.users['${username}'].bidresponses['bid'].data.id}
+  Set To Dictionary   ${bid.data}  id=${USERS.users['${username}'].bidresponses['bid'].data.id}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
   ${changed_bid}=  Call Method  ${USERS.users['${username}'].client}  delete_bid   ${tender}  ${bid}
   Log  ${changed_bid}
@@ -203,7 +203,7 @@ Library  openprocurement_client_helper.py
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
   ${response}=  Call Method  ${USERS.users['${username}'].client}  upload_bid_document  ${path}  ${tender}  ${bid_id}  ${doc_type}
-  ${uploaded_file} =  Create Dictionary   filepath  ${path}   upload_response  ${response}
+  ${uploaded_file} =  Create Dictionary   filepath=${path}   upload_response=${response}
   Log  ${response}
   Log object data   ${uploaded_file}
   [return]  ${uploaded_file}
@@ -214,7 +214,7 @@ Library  openprocurement_client_helper.py
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${TENDER['TENDER_UAID']}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
   ${response}=  Call Method  ${USERS.users['${username}'].client}  update_bid_document  ${path}  ${tender}   ${bidid}   ${docid}
-  ${uploaded_file} =  Create Dictionary   filepath  ${path}   upload_response  ${response}
+  ${uploaded_file} =  Create Dictionary   filepath=${path}   upload_response=${response}
   Log  ${response}
   Log object data   ${uploaded_file}
   [return]  ${uploaded_file}
@@ -420,7 +420,7 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uaid}  ${award_num}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${award}=  create_data_dict  data.status  active
-  Set To Dictionary  ${award.data}  id  ${tender.data.awards[${award_num}].id}
+  Set To Dictionary  ${award.data}  id=${tender.data.awards[${award_num}].id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_award  ${tender}  ${award}
   Log  ${reply}
 
@@ -433,7 +433,7 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uid}  ${award_num}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
   ${award}=  create_data_dict   data.status  unsuccessful
-  Set To Dictionary  ${award.data}  id  ${tender.data.awards[${award_num}].id}
+  Set To Dictionary  ${award.data}  id=${tender.data.awards[${award_num}].id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_award  ${tender}  ${award}
   Log  ${reply}
   [Return]  ${reply}
@@ -447,7 +447,7 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uid}  ${award_num}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
   ${award}=  create_data_dict   data.status  cancelled
-  Set To Dictionary  ${award.data}  id  ${tender.data.awards[${award_num}].id}
+  Set To Dictionary  ${award.data}  id=${tender.data.awards[${award_num}].id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_award  ${tender}  ${award}
   Log  ${reply}
   [Return]  ${reply}
@@ -465,7 +465,7 @@ Library  openprocurement_client_helper.py
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${data}=  test_additional_items_data  ${tender['data']['id']}  ${tender['access']['token']}
   Log  ${data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  additional_items  ${data['data']['items']}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  additional_items=${data['data']['items']}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${data}
   Log  ${reply}
 
@@ -527,8 +527,8 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uaid}  ${cancellation_id}  ${document_id}  ${new_description}
   ${field}=  Set variable  description
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${temp}=  Create Dictionary  ${field}  ${new_description}
-  ${data}=  Create Dictionary  data  ${temp}
+  ${temp}=  Create Dictionary  ${field}=${new_description}
+  ${data}=  Create Dictionary  data=${temp}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_cancellation_document  ${tender}  ${data}  ${cancellation_id}  ${document_id}
   Log  ${reply}
 
@@ -541,7 +541,7 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uaid}  ${cancel_num}  ${doc_num}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${second_cancel_doc}=  create_fake_doc
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  second_cancel_doc  ${second_cancel_doc}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  second_cancel_doc=${second_cancel_doc}
   Log  ${second_cancel_doc}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  update_cancellation_document  ${second_cancel_doc}  ${tender}  ${tender['data']['cancellations'][${cancel_num}]['id']}  ${tender['data']['cancellations'][${cancel_num}]['documents'][${doc_num}]['id']}
   Log  ${reply}
@@ -584,7 +584,7 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uid}  ${qualification_num}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
   ${qualification}=  create_data_dict   data.status  active
-  Set To Dictionary  ${qualification.data}  id  ${tender.data.qualifications[${qualification_num}].id}
+  Set To Dictionary  ${qualification.data}  id=${tender.data.qualifications[${qualification_num}].id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_qualification  ${tender}  ${qualification}
   Log  ${reply}
   [Return]  ${reply}
@@ -598,7 +598,7 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uid}  ${qualification_num}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
   ${qualification}=  create_data_dict   data.status  unsuccessful
-  Set To Dictionary  ${qualification.data}  id  ${tender.data.qualifications[${qualification_num}].id}
+  Set To Dictionary  ${qualification.data}  id=${tender.data.qualifications[${qualification_num}].id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_qualification  ${tender}  ${qualification}
   Log  ${reply}
   [Return]  ${reply}
@@ -624,7 +624,7 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uid}  ${qualification_num}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
   ${qualification}=  create_data_dict   data.status  cancelled
-  Set To Dictionary  ${qualification.data}  id  ${tender.data.qualifications[${qualification_num}].id}
+  Set To Dictionary  ${qualification.data}  id=${tender.data.qualifications[${qualification_num}].id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_qualification  ${tender}  ${qualification}
   Log  ${reply}
   [Return]  ${reply}
