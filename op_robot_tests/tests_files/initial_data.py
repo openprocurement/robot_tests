@@ -189,10 +189,22 @@ def test_tender_data_limited(intervals, procurement_method_type):
             "currency": "UAH",
             "valueAddedTaxIncluded": True
         },
+        "description": fake.sentence(nb_words=10, variable_nb_words=True),
         "title": u"Послуги шкільних їдалень",
     }
+    if procurement_method_type == "negotiation":
+        cause_variants = ('artContestIP', 'noCompetition', 'twiceUnsuccessful', 'additionalPurchase', 'additionalConstruction', 'stateLegalServices')
+        cause = fake.random_element(cause_variants)
+        data.update({"cause": cause})
+    if procurement_method_type == "negotiation.quick":
+        cause_variants = ('quick',)
+        cause = fake.random_element(cause_variants)
+        data.update({"cause": cause})
     if procurement_method_type == "negotiation" or procurement_method_type == "negotiation.quick":
-        data.update({"procurementMethodDetails": "quick, accelerator=1440"})
+        data.update({
+            "procurementMethodDetails": "quick, accelerator=1440",
+            "causeDescription": fake.sentence(nb_words=10, variable_nb_words=True)
+        })
     return data
 
 
