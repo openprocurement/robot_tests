@@ -57,7 +57,8 @@ def test_tender_data(intervals, periods=("enquiry", "tender")):
         },
         "value": {
             "amount": 50000.99,
-            "currency": u"UAH"
+            "currency": u"UAH",
+            "valueAddedTaxIncluded": True
         },
         "minimalStep": {
             "amount": 100.1,
@@ -452,7 +453,7 @@ def test_bid_data():
             "value": {
                 "currency": "UAH",
                 "amount": 500,
-                "valueAddedTaxIncluded": "true"
+                "valueAddedTaxIncluded": True
             }
         }
     })
@@ -484,7 +485,7 @@ def test_lots_bid_data():
                 "value": {
                     "currency": "UAH",
                     "amount": fake.random_int(max=1999),
-                    "valueAddedTaxIncluded": "true"
+                    "valueAddedTaxIncluded": True
                 },
                 "relatedLot": "3c8f387879de4c38957402dbdb8b31af",
                 "date": "2015-11-01T12:43:12.482645+02:00"
@@ -493,7 +494,7 @@ def test_lots_bid_data():
                 "value": {
                     "currency": "UAH",
                     "amount": fake.random_int(max=1999),
-                    "valueAddedTaxIncluded": "true"
+                    "valueAddedTaxIncluded": True
                 },
                 "relatedLot": "bcac8d2ceb5f4227b841a2211f5cb646",
                 "date": "2015-11-01T12:43:12.482645+02:00"
@@ -509,7 +510,7 @@ def auction_bid():
             "value": {
                 "amount": 200,
                 "currency": "UAH",
-                "valueAddedTaxIncluded": "true"
+                "valueAddedTaxIncluded": True
             }
         }
     })
@@ -644,12 +645,12 @@ def test_lot_data():
             "value": {
                 "currency": "UAH",
                 "amount": 2000 + fake.pyfloat(left_digits=4, right_digits=1, positive=True),
-                "valueAddedTaxIncluded": "true"
+                "valueAddedTaxIncluded": True
             },
             "minimalStep": {
                 "currency": "UAH",
                 "amount": 30.0,
-                "valueAddedTaxIncluded": "true"
+                "valueAddedTaxIncluded": True
             },
             "status": "active"
         })
