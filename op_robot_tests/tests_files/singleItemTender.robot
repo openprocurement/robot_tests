@@ -87,6 +87,24 @@ ${question_id}  0
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  value.amount
 
 
+Відображення валюти оголошеного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  Звірити поле тендера  ${viewer}
+  ...      ${USERS.users['${tender_owner}'].initial_data}
+  ...      value.currency
+
+
+Відображення ПДВ в бюджеті оголошеного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  Звірити поле тендера  ${viewer}
+  ...      ${USERS.users['${tender_owner}'].initial_data}
+  ...      value.valueAddedTaxIncluded
+
+
 Відображення tenderID оголошеного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
   ...      viewer
