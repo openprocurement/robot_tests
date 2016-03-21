@@ -10,13 +10,9 @@ Library  openprocurement_client_helper.py
   Log Many  ${ID_MAP}
   ${status}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${ID_MAP}  ${tender_uaid}
   Run Keyword And Return If  ${status}  Get From Dictionary  ${ID_MAP}  ${tender_uaid}
-  ${tenders}=  get_tenders  ${USERS.users['${username}'].client}
-  Log Many  @{tenders}
-  :FOR  ${tender}  IN  @{tenders}
-  \  Set To Dictionary  ${ID_MAP}  ${tender.tenderID}=${tender.id}
-  Log Many  ${ID_MAP}
-  Dictionary Should Contain Key  ${ID_MAP}  ${tender_uaid}
-  Run Keyword And Return  Get From Dictionary  ${ID_MAP}  ${tender_uaid}
+  ${tender_id}=  get_tender_id_by_uaid  ${tender_uaid}  ${USERS.users['${username}'].client}
+  Set To Dictionary  ${ID_MAP}  ${tender_uaid}  ${tender_id}
+  [return]  ${tender_id}
 
 
 Підготувати клієнт для користувача
