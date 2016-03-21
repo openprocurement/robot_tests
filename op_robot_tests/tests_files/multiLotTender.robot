@@ -52,7 +52,7 @@ ${complaint_id}  1
   [Setup]  Дочекатись синхронізації з майданчиком    ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${tender_data}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data}
-  ${lot}=  test lot data
+  ${lot}=  Підготовка даних для створення лоту
   ${lotcreate}=  Викликати для учасника   ${tender_owner}  Створити лот  ${tender_data}  ${lot}
   ${lotresponses}=  Create Dictionary
   Set To Dictionary  ${lotresponses}   resp0   ${lotcreate}
@@ -75,7 +75,7 @@ ${complaint_id}  1
   ...      ${USERS.users['${tender_owner}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${tender_data}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data}
-  ${lot}=  test lot data
+  ${lot}=  Підготовка даних для створення лоту
   ${lotcreate}=  Викликати для учасника   ${tender_owner}  Створити лот  ${tender_data}  ${lot}
   ${lotresponses}=  Create Dictionary
   Set To Dictionary  ${lotresponses}   resp   ${lotcreate}

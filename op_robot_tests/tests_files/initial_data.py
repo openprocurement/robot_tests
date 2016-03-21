@@ -63,49 +63,10 @@ def test_tender_data(intervals, periods=("enquiry", "tender")):
             "amount": 100.1,
             "currency": u"UAH"
         },
-        "items": [
-            {
-                "description": fake.catch_phrase(),
-                "deliveryDate": {
-                    "endDate": (now + timedelta(days=5)).isoformat()
-                },
-                "deliveryLocation": {
-                    "latitude": 49.8500,
-                    "longitude": 24.0167
-                },
-                "deliveryAddress": {
-                    "countryName": u"Україна",
-                    "countryName_ru": u"Украина",
-                    "countryName_en": "Ukraine",
-                    "postalCode": fake.postalcode(),
-                    "region": u"м. Київ",
-                    "locality": u"м. Київ",
-                    "streetAddress": fake.street_address()
-                },
-                "classification": {
-                    "scheme": u"CPV",
-                    "id": u"44617100-9",
-                    "description": u"Картонки",
-                    "description_ru": u"Большие картонные коробки",
-                    "description_en": u"Cartons"
-                },
-                "additionalClassifications": [
-                    {
-                        "scheme": u"ДКПП",
-                        "id": u"17.21.1",
-                        "description": u"Папір і картон гофровані, паперова й картонна тара"
-                    }
-                ],
-                "unit": {
-                    "name": u"кілограм",
-                    "name_ru": u"килограмм",
-                    "name_en": "kilogram",
-                    "code": u"KGM"
-                },
-                "quantity": fake.pyint()
-            }
-        ]
+        "items": []
     }
+    new_item = test_item_data()
+    t_data['items'].append(new_item)
     period_dict = {}
     inc_dt = now
     for period_name in periods:
@@ -211,24 +172,12 @@ def test_tender_data_multiple_lots(t_data):
     for item in t_data['data']['items'][:-1]:
         item['relatedLot'] = first_lot_id
     t_data['data']['items'][-1]['relatedLot'] = second_lot_id
-
-    t_data['data']['lots'] = [
-        {
-            "id": first_lot_id,
-            "title": "Lot #1: Kyiv stationery",
-            "description": "Items for Kyiv office",
-            "value": {"currency": "UAH", "amount": 34000.0, "valueAddedTaxIncluded": "true"},
-            "minimalStep": {"currency": "UAH", "amount": 30.0, "valueAddedTaxIncluded": "true"},
-            "status": "active"
-        }, {
-            "id": second_lot_id,
-            "title": "Lot #2: Lviv stationery",
-            "description": "Items for Lviv office",
-            "value": {"currency": "UAH", "amount": 9000.0, "valueAddedTaxIncluded": "true"},
-            "minimalStep": {"currency": "UAH", "amount": 35.0, "valueAddedTaxIncluded": "true"},
-            "status": "active"
-        }
-    ]
+    t_data['data']['lots'] = []
+    for _ in range(2):
+        new_lot = test_lot_data()
+        t_data['data']['lots'].append(new_lot)
+    t_data['data']['lots'][0]['id'] = first_lot_id
+    t_data['data']['lots'][1]['id'] = second_lot_id
     return t_data
 
 
@@ -689,22 +638,21 @@ def test_invalid_features_data():
 
 def test_lot_data():
     return munchify(
-        {'data':
-            {
-                "description": fake.sentence(nb_words=10, variable_nb_words=True),
-                "title": fake.sentence(nb_words=6, variable_nb_words=True),
-                "value": {
-                    "currency": "UAH",
-                    "amount": fake.pyfloat(left_digits=4, right_digits=1, positive=True),
-                    "valueAddedTaxIncluded": "true"
-                },
-                "minimalStep": {
-                    "currency": "UAH",
-                    "amount": 30.0,
-                    "valueAddedTaxIncluded": "true"
-                },
-                "status": "active"
-            }})
+        {
+            "description": fake.sentence(nb_words=10, variable_nb_words=True),
+            "title": fake.sentence(nb_words=6, variable_nb_words=True),
+            "value": {
+                "currency": "UAH",
+                "amount": 2000 + fake.pyfloat(left_digits=4, right_digits=1, positive=True),
+                "valueAddedTaxIncluded": "true"
+            },
+            "minimalStep": {
+                "currency": "UAH",
+                "amount": 30.0,
+                "valueAddedTaxIncluded": "true"
+            },
+            "status": "active"
+        })
 
 
 def test_lot_document_data(document, lot_id="3c8f387879de4c38957402dbdb8b31af"):
