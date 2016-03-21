@@ -112,18 +112,28 @@ users:
     Prom_Owner:
         broker:   Prom
         homepage: "http://zakupki.dz-test.net/"
-        default_page: "http://my.dz-test.net/cabinet/purchases/state_purchase/list"
-        login:    test@test12.com
-        password: 1234
+        default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_purchase/list"
+        login:  test@test12.com
+        password: 12345678
         browser:  chrome
         position: [0, 0]
         size:     [1280, 1024]
     Prom_Viewer:
         broker:   Prom
         homepage: "http://zakupki.dz-test.net/"
-        default_page: "http://my.dz-test.net/cabinet/purchases/state_purchase/list"
+        default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_purchase/list"
         login:  test@test13.com
-        password: 1234
+        password: 12345678
+        browser:  chrome
+        position:  [640, 0]
+        size:  [1280, 1024]
+    Prom_Provider:
+        broker:   Prom
+        username: Promtest
+        homepage: "http://zakupki.dz-test.net/"
+        default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_purchase/list"
+        login:  test@test14.com
+        password: 12345678
         browser:  chrome
         position: [640, 0]
         size:     [1280, 1024]
