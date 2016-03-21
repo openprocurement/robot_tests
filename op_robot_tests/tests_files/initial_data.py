@@ -126,18 +126,18 @@ def test_tender_data_limited(intervals, procurement_method_type):
                 "additionalClassifications":
                 [
                     {
-                        "description": u"Послуги шкільних їдалень",
+                        "description": fake.sentence(nb_words=10, variable_nb_words=True),
                         "id": "55.51.10.300",
                         "scheme": u"ДКПП"
                     }
                 ],
                 "classification":
                 {
-                    "description": u"Послуги з харчування у школах",
+                    "description": fake.sentence(nb_words=10, variable_nb_words=True),
                     "id": "55523100-3",
                     "scheme": "CPV"
                 },
-                "description": u"Послуги шкільних їдалень",
+                "description": fake.sentence(nb_words=10, variable_nb_words=True),
                 "id": "2dc54675d6364e2baffbc0f8e74432ac",
                 "deliveryDate": {
                     "endDate": (now + timedelta(days=5)).isoformat()
@@ -190,7 +190,7 @@ def test_tender_data_limited(intervals, procurement_method_type):
             "valueAddedTaxIncluded": True
         },
         "description": fake.sentence(nb_words=10, variable_nb_words=True),
-        "title": u"Послуги шкільних їдалень",
+        "title": u"Послуги шкільних їдалень"
     }
     if procurement_method_type == "negotiation":
         cause_variants = (

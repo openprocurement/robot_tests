@@ -117,6 +117,23 @@ Resource           resource.robot
   ...      ${TENDER['TENDER_UAID']}
   ...      tenderID
 
+
+Відображення опису закупівлі
+  Звірити поле тендера  ${viewer}
+  ...      ${USERS.users['${tender_owner}'].initial_data}
+  ...      description
+
+Відображення причини вибору закупівлі
+  Звірити поле тендера  ${viewer}
+  ...      ${USERS.users['${tender_owner}'].initial_data}
+  ...      causeDescription
+
+
+Відображення опису причини вибору закупівлі
+  Звірити поле тендера  ${viewer}
+  ...      ${USERS.users['${tender_owner}'].initial_data}
+  ...      cause
+
 ##############################################################################################
 #             MAIN DATA.VALUE
 ##############################################################################################
