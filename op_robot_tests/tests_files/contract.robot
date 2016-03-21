@@ -5,8 +5,7 @@ Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
 *** Variables ***
-${role}         viewer
-${broker}       Quinta
+@{used_roles}   tender_owner  viewer
 
 
 *** Test Cases ***

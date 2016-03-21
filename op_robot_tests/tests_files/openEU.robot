@@ -6,9 +6,7 @@ Suite Teardown  Test Suite Teardown
 
 *** Variables ***
 ${mode}         openeu
-
-${role}         viewer
-${broker}       Quinta
+@{used_roles}   tender_owner  provider  provider1  viewer
 
 
 *** Test Cases ***

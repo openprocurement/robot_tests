@@ -11,11 +11,9 @@ Suite Teardown  Test Suite Teardown
 
 *** Variables ***
 ${mode}         multi
-
-${role}         viewer
-${broker}       Quinta
-
+@{used_roles}   tender_owner  provider  provider1  viewer
 ${complaint_id}  1
+
 
 *** Test Cases ***
 Можливість оголосити мультилотовий тендер

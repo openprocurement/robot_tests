@@ -6,8 +6,7 @@ Suite Teardown     Close all browsers
 
 *** Variables ***
 ${mode}         reporting
-${role}         viewer
-${broker}       Quinta
+@{used_roles}   tender_owner  viewer
 
 
 *** Test Cases ***
