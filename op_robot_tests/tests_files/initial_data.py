@@ -88,18 +88,18 @@ def test_tender_data_limited(intervals, procurement_method_type):
                 "additionalClassifications":
                 [
                     {
-                        "description": u"Послуги шкільних їдалень",
+                        "description": fake.sentence(nb_words=10, variable_nb_words=True),
                         "id": "55.51.10.300",
                         "scheme": u"ДКПП"
                     }
                 ],
                 "classification":
                 {
-                    "description": u"Послуги з харчування у школах",
+                    "description": fake.sentence(nb_words=10, variable_nb_words=True),
                     "id": "55523100-3",
                     "scheme": "CPV"
                 },
-                "description": u"Послуги шкільних їдалень",
+                "description": fake.sentence(nb_words=10, variable_nb_words=True),
                 "id": "2dc54675d6364e2baffbc0f8e74432ac",
                 "deliveryDate": {
                     "endDate": (now + timedelta(days=5)).isoformat()
@@ -151,10 +151,34 @@ def test_tender_data_limited(intervals, procurement_method_type):
             "currency": "UAH",
             "valueAddedTaxIncluded": True
         },
-        "title": u"Послуги шкільних їдалень",
+        "description": fake.sentence(nb_words=10, variable_nb_words=True),
+        "description_en": fake.sentence(nb_words=10, variable_nb_words=True),
+        "description_ru": fake.sentence(nb_words=10, variable_nb_words=True),
+        "title": fake.catch_phrase(),
+        "title_en": fake.catch_phrase(),
+        "title_ru": fake.catch_phrase()
     }
-    if procurement_method_type == "negotiation" or procurement_method_type == "negotiation.quick":
-        data.update({"procurementMethodDetails": "quick, accelerator=1440"})
+    if procurement_method_type == "negotiation":
+        cause_variants = (
+            "artContestIP",
+            "noCompetition",
+            "twiceUnsuccessful",
+            "additionalPurchase",
+            "additionalConstruction",
+            "stateLegalServices"
+        )
+        cause = fake.random_element(cause_variants)
+        data.update({"cause": cause})
+    if procurement_method_type == "negotiation.quick":
+        cause_variants = ('quick',)
+        cause = fake.random_element(cause_variants)
+        data.update({"cause": cause})
+    if procurement_method_type == "negotiation" \
+    or procurement_method_type == "negotiation.quick":
+        data.update({
+            "procurementMethodDetails": "quick, accelerator=1440",
+            "causeDescription": fake.sentence(nb_words=10, variable_nb_words=True)
+        })
     return data
 
 
