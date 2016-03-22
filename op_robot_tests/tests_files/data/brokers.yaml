@@ -67,13 +67,19 @@ E-tender:
         viewer:         E-tender_Viewer
     timeout_on_wait: 600
 DZO:
+    intervals:
+        default:
+            enquiry: [0, 20]
+            tender:  [0, 15]
     keywords_file: dzo
     login: admin
     password: uStudio
     roles:
-        provider:       DZO_Provider1
         tender_owner:   DZO_Owner
+        provider:       DZO_Provider
+        provider1:      DZO_Provider1
         viewer:         DZO_Viewer
+    timeout_on_wait: 300
 Newtend:
     keywords_file: newtend
     roles:
