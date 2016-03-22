@@ -160,6 +160,9 @@ def test_tender_data_limited(intervals, procurement_method_type):
         "owner": "test.quintagroup.com",
         "procurementMethod": "limited",
         "procurementMethodType": procurement_method_type,
+        "procurementMethodRationale": fake.catch_phrase(),
+        "procurementMethodRationale_en": fake.catch_phrase(),
+        "procurementMethodRationale_ru": fake.catch_phrase(),
         "procuringEntity":
         {
             "address":
@@ -190,7 +193,11 @@ def test_tender_data_limited(intervals, procurement_method_type):
             "valueAddedTaxIncluded": True
         },
         "description": fake.sentence(nb_words=10, variable_nb_words=True),
-        "title": u"Послуги шкільних їдалень"
+        "description_en": fake.sentence(nb_words=10, variable_nb_words=True),
+        "description_ru": fake.sentence(nb_words=10, variable_nb_words=True),
+        "title": fake.catch_phrase(),
+        "title_en": fake.catch_phrase(),
+        "title_ru": fake.catch_phrase()
     }
     if procurement_method_type == "negotiation":
         cause_variants = (

@@ -112,6 +112,18 @@ Resource           resource.robot
   ...      title
 
 
+Відображення заголовку закупівлі англійською мовою
+  Звірити поле тендера  ${viewer}
+  ...      ${USERS.users['${tender_owner}'].initial_data}
+  ...      title_en
+
+
+Відображення заголовку закупівлі російською мовою
+  Звірити поле тендера  ${viewer}
+  ...      ${USERS.users['${tender_owner}'].initial_data}
+  ...      title_ru
+
+
 Відображення ідентифікатора закупівлі
   Звірити поле тендера із значенням  ${viewer}
   ...      ${TENDER['TENDER_UAID']}
@@ -123,13 +135,26 @@ Resource           resource.robot
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      description
 
-Відображення причини вибору закупівлі
+
+Відображення опису закупівлі англійською мовою
+  Звірити поле тендера  ${viewer}
+  ...      ${USERS.users['${tender_owner}'].initial_data}
+  ...      description_en
+
+
+Відображення опису закупівлі російською мовою
+  Звірити поле тендера  ${viewer}
+  ...      ${USERS.users['${tender_owner}'].initial_data}
+  ...      description_ru
+
+
+Відображення підстави вибору закупівлі
   Звірити поле тендера  ${viewer}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      causeDescription
 
 
-Відображення опису причини вибору закупівлі
+Відображення обгрунтування причини вибору закупівлі
   Звірити поле тендера  ${viewer}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      cause
