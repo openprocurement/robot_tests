@@ -92,14 +92,14 @@ def test_tender_data_limited(intervals, procurement_method_type):
                 "additionalClassifications":
                 [
                     {
-                        "description": fake.sentence(nb_words=10, variable_nb_words=True),
-                        "id": "55.51.10.300",
+                        "description": "Послуги щодо забезпечення харчуванням, інші",
+                        "id": "56.29",
                         "scheme": u"ДКПП"
                     }
                 ],
                 "classification":
                 {
-                    "description": fake.sentence(nb_words=10, variable_nb_words=True),
+                    "description": "Послуги з організації шкільного харчування",
                     "id": "55523100-3",
                     "scheme": "CPV"
                 },
@@ -606,7 +606,7 @@ def test_item_data():
         "classification": {
             "scheme": u"CPV",
             "id": u"44617100-9",
-            "description": u"Картонки",
+            "description": u"Картонні коробки",
             "description_ru": u"Большие картонные коробки",
             "description_en": u"Cartons"
         },
