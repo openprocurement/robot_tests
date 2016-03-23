@@ -31,7 +31,7 @@ ${broker}       Quinta
   ...      ${USERS.users['${tender_owner}'].broker}
   ${usernames}=  Create List  ${viewer}  ${tender_owner}
   :FOR  ${username}  IN  @{usernames}
-  \  Викликати для учасника  ${username}  Отримати інформацію із тендера  awards[1].complaintPeriod.endDate
+  \  Отримати дані із тендера  ${username}  awards[1].complaintPeriod.endDate
 
 Дочекатися закічення stand still періоду
   ${standstillEnd}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data.awards[1].complaintPeriod.endDate}
