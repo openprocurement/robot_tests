@@ -7,7 +7,7 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uaid}
   Log  ${username}
   Log  ${tender_uaid}
-  Log Many  ${ID_MAP}
+  ${ID_MAP}=  Get Variable Value  ${USERS.users['${username}']['ID_MAP']}
   ${status}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${ID_MAP}  ${tender_uaid}
   Run Keyword And Return If  ${status}  Get From Dictionary  ${ID_MAP}  ${tender_uaid}
   ${tender_id}=  get_tender_id_by_uaid  ${tender_uaid}  ${USERS.users['${username}'].client}
@@ -24,7 +24,7 @@ Library  openprocurement_client_helper.py
   Set To Dictionary  ${USERS.users['${username}']}  client=${api_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${EMPTY}
   ${ID_MAP}=  Create Dictionary
-  Set Suite Variable  ${ID_MAP}
+  Set To Dictionary  ${USERS.users['${username}']}  ID_MAP=${ID_MAP}
   Log Variables
 
 
