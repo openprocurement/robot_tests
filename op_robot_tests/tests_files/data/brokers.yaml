@@ -45,9 +45,9 @@ Quinta:
             enquiry: [0, 2]
             tender:  [0, 5]
         openua:
-            tender:  [0, 15]
+            tender:  [1, 15]
         openeu:
-            tender:  [0, 30]
+            tender:  [1, 30]
     keywords_file: openprocurement_client
     roles:
         provider:       Tender_User
