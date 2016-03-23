@@ -22,9 +22,10 @@ ${broker}       Quinta
   ...  from-0.12
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${tender_data}=  Підготовка даних для створення тендера
+  ${adapted_data}=  Адаптувати дані для оголошення тендера  ${tender_owner}  ${tender_data}
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}
   ...      Створити тендер
-  ...      ${tender_data}
+  ...      ${adapted_data}
   Set To Dictionary  ${TENDER}  TENDER_UAID  ${TENDER_UAID}
   Log  ${TENDER}
 
