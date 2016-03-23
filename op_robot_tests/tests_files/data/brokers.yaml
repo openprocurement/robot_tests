@@ -94,12 +94,14 @@ PrivatMarket:
 Prom:
     intervals:
         default:
-            enquiry: [10, 10]
-            tender:  [0,  45]
+            enquiry: [4, 4]
+            tender:  [0,  30]
     keywords_file: prom
     roles:
         tender_owner:   Prom_Owner
         viewer:         Prom_Viewer
+        provider:       Prom_Provider1
+    timeout_on_wait: 10
 Publicbid:
     intervals:
         default:
