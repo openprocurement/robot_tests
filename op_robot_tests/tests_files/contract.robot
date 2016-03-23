@@ -29,7 +29,7 @@ ${broker}       Quinta
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
-  \  Викликати для учасника  ${username}  Отримати інформацію із тендера  awards[1].complaintPeriod.endDate
+  \  Отримати дані із тендера  ${username}  awards[1].complaintPeriod.endDate
 
 Дочекатися закічення stand still періоду
   ${standstillEnd}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data.awards[1].complaintPeriod.endDate}

@@ -63,7 +63,7 @@ ${broker}       Quinta
   ...      ${USERS.users['${viewer}'].broker}
   ...      minimal
   :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}
-  \  Викликати для учасника  ${username}  Отримати інформацію із тендера  complaintPeriod.endDate
+  \  Отримати дані із тендера  ${username}  complaintPeriod.endDate
 
 Можливість подати вимогу на умови більше ніж за 10 днів до завершення періоду подання пропозицій
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати вимогу на умови

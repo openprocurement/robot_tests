@@ -26,7 +26,7 @@ ${broker}       Quinta
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
-  Викликати для учасника  ${viewer}  Отримати інформацію із тендера  auctionPeriod.startDate
+  Отримати дані із тендера  ${viewer}  auctionPeriod.startDate
 
 
 Очікування початку аукціону
@@ -48,4 +48,4 @@ ${broker}       Quinta
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
-  Викликати для учасника  ${viewer}  Отримати інформацію із тендера  auctionPeriod.endDate
+  Отримати дані із тендера  ${viewer}  auctionPeriod.endDate

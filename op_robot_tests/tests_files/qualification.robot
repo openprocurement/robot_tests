@@ -36,21 +36,21 @@ ${broker}       Quinta
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
-  \  Викликати для учасника  ${username}  Отримати інформацію із тендера  awards[0].value.amount
+  \  Отримати дані із тендера  ${username}  awards[0].value.amount
 
 Відображення імені постачальника
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних оголошеного тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
-  \  Викликати для учасника  ${username}  Отримати інформацію із тендера  awards[0].suppliers[0].name
+  \  Отримати дані із тендера  ${username}  awards[0].suppliers[0].name
 
 Відображення ідентифікатора постачальника
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних оголошеного тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
-  \  Викликати для учасника  ${username}  Отримати інформацію із тендера  awards[0].suppliers[0].identifier.id
+  \  Отримати дані із тендера  ${username}  awards[0].suppliers[0].identifier.id
 
 
 ##############################################################################################
