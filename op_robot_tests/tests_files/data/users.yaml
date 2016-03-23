@@ -46,23 +46,31 @@ users:
         homepage: "http://dz2.byustudio.in.ua"
         login:    ovramet.s@gmail.com
         password: Password1
-        browser:  chrome
+        browser:  firefox
         position: [0, 0]
-        size:     [700, 800]
-    DZO_Provider1:
+        size:     [1366, 800]
+    DZO_Provider:
         broker:   DZO
         homepage: "http://dz2.byustudio.in.ua"
         login:    halyna.khimka@gmail.com
         password: JHO5VUp5n
-        browser:  chrome
+        browser:  firefox
         position: [0, 0]
-        size:     [600, 800]
-    DZO_Viewer:
+        size:     [1366, 800]
+    DZO_Provider1:
         broker:   DZO
         homepage: "http://dz2.byustudio.in.ua"
-        browser:  chrome
+        login:    dzoprovider2@gmail.com
+        password: UxYkGVVfk
+        browser:  firefox
         position: [0, 0]
-        size:     [600, 800]
+        size:     [1366, 800]
+    DZO_Viewer:
+        broker:   DZO
+        homepage: "http://dz2.byustudio.in.ua/?test_mode=guest"
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
     Newtend_Owner:
         broker:   Newtend
         homepage: "http://dev23.newtend.com/opc/tenders"
