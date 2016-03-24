@@ -146,10 +146,12 @@ Get Broker Property By Username
   Log  ${tender_data}
   [return]  ${tender_data}
 
+
 Підготовка даних для створення лоту
   ${lot}=  test_lot_data
   ${reply}=  Create Dictionary  data=${lot}
   [Return]  ${reply}
+
 
 Підготовка даних для подання вимоги
   ${claim}=  test_claim_data
@@ -194,6 +196,21 @@ Get Broker Property By Username
   ${cancellation_data}=  Create Dictionary  cancellation_reason=${cancellation_reason}  document=${document}  description=${new_description}
   Set To Dictionary  ${USERS.users['${username}']}  cancellation_data=${cancellation_data}
   [Return]  ${cancellation_data}
+
+
+Адаптувати дані для оголошення тендера
+  [Arguments]  ${username}  ${tender_data}
+  # munchify is used to make deep copy of ${tender_data}
+  ${tender_data_copy}=  munchify  ${tender_data}
+  ${status}  ${adapted_data}=  Run Keyword And Ignore Error  Викликати для учасника  ${username}  Підготувати дані для оголошення тендера  ${tender_data_copy}
+  ${adapted_data}=  Set variable if  '${status}' == 'FAIL'  ${tender_data_copy}  ${adapted_data}
+  # munchify is used to make nice log output
+  ${adapted_data}=  munchify  ${adapted_data}
+  Log  ${tender_data}
+  Log  ${adapted_data}
+  ${status}=  Run keyword and return status  Dictionaries Should Be Equal  ${adapted_data.data}  ${tender_data.data}
+  Run keyword if  ${status} == ${False}  Log  Initial tender data was changed  WARN
+  [Return]  ${adapted_data}
 
 
 Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
@@ -363,6 +380,7 @@ Get Broker Property By Username
   ...      WARN
   Run Keyword And Return  Run As  ${username}  ${command}  @{arguments}
 
+
 Отримати дані із тендера
   [Arguments]  ${username}  ${field_name}
   Log  ${username}
@@ -379,8 +397,6 @@ Get Broker Property By Username
   # And caching its value before return
   Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field_name}  ${field_value}
   [return]  ${field_value}
-
-
 
 
 Run As
