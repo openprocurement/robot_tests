@@ -453,8 +453,8 @@ def test_complaint_reply_data():
     })
 
 
-def test_bid_data():
-    return munchify({
+def test_bid_data(aboveThreshold=False):
+    bid = munchify({
         "data": {
             "tenderers": [
                 {
@@ -485,7 +485,10 @@ def test_bid_data():
             }
         }
     })
-
+    if aboveThreshold:
+        bid.data['selfEligible'] = True
+        bid.data['selfQualified'] = True
+    return bid
 
 def test_bid_data_meat_tender():
     bid = test_bid_data()
@@ -714,8 +717,6 @@ def test_tender_data_openua(intervals):
     t_data['procurementMethodType'] = 'aboveThresholdUA'
     t_data['procurementMethodDetails'] = 'quick, ' \
         'accelerator={}'.format(accelerator)
-    t_data['selfEligible'] = True
-    t_data['selfQualified'] = True
     return t_data
 
 
@@ -737,6 +738,4 @@ def test_tender_data_openeu(intervals):
     t_data['procuringEntity']['contactPoint']['name_en'] = fake_en.name()
     t_data['procuringEntity']['contactPoint']['availableLanguage'] = "en"
     t_data['procuringEntity']['identifier']['legalName_en'] = "Institution \"Vinnytsia City Council primary and secondary general school № 10\""
-    t_data['selfEligible'] = True
-    t_data['selfQualified'] = True
     return t_data

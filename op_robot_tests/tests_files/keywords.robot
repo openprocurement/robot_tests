@@ -177,6 +177,10 @@ Get Broker Property By Username
   ${answer}=  test_question_answer_data
   [Return]  ${answer}
 
+Підготувати дані для подання пропозиції
+  [Arguments]  ${aboveThreshold}=${False}
+  ${supplier_data}=  test_bid_data  ${aboveThreshold}
+  [Return]  ${supplier_data}
 
 Підготувати дані про постачальника
   [Arguments]  ${username}
