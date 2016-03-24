@@ -146,10 +146,12 @@ Get Broker Property By Username
   Log  ${tender_data}
   [return]  ${tender_data}
 
+
 Підготовка даних для створення лоту
   ${lot}=  test_lot_data
   ${reply}=  Create Dictionary  data=${lot}
   [Return]  ${reply}
+
 
 Підготовка даних для подання вимоги
   ${claim}=  test_claim_data
@@ -363,6 +365,7 @@ Get Broker Property By Username
   ...      WARN
   Run Keyword And Return  Run As  ${username}  ${command}  @{arguments}
 
+
 Отримати дані із тендера
   [Arguments]  ${username}  ${field_name}
   Log  ${username}
@@ -379,8 +382,6 @@ Get Broker Property By Username
   # And caching its value before return
   Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field_name}  ${field_value}
   [return]  ${field_value}
-
-
 
 
 Run As
@@ -415,6 +416,20 @@ Require Failure
   [Arguments]  ${date}
   ${sleep}=  wait_to_date  ${date}
   Run Keyword If  ${sleep} > 0  Sleep  ${sleep}
+
+
+Дочекатись дати початку періоду подання уточнень
+  [Arguments]  ${username}
+  Log  ${username}
+  # XXX: HACK: Same as below
+  ${status}  ${date}=  Run Keyword And Ignore Error
+  ...      Set Variable
+  ...      ${USERS.users['${username}'].tender_data.data.enquiryPeriod.startDate}
+  ${date}=  Set Variable If
+  ...      '${status}' == 'FAIL'
+  ...      ${USERS.users['${tender_owner}'].initial_data.data.enquiryPeriod.startDate}
+  ...      ${date}
+  Дочекатись дати  ${date}
 
 
 Дочекатись дати початку прийому пропозицій
