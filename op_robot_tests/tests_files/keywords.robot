@@ -287,10 +287,8 @@ Get Broker Property By Username
 
 
 Звірити поле тендера із значенням
-  [Arguments]  ${username}  ${left}  ${field}
-  ${right}=  Отримати дані із тендера  ${username}  ${field}
-  Log  ${left}
-  Log  ${right}
+  [Arguments]  ${username}  ${left}  ${field}  ${object_id}=${EMPTY}
+  ${right}=  Отримати дані із тендера  ${username}  ${field}  ${object_id}
   Порівняти об'єкти  ${left}  ${right}
 
 
@@ -310,8 +308,8 @@ Get Broker Property By Username
 
 
 Звірити дату тендера із значенням
-  [Arguments]  ${username}  ${left}  ${field}
-  ${right}=  Отримати дані із тендера  ${username}  ${field}
+  [Arguments]  ${username}  ${left}  ${field}  ${object_id}=${EMPTY}
+  ${right}=  Отримати дані із тендера  ${username}  ${field}  ${object_id}
   Порівняти дати  ${left}  ${right}
 
 
@@ -350,6 +348,42 @@ Get Broker Property By Username
   \  Звірити дату тендера  ${viewer}  ${tender_data}  items[${index}].${field}
 
 
+Отримати дані із тендера
+  [Arguments]  ${username}  ${field_name}  ${object_id}=${EMPTY}
+  Log  ${username}
+  Log  ${field_name}
+  ${field}=  Run Keyword If  '${object_id}'=='${EMPTY}'  Set Variable  ${field_name}
+  ...             ELSE  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${object_id}
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      Get from object
+  ...      ${USERS.users['${username}'].tender_data.data}
+  ...      ${field}
+  # If field in cache, return its value
+  Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
+  # Else call broker to find field
+  ${field_value}=  Run Keyword IF  '${object_id}'=='${EMPTY}'  Run As  ${username}  Отримати інформацію із тендера  ${field}
+  ...                          ELSE  Отримати дані із об’єкта тендера  ${username}  ${object_id}  ${field_name}
+  # And caching its value before return
+  Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${field_value}
+  [return]  ${field_value}
+
+
+Отримати шлях до поля об’єкта
+  [Arguments]  ${username}  ${field_name}  ${object_id}
+  ${path_to_object}=  get_pyth_to_object_by_id  ${USERS.users['${username}'].tender_data.data}  ${object_id}
+  [return]  ${path_to_object}.${field_name}
+
+
+Отримати дані із об’єкта тендера
+  [Arguments]  ${username}  ${object_id}  ${field_name}
+  ${object_type}=   get_object_type_by_id  ${object_id}
+  ${status}  ${value}=  Run keyword and ignore keyword definitions  Run As  ${username}  Отримати інформацію із запитання  ${object_id}  ${field_name}
+  ${field}=  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${object_id}
+  ${field_value}=  Run Keyword IF  '${status}'=='PASS'  Set Variable  ${value}
+  ...                          ELSE  Run As  ${username}  Отримати інформацію із тендера  ${field}
+  [return]  ${field_value}
+
+
 Викликати для учасника
   [Arguments]  ${username}  ${command}  @{arguments}
   Run keyword unless  '${WARN_RUN_AS}' == '${True}'
@@ -362,25 +396,6 @@ Get Broker Property By Username
   ...      Log  Keyword 'Викликати для учасника' is deprecated. Please use 'Run As' and 'Require Failure' instead.
   ...      WARN
   Run Keyword And Return  Run As  ${username}  ${command}  @{arguments}
-
-Отримати дані із тендера
-  [Arguments]  ${username}  ${field_name}
-  Log  ${username}
-  Log  ${field_name}
-
-  ${status}  ${field_value}=  Run keyword and ignore error
-  ...      Get from object
-  ...      ${USERS.users['${username}'].tender_data.data}
-  ...      ${field_name}
-  # If field in cache, return its value
-  Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
-  # Else call broker to find field
-  ${field_value}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field_name}
-  # And caching its value before return
-  Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field_name}  ${field_value}
-  [return]  ${field_value}
-
-
 
 
 Run As

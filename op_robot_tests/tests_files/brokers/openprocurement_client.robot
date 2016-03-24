@@ -78,6 +78,12 @@ Library  openprocurement_client_helper.py
   Fail  Field not found: ${field_name}
 
 
+Отримати інформацію із запитання
+  [Arguments]  ${username}  ${question_id}  ${field_name}
+  ${field_name}=  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${question_id}
+  Run Keyword And Return  openprocurement_client.Отримати інформацію із тендера  ${username}  ${field_name}
+
+
 Внести зміни в тендер
   [Arguments]  ${username}  ${tender_uaid}  ${fieldname}  ${fieldvalue}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
@@ -136,10 +142,10 @@ Library  openprocurement_client_helper.py
 
 
 Відповісти на питання
-  [Arguments]  ${username}  ${tender_uaid}  ${question}  ${answer_data}
+  [Arguments]  ${username}  ${tender_uaid}  ${question}  ${answer_data}  ${question_id}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
-  ${answer_data.data.id}=  Set Variable   ${question.data.id}
+  openprocurement_client.Отримати інформацію із запитання  ${username}  ${question_id}  id
   ${question_with_answer}=  Call Method  ${USERS.users['${username}'].client}  patch_question  ${tender}  ${answer_data}
   Log object data   ${question_with_answer}  question_with_answer
   [return]  ${question_with_answer}
