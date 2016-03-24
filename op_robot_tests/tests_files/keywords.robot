@@ -7,6 +7,7 @@ Library  OperatingSystem
 Library  DateTime
 Library  DebugLibrary
 
+
 Documentation
 ...  This resource file contains keywords that are used directly by
 ...  test suites or by brokers' keyword libraries (also known as drivers).
@@ -178,6 +179,12 @@ Get Broker Property By Username
 Підготовка даних для відповіді на запитання
   ${answer}=  test_question_answer_data
   [Return]  ${answer}
+
+
+Підготувати дані для подання пропозиції
+  [Arguments]  ${aboveThreshold}=${False}
+  ${supplier_data}=  test_bid_data  ${aboveThreshold}
+  [Return]  ${supplier_data}
 
 
 Підготувати дані про постачальника

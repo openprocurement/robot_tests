@@ -372,7 +372,7 @@ ${question_id}  0
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
-  ${bid}=  test bid data
+  ${bid}=  Підготувати дані для подання пропозиції
   Log  ${bid}
   ${bidresponses}=  Create Dictionary  bid=${bid}
   Set To Dictionary  ${USERS.users['${provider}']}  bidresponses=${bidresponses}
@@ -419,7 +419,7 @@ ${question_id}  0
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати початку прийому пропозицій  ${provider}
-  ${bid}=  test bid data
+  ${bid}=  Підготувати дані для подання пропозиції
   Log  ${bid}
   ${bidresponses}=  Create Dictionary  bid=${bid}
   Set To Dictionary  ${USERS.users['${provider}']}  bidresponses=${bidresponses}
@@ -444,7 +444,7 @@ ${question_id}  0
   ...      minimal
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати початку прийому пропозицій  ${provider}
-  ${bid}=  test bid data
+  ${bid}=  Підготувати дані для подання пропозиції
   Log  ${bid}
   ${bidresponses}=  Create Dictionary  bid=${bid}
   Set To Dictionary  ${USERS.users['${provider}']}  bidresponses=${bidresponses}
@@ -516,7 +516,7 @@ ${question_id}  0
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider1}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати початку прийому пропозицій  ${provider1}
-  ${bid}=  test bid data
+  ${bid}=  Підготувати дані для подання пропозиції
   Log  ${bid}
   ${bidresponses}=  Create Dictionary  bid=${bid}
   Set To Dictionary  ${USERS.users['${provider1}']}  bidresponses=${bidresponses}

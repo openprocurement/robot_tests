@@ -99,7 +99,7 @@ ${broker}       Quinta
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${bid}=  test bid data
+  ${bid}=  Підготувати дані для подання пропозиції  aboveThreshold=${True}
   Log  ${bid}
   ${bidresponses}=  Create Dictionary
   Set To Dictionary  ${bidresponses}                 bid   ${bid}
@@ -113,7 +113,7 @@ ${broker}       Quinta
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${bid}=  test bid data
+  ${bid}=  Підготувати дані для подання пропозиції  aboveThreshold=${True}
   Log  ${bid}
   ${bidresponses}=  Create Dictionary
   Set To Dictionary  ${bidresponses}                 bid   ${bid}
@@ -163,7 +163,7 @@ Cкасувати цінову пропозицію другого учасни�
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${bid}=  test bid data
+  ${bid}=  Підготувати дані для подання пропозиції  aboveThreshold=${True}
   Log  ${bid}
   ${bidresponses}=  Create Dictionary
   Set To Dictionary  ${bidresponses}                 bid   ${bid}
@@ -288,7 +288,7 @@ Cкасувати цінову пропозицію другого учасни�
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${bid}=  test bid data
+  ${bid}=  Підготувати дані для подання пропозиції  aboveThreshold=${True}
   Log  ${bid}
   ${bidresponses}=  Create Dictionary
   Set To Dictionary  ${bidresponses}                 bid   ${bid}
