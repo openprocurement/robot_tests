@@ -63,6 +63,7 @@ ${broker}       Quinta
   ...      ${USERS.users['${provider}'].broker}
   [Documentation]  Користувач ${USERS.users['${provider}'].broker} намагається подати скаргу на умови оголошеної закупівлі
   [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Дочекатись дати початку періоду подання уточнень  ${provider}
   ${claim}=  Підготовка даних для подання вимоги
   ${claim_resp}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
