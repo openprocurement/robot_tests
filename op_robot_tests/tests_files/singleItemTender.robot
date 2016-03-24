@@ -15,8 +15,6 @@ ${mode}         single
 ${role}         viewer
 ${broker}       Quinta
 
-${question_id}  0
-
 *** Test Cases ***
 Можливість оголосити однопредметний тендер
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
@@ -330,7 +328,8 @@ ${question_id}  0
   ${question_resp}=  Викликати для учасника  ${provider}  Задати питання  ${TENDER['TENDER_UAID']}  ${question}
   ${now}=  Get Current TZdate
   ${question.data.date}=  Set variable  ${now}
-  ${question_data}=  Create Dictionary  question=${question}  question_resp=${question_resp}
+  ${question_id}=  get_id_from_field  ${question.data.description}
+  ${question_data}=  Create Dictionary  question=${question}  question_resp=${question_resp}  question_id=${question_id}
   ${question_data}=  munch_dict  arg=${question_data}
   Set To Dictionary  ${USERS.users['${provider}']}  question_data=${question_data}
 
@@ -345,7 +344,9 @@ ${question_id}  0
   ...      critical level 2
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Викликати для учасника  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
-  Звірити поле тендера із значенням  ${viewer}  ${USERS.users['${provider}'].question_data.question.data.title}  questions[${question_id}].title
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}'].question_data.question.data.title}  title
+  ...      object_id=${USERS.users['${provider}'].question_data.question_id}
 
 
 Відображення опису анонімного питання без відповіді
@@ -353,14 +354,18 @@ ${question_id}  0
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      critical level 2
-  Звірити поле тендера із значенням  ${viewer}  ${USERS.users['${provider}'].question_data.question.data.description}  questions[${question_id}].description
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}'].question_data.question.data.description}  description
+  ...      object_id=${USERS.users['${provider}'].question_data.question_id}
 
 
 Відображення дати анонімного питання без відповіді
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповідей
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити дату тендера із значенням  ${viewer}  ${USERS.users['${provider}'].question_data.question.data.date}  questions[${question_id}].date
+  Звірити дату тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}'].question_data.question.data.date}  date
+  ...      object_id=${USERS.users['${provider}'].question_data.question_id}
 
 ##############################################################################################
 #             МОЖЛИВІСТЬ
@@ -388,7 +393,10 @@ ${question_id}  0
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${answer}=  Підготовка даних для відповіді на запитання
-  ${answer_resp}=  Викликати для учасника  ${tender_owner}  Відповісти на питання  ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}']['question_data']['question_resp']}  ${answer}
+  ${answer_resp}=  Викликати для учасника  ${tender_owner}
+  ...      Відповісти на питання  ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}']['question_data']['question_resp']}  ${answer}
+  ...      question_id=${USERS.users['${provider}'].question_data.question_id}
   ${now}=  Get Current TZdate
   ${answer.data.date}=  Set variable  ${now}
   ${answer_data}=  Create Dictionary  answer=${answer}  answer_resp=${answer_resp}
@@ -405,7 +413,9 @@ ${question_id}  0
   ...      critical level 2
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Викликати для учасника  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
-  Звірити поле тендера із значенням  ${viewer}  ${USERS.users['${provider}']['answer_data']['answer'].data.answer}  questions[${question_id}].answer
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${provider}']['answer_data']['answer'].data.answer}  answer
+  ...      object_id=${USERS.users['${provider}'].question_data.question_id}
 
 ##############################################################################################
 #             МОЖЛИВІСТЬ

@@ -339,6 +339,24 @@ def munch_dict(arg=None, data=False):
     return munchify(arg)
 
 
+def get_id_from_field(field):
+    return re.match(r'(^[filq]-[0-9a-fA-F]{8}): ', field).group(1)
+
+
+def get_object_type_by_id(object_id):
+    prefixes = {'q': 'questions', 'f': 'features', 'i': 'items', 'l': 'lots'}
+    return prefixes.get(object_id[0])
+
+
+def get_object_index_by_id(data, object_id):
+    for index, element in enumerate(data):
+        element_id = get_id_from_field(element['description'])
+        if element_id == object_id:
+            break
+    else:
+        index = 0
+    return index
+
 # GUI Frontends common
 def add_data_for_gui_frontends(tender_data):
     now = get_now()
