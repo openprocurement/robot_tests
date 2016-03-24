@@ -146,10 +146,12 @@ Get Broker Property By Username
   Log  ${tender_data}
   [return]  ${tender_data}
 
+
 Підготовка даних для створення лоту
   ${lot}=  test_lot_data
   ${reply}=  Create Dictionary  data=${lot}
   [Return]  ${reply}
+
 
 Підготовка даних для подання вимоги
   ${claim}=  test_claim_data
@@ -363,6 +365,7 @@ Get Broker Property By Username
   ...      WARN
   Run Keyword And Return  Run As  ${username}  ${command}  @{arguments}
 
+
 Отримати дані із тендера
   [Arguments]  ${username}  ${field_name}
   Log  ${username}
@@ -379,8 +382,6 @@ Get Broker Property By Username
   # And caching its value before return
   Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field_name}  ${field_value}
   [return]  ${field_value}
-
-
 
 
 Run As
@@ -472,6 +473,29 @@ Require Failure
   [Arguments]  ${username}
   log  ${username}
   Дочекатись дати  ${USERS.users['${username}'].tender_data.data.complaintPeriod.endDate}
+
+
+Дочекатись дати початку періоду подання запитань
+  [Arguments]  ${username}
+  Log  ${username}
+  # This tries to get the date from current user's procurement data cache.
+  # On failure, it reads from tender_owner's cached initial_data.
+  # XXX: This is a dirty hack!
+  # HACK: It was left here only for backward compatibiliy.
+  # HACK: Before caching was implemented, this keyword used to look into
+  # HACK: tender_owner's initial_data.
+  # HACK: This should be cleaned up as soon as each broker implements reading
+  # HACK: of the needed dates from tender's page.
+  ${status}  ${date}=  Run Keyword And Ignore Error
+  ...      Set Variable
+  ...      ${USERS.users['${username}'].tender_data.data.enquiryPeriod.startDate}
+  # By default if condition is not satisfied, variable is set to None.
+  # The third argument sets the variable to itself instead of None.
+  ${date}=  Set Variable If
+  ...      '${status}' == 'FAIL'
+  ...      ${USERS.users['${tender_owner}'].initial_data.data.enquiryPeriod.startDate}
+  ...      ${date}
+  Дочекатись дати  ${date}
 
 
 Оновити LAST_MODIFICATION_DATE
