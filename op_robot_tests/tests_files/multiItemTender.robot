@@ -30,11 +30,10 @@ ${broker}       Quinta
 
 Можливість знайти багатопредметний тендер по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
-  ...      viewer  tender_owner  provider  provider1
+  ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
-  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      minimal
-  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \  Дочекатись синхронізації з майданчиком    ${username}
   \  Викликати для учасника  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
 
