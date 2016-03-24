@@ -14,9 +14,13 @@ def create_fake_sentence():
     return fake.sentence(nb_words=10, variable_nb_words=True)
 
 
+def description_with_id(prefix, sentence):
+    return "{}-{}: {}".format(prefix, fake.uuid4()[:8], sentence)
+
+
 def create_fake_doc():
     content = fake.text()
-    suffix = fake.random_element(('.txt', '.doc', '.docx', '.pdf'))
+    suffix = fake.random_element(('.doc', '.docx', '.pdf'))
     tf = NamedTemporaryFile(delete=False, suffix=suffix)
     tf.write(content)
     tf.close()
@@ -57,55 +61,17 @@ def test_tender_data(intervals, periods=("enquiry", "tender")):
         },
         "value": {
             "amount": 50000.99,
-            "currency": u"UAH"
+            "currency": u"UAH",
+            "valueAddedTaxIncluded": True
         },
         "minimalStep": {
             "amount": 100.1,
             "currency": u"UAH"
         },
-        "items": [
-            {
-                "description": fake.catch_phrase(),
-                "deliveryDate": {
-                    "endDate": (now + timedelta(days=5)).isoformat()
-                },
-                "deliveryLocation": {
-                    "latitude": 49.8500,
-                    "longitude": 24.0167
-                },
-                "deliveryAddress": {
-                    "countryName": u"Україна",
-                    "countryName_ru": u"Украина",
-                    "countryName_en": "Ukraine",
-                    "postalCode": fake.postalcode(),
-                    "region": u"м. Київ",
-                    "locality": u"м. Київ",
-                    "streetAddress": fake.street_address()
-                },
-                "classification": {
-                    "scheme": u"CPV",
-                    "id": u"44617100-9",
-                    "description": u"Картонки",
-                    "description_ru": u"Большие картонные коробки",
-                    "description_en": u"Cartons"
-                },
-                "additionalClassifications": [
-                    {
-                        "scheme": u"ДКПП",
-                        "id": u"17.21.1",
-                        "description": u"Папір і картон гофровані, паперова й картонна тара"
-                    }
-                ],
-                "unit": {
-                    "name": u"кілограм",
-                    "name_ru": u"килограмм",
-                    "name_en": "kilogram",
-                    "code": u"KGM"
-                },
-                "quantity": fake.pyint()
-            }
-        ]
+        "items": []
     }
+    new_item = test_item_data()
+    t_data['items'].append(new_item)
     period_dict = {}
     inc_dt = now
     for period_name in periods:
@@ -126,18 +92,18 @@ def test_tender_data_limited(intervals, procurement_method_type):
                 "additionalClassifications":
                 [
                     {
-                        "description": u"Послуги шкільних їдалень",
-                        "id": "55.51.10.300",
+                        "description": "Послуги щодо забезпечення харчуванням, інші",
+                        "id": "56.29",
                         "scheme": u"ДКПП"
                     }
                 ],
                 "classification":
                 {
-                    "description": u"Послуги з харчування у школах",
+                    "description": "Послуги з організації шкільного харчування",
                     "id": "55523100-3",
                     "scheme": "CPV"
                 },
-                "description": u"Послуги шкільних їдалень",
+                "description": description_with_id('i', fake.sentence(nb_words=10, variable_nb_words=True)),
                 "id": "2dc54675d6364e2baffbc0f8e74432ac",
                 "deliveryDate": {
                     "endDate": (now + timedelta(days=5)).isoformat()
@@ -189,10 +155,34 @@ def test_tender_data_limited(intervals, procurement_method_type):
             "currency": "UAH",
             "valueAddedTaxIncluded": True
         },
-        "title": u"Послуги шкільних їдалень",
+        "description": fake.sentence(nb_words=10, variable_nb_words=True),
+        "description_en": fake.sentence(nb_words=10, variable_nb_words=True),
+        "description_ru": fake.sentence(nb_words=10, variable_nb_words=True),
+        "title": fake.catch_phrase(),
+        "title_en": fake.catch_phrase(),
+        "title_ru": fake.catch_phrase()
     }
-    if procurement_method_type == "negotiation" or procurement_method_type == "negotiation.quick":
-        data.update({"procurementMethodDetails": "quick, accelerator=1440"})
+    if procurement_method_type == "negotiation":
+        cause_variants = (
+            "artContestIP",
+            "noCompetition",
+            "twiceUnsuccessful",
+            "additionalPurchase",
+            "additionalConstruction",
+            "stateLegalServices"
+        )
+        cause = fake.random_element(cause_variants)
+        data.update({"cause": cause})
+    if procurement_method_type == "negotiation.quick":
+        cause_variants = ('quick',)
+        cause = fake.random_element(cause_variants)
+        data.update({"cause": cause})
+    if procurement_method_type == "negotiation" \
+    or procurement_method_type == "negotiation.quick":
+        data.update({
+            "procurementMethodDetails": "quick, accelerator=1440",
+            "causeDescription": fake.sentence(nb_words=10, variable_nb_words=True)
+        })
     return data
 
 
@@ -211,24 +201,12 @@ def test_tender_data_multiple_lots(t_data):
     for item in t_data['data']['items'][:-1]:
         item['relatedLot'] = first_lot_id
     t_data['data']['items'][-1]['relatedLot'] = second_lot_id
-
-    t_data['data']['lots'] = [
-        {
-            "id": first_lot_id,
-            "title": "Lot #1: Kyiv stationery",
-            "description": "Items for Kyiv office",
-            "value": {"currency": "UAH", "amount": 34000.0, "valueAddedTaxIncluded": "true"},
-            "minimalStep": {"currency": "UAH", "amount": 30.0, "valueAddedTaxIncluded": "true"},
-            "status": "active"
-        }, {
-            "id": second_lot_id,
-            "title": "Lot #2: Lviv stationery",
-            "description": "Items for Lviv office",
-            "value": {"currency": "UAH", "amount": 9000.0, "valueAddedTaxIncluded": "true"},
-            "minimalStep": {"currency": "UAH", "amount": 35.0, "valueAddedTaxIncluded": "true"},
-            "status": "active"
-        }
-    ]
+    t_data['data']['lots'] = []
+    for _ in range(2):
+        new_lot = test_lot_data()
+        t_data['data']['lots'].append(new_lot)
+    t_data['data']['lots'][0]['id'] = first_lot_id
+    t_data['data']['lots'][1]['id'] = second_lot_id
     return t_data
 
 
@@ -240,7 +218,7 @@ def test_meat_tender_data(tender):
             "code": "ee3e24bc17234a41bd3e3a04cc28e9c6",
             "featureOf": "tenderer",
             "title": "Термін оплати",
-            "description": "Умови відстрочки платежу після поставки товару",
+            "description": description_with_id('f', "Умови відстрочки платежу після поставки товару"),
             "enum": [
                 {
                     "value": 0.15,
@@ -265,7 +243,7 @@ def test_meat_tender_data(tender):
             "featureOf": "item",
             "relatedItem": item_id,
             "title": "Сорт",
-            "description": "Сорт продукції",
+            "description": description_with_id('f', "Сорт продукції"),
             "enum": [
                 {
                     "value": 0.05,
@@ -309,7 +287,7 @@ def test_question_data(lot=False):
                 },
                 "name": fake.company()
             },
-            "description": fake.sentence(nb_words=10, variable_nb_words=True),
+            "description": description_with_id('q', fake.sentence(nb_words=10, variable_nb_words=True)),
             "title": fake.sentence(nb_words=6, variable_nb_words=True)
         }
     })
@@ -503,7 +481,7 @@ def test_bid_data():
             "value": {
                 "currency": "UAH",
                 "amount": 500,
-                "valueAddedTaxIncluded": "true"
+                "valueAddedTaxIncluded": True
             }
         }
     })
@@ -535,7 +513,7 @@ def test_lots_bid_data():
                 "value": {
                     "currency": "UAH",
                     "amount": fake.random_int(max=1999),
-                    "valueAddedTaxIncluded": "true"
+                    "valueAddedTaxIncluded": True
                 },
                 "relatedLot": "3c8f387879de4c38957402dbdb8b31af",
                 "date": "2015-11-01T12:43:12.482645+02:00"
@@ -544,7 +522,7 @@ def test_lots_bid_data():
                 "value": {
                     "currency": "UAH",
                     "amount": fake.random_int(max=1999),
-                    "valueAddedTaxIncluded": "true"
+                    "valueAddedTaxIncluded": True
                 },
                 "relatedLot": "bcac8d2ceb5f4227b841a2211f5cb646",
                 "date": "2015-11-01T12:43:12.482645+02:00"
@@ -560,7 +538,7 @@ def auction_bid():
             "value": {
                 "amount": 200,
                 "currency": "UAH",
-                "valueAddedTaxIncluded": "true"
+                "valueAddedTaxIncluded": True
             }
         }
     })
@@ -608,7 +586,7 @@ def test_award_data():
 def test_item_data():
     now = get_now()
     return {
-        "description": fake.catch_phrase(),
+        "description": description_with_id('i', fake.catch_phrase()),
         "deliveryDate": {
             "endDate": (now + timedelta(days=5)).isoformat()
         },
@@ -628,7 +606,7 @@ def test_item_data():
         "classification": {
             "scheme": u"CPV",
             "id": u"44617100-9",
-            "description": u"Картонки",
+            "description": u"Картонні коробки",
             "description_ru": u"Большие картонные коробки",
             "description_en": u"Cartons"
         },
@@ -689,22 +667,21 @@ def test_invalid_features_data():
 
 def test_lot_data():
     return munchify(
-        {'data':
-            {
-                "description": fake.sentence(nb_words=10, variable_nb_words=True),
-                "title": fake.sentence(nb_words=6, variable_nb_words=True),
-                "value": {
-                    "currency": "UAH",
-                    "amount": fake.pyfloat(left_digits=4, right_digits=1, positive=True),
-                    "valueAddedTaxIncluded": "true"
-                },
-                "minimalStep": {
-                    "currency": "UAH",
-                    "amount": 30.0,
-                    "valueAddedTaxIncluded": "true"
-                },
-                "status": "active"
-            }})
+        {
+            "description": description_with_id('l', fake.sentence(nb_words=10, variable_nb_words=True)),
+            "title": fake.sentence(nb_words=6, variable_nb_words=True),
+            "value": {
+                "currency": "UAH",
+                "amount": 2000 + fake.pyfloat(left_digits=4, right_digits=1, positive=True),
+                "valueAddedTaxIncluded": True
+            },
+            "minimalStep": {
+                "currency": "UAH",
+                "amount": 30.0,
+                "valueAddedTaxIncluded": True
+            },
+            "status": "active"
+        })
 
 
 def test_lot_document_data(document, lot_id="3c8f387879de4c38957402dbdb8b31af"):
@@ -737,6 +714,8 @@ def test_tender_data_openua(intervals):
     t_data['procurementMethodType'] = 'aboveThresholdUA'
     t_data['procurementMethodDetails'] = 'quick, ' \
         'accelerator={}'.format(accelerator)
+    t_data['selfEligible'] = True
+    t_data['selfQualified'] = True
     return t_data
 
 
@@ -758,4 +737,6 @@ def test_tender_data_openeu(intervals):
     t_data['procuringEntity']['contactPoint']['name_en'] = fake_en.name()
     t_data['procuringEntity']['contactPoint']['availableLanguage'] = "en"
     t_data['procuringEntity']['identifier']['legalName_en'] = "Institution \"Vinnytsia City Council primary and secondary general school № 10\""
+    t_data['selfEligible'] = True
+    t_data['selfQualified'] = True
     return t_data

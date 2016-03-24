@@ -10,12 +10,21 @@ Resource           resource.robot
 ##############################################################################################
 Можливість створити закупівлю для тестування скасування
   ${tender_data}=  Підготовка даних для створення тендера
+  # munchify is used to make deep copy of ${tender_data}
+  ${tender_data_copy}=  munchify  ${tender_data}
+  ${status}  ${adapted_data}=  Run Keyword And Ignore Error  Викликати для учасника  ${tender_owner}  Підготувати дані для оголошення тендера  ${tender_data_copy}
+  ${adapted_data}=  Set variable if  '${status}' == 'FAIL'  ${tender_data_copy}  ${adapted_data}
+  # munchify is used to make nice log output
+  ${adapted_data}=  munchify  ${adapted_data}
+  Log  ${tender_data}
+  Log  ${adapted_data}
+  ${status}=  Run keyword and return status  Dictionaries Should Be Equal  ${adapted_data.data}  ${tender_data.data}
+  Run keyword if  ${status} == ${False}  Log  Initial tender data was changed  WARN
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}
   ...      Створити тендер
-  ...      ${tender_data}
-  Log  ${tender_data}
-  Set To Dictionary  ${TENDER}  TENDER_UAID  ${TENDER_UAID}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data  ${tender_data}
+  ...      ${adapted_data}
+  Set To Dictionary  ${TENDER}  TENDER_UAID=${TENDER_UAID}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data=${adapted_data}
   Log  ${TENDER}
 
 
@@ -62,12 +71,21 @@ Resource           resource.robot
 
 Можливість створити закупівлю
   ${tender_data}=  Підготовка даних для створення тендера
+  # munchify is used to make deep copy of ${tender_data}
+  ${tender_data_copy}=  munchify  ${tender_data}
+  ${status}  ${adapted_data}=  Run Keyword And Ignore Error  Викликати для учасника  ${tender_owner}  Підготувати дані для оголошення тендера  ${tender_data_copy}
+  ${adapted_data}=  Set variable if  '${status}' == 'FAIL'  ${tender_data_copy}  ${adapted_data}
+  # munchify is used to make nice log output
+  ${adapted_data}=  munchify  ${adapted_data}
+  Log  ${tender_data}
+  Log  ${adapted_data}
+  ${status}=  Run keyword and return status  Dictionaries Should Be Equal  ${adapted_data.data}  ${tender_data.data}
+  Run keyword if  ${status} == ${False}  Log  Initial tender data was changed  WARN
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}
   ...      Створити тендер
-  ...      ${tender_data}
-  Log  ${tender_data}
-  Set To Dictionary  ${TENDER}  TENDER_UAID  ${TENDER_UAID}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data  ${tender_data}
+  ...      ${adapted_data}
+  Set To Dictionary  ${TENDER}  TENDER_UAID=${TENDER_UAID}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data=${adapted_data}
   Log  ${TENDER}
 
 
@@ -89,8 +107,8 @@ Resource           resource.robot
   ...      Завантажити документ
   ...      ${filepath}
   ...      ${TENDER['TENDER_UAID']}
-  ${documents}=  Create Dictionary  filepath  ${filepath}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  documents  ${documents}
+  ${documents}=  Create Dictionary  filepath=${filepath}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  documents=${documents}
 
 
 Можливість зареєструвати і підтвердити постачальника до закупівлі
@@ -112,10 +130,52 @@ Resource           resource.robot
   ...      title
 
 
+Відображення заголовку закупівлі англійською мовою
+  Звірити поле тендера  ${viewer}
+  ...      ${USERS.users['${tender_owner}'].initial_data}
+  ...      title_en
+
+
+Відображення заголовку закупівлі російською мовою
+  Звірити поле тендера  ${viewer}
+  ...      ${USERS.users['${tender_owner}'].initial_data}
+  ...      title_ru
+
+
 Відображення ідентифікатора закупівлі
   Звірити поле тендера із значенням  ${viewer}
   ...      ${TENDER['TENDER_UAID']}
   ...      tenderID
+
+
+Відображення опису закупівлі
+  Звірити поле тендера  ${viewer}
+  ...      ${USERS.users['${tender_owner}'].initial_data}
+  ...      description
+
+
+Відображення опису закупівлі англійською мовою
+  Звірити поле тендера  ${viewer}
+  ...      ${USERS.users['${tender_owner}'].initial_data}
+  ...      description_en
+
+
+Відображення опису закупівлі російською мовою
+  Звірити поле тендера  ${viewer}
+  ...      ${USERS.users['${tender_owner}'].initial_data}
+  ...      description_ru
+
+
+Відображення підстави вибору закупівлі
+  Звірити поле тендера  ${viewer}
+  ...      ${USERS.users['${tender_owner}'].initial_data}
+  ...      causeDescription
+
+
+Відображення обгрунтування причини вибору закупівлі
+  Звірити поле тендера  ${viewer}
+  ...      ${USERS.users['${tender_owner}'].initial_data}
+  ...      cause
 
 ##############################################################################################
 #             MAIN DATA.VALUE

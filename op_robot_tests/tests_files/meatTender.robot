@@ -144,7 +144,7 @@ ${broker}       Quinta
   ...      ${USERS.users['${viewer}'].broker}
   ...      minimal
   [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
-  Викликати для учасника  ${viewer}  Отримати інформацію із тендера  auctionPeriod.startDate
+  Отримати дані із тендера  ${viewer}  auctionPeriod.startDate
 
 
 Очікування аукціону

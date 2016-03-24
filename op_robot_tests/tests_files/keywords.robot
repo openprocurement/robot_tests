@@ -3,6 +3,7 @@ Library  op_robot_tests.tests_files.service_keywords
 Library  String
 Library  Collections
 Library  Selenium2Library
+Library  OperatingSystem
 Library  DateTime
 Library  DebugLibrary
 
@@ -16,6 +17,8 @@ Test Suite Setup
   Set Suite Variable  ${WARN_RUN_AS}  ${False}
   Set Selenium Implicit Wait  5 s
   Set Selenium Timeout  10 s
+  Залогувати git-дані
+  Порівняти системний і серверний час
   Завантажуємо дані про користувачів і майданчики
 
 
@@ -28,6 +31,23 @@ Set Suite Variable With Default Value
   [Arguments]  ${suite_var}  ${def_value}
   ${tmp}=  Get Variable Value  ${${suite_var}}  ${def_value}
   Set Suite Variable  ${${suite_var}}  ${tmp}
+
+
+Порівняти системний і серверний час
+  ${server_time}=  request  ${api_host_url}  HEAD
+  ${local_time}=  Get current TZdate
+  Log  ${server_time.headers['date']}
+  Log  ${local_time}
+  ${status}=  compare_date  ${server_time.headers['date']}  ${local_time}  5
+  Run keyword if  ${status} == ${False}
+  ...      Log  Час на сервері відрізняється від локального більше ніж на 5 секунд  WARN
+
+
+Залогувати git-дані
+  ${commit}=  Run  git log --graph --pretty --abbrev-commit --date=relative -n 30
+  ${repo}=    Run  git remote -v
+  ${branch}=  Run  git branch -vva
+  Log many  ${commit}  ${repo}  ${branch}
 
 
 Завантажуємо дані про користувачів і майданчики
@@ -127,10 +147,15 @@ Get Broker Property By Username
   [return]  ${tender_data}
 
 
+Підготовка даних для створення лоту
+  ${lot}=  test_lot_data
+  ${reply}=  Create Dictionary  data=${lot}
+  [Return]  ${reply}
+
+
 Підготовка даних для подання вимоги
   ${claim}=  test_claim_data
   [Return]  ${claim}
-
 
 
 Підготовка даних для подання скарги
@@ -174,8 +199,22 @@ Get Broker Property By Username
 
 
 Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
+  [Documentation]
+  ...      Load broker's driver (keyword library).
+  ...
+  ...      `Import Resource` is called twice:
+  ...
+  ...      1) It tries to read from  ``brokers/`` directory
+  ...      (located next to ``keywords.robot``).
+  ...      This is an old feature which will be removed in the future.
+  ...
+  ...      2) It looks for a given filename in ``sys.path``
+  ...      (``PYTHONPATH`` environment variable).
+  ...
+  ...      This keyword will fail if ``keywords_file`` was found
+  ...      in both locations.
   ${bundled_st}=  Run Keyword And Return Status  Import Resource  ${CURDIR}${/}brokers${/}${keywords_file}.robot
-  ${external_st}=  Run Keyword And Return Status  Import Resource  ${CURDIR}${/}..${/}..${/}src${/}robot_tests.broker.${keywords_file}${/}${keywords_file}.robot
+  ${external_st}=  Run Keyword And Return Status  Import Resource  ${keywords_file}.robot
   Run Keyword If  ${bundled_st} == ${external_st} == ${False}  Fail  Resource file ${keywords_file}.robot not found
   Run Keyword If  ${bundled_st} == ${external_st} == ${True}  Fail  Resource file ${keywords_file}.robot found in both brokers${/} and src${/}
 
@@ -183,13 +222,15 @@ Get Broker Property By Username
 Дочекатись синхронізації з майданчиком
   [Arguments]  ${username}
   [Documentation]
-  ...      Find out how much time has passed since the procurement was modified
-  ...      and store the result in `delta`,
-  ...      then get `timeout_on_wait` for ``username``,
-  ...      then wait for `sleep` seconds, where:
-  ...
-  ...      sleep = timeout_on_wait - delta
-  ...
+  ...      Synchronise with ``username`` and update cache
+  ...      First section
+  ...      Get `timeout_on_wait` for ``username``
+  ...      Add `timeout_on_wait` to `last_modification_date` in order to have
+  ...      correct time of data modification in CDB(every broker has different
+  ...      data synchronisation time with CDB).
+  ...      Find diff between `last_mofidication_date_corrected`
+  ...      and `now`. If that value is positive, sleep for `sleep` seconds,
+  ...      else go to next section.
   ...      Thus, when this keyword is executed several times in a row,
   ...      it will wait for as long as really needed.
   ...
@@ -212,18 +253,34 @@ Get Broker Property By Username
   ...      First call will trigger `Sleep 115`.
   ...      Second call will trigger `Sleep 0`,
   ...      since we have already slept for 120 seconds
-  ...      and there is no need to sleep any longer.
-  ${now}=  Get Current TZdate
-  ${delta}=  Subtract Date From Date  ${now}  ${TENDER['LAST_MODIFICATION_DATE']}
+  ...      and there is no need to sleep anymore.
+  ...
+  ...      Second section
+  ...      Find how much time passed from ``username``'s `last_refresh_date`
+  ...      to `last_modification_date_corrected`. If that value is positive, then
+  ...      cahce for ``username`` is not up-to-date. So, it will be refreshed and
+  ...      `last_refresh_date` will be updated.
+  ...      Else do nothing.
   ${timeout_on_wait}=  Get Broker Property By Username  ${username}  timeout_on_wait
-  ${sleep}=  Subtract Time From Time  ${timeout_on_wait}  ${delta}
+  ${last_modification_date_corrected}=  Add Time To Date
+  ...      ${TENDER['LAST_MODIFICATION_DATE']}
+  ...      ${timeout_on_wait} s
+  ${now}=  Get Current TZdate
+  ${sleep}=  Subtract Date From Date
+  ...      ${last_modification_date_corrected}
+  ...      ${now}
   Run Keyword If  ${sleep} > 0  Sleep  ${sleep}
 
-  ${last_modification_date_corrected}=  Add Time To Date  ${TENDER['LAST_MODIFICATION_DATE']}  ${timeout_on_wait} s
-  ${time_diff}=  Subtract Date From Date  ${last_modification_date_corrected}  ${USERS.users['${username}']['LAST_REFRESH_DATE']}
-  Run Keyword If  ${time_diff} > 0  Викликати для учасника  ${username}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+
+  ${time_diff}=  Subtract Date From Date
+  ...      ${last_modification_date_corrected}
+  ...      ${USERS.users['${username}']['LAST_REFRESH_DATE']}
   ${LAST_REFRESH_DATE}=  Get Current TZdate
-  Run Keyword If  ${time_diff} > 0  Set To Dictionary  ${USERS.users['${username}']}  LAST_REFRESH_DATE=${LAST_REFRESH_DATE}
+  Run Keyword If  ${time_diff} > 0  Run keywords
+  ...      Викликати для учасника  ${username}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  ...      AND
+  ...      Set To Dictionary  ${USERS.users['${username}']}  LAST_REFRESH_DATE=${LAST_REFRESH_DATE}
+
 
 Звірити поле тендера
   [Arguments]  ${username}  ${tender_data}  ${field}
@@ -233,11 +290,10 @@ Get Broker Property By Username
 
 Звірити поле тендера із значенням
   [Arguments]  ${username}  ${left}  ${field}
-  ${right}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field}
+  ${right}=  Отримати дані із тендера  ${username}  ${field}
   Log  ${left}
   Log  ${right}
   Порівняти об'єкти  ${left}  ${right}
-  Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${left}
 
 
 Порівняти об'єкти
@@ -257,9 +313,8 @@ Get Broker Property By Username
 
 Звірити дату тендера із значенням
   [Arguments]  ${username}  ${left}  ${field}
-  ${right}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field}
+  ${right}=  Отримати дані із тендера  ${username}  ${field}
   Порівняти дати  ${left}  ${right}
-  Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${left}
 
 
 Порівняти дати
@@ -309,6 +364,24 @@ Get Broker Property By Username
   ...      Log  Keyword 'Викликати для учасника' is deprecated. Please use 'Run As' and 'Require Failure' instead.
   ...      WARN
   Run Keyword And Return  Run As  ${username}  ${command}  @{arguments}
+
+
+Отримати дані із тендера
+  [Arguments]  ${username}  ${field_name}
+  Log  ${username}
+  Log  ${field_name}
+
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      Get from object
+  ...      ${USERS.users['${username}'].tender_data.data}
+  ...      ${field_name}
+  # If field in cache, return its value
+  Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
+  # Else call broker to find field
+  ${field_value}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field_name}
+  # And caching its value before return
+  Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field_name}  ${field_value}
+  [return]  ${field_value}
 
 
 Run As
@@ -400,6 +473,29 @@ Require Failure
   [Arguments]  ${username}
   log  ${username}
   Дочекатись дати  ${USERS.users['${username}'].tender_data.data.complaintPeriod.endDate}
+
+
+Дочекатись дати початку періоду подання запитань
+  [Arguments]  ${username}
+  Log  ${username}
+  # This tries to get the date from current user's procurement data cache.
+  # On failure, it reads from tender_owner's cached initial_data.
+  # XXX: This is a dirty hack!
+  # HACK: It was left here only for backward compatibiliy.
+  # HACK: Before caching was implemented, this keyword used to look into
+  # HACK: tender_owner's initial_data.
+  # HACK: This should be cleaned up as soon as each broker implements reading
+  # HACK: of the needed dates from tender's page.
+  ${status}  ${date}=  Run Keyword And Ignore Error
+  ...      Set Variable
+  ...      ${USERS.users['${username}'].tender_data.data.enquiryPeriod.startDate}
+  # By default if condition is not satisfied, variable is set to None.
+  # The third argument sets the variable to itself instead of None.
+  ${date}=  Set Variable If
+  ...      '${status}' == 'FAIL'
+  ...      ${USERS.users['${tender_owner}'].initial_data.data.enquiryPeriod.startDate}
+  ...      ${date}
+  Дочекатись дати  ${date}
 
 
 Оновити LAST_MODIFICATION_DATE

@@ -16,8 +16,7 @@ ${broker}       Quinta
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      minimal
   Завантажити дані про тендер
-  ${usernames}=  Create List  ${viewer}  ${tender_owner}
-  :FOR  ${username}  IN  @{usernames}
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \   ${resp}=  Викликати для учасника  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
   Log  ${resp}
 
@@ -29,9 +28,8 @@ ${broker}       Quinta
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних оголошеного тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ${usernames}=  Create List  ${viewer}  ${tender_owner}
-  :FOR  ${username}  IN  @{usernames}
-  \  Викликати для учасника  ${username}  Отримати інформацію із тендера  awards[1].complaintPeriod.endDate
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
+  \  Отримати дані із тендера  ${username}  awards[1].complaintPeriod.endDate
 
 Дочекатися закічення stand still періоду
   ${standstillEnd}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data.awards[1].complaintPeriod.endDate}

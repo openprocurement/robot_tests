@@ -45,11 +45,9 @@ Quinta:
             enquiry: [0, 2]
             tender:  [0, 5]
         openua:
-            accelerator: 1440
-            tender:  [0, 15]
+            tender:  [1, 15]
         openeu:
-            accelerator: 1440
-            tender:  [0, 30]
+            tender:  [1, 30]
     keywords_file: openprocurement_client
     roles:
         provider:       Tender_User
@@ -70,6 +68,9 @@ Quinta_Plan:
         viewer:         Plan_Viewer
     timeout_on_wait: 15
 E-tender:
+    intervals:
+        default:
+            enquiry: [0, 5]
     keywords_file: etender
     roles:
         provider:       E-tender_Provider1
@@ -78,13 +79,17 @@ E-tender:
         viewer:         E-tender_Viewer
     timeout_on_wait: 600
 DZO:
+    intervals:
+        default:
+            enquiry: [0, 20]
+            tender:  [0, 15]
     keywords_file: dzo
-    login: admin
-    password: uStudio
     roles:
-        provider:       DZO_Provider1
         tender_owner:   DZO_Owner
+        provider:       DZO_Provider
+        provider1:      DZO_Provider1
         viewer:         DZO_Viewer
+    timeout_on_wait: 300
 Newtend:
     keywords_file: newtend
     roles:
@@ -105,12 +110,14 @@ PrivatMarket:
 Prom:
     intervals:
         default:
-            enquiry: [10, 10]
-            tender:  [0,  45]
+            enquiry: [4, 4]
+            tender:  [0,  30]
     keywords_file: prom
     roles:
         tender_owner:   Prom_Owner
         viewer:         Prom_Viewer
+        provider:       Prom_Provider1
+    timeout_on_wait: 10
 Publicbid:
     intervals:
         default:
@@ -128,8 +135,14 @@ PublicPortal:
 SmartTender:
     intervals:
         default:
-            enquiry: [5, 10]
+            enquiry: [0, 10]
+            tender:  [0, 20]
+        openua:
+            accelerator: 1440
             tender:  [0, 15]
+        openeu:
+            tender:  [0, 30]
+            accelerator: 1440
     keywords_file: smarttender
     roles:
         provider:       SmartTender_Provider1

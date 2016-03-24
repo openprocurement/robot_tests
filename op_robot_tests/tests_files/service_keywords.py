@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -
+from copy import deepcopy
 from datetime import timedelta
 from dateutil.parser import parse
 from dpath.util import new as xpathnew
@@ -6,6 +7,7 @@ from iso8601 import parse_date
 from json import load
 from jsonpath_rw import parse as parse_path
 from munch import fromYAML, Munch, munchify
+from restkit import request
 from robot.errors import HandlerExecutionFailed
 from robot.libraries.BuiltIn import BuiltIn
 from robot.output import LOGGER
@@ -246,11 +248,20 @@ def wait_to_date(date_stamp):
     return wait_seconds
 
 
-def merge_dicts(left, right):
-    new = {}
-    new.update(left)
-    new.update(right)
-    return new
+def merge_dicts(a, b):
+    """Merge dicts recursively.
+
+    Origin: https://www.xormedia.com/recursively-merge-dictionaries-in-python/
+    """
+    if not isinstance(b, dict):
+        return b
+    result = deepcopy(a)
+    for k, v in b.iteritems():
+        if k in result and isinstance(result[k], dict):
+                result[k] = merge_dicts(result[k], v)
+        else:
+            result[k] = deepcopy(v)
+    return munchify(result)
 
 
 def create_data_dict(path_to_value=None, value=None):

@@ -25,7 +25,7 @@ users:
         broker:   Quinta_Plan
     E-tender_Owner:
         broker:   E-tender
-        homepage: "http://bid.uat.e-tender.biz/#"
+        homepage: "http://bid.uat.e-tender.biz/#/"
         login:    Misha2
         password: Password1
         browser:  chrome
@@ -33,7 +33,7 @@ users:
         size:     [800, 800]
     E-tender_Provider1:
         broker:   E-tender
-        homepage: "http://bid.uat.e-tender.biz/#"
+        homepage: "http://bid.uat.e-tender.biz/#/"
         login:    st_org
         password: 12345678
         browser:  chrome
@@ -41,7 +41,7 @@ users:
         size:     [700, 800]
     E-tender_Provider2:
         broker:   E-tender
-        homepage: "http://bid.uat.e-tender.biz/#"
+        homepage: "http://bid.uat.e-tender.biz/#/"
         login:    provider2
         password: Qa123456
         browser:  chrome
@@ -49,7 +49,7 @@ users:
         size:     [640, 450]
     E-tender_Viewer:
         broker:   E-tender
-        homepage: "http://bid.uat.e-tender.biz/#"
+        homepage: "http://bid.uat.e-tender.biz/#/"
         browser:  chrome
         position: [0, 0]
         size:     [640, 450]
@@ -58,54 +58,62 @@ users:
         homepage: "http://dz2.byustudio.in.ua"
         login:    ovramet.s@gmail.com
         password: Password1
-        browser:  chrome
+        browser:  firefox
         position: [0, 0]
-        size:     [700, 800]
-    DZO_Provider1:
+        size:     [1366, 800]
+    DZO_Provider:
         broker:   DZO
         homepage: "http://dz2.byustudio.in.ua"
         login:    halyna.khimka@gmail.com
         password: JHO5VUp5n
-        browser:  chrome
+        browser:  firefox
         position: [0, 0]
-        size:     [600, 800]
-    DZO_Viewer:
+        size:     [1366, 800]
+    DZO_Provider1:
         broker:   DZO
         homepage: "http://dz2.byustudio.in.ua"
-        browser:  chrome
+        login:    dzoprovider2@gmail.com
+        password: UxYkGVVfk
+        browser:  firefox
         position: [0, 0]
-        size:     [600, 800]
+        size:     [1366, 800]
+    DZO_Viewer:
+        broker:   DZO
+        homepage: "http://dz2.byustudio.in.ua/?test_mode=guest"
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
     Newtend_Owner:
         broker:   Newtend
-        homepage: "http://openprocurement:test@dev23.newtend.com/"
-        login:    openprocurement@mailinator.com
+        homepage: "http://dev23.newtend.com/opc/tenders"
+        login:    ten2312@mailinator.com
         password: 123123
         browser:  chrome
         position: [0, 0]
         size:     [1200, 1200]
     Newtend_Provider1:
         broker:   Newtend
-        homepage: "http://openprocurement:test@dev23.newtend.com/"
-        login:    openprocboss@mailinator.com
+        homepage: "http://dev23.newtend.com/opc/tenders"
+        login:    ten2316@mailinator.com
         password: 123123
         browser:  chrome
         position: [700, 0]
         size:     [800, 700]
     Newtend_Viewer:
         broker:   Newtend
-        homepage: "http://openprocurement:test@dev23.newtend.com/openprocurement/tenders"
+        homepage: "http://openprocurement:test@dev23.newtend.com/opc/tenders"
         browser:  chrome
         position: [800, 400]
         size:     [800, 700]
     PrivatMarket_Viewer:
         broker:   PrivatMarket
-        homepage: "https://pmarket-rc.privatbank.ua/app.php/business/tenders"
+        homepage: "https://pmarket-rc-2.privatbank.ua/business/tenders"
         browser:  chrome
         position: [-1500, 0]
         size:     [1000, 1000]
     PrivatMarket_Provider:
         broker:   PrivatMarket
-        homepage: "https://pmarket-rc.privatbank.ua/app.php/business/tenders"
+        homepage: "https://pmarket-rc-2.privatbank.ua/business/tenders"
         email:    pbecommercetest2@ukr.net
         login:    +380639405094
         password: password5094
@@ -114,7 +122,7 @@ users:
         size:     [1000, 1000]
     PrivatMarket_Provider1:
         broker:   PrivatMarket
-        homepage: "https://pmarket-rc.privatbank.ua/app.php/business/tenders"
+        homepage: "https://pmarket-rc-2.privatbank.ua/business/tenders"
         email:    pbecommercetest1@ukr.net
         login:    +380980704168
         password: password4168
@@ -124,18 +132,27 @@ users:
     Prom_Owner:
         broker:   Prom
         homepage: "http://zakupki.dz-test.net/"
-        default_page: "http://my.dz-test.net/cabinet/purchases/state_purchase/list"
+        default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_purchase/list"
         login:    test@test12.com
-        password: 1234
+        password: 12345678
         browser:  chrome
         position: [0, 0]
         size:     [1280, 1024]
     Prom_Viewer:
         broker:   Prom
         homepage: "http://zakupki.dz-test.net/"
-        default_page: "http://my.dz-test.net/cabinet/purchases/state_purchase/list"
-        login:  test@test13.com
-        password: 1234
+        default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_purchase/list"
+        login:    test@test13.com
+        password: 12345678
+        browser:  chrome
+        position: [640, 0]
+        size:     [1280, 1024]
+    Prom_Provider:
+        broker:   Prom
+        homepage: "http://zakupki.dz-test.net/"
+        default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_purchase/list"
+        login:    test@test14.com
+        password: 12345678
         browser:  chrome
         position: [640, 0]
         size:     [1280, 1024]
@@ -169,13 +186,13 @@ users:
         size:     [640, 480]
     SmartTender_Viewer:
         broker:   SmartTender
-        homepage: "https://m.it.ua/cp_smart/test-tenders?allcat=1"
+        homepage: "http://test.smarttender.biz/test-tenders?allcat=1"
         browser:  chrome
         position: [0, 450]
         size:     [640, 450]
     SmartTender_Provider1:
         broker:   SmartTender
-        homepage: "https://m.it.ua/cp_smart/test-tenders?allcat=1"
+        homepage: "http://test.smarttender.biz/test-tenders?allcat=1"
         login:    bened@it.ua
         password: 111111
         browser:  chrome
@@ -183,7 +200,7 @@ users:
         size:     [640, 450]
     SmartTender_Provider2:
         broker:   SmartTender
-        homepage: "https://m.it.ua/cp_smart/test-tenders?allcat=1"
+        homepage: "http://test.smarttender.biz/test-tenders?allcat=1"
         login:    my.mail.rudenko@gmail.com
         password: qwerty123
         browser:  chrome
@@ -191,7 +208,7 @@ users:
         size:     [640, 450]
     SmartTender_Owner:
         broker:   SmartTender
-        homepage: "https://m.it.ua/cp_smart/"
+        homepage: "http://test.smarttender.biz/test-tenders?allcat=1"
         login:    PPR_BV
         password: 123321
         browser:  chrome

@@ -52,7 +52,7 @@ ${complaint_id}  1
   [Setup]  Дочекатись синхронізації з майданчиком    ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${tender_data}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data}
-  ${lot}=  test lot data
+  ${lot}=  Підготовка даних для створення лоту
   ${lotcreate}=  Викликати для учасника   ${tender_owner}  Створити лот  ${tender_data}  ${lot}
   ${lotresponses}=  Create Dictionary
   Set To Dictionary  ${lotresponses}   resp0   ${lotcreate}
@@ -75,14 +75,14 @@ ${complaint_id}  1
   ...      ${USERS.users['${tender_owner}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${tender_data}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data}
-  ${lot}=  test lot data
+  ${lot}=  Підготовка даних для створення лоту
   ${lotcreate}=  Викликати для учасника   ${tender_owner}  Створити лот  ${tender_data}  ${lot}
   ${lotresponses}=  Create Dictionary
   Set To Dictionary  ${lotresponses}   resp   ${lotcreate}
   Set To Dictionary  ${USERS.users['${tender_owner}']}   lotresponses  ${lotresponses}
   log  ${lotcreate}
 
-Можливість змінити цінову пропозицію у новому лоті до 8000
+Можливість змінити бюджет нового лоту до 8000
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
@@ -93,7 +93,7 @@ ${complaint_id}  1
   Set To Dictionary  ${USERS.users['${tender_owner}'].lotresponses}   fixlotto8000resp   ${fixlotto8000resp}
   log  ${fixlotto8000resp}
 
-Можливість змінити цінову пропозицію у новому лоті до 100
+Можливість змінити бюджет нового лоту до 100
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}

@@ -7,16 +7,12 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uaid}
   Log  ${username}
   Log  ${tender_uaid}
-  Log Many  ${ID_MAP}
-  ${status}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${ID_MAP}  ${tender_uaid}
-  Run Keyword And Return If  ${status}  Get From Dictionary  ${ID_MAP}  ${tender_uaid}
-  ${tenders}=  get_tenders  ${USERS.users['${username}'].client}
-  Log Many  @{tenders}
-  :FOR  ${tender}  IN  @{tenders}
-  \  Set To Dictionary  ${ID_MAP}  ${tender.tenderID}  ${tender.id}
-  Log Many  ${ID_MAP}
-  Dictionary Should Contain Key  ${ID_MAP}  ${tender_uaid}
-  Run Keyword And Return  Get From Dictionary  ${ID_MAP}  ${tender_uaid}
+  Log Many  ${USERS.users['${username}'].id_map}
+  ${status}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${USERS.users['${username}'].id_map}  ${tender_uaid}
+  Run Keyword And Return If  ${status}  Get From Dictionary  ${USERS.users['${username}'].id_map}  ${tender_uaid}
+  ${tender_id}=  get_tender_id_by_uaid  ${tender_uaid}  ${USERS.users['${username}'].client}
+  Set To Dictionary  ${USERS.users['${username}'].id_map}  ${tender_uaid}  ${tender_id}
+  [return]  ${tender_id}
 
 
 Підготувати клієнт для користувача
@@ -25,16 +21,17 @@ Library  openprocurement_client_helper.py
   Log  ${api_host_url}
   Log  ${api_version}
   ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${api_host_url}  ${api_version}
-  Set To Dictionary  ${USERS.users['${username}']}  client  ${api_wrapper}
-  Set To Dictionary  ${USERS.users['${username}']}  access_token  ${EMPTY}
-  ${ID_MAP}=  Create Dictionary
-  Set Suite Variable  ${ID_MAP}
+  Set To Dictionary  ${USERS.users['${username}']}  client=${api_wrapper}
+  Set To Dictionary  ${USERS.users['${username}']}  access_token=${EMPTY}
+  ${id_map}=  Create Dictionary
+  Set To Dictionary  ${USERS.users['${username}']}  id_map=${id_map}
   Log Variables
 
 
 Підготувати дані для оголошення тендера
-  ${INITIAL_TENDER_DATA}=  prepare_test_tender_data
-  [return]   ${INITIAL_TENDER_DATA}
+  [Documentation]  Це слово використовується в майданчиків, тому потрібно, щоб воно було і тут
+  [Arguments]  ${username}  ${tender_data}
+  [return]  ${tender_data}
 
 
 Створити тендер
@@ -42,8 +39,8 @@ Library  openprocurement_client_helper.py
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  create_tender  ${tender_data}
   Log object data  ${tender}  created_tender
   ${access_token}=  Get Variable Value  ${tender.access.token}
-  Set To Dictionary  ${USERS.users['${username}']}   access_token   ${access_token}
-  Set To Dictionary  ${USERS.users['${username}']}   tender_data   ${tender}
+  Set To Dictionary  ${USERS.users['${username}']}   access_token=${access_token}
+  Set To Dictionary  ${USERS.users['${username}']}   tender_data=${tender}
   Log   ${access_token}
   Log   ${tender.data.id}
   Log   ${USERS.users['${username}'].tender_data}
@@ -68,14 +65,6 @@ Library  openprocurement_client_helper.py
   Log  ${username}
   Log  ${field_name}
 
-  ${status}  ${field_value}=  Run keyword and ignore error
-  ...      Get from object
-  ...      ${USERS.users['${username}'].tender_data.data}
-  ...      ${field_name}
-  # If field is found, return its value
-  Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
-
-  # Else refresh cached data and try again
   openprocurement_client.Пошук тендера по ідентифікатору
   ...      ${username}
   ...      ${TENDER['TENDER_UAID']}
@@ -86,7 +75,6 @@ Library  openprocurement_client_helper.py
   ...      ${field_name}
   Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
 
-  # If field is still absent, trigger a failure
   Fail  Field not found: ${field_name}
 
 
@@ -108,7 +96,7 @@ Library  openprocurement_client_helper.py
   Log  ${internalid}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
-  Set To Dictionary  ${USERS.users['${username}']}  tender_data  ${tender}
+  Set To Dictionary  ${USERS.users['${username}']}  tender_data=${tender}
   Log  ${tender}
   [Return]  ${tender}
 
@@ -161,7 +149,7 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uaid}  ${bid}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${biddingresponse}=  Call Method  ${USERS.users['${username}'].client}  create_bid  ${tender}  ${bid}
-  Set To Dictionary   ${USERS.users['${username}'].bidresponses['bid'].data}  id  ${biddingresponse['data']['id']}
+  Set To Dictionary   ${USERS.users['${username}'].bidresponses['bid'].data}  id=${biddingresponse['data']['id']}
   Log  ${biddingresponse}
   [return]  ${biddingresponse}
 
@@ -180,7 +168,7 @@ Library  openprocurement_client_helper.py
 Скасувати цінову пропозицію
   [Arguments]  ${username}  ${tender_uaid}  ${bid}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  Set To Dictionary   ${bid.data}  id  ${USERS.users['${username}'].bidresponses['bid'].data.id}
+  Set To Dictionary   ${bid.data}  id=${USERS.users['${username}'].bidresponses['bid'].data.id}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
   ${changed_bid}=  Call Method  ${USERS.users['${username}'].client}  delete_bid   ${tender}  ${bid}
   Log  ${changed_bid}
@@ -203,7 +191,7 @@ Library  openprocurement_client_helper.py
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
   ${response}=  Call Method  ${USERS.users['${username}'].client}  upload_bid_document  ${path}  ${tender}  ${bid_id}  ${doc_type}
-  ${uploaded_file} =  Create Dictionary   filepath  ${path}   upload_response  ${response}
+  ${uploaded_file} =  Create Dictionary   filepath=${path}   upload_response=${response}
   Log  ${response}
   Log object data   ${uploaded_file}
   [return]  ${uploaded_file}
@@ -214,7 +202,7 @@ Library  openprocurement_client_helper.py
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${TENDER['TENDER_UAID']}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
   ${response}=  Call Method  ${USERS.users['${username}'].client}  update_bid_document  ${path}  ${tender}   ${bidid}   ${docid}
-  ${uploaded_file} =  Create Dictionary   filepath  ${path}   upload_response  ${response}
+  ${uploaded_file} =  Create Dictionary   filepath=${path}   upload_response=${response}
   Log  ${response}
   Log object data   ${uploaded_file}
   [return]  ${uploaded_file}
@@ -420,12 +408,12 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uaid}  ${award_num}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${award}=  create_data_dict  data.status  active
-  Set To Dictionary  ${award.data}  id  ${tender.data.awards[${award_num}].id}
+  Set To Dictionary  ${award.data}  id=${tender.data.awards[${award_num}].id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_award  ${tender}  ${award}
   Log  ${reply}
 
 
-Дискваліфікація постачальника
+Дискваліфікувати постачальника
   [Documentation]
   ...      [Arguments] Username, tender uaid and award number
   ...      [Description] Find tender using uaid, create data dict with unsuccessful status and call patch_award
@@ -433,7 +421,7 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uid}  ${award_num}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
   ${award}=  create_data_dict   data.status  unsuccessful
-  Set To Dictionary  ${award.data}  id  ${tender.data.awards[${award_num}].id}
+  Set To Dictionary  ${award.data}  id=${tender.data.awards[${award_num}].id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_award  ${tender}  ${award}
   Log  ${reply}
   [Return]  ${reply}
@@ -447,7 +435,7 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uid}  ${award_num}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
   ${award}=  create_data_dict   data.status  cancelled
-  Set To Dictionary  ${award.data}  id  ${tender.data.awards[${award_num}].id}
+  Set To Dictionary  ${award.data}  id=${tender.data.awards[${award_num}].id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_award  ${tender}  ${award}
   Log  ${reply}
   [Return]  ${reply}
@@ -465,7 +453,7 @@ Library  openprocurement_client_helper.py
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${data}=  test_additional_items_data  ${tender['data']['id']}  ${tender['access']['token']}
   Log  ${data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  additional_items  ${data['data']['items']}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  additional_items=${data['data']['items']}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${data}
   Log  ${reply}
 
@@ -527,8 +515,8 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uaid}  ${cancellation_id}  ${document_id}  ${new_description}
   ${field}=  Set variable  description
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${temp}=  Create Dictionary  ${field}  ${new_description}
-  ${data}=  Create Dictionary  data  ${temp}
+  ${temp}=  Create Dictionary  ${field}=${new_description}
+  ${data}=  Create Dictionary  data=${temp}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_cancellation_document  ${tender}  ${data}  ${cancellation_id}  ${document_id}
   Log  ${reply}
 
@@ -541,7 +529,7 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uaid}  ${cancel_num}  ${doc_num}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${second_cancel_doc}=  create_fake_doc
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  second_cancel_doc  ${second_cancel_doc}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  second_cancel_doc=${second_cancel_doc}
   Log  ${second_cancel_doc}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  update_cancellation_document  ${second_cancel_doc}  ${tender}  ${tender['data']['cancellations'][${cancel_num}]['id']}  ${tender['data']['cancellations'][${cancel_num}]['documents'][${doc_num}]['id']}
   Log  ${reply}
@@ -584,7 +572,7 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uid}  ${qualification_num}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
   ${qualification}=  create_data_dict   data.status  active
-  Set To Dictionary  ${qualification.data}  id  ${tender.data.qualifications[${qualification_num}].id}
+  Set To Dictionary  ${qualification.data}  id=${tender.data.qualifications[${qualification_num}].id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_qualification  ${tender}  ${qualification}
   Log  ${reply}
   [Return]  ${reply}
@@ -598,7 +586,7 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uid}  ${qualification_num}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
   ${qualification}=  create_data_dict   data.status  unsuccessful
-  Set To Dictionary  ${qualification.data}  id  ${tender.data.qualifications[${qualification_num}].id}
+  Set To Dictionary  ${qualification.data}  id=${tender.data.qualifications[${qualification_num}].id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_qualification  ${tender}  ${qualification}
   Log  ${reply}
   [Return]  ${reply}
@@ -624,7 +612,7 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uid}  ${qualification_num}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
   ${qualification}=  create_data_dict   data.status  cancelled
-  Set To Dictionary  ${qualification.data}  id  ${tender.data.qualifications[${qualification_num}].id}
+  Set To Dictionary  ${qualification.data}  id=${tender.data.qualifications[${qualification_num}].id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_qualification  ${tender}  ${qualification}
   Log  ${reply}
   [Return]  ${reply}

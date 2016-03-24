@@ -8,7 +8,7 @@ sys.path.append(CHROMEDRV_PATH)
 
 def runner():
     args = sys.argv[1:]
-    if '-d' not in args:
+    if '-d' not in args and '--outputdir' not in args:
         directory = os.path.join(os.getcwd(), 'test_output')
         if not os.path.exists(directory):
             os.mkdir(directory)
