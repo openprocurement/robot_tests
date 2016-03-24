@@ -36,7 +36,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість завантажити документ
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      critical level 2
+  ...      level2
   [Documentation]  Закупівельник ${USERS.users['${tender_owner}'].broker} завантажує документацію до оголошеної закупівлі
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${filepath}=  create_fake_doc
@@ -83,7 +83,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      critical level 2
+  ...      level2
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  value.amount
 
 
@@ -109,7 +109,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      critical level 2
+  ...      level2
   Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}  tenderID
 
 
@@ -117,7 +117,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      critical level 2
+  ...      level2
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  procuringEntity.name
 
 
@@ -167,7 +167,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      critical level 3
+  ...      level3
   Звірити дату тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryDate.endDate
 
 
@@ -189,7 +189,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      critical level 3
+  ...      level3
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.countryName
 
 
@@ -204,7 +204,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      critical level 3
+  ...      level3
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.region
 
 
@@ -233,7 +233,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      critical level 3
+  ...      level3
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].classification.id
 
 
@@ -241,7 +241,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      critical level 3
+  ...      level3
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].classification.description
 
 
@@ -256,7 +256,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      critical level 3
+  ...      level3
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].additionalClassifications[0].id
 
 
@@ -264,7 +264,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      critical level 3
+  ...      level3
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].additionalClassifications[0].description
 
 
@@ -272,7 +272,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      critical level 3
+  ...      level3
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].unit.name
 
 
@@ -287,7 +287,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      critical level 3
+  ...      level3
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].quantity
 
 ##############################################################################################
@@ -298,7 +298,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      critical level 2
+  ...      level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Викликати для учасника  ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  description  description
@@ -311,7 +311,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      critical level 2
+  ...      level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].description
 
@@ -323,7 +323,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість задати запитання
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      critical level 2
+  ...      level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${question}=  Підготовка даних для запитання
@@ -342,7 +342,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповідей
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      critical level 2
+  ...      level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Викликати для учасника  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
   Звірити поле тендера із значенням  ${viewer}  ${USERS.users['${provider}'].question_data.question.data.title}  questions[${question_id}].title
@@ -352,7 +352,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення анонімного питання без відповідей
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      critical level 2
+  ...      level2
   Звірити поле тендера із значенням  ${viewer}  ${USERS.users['${provider}'].question_data.question.data.description}  questions[${question_id}].description
 
 
@@ -384,7 +384,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість відповісти на запитання
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      critical level 2
+  ...      level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${answer}=  Підготовка даних для відповіді на запитання
@@ -402,7 +402,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення відповіді на запитання
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      critical level 2
+  ...      level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Викликати для учасника  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
   Звірити поле тендера із значенням  ${viewer}  ${USERS.users['${provider}']['answer_data']['answer'].data.answer}  questions[${question_id}].answer
@@ -476,7 +476,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      critical level 2
+  ...      level2
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Log  ${USERS.users['${provider}'].broker}
   ${filepath}=  create_fake_doc
@@ -537,7 +537,7 @@ ${question_id}  0
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість прийняти пропозицію переможця
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
-  ...      critical level 2
+  ...      level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider1}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Log  ${USERS.users['${provider1}'].broker}

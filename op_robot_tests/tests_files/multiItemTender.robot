@@ -49,7 +49,7 @@ ${broker}       Quinta
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      critical level 3
+  ...      level3
   Звірити дату предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  deliveryDate.endDate
 
 Відображення координат широти доставки позицій закупівлі багатопредметного тендера
@@ -68,7 +68,7 @@ ${broker}       Quinta
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      critical level 3
+  ...      level3
   Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  deliveryAddress.countryName
 
 Відображення пошт. коду доставки позицій закупівлі багатопредметного тендера
@@ -81,7 +81,7 @@ ${broker}       Quinta
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      critical level 3
+  ...      level3
   Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  deliveryAddress.region
 
 Відображення locality адреси доставки позицій закупівлі багатопредметного тендера
@@ -106,14 +106,14 @@ ${broker}       Quinta
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      critical level 3
+  ...      level3
   Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  classification.id
 
 Відображення опису класифікації позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      critical level 3
+  ...      level3
   Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  classification.description
 
 Відображення схеми додаткової класифікації позицій закупівлі багатопредметного тендера
@@ -126,21 +126,21 @@ ${broker}       Quinta
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      critical level 3
+  ...      level3
   Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  additionalClassifications[0].id
 
 Відображення опису додаткової класифікації позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      critical level 3
+  ...      level3
   Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  additionalClassifications[0].description
 
 Відображення назви одиниці позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      critical level 3
+  ...      level3
   Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  unit.name
 
 Відображення коду одиниці позицій закупівлі багатопредметного тендера
@@ -153,14 +153,14 @@ ${broker}       Quinta
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      critical level 3
+  ...      level3
   Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  quantity
 
 Можливість редагувати багатопредметний тендер
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      critical level 2
+  ...      level2
   [Setup]  Дочекатись синхронізації з майданчиком    ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Викликати для учасника   ${tender_owner}  Внести зміни в тендер    ${TENDER['TENDER_UAID']}   description     description
@@ -169,7 +169,7 @@ ${broker}       Quinta
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      critical level 2
+  ...      level2
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Викликати для учасника   ${tender_owner}   Додати предмети закупівлі    ${TENDER['TENDER_UAID']}   3
 
@@ -177,6 +177,6 @@ ${broker}       Quinta
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      critical level 2
+  ...      level2
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Викликати для учасника   ${tender_owner}   Відняти предмети закупівлі   ${TENDER['TENDER_UAID']}   2
