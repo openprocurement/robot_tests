@@ -178,7 +178,7 @@ def test_tender_data_limited(intervals, procurement_method_type):
         cause = fake.random_element(cause_variants)
         data.update({"cause": cause})
     if procurement_method_type == "negotiation" \
-    or procurement_method_type == "negotiation.quick":
+            or procurement_method_type == "negotiation.quick":
         data.update({
             "procurementMethodDetails": "quick, accelerator=1440",
             "causeDescription": fake.sentence(nb_words=10, variable_nb_words=True)
@@ -409,11 +409,11 @@ def test_change_cancellation_document_field_data(key, value):
     })
 
 
-def test_confirm_data(ID):
+def test_confirm_data(id):
     return munchify({
         "data": {
             "status": "active",
-            "id": ID
+            "id": id
         }
     })
 
