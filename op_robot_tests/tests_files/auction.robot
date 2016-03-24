@@ -4,9 +4,11 @@ Resource        resource.robot
 Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
+
 *** Variables ***
 ${role}         viewer
 ${broker}       Quinta
+${browser}      googlechrome
 
 
 *** Test Cases ***
@@ -15,7 +17,6 @@ ${broker}       Quinta
   ...      ${USERS.users['${viewer}'].broker}
   Завантажити дані про тендер
   Викликати для учасника  ${viewer}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
-
 
 ##############################################################################################
 #             AUCTION
@@ -29,23 +30,33 @@ ${broker}       Quinta
   Отримати дані із тендера  ${viewer}  auctionPeriod.startDate
 
 
-Очікування початку аукціону
-  [Tags]   ${USERS.users['${viewer}'].broker}: Очікування аукціону
+Можливість дочекатися початку аукціону
+  [Tags]   ${USERS.users['${viewer}'].broker}: Можливість дочекатися початку аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   Дочекатись дати початку аукціону  ${viewer}
 
-Очікування завершення аукціону
-  [Tags]   ${USERS.users['${viewer}'].broker}: Очікування аукціону
+
+Можливість дочекатися завершення аукціону
+  [Tags]   ${USERS.users['${viewer}'].broker}: Можливість дочекатися завершення аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${auctionEnd}=  add_minutes_to_date  ${USERS.users['${viewer}'].tender_data.data.auctionPeriod.startDate}  25
-  Дочекатись дати  ${auctionEnd}  # auction time for two bids plus 4 minutes for reliability
+  Відкрити сторінку аукціону для глядача
+  Wait Until Keyword Succeeds  61 times  30 s  Page should contain  Аукціон завершився
+  Wait Until Keyword Succeeds  5 times  30 s  Page should not contain  очікуємо розкриття учасників
+  Close browser
 
-Відображення дати закінчення аукціону
+
+Відображення дати завершення аукціону
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
   Отримати дані із тендера  ${viewer}  auctionPeriod.endDate
+
+
+*** Keywords ***
+Відкрити сторінку аукціону для глядача
+  ${url}=  Викликати для учасника  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
+  Open browser  ${url}  ${browser}
