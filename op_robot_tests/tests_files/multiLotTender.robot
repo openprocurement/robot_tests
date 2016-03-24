@@ -15,7 +15,6 @@ ${mode}         multi
 ${role}         viewer
 ${broker}       Quinta
 
-${question_id}  1
 ${complaint_id}  1
 
 *** Test Cases ***
@@ -176,8 +175,12 @@ ${complaint_id}  1
   ${question_resp}=  Викликати для учасника   ${provider}   Задати питання  ${TENDER['TENDER_UAID']}   ${question}
   ${now}=  Get Current TZdate
   ${question.data.date}=  Set variable  ${now}
-  ${question_data}=  Create Dictionary  question=${question}  question_resp=${question_resp}
+  ${question_id}=  get_id_from_field  ${question.data.description}
+  ${question_data}=  Create Dictionary  question=${question}  question_resp=${question_resp}  question_id=${question_id}
+  ${question_data}=  munch_dict  arg=${question_data}
   Set To Dictionary  ${USERS.users['${provider}']}  question_data  ${question_data}
+
+
 Можливість відповісти на запитання
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість відповісти на запитання
   ...      tender_owner
@@ -185,7 +188,7 @@ ${complaint_id}  1
   [Setup]  Дочекатись синхронізації з майданчиком    ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${answer}=  Підготовка даних для відповіді на запитання
-  ${answer_resp}=  Викликати для учасника   ${tender_owner}   Відповісти на питання    ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}']['question_data']['question_resp']}  ${answer}
+  ${answer_resp}=  Викликати для учасника  ${tender_owner}  Відповісти на питання  ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}'].question_data.question_id}  ${answer}
   ${now}=  Get Current TZdate
   ${answer.data.date}=  Set variable  ${now}
   ${answer_data}=  Create Dictionary  answer=${answer}  answer_resp=${answer_resp}
