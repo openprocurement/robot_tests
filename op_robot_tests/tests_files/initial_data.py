@@ -92,14 +92,14 @@ def test_tender_data_limited(intervals, procurement_method_type):
                 "additionalClassifications":
                 [
                     {
-                        "description": "Послуги щодо забезпечення харчуванням, інші",
+                        "description": u"Послуги щодо забезпечення харчуванням, інші",
                         "id": "56.29",
                         "scheme": u"ДКПП"
                     }
                 ],
                 "classification":
                 {
-                    "description": "Послуги з організації шкільного харчування",
+                    "description": u"Послуги з організації шкільного харчування",
                     "id": "55523100-3",
                     "scheme": "CPV"
                 },
