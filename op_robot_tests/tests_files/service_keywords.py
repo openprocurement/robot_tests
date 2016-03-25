@@ -60,7 +60,7 @@ def get_current_tzdate():
 
 
 def add_minutes_to_date(date, minutes):
-    return (parse_date(date) + timedelta(minutes=int(minutes))).isoformat()
+    return (parse(date) + timedelta(minutes=float(minutes))).isoformat()
 
 
 def get_file_contents(path):
