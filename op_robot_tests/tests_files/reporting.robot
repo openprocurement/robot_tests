@@ -83,7 +83,7 @@ ${broker}       Quinta
 
 
 Можливість модифікації звіту про укладений договір
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість модифікації процедури
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість редагувати процедуру
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  level2
