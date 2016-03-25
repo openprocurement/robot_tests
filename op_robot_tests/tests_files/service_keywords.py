@@ -72,15 +72,50 @@ def get_file_contents(path):
         return unicode(f.read()) or u''
 
 
-def compare_date(date1, date2, accuracy):
+def compare_date(date1, date2, accuracy="minute"):
+    '''Compares dates with specified accuracy
+
+    Before comparison dates are parsed into ???WHICH??? format
+    and localized.
+
+    :param date1:    First date
+    :param date2:    Second date
+    :param accuracy: Max difference between dates to consider them equal
+                     Default value   - "minute"
+                     Possible values - "day", "hour", minute" or float value
+                     of seconds
+    :returns:        Boolean value
+                     abs(date1 - date2) <= accuracy -> True
+                     abs(date1 - date2) >  accuracy -> False
+
+    :error:          ValueError when there is problem with converting accuracy
+                     into float value. When it will be catched warning will be
+                     given and accuracy will be set to 60.
+
+    '''
     date1 = parse(date1)
     date2 = parse(date2)
+
     if date1.tzinfo is None:
         date1 = TZ.localize(date1)
     if date2.tzinfo is None:
         date2 = TZ.localize(date2)
 
     delta = (date1 - date2).total_seconds()
+
+    if accuracy == "day":
+        accuracy = 24 * 60 * 60
+    elif accuracy == "hour":
+        accuracy = 60 * 60
+    elif accuracy == "minute":
+        accuracy = 60
+    else:
+        try:
+            accuracy = float(accuracy)
+        except ValueError:
+            LOGGER.log_message(Message("Could not convert from {} to float. Accuracy is set to 60 seconds.".format(accuracy), "WARN"))
+            accuracy = 60
+
     if abs(delta) > accuracy:
         return False
     return True
