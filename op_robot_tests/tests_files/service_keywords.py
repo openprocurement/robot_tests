@@ -8,7 +8,7 @@ from json import load
 from jsonpath_rw import parse as parse_path
 from munch import fromYAML, Munch, munchify
 from restkit import request
-from robot.errors import HandlerExecutionFailed
+from robot.errors import ExecutionFailed
 from robot.libraries.BuiltIn import BuiltIn
 from robot.output import LOGGER
 from robot.output.loggerhelper import Message
@@ -202,9 +202,8 @@ def run_keyword_and_ignore_keyword_definitions(name, *args, **kwargs):
     """
     try:
         status, _ = BuiltIn().run_keyword_and_ignore_error(name, *args, **kwargs)
-    except HandlerExecutionFailed:
-        LOGGER.log_message(Message("Keyword is not implemented: {}".format(name), "ERROR"))
-        status, _ = "FAIL", None
+    except ExecutionFailed as e:
+        status, _ = "FAIL", e.message
     return status, _
 
 
@@ -338,6 +337,24 @@ def munch_dict(arg=None, data=False):
         arg['data'] = {}
     return munchify(arg)
 
+
+def get_id_from_field(field):
+    return re.match(r'(^[filq]-[0-9a-fA-F]{8}): ', field).group(1)
+
+
+def get_object_type_by_id(object_id):
+    prefixes = {'q': 'questions', 'f': 'features', 'i': 'items', 'l': 'lots'}
+    return prefixes.get(object_id[0])
+
+
+def get_object_index_by_id(data, object_id):
+    for index, element in enumerate(data):
+        element_id = get_id_from_field(element['description'])
+        if element_id == object_id:
+            break
+    else:
+        index = 0
+    return index
 
 # GUI Frontends common
 def add_data_for_gui_frontends(tender_data):

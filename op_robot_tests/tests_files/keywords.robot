@@ -311,10 +311,8 @@ Get Broker Property By Username
 
 
 Звірити поле тендера із значенням
-  [Arguments]  ${username}  ${left}  ${field}
-  ${right}=  Отримати дані із тендера  ${username}  ${field}
-  Log  ${left}
-  Log  ${right}
+  [Arguments]  ${username}  ${left}  ${field}  ${object_id}=${None}
+  ${right}=  Отримати дані із тендера  ${username}  ${field}  ${object_id}
   Порівняти об'єкти  ${left}  ${right}
 
 
@@ -334,8 +332,8 @@ Get Broker Property By Username
 
 
 Звірити дату тендера із значенням
-  [Arguments]  ${username}  ${left}  ${field}
-  ${right}=  Отримати дані із тендера  ${username}  ${field}
+  [Arguments]  ${username}  ${left}  ${field}  ${object_id}=${None}
+  ${right}=  Отримати дані із тендера  ${username}  ${field}  ${object_id}
   Порівняти дати  ${left}  ${right}
 
 
@@ -374,6 +372,44 @@ Get Broker Property By Username
   \  Звірити дату тендера  ${viewer}  ${tender_data}  items[${index}].${field}
 
 
+Отримати дані із тендера
+  [Arguments]  ${username}  ${field_name}  ${object_id}=${None}
+  Log  ${username}
+  Log  ${field_name}
+  ${field}=  Run Keyword If  '${object_id}'=='${None}'  Set Variable  ${field_name}
+  ...             ELSE  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${object_id}
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      Get from object
+  ...      ${USERS.users['${username}'].tender_data.data}
+  ...      ${field}
+  # If field in cache, return its value
+  Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
+  # Else call broker to find field
+  ${field_value}=  Run Keyword IF  '${object_id}'=='${None}'  Run As  ${username}  Отримати інформацію із тендера  ${field}
+  ...                          ELSE  Отримати дані із об’єкта тендера  ${username}  ${object_id}  ${field_name}
+  # And caching its value before return
+  Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${field_value}
+  [return]  ${field_value}
+
+
+Отримати шлях до поля об’єкта
+  [Arguments]  ${username}  ${field_name}  ${object_id}
+  ${object_type}=  get_object_type_by_id  ${object_id}
+  ${objects}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data['${object_type}']}  ${empty}
+  ${object_index}=  get_object_index_by_id  ${objects}  ${object_id}
+  [return]  ${object_type}[${object_index}].${field_name}
+
+
+Отримати дані із об’єкта тендера
+  [Arguments]  ${username}  ${object_id}  ${field_name}
+  ${object_type}=   get_object_type_by_id  ${object_id}
+  ${status}  ${value}=  Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із запитання  ${object_id}  ${field_name}
+  ${field}=  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${object_id}
+  ${field_value}=  Run Keyword IF  '${status}'=='PASS'  Set Variable  ${value}
+  ...                          ELSE  Run As  ${username}  Отримати інформацію із тендера  ${field}
+  [return]  ${field_value}
+
+
 Викликати для учасника
   [Arguments]  ${username}  ${command}  @{arguments}
   Run keyword unless  '${WARN_RUN_AS}' == '${True}'
@@ -388,24 +424,6 @@ Get Broker Property By Username
   Run Keyword And Return  Run As  ${username}  ${command}  @{arguments}
 
 
-Отримати дані із тендера
-  [Arguments]  ${username}  ${field_name}
-  Log  ${username}
-  Log  ${field_name}
-
-  ${status}  ${field_value}=  Run keyword and ignore error
-  ...      Get from object
-  ...      ${USERS.users['${username}'].tender_data.data}
-  ...      ${field_name}
-  # If field in cache, return its value
-  Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
-  # Else call broker to find field
-  ${field_value}=  Викликати для учасника  ${username}  Отримати інформацію із тендера  ${field_name}
-  # And caching its value before return
-  Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field_name}  ${field_value}
-  [return]  ${field_value}
-
-
 Run As
   [Arguments]  ${username}  ${command}  @{arguments}
   [Documentation]
@@ -415,7 +433,12 @@ Run As
   Log  ${command}
   Log Many  @{arguments}
   ${keywords_file}=  Get Broker Property By Username  ${username}  keywords_file
-  Run Keyword And Return  ${keywords_file}.${command}  ${username}  @{arguments}
+  ${status}  ${value}=  Run keyword and ignore keyword definitions  ${keywords_file}.${command}  ${username}  @{arguments}
+  ${unexpected_args}=  Get Regexp Matches  '${value}'  expected [0-9] arguments, got [0-9]
+  ${status}  ${value}=  Run Keyword If  "${unexpected_args}"=="[]"  Set Variable  ${status}  ${value}
+  ...      ELSE  Run keyword and ignore keyword definitions  ${keywords_file}.${command}  ${username}  @{arguments[:-1]}
+  Run Keyword If  '${status}' == 'FAIL'  Fail  ${value}
+  [return]  ${value}
 
 
 Require Failure
