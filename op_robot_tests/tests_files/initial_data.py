@@ -351,34 +351,13 @@ def test_complaint_answer_data(complaint_id):
     })
 
 
-def test_claim_answer_satisfying_data(claim_id):
-    return munchify({
-        "data": {
-            "id": claim_id,
-            "status": "resolved",
-            "satisfied": True
-        }
-    })
-
-
-def test_claim_answer_data(claim_id):
+def test_claim_answer_data():
     return munchify({
         "data": {
             "status": "answered",
             "resolutionType": "resolved",
             "tendererAction": fake.sentence(nb_words=10, variable_nb_words=True),
-            "resolution": fake.sentence(nb_words=15, variable_nb_words=True),
-            "id": claim_id
-        }
-    })
-
-
-def test_escalate_claim_data(claim_id):
-    return munchify({
-        "data": {
-            "status": "pending",
-            "satisfied": False,
-            "id": claim_id
+            "resolution": fake.sentence(nb_words=15, variable_nb_words=True)
         }
     })
 
@@ -387,16 +366,6 @@ def test_cancel_tender_data(cancellation_reason):
     return munchify({
         'data': {
             'reason': cancellation_reason
-        }
-    })
-
-
-def test_cancel_claim_data(claim_id, cancellation_reason):
-    return munchify({
-        'data': {
-            'cancellationReason': cancellation_reason,
-            'status': 'cancelled',
-            'id': claim_id
         }
     })
 
@@ -414,15 +383,6 @@ def test_confirm_data(id):
         "data": {
             "status": "active",
             "id": id
-        }
-    })
-
-
-def test_submit_claim_data(claim_id):
-    return munchify({
-        "data": {
-            "id": claim_id,
-            "status": "claim"
         }
     })
 
