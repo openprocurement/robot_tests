@@ -58,7 +58,7 @@ Set Suite Variable With Default Value
 
   # Load brokers data
   ${file_path}=  Get Variable Value  ${BROKERS_FILE}  brokers.yaml
-  ${BROKERS}=  load_initial_data_from  ${file_path}
+  ${BROKERS}=  load_data_from  ${file_path}  mode=brokers
   Log  ${BROKERS}
   Set Suite Variable  ${BROKERS}
   # List of currently used brokers
@@ -66,7 +66,7 @@ Set Suite Variable With Default Value
 
   # Load users data
   ${file_path}=  Get Variable Value  ${USERS_FILE}  users.yaml
-  ${USERS}=  load_initial_data_from  ${file_path}
+  ${USERS}=  load_data_from  ${file_path}
   Log  ${USERS.users}
   Set Suite Variable  ${USERS}
   # List of currently used users
@@ -132,11 +132,8 @@ Get Broker Property
   ...      if that property exists, otherwise, it returns a
   ...      default value.
   Run Keyword If  '${broker_name}'=='${None}'  Fail  \${broker_name} is NoneType
-  ${status}=  Run Keyword And Return Status  Should Contain  ${BROKERS['${broker_name}']}  ${property}
-  Return From Keyword If  ${status}  ${BROKERS['${broker_name}'].${property}}
-  # If broker doesn't have that property, fall back to default value
-  Should Contain  ${BROKERS['Default']}  ${property}
-  [return]  ${BROKERS['Default'].${property}}
+  Should Contain  ${BROKERS['${broker_name}']}  ${property}
+  Return From Keyword  ${BROKERS['${broker_name}'].${property}}
 
 
 Get Broker Property By Username
@@ -166,7 +163,7 @@ Get Broker Property By Username
 
 Завантажити дані про тендер
   ${file_path}=  Get Variable Value  ${ARTIFACT_FILE}  artifact.yaml
-  ${ARTIFACT}=  load_initial_data_from  ${file_path}
+  ${ARTIFACT}=  load_data_from  ${file_path}
   Run Keyword If  '${USERS.users['${tender_owner}'].broker}' == 'Quinta'
   ...      Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token=${ARTIFACT.access_token}
   ${TENDER}=  Create Dictionary
@@ -177,9 +174,7 @@ Get Broker Property By Username
 
 
 Підготовка даних для створення тендера
-  ${custom_intervals}=  Get Broker Property By Username  ${tender_owner}  intervals
-  ${default_intervals}=  Get Broker Property  Default  intervals
-  ${period_intervals}=  merge_dicts  ${default_intervals}  ${custom_intervals}
+  ${period_intervals}=  Get Broker Property By Username  ${tender_owner}  intervals
   ${tender_data}=  prepare_test_tender_data  ${period_intervals}  ${mode}
   ${TENDER}=  Create Dictionary
   Set Global Variable  ${TENDER}

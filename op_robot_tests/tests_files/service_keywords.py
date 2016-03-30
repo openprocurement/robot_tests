@@ -142,14 +142,22 @@ def munch_to_object(data, format="yaml"):
         return data.toYAML(allow_unicode=True, default_flow_style=False)
 
 
-def load_initial_data_from(file_name):
+def load_data_from(file_name, mode=None):
     if not os.path.exists(file_name):
         file_name = os.path.join(os.path.dirname(__file__), 'data', file_name)
     with open(file_name) as file_obj:
         if file_name.endswith(".json"):
-            return Munch.fromDict(load(file_obj))
+            file_data = Munch.fromDict(load(file_obj))
         elif file_name.endswith(".yaml"):
-            return fromYAML(file_obj)
+            file_data = fromYAML(file_obj)
+    if mode == "brokers":
+        default = file_data.pop('Default')
+        brokers = {}
+        for k, v in file_data.iteritems():
+            brokers[k] = merge_dicts(default, v)
+        return brokers
+    else:
+        return file_data
 
 
 def prepare_test_tender_data(procedure_intervals, mode):
