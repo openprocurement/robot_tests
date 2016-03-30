@@ -92,6 +92,7 @@ Get Broker Property
   ...      This keyword returns a property of specified broker
   ...      if that property exists, otherwise, it returns a
   ...      default value.
+  Run Keyword If  '${broker_name}'=='${None}'  Fail  \${broker_name} is NoneType
   ${status}=  Run Keyword And Return Status  Should Contain  ${BROKERS['${broker_name}']}  ${property}
   Return From Keyword If  ${status}  ${BROKERS['${broker_name}'].${property}}
   # If broker doesn't have that property, fall back to default value
