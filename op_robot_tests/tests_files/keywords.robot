@@ -410,6 +410,33 @@ Get Broker Property By Username
   [return]  ${field_value}
 
 
+Звірити поле скарги із значенням
+  [Arguments]  ${username}  ${given_value}  ${field_name}  ${complaintID}
+  ${received_value}=  Отримати дані із скарги на умови  ${username}  ${complaintID}  ${field_name}  ${given_value}
+  Порівняти об'єкти  ${given_value}  ${received_value}
+
+
+Отримати дані із скарги на умови
+  [Arguments]  ${username}  ${complaintID}  ${field_name}  ${given_value}
+  ${complaints}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.complaints}
+  ${complaint_index}=  get_complaint_index_by_complaintID  ${complaints}  ${complaintID}
+  Run keyword And Return if  '${field_name}' == 'document.title'  Отримати заголовок документа
+  ...      ${username}
+  ...      ${complaints[${complaint_index}].documents}
+  ...      ${given_value}
+  ${field_value}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.complaints[${complaint_index}]['${field_name}']}
+  Log  ${field_value}
+  [Return]  ${field_value}
+
+
+Отримати заголовок документа
+  [Arguments]  ${username}  ${documents}  ${document_id}
+  ${document_index}=  get_document_index_by_id  ${documents}  ${document_id}
+  ${field_value}=  Get Variable Value  ${documents[${document_index}]['title']}
+  Log  ${field_value}
+  [Return]  ${field_value}
+
+
 Викликати для учасника
   [Arguments]  ${username}  ${command}  @{arguments}
   Run keyword unless  '${WARN_RUN_AS}' == '${True}'
