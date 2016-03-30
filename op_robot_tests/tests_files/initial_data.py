@@ -39,7 +39,8 @@ def translate_country_ru(country):
 def create_fake_doc():
     content = fake.text()
     suffix = fake.random_element(('.doc', '.docx', '.pdf'))
-    tf = NamedTemporaryFile(delete=False, suffix=suffix)
+    prefix = "{}-{}{}".format("d", fake.uuid4()[:8], fake_en.word())
+    tf = NamedTemporaryFile(delete=False, suffix=suffix, prefix=prefix)
     tf.write(content)
     tf.close()
     return tf.name
