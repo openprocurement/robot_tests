@@ -54,6 +54,8 @@ Set Suite Variable With Default Value
 Завантажуємо дані про користувачів і майданчики
   Log  ${broker}
   Log  ${role}
+  # Suite variable; should be present in every test suite
+  # in `*** Variables ***` section
   Log Many  @{used_roles}
 
   # Load brokers data
@@ -92,7 +94,10 @@ Set Suite Variable With Default Value
   \  ...      ${BROKERS['Quinta'].roles.${tmp_role}}
   \  Append To List  ${used_users}  ${${tmp_role}}
   \  Append To List  ${used_brokers}  ${USERS.users.${${tmp_role}}.broker}
+  # Since `@{used_roles}` is already a suite variable,
+  # let's make `@{used_brokers}` alike.
   ${used_brokers}=  Remove Duplicates  ${used_brokers}
+  Set Suite Variable  ${used_brokers}
   # We need to create two lists since Robot Framework doesn't support
   # dicts in `:FOR` loops.
   Log Many  @{used_users}
@@ -174,7 +179,7 @@ Get Broker Property By Username
 
 
 Підготовка даних для створення тендера
-  ${period_intervals}=  Get Broker Property By Username  ${tender_owner}  intervals
+  ${period_intervals}=  compute_intrs  ${BROKERS}  ${used_brokers}
   ${tender_data}=  prepare_test_tender_data  ${period_intervals}  ${mode}
   ${TENDER}=  Create Dictionary
   Set Global Variable  ${TENDER}
