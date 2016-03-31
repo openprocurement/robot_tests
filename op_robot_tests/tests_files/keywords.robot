@@ -153,6 +153,9 @@ Get Broker Property By Username
   ${reply}=  Create Dictionary  data=${lot}
   [Return]  ${reply}
 
+Підготовка даних для створення предмету закупівлі
+  ${item}=  test_item_data
+  [Return]  ${item}
 
 Підготовка даних для подання вимоги
   ${claim}=  test_claim_data
@@ -171,8 +174,7 @@ Get Broker Property By Username
 
 
 Підготовка даних для запитання
-  [Arguments]  ${lot}=${False}
-  ${question}=  test_question_data  ${lot}
+  ${question}=  test_question_data
   [Return]  ${question}
 
 
@@ -182,8 +184,7 @@ Get Broker Property By Username
 
 
 Підготувати дані для подання пропозиції
-  [Arguments]  ${aboveThreshold}=${False}
-  ${supplier_data}=  test_bid_data  ${aboveThreshold}
+  ${supplier_data}=  test_bid_data  ${mode}
   [Return]  ${supplier_data}
 
 

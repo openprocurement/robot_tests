@@ -298,7 +298,7 @@ ${complaint_id}  1
   ...      ${USERS.users['${provider}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider}
   Дочекатись дати початку прийому пропозицій  ${provider}
-  ${bid}=  test bid data
+  ${bid}=  Підготувати дані для подання пропозиції
   Log   ${bid}
   ${bidresponses}=  Create Dictionary
   Set To Dictionary  ${bidresponses}                 bid  ${bid}
