@@ -147,6 +147,9 @@ Get Broker Property By Username
   Log  ${tender_data}
   [return]  ${tender_data}
 
+Підготовка даних для створення предмету закупівлі
+  ${item}=  test_item_data
+  [Return]  ${item}
 
 Підготовка даних для створення лоту
   ${lot}=  test_lot_data

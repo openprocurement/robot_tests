@@ -24,7 +24,7 @@ ${broker}       Quinta
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${tender_data}=  Підготовка даних для створення тендера
   ${adapted_data}=  Адаптувати дані для оголошення тендера  ${tender_owner}  ${tender_data}
-  ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${adapted_data}
+  ${TENDER_UAID}=  Run As  ${tender_owner}  Створити тендер  ${adapted_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data=${adapted_data}
   Set To Dictionary  ${TENDER}   TENDER_UAID             ${TENDER_UAID}
   log  ${TENDER}
@@ -36,7 +36,7 @@ ${broker}       Quinta
   ...      minimal
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \  Дочекатись синхронізації з майданчиком    ${username}
-  \  Викликати для учасника  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
+  \  Run As  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
 
 Відображення опису позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
@@ -163,20 +163,55 @@ ${broker}       Quinta
   ...      level2
   [Setup]  Дочекатись синхронізації з майданчиком    ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Викликати для учасника   ${tender_owner}  Внести зміни в тендер    ${TENDER['TENDER_UAID']}   description     description
+  Run As   ${tender_owner}  Внести зміни в тендер    ${TENDER['TENDER_UAID']}   description     description
 
-Можливість додати позицію закупівлі в тендер
+Можливість додати шосту позицію закупівлі в тендер
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      level2
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Викликати для учасника   ${tender_owner}   Додати предмети закупівлі    ${TENDER['TENDER_UAID']}   3
+  ${item}=  Підготовка даних для створення предмету закупівлі
+  Run As   ${tender_owner}   Додати предмет закупівлі    ${TENDER['TENDER_UAID']}   ${item}
+  ${item_id}=  get_id_from_field  ${item.description}
+  ${item_data}=  Create Dictionary  item=${item}  item_id=${item_id}
+  ${item_data}=  munch_dict  arg=${item_data}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  item_data=${item_data}
 
-Можливість видалити позиції закупівлі тендера
+Відображення опису нової шостої позицій закупівлі багатопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      level2
+  ${item_id}=  Get Variable Value  ${USERS.users['${tender_owner}'].item_data.item_id}
+  Звірити поле тендера із значенням  ${viewer}  ${USERS.users['${tender_owner}'].item_data.item.description}  description  ${item_id}
+
+Можливість додати сьому позицію закупівлі в тендер
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      level2
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Викликати для учасника   ${tender_owner}   Відняти предмети закупівлі   ${TENDER['TENDER_UAID']}   2
+  ${item}=  Підготовка даних для створення предмету закупівлі
+  Run As   ${tender_owner}   Додати предмет закупівлі    ${TENDER['TENDER_UAID']}   ${item}
+  ${item_id}=  get_id_from_field  ${item.description}
+  ${item_data}=  Create Dictionary  item=${item}  item_id=${item_id}
+  ${item_data}=  munch_dict  arg=${item_data}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  item_data=${item_data}
+
+Відображення опису нової сьомої позицій закупівлі багатопредметного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      level2
+  ${item_id}=  Get Variable Value  ${USERS.users['${tender_owner}'].item_data.item_id}
+  Звірити поле тендера із значенням  ${viewer}  ${USERS.users['${tender_owner}'].item_data.item.description}  description  ${item_id}
+
+Можливість видалити п’яту позиції закупівлі тендера
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      level2
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${item_id}=  get_id_from_field  ${USERS.users['${tender_owner}'].tender_data.items[4].description}
+  Run As  ${tender_owner}  Видалити предмет закупівлі  ${TENDER['TENDER_UAID']}  ${item_id}
