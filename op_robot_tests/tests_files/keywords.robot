@@ -157,11 +157,15 @@ Get Broker Property By Username
   ...      tender_uaid=${TENDER['TENDER_UAID']}
   ...      last_modification_date=${TENDER['LAST_MODIFICATION_DATE']}
   ...      tender_owner=${USERS.users['${tender_owner}'].broker}
+  ...      mode=${mode}
   Run Keyword If  '${USERS.users['${tender_owner}'].broker}' == 'Quinta'
   ...      Run Keyword And Ignore Error
   ...      Set To Dictionary  ${artifact}
   ...          access_token=${USERS.users['${tender_owner}'].access_token}
   ...          tender_id=${USERS.users['${tender_owner}'].tender_data.data.id}
+  ${status}  ${lots_ids}=  Run Keyword And Ignore Error  Отримати ідентифікатори об’єктів  ${viewer}  lots
+  Run Keyword If  ${status}'=='PASS'
+  ...      Set To Dictionary   ${artifact}   lots=${lots_ids}
   Log   ${artifact}
   log_object_data  ${artifact}  artifact  update=${True}
 
@@ -198,9 +202,6 @@ Get Broker Property By Username
   ${reply}=  Create Dictionary  data=${lot}
   [Return]  ${reply}
 
-Підготовка даних для створення предмету закупівлі
-  ${item}=  test_item_data
-  [Return]  ${item}
 
 Підготовка даних для подання вимоги
   ${claim}=  test_claim_data
@@ -449,11 +450,24 @@ Get Broker Property By Username
 Отримати дані із об’єкта тендера
   [Arguments]  ${username}  ${object_id}  ${field_name}
   ${object_type}=   get_object_type_by_id  ${object_id}
-  ${status}  ${value}=  Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із запитання  ${object_id}  ${field_name}
+  ${status}  ${value}=  Run Keyword If  '${object_type}'=='question'
+  ...                     Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із запитання  ${object_id}  ${field_name}
+  ...                   ELSE IF  '${object_type}'=='lots'
+  ...                     Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із лоту  ${object_id}  ${field_name}
   ${field}=  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${object_id}
   ${field_value}=  Run Keyword IF  '${status}'=='PASS'  Set Variable  ${value}
   ...                          ELSE  Run As  ${username}  Отримати інформацію із тендера  ${field}
   [return]  ${field_value}
+
+
+Отримати ідентифікатори об’єктів
+  [Arguments]  ${username}  ${objects_type}
+  @{objects_ids}=  Create List
+  @{objects}=  Get from object  ${USERS.users['${username}'].tender_data.data}  ${objects_type}
+  :FOR  ${obj}  IN  @{objects}
+  \   ${obj_id}=  get_id_from_object  ${obj}
+  \   Append To List  ${objects_ids}  ${obj_id}
+  [return]  ${objects_ids}
 
 
 Викликати для учасника

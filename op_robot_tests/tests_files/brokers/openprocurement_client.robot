@@ -275,50 +275,77 @@ Library  openprocurement_client_helper.py
 ##############################################################################
 
 Створити лот
-  [Arguments]  ${username}  ${tender}  ${lot}
-  Log  ${username}
-  Log  ${tender}
-  Log  ${lot}
-  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
-  ${tender_lot}=  Call Method  ${USERS.users['${username}'].client}   create_lot   ${tender}    ${lot}
-  Log   ${tender_lot}
-  [return]  ${tender_lot}
-  #TODO:
-  #[Arguments]  ${username}  ${tender_uaid}  ${lot}
-  #${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  [Arguments]  ${username}  ${tender_uaid}  ${lot}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}   create_lot   ${tender}    ${lot}
+  [return]  ${reply}
+
+
+Отримати інформацію із лоту
+  [Arguments]  ${username}  ${lot_id}  ${field_name}
+  ${field_name}=  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${lot_id}
+  Run Keyword And Return  openprocurement_client.Отримати інформацію із тендера  ${username}  ${field_name}
 
 
 Змінити лот
-  [Arguments]  ${username}  ${tender}  ${lot}
-  ${tender}=  set_access_key  ${tender}   ${USERS.users['${username}'].access_token}
-  ${tender_lot}=  Call Method  ${USERS.users['${username}'].client}   patch_lot   ${tender}    ${lot}
-  Log   ${tender_lot}
-  [return]  ${tender_lot}
-  #TODO:
-  #[Arguments]  ${username}  ${tender_uaid}  ${lot}
-  #${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}   ${fieldname}  ${fieldvalue}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${lot_index}=  get_object_index_by_id  ${tender.data.lots}  ${lot_id}
+  ${lot}=  Create Dictionary  data=${tender.data.lots[${lot_index}]}
+  Set_To_Object   ${lot.data}   ${fieldname}   ${fieldvalue}
+  ${reply}=  Call Method   ${USERS.users['${username}'].client}   patch_lot   ${tender}   ${lot}
+  [return]  ${reply}
+
+
+Додати предмет закупівлі в лот
+  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}  ${item}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${lot_index}=  get_object_index_by_id  ${tender.data.lots}  ${lot_id}
+  ${lot_id}=  Get Variable Value  ${tender.data.lots[${lot_index}].id}
+  Set_To_Object   ${item}   relatedLot   ${lot_id}
+  Append To List   ${tender.data['items']}   ${item}
+  Call Method   ${USERS.users['${username}'].client}   patch_tender   ${tender}
+
+
+Задати питання до лоту
+  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}  ${question}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${lot_index}=  get_object_index_by_id  ${tender.data.lots}  ${lot_id}
+  ${lot_id}=  Get Variable Value  ${tender.data.lots[${lot_index}].id}
+  ${question}=  test_lot_question_data  ${question}  ${lot_id}
+  ${biddingresponse}=  Call Method  ${USERS.users['${username}'].client}  create_question  ${tender}  ${question}
+  [return]  ${biddingresponse}
 
 
 Завантажити документ в лот
   [Arguments]  ${username}  ${filepath}  ${tender_uaid}  ${lot_id}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${tender}=  set_access_key  ${tender}   ${USERS.users['${username}'].access_token}
+  ${lot_index}=  get_object_index_by_id  ${tender.data.lots}  ${lot_id}
+  ${lot_id}=  Get Variable Value  ${tender.data.lots[${lot_index}].id}
   ${doc}=  openprocurement_client.Завантажити документ  ${username}  ${filepath}  ${tender_uaid}
   ${lot_doc}=  test_lot_document_data  ${doc}  ${lot_id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_document   ${tender}   ${lot_doc}
-  Log object data   ${reply}  reply
   [return]   ${reply}
 
 
 Видалити лот
-  [Arguments]  ${username}  ${tender}  ${lot}
-  ${tender}=  set_access_key  ${tender}   ${USERS.users['${username}'].access_token}
-  ${tender_lot}=  Call Method  ${USERS.users['${username}'].client}   delete_lot   ${tender}   ${lot}
-  Log   ${tender_lot}
-  [return]  ${tender_lot}
-  #TODO:
-  #[Arguments]  ${username}  ${tender_uaid}  ${lot}
-  #${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${lot_index}=  get_object_index_by_id  ${tender.data.lots}  ${lot_id}
+  ${lot}=  Create Dictionary  data=${tender.data.lots[${lot_index}]}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}   delete_lot   ${tender}    ${lot}
+  [return]  ${reply}
+
+
+Подати цінову пропозицію на лоти
+  [Arguments]  ${username}  ${tender_uaid}  ${bid}  ${lots_ids}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  : FOR    ${index}    ${lot_id}    IN ENUMERATE    @{lots_ids}
+  \    ${lot_index}=  get_object_index_by_id  ${tender.data.lots}  ${lot_id}
+  \    ${lot_id}=  Get Variable Value  ${tender.data.lots[${lot_index}].id}
+  \    Set To Dictionary  ${bid.data.lotValues[${index}]}  relatedLot=${lot_id}
+  ${reply}=  openprocurement_client.Подати цінову пропозицію  ${username}  ${tender_uaid}  ${bid}
+  [return]  ${reply}
 
 ##############################################################################
 #             Claims
