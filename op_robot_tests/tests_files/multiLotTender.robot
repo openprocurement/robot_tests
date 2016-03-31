@@ -15,8 +15,6 @@ ${mode}         multiLot
 ${role}         viewer
 ${broker}       Quinta
 
-${complaint_id}  1
-
 *** Test Cases ***
 Можливість оголосити мультилотовий тендер
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити мультилотовий тендер
@@ -26,10 +24,11 @@ ${complaint_id}  1
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${tender_data}=  Підготовка даних для створення тендера
   ${adapted_data}=  Адаптувати дані для оголошення тендера  ${tender_owner}  ${tender_data}
-  ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${tender_data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data  ${tender_data}
-  Set To Dictionary  ${TENDER}   TENDER_UAID             ${TENDER_UAID}
+  ${TENDER_UAID}=  Run As  ${tender_owner}  Створити тендер  ${adapted_data}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data=${adapted_data}
+  Set To Dictionary  ${TENDER}   TENDER_UAID=${TENDER_UAID}
   Log  ${TENDER}
+
 
 Можливість знайти мультилотовий тендер по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
@@ -39,7 +38,38 @@ ${complaint_id}  1
   ...      minimal
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
   \  Дочекатись синхронізації з майданчиком    ${username}
-  \  Викликати для учасника  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
+  \  Run As  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
+
+Можливість додати тендерну документацію лоту
+  [Tags]    ${USERS.users['${tender_owner}'].broker}: Можливість завантажити документ
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  [Documentation]   Закупівельник   ${USERS.users['${tender_owner}'].broker}  завантажує документацію  до  оголошеної закупівлі
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data.lots[0]}
+  ${filepath}=   create_fake_doc
+  Run As   ${tender_owner}   Завантажити документ в лот  ${filepath}   ${TENDER['TENDER_UAID']}  ${lot_id}
+
+Відображення заголовку першого лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data.lots[0]}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${tender_owner}'].initial_data.data.lots[0].title}  title
+  ...      object_id=${lot_id}
+
+Відображення опису першого лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data.lots[0]}
+  :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}
+  \  Дочекатись синхронізації з майданчиком  ${username}
+  \  Звірити поле тендера із значенням  ${username}
+  \  ...      ${USERS.users['${tender_owner}'].initial_data.data.lots[0].description}  description
+  \  ...      object_id=${lot_id}
 
 #######
 #Операції з лотом
@@ -50,81 +80,87 @@ ${complaint_id}  1
   ...      ${USERS.users['${tender_owner}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${tender_data}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data}
   ${lot}=  Підготовка даних для створення лоту
-  ${lotcreate}=  Викликати для учасника   ${tender_owner}  Створити лот  ${tender_data}  ${lot}
-  ${lotresponses}=  Create Dictionary
-  Set To Dictionary  ${lotresponses}   resp0   ${lotcreate}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}   lotresponses  ${lotresponses}
-  log  ${lotcreate}
+  ${lot_resp}=  Run As   ${tender_owner}  Створити лот  ${TENDER['TENDER_UAID']}  ${lot}
+  ${lot_id}=  get_id_from_object  ${lot.data}
+  ${lot_data}=  Create Dictionary  lot=${lot}  lot_resp=${lot_resp}  lot_id=${lot_id}
+  ${lot_data}=  munch_dict  arg=${lot_data}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  lot_data=${lot_data}
+  log  ${lot_resp}
 
 Можливість видалення лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${tender_data}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data}
-  ${lot}=  Get Variable Value  ${USERS.users['${tender_owner}'].lotresponses['resp0']}
-  ${lotdelete}=  Викликати для учасника   ${tender_owner}  Видалити лот  ${tender_data}  ${lot}
-  Log  ${lotdelete}
+  Run As  ${tender_owner}  Видалити лот  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].lot_data.lot_id}
 
 Можливість повторого створення лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${tender_data}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data}
   ${lot}=  Підготовка даних для створення лоту
-  ${lotcreate}=  Викликати для учасника   ${tender_owner}  Створити лот  ${tender_data}  ${lot}
-  ${lotresponses}=  Create Dictionary
-  Set To Dictionary  ${lotresponses}   resp   ${lotcreate}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}   lotresponses  ${lotresponses}
-  log  ${lotcreate}
+  ${lot_resp}=  Run As   ${tender_owner}  Створити лот  ${TENDER['TENDER_UAID']}  ${lot}
+  ${lot_id}=  get_id_from_object  ${lot.data}
+  ${lot_data}=  Create Dictionary  lot=${lot}  lot_resp=${lot_resp}  lot_id=${lot_id}
+  ${lot_data}=  munch_dict  arg=${lot_data}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  lot_data=${lot_data}
+  log  ${lot_resp}
 
-Можливість змінити бюджет нового лоту до 8000
+Відображення заголовку другого лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${tender_owner}'].lot_data.lot.data.title}  title
+  ...      object_id=${USERS.users['${tender_owner}'].lot_data.lot_id}
+
+Відображення опису другого лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}
+  \  Дочекатись синхронізації з майданчиком  ${username}
+  \  Звірити поле тендера із значенням  ${username}
+  \  ...      ${USERS.users['${tender_owner}'].lot_data.lot.data.description}  description
+  \  ...      object_id=${USERS.users['${tender_owner}'].lot_data.lot_id}
+
+Відображення бюджету другого лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити поле тендера із значенням  ${viewer}
+  ...      ${USERS.users['${tender_owner}'].lot_data.lot.data.value.amount}  value.amount
+  ...      object_id=${USERS.users['${tender_owner}'].lot_data.lot_id}
+
+
+Можливість змінити бюджет другого лоту до 100
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${tender_data}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data}
-  Set To Dictionary  ${USERS.users['${tender_owner}'].lotresponses['resp'].data.value}  amount   8000
-  ${fixlotto8000resp}=   Викликати для учасника   ${tender_owner}  Змінити лот  ${tender_data}  ${USERS.users['${tender_owner}'].lotresponses['resp']}
-  Set To Dictionary  ${USERS.users['${tender_owner}'].lotresponses}   fixlotto8000resp   ${fixlotto8000resp}
-  log  ${fixlotto8000resp}
+  Run As   ${tender_owner}  Змінити лот  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].lot_data.lot_id}  value.amount   100
 
-Можливість змінити бюджет нового лоту до 100
+
+Можливість змінити бюджет другого лоту до 8000
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${tender_data}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data}
-  Set To Dictionary  ${USERS.users['${tender_owner}'].lotresponses['resp'].data.value}  amount   8000
-  ${fixlotto100resp}=   Викликати для учасника   ${tender_owner}  Змінити лот  ${tender_data}  ${USERS.users['${tender_owner}'].lotresponses['resp']}
-  Set To Dictionary  ${USERS.users['${tender_owner}'].lotresponses}   fixlotto100resp   ${fixlotto100resp}
-  log  ${fixlotto100resp}
-
+  Run As   ${tender_owner}  Змінити лот  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].lot_data.lot_id}  value.amount   8000
 
 #####
 #Предмети закупівлі лоту
 
-Можливість додати позицію закупівлі в тендер
+Можливість добавити предмет закупівлі до другого лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Викликати для учасника   ${tender_owner}   Додати предмети закупівлі    ${TENDER['TENDER_UAID']}   1
-
-Можливість добавити предмет закупівлі до лоту
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${items}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data['items']}
-  Log   ${items}
-  ${lot_id}=   Get Variable Value  ${USERS.users['${tender_owner}'].lotresponses['resp'].data.id}
-  Set To Dictionary  ${items[-1]}  relatedLot   ${lot_id}
-  Log  ${items[-1]}
-  Викликати для учасника   ${tender_owner}  Внести зміни в тендер    ${TENDER['TENDER_UAID']}   items     ${items}
+  ${item}=  Підготовка даних для створення предмету закупівлі
+  Run As   ${tender_owner}   Додати предмет закупівлі в лот    ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].lot_data.lot_id}   ${item}
 
 Неможливість видалення лоту з прив’язаними предметами закупівлі
   [Documentation]
@@ -132,125 +168,46 @@ ${complaint_id}  1
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ${tender_data}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data}
-  ${lot}=  Get Variable Value  ${USERS.users['${tender_owner}'].lotresponses['resp']}
-  Require Failure  ${tender_owner}  Видалити лот  ${tender_data}  ${lot}
-
-Можливість видалити позиції закупівлі тендера
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${items}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data['items']}
-  Log  ${items}
-  ${resp}=  Викликати для учасника   ${tender_owner}  Внести зміни в тендер    ${TENDER['TENDER_UAID']}   items     ${items[:-1]}
-  Log  ${resp}
-
-Можливість додати тендерну документацію лоту
-  [Tags]    ${USERS.users['${tender_owner}'].broker}: Можливість завантажити документ
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  [Documentation]   Закупівельник   ${USERS.users['${tender_owner}'].broker}  завантажує документацію  до  оголошеної закупівлі
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${filepath}=   create_fake_doc
-  ${lot_id}=   Get Variable Value  ${USERS.users['${tender_owner}'].lotresponses['resp'].data.id}
-  ${doc_upload_reply}=  Викликати для учасника   ${tender_owner}   Завантажити документ в лот  ${filepath}   ${TENDER['TENDER_UAID']}  ${lot_id}
-  ${file_upload_process_data} =  Create Dictionary   filepath=${filepath}  doc_upload_reply=${doc_upload_reply}
-  log  ${file_upload_process_data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}   file_upload_process_data   ${file_upload_process_data}
-  Log  ${lot_id}
-  Log  ${USERS.users['${tender_owner}']}
+  ${lot_id}=  Get Variable Value  ${USERS.users['${tender_owner}'].lot_data.lot_id}
+  Require Failure  ${tender_owner}  Видалити лот  ${TENDER['TENDER_UAID']}  ${lot_id}
 
 
 #######
 #Запитання до лоту
 
-Можливість задати питання
+Можливість задати питання до лоту
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість задати запитання
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${lot_id}=  Get Variable Value  ${USERS.users['${tender_owner}'].lot_data.lot_id}
   ${question}=  Підготовка даних для запитання
-  ${question_resp}=  Викликати для учасника   ${provider}   Задати питання  ${TENDER['TENDER_UAID']}   ${question}
+  ${question_resp}=  Run As   ${provider}   Задати питання до лоту  ${TENDER['TENDER_UAID']}  ${lot_id}  ${question}
   ${now}=  Get Current TZdate
   ${question.data.date}=  Set variable  ${now}
-  ${question_id}=  get_id_from_field  ${question.data.description}
+  ${question_id}=  get_id_from_object  ${question.data}
   ${question_data}=  Create Dictionary  question=${question}  question_resp=${question_resp}  question_id=${question_id}
   ${question_data}=  munch_dict  arg=${question_data}
-  Set To Dictionary  ${USERS.users['${provider}']}  question_data  ${question_data}
+  Set To Dictionary  ${USERS.users['${provider}']}  question_data=${question_data}
 
 
-Можливість відповісти на запитання
+Можливість відповісти на запитання до лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість відповісти на запитання
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${answer}=  Підготовка даних для відповіді на запитання
-  ${answer_resp}=  Викликати для учасника  ${tender_owner}
+  ${answer_resp}=  Run As  ${tender_owner}
   ...      Відповісти на питання  ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${provider}']['question_data']['question_resp']}  ${answer}
   ...      question_id=${USERS.users['${provider}'].question_data.question_id}
   ${now}=  Get Current TZdate
   ${answer.data.date}=  Set variable  ${now}
   ${answer_data}=  Create Dictionary  answer=${answer}  answer_resp=${answer_resp}
-  Set To Dictionary  ${USERS.users['${provider}']}  answer_data  ${answer_data}
+  Set To Dictionary  ${USERS.users['${provider}']}  answer_data=${answer_data}
 
-######
-#Cкарга на лот
-#
-#
-#####  Дочекатися скарг на лот
-#
-#
-#Можливість подати скаргу на лот
-#  [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати скаргу на умови
-#  [Documentation]    Користувач  ${USERS.users['${provider}'].broker}  намагається подати скаргу на умови оголошеної  закупівлі
-#  Викликати для учасника   ${provider}   Подати скаргу    ${TENDER['TENDER_UAID']}   ${COMPLAINTS[${complaint_id}]}
-#  ${LAST_MODIFICATION_DATE}=  Get Current Date
-#  Set Global Variable   ${LAST_MODIFICATION_DATE}
-#
-#Можливість побачити скаргу користувачем
-#  [Tags]   ${USERS.users['${provider}'].broker}: Відображення основних даних оголошеного тендера
-#  Викликати для учасника   ${provider}   Порівняти скаргу  ${TENDER['TENDER_UAID']}   ${COMPLAINTS[${complaint_id}]}
-#
-#Можливість побачити скаргу анонімом
-#  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
-#  Викликати для учасника    ${viewer}  Порівняти скаргу  ${TENDER['TENDER_UAID']}   ${COMPLAINTS[${complaint_id}]}
-#
-#Можливість відхилити скаргу на лот
-#  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість відхилити скаргу на умови
-#  Set To Dictionary  ${COMPLAINTS[0].data}   status   declined
-#  Викликати для учасника   ${tender_owner}   Обробити скаргу    ${TENDER['TENDER_UAID']}  0  ${COMPLAINTS[${complaint_id}]}
-#  log many   ${COMPLAINTS[${complaint_id}]}
-#  викликати для учасника   ${viewer}   Оновити сторінку з тендером   ${TENDER['TENDER_UAID']}
-#
-#Можливість відкинути скаргу на лот
-#  [Tags]    ${USERS.users['${tender_owner}'].broker}: Можливість відкинути скаргу на умови
-#  Викликати для учасника   ${provider}   Подати скаргу    ${TENDER['TENDER_UAID']}   ${COMPLAINTS[${complaint_id}]}
-#  ${LAST_MODIFICATION_DATE}=  Get Current Date
-#  Set Global Variable   ${LAST_MODIFICATION_DATE}
-#  Викликати для учасника   ${viewer}   Оновити сторінку з тендером   ${TENDER['TENDER_UAID']}
-#  Set To Dictionary  ${COMPLAINTS[0].data}   status   invalid
-#  Викликати для учасника   ${tender_owner}   Обробити скаргу    ${TENDER['TENDER_UAID']}  1  ${COMPLAINTS[${complaint_id}]}
-#  log many   ${COMPLAINTS[${complaint_id}]}
-#  ${LAST_MODIFICATION_DATE}=  Get Current Date
-#  Set Global Variable   ${LAST_MODIFICATION_DATE}
-# Викликати для учасника   ${viewer}   Оновити сторінку з тендером   ${TENDER['TENDER_UAID']}
-#
-#Можливість задовільнити скаргу на лот
-#  [Tags]    ${USERS.users['${provider}'].broker}: Можливість відповісти на запитання
-#  Викликати для учасника   ${provider}   Подати скаргу    ${TENDER['TENDER_UAID']}   ${COMPLAINTS[${complaint_id}]}
-#  ${LAST_MODIFICATION_DATE}=  Get Current Date
-#  Set Global Variable   ${LAST_MODIFICATION_DATE}
-#  Викликати для учасника   ${viewer}   Оновити сторінку з тендером   ${TENDER['TENDER_UAID']}
-#  Set To Dictionary  ${COMPLAINTS[0].data}   status   resolved
-#  Викликати для учасника   ${tender_owner}   Обробити скаргу    ${TENDER['TENDER_UAID']}  2  ${COMPLAINTS[${complaint_id}]}
-#  log many   ${COMPLAINTS[${complaint_id}]}
-#  ${LAST_MODIFICATION_DATE}=  Get Current Date
-#  Set Global Variable   ${LAST_MODIFICATION_DATE}
-#
 ######
 #Подання пропозицій
 
@@ -281,14 +238,10 @@ ${complaint_id}  1
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider}
-  ${bid}=  test lots bid data
-  Log   ${bid}
-  ${bidresponses}=  Create Dictionary
-  Set To Dictionary  ${bidresponses}                 bid  ${bid}
-  Set To Dictionary  ${USERS.users['${provider}']}   bidresponses  ${bidresponses}
-  ${bid_before_bidperiod_resp}=  Require Failure  ${provider}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}
-  Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   bid_before_bidperiod_resp  ${bid_before_bidperiod_resp}
-  log   ${USERS.users['${provider}']}
+  @{lots_ids}=  Отримати ідентифікатори об’єктів  ${provider}  lots
+  ${bid}=  Підготувати дані для подання пропозиції
+  ${bid_before_bidperiod_resp}=  Require Failure  ${provider}  Подати цінову пропозицію на лоти  ${TENDER['TENDER_UAID']}  ${bid}  ${lots_ids}
+  log   ${bid_before_bidperiod_resp}
 
 Неможливість подати цінову пропозицію без прив’язки до лоту
   [Documentation]
@@ -299,34 +252,27 @@ ${complaint_id}  1
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider}
   Дочекатись дати початку прийому пропозицій  ${provider}
   ${bid}=  Підготувати дані для подання пропозиції
-  Log   ${bid}
-  ${bidresponses}=  Create Dictionary
-  Set To Dictionary  ${bidresponses}                 bid  ${bid}
-  Set To Dictionary  ${USERS.users['${provider}']}   bidresponses  ${bidresponses}
   ${no_lot_bid_resp}=  Require Failure  ${provider}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}
-  Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   no_lot_bid_resp  ${no_lot_bid_resp}
-  log   ${USERS.users['${provider}']}
+  log   ${no_lot_bid_resp}
 
 Можливість подати цінову пропозицію першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${bid}=  test lots bid data
-  Log  ${bid}
-  ${bidresponses}=  Create Dictionary
-  Set To Dictionary  ${bidresponses}                 bid  ${bid}
-  Set To Dictionary  ${USERS.users['${provider}']}   bidresponses  ${bidresponses}
-  ${resp}=  Викликати для учасника   ${provider}   Подати цінову пропозицію   ${TENDER['TENDER_UAID']}   ${bid}
-  Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   resp  ${resp}
-  log   ${USERS.users['${provider}']}
+  @{lots_ids}=  Отримати ідентифікатори об’єктів  ${provider}  lots
+  ${bid}=  Підготувати дані для подання пропозиції
+  ${bidresponses}=  Create Dictionary  bid=${bid}
+  Set To Dictionary  ${USERS.users['${provider}']}   bidresponses=${bidresponses}
+  ${resp}=  Run As  ${provider}  Подати цінову пропозицію на лоти  ${TENDER['TENDER_UAID']}  ${bid}  ${lots_ids}
+  Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   resp=${resp}
 
 Можливість скасувати цінову пропозицію
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість скасувати цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${canceledbidresp}=  Викликати для учасника   ${provider}   Скасувати цінову пропозицію   ${TENDER['TENDER_UAID']}   ${USERS.users['${provider}'].bidresponses['resp']}
+  ${canceledbidresp}=  Run As   ${provider}   Скасувати цінову пропозицію   ${TENDER['TENDER_UAID']}   ${USERS.users['${provider}'].bidresponses['resp']}
   Log  ${canceledbidresp}
 
 Можливість подати повторно цінову пропозицію першим учасником
@@ -335,22 +281,19 @@ ${complaint_id}  1
   ...      ${USERS.users['${provider}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати початку прийому пропозицій  ${provider}
-  ${bid}=  test lots bid data
-  Log  ${bid}
-  ${bidresponses}=  Create Dictionary
-  Set To Dictionary  ${bidresponses}   bid   ${bid}
-  Set To Dictionary  ${USERS.users['${provider}']}   bidresponses   ${bidresponses}
-  ${resp}=  Викликати для учасника   ${provider}   Подати цінову пропозицію   ${TENDER['TENDER_UAID']}   ${bid}
-  Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   resp   ${resp}
-  log  ${USERS.users['${provider}'].bidresponses}
+  @{lots_ids}=  Отримати ідентифікатори об’єктів  ${provider}  lots
+  ${bid}=  Підготувати дані для подання пропозиції
+  ${bidresponses}=  Create Dictionary  bid=${bid}
+  Set To Dictionary  ${USERS.users['${provider}']}   bidresponses=${bidresponses}
+  ${resp}=  Run As  ${provider}  Подати цінову пропозицію на лоти  ${TENDER['TENDER_UAID']}  ${bid}  ${lots_ids}
+  Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   resp=${resp}
 
 Можливість змінити повторну цінову пропозицію до 2000
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${fixbidto2000resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   lotValues.0.value.amount  2000
-  Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   fixbidto2000resp   ${fixbidto2000resp}
+  ${fixbidto2000resp}=  Run As   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   lotValues.0.value.amount  2000
   log  ${fixbidto2000resp}
 
 Можливість змінити повторну цінову пропозицію до 10
@@ -358,8 +301,7 @@ ${complaint_id}  1
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${fixbidto10resp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   lotValues.0.value.amount  10
-  Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   fixbidto10resp   ${fixbidto10resp}
+  ${fixbidto10resp}=  Run As   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   lotValues.0.value.amount  10
   log  ${fixbidto10resp}
 
 Можливість подати цінову пропозицію другим учасником
@@ -369,15 +311,12 @@ ${complaint_id}  1
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider1}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати початку прийому пропозицій  ${provider1}
-  ${bid}=  test lots bid data
-  Log  ${bid}
-  ${bidresponses}=  Create Dictionary
-  Set To Dictionary  ${bidresponses}                 bid  ${bid}
-  Set To Dictionary  ${USERS.users['${provider1}']}   bidresponses  ${bidresponses}
-  ${resp}=  Викликати для учасника   ${provider1}   Подати цінову пропозицію   ${TENDER['TENDER_UAID']}   ${bid}
-  Set To Dictionary  ${USERS.users['${provider1}'].bidresponses}    resp  ${resp}
-  log  ${resp}
-  log  ${USERS.users['${provider1}'].bidresponses}
+  @{lots_ids}=  Отримати ідентифікатори об’єктів  ${provider1}  lots
+  ${bid}=  Підготувати дані для подання пропозиції
+  ${bidresponses}=  Create Dictionary  bid=${bid}
+  Set To Dictionary  ${USERS.users['${provider1}']}   bidresponses=${bidresponses}
+  ${resp}=  Run As  ${provider1}  Подати цінову пропозицію на лоти  ${TENDER['TENDER_UAID']}  ${bid}  ${lots_ids}
+  Set To Dictionary  ${USERS.users['${provider1}'].bidresponses}   resp=${resp}
 
 Неможливість побачити цінові пропозиції учасників під час прийому пропозицій
   [Tags]   ${USERS.users['${viewer}'].broker}: Можливість подати цінову пропозицію
@@ -395,7 +334,6 @@ ${complaint_id}  1
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider1}
   Дочекатись дати закінчення прийому пропозицій  ${provider1}
   ${failfixbidto2000resp}=  Require Failure  ${provider1}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  lotValues.0.value.amount  2000
-  Set To Dictionary  ${USERS.users['${provider1}'].bidresponses}   failfixbidto2000resp   ${failfixbidto2000resp}
   log  ${failfixbidto2000resp}
 
 Неможливість змінити цінову пропозицію до 1 після закінчення прийому пропозицій
@@ -405,7 +343,6 @@ ${complaint_id}  1
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ${failfixbidto1resp}=  Require Failure  ${provider1}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  lotValues.0.value.amount  1
-  Set To Dictionary  ${USERS.users['${provider1}'].bidresponses}   failfixbidto1resp   ${failfixbidto1resp}
   log  ${failfixbidto1resp}
 
 Неможливість скасувати цінову пропозицію
@@ -415,3 +352,4 @@ ${complaint_id}  1
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ${biddingresponse}=  Require Failure  ${provider1}  Скасувати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${USERS.users['${provider1}'].bidresponses['resp']}
+  log  ${biddingresponse}
