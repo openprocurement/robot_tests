@@ -455,7 +455,7 @@ def test_complaint_reply_data():
     })
 
 
-def test_bid_data(above_threshold=False):
+def test_bid_data(mode):
     bid = munchify({
         "data": {
             "tenderers": [
@@ -479,23 +479,25 @@ def test_bid_data(above_threshold=False):
                     },
                     "name": fake.company()
                 }
-            ],
-            "value": {
-                "currency": "UAH",
-                "amount": 500,
-                "valueAddedTaxIncluded": True
-            }
+            ]
         }
     })
-    if above_threshold:
+    if 'open' in mode:
         bid.data['selfEligible'] = True
         bid.data['selfQualified'] = True
+    if mode == 'multiLot':
+        bid.data.lotValues = list()
+        for _ in range(2):
+            bid.data.lotValues.append(test_bid_values())
+    else:
+        bid.data.value = test_bid_values()
+    if mode == 'meat':
+        bid.update(test_bid_params())
     return bid
 
 
-def test_bid_data_meat_tender():
-    bid = test_bid_data()
-    bid.data.update({
+def test_bid_params():
+    return munchify({
         "parameters": [
             {
                 "code": "ee3e24bc17234a41bd3e3a04cc28e9c6",
@@ -507,35 +509,15 @@ def test_bid_data_meat_tender():
             }
         ]
     })
-    return bid
 
-
-def test_lots_bid_data():
-    bid = test_bid_data()
-    del bid.data.value
-    bid.data.update({
-        "lotValues": [
-            {
+def test_bid_values():
+    return munchify({
                 "value": {
                     "currency": "UAH",
                     "amount": fake.random_int(max=1999),
                     "valueAddedTaxIncluded": True
-                },
-                "relatedLot": "3c8f387879de4c38957402dbdb8b31af",
-                "date": "2015-11-01T12:43:12.482645+02:00"
-            },
-            {
-                "value": {
-                    "currency": "UAH",
-                    "amount": fake.random_int(max=1999),
-                    "valueAddedTaxIncluded": True
-                },
-                "relatedLot": "bcac8d2ceb5f4227b841a2211f5cb646",
-                "date": "2015-11-01T12:43:12.482645+02:00"
-            }
-        ]
-    })
-    return bid
+                }
+            })
 
 
 def auction_bid():
