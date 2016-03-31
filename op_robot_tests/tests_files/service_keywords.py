@@ -391,8 +391,11 @@ def munch_dict(arg=None, data=False):
     return munchify(arg)
 
 
-def get_id_from_field(field):
-    return re.match(r'(^[filq]-[0-9a-fA-F]{8}): ', field).group(1)
+def get_id_from_object(obj):
+    obj_id = re.match(r'(^[filq]-[0-9a-fA-F]{8}): ', obj['title'])
+    if not obj_id:
+        obj_id = re.match(r'(^[filq]-[0-9a-fA-F]{8}): ', obj['description'])
+    return obj_id.group(1)
 
 
 def get_object_type_by_id(object_id):
@@ -404,7 +407,7 @@ def get_object_index_by_id(data, object_id):
     if not data:
         return 0
     for index, element in enumerate(data):
-        element_id = get_id_from_field(element['description'])
+        element_id = get_id_from_object(element)
         if element_id == object_id:
             break
     else:
