@@ -589,7 +589,7 @@ def test_award_data():
 
 def test_item_data():
     now = get_now()
-    return {
+    return munchify({
         "description": description_with_id('i', fake.catch_phrase()),
         "deliveryDate": {
             "endDate": (now + timedelta(days=5)).isoformat()
@@ -628,7 +628,7 @@ def test_item_data():
             "code": u"KGM"
         },
         "quantity": fake.pyint()
-    }
+    })
 
 
 def test_invalid_features_data():

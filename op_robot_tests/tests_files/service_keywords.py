@@ -348,12 +348,14 @@ def get_object_type_by_id(object_id):
 
 
 def get_object_index_by_id(data, object_id):
+    if not data:
+        return 0
     for index, element in enumerate(data):
         element_id = get_id_from_field(element['description'])
         if element_id == object_id:
             break
     else:
-        index = 0
+        index += 1
     return index
 
 # GUI Frontends common
