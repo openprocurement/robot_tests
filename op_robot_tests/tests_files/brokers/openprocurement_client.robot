@@ -107,29 +107,18 @@ Library  openprocurement_client_helper.py
   [Return]  ${tender}
 
 
-Відняти предмети закупівлі
-  [Arguments]  ${username}  ${tender_uaid}  ${number}
+Додати предмет закупівлі
+  [Arguments]  ${username}  ${tender_uaid}  ${item}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  @{items}=  Get From Object   ${tender.data}    items
-  Log Many  @{items}
-  :FOR    ${INDEX}    IN RANGE    ${number}
-   \          Remove From List  ${items}  0
-  Log Many  @{items}
-  Set_To_Object    ${tender.data}   items  ${items}
+  Append To List  ${tender.data['items']}  ${item}
   Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
 
 
-Додати предмети закупівлі
-  [Arguments]  ${username}  ${tender_uaid}  ${number}
+Видалити предмет закупівлі
+  [Arguments]  ${username}  ${tender_uaid}  ${item_id}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  @{items}=  Get From Object   ${tender.data}    items
-  Log Many  @{items}
-  :FOR    ${INDEX}    IN RANGE    ${number}
-  \    ${item}=  test_item_data
-  \    Append To List  ${items}  ${item}
-  Log Many  @{items}
-  Set_To_Object    ${tender.data}   items  ${items}
-  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
+  ${item_index}=  get_object_index_by_id  ${tender.data['items']}  ${item_id}
+  Remove From List  ${tender.data['items']}  ${item_index}
   Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
 
 
