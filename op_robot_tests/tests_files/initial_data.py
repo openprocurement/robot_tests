@@ -4,11 +4,13 @@ from faker import Factory
 from munch import munchify
 from tempfile import NamedTemporaryFile
 from .local_time import get_now
+from .op_faker import OP_Provider
 
 fake = Factory.create('uk_UA')
 fake_ru = Factory.create('ru')
 fake_en = Factory.create()
 
+fake.add_provider(OP_Provider)
 
 def create_fake_sentence():
     return fake.sentence(nb_words=10, variable_nb_words=True)
@@ -92,7 +94,7 @@ def test_tender_data_limited(intervals, procurement_method_type):
                 "additionalClassifications":
                 [
                     {
-                        "description": u"Послуги щодо забезпечення харчуванням, інші",
+                        "description": fake.description(),
                         "id": "56.29",
                         "scheme": u"ДКПП"
                     }
