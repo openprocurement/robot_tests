@@ -249,13 +249,19 @@ Library  openprocurement_client_helper.py
 Отримати посилання на аукціон для глядача
   [Arguments]  ${username}  ${tender_uaid}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  [return]  ${tender.data.auctionUrl}
+  ${lots}=  Get Variable Value  ${tender.data.lots}
+  ${auctionUrl}=  Run Keyword If  ${lots}  Set Variable  ${tender.data.lots[0].auctionUrl}
+  ...                         ELSE  Set Variable  ${tender.data.auctionUrl}
+  [return]  ${auctionUrl}
 
 
 Отримати посилання на аукціон для учасника
   [Arguments]  ${username}  ${tender_uaid}
   ${bid}=  openprocurement_client.Отримати пропозицію  ${username}  ${tender_uaid}
-  [return]  ${bid.data.participationUrl}
+  ${lots}=  Get Variable Value  ${bid.data.lotValues}
+  ${participationUrl}=  Run Keyword If  ${lots}  Set Variable  ${bid.data.lotValues[0].participationUrl}
+  ...                               ELSE  Set Variable  ${bid.data.participationUrl}
+  [return]  ${participationUrl}
 
 
 Отримати пропозицію
