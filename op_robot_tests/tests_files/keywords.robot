@@ -322,6 +322,8 @@ Get Broker Property By Username
   Log  ${right}
   Should Not Be Equal  ${left}  ${None}
   Should Not Be Equal  ${right}  ${None}
+  ${left}=  Convert To String  ${left}
+  ${right}=  Convert To String  ${right}
   Should Be Equal  ${left}  ${right}  msg=Objects are not equal
 
 
