@@ -463,6 +463,20 @@ Require Failure
   Run Keyword If  ${sleep} > 0  Sleep  ${sleep}
 
 
+Дочекатись дати початку періоду уточнень
+  [Arguments]  ${username}
+  Log  ${username}
+  # XXX: HACK: Same as below
+  ${status}  ${date}=  Run Keyword And Ignore Error
+  ...      Set Variable
+  ...      ${USERS.users['${username}'].tender_data.data.enquiryPeriod.startDate}
+  ${date}=  Set Variable If
+  ...      '${status}' == 'FAIL'
+  ...      ${USERS.users['${tender_owner}'].initial_data.data.enquiryPeriod.startDate}
+  ...      ${date}
+  Дочекатись дати  ${date}
+
+
 Дочекатись дати початку прийому пропозицій
   [Arguments]  ${username}
   Log  ${username}
