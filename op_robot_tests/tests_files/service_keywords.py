@@ -142,14 +142,65 @@ def munch_to_object(data, format="yaml"):
         return data.toYAML(allow_unicode=True, default_flow_style=False)
 
 
-def load_initial_data_from(file_name):
+def load_data_from(file_name, mode=None):
     if not os.path.exists(file_name):
         file_name = os.path.join(os.path.dirname(__file__), 'data', file_name)
     with open(file_name) as file_obj:
         if file_name.endswith(".json"):
-            return Munch.fromDict(load(file_obj))
+            file_data = Munch.fromDict(load(file_obj))
         elif file_name.endswith(".yaml"):
-            return fromYAML(file_obj)
+            file_data = fromYAML(file_obj)
+    if mode == "brokers":
+        default = file_data.pop('Default')
+        brokers = {}
+        for k, v in file_data.iteritems():
+            brokers[k] = merge_dicts(default, v)
+        return brokers
+    else:
+        return file_data
+
+
+def compute_intrs(brokers_data, used_brokers):
+    """Compute optimal values for period intervals.
+
+    Notice: This function is maximally effective if ``brokers_data``
+    does not contain ``Default`` entry.
+    Using `load_data_from` with ``mode='brokers'`` is recommended.
+    """
+    num_types = (int, long, float)
+
+    def recur(l, r):
+        l, r = deepcopy(l), deepcopy(r)
+        if isinstance(l, list) and isinstance(r, list) and len(l) == len(r):
+            lst = []
+            for ll, rr in zip(l, r):
+                lst.append(recur(ll, rr))
+            return lst
+        elif isinstance(l, num_types) and isinstance(r, num_types):
+            if l == r:
+                return l
+            if l > r:
+                return l
+            if l < r:
+                return r
+        elif isinstance(l, dict) and isinstance(r, dict):
+            for k, v in r.iteritems():
+                if k not in l.keys():
+                    l[k] = v
+                else:
+                    l[k] = recur(l[k], v)
+            return l
+        else:
+            raise TypeError("Couldn't recur({0}, {1})".format(
+                str(type(l)), str(type(r))))
+
+    intrs = []
+    for i in used_brokers:
+        intrs.append(brokers_data[i]['intervals'])
+    result = intrs.pop(0)
+    for i in intrs:
+        result = recur(result, i)
+    return result
 
 
 def prepare_test_tender_data(procedure_intervals, mode):

@@ -54,36 +54,80 @@ Set Suite Variable With Default Value
 Завантажуємо дані про користувачів і майданчики
   Log  ${broker}
   Log  ${role}
+  # Suite variable; should be present in every test suite
+  # in `*** Variables ***` section
+  Log Many  @{used_roles}
 
+  # Load brokers data
   ${file_path}=  Get Variable Value  ${BROKERS_FILE}  brokers.yaml
-  ${BROKERS}=  load_initial_data_from  ${file_path}
+  ${BROKERS}=  load_data_from  ${file_path}  mode=brokers
   Log  ${BROKERS}
   Set Suite Variable  ${BROKERS}
+  # List of currently used brokers
+  ${used_brokers}=  Create List
 
+  # Load users data
   ${file_path}=  Get Variable Value  ${USERS_FILE}  users.yaml
-  ${USERS}=  load_initial_data_from  ${file_path}
-  Set Global Variable  ${USERS}
+  ${USERS}=  load_data_from  ${file_path}
+  Log  ${USERS.users}
+  Set Suite Variable  ${USERS}
+  # List of currently used users
+  ${used_users}=  Create List
 
-  Set Suite Variable With Default Value  ${role}  ${BROKERS['${broker}'].roles.${role}}
-  Set Suite Variable With Default Value  tender_owner  Tender_Owner
-  Set Suite Variable With Default Value  provider      Tender_User
-  Set Suite Variable With Default Value  provider1     Tender_User1
-  Set Suite Variable With Default Value  viewer        Tender_Viewer
-  ${active_users}=  Create Dictionary  tender_owner=${tender_owner}  provider=${provider}  provider1=${provider1}  viewer=${viewer}
+  # Handle `-v role:something`
+  Run Keyword Unless  '${role}' in @{used_roles}
+  ...      Log
+  ...      Role ${role} is not used in this test suite.
+  ...      WARN
+  Set Suite Variable With Default Value
+  ...      ${role}
+  ...      ${BROKERS['${broker}'].roles.${role}}
 
-  ${users_list}=  Get Dictionary Items  ${USERS.users}
-  :FOR  ${username}  ${user_data}  IN  @{users_list}
-  \  Log  ${active_users}
-  \  Log  ${username}
+  # Set default value for each role if it is not set yet;
+  # fill `used_users`;
+  # fill `used_brokers`.
+  #
+  # Don't even ask how this works!
+  :FOR  ${tmp_role}  IN  @{used_roles}
+  \  Set Suite Variable With Default Value
+  \  ...      ${tmp_role}
+  \  ...      ${BROKERS['Quinta'].roles.${tmp_role}}
+  \  Append To List  ${used_users}  ${${tmp_role}}
+  \  Append To List  ${used_brokers}  ${USERS.users.${${tmp_role}}.broker}
+  # Since `@{used_roles}` is already a suite variable,
+  # let's make `@{used_brokers}` alike.
+  ${used_brokers}=  Remove Duplicates  ${used_brokers}
+  Set Suite Variable  ${used_brokers}
+  # We need to create two lists since Robot Framework doesn't support
+  # dicts in `:FOR` loops.
+  Log Many  @{used_users}
+  Log Many  @{used_brokers}
+
+  # A list of all users in users file
+  ${known_users}=  Get Dictionary Keys  ${USERS.users}
+
+  # Check whether users file contains an entry for each
+  # selected user before preparing any clients
+  :FOR  ${username}  IN  @{used_users}
+  \  List Should Contain Value
+  \  ...      ${known_users}
+  \  ...      ${username}
+  \  ...      msg=User ${username} not found in users file!
+
+  # Prepare a client for each user
+  :FOR  ${username}  IN  @{used_users}
   \  ${munch_dict}=  munch_dict  data=${True}
-  \  Log Many  ${munch_dict}
-  \  ${status}=  Run Keyword And Return Status  Dictionary Should Contain Value  ${active_users}  ${username}
-  \  ${keywords_file}=  Get Broker Property By Username  ${username}  keywords_file
-  \  Run Keyword If  ${status}  Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
-  \  Run Keyword If  ${status}  Викликати для учасника  ${username}  Підготувати клієнт для користувача
-  \  Run Keyword If  ${status}  Set To Dictionary  ${USERS.users['${username}']}  tender_data=${munch_dict}
+  \  ${keywords_file}=  Get Broker Property  ${USERS.users.${username}.broker}  keywords_file
+  \  Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
+  \  Run As  ${username}  Підготувати клієнт для користувача
   \  ${LAST_REFRESH_DATE}=  Get Current TZdate
-  \  Set To Dictionary  ${USERS.users['${username}']}  LAST_REFRESH_DATE  ${LAST_REFRESH_DATE}
+  \  Set To Dictionary  ${USERS}  ${username}=${USERS.users.${username}}
+  \  Set To Dictionary  ${USERS.${username}}  tender_data=${munch_dict}
+  \  Set To Dictionary  ${USERS.${username}}  LAST_REFRESH_DATE  ${LAST_REFRESH_DATE}
+
+  # Drop all unused users
+  Keep In Dictionary  ${USERS.users}  @{used_users}
+  Log Many  @{USERS}
 
 
 Get Broker Property
@@ -92,11 +136,9 @@ Get Broker Property
   ...      This keyword returns a property of specified broker
   ...      if that property exists, otherwise, it returns a
   ...      default value.
-  ${status}=  Run Keyword And Return Status  Should Contain  ${BROKERS['${broker_name}']}  ${property}
-  Return From Keyword If  ${status}  ${BROKERS['${broker_name}'].${property}}
-  # If broker doesn't have that property, fall back to default value
-  Should Contain  ${BROKERS['Default']}  ${property}
-  [return]  ${BROKERS['Default'].${property}}
+  Run Keyword If  '${broker_name}'=='${None}'  Fail  \${broker_name} is NoneType
+  Should Contain  ${BROKERS['${broker_name}']}  ${property}
+  Return From Keyword  ${BROKERS['${broker_name}'].${property}}
 
 
 Get Broker Property By Username
@@ -126,7 +168,7 @@ Get Broker Property By Username
 
 Завантажити дані про тендер
   ${file_path}=  Get Variable Value  ${ARTIFACT_FILE}  artifact.yaml
-  ${ARTIFACT}=  load_initial_data_from  ${file_path}
+  ${ARTIFACT}=  load_data_from  ${file_path}
   Run Keyword If  '${USERS.users['${tender_owner}'].broker}' == 'Quinta'
   ...      Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token=${ARTIFACT.access_token}
   ${TENDER}=  Create Dictionary
@@ -137,9 +179,7 @@ Get Broker Property By Username
 
 
 Підготовка даних для створення тендера
-  ${custom_intervals}=  Get Broker Property By Username  ${tender_owner}  intervals
-  ${default_intervals}=  Get Broker Property  Default  intervals
-  ${period_intervals}=  merge_dicts  ${default_intervals}  ${custom_intervals}
+  ${period_intervals}=  compute_intrs  ${BROKERS}  ${used_brokers}
   ${tender_data}=  prepare_test_tender_data  ${period_intervals}  ${mode}
   ${TENDER}=  Create Dictionary
   Set Global Variable  ${TENDER}
