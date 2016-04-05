@@ -154,6 +154,14 @@ Library  openprocurement_client_helper.py
 Подати цінову пропозицію
   [Arguments]  ${username}  ${tender_uaid}  ${bid}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${lots}=  Get Variable Value  ${tender.data.lots}
+  ${bid}=  Run Keyword If  ${lots}  test_lots_bid_data
+  ...                  ELSE  Set Variable  ${bid}
+  Run Keyword If  ${lots}
+  ...       Run Keywords
+  ...       Remove From List  ${bid.data.lotValues}  1
+  ...       AND
+  ...       Set_To_Object  ${bid.data.lotValues[0]}  relatedLot  ${lots[0].id}
   ${biddingresponse}=  Call Method  ${USERS.users['${username}'].client}  create_bid  ${tender}  ${bid}
   Set To Dictionary   ${USERS.users['${username}'].bidresponses['bid'].data}  id=${biddingresponse['data']['id']}
   Log  ${biddingresponse}
@@ -163,6 +171,9 @@ Library  openprocurement_client_helper.py
 Змінити цінову пропозицію
   [Arguments]  ${username}  ${tender_uaid}  ${fieldname}  ${fieldvalue}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${lots}=  Get Variable Value  ${tender.data.lots}
+  ${fieldname}=  Run Keyword If  ${lots}  Set Variable  lotValues.0.${fieldname}
+  ...                        ELSE  Set Variable  ${fieldname}
   ${bid}=  openprocurement_client.Отримати пропозицію  ${username}  ${tender_uaid}
   Set_To_Object  ${bid.data}   ${fieldname}   ${fieldvalue}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
@@ -238,13 +249,19 @@ Library  openprocurement_client_helper.py
 Отримати посилання на аукціон для глядача
   [Arguments]  ${username}  ${tender_uaid}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  [return]  ${tender.data.auctionUrl}
+  ${lots}=  Get Variable Value  ${tender.data.lots}
+  ${auctionUrl}=  Run Keyword If  ${lots}  Set Variable  ${tender.data.lots[0].auctionUrl}
+  ...                         ELSE  Set Variable  ${tender.data.auctionUrl}
+  [return]  ${auctionUrl}
 
 
 Отримати посилання на аукціон для учасника
   [Arguments]  ${username}  ${tender_uaid}
   ${bid}=  openprocurement_client.Отримати пропозицію  ${username}  ${tender_uaid}
-  [return]  ${bid.data.participationUrl}
+  ${lots}=  Get Variable Value  ${bid.data.lotValues}
+  ${participationUrl}=  Run Keyword If  ${lots}  Set Variable  ${bid.data.lotValues[0].participationUrl}
+  ...                               ELSE  Set Variable  ${bid.data.participationUrl}
+  [return]  ${participationUrl}
 
 
 Отримати пропозицію
