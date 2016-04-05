@@ -10,6 +10,7 @@ users:
         broker:   Quinta
     Tender_Viewer:
         api_key:  ""
+        browser:  chrome
         broker:   Quinta
     E-tender_Owner:
         broker:   E-tender

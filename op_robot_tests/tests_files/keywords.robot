@@ -133,9 +133,8 @@ Get Broker Property By Username
   ${ARTIFACT}=  load_initial_data_from  ${file_path}
   Run Keyword If  '${USERS.users['${tender_owner}'].broker}' == 'Quinta'
   ...      Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token=${ARTIFACT.access_token}
-  ${TENDER}=  Create Dictionary
-  Set To Dictionary  ${TENDER}  TENDER_UAID=${ARTIFACT.tender_uaid}
-  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE=${ARTIFACT.last_modification_date}
+  ${TENDER}=  Create Dictionary   TENDER_UAID=${ARTIFACT.tender_uaid}   LAST_MODIFICATION_DATE=${ARTIFACT.last_modification_date}   LOT_ID=${Empty}
+  Run Keyword And Ignore Error  Set To Dictionary  ${TENDER}  LOT_ID=${ARTIFACT.lots[${lot_index}]}
   Set Global Variable  ${TENDER}
   log_object_data  ${ARTIFACT}  artifact
 
@@ -518,25 +517,15 @@ Require Failure
   Дочекатись дати  ${date}
 
 
-Дочекатись дати початку аукціону
-  [Arguments]  ${username}
-  Log  ${username}
-  # Can't use that dirty hack here since we don't know
-  # the date of auction when creating the procurement :)
-  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.auctionPeriod.startDate}
-
-
-Дочекатись дати закінчення аукціону
-  [Arguments]  ${username}
-  Log  ${username}
-  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.auctionPeriod.endDate}
-
-
 Дочекатись дати закінчення періоду подання скарг
   [Arguments]  ${username}
   log  ${username}
   Дочекатись дати  ${USERS.users['${username}'].tender_data.data.complaintPeriod.endDate}
 
+Дочекатись дати початку аукціону
+  [Arguments]  ${username}  ${lot_id}=${Empty}
+  ${auctionStart}=  Отримати дані із тендера   ${username}   auctionPeriod.startDate  ${lot_id}
+  Дочекатись дати  ${auctionStart}
 
 Оновити LAST_MODIFICATION_DATE
   ${LAST_MODIFICATION_DATE}=  Get Current TZdate
