@@ -10,6 +10,7 @@ users:
         broker:   Quinta
     Tender_Viewer:
         api_key:  ""
+        browser:  chrome
         broker:   Quinta
         browser:  firefox
         position: [0, 0]

@@ -8,7 +8,6 @@ Suite Teardown  Test Suite Teardown
 *** Variables ***
 @{used_roles}   viewer
 
-
 *** Test Cases ***
 Можливість знайти закупівлю по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
@@ -25,14 +24,14 @@ Suite Teardown  Test Suite Teardown
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
-  Отримати дані із тендера  ${viewer}  auctionPeriod.startDate
+  Отримати дані із тендера  ${viewer}  auctionPeriod.startDate  ${TENDER['LOT_ID']}
 
 
 Можливість дочекатися початку аукціону
   [Tags]   ${USERS.users['${viewer}'].broker}: Можливість дочекатися початку аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Дочекатись дати початку аукціону  ${viewer}
+  Дочекатись дати початку аукціону  ${viewer}  ${TENDER['LOT_ID']}
 
 
 Можливість дочекатися завершення аукціону
@@ -51,4 +50,4 @@ Suite Teardown  Test Suite Teardown
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
-  Отримати дані із тендера  ${viewer}  auctionPeriod.endDate
+  Отримати дані із тендера  ${viewer}  auctionPeriod.endDate  ${TENDER['LOT_ID']}
