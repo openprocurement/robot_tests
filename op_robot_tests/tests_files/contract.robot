@@ -16,8 +16,7 @@ Suite Teardown  Test Suite Teardown
   ...      minimal
   Завантажити дані про тендер
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
-  \   ${resp}=  Викликати для учасника  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
-  Log  ${resp}
+  \   Викликати для учасника  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
 
 ##############################################################################################
 #             CONTRACT
