@@ -123,7 +123,7 @@ def test_tender_data_limited(intervals, procurement_method_type):
                 }
             }
         ],
-        "owner": "test.quintagroup.com",
+        "mode": "test",
         "procurementMethod": "limited",
         "procurementMethodType": procurement_method_type,
         "procuringEntity":
