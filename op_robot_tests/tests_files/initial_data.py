@@ -429,24 +429,6 @@ def test_submit_claim_data(claim_id):
     })
 
 
-def test_additional_items_data(tender_id, access_token):
-    return munchify({
-        "access": {
-            "token": access_token
-        },
-        "data": {
-            "id": tender_id,
-            "items": [{
-                "unit": {
-                    "code": "MON",
-                    "name": "month"
-                },
-                "quantity": 9
-            }]
-        }
-    })
-
-
 def test_complaint_reply_data():
     return munchify({
         "data": {

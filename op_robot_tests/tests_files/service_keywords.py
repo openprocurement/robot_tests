@@ -19,7 +19,6 @@ from .initial_data import (
     auction_bid,
     create_fake_doc,
     create_fake_sentence,
-    test_additional_items_data,
     test_award_data,
     test_bid_data,
     test_bid_data_meat_tender,

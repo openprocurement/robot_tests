@@ -66,12 +66,6 @@ Resource           resource.robot
   ...      ${TENDER['TENDER_UAID']}
 
 
-Можливість модифікації закупівлі
-  Викликати для учасника  ${tender_owner}
-  ...      Модифікувати закупівлю
-  ...      ${TENDER['TENDER_UAID']}
-
-
 Можливість додати документацію до закупівлі
   ${filepath}=  create_fake_doc
   Викликати для учасника  ${tender_owner}
@@ -301,20 +295,20 @@ Resource           resource.robot
 
 
 Відображення кількості номенклатури закупівлі
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].additional_items[${ITEMS_NUM}]['quantity']}
+  Звірити поле тендера  ${viewer}
+  ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      items[${ITEMS_NUM}].quantity
 
 
 Відображення назви одиниці номенклатури закупівлі
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].additional_items[${ITEMS_NUM}]['unit']['name']}
+  Звірити поле тендера  ${viewer}
+  ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      items[${ITEMS_NUM}].unit.name
 
 
 Відображення коду одиниці номенклатури закупівлі
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].additional_items[${ITEMS_NUM}]['unit']['code']}
+  Звірити поле тендера  ${viewer}
+  ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      items[${ITEMS_NUM}].unit.code
 
 

@@ -72,15 +72,6 @@ ${mode}         negotiation.quick
   Можливість створити закупівлю
 
 
-Можливість модифікації переговорної процедури за нагальною потребою
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість модифікації процедури
-  ...  tender_owner
-  ...  ${USERS.users['${tender_owner}'].broker}
-  ...  level2
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість модифікації закупівлі
-
-
 Можливість додати документацію до переговорної процедури за нагальною потребою
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість додати документацію до процедури
   ...  tender_owner
