@@ -16,7 +16,6 @@ from robot.output.loggerhelper import Message
 # can access them by simply importing library "service_keywords".
 # Please ignore the warning given by Flake8 or other linter.
 from .initial_data import (
-    auction_bid,
     create_fake_doc,
     create_fake_sentence,
     test_additional_items_data,
@@ -205,14 +204,6 @@ def run_keyword_and_ignore_keyword_definitions(name, *args, **kwargs):
     except ExecutionFailed as e:
         status, _ = "FAIL", e.message
     return status, _
-
-
-def set_tender_periods(tender):
-    now = get_now()
-    tender.data.enquiryPeriod.endDate = (now + timedelta(minutes=2)).isoformat()
-    tender.data.tenderPeriod.startDate = (now + timedelta(minutes=2)).isoformat()
-    tender.data.tenderPeriod.endDate = (now + timedelta(minutes=4)).isoformat()
-    return tender
 
 
 def set_access_key(tender, access_token):

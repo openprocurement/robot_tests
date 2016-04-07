@@ -536,18 +536,6 @@ def test_lots_bid_data():
     return bid
 
 
-def auction_bid():
-    return munchify({
-        "data": {
-            "value": {
-                "amount": 200,
-                "currency": "UAH",
-                "valueAddedTaxIncluded": True
-            }
-        }
-    })
-
-
 def test_supplier_data():
     return munchify({
         "data": {
