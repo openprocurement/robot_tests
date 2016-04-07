@@ -27,7 +27,7 @@ ${broker}       Quinta
   Log  ${TENDER}
 
 Можливість знайти понадпороговий однопредметний тендер по ідентифікатору
-  [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
+  [Tags]   ${USERS.users['${viewer}'].broker}: Можливість знайти тендер
   ...      viewer  tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
@@ -37,21 +37,21 @@ ${broker}       Quinta
   \  Викликати для учасника  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
 
 Відображення типу закупівлі оголошеного тендер
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних понадпорогового тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  procurementMethodType
 
-Відображення початку періоду прийому пропозицій оголошеного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+Відображення початку періоду прийому пропозицій понадпорогового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних понадпорогового тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      minimal
   :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}
   \  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.startDate
 
-Відображення закінчення періоду прийому пропозицій оголошеного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+Відображення закінчення періоду прийому пропозицій понадпорогового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних понадпорогового тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      minimal
@@ -59,7 +59,7 @@ ${broker}       Quinta
   \  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.endDate
 
 Відображення закінчення періоду подання скарг на оголошений тендер
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних понадпорогового тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      minimal
@@ -103,7 +103,7 @@ ${broker}       Quinta
   Set To Dictionary  ${USERS.users['${provider}'].claim_data}  cancellation  ${cancellation_data}
 
 Можливість подати цінову пропозицію першим учасником
-  [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
+  [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
@@ -173,7 +173,7 @@ ${broker}       Quinta
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   bid_doc_upload   ${bid_doc_upload}
 
 Можливість подати цінову пропозицію другим учасником
-  [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
+  [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати пропозицію
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
@@ -223,7 +223,7 @@ ${broker}       Quinta
   ${bidresponses}=  Викликати для учасника   ${provider1}   Скасувати цінову пропозицію   ${TENDER['TENDER_UAID']}   ${bid}
 
 Можливість повторно подати цінову пропозицію другим учасником після першої зміни
-  [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
+  [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати пропозицію
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
@@ -345,7 +345,7 @@ ${broker}       Quinta
 
 
 Можливість повторно подати цінову пропозицію другим учасником після другої зміни
-  [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
+  [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати пропозицію
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
@@ -387,7 +387,7 @@ ${broker}       Quinta
 ####
 #  Qualification
 Відображення статусу першої пропозиції кваліфікації
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних оголошеного тендера
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних понадпорогового тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   Дочекатись дати закінчення прийому пропозицій  ${tender_owner}
@@ -395,7 +395,7 @@ ${broker}       Quinta
   Звірити поле тендера із значенням  ${tender_owner}  pending  qualifications[0].status
 
 Відображення статусу другої пропозиції кваліфікації
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних оголошеного тендера
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних понадпорогового тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   Дочекатись дати закінчення прийому пропозицій  ${tender_owner}
