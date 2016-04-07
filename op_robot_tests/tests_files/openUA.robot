@@ -24,7 +24,7 @@ ${mode}         openua
   Log  ${TENDER}
 
 Можливість знайти понадпороговий однопредметний тендер по ідентифікатору
-  [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
+  [Tags]   ${USERS.users['${viewer}'].broker}: Можливість знайти тендер
   ...      viewer  tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
@@ -33,22 +33,22 @@ ${mode}         openua
   \  Дочекатись синхронізації з майданчиком    ${username}
   \  Викликати для учасника  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
 
-Відображення типу оголошеного тендер
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних понадпорогового тендера
+Відображення типу оголошеного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  procurementMethodType
 
-Відображення початку періоду прийому пропозицій оголошеного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+Відображення початку періоду прийому пропозицій понадпорогового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      minimal
   :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}
   \  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.startDate
 
-Відображення закінчення періоду прийому пропозицій оголошеного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+Відображення закінчення періоду прийому пропозицій понадпорогового тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      minimal
@@ -56,7 +56,7 @@ ${mode}         openua
   \  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.endDate
 
 Можливість подати вимогу на умови більше ніж за 10 днів до завершення періоду подання пропозицій
-  [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати вимогу на умови
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання скарги
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Documentation]  Користувач ${USERS.users['${provider}'].broker} намагається подати скаргу на умови оголошеного тендера
@@ -79,7 +79,7 @@ ${mode}         openua
   ...      ${confrimation_data}
 
 Можливість скасувати вимогу на умови
-  [Tags]   ${USERS.users['${provider}'].broker}: Можливість скасувати скаргу на умови
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання скарги
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
@@ -93,7 +93,7 @@ ${mode}         openua
   Set To Dictionary  ${USERS.users['${provider}'].claim_data}  cancellation  ${cancellation_data}
 
 Можливість подати цінову пропозицію першим учасником
-  [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}
@@ -108,7 +108,7 @@ ${mode}         openua
   log  ${resp}
 
 Можливість подати цінову пропозицію другим учасником
-  [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
+  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider1}
@@ -123,14 +123,14 @@ ${mode}         openua
   log  ${resp}
 
 Можливість редагувати однопредметний тендер більше ніж за 7 днів до завершення періоду подання пропозицій
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Викликати для учасника   ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}   description     description
 
 Відображення зміни статусу пропозицій після редагування інформації про тендер
-  [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider  provider1
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   :FOR  ${username}  IN  ${provider}  ${provider1}
@@ -142,7 +142,7 @@ ${mode}         openua
 
 
 Можливість оновити статус цінової пропозиції першого учасника
-  [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
@@ -151,7 +151,7 @@ ${mode}         openua
   log  ${activestatusresp}
 
 Можливість скасувати цінову пропозицію другого учасника
-  [Tags]   ${USERS.users['${provider1}'].broker}: Можливість скасувати цінову пропозицію
+  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
@@ -159,7 +159,7 @@ ${mode}         openua
   ${bidresponses}=  Викликати для учасника   ${provider1}   Скасувати цінову пропозицію   ${TENDER['TENDER_UAID']}   ${bid}
 
 Можливість повторно подати цінову пропозицію другим учасником після першої зміни
-  [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
+  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
@@ -173,7 +173,7 @@ ${mode}         openua
   log  ${resp}
 
 Неможливість редагувати однопредметний тендер менше ніж за 7 днів до завершення періоду подання пропозицій
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ${no_edit_time}=  add_minutes_to_date  ${USERS.users['${tender_owner}'].tender_data.data.tenderPeriod.endDate}  -6
@@ -181,7 +181,7 @@ ${mode}         openua
   Require Failure  ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  description  description
 
 Неможливість подати вимогу на умови менше ніж за 10 днів до завершення періоду подання пропозицій
-  [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати вимогу на умови
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання скарги
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Documentation]  Користувач ${USERS.users['${provider}'].broker} намагається подати скаргу на умови оголошеного тендера
@@ -204,7 +204,7 @@ ${mode}         openua
 
 
 Можливість продовжити період подання пропозиції на 7 днів
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
@@ -213,7 +213,7 @@ ${mode}         openua
 
 
 Можливість подати скаргу на умови більше ніж за 4 дні до завершення періоду подання пропозицій
-  [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати скаргу на умови
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання скарги
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Documentation]  Користувач ${USERS.users['${provider}'].broker} намагається подати скаргу на умови оголошеного тендера
@@ -238,7 +238,7 @@ ${mode}         openua
   Set To Dictionary  ${USERS.users['${provider}'].claim_data3}  escalation  ${escalation_data}
 
 Можливість скасувати скаргу на умови
-  [Tags]   ${USERS.users['${provider}'].broker}: Можливість скасувати скаргу на умови
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання скарги
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
@@ -254,7 +254,7 @@ ${mode}         openua
 
 
 Можливість редагувати однопредметний тендер після продовження періоду подання пропозицій
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
@@ -262,7 +262,7 @@ ${mode}         openua
 
 
 Відображення зміни статусу пропозицій після другої зміни
-  [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider  provider1
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   :FOR  ${username}  IN  ${provider}  ${provider1}
@@ -274,7 +274,7 @@ ${mode}         openua
 
 
 Можливість оновити статус цінової пропозиції першого учасника після другої зміни
-  [Tags]   ${USERS.users['${provider}'].broker}: Можливість змінити цінову пропозицію
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
@@ -284,7 +284,7 @@ ${mode}         openua
 
 
 Можливість повторно подати цінову пропозицію другим учасником після другої зміни
-  [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
+  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
@@ -299,7 +299,7 @@ ${mode}         openua
 
 
 Неможливість подати скаргу на умови менше ніж за 4 дні до завершення періоду подання пропозицій
-  [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати скаргу на умови
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання скарги
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Documentation]    Користувач  ${USERS.users['${provider}'].broker}  намагається подати скаргу на умови оголошеного тендера
