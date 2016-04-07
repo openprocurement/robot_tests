@@ -18,7 +18,6 @@ from robot.output.loggerhelper import Message
 from .initial_data import (
     create_fake_doc,
     create_fake_sentence,
-    test_additional_items_data,
     test_bid_data,
     test_bid_data_meat_tender,
     test_cancel_claim_data,
