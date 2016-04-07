@@ -207,14 +207,6 @@ def run_keyword_and_ignore_keyword_definitions(name, *args, **kwargs):
     return status, _
 
 
-def set_tender_periods(tender):
-    now = get_now()
-    tender.data.enquiryPeriod.endDate = (now + timedelta(minutes=2)).isoformat()
-    tender.data.tenderPeriod.startDate = (now + timedelta(minutes=2)).isoformat()
-    tender.data.tenderPeriod.endDate = (now + timedelta(minutes=4)).isoformat()
-    return tender
-
-
 def set_access_key(tender, access_token):
     tender.access = munchify({"token": access_token})
     return tender
