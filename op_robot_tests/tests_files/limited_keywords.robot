@@ -8,17 +8,6 @@ Resource           resource.robot
 ##############################################################################################
 #             CANCELLATIONS
 ##############################################################################################
-Можливість створити закупівлю для тестування скасування
-  ${tender_data}=  Підготовка даних для створення тендера
-  ${adapted_data}=  Адаптувати дані для оголошення тендера  ${tender_owner}  ${tender_data}
-  ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}
-  ...      Створити тендер
-  ...      ${adapted_data}
-  Set To Dictionary  ${TENDER}  TENDER_UAID=${TENDER_UAID}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data=${adapted_data}
-  Log  ${TENDER}
-
-
 Можливість скасувати закупівлю
   ${cancellation_data}=  Підготувати дані про скасування  ${tender_owner}
   Викликати для учасника  ${tender_owner}

@@ -19,7 +19,7 @@ ${mode}         reporting
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  minimal
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість створити закупівлю для тестування скасування
+  Можливість створити закупівлю
 
 
 Можливість скасувати звіт про укладений договір
