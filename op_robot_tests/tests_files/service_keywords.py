@@ -16,20 +16,16 @@ from robot.output.loggerhelper import Message
 # can access them by simply importing library "service_keywords".
 # Please ignore the warning given by Flake8 or other linter.
 from .initial_data import (
-    auction_bid,
     create_fake_doc,
     create_fake_sentence,
     test_additional_items_data,
-    test_award_data,
     test_bid_data,
     test_bid_data_meat_tender,
     test_cancel_claim_data,
     test_cancel_tender_data,
-    test_change_cancellation_document_field_data,
     test_claim_answer_data,
     test_claim_answer_satisfying_data,
     test_claim_data,
-    test_complaint_answer_data,
     test_complaint_data,
     test_complaint_reply_data,
     test_confirm_data,
