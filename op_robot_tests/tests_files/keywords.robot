@@ -371,15 +371,15 @@ Get Broker Property By Username
 
 
 Звірити дату тендера
-  [Arguments]  ${username}  ${tender_data}  ${field}
+  [Arguments]  ${username}  ${tender_data}  ${field}  ${accuracy}=60
   ${left}=  Get_From_Object  ${tender_data.data}  ${field}
-  Звірити дату тендера із значенням  ${username}  ${left}  ${field}
+  Звірити дату тендера із значенням  ${username}  ${left}  ${field}  accuracy=${accuracy}
 
 
 Звірити дату тендера із значенням
-  [Arguments]  ${username}  ${left}  ${field}  ${object_id}=${None}
-  ${right}=  Отримати дані із тендера  ${username}  ${field}  ${object_id}
-  Порівняти дати  ${left}  ${right}
+  [Arguments]  ${username}  ${left}  ${field}  ${object_id}=${None}  ${accuracy}=60
+  ${right}=  Отримати дані із тендера  ${username}  ${field}
+  Порівняти дати  ${left}  ${right}  ${accuracy}
 
 
 Порівняти дати
@@ -409,12 +409,12 @@ Get Broker Property By Username
 
 
 Звірити дату предметів закупівлі багатопредметного тендера
-  [Arguments]  ${username}  ${tender_data}  ${field}
+  [Arguments]  ${username}  ${tender_data}  ${field}  ${accuracy}=60
   @{items}=  Get_From_Object  ${tender_data.data}  items
   ${len_of_items}=  Get Length  ${items}
   :FOR  ${index}  IN RANGE  ${len_of_items}
   \  Log  ${index}
-  \  Звірити дату тендера  ${viewer}  ${tender_data}  items[${index}].${field}
+  \  Звірити дату тендера  ${viewer}  ${tender_data}  items[${index}].${field}  ${accuracy}
 
 
 Отримати дані із тендера
