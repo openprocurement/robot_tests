@@ -310,6 +310,7 @@ Resource           resource.robot
   Звірити дату тендера  ${viewer}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      items[${ITEMS_NUM}].deliveryDate.endDate
+  ...      day
 
 
 Відображення координат широти доставки номенклатури закупівлі
