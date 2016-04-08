@@ -169,7 +169,7 @@ ${question_id}  0
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      level3
-  Звірити дату тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryDate.endDate
+  Звірити дату тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryDate.endDate  day
 
 
 Відображення координат широти доставки позицій закупівлі однопредметного тендера
