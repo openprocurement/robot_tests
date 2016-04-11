@@ -10,7 +10,7 @@ Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
 *** Variables ***
-${mode}         single
+${mode}         meat
 @{used_roles}   tender_owner  provider  provider1  viewer
 
 
@@ -22,8 +22,7 @@ ${mode}         single
   ...      minimal
   [Documentation]   Створення закупівлі замовником, обовязково має повертати UAID закупівлі (номер тендера),
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${base_tender_data}=  Підготовка даних для створення тендера
-  ${tender_data}=  test_meat_tender_data  ${base_tender_data}
+  ${tender_data}=  Підготовка даних для створення тендера
   ${adapted_data}=  Адаптувати дані для оголошення тендера  ${tender_owner}  ${tender_data}
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${adapted_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data=${adapted_data}

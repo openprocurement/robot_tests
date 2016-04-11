@@ -10,7 +10,7 @@ Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
 *** Variables ***
-${mode}         multi
+${mode}         multiLot
 @{used_roles}   tender_owner  provider  provider1  viewer
 ${complaint_id}  1
 
@@ -23,7 +23,6 @@ ${complaint_id}  1
   ...      minimal
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${tender_data}=  Підготовка даних для створення тендера
-  ${tender_data}=  test_tender_data_multiple_lots  ${tender_data}
   ${adapted_data}=  Адаптувати дані для оголошення тендера  ${tender_owner}  ${tender_data}
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${adapted_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data=${adapted_data}
