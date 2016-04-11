@@ -354,6 +354,35 @@ Get Broker Property By Username
   Should Be True  ${status}  msg=Dates are not equal: ${left} != ${right}
 
 
+Звірити координати тендера
+  [Arguments]  ${username}  ${tender_data}  ${field}
+  ${left}=  Get_From_Object  ${tender_data.data}  ${field}
+  Звірити координати тендера із значенням  ${username}  ${left}  ${field}
+
+
+Звірити координати тендера із значенням
+  [Arguments]  ${username}  ${left}  ${field}  ${object_id}=${None}
+  ${right}=  Отримати дані із тендера  ${username}  ${field}  ${object_id}
+  Порівняти координати  ${left}  ${right}
+
+
+Порівняти координати
+  [Documentation]
+  ...      Compare coordinates with specified ``accuracy`` (in arcdegree).
+  ...      Default is `0.01`.
+  ...
+  ...      The keyword will fail if the difference between
+  ...      ``left`` and ``right`` dates is more than ``accuracy``,
+  ...      otherwise it will pass.
+  [Arguments]  ${left}  ${right}  ${accuracy}=0.01
+  Log  ${left}
+  Log  ${right}
+  Should Not Be Equal  ${left}  ${None}
+  Should Not Be Equal  ${right}  ${None}
+  ${status}=  compare_coordinates  ${left}  ${right}  ${accuracy}
+  Should Be True  ${status}  msg=Coordinates are not equal: ${left} != ${right}
+
+
 Звірити поля предметів закупівлі багатопредметного тендера
   [Arguments]  ${username}  ${tender_data}  ${field}
   @{items}=  Get_From_Object  ${tender_data.data}  items
@@ -370,6 +399,14 @@ Get Broker Property By Username
   :FOR  ${index}  IN RANGE  ${len_of_items}
   \  Log  ${index}
   \  Звірити дату тендера  ${viewer}  ${tender_data}  items[${index}].${field}
+
+Звірити координати предметів закупівлі багатопредметного тендера
+  [Arguments]  ${username}  ${tender_data}  ${field}
+  @{items}=  Get_From_Object  ${tender_data.data}  items
+  ${len_of_items}=  Get Length  ${items}
+  :FOR  ${index}  IN RANGE  ${len_of_items}
+  \  Log  ${index}
+  \  Звірити координати тендера  ${viewer}  ${tender_data}  items[${index}].${field}
 
 
 Отримати дані із тендера

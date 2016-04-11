@@ -85,6 +85,14 @@ def compare_date(date1, date2, accuracy):
         return False
     return True
 
+def compare_coordinates(coord1, coord2, accuracy):
+    coord1 = float(coord1)
+    coord2 = float(coord2)
+    delta = (coord1 - coord2)
+    if abs(delta) > accuracy:
+        return False
+    return True
+
 
 def log_object_data(data, file_name=None, format="yaml", update=False):
     """Log object data in pretty format (JSON or YAML)

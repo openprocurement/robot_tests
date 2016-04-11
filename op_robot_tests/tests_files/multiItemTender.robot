@@ -56,13 +56,13 @@ ${broker}       Quinta
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  deliveryLocation.latitude
+  Звірити координати предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  deliveryLocation.latitude
 
 Відображення координат довготи доставки позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити поля предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  deliveryLocation.longitude
+  Звірити координати предметів закупівлі багатопредметного тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  deliveryLocation.longitude
 
 Відображення назви нас. пункту доставки позицій закупівлі багатопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів багатопредметного тендера
