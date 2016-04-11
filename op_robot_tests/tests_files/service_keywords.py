@@ -56,6 +56,8 @@ import os
 from barbecue import chef
 import re
 
+NUM_TYPES = (int, long, float)
+
 
 def get_current_tzdate():
     return get_now().strftime('%Y-%m-%d %H:%M:%S.%f')
@@ -70,15 +72,25 @@ def get_file_contents(path):
         return unicode(f.read()) or u''
 
 
-def compare_date(date1, date2, accuracy):
-    date1 = parse(date1)
-    date2 = parse(date2)
-    if date1.tzinfo is None:
-        date1 = TZ.localize(date1)
-    if date2.tzinfo is None:
-        date2 = TZ.localize(date2)
+def compare_date(left, right, accuracy):
+    left = parse(left)
+    right = parse(right)
+    if left.tzinfo is None:
+        left = TZ.localize(left)
+    if right.tzinfo is None:
+        right = TZ.localize(right)
+    delta = (left - right).total_seconds()
+    if abs(delta) > accuracy:
+        return False
+    return True
 
-    delta = (date1 - date2).total_seconds()
+def compare_coordinates(left, right, accuracy):
+    for key, value in {'left': left, 'right': right}.iteritems():
+        if not isinstance(value, NUM_TYPES):
+            raise TypeError("Invalid type for coordinate '{0}'. "
+                            "Expected one of {1}, got {2}".format(
+                                key, str(NUM_TYPES), str(type(value))))
+    delta = left - right
     if abs(delta) > accuracy:
         return False
     return True
@@ -165,8 +177,6 @@ def compute_intrs(brokers_data, used_brokers):
     does not contain ``Default`` entry.
     Using `load_data_from` with ``mode='brokers'`` is recommended.
     """
-    num_types = (int, long, float)
-
     def recur(l, r):
         l, r = deepcopy(l), deepcopy(r)
         if isinstance(l, list) and isinstance(r, list) and len(l) == len(r):
@@ -174,7 +184,7 @@ def compute_intrs(brokers_data, used_brokers):
             for ll, rr in zip(l, r):
                 lst.append(recur(ll, rr))
             return lst
-        elif isinstance(l, num_types) and isinstance(r, num_types):
+        elif isinstance(l, NUM_TYPES) and isinstance(r, NUM_TYPES):
             if l == r:
                 return l
             if l > r:

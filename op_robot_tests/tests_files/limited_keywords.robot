@@ -319,13 +319,13 @@ Resource           resource.robot
 
 
 Відображення координат широти доставки номенклатури закупівлі
-  Звірити поле тендера  ${viewer}
+  Звірити координати тендера  ${viewer}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      items[${ITEMS_NUM}].deliveryLocation.latitude
 
 
 Відображення координат довготи доставки номенклатури закупівлі
-  Звірити поле тендера  ${viewer}
+  Звірити координати тендера  ${viewer}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      items[${ITEMS_NUM}].deliveryLocation.longitude
 
