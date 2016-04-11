@@ -58,6 +58,8 @@ import os
 from barbecue import chef
 import re
 
+num_types = (int, float)
+
 
 def get_current_tzdate():
     return get_now().strftime('%Y-%m-%d %H:%M:%S.%f')
@@ -72,15 +74,25 @@ def get_file_contents(path):
         return unicode(f.read()) or u''
 
 
-def compare_date(date1, date2, accuracy):
-    date1 = parse(date1)
-    date2 = parse(date2)
-    if date1.tzinfo is None:
-        date1 = TZ.localize(date1)
-    if date2.tzinfo is None:
-        date2 = TZ.localize(date2)
+def compare_date(left, right, accuracy):
+    left = parse(left)
+    right = parse(right)
+    if left.tzinfo is None:
+        left = TZ.localize(left)
+    if right.tzinfo is None:
+        right = TZ.localize(right)
+    delta = (left - right).total_seconds()
+    if abs(delta) > accuracy:
+        return False
+    return True
 
-    delta = (date1 - date2).total_seconds()
+def compare_coordinates(left, right, accuracy):
+    for key, value in {'left': left, 'right': right}.iteritems():
+        if not isinstance(value, num_types):
+            raise TypeError("Invalid type for coordinate '{0}'. "
+                            "Expected one of {1}, got {2}".format(
+                                key, str(num_types), str(type(value))))
+    delta = left - right
     if abs(delta) > accuracy:
         return False
     return True

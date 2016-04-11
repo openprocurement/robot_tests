@@ -351,7 +351,36 @@ Get Broker Property By Username
   Should Not Be Equal  ${left}  ${None}
   Should Not Be Equal  ${right}  ${None}
   ${status}=  compare_date  ${left}  ${right}  ${accuracy}
-  Should Be True  ${status}  msg=Dates are not equal: ${left} != ${right}
+  Should Be True  ${status}  msg=Dates differ: ${left} != ${right}
+
+
+Звірити координати тендера
+  [Arguments]  ${username}  ${tender_data}  ${field}
+  ${left}=  Get_From_Object  ${tender_data.data}  ${field}
+  Звірити координати тендера із значенням  ${username}  ${left}  ${field}
+
+
+Звірити координати тендера із значенням
+  [Arguments]  ${username}  ${left}  ${field}  ${object_id}=${None}
+  ${right}=  Отримати дані із тендера  ${username}  ${field}  ${object_id}
+  Порівняти координати  ${left}  ${right}
+
+
+Порівняти координати
+  [Documentation]
+  ...      Compare coordinates with specified ``accuracy`` (in decimal degree).
+  ...      Default is `0.01`.
+  ...
+  ...      The keyword will fail if the difference between
+  ...      ``left`` and ``right`` is more than ``accuracy``,
+  ...      otherwise it will pass.
+  [Arguments]  ${left}  ${right}  ${accuracy}=0.01
+  Log  ${left}
+  Log  ${right}
+  Should Not Be Equal  ${left}  ${None}
+  Should Not Be Equal  ${right}  ${None}
+  ${status}=  compare_coordinates  ${left}  ${right}  ${accuracy}
+  Should Be True  ${status}  msg=Coordinates differ: ${left} != ${right}
 
 
 Звірити поля предметів закупівлі багатопредметного тендера
@@ -366,10 +395,17 @@ Get Broker Property By Username
 Звірити дату предметів закупівлі багатопредметного тендера
   [Arguments]  ${username}  ${tender_data}  ${field}
   @{items}=  Get_From_Object  ${tender_data.data}  items
-  ${len_of_items}=  Get Length  ${items}
-  :FOR  ${index}  IN RANGE  ${len_of_items}
+  :FOR  ${index}  ${_}  IN ENUMERATE  @{items}
   \  Log  ${index}
   \  Звірити дату тендера  ${viewer}  ${tender_data}  items[${index}].${field}
+
+
+Звірити координати предметів закупівлі багатопредметного тендера
+  [Arguments]  ${username}  ${tender_data}  ${field}
+  @{items}=  Get_From_Object  ${tender_data.data}  items
+  :FOR  ${index}  ${_}  IN ENUMERATE  @{items}
+  \  Log  ${index}
+  \  Звірити координати тендера  ${viewer}  ${tender_data}  items[${index}].${field}
 
 
 Отримати дані із тендера
