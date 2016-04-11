@@ -52,9 +52,3 @@ Suite Teardown  Test Suite Teardown
   ...      ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
   Отримати дані із тендера  ${viewer}  auctionPeriod.endDate
-
-
-*** Keywords ***
-Відкрити сторінку аукціону для глядача
-  ${url}=  Run as  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
-  Open browser  ${url}  ${USERS.users['${viewer}'].browser}
