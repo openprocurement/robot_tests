@@ -67,6 +67,16 @@ ${mode}         single
   \  Дочекатись синхронізації з майданчиком    ${username}
   \  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.startDate
 
+Відображення закінчення періоду прийому пропозицій оголошеного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
+  ...      viewer  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${provider}'].broker}
+  ...      ${USERS.users['${provider1}'].broker}
+  ...      minimal
+  :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}
+  \  Дочекатись синхронізації з майданчиком    ${username}
+  \  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.endDate
+
 
 Неможливість подати цінову пропозицію без нецінового показника
   [Documentation]
@@ -74,9 +84,7 @@ ${mode}         single
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  [Setup]  Дочекатись синхронізації з майданчиком    ${provider}
-  Дочекатись дати початку прийому пропозицій  ${provider}
-  sleep  90
+  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}
   ${bid}=  test bid data
   Log  ${bid}
   ${failbid}=  Require Failure  ${provider}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}
@@ -122,9 +130,8 @@ ${mode}         single
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
-  [Setup]  Дочекатись синхронізації з майданчиком    ${provider1}
+  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider1}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Дочекатись дати початку прийому пропозицій  ${provider1}
   ${bid}=  test bid data meat tender
   Log  ${bid}
   ${bidresponses}=  Create Dictionary
@@ -143,7 +150,7 @@ ${mode}         single
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      minimal
-  [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
+  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}
   Отримати дані із тендера  ${viewer}  auctionPeriod.startDate
 
 
