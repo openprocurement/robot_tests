@@ -567,6 +567,11 @@ Require Failure
   Дочекатись дати  ${USERS.users['${username}'].tender_data.data.auctionPeriod.startDate}
 
 
+Відкрити сторінку аукціону для глядача
+  ${url}=  Run as  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
+  Open browser  ${url}  ${USERS.users['${viewer}'].browser}
+
+
 Дочекатись дати закінчення аукціону
   [Arguments]  ${username}
   Log  ${username}

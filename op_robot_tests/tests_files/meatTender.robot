@@ -145,15 +145,28 @@ ${mode}         meat
   [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
   Отримати дані із тендера  ${viewer}  auctionPeriod.startDate
 
-
-Очікування аукціону
-  [Tags]   ${USERS.users['${viewer}'].broker}: Очікування аукціону
+Можливість дочекатися початку аукціону
+  [Tags]   ${USERS.users['${viewer}'].broker}: Можливість дочекатися початку аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   Дочекатись дати початку аукціону  ${viewer}
-  ${url}=  Викликати для учасника  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
-  Log to console  URL аукціону для глядача: ${url}
-  sleep  1500
+
+Можливість дочекатися завершення аукціону
+  [Tags]   ${USERS.users['${viewer}'].broker}: Можливість дочекатися завершення аукціону
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Відкрити сторінку аукціону для глядача
+  Wait Until Keyword Succeeds  61 times  30 s  Page should contain  Аукціон завершився
+  Wait Until Keyword Succeeds  5 times  30 s  Page should not contain  очікуємо розкриття учасників
+  Close browser
+
+Відображення дати завершення аукціону
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
+  Отримати дані із тендера  ${viewer}  auctionPeriod.endDate
 
 Відображення значення ставки першої пропозиції
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення пропозицій
