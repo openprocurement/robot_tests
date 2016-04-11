@@ -66,6 +66,16 @@ ${mode}         meat
   \  Дочекатись синхронізації з майданчиком    ${username}
   \  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.startDate
 
+Відображення закінчення періоду прийому пропозицій оголошеного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
+  ...      viewer  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${provider}'].broker}
+  ...      ${USERS.users['${provider1}'].broker}
+  ...      minimal
+  :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}
+  \  Дочекатись синхронізації з майданчиком    ${username}
+  \  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.endDate
+
 
 Неможливість подати цінову пропозицію без нецінового показника
   [Documentation]
@@ -73,9 +83,7 @@ ${mode}         meat
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  [Setup]  Дочекатись синхронізації з майданчиком    ${provider}
-  Дочекатись дати початку прийому пропозицій  ${provider}
-  sleep  90
+  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}
   ${bid}=  test bid data  single
   Log  ${bid}
   ${failbid}=  Require Failure  ${provider}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}
@@ -88,10 +96,8 @@ ${mode}         meat
   ...      ${USERS.users['${provider}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${bid}=  Підготувати дані для подання пропозиції
-  Log  ${bid}
-  ${bidresponses}=  Create Dictionary
-  Set To Dictionary  ${bidresponses}                 bid   ${bid}
-  Set To Dictionary  ${USERS.users['${provider}']}   bidresponses  ${bidresponses}
+  ${bidresponses}=  Create Dictionary  bid=${bid}
+  Set To Dictionary  ${USERS.users['${provider}']}   bidresponses=${bidresponses}
   ${resp}=  Викликати для учасника   ${provider}   Подати цінову пропозицію   ${TENDER['TENDER_UAID']}   ${bid}
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   resp  ${resp}
   log  ${resp}
@@ -121,9 +127,8 @@ ${mode}         meat
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
-  [Setup]  Дочекатись синхронізації з майданчиком    ${provider1}
+  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider1}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Дочекатись дати початку прийому пропозицій  ${provider1}
   ${bid}=  Підготувати дані для подання пропозиції
   Log  ${bid}
   ${bidresponses}=  Create Dictionary
@@ -142,7 +147,7 @@ ${mode}         meat
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      minimal
-  [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
+  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}
   Отримати дані із тендера  ${viewer}  auctionPeriod.startDate
 
 Можливість дочекатися початку аукціону
