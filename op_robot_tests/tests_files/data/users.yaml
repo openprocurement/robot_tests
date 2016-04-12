@@ -202,3 +202,33 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1400, 900]
+    UBIZ_Viewer:
+        broker:   UBIZ
+        homepage: "http://ubiz.iov.zt.ua/#"
+        browser:  chrome
+        position: [0, 0]
+        size:     [640, 450]
+    UBIZ_Provider1:
+        broker:   UBIZ
+        homepage: "http://ubiz.iov.zt.ua/#"
+        login:    ubiz_provider1
+        password: ubiz_provider1
+        browser:  chrome
+        position: [0, 0]
+        size:     [640, 450]
+    UBIZ_Provider2:
+        broker:   UBIZ
+        homepage: "http://ubiz.iov.zt.ua/#"
+        login:    ubiz_provider2
+        password: ubiz_provider2
+        browser:  chrome
+        position: [0, 0]
+        size:     [640, 450]
+    UBIZ_Owner:
+        broker:   UBIZ
+        homepage: "http://ubiz.iov.zt.ua/#"
+        login:    ubiz_owner
+        password: ubiz_owner
+        browser:  chrome
+        position: [0, 0]
+        size:     [640, 450]

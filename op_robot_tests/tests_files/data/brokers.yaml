@@ -138,3 +138,10 @@ SmartTender:
         tender_owner:   SmartTender_Owner
         viewer:         SmartTender_Viewer
     timeout_on_wait: 300
+UBIZ:
+    keywords_file: ubiz
+    roles:
+        provider:       UBIZ_Provider1
+        provider1:      UBIZ_Provider2
+        tender_owner:   UBIZ_Owner
+        viewer:         UBIZ_Viewer
