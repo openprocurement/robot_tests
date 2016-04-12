@@ -31,7 +31,7 @@ ${mode}         meat
 
 
 Можливість знайти однопредметний тендер по ідентифікатору
-  [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
+  [Tags]   ${USERS.users['${viewer}'].broker}: Можливість знайти тендер
   ...      viewer  tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
@@ -57,7 +57,7 @@ ${mode}         meat
 #Подання пропозицій
 
 Відображення початку періоду прийому пропозицій оголошеного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${provider}'].broker}
   ...      ${USERS.users['${provider1}'].broker}
@@ -151,17 +151,86 @@ ${mode}         meat
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   Дочекатись дати початку аукціону  ${viewer}
+  ${url}=  Викликати для учасника  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
+  Log to console  URL аукціону для глядача: ${url}
   sleep  1500
 
+Відображення значення ставки першої пропозиції
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення пропозицій
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
+  Отримати дані із тендера  ${viewer}  bids[0].value.amount
+
+Відображення значення нецінового критерію першої пропозиції
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення пропозицій
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
+  Отримати дані із тендера  ${viewer}  bids[0].parameters
+
+Відображення дати першої пропозиції
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення пропозицій
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
+  Отримати дані із тендера  ${viewer}  bids[0].date
+
+Відображення назви учасника першої пропозиції
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення пропозицій
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
+  Отримати дані із тендера  ${viewer}  bids[0].tenderers[0].name
+
+Відображення значення ставки другої пропозиції
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення пропозицій
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
+  Отримати дані із тендера  ${viewer}  bids[1].value.amount
+
+Відображення значення нецінового критерію другої пропозиції
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення пропозицій
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
+  Отримати дані із тендера  ${viewer}  bids[1].parameters
+
+Відображення дати другої пропозиції
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення пропозицій
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
+  Отримати дані із тендера  ${viewer}  bids[1].date
+
+Відображення назви учасника другої пропозиції
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення пропозицій
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
+  Отримати дані із тендера  ${viewer}  bids[1].tenderers[0].name
+
+Відображення значення ставки пропозиції переможця
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення даних про постачальника
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
+  Отримати дані із тендера  ${viewer}  awards[0].value.amount
+
+Відображення назви переможця
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення даних про постачальника
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
+  Отримати дані із тендера  ${viewer}  awards[0].suppliers[0].name
 
 Можливість отримати результати аукціону
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Результати аукціону
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  [Setup]  Дочекатись синхронізації з майданчиком    ${tender_owner}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${tender_data}=  Викликати для учасника   ${tender_owner}   Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
-  ${result}=    chef  ${tender_data.data.bids}  ${tender_data.data.features}
-  Log Many  ${result[0]}  ${tender_data.data.awards[0]}
-  Log Many  ${result[0].id}  ${tender_data.data.awards[0].bid_id}
-  Should Be Equal   ${result[0].id}  ${tender_data.data.awards[0].bid_id}
+  [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
+  ${result}=    chef  ${USERS.users['${viewer}'].tender_data.data.bids}  ${USERS.users['${tender_owner}'].initial_data.data.features}
+  Log  ${result}
+  Should Be Equal  ${result[0].tenderers[0].name}  ${USERS.users['${viewer}'].tender_data.data.awards[0].suppliers[0].name}
+  Should Be Equal  ${result[0].value.amount}  ${USERS.users['${viewer}'].tender_data.data.awards[0].value.amount}
