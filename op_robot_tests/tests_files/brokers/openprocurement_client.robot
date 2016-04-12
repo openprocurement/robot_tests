@@ -143,8 +143,8 @@ Library  openprocurement_client_helper.py
 Подати цінову пропозицію
   [Arguments]  ${username}  ${tender_uaid}  ${bid}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${lots}=  Get Variable Value  ${tender.data.lots}
-  ${bid}=  Run Keyword If  ${lots}  test_lots_bid_data
+  ${lots}=  Run Keyword If  "${mode}" == "single"  Get Variable Value  ${tender.data.lots}
+  ${bid}=  Run Keyword If  ${lots}  test_bid_data  multiLot
   ...                  ELSE  Set Variable  ${bid}
   Run Keyword If  ${lots}
   ...       Run Keywords
@@ -160,7 +160,7 @@ Library  openprocurement_client_helper.py
 Змінити цінову пропозицію
   [Arguments]  ${username}  ${tender_uaid}  ${fieldname}  ${fieldvalue}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${lots}=  Get Variable Value  ${tender.data.lots}
+  ${lots}=  Run Keyword If  "${mode}" == "single"  Get Variable Value  ${tender.data.lots}
   ${fieldname}=  Run Keyword If  ${lots}  Set Variable  lotValues.0.${fieldname}
   ...                        ELSE  Set Variable  ${fieldname}
   ${bid}=  openprocurement_client.Отримати пропозицію  ${username}  ${tender_uaid}
@@ -238,7 +238,7 @@ Library  openprocurement_client_helper.py
 Отримати посилання на аукціон для глядача
   [Arguments]  ${username}  ${tender_uaid}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${lots}=  Get Variable Value  ${tender.data.lots}
+  ${lots}=  Run Keyword If  "${mode}" == "single"  Get Variable Value  ${tender.data.lots}
   ${auctionUrl}=  Run Keyword If  ${lots}  Set Variable  ${tender.data.lots[0].auctionUrl}
   ...                         ELSE  Set Variable  ${tender.data.auctionUrl}
   [return]  ${auctionUrl}
@@ -247,7 +247,7 @@ Library  openprocurement_client_helper.py
 Отримати посилання на аукціон для учасника
   [Arguments]  ${username}  ${tender_uaid}
   ${bid}=  openprocurement_client.Отримати пропозицію  ${username}  ${tender_uaid}
-  ${lots}=  Get Variable Value  ${bid.data.lotValues}
+  ${lots}=  Run Keyword If  "${mode}" == "single"  Get Variable Value  ${bid.data.lotValues}
   ${participationUrl}=  Run Keyword If  ${lots}  Set Variable  ${bid.data.lotValues[0].participationUrl}
   ...                               ELSE  Set Variable  ${bid.data.participationUrl}
   [return]  ${participationUrl}
