@@ -70,7 +70,10 @@ DZO:
     intervals:
         default:
             enquiry: [0, 20]
-            tender:  [0, 15]
+            tender:  [0, 20]
+        openua:
+            accelerator: 720
+            tender:  [0, 30]
     keywords_file: dzo
     roles:
         tender_owner:   DZO_Owner
