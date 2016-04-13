@@ -84,6 +84,7 @@ Newtend:
         provider:       Newtend_Provider1
         tender_owner:   Newtend_Owner
         viewer:         Newtend_Viewer
+    timeout_on_wait: 60
 PrivatMarket:
     intervals:
         default:
