@@ -456,20 +456,6 @@ Library  openprocurement_client_helper.py
 #             Limited procurement
 ##############################################################################
 
-Модифікувати закупівлю
-  [Documentation]
-  ...      [Arguments] Username and tender uaid
-  ...      Find tender using uaid, get data from test_additional_items_data and call patch_tender
-  ...      [Return] Nothing
-  [Arguments]  ${username}  ${tender_uaid}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${data}=  test_additional_items_data  ${tender['data']['id']}  ${tender['access']['token']}
-  Log  ${data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  additional_items=${data['data']['items']}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${data}
-  Log  ${reply}
-
-
 Додати і підтвердити постачальника
   [Documentation]
   ...      [Arguments] Username, tender uaid and supplier data
