@@ -202,3 +202,27 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1400, 900]
+    uatenders_Owner:
+        broker:   uatenders
+        homepage: "http://dev.zakupki.com.ua/tender/list"
+        login:    Azarov.andreas@Gmail.com
+        password: 111111
+        browser:  chrome
+        position: [750, 0]
+        size:     [740, 550]
+    uatenders_Provider:
+        broker:   uatenders
+        homepage: "http://dev.zakupki.com.ua/tender/list"
+        login:    andreynichik@gmail.com
+        password: 111111
+        browser:  chrome
+        position: [750, 0]
+        size:     [740, 550]
+    uatenders_Viewer:
+        broker:   uatenders
+        homepage: "http://dev.zakupki.com.ua/tender/list"
+        login:    Azarov.andreas@Gmail.com
+        password: 111111
+        browser:  chrome
+        position: [750, 0]
+        size:     [740, 550]

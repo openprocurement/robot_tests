@@ -138,3 +138,14 @@ SmartTender:
         tender_owner:   SmartTender_Owner
         viewer:         SmartTender_Viewer
     timeout_on_wait: 300
+uatenders:
+    intervals:
+        default:
+            enquiry: [0, 20]
+            tender:  [0, 30]
+    keywords_file: uatenders
+    roles:
+        provider:       uatenders_Provider
+        tender_owner:   uatenders_Owner
+        viewer:         uatenders_Viewer
+    timeout_on_wait: 60
