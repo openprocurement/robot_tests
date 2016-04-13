@@ -110,13 +110,14 @@ Prom:
 Publicbid:
     intervals:
         default:
-            enquiry: [21, 15]
-            tender:  [1,  15]
+            enquiry: [1, 10]
+            tender:  [1, 12]
     keywords_file: publicbid
     roles:
         provider:       Publicbid_Provider1
         tender_owner:   Publicbid_Owner
         viewer:         Publicbid_Viewer
+    timeout_on_wait: 120
 PublicPortal:
     keywords_file: publicportal
     roles:
