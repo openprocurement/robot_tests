@@ -149,3 +149,15 @@ uatenders:
         tender_owner:   uatenders_Owner
         viewer:         uatenders_Viewer
     timeout_on_wait: 60
+ubiz:
+    intervals:
+        default:
+            enquiry: [0, 5]
+    keywords_file: ubiz
+    homepage: 'http://fgvfo.com.ua/'
+    roles:
+        provider:       ubiz_Provider1
+        provider1:      ubiz_Provider2
+        tender_owner:   ubiz_Owner
+        viewer:         ubiz_Viewer
+    timeout_on_wait: 50
