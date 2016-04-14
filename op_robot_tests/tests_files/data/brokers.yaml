@@ -161,3 +161,15 @@ ubiz:
         tender_owner:   ubiz_Owner
         viewer:         ubiz_Viewer
     timeout_on_wait: 50
+zakpro:
+    intervals:
+        default:
+            enquiry: [0, 20]
+            tender:  [0, 15]
+    keywords_file: zakpro
+    roles:
+        provider:       zakpro_Provider
+        provider1:      zakpro_Provider1
+        tender_owner:   zakpro_Owner
+        viewer:         zakpro_Viewer
+    timeout_on_wait: 300

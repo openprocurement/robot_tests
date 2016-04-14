@@ -256,3 +256,33 @@ users:
         browser:  chrome
         position: [0, 500]
         size:     [1000, 500]
+    zakpro_Owner:
+        broker:   zakpro
+        homepage: "https://market.zakupkipro.com/"
+        login:    owner.t@zakupkipro.com
+        password: own_pwd_44
+        browser:  firefox
+        position: [10, 10]
+        size:     [1366, 800]
+    zakpro_Provider:
+        broker:   zakpro
+        homepage: "https://market.zakupkipro.com/"
+        login:    provider1.t@zakupkipro.com
+        password: pr1_pwd_55
+        browser:  firefox
+        position: [30, 30]
+        size:     [1366, 800]
+    zakpro_Provider1:
+        broker:   zakpro
+        homepage: "https://market.zakupkipro.com/"
+        login:    provider2.t@zakupkipro.com
+        password: pr2_pwd_66
+        browser:  firefox
+        position: [50, 50]
+        size:     [1366, 800]
+    zakpro_Viewer:
+        broker:   zakpro
+        homepage: "https://market.zakupkipro.com/"
+        browser:  firefox
+        position: [70, 70]
+        size:     [1366, 800]
