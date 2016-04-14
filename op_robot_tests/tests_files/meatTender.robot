@@ -76,7 +76,7 @@ ${mode}         meat
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider}
   Дочекатись дати початку прийому пропозицій  ${provider}
   sleep  90
-  ${bid}=  test bid data
+  ${bid}=  test bid data  single
   Log  ${bid}
   ${failbid}=  Require Failure  ${provider}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}
   log  ${failbid}
@@ -87,7 +87,7 @@ ${mode}         meat
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${bid}=  test bid data meat tender
+  ${bid}=  Підготувати дані для подання пропозиції
   Log  ${bid}
   ${bidresponses}=  Create Dictionary
   Set To Dictionary  ${bidresponses}                 bid   ${bid}
@@ -124,7 +124,7 @@ ${mode}         meat
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider1}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати початку прийому пропозицій  ${provider1}
-  ${bid}=  test bid data meat tender
+  ${bid}=  Підготувати дані для подання пропозиції
   Log  ${bid}
   ${bidresponses}=  Create Dictionary
   Set To Dictionary  ${bidresponses}                 bid  ${bid}
