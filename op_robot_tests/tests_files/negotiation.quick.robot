@@ -6,8 +6,7 @@ Suite Teardown     Close all browsers
 
 *** Variables ***
 ${mode}         negotiation.quick
-${role}         viewer
-${broker}       Quinta
+@{used_roles}   tender_owner  viewer
 
 
 *** Test Cases ***
@@ -20,7 +19,7 @@ ${broker}       Quinta
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  minimal
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість створити закупівлю для тестування скасування
+  Можливість створити закупівлю
 
 
 Можливість скасувати переговорну процедуру за нагальною потребою
@@ -73,24 +72,6 @@ ${broker}       Quinta
   Можливість створити закупівлю
 
 
-Можливість знайти переговорну процедуру за нагальною потребою по ідентифікатору
-  [Tags]  ${USERS.users['${viewer}'].broker}: Можливість знайти процедуру
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  minimal
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Можливість знайти закупівлю по ідентифікатору
-
-
-Можливість модифікації переговорної процедури за нагальною потребою
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість модифікації процедури
-  ...  tender_owner
-  ...  ${USERS.users['${tender_owner}'].broker}
-  ...  level2
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість модифікації закупівлі
-
-
 Можливість додати документацію до переговорної процедури за нагальною потребою
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість додати документацію до процедури
   ...  tender_owner
@@ -107,6 +88,15 @@ ${broker}       Quinta
   ...  minimal
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість зареєструвати і підтвердити постачальника до закупівлі
+
+
+Можливість знайти переговорну процедуру за нагальною потребою по ідентифікатору
+  [Tags]  ${USERS.users['${viewer}'].broker}: Можливість знайти процедуру
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  minimal
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Можливість знайти закупівлю по ідентифікатору
 
 ##############################################################################################
 #             MAIN DATA

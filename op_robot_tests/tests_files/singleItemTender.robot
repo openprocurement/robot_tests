@@ -11,9 +11,8 @@ Suite Teardown  Test Suite Teardown
 
 *** Variables ***
 ${mode}         single
+@{used_roles}   tender_owner  provider  provider1  viewer
 
-${role}         viewer
-${broker}       Quinta
 
 *** Test Cases ***
 Можливість оголосити однопредметний тендер
@@ -329,7 +328,7 @@ ${broker}       Quinta
   ${question_resp}=  Викликати для учасника  ${provider}  Задати питання  ${TENDER['TENDER_UAID']}  ${question}
   ${now}=  Get Current TZdate
   ${question.data.date}=  Set variable  ${now}
-  ${question_id}=  get_id_from_field  ${question.data.description}
+  ${question_id}=  get_id_from_object  ${question.data}
   ${question_data}=  Create Dictionary  question=${question}  question_resp=${question_resp}  question_id=${question_id}
   ${question_data}=  munch_dict  arg=${question_data}
   Set To Dictionary  ${USERS.users['${provider}']}  question_data=${question_data}
