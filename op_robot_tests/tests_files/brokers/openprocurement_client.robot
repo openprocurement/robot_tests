@@ -442,7 +442,7 @@ Library  openprocurement_client_helper.py
 Підтвердити постачальника
   [Documentation]
   ...      [Arguments] Username, tender uaid and number of the award to confirm
-  ...      Find tender using uaid, get data from confirm_supplier and call patch_award
+  ...      Find tender using uaid, create dict with confirmation data and call patch_award
   ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}  ${award_num}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}

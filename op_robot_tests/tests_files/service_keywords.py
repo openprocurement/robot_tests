@@ -322,57 +322,6 @@ def create_data_dict(path_to_value=None, value=None):
     return data_dict
 
 
-def cancel_tender(cancellation_reason):
-    return {
-        'data': {
-            'reason': cancellation_reason
-        }
-    }
-
-
-def confirm_supplier(supplier_id):
-    return {
-        "data": {
-            "status": "active",
-            "id": supplier_id
-        }
-    }
-
-
-def change_cancellation_document_field(key, value):
-    data = {
-        "data": {
-            key: value
-        }
-    }
-    return data
-
-
-def confirm_cancellation(cancellation_id):
-    data = {
-        "data": {
-            "status": "active",
-            "id": cancellation_id
-        }
-    }
-    return data
-
-
-def confirm_contract(contract_id):
-    data = {
-        "data": {
-            "id": contract_id,
-            "status": "active"
-        }
-    }
-    return data
-
-
-def additional_items_data(tender_id, access_token):
-    data = {"access": {"token": access_token}, "data": {"id": tender_id, "items": [{"unit": {"code": "MON", "name": "month"}, "quantity": 9}]}}
-    return data
-
-
 def munch_dict(arg=None, data=False):
     if arg is None:
         arg = {}
