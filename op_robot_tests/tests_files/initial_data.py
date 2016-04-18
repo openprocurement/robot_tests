@@ -57,7 +57,8 @@ def test_tender_data(intervals, periods=("enquiry", "tender")):
             "contactPoint": {
                 "name": fake.name(),
                 "telephone": fake.phone_number()
-            }
+            },
+            "kind": "other"
         },
         "value": {
             "amount": 50000.99,
@@ -148,7 +149,8 @@ def test_tender_data_limited(intervals, procurement_method_type):
                 "legalName": u"Заклад \"Загальноосвітня школа І-ІІІ ступенів № 10 Вінницької міської ради\"",
                 "scheme": u"UA-EDR"
             },
-            "name": u"ЗОСШ #10 м.Вінниці"
+            "name": u"ЗОСШ #10 м.Вінниці",
+            "kind": "general"
         },
         "value": {
             "amount": 500000,
@@ -659,6 +661,7 @@ def test_tender_data_openua(intervals):
     t_data['procurementMethodType'] = 'aboveThresholdUA'
     t_data['procurementMethodDetails'] = 'quick, ' \
         'accelerator={}'.format(accelerator)
+    t_data['procuringEntity']['kind'] = 'general'
     return t_data
 
 
@@ -680,4 +683,5 @@ def test_tender_data_openeu(intervals):
     t_data['procuringEntity']['contactPoint']['name_en'] = fake_en.name()
     t_data['procuringEntity']['contactPoint']['availableLanguage'] = "en"
     t_data['procuringEntity']['identifier']['legalName_en'] = "Institution \"Vinnytsia City Council primary and secondary general school № 10\""
+    t_data['procuringEntity']['kind'] = 'general'
     return t_data
