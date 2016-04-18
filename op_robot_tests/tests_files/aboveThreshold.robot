@@ -116,6 +116,7 @@ ${mode}         openeu
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   resp  ${resp}
   log  ${resp}
 
+
 Можливість завантажити публічний документ до пропозиції першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця
   ...      provider
@@ -126,10 +127,14 @@ ${mode}         openeu
   ${bid_doc_upload}=  Викликати для учасника   ${provider}   Завантажити документ в ставку  ${filepath}   ${TENDER['TENDER_UAID']}
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   bid_doc_upload   ${bid_doc_upload}
 
+#######
+#  openEU:  Операції із документацію пропозиції
+
 Можливість змінити документацію цінової пропозиції з публічної на приватну
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  ...      openeu
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   log   ${USERS.users['${provider}'].broker}
   ${privat_doc}=   create_data_dict  data.confidentialityRationale  "Only our company sells badgers with pink hair."
@@ -143,6 +148,7 @@ ${mode}         openeu
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  ...      openeu
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   log   ${USERS.users['${provider}'].broker}
   ${filepath}=   create_fake_doc
@@ -154,6 +160,7 @@ ${mode}         openeu
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  ...      openeu
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   log   ${USERS.users['${provider}'].broker}
   ${filepath}=   create_fake_doc
@@ -165,12 +172,15 @@ ${mode}         openeu
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість прийняти пропозицію переможця
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  ...      openeu
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   log   ${USERS.users['${provider}'].broker}
   ${filepath}=   create_fake_doc
   ${doc_type}=  Set variable  qualification_documents
   ${bid_doc_upload}=  Викликати для учасника   ${provider}   Завантажити документ в ставку  ${filepath}   ${TENDER['TENDER_UAID']}  ${doc_type}
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   bid_doc_upload   ${bid_doc_upload}
+
+#######
 
 Подати цінову пропозицію другим учасником
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
@@ -211,7 +221,9 @@ ${mode}         openeu
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${activestatusresp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   status  pending
+  ${status}=  Run Keyword IF  '${mode}'=='openeu'  Set Variable  pending
+  ...                     ELSE IF  '${mode}'=='openua'  Set Variable  active
+  ${activestatusresp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   status  ${status}
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   activestatusresp   ${activestatusresp}
   log  ${activestatusresp}
 
@@ -340,7 +352,9 @@ Cкасувати цінову пропозицію другого учасни�
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${activestatusresp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   status  pending
+  ${status}=  Run Keyword IF  '${mode}'=='openeu'  Set Variable  pending
+  ...                     ELSE IF  '${mode}'=='openua'  Set Variable  active
+  ${activestatusresp}=  Викликати для учасника   ${provider}   Змінити цінову пропозицію   ${TENDER['TENDER_UAID']}   status  ${status}
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}   activestatusresp   ${activestatusresp}
   log  ${activestatusresp}
 
@@ -384,12 +398,15 @@ Cкасувати цінову пропозицію другого учасни�
   ...      ${escalation_data}
   Set To Dictionary  ${USERS.users['${provider}'].claim_data4}  escalation  ${escalation_data}
 
-####
-#  Qualification
+##############################################################################################
+#             OPENEU  Pre-Qualification
+##############################################################################################
+
 Відображення статусу першої пропозиції кваліфікації
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних оголошеного тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  ...      openeu
   [Setup]  Дочекатись дати закінчення прийому пропозицій  ${tender_owner}
   Звірити поле тендера із значенням  ${tender_owner}  pending  qualifications[0].status
 
@@ -397,6 +414,7 @@ Cкасувати цінову пропозицію другого учасни�
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних оголошеного тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  ...      openeu
   [Setup]  Дочекатись дати закінчення прийому пропозицій  ${tender_owner}
   Звірити поле тендера із значенням  ${tender_owner}  pending  qualifications[1].status
 
@@ -404,6 +422,7 @@ Cкасувати цінову пропозицію другого учасни�
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість завантажити документ у кваліфікацію пропозиції першого учасника
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  ...      openeu
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   log   ${USERS.users['${tender_owner}'].broker}
   ${filepath}=   create_fake_doc
@@ -413,6 +432,7 @@ Cкасувати цінову пропозицію другого учасни�
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість підтвердити першу пропозицію кваліфікації
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  ...      openeu
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Викликати для учасника  ${tender_owner}  Підтвердити кваліфікацію  ${TENDER['TENDER_UAID']}  0
 
@@ -420,6 +440,7 @@ Cкасувати цінову пропозицію другого учасни�
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість завантажити документ у кваліфікацію пропозиції другого учасника
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  ...      openeu
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   log   ${USERS.users['${tender_owner}'].broker}
   ${filepath}=   create_fake_doc
@@ -429,6 +450,7 @@ Cкасувати цінову пропозицію другого учасни�
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість відхилити другу пропозицію кваліфікації
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  ...      openeu
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Викликати для учасника  ${tender_owner}  Відхилити кваліфікацію  ${TENDER['TENDER_UAID']}  1
 
@@ -436,6 +458,7 @@ Cкасувати цінову пропозицію другого учасни�
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість скасувати рішення кваліфікації для другої пропопозиції
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  ...      openeu
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Викликати для учасника  ${tender_owner}  Скасувати кваліфікацію  ${TENDER['TENDER_UAID']}  1
 
@@ -443,6 +466,7 @@ Cкасувати цінову пропозицію другого учасни�
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість підтвердити другу пропозицію кваліфікації
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  ...      openeu
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Викликати для учасника  ${tender_owner}  Підтвердити кваліфікацію  ${TENDER['TENDER_UAID']}  2
 
@@ -450,5 +474,6 @@ Cкасувати цінову пропозицію другого учасни�
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість затвердити остаточне рішення кваліфікації
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  ...      openeu
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Викликати для учасника  ${tender_owner}  Затвердити остаточне рішення кваліфікації  ${TENDER['TENDER_UAID']}
