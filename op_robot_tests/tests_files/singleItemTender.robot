@@ -497,6 +497,7 @@ ${mode}         single
   ${docid}=  Get Variable Value  ${USERS.users['${provider}'].bidresponses['bid_doc_upload']['upload_response'].data.id}
   ${bid_doc_modified}=  Викликати для учасника  ${provider}  Змінити документ в ставці  ${filepath}  ${bidid}  ${docid}
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}  bid_doc_modified=${bid_doc_modified}
+  Set To Dictionary  ${USERS.users['${provider}']}  bid_document=${filepath}
 
 
 Неможливість задати запитання після закінчення періоду уточнень
@@ -545,6 +546,7 @@ ${mode}         single
   ${filepath}=  create_fake_doc
   ${bid_doc_upload}=  Викликати для учасника  ${provider1}  Завантажити документ в ставку  ${filepath}  ${TENDER['TENDER_UAID']}
   Set To Dictionary  ${USERS.users['${provider1}'].bidresponses}  bid_doc_upload=${bid_doc_upload}
+  Set To Dictionary  ${USERS.users['${provider1}']}  bid_document=${filepath}
 
 
 Неможливість змінити цінову пропозицію до 50000 після закінчення прийому пропозицій
