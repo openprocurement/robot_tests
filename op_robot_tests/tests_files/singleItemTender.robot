@@ -169,18 +169,11 @@ ${mode}         single
   Звірити дату тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryDate.endDate
 
 
-Відображення координат широти доставки позицій закупівлі однопредметного тендера
+Відображення координати доставки позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryLocation.latitude
-
-
-Відображення координат довготи доставки позицій закупівлі однопредметного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення полів предметів однопредметного тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryLocation.longitude
+  Звірити координати доставки тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0]
 
 
 Відображення назви нас. пункту доставки позицій закупівлі однопредметного тендера

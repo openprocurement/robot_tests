@@ -318,16 +318,10 @@ Resource           resource.robot
   ...      items[${ITEMS_NUM}].deliveryDate.endDate
 
 
-Відображення координат широти доставки номенклатури закупівлі
-  Звірити поле тендера  ${viewer}
+Відображення координат доставки номенклатури закупівлі
+  Звірити координати доставки тендера  ${viewer}
   ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      items[${ITEMS_NUM}].deliveryLocation.latitude
-
-
-Відображення координат довготи доставки номенклатури закупівлі
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      items[${ITEMS_NUM}].deliveryLocation.longitude
+  ...      items[${ITEMS_NUM}]
 
 
 Відображення назви нас. пункту доставки номенклатури закупівлі
