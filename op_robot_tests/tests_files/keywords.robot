@@ -164,12 +164,14 @@ Get Broker Property By Username
   ...      tender_uaid=${TENDER['TENDER_UAID']}
   ...      last_modification_date=${TENDER['LAST_MODIFICATION_DATE']}
   ...      mode=${mode}
+  Run Keyword And Ignore Error  Set to dictionary  ${artifact}  provider_bid_document=${USERS.users['${provider}']['bid_document']}
+  Run Keyword And Ignore Error  Set to dictionary  ${artifact}  provider1_bid_document=${USERS.users['${provider1}']['bid_document']}
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}
   ...          tender_owner=${USERS.users['${tender_owner}'].broker}
   ...          access_token=${USERS.users['${tender_owner}'].access_token}
   ...          tender_id=${USERS.users['${tender_owner}'].tender_data.data.id}
   ${status}  ${lots_ids}=  Run Keyword And Ignore Error  Отримати ідентифікатори об’єктів  ${viewer}  lots
-  Run Keyword If  ${status}'=='PASS'
+  Run Keyword If  '${status}'=='PASS'
   ...      Set To Dictionary   ${artifact}   lots=${lots_ids}
   Log   ${artifact}
   log_object_data  ${artifact}  artifact  update=${True}
@@ -183,6 +185,8 @@ Get Broker Property By Username
   ${lot_index}=  Get Variable Value  ${lot_index}  0
   Run Keyword And Ignore Error  Set To Dictionary  ${TENDER}  LOT_ID=${ARTIFACT.lots[${lot_index}]}
   ${mode}=  Get Variable Value  ${mode}  ${ARTIFACT.mode}
+  Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider}']}  bid_document=${ARTIFACT.provider_bid_document}
+  Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider1}']}  bid_document=${ARTIFACT.provider1_bid_document}
   Set Suite Variable  ${mode}
   Set Suite Variable  ${lot_index}
   Set Suite Variable  ${TENDER}
@@ -380,15 +384,15 @@ Get Broker Property By Username
 
 
 Звірити дату тендера
-  [Arguments]  ${username}  ${tender_data}  ${field}  ${accuracy}=60  ${absolute_delta}=${False}
+  [Arguments]  ${username}  ${tender_data}  ${field}
   ${left}=  Get_From_Object  ${tender_data.data}  ${field}
-  Звірити дату тендера із значенням  ${username}  ${left}  ${field}  accuracy=${accuracy}  absolute_delta=${absolute_delta}
+  Звірити дату тендера із значенням  ${username}  ${left}  ${field}
 
 
 Звірити дату тендера із значенням
-  [Arguments]  ${username}  ${left}  ${field}  ${object_id}=${None}  ${accuracy}=60  ${absolute_delta}=${False}
+  [Arguments]  ${username}  ${left}  ${field}  ${object_id}=${None}
   ${right}=  Отримати дані із тендера  ${username}  ${field}  ${object_id}
-  Порівняти дати  ${left}  ${right}  accuracy=${accuracy}  absolute_delta=${absolute_delta}
+  Порівняти дати  ${left}  ${right}
 
 
 Порівняти дати
@@ -399,39 +403,13 @@ Get Broker Property By Username
   ...      The keyword will fail if the difference between
   ...      ``left`` and ``right`` dates is more than ``accuracy``,
   ...      otherwise it will pass.
-  [Arguments]  ${left}  ${right}  ${accuracy}=60  ${absolute_delta}=${False}
+  [Arguments]  ${left}  ${right}  ${accuracy}=60
   Log  ${left}
   Log  ${right}
   Should Not Be Equal  ${left}  ${None}
   Should Not Be Equal  ${right}  ${None}
-  ${status}=  compare_date  ${left}  ${right}  accuracy=${accuracy}  absolute_delta=${absolute_delta}
-  Should Be True  ${status}  msg=Dates differ: ${left} != ${right}
-
-
-Звірити координати доставки тендера
-  [Arguments]  ${username}  ${tender_data}  ${field}  ${object_id}=${None}
-  ${left_lat}=  Get_From_Object  ${tender_data.data}  ${field}.deliveryLocation.latitude
-  ${left_lon}=  Get_From_Object  ${tender_data.data}  ${field}.deliveryLocation.longitude
-  ${right_lat}=  Отримати дані із тендера  ${username}  ${field}.deliveryLocation.latitude  ${object_id}
-  ${right_lon}=  Отримати дані із тендера  ${username}  ${field}.deliveryLocation.longitude  ${object_id}
-  Порівняти координати  ${left_lat}  ${left_lon}  ${right_lat}  ${right_lon}
-
-
-Порівняти координати
-  [Documentation]
-  ...      Compare coordinates with specified ``accuracy`` (in km).
-  ...      Default is `0.1`.
-  ...
-  ...      The keyword will fail if the difference between
-  ...      ``left`` and ``right`` is more than ``accuracy``,
-  ...      otherwise it will pass.
-  [Arguments]  ${left_lat}  ${left_lon}  ${right_lat}  ${right_lon}  ${accuracy}=0.1
-  Should Not Be Equal  ${left_lat}  ${None}
-  Should Not Be Equal  ${left_lon}  ${None}
-  Should Not Be Equal  ${right_lat}  ${None}
-  Should Not Be Equal  ${right_lon}  ${None}
-  ${status}=  compare_coordinates  ${left_lat}  ${left_lon}  ${right_lat}  ${right_lon}  ${accuracy}
-  Should Be True  ${status}  msg=Coordinates differ: (${left_lat}, ${left_lon}) != (${right_lat}, ${right_lon})
+  ${status}=  compare_date  ${left}  ${right}  ${accuracy}
+  Should Be True  ${status}  msg=Dates are not equal: ${left} != ${right}
 
 
 Звірити поля предметів закупівлі багатопредметного тендера
@@ -444,19 +422,12 @@ Get Broker Property By Username
 
 
 Звірити дату предметів закупівлі багатопредметного тендера
-  [Arguments]  ${username}  ${tender_data}  ${field}  ${accuracy}=60  ${absolute_delta}=${False}
+  [Arguments]  ${username}  ${tender_data}  ${field}
   @{items}=  Get_From_Object  ${tender_data.data}  items
-  :FOR  ${index}  ${_}  IN ENUMERATE  @{items}
+  ${len_of_items}=  Get Length  ${items}
+  :FOR  ${index}  IN RANGE  ${len_of_items}
   \  Log  ${index}
-  \  Звірити дату тендера  ${viewer}  ${tender_data}  items[${index}].${field}  accuracy=${accuracy}  absolute_delta=${absolute_delta}
-
-
-Звірити координати доставки предметів закупівлі багатопредметного тендера
-  [Arguments]  ${username}  ${tender_data}
-  @{items}=  Get_From_Object  ${tender_data.data}  items
-  :FOR  ${index}  ${_}  IN ENUMERATE  @{items}
-  \  Log  ${index}
-  \  Звірити координати тендера  ${viewer}  ${tender_data}  items[${index}]
+  \  Звірити дату тендера  ${viewer}  ${tender_data}  items[${index}].${field}
 
 
 Отримати дані із тендера
@@ -598,8 +569,6 @@ Require Failure
   ...      ${USERS.users['${tender_owner}'].initial_data.data.tenderPeriod.startDate}
   ...      ${date}
   Дочекатись дати  ${date}
-  Оновити LAST_MODIFICATION_DATE
-  Дочекатись синхронізації з майданчиком  ${username}
 
 
 Дочекатись дати закінчення прийому пропозицій
@@ -613,46 +582,34 @@ Require Failure
   ...      '${status}' == 'FAIL'
   ...      ${USERS.users['${tender_owner}'].initial_data.data.tenderPeriod.endDate}
   ...      ${date}
-  ${date}=  add_minutes_to_date  ${date}  2  # Auction sync
   Дочекатись дати  ${date}
-  Оновити LAST_MODIFICATION_DATE
-  Дочекатись синхронізації з майданчиком  ${username}
 
 
 Дочекатись дати початку аукціону
   [Arguments]  ${username}
+  Log  ${username}
   # Can't use that dirty hack here since we don't know
   # the date of auction when creating the procurement :)
-  ${auctionStart}=  Отримати дані із тендера   ${username}   auctionPeriod.startDate  ${TENDER['LOT_ID']}
-  Дочекатись дати  ${auctionStart}
-  Оновити LAST_MODIFICATION_DATE
-  Дочекатись синхронізації з майданчиком  ${username}
+  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.auctionPeriod.startDate}
 
 
 Відкрити сторінку аукціону для глядача
-  ${url}=  Run as  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}  ${TENDER['LOT_ID']}
+  ${url}=  Run as  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
   Open browser  ${url}  ${USERS.users['${viewer}'].browser}
 
 
 Дочекатись дати закінчення аукціону
   [Arguments]  ${username}
   Log  ${username}
-  ${auctionEnd}=  Отримати дані із тендера   ${username}   auctionPeriod.endDate  ${TENDER['LOT_ID']}
-  Дочекатись дати  ${auctionEnd}
-  Оновити LAST_MODIFICATION_DATE
-  Дочекатись синхронізації з майданчиком  ${username}
+  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.auctionPeriod.endDate}
 
 
 Дочекатись дати закінчення періоду подання скарг
   [Arguments]  ${username}
   log  ${username}
   Дочекатись дати  ${USERS.users['${username}'].tender_data.data.complaintPeriod.endDate}
-  Оновити LAST_MODIFICATION_DATE
-  Дочекатись синхронізації з майданчиком  ${username}
 
 
 Оновити LAST_MODIFICATION_DATE
   ${LAST_MODIFICATION_DATE}=  Get Current TZdate
-  ${status}=  Get Variable Value  ${TEST_STATUS}
-  Run Keyword If  '${status}' == 'PASS'  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE=${LAST_MODIFICATION_DATE}
-  ...         ELSE IF  '${status}' == '${Empty}'  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE=${LAST_MODIFICATION_DATE}
+  Run keyword if  '${TEST_STATUS}' == 'PASS'  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE=${LAST_MODIFICATION_DATE}
