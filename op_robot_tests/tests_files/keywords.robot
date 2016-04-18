@@ -396,7 +396,33 @@ Get Broker Property By Username
   Should Not Be Equal  ${left}  ${None}
   Should Not Be Equal  ${right}  ${None}
   ${status}=  compare_date  ${left}  ${right}  ${accuracy}
-  Should Be True  ${status}  msg=Dates are not equal: ${left} != ${right}
+  Should Be True  ${status}  msg=Dates differ: ${left} != ${right}
+
+
+Звірити координати тендера
+  [Arguments]  ${username}  ${tender_data}  ${field}  ${object_id}=${None}
+  ${left_lat}=  Get_From_Object  ${tender_data.data}  ${field}.deliveryLocation.latitude
+  ${left_lon}=  Get_From_Object  ${tender_data.data}  ${field}.deliveryLocation.longitude
+  ${right_lat}=  Отримати дані із тендера  ${username}  ${field}.deliveryLocation.latitude  ${object_id}
+  ${right_lon}=  Отримати дані із тендера  ${username}  ${field}.deliveryLocation.longitude  ${object_id}
+  Порівняти координати  ${left_lat}  ${left_lon}  ${right_lat}  ${right_lon}
+
+
+Порівняти координати
+  [Documentation]
+  ...      Compare coordinates with specified ``accuracy`` (in km).
+  ...      Default is `0.1`.
+  ...
+  ...      The keyword will fail if the difference between
+  ...      ``left`` and ``right`` is more than ``accuracy``,
+  ...      otherwise it will pass.
+  [Arguments]  ${left_lat}  ${left_lon}  ${right_lat}  ${right_lon}  ${accuracy}=0.1
+  Should Not Be Equal  ${left_lat}  ${None}
+  Should Not Be Equal  ${left_lon}  ${None}
+  Should Not Be Equal  ${right_lat}  ${None}
+  Should Not Be Equal  ${right_lon}  ${None}
+  ${status}=  compare_coordinates  ${left_lat}  ${left_lon}  ${right_lat}  ${right_lon}  ${accuracy}
+  Should Be True  ${status}  msg="Coordinates differ: (${left_lat}, ${left_lon})!=(${right_lat}, ${right_lon})"
 
 
 Звірити поля предметів закупівлі багатопредметного тендера
@@ -411,10 +437,17 @@ Get Broker Property By Username
 Звірити дату предметів закупівлі багатопредметного тендера
   [Arguments]  ${username}  ${tender_data}  ${field}
   @{items}=  Get_From_Object  ${tender_data.data}  items
-  ${len_of_items}=  Get Length  ${items}
-  :FOR  ${index}  IN RANGE  ${len_of_items}
+  :FOR  ${index}  ${_}  IN ENUMERATE  @{items}
   \  Log  ${index}
   \  Звірити дату тендера  ${viewer}  ${tender_data}  items[${index}].${field}
+
+
+Звірити координати предметів закупівлі багатопредметного тендера
+  [Arguments]  ${username}  ${tender_data}
+  @{items}=  Get_From_Object  ${tender_data.data}  items
+  :FOR  ${index}  ${_}  IN ENUMERATE  @{items}
+  \  Log  ${index}
+  \  Звірити координати тендера  ${viewer}  ${tender_data}  items[${index}]
 
 
 Отримати дані із тендера
