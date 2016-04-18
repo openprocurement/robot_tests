@@ -6,7 +6,7 @@ Suite Teardown  Test Suite Teardown
 
 
 *** Variables ***
-@{used_roles}   viewer
+@{used_roles}   viewer  tender_owner  provider  provider1
 
 
 *** Test Cases ***

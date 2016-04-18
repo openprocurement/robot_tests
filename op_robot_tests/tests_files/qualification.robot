@@ -5,7 +5,7 @@ Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
 *** Variables ***
-@{used_roles}   tender_owner  viewer
+@{used_roles}   tender_owner  viewer  provider  provider1
 
 
 *** Test Cases ***
@@ -16,8 +16,7 @@ Suite Teardown  Test Suite Teardown
   ...      minimal
   Завантажити дані про тендер
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
-  \   ${resp}=  Викликати для учасника  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
-  Log  ${resp}
+  \   Викликати для учасника  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
 
 ##############################################################################################
 #             AWARDS
@@ -28,7 +27,22 @@ Suite Teardown  Test Suite Teardown
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
-  \   Звірити поле тендера із значенням  ${tender_owner}  active.qualification  status
+  \   Звірити поле тендера із значенням  ${username}  active.qualification  status
+
+
+Відображення заголовку документа доданого до пропозиції першим учасником
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
+  \     Звірити поле тендера із значенням  ${username}
+  ...      ${USERS.users['${provider}']['bid_document']}
+  ...      bids[0].documents[1].title
+
+
+Відображення заголовку документа доданого до пропозиції другим учасником
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
+  \     Звірити поле тендера із значенням  ${username}
+  ...      ${USERS.users['${provider1}']['bid_document']}
+  ...      bids[1].documents[0].title
+
 
 Відображення вартості номенклатури постачальника
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних оголошеного тендера

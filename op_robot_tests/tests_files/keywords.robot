@@ -157,14 +157,16 @@ Get Broker Property By Username
   ...      tender_uaid=${TENDER['TENDER_UAID']}
   ...      last_modification_date=${TENDER['LAST_MODIFICATION_DATE']}
   ...      tender_owner=${USERS.users['${tender_owner}'].broker}
-  ...      mode=${mode}
+  Run Keyword And Ignore Error  Set to dictionary  ${artifact}  mode=${mode}
+  Run Keyword And Ignore Error  Set to dictionary  ${artifact}  provider_bid_document=${USERS.users['${provider}']['bid_document']}
+  Run Keyword And Ignore Error  Set to dictionary  ${artifact}  provider1_bid_document=${USERS.users['${provider1}']['bid_document']}
   Run Keyword If  '${USERS.users['${tender_owner}'].broker}' == 'Quinta'
   ...      Run Keyword And Ignore Error
   ...      Set To Dictionary  ${artifact}
   ...          access_token=${USERS.users['${tender_owner}'].access_token}
   ...          tender_id=${USERS.users['${tender_owner}'].tender_data.data.id}
   ${status}  ${lots_ids}=  Run Keyword And Ignore Error  Отримати ідентифікатори об’єктів  ${viewer}  lots
-  Run Keyword If  ${status}'=='PASS'
+  Run Keyword If  '${status}'=='PASS'
   ...      Set To Dictionary   ${artifact}   lots=${lots_ids}
   Log   ${artifact}
   log_object_data  ${artifact}  artifact  update=${True}
@@ -178,7 +180,11 @@ Get Broker Property By Username
   ${TENDER}=  Create Dictionary
   Set To Dictionary  ${TENDER}  TENDER_UAID=${ARTIFACT.tender_uaid}
   Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE=${ARTIFACT.last_modification_date}
-  Set Global Variable  ${TENDER}
+  Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider}']}  bid_document=${ARTIFACT.provider_bid_document}
+  Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider1}']}  bid_document=${ARTIFACT.provider1_bid_document}
+  Set Suite Variable  ${TENDER}
+  ${mode}=  Set variable  ${ARTIFACT.mode}
+  Set Suite Variable  ${mode}
   log_object_data  ${ARTIFACT}  artifact
 
 
