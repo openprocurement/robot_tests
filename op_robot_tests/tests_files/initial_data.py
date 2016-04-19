@@ -4,6 +4,7 @@ from faker import Factory
 from munch import munchify
 from tempfile import NamedTemporaryFile
 from .local_time import get_now
+import random
 
 fake = Factory.create('uk_UA')
 fake_ru = Factory.create('ru')
@@ -29,6 +30,7 @@ def create_fake_doc():
 
 def test_tender_data(intervals, periods=("enquiry", "tender")):
     now = get_now()
+    value_amount = 50000.99
     t_data = {
         "title": u"[ТЕСТУВАННЯ] " + fake.catch_phrase(),
         "mode": "test",
@@ -61,12 +63,12 @@ def test_tender_data(intervals, periods=("enquiry", "tender")):
             "kind": "other"
         },
         "value": {
-            "amount": 50000.99,
+            "amount": value_amount,
             "currency": u"UAH",
             "valueAddedTaxIncluded": True
         },
         "minimalStep": {
-            "amount": 100.1,
+            "amount": round(random.uniform(0.005, 0.03) * value_amount, 2),
             "currency": u"UAH"
         },
         "items": []
