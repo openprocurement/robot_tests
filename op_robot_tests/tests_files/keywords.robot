@@ -48,7 +48,14 @@ Set Suite Variable With Default Value
   ${commit}=  Run  git log --graph --pretty --abbrev-commit --date=relative -n 30
   ${repo}=    Run  git remote -v
   ${branch}=  Run  git branch -vva
-  Log many  ${commit}  ${repo}  ${branch}
+  ${status}=  Run  git status
+  ${diff}=  Run  git diff
+  ${reflog}=  Run  git reflog
+  Log  ${commit}
+  Log  ${repo}
+  Log  ${branch}
+  Log  ${diff}
+  Log  ${reflog}
 
 
 Завантажуємо дані про користувачів і майданчики
