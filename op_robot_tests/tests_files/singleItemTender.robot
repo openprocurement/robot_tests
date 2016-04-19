@@ -425,9 +425,8 @@ ${mode}         single
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Дочекатись дати початку прийому пропозицій  ${provider}
   ${bid}=  Підготувати дані для подання пропозиції
   Log  ${bid}
   ${bidresponses}=  Create Dictionary  bid=${bid}
@@ -451,8 +450,8 @@ ${mode}         single
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      minimal
+  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Дочекатись дати початку прийому пропозицій  ${provider}
   ${bid}=  Підготувати дані для подання пропозиції
   Log  ${bid}
   ${bidresponses}=  Create Dictionary  bid=${bid}
@@ -522,9 +521,8 @@ ${mode}         single
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      minimal
-  [Setup]  Дочекатись синхронізації з майданчиком  ${provider1}
+  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider1}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Дочекатись дати початку прийому пропозицій  ${provider1}
   ${bid}=  Підготувати дані для подання пропозиції
   Log  ${bid}
   ${bidresponses}=  Create Dictionary  bid=${bid}
@@ -560,7 +558,7 @@ ${mode}         single
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
-  Дочекатись дати закінчення прийому пропозицій  ${provider1}
+  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${provider1}
   ${failfixbidto50000resp}=  Require Failure  ${provider1}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  value.amount  50000
   Set To Dictionary  ${USERS.users['${provider1}'].bidresponses}  failfixbidto50000resp=${failfixbidto50000resp}
   Log  ${failfixbidto50000resp}
@@ -575,7 +573,7 @@ ${mode}         single
   Log  ${failfixbidto1resp}
 
 
-Неможливість скасувати цінову пропозицію
+Неможливість скасувати цінову пропозицію після закінчення прийому пропозицій
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
@@ -608,10 +606,7 @@ ${mode}         single
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      minimal
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Дочекатись дати закінчення прийому пропозицій  ${viewer}
-  Sleep  120
+  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}
   ${url}=  Викликати для учасника  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
   Should Be True  '${url}'
   Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.openprocurement\.org\/tenders\/([0-9A-Fa-f]{32})
@@ -624,7 +619,6 @@ ${mode}         single
   ...      ${USERS.users['${provider}'].broker}
   ...      minimal
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${url}=  Викликати для учасника  ${provider}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
   Should Be True  '${url}'
   Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.openprocurement\.org\/tenders\/([0-9A-Fa-f]{32})
@@ -637,7 +631,6 @@ ${mode}         single
   ...      ${USERS.users['${provider1}'].broker}
   ...      minimal
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider1}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${url}=  Викликати для учасника  ${provider1}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
   Should Be True  '${url}'
   Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.openprocurement\.org\/tenders\/([0-9A-Fa-f]{32})

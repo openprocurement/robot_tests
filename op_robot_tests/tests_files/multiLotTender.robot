@@ -248,8 +248,7 @@ ${complaint_id}  1
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  [Setup]  Дочекатись синхронізації з майданчиком    ${provider}
-  Дочекатись дати початку прийому пропозицій  ${provider}
+  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}
   ${bid}=  Підготувати дані для подання пропозиції
   ${no_lot_bid_resp}=  Require Failure  ${provider}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}
   log   ${no_lot_bid_resp}
@@ -278,6 +277,7 @@ ${complaint_id}  1
   [Tags]   ${USERS.users['${provider}'].broker}: Можливість подати цінову пропозицію
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
+  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати початку прийому пропозицій  ${provider}
   @{lots_ids}=  Отримати ідентифікатори об’єктів  ${provider}  lots
@@ -307,7 +307,7 @@ ${complaint_id}  1
   [Tags]   ${USERS.users['${provider1}'].broker}: Можливість подати цінову пропозицію
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
-  [Setup]  Дочекатись синхронізації з майданчиком    ${provider1}
+  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider1}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати початку прийому пропозицій  ${provider1}
   @{lots_ids}=  Отримати ідентифікатори об’єктів  ${provider1}  lots
@@ -330,8 +330,7 @@ ${complaint_id}  1
   [Tags]   ${USERS.users['${provider1}'].broker}: Неможливість змінити цінову пропозицію до 2000 після закінчення прийому пропозицій
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
-  [Setup]  Дочекатись синхронізації з майданчиком    ${provider1}
-  Дочекатись дати закінчення прийому пропозицій  ${provider1}
+  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${provider1}
   ${failfixbidto2000resp}=  Require Failure  ${provider1}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  lotValues.0.value.amount  2000
   log  ${failfixbidto2000resp}
 
