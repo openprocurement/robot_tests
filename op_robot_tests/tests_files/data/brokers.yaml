@@ -42,7 +42,7 @@ Default:
 Quinta:
     intervals:
         default:
-            enquiry: [0, 2]
+            enquiry: [0, 3]
             tender:  [0, 5]
         openua:
             tender:  [1, 15]
@@ -70,7 +70,10 @@ DZO:
     intervals:
         default:
             enquiry: [0, 20]
-            tender:  [0, 15]
+            tender:  [0, 20]
+        openua:
+            accelerator: 720
+            tender:  [0, 30]
     keywords_file: dzo
     roles:
         tender_owner:   DZO_Owner
@@ -84,11 +87,12 @@ Newtend:
         provider:       Newtend_Provider1
         tender_owner:   Newtend_Owner
         viewer:         Newtend_Viewer
+    timeout_on_wait: 60
 PrivatMarket:
     intervals:
         default:
-            enquiry: [0, 2]
-            tender:  [0, 5]
+            enquiry: [0, 15]
+            tender:  [0, 15]
     keywords_file: privatmarket
     roles:
         provider:       PrivatMarket_Provider
@@ -109,13 +113,14 @@ Prom:
 Publicbid:
     intervals:
         default:
-            enquiry: [21, 15]
-            tender:  [1,  15]
+            enquiry: [1, 10]
+            tender:  [1, 12]
     keywords_file: publicbid
     roles:
         provider:       Publicbid_Provider1
         tender_owner:   Publicbid_Owner
         viewer:         Publicbid_Viewer
+    timeout_on_wait: 120
 PublicPortal:
     keywords_file: publicportal
     roles:

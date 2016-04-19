@@ -14,7 +14,7 @@ def create_fake_sentence():
     return fake.sentence(nb_words=10, variable_nb_words=True)
 
 
-def description_with_id(prefix, sentence):
+def field_with_id(prefix, sentence):
     return "{}-{}: {}".format(prefix, fake.uuid4()[:8], sentence)
 
 
@@ -57,7 +57,8 @@ def test_tender_data(intervals, periods=("enquiry", "tender")):
             "contactPoint": {
                 "name": fake.name(),
                 "telephone": fake.phone_number()
-            }
+            },
+            "kind": "other"
         },
         "value": {
             "amount": 50000.99,
@@ -103,7 +104,7 @@ def test_tender_data_limited(intervals, procurement_method_type):
                     "id": "55523100-3",
                     "scheme": "CPV"
                 },
-                "description": description_with_id('i', fake.sentence(nb_words=10, variable_nb_words=True)),
+                "description": field_with_id('i', fake.sentence(nb_words=10, variable_nb_words=True)),
                 "id": "2dc54675d6364e2baffbc0f8e74432ac",
                 "deliveryDate": {
                     "endDate": (now + timedelta(days=5)).isoformat()
@@ -123,7 +124,7 @@ def test_tender_data_limited(intervals, procurement_method_type):
                 }
             }
         ],
-        "owner": "test.quintagroup.com",
+        "mode": "test",
         "procurementMethod": "limited",
         "procurementMethodType": procurement_method_type,
         "procuringEntity":
@@ -148,7 +149,8 @@ def test_tender_data_limited(intervals, procurement_method_type):
                 "legalName": u"Заклад \"Загальноосвітня школа І-ІІІ ступенів № 10 Вінницької міської ради\"",
                 "scheme": u"UA-EDR"
             },
-            "name": u"ЗОСШ #10 м.Вінниці"
+            "name": u"ЗОСШ #10 м.Вінниці",
+            "kind": "general"
         },
         "value": {
             "amount": 500000,
@@ -194,31 +196,25 @@ def test_tender_data_multiple_items(intervals):
     return t_data
 
 
-def test_tender_data_multiple_lots(t_data):
+def test_tender_data_multiple_lots(intervals):
+    tender = test_tender_data(intervals)
     first_lot_id = "3c8f387879de4c38957402dbdb8b31af"
-    second_lot_id = "bcac8d2ceb5f4227b841a2211f5cb646"
-
-    for item in t_data['data']['items'][:-1]:
-        item['relatedLot'] = first_lot_id
-    t_data['data']['items'][-1]['relatedLot'] = second_lot_id
-    t_data['data']['lots'] = []
-    for _ in range(2):
-        new_lot = test_lot_data()
-        t_data['data']['lots'].append(new_lot)
-    t_data['data']['lots'][0]['id'] = first_lot_id
-    t_data['data']['lots'][1]['id'] = second_lot_id
-    return t_data
+    tender['items'][0]['relatedLot'] = first_lot_id
+    tender['lots'] = [test_lot_data()]
+    tender['lots'][0]['id'] = first_lot_id
+    return tender
 
 
-def test_meat_tender_data(tender):
+def test_tender_data_meat(intervals):
+    tender = munchify(test_tender_data(intervals))
     item_id = "edd0032574bf4402877ad5f362df225a"
-    tender.data['items'][0].id = item_id
-    tender.data.features = [
+    tender['items'][0].id = item_id
+    tender.features = [
         {
             "code": "ee3e24bc17234a41bd3e3a04cc28e9c6",
             "featureOf": "tenderer",
-            "title": "Термін оплати",
-            "description": description_with_id('f', "Умови відстрочки платежу після поставки товару"),
+            "title":  field_with_id('f', "Термін оплати"),
+            "description": "Умови відстрочки платежу після поставки товару",
             "enum": [
                 {
                     "value": 0.15,
@@ -242,8 +238,8 @@ def test_meat_tender_data(tender):
             "code": "48cfd91612c04125ab406374d7cc8d93",
             "featureOf": "item",
             "relatedItem": item_id,
-            "title": "Сорт",
-            "description": description_with_id('f', "Сорт продукції"),
+            "title":  field_with_id('f', "Сорт"),
+            "description": "Сорт продукції",
             "enum": [
                 {
                     "value": 0.05,
@@ -263,7 +259,7 @@ def test_meat_tender_data(tender):
     return tender
 
 
-def test_question_data(lot=False):
+def test_question_data():
     data = munchify({
         "data": {
             "author": {
@@ -287,12 +283,10 @@ def test_question_data(lot=False):
                 },
                 "name": fake.company()
             },
-            "description": description_with_id('q', fake.sentence(nb_words=10, variable_nb_words=True)),
-            "title": fake.sentence(nb_words=6, variable_nb_words=True)
+            "description": fake.sentence(nb_words=10, variable_nb_words=True),
+            "title": field_with_id('q', fake.sentence(nb_words=6, variable_nb_words=True))
         }
     })
-    if lot:
-        data = test_lot_question_data(data)
     return data
 
 
@@ -427,24 +421,6 @@ def test_submit_claim_data(claim_id):
     })
 
 
-def test_additional_items_data(tender_id, access_token):
-    return munchify({
-        "access": {
-            "token": access_token
-        },
-        "data": {
-            "id": tender_id,
-            "items": [{
-                "unit": {
-                    "code": "MON",
-                    "name": "month"
-                },
-                "quantity": 9
-            }]
-        }
-    })
-
-
 def test_complaint_reply_data():
     return munchify({
         "data": {
@@ -453,7 +429,7 @@ def test_complaint_reply_data():
     })
 
 
-def test_bid_data(above_threshold=False):
+def test_bid_data(mode):
     bid = munchify({
         "data": {
             "tenderers": [
@@ -477,23 +453,25 @@ def test_bid_data(above_threshold=False):
                     },
                     "name": fake.company()
                 }
-            ],
-            "value": {
-                "currency": "UAH",
-                "amount": 500,
-                "valueAddedTaxIncluded": True
-            }
+            ]
         }
     })
-    if above_threshold:
+    if 'open' in mode:
         bid.data['selfEligible'] = True
         bid.data['selfQualified'] = True
+    if mode == 'multiLot':
+        bid.data.lotValues = list()
+        for _ in range(2):
+            bid.data.lotValues.append(test_bid_value())
+    else:
+        bid.data.update(test_bid_value())
+    if mode == 'meat':
+        bid.update(test_bid_params())
     return bid
 
 
-def test_bid_data_meat_tender():
-    bid = test_bid_data()
-    bid.data.update({
+def test_bid_params():
+    return munchify({
         "parameters": [
             {
                 "code": "ee3e24bc17234a41bd3e3a04cc28e9c6",
@@ -505,47 +483,15 @@ def test_bid_data_meat_tender():
             }
         ]
     })
-    return bid
 
-
-def test_lots_bid_data():
-    bid = test_bid_data()
-    del bid.data.value
-    bid.data.update({
-        "lotValues": [
-            {
-                "value": {
-                    "currency": "UAH",
-                    "amount": fake.random_int(max=1999),
-                    "valueAddedTaxIncluded": True
-                },
-                "relatedLot": "3c8f387879de4c38957402dbdb8b31af",
-                "date": "2015-11-01T12:43:12.482645+02:00"
-            },
-            {
-                "value": {
-                    "currency": "UAH",
-                    "amount": fake.random_int(max=1999),
-                    "valueAddedTaxIncluded": True
-                },
-                "relatedLot": "bcac8d2ceb5f4227b841a2211f5cb646",
-                "date": "2015-11-01T12:43:12.482645+02:00"
-            }
-        ]
-    })
-    return bid
-
-
-def auction_bid():
+def test_bid_value():
     return munchify({
-        "data": {
-            "value": {
-                "amount": 200,
-                "currency": "UAH",
-                "valueAddedTaxIncluded": True
-            }
-        }
-    })
+                "value": {
+                    "currency": "UAH",
+                    "amount": fake.random_int(max=1999),
+                    "valueAddedTaxIncluded": True
+                }
+            })
 
 
 def test_supplier_data():
@@ -589,8 +535,8 @@ def test_award_data():
 
 def test_item_data():
     now = get_now()
-    return {
-        "description": description_with_id('i', fake.catch_phrase()),
+    return munchify({
+        "description": field_with_id('i', fake.catch_phrase()),
         "deliveryDate": {
             "endDate": (now + timedelta(days=5)).isoformat()
         },
@@ -628,7 +574,7 @@ def test_item_data():
             "code": u"KGM"
         },
         "quantity": fake.pyint()
-    }
+    })
 
 
 def test_invalid_features_data():
@@ -672,8 +618,8 @@ def test_invalid_features_data():
 def test_lot_data():
     return munchify(
         {
-            "description": description_with_id('l', fake.sentence(nb_words=10, variable_nb_words=True)),
-            "title": fake.sentence(nb_words=6, variable_nb_words=True),
+            "description": fake.sentence(nb_words=10, variable_nb_words=True),
+            "title": field_with_id('l', fake.sentence(nb_words=6, variable_nb_words=True)),
             "value": {
                 "currency": "UAH",
                 "amount": 2000 + fake.pyfloat(left_digits=4, right_digits=1, positive=True),
@@ -688,22 +634,19 @@ def test_lot_data():
         })
 
 
-def test_lot_document_data(document, lot_id="3c8f387879de4c38957402dbdb8b31af"):
-    lot_document = {"documentOf": "lot", "relatedItem": lot_id}
-    lot_document.update(document.data)
-    return munchify({"data": lot_document})
+def test_lot_document_data(document, lot_id):
+    document.data.update({"documentOf": "lot", "relatedItem": lot_id})
+    return munchify(document)
 
 
-def test_lot_question_data(question, lot_id="3c8f387879de4c38957402dbdb8b31af"):
-    lot_question = {"questionOf": "lot", "relatedItem": lot_id}
-    lot_question.update(question.data)
-    return munchify({"data": lot_question})
+def test_lot_question_data(question, lot_id):
+    question.data.update({"questionOf": "lot", "relatedItem": lot_id})
+    return munchify(question)
 
 
-def test_lot_complaint_data(complaint, lot_id="3c8f387879de4c38957402dbdb8b31af"):
-    lot_complaint = {"complaintOf": "lot", "relatedItem": lot_id}
-    lot_complaint.update(complaint.data)
-    return munchify({"data": lot_complaint})
+def test_lot_complaint_data(complaint, lot_id):
+    complaint.data.update({"complaintOf": "lot", "relatedItem": lot_id})
+    return munchify(complaint)
 
 
 def test_tender_data_openua(intervals):
@@ -718,6 +661,7 @@ def test_tender_data_openua(intervals):
     t_data['procurementMethodType'] = 'aboveThresholdUA'
     t_data['procurementMethodDetails'] = 'quick, ' \
         'accelerator={}'.format(accelerator)
+    t_data['procuringEntity']['kind'] = 'general'
     return t_data
 
 
@@ -739,4 +683,5 @@ def test_tender_data_openeu(intervals):
     t_data['procuringEntity']['contactPoint']['name_en'] = fake_en.name()
     t_data['procuringEntity']['contactPoint']['availableLanguage'] = "en"
     t_data['procuringEntity']['identifier']['legalName_en'] = "Institution \"Vinnytsia City Council primary and secondary general school № 10\""
+    t_data['procuringEntity']['kind'] = 'general'
     return t_data
