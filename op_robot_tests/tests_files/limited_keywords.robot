@@ -288,12 +288,6 @@ Resource           resource.robot
   ...      items[${ITEMS_NUM}].description
 
 
-Відображення ідентифікатора номенклатури закупівлі
-  Звірити поле тендера  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      items[${ITEMS_NUM}].id
-
-
 Відображення кількості номенклатури закупівлі
   Звірити поле тендера  ${viewer}
   ...      ${USERS.users['${tender_owner}'].initial_data}
