@@ -380,15 +380,15 @@ Get Broker Property By Username
 
 
 Звірити дату тендера
-  [Arguments]  ${username}  ${tender_data}  ${field}
+  [Arguments]  ${username}  ${tender_data}  ${field}  ${accuracy}=60  ${absolute_delta}=${False}
   ${left}=  Get_From_Object  ${tender_data.data}  ${field}
-  Звірити дату тендера із значенням  ${username}  ${left}  ${field}
+  Звірити дату тендера із значенням  ${username}  ${left}  ${field}  accuracy=${accuracy}  absolute_delta=${absolute_delta}
 
 
 Звірити дату тендера із значенням
-  [Arguments]  ${username}  ${left}  ${field}  ${object_id}=${None}
+  [Arguments]  ${username}  ${left}  ${field}  ${object_id}=${None}  ${accuracy}=60  ${absolute_delta}=${False}
   ${right}=  Отримати дані із тендера  ${username}  ${field}  ${object_id}
-  Порівняти дати  ${left}  ${right}
+  Порівняти дати  ${left}  ${right}  accuracy=${accuracy}  absolute_delta=${absolute_delta}
 
 
 Порівняти дати
@@ -399,12 +399,12 @@ Get Broker Property By Username
   ...      The keyword will fail if the difference between
   ...      ``left`` and ``right`` dates is more than ``accuracy``,
   ...      otherwise it will pass.
-  [Arguments]  ${left}  ${right}  ${accuracy}=60
+  [Arguments]  ${left}  ${right}  ${accuracy}=60  ${absolute_delta}=${False}
   Log  ${left}
   Log  ${right}
   Should Not Be Equal  ${left}  ${None}
   Should Not Be Equal  ${right}  ${None}
-  ${status}=  compare_date  ${left}  ${right}  ${accuracy}
+  ${status}=  compare_date  ${left}  ${right}  accuracy=${accuracy}  absolute_delta=${absolute_delta}
   Should Be True  ${status}  msg=Dates are not equal: ${left} != ${right}
 
 
@@ -418,12 +418,12 @@ Get Broker Property By Username
 
 
 Звірити дату предметів закупівлі багатопредметного тендера
-  [Arguments]  ${username}  ${tender_data}  ${field}
+  [Arguments]  ${username}  ${tender_data}  ${field}  ${accuracy}=60  ${absolute_delta}=${False}
   @{items}=  Get_From_Object  ${tender_data.data}  items
   ${len_of_items}=  Get Length  ${items}
   :FOR  ${index}  IN RANGE  ${len_of_items}
   \  Log  ${index}
-  \  Звірити дату тендера  ${viewer}  ${tender_data}  items[${index}].${field}
+  \  Звірити дату тендера  ${viewer}  ${tender_data}  items[${index}].${field}  accuracy=${accuracy}  absolute_delta=${absolute_delta}
 
 
 Отримати дані із тендера
