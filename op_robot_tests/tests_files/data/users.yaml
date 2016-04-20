@@ -12,8 +12,6 @@ users:
         api_key:  ""
         broker:   Quinta
         browser:  firefox
-        position: [0, 0]
-        size:     [1366, 800]
     E-tender_Owner:
         broker:   E-tender
         homepage: "http://bid.uat.e-tender.biz/#/"

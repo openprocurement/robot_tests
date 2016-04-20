@@ -236,10 +236,11 @@ Library  openprocurement_client_helper.py
 
 
 Отримати посилання на аукціон для глядача
-  [Arguments]  ${username}  ${tender_uaid}
+  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${lots}=  Run Keyword If  "${mode}" == "single"  Get Variable Value  ${tender.data.lots}
-  ${auctionUrl}=  Run Keyword If  ${lots}  Set Variable  ${tender.data.lots[0].auctionUrl}
+  ${lot_auctionUrl}=  Run Keyword If  "${mode}" == "single"  Get Variable Value  ${tender.data.lots[0].auctionUrl}
+  ${auctionUrl}=  Run Keyword If  ${lot_auctionUrl}  Set Variable  ${lot_auctionUrl}
+  ...                         ELSE IF  '${lot_id}'  Set Variable  ${tender.data.lots[${lot_index}].auctionUrl}
   ...                         ELSE  Set Variable  ${tender.data.auctionUrl}
   [return]  ${auctionUrl}
 
@@ -247,8 +248,8 @@ Library  openprocurement_client_helper.py
 Отримати посилання на аукціон для учасника
   [Arguments]  ${username}  ${tender_uaid}
   ${bid}=  openprocurement_client.Отримати пропозицію  ${username}  ${tender_uaid}
-  ${lots}=  Run Keyword If  "${mode}" == "single"  Get Variable Value  ${bid.data.lotValues}
-  ${participationUrl}=  Run Keyword If  ${lots}  Set Variable  ${bid.data.lotValues[0].participationUrl}
+  ${lot_participationUrl}=  Run Keyword If  "${mode}" == "single"  Get Variable Value  ${bid.data.lots[0].participationUrl}
+  ${participationUrl}=  Run Keyword If  ${lot_participationUrl}  Set Variable  ${participationUrl}
   ...                               ELSE  Set Variable  ${bid.data.participationUrl}
   [return]  ${participationUrl}
 
@@ -432,11 +433,16 @@ Library  openprocurement_client_helper.py
   ...      [Arguments] Username, tender uaid, qualification number and document to upload
   ...      [Description] Find tender using uaid,  and call upload_qualification_document
   ...      [Return] Reply of API
-  [Arguments]  ${username}  ${document}  ${tender_uaid}  ${award_num}
+  [Arguments]  ${username}  ${document}  ${tender_uaid}  ${award_num}  ${lot_id}=${Empty}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${doc_reply}=  Call Method  ${USERS.users['${username}'].client}  upload_award_document  ${document}  ${tender}  ${tender.data.awards[${award_num}].id}
-  Log  ${doc_reply}
-  [Return]  ${doc_reply}
+  ${doc}=  Call Method  ${USERS.users['${username}'].client}  upload_award_document  ${document}  ${tender}  ${tender.data.awards[${award_num}].id}
+  ${lot_index}=  Run Keyword If  '${lot_id}'  get_object_index_by_id  ${tender.data.lots}  ${lot_id}
+  Run Keyword If  '${lot_id}'
+  ...      Set To Object  ${doc.data}  documentOf  lot
+  ...      Set To Object  ${doc.data}  relatedItem  ${tender.data.lots[${lot_index}].id}
+  ...      Call Method  ${USERS.users['${username}'].client}  patch_document   ${tender}   ${doc}
+  Log  ${doc}
+  [Return]  ${doc}
 
 
 Підтвердити постачальника

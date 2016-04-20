@@ -163,11 +163,9 @@ Get Broker Property By Username
   ...      api_version=${api_version}
   ...      tender_uaid=${TENDER['TENDER_UAID']}
   ...      last_modification_date=${TENDER['LAST_MODIFICATION_DATE']}
-  ...      tender_owner=${USERS.users['${tender_owner}'].broker}
   ...      mode=${mode}
-  Run Keyword If  '${USERS.users['${tender_owner}'].broker}' == 'Quinta'
-  ...      Run Keyword And Ignore Error
-  ...      Set To Dictionary  ${artifact}
+  Run Keyword And Ignore Error  Set To Dictionary  ${artifact}
+  ...          tender_owner=${USERS.users['${tender_owner}'].broker}
   ...          access_token=${USERS.users['${tender_owner}'].access_token}
   ...          tender_id=${USERS.users['${tender_owner}'].tender_data.data.id}
   ${status}  ${lots_ids}=  Run Keyword And Ignore Error  Отримати ідентифікатори об’єктів  ${viewer}  lots
@@ -180,12 +178,14 @@ Get Broker Property By Username
 Завантажити дані про тендер
   ${file_path}=  Get Variable Value  ${ARTIFACT_FILE}  artifact.yaml
   ${ARTIFACT}=  load_data_from  ${file_path}
-  Run Keyword If  '${USERS.users['${tender_owner}'].broker}' == 'Quinta'
-  ...      Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token=${ARTIFACT.access_token}
-  ${TENDER}=  Create Dictionary
-  Set To Dictionary  ${TENDER}  TENDER_UAID=${ARTIFACT.tender_uaid}
-  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE=${ARTIFACT.last_modification_date}
-  Set Global Variable  ${TENDER}
+  Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token=${ARTIFACT.access_token}
+  ${TENDER}=  Create Dictionary   TENDER_UAID=${ARTIFACT.tender_uaid}   LAST_MODIFICATION_DATE=${ARTIFACT.last_modification_date}   LOT_ID=${Empty}
+  ${lot_index}=  Get Variable Value  ${lot_index}  0
+  Run Keyword And Ignore Error  Set To Dictionary  ${TENDER}  LOT_ID=${ARTIFACT.lots[${lot_index}]}
+  ${mode}=  Get Variable Value  ${mode}  ${ARTIFACT.mode}
+  Set Suite Variable  ${mode}
+  Set Suite Variable  ${lot_index}
+  Set Suite Variable  ${TENDER}
   log_object_data  ${ARTIFACT}  artifact
 
 
@@ -588,23 +588,24 @@ Require Failure
 
 Дочекатись дати початку аукціону
   [Arguments]  ${username}
-  Log  ${username}
   # Can't use that dirty hack here since we don't know
   # the date of auction when creating the procurement :)
-  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.auctionPeriod.startDate}
+  ${auctionStart}=  Отримати дані із тендера   ${username}   auctionPeriod.startDate  ${TENDER['LOT_ID']}
+  Дочекатись дати  ${auctionStart}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
 
 
 Відкрити сторінку аукціону для глядача
-  ${url}=  Run as  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
+  ${url}=  Run as  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}  ${TENDER['LOT_ID']}
   Open browser  ${url}  ${USERS.users['${viewer}'].browser}
 
 
 Дочекатись дати закінчення аукціону
   [Arguments]  ${username}
   Log  ${username}
-  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.auctionPeriod.endDate}
+  ${auctionEnd}=  Отримати дані із тендера   ${username}   auctionPeriod.endDate  ${TENDER['LOT_ID']}
+  Дочекатись дати  ${auctionEnd}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
 
