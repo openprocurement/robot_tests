@@ -249,19 +249,19 @@ Resource           resource.robot
   Set Suite Variable  ${ADDITIONAL_CLASS_NUM}
   Звірити поле тендера  ${viewer}
   ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      items[${ITEMS_NUM}].additionalClassifications.[${ADDITIONAL_CLASS_NUM}].description
+  ...      items[${ITEMS_NUM}].additionalClassifications[${ADDITIONAL_CLASS_NUM}].description
 
 
 Відображення ідентифікатора додаткової класифікації номенклатури закупівлі
   Звірити поле тендера  ${viewer}
   ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      items[${ITEMS_NUM}].additionalClassifications.[${ADDITIONAL_CLASS_NUM}].id
+  ...      items[${ITEMS_NUM}].additionalClassifications[${ADDITIONAL_CLASS_NUM}].id
 
 
 Відображення схеми додаткової класифікації номенклатури закупівлі
   Звірити поле тендера  ${viewer}
   ...      ${USERS.users['${tender_owner}'].initial_data}
-  ...      items[${ITEMS_NUM}].additionalClassifications.[${ADDITIONAL_CLASS_NUM}].scheme
+  ...      items[${ITEMS_NUM}].additionalClassifications[${ADDITIONAL_CLASS_NUM}].scheme
 
 
 Відображення схеми класифікації номенклатури закупівлі
