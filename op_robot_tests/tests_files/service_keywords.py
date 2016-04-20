@@ -369,9 +369,9 @@ def munch_dict(arg=None, data=False):
 
 
 def get_id_from_object(obj):
-    obj_id = re.match(r'(^[filq]-[0-9a-fA-F]{8}): ', obj['title'])
+    obj_id = re.match(r'(^[filq]-[0-9a-fA-F]{8}): ', obj.get('title', ''))
     if not obj_id:
-        obj_id = re.match(r'(^[filq]-[0-9a-fA-F]{8}): ', obj['description'])
+        obj_id = re.match(r'(^[filq]-[0-9a-fA-F]{8}): ', obj.get('description', ''))
     return obj_id.group(1)
 
 
