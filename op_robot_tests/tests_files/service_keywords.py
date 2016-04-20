@@ -12,6 +12,7 @@ from robot.errors import ExecutionFailed
 from robot.libraries.BuiltIn import BuiltIn
 from robot.output import LOGGER
 from robot.output.loggerhelper import Message
+from math import radians, cos, sin, asin, sqrt
 # These imports are not pointless. Robot's resource and testsuite files
 # can access them by simply importing library "service_keywords".
 # Please ignore the warning given by Flake8 or other linter.
@@ -54,6 +55,8 @@ import os
 from barbecue import chef
 import re
 
+NUM_TYPES = (int, long, float)
+
 
 def get_current_tzdate():
     return get_now().strftime('%Y-%m-%d %H:%M:%S.%f')
@@ -68,18 +71,45 @@ def get_file_contents(path):
         return unicode(f.read()) or u''
 
 
-def compare_date(date1, date2, accuracy):
-    date1 = parse(date1)
-    date2 = parse(date2)
-    if date1.tzinfo is None:
-        date1 = TZ.localize(date1)
-    if date2.tzinfo is None:
-        date2 = TZ.localize(date2)
-
-    delta = (date1 - date2).total_seconds()
+def compare_date(left, right, accuracy):
+    left = parse(left)
+    right = parse(right)
+    if left.tzinfo is None:
+        left = TZ.localize(left)
+    if right.tzinfo is None:
+        right = TZ.localize(right)
+    delta = (left - right).total_seconds()
     if abs(delta) > accuracy:
         return False
     return True
+
+
+def compare_coordinates(left_lat, left_lon, right_lat, right_lon, accuracy):
+    for key, value in {'left_lat': left_lat, 'left_lon': left_lon, 'right_lat': right_lat, 'right_lon': right_lon}.iteritems():
+        if not isinstance(value, NUM_TYPES):
+            raise TypeError("Invalid type for coordinate '{0}'. "
+                            "Expected one of {1}, got {2}".format(
+                                key, str(NUM_TYPES), str(type(value))))
+    distance = haversine(left_lat, left_lon, right_lat, right_lon)
+    if distance > accuracy:
+        return False
+    return True
+
+
+def haversine(left_lat, left_lon, right_lat, right_lon):
+    """
+    Calculate the great circle distance between two points
+    on the earth (specified in decimal degrees)
+    """
+    # convert decimal degrees to radians
+    left_lon, left_lat, right_lon, right_lat = map(radians, [left_lon, left_lat, right_lon, right_lat])
+    # haversine formula
+    dlon = right_lon - left_lon
+    dlat = right_lat - left_lat
+    a = sin(dlat/2)**2 + cos(left_lat) * cos(right_lat) * sin(dlon/2)**2
+    c = 2 * asin(sqrt(a))
+    km = 6367 * c
+    return km
 
 
 def log_object_data(data, file_name=None, format="yaml", update=False):
@@ -163,8 +193,6 @@ def compute_intrs(brokers_data, used_brokers):
     does not contain ``Default`` entry.
     Using `load_data_from` with ``mode='brokers'`` is recommended.
     """
-    num_types = (int, long, float)
-
     def recur(l, r):
         l, r = deepcopy(l), deepcopy(r)
         if isinstance(l, list) and isinstance(r, list) and len(l) == len(r):
@@ -172,7 +200,7 @@ def compute_intrs(brokers_data, used_brokers):
             for ll, rr in zip(l, r):
                 lst.append(recur(ll, rr))
             return lst
-        elif isinstance(l, num_types) and isinstance(r, num_types):
+        elif isinstance(l, NUM_TYPES) and isinstance(r, NUM_TYPES):
             if l == r:
                 return l
             if l > r:
