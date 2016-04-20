@@ -212,7 +212,7 @@ users:
         password: 111111
         browser:  chrome
         position: [750, 0]
-        size:     [740, 550]
+        size:     [1280, 800]
     uatenders_Provider:
         broker:   uatenders
         homepage: "http://dev.zakupki.com.ua/tender/list"
@@ -220,7 +220,7 @@ users:
         password: 111111
         browser:  chrome
         position: [750, 0]
-        size:     [740, 550]
+        size:     [1280, 800]
     uatenders_Viewer:
         broker:   uatenders
         homepage: "http://dev.zakupki.com.ua/tender/list"
@@ -228,7 +228,7 @@ users:
         password: 111111
         browser:  chrome
         position: [750, 0]
-        size:     [740, 550]
+        size:     [1280, 800]
     ubiz_Owner:
         broker:   ubiz
         homepage: "http://fgvfo.com.ua/user/purchase"
