@@ -12,6 +12,8 @@ from robot.errors import ExecutionFailed
 from robot.libraries.BuiltIn import BuiltIn
 from robot.output import LOGGER
 from robot.output.loggerhelper import Message
+from haversine import haversine
+from math import radians, cos, sin, asin, sqrt
 # These imports are not pointless. Robot's resource and testsuite files
 # can access them by simply importing library "service_keywords".
 # Please ignore the warning given by Flake8 or other linter.
@@ -54,6 +56,8 @@ import os
 from barbecue import chef
 import re
 
+NUM_TYPES = (int, long, float)
+
 
 def get_current_tzdate():
     return get_now().strftime('%Y-%m-%d %H:%M:%S.%f')
@@ -68,20 +72,20 @@ def get_file_contents(path):
         return unicode(f.read()) or u''
 
 
-def compare_date(date1, date2, accuracy="minute", absolute_delta=True):
+def compare_date(left, right, accuracy="minute", absolute_delta=True):
     '''Compares dates with specified accuracy
 
     Before comparison dates are parsed into datetime.datetime format
     and localized.
 
-    :param date1:           First date
-    :param date2:           Second date
+    :param left:            First date
+    :param right:           Second date
     :param accuracy:        Max difference between dates to consider them equal
                             Default value   - "minute"
                             Possible values - "day", "hour", "minute" or float value
                             of seconds
     :param absolute_delta:  Type of comparison. If set to True, then no matter which date order. If set to
-                            False then date2 must be lower then date1 for accuracy value.
+                            False then right must be lower then left for accuracy value.
                             Default value   - True
                             Possible values - True and False or something what can be casted into them
     :returns:               Boolean value
@@ -91,15 +95,15 @@ def compare_date(date1, date2, accuracy="minute", absolute_delta=True):
                             given and accuracy will be set to 60.
 
     '''
-    date1 = parse(date1)
-    date2 = parse(date2)
+    left = parse(left)
+    right = parse(right)
 
-    if date1.tzinfo is None:
-        date1 = TZ.localize(date1)
-    if date2.tzinfo is None:
-        date2 = TZ.localize(date2)
+    if left.tzinfo is None:
+        left = TZ.localize(left)
+    if right.tzinfo is None:
+        right = TZ.localize(right)
 
-    delta = (date1 - date2).total_seconds()
+    delta = (left - right).total_seconds()
 
     if accuracy == "day":
         accuracy = 24 * 60 * 60 - 1
@@ -116,6 +120,38 @@ def compare_date(date1, date2, accuracy="minute", absolute_delta=True):
     if absolute_delta:
         delta = abs(delta)
     if delta > accuracy:
+        return False
+    return True
+
+
+def compare_coordinates(left_lat, left_lon, right_lat, right_lon, accuracy=0.1):
+    '''Compares dates with specified accuracy
+
+    Before comparison dates are parsed into datetime.datetime format
+    and localized.
+
+    :param left_lat:        First coordinate latitude
+    :param left_lon:        First coordinate longitude
+    :param right_lat:       Second coordinate latitude
+    :param right_lon:       Second coordinate longitude
+    :param accuracy:        Max difference between coordinates to consider them equal
+                            Default value   - 0.1
+                            Possible values - float or integer value of kilometers
+
+    :returns:               Boolean value
+
+    :error:                 ValueError when there is problem with converting accuracy
+                            into float value. When it will be catched warning will be
+                            given and accuracy will be set to 0.1.
+
+    '''
+    for key, value in {'left_lat': left_lat, 'left_lon': left_lon, 'right_lat': right_lat, 'right_lon': right_lon}.iteritems():
+        if not isinstance(value, NUM_TYPES):
+            raise TypeError("Invalid type for coordinate '{0}'. "
+                            "Expected one of {1}, got {2}".format(
+                                key, str(NUM_TYPES), str(type(value))))
+    distance = haversine((left_lat, left_lon), (right_lat, right_lon))
+    if distance > accuracy:
         return False
     return True
 
@@ -201,8 +237,6 @@ def compute_intrs(brokers_data, used_brokers):
     does not contain ``Default`` entry.
     Using `load_data_from` with ``mode='brokers'`` is recommended.
     """
-    num_types = (int, long, float)
-
     def recur(l, r):
         l, r = deepcopy(l), deepcopy(r)
         if isinstance(l, list) and isinstance(r, list) and len(l) == len(r):
@@ -210,7 +244,7 @@ def compute_intrs(brokers_data, used_brokers):
             for ll, rr in zip(l, r):
                 lst.append(recur(ll, rr))
             return lst
-        elif isinstance(l, num_types) and isinstance(r, num_types):
+        elif isinstance(l, NUM_TYPES) and isinstance(r, NUM_TYPES):
             if l == r:
                 return l
             if l > r:

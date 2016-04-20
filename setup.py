@@ -33,7 +33,8 @@ setup(name='op_robot_tests',
           'pytz',
           'parse',
           'chromedriver',
-          'barbecue'
+          'barbecue',
+          'haversine'
       ],
       entry_points={
           'console_scripts': [
