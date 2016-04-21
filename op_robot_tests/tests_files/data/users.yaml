@@ -287,3 +287,35 @@ users:
         browser:  firefox
         position: [70, 70]
         size:     [1366, 800]
+    proztorg_Owner:
+        broker:   proztorg
+        homepage: "http://proztorg.com.ua/user/statePurchase"
+        login:    i.brus@ts.com
+        password: zloyvizl
+        browser:  chrome
+        position: [0, 0]
+        size:     [1000, 500]
+    proztorg_Provider1:
+        broker:   proztorg
+        homepage: "http://proztorg.com.ua/user/statePurchase"
+        login:    vizl@te.net.ua
+        password: zloyvizl
+        browser:  chrome
+        position: [0, 0]
+        size:     [1000, 500]
+    proztorg_Provider2:
+        broker:   proztorg
+        homepage: "http://proztorg.com.ua/user/statePurchase"
+        login:    brus.andreevich@gmail.com
+        password: zloyvizl
+        browser:  chrome
+        position: [0, 0]
+        size:     [1000, 500]
+    proztorg_Viewer:
+        broker:   proztorg
+        homepage: "http://proztorg.com.ua/user/statePurchase"
+        login:    yuliya.belousova@mail.ru
+        password: 646086646086
+        browser:  chrome
+        position: [0, 0]
+        size:     [1000, 500]
