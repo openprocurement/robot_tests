@@ -11,8 +11,8 @@ Suite Teardown  Test Suite Teardown
 
 *** Variables ***
 ${mode}         single
-${role}         viewer
-${broker}       Quinta
+@{used_roles}   tender_owner  provider  viewer
+
 
 *** Test Cases ***
 Можливість оголосити однопредметний тендер

@@ -11,6 +11,9 @@ users:
     Tender_Viewer:
         api_key:  ""
         broker:   Quinta
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
     E-tender_Owner:
         broker:   E-tender
         homepage: "http://bid.uat.e-tender.biz/#/"
@@ -89,7 +92,7 @@ users:
         size:     [800, 700]
     Newtend_Viewer:
         broker:   Newtend
-        homepage: "http://openprocurement:test@dev23.newtend.com/opc/tenders"
+        homepage: "http://dev23.newtend.com/opc"
         browser:  chrome
         position: [800, 400]
         size:     [800, 700]
