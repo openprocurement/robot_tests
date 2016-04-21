@@ -173,3 +173,15 @@ zakpro:
         tender_owner:   zakpro_Owner
         viewer:         zakpro_Viewer
     timeout_on_wait: 300
+proztorg:
+    intervals:
+        default:
+            enquiry: [0, 5]
+    keywords_file: proztorg
+    homepage: 'http://proztorg.com.ua/'
+    roles:
+        provider:       proztorg_Provider1
+        provider1:      proztorg_Provider2
+        tender_owner:   proztorg_Owner
+        viewer:         proztorg_Viewer
+    timeout_on_wait: 50
