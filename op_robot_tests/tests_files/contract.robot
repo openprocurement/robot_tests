@@ -5,8 +5,7 @@ Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
 *** Variables ***
-${role}         viewer
-${broker}       Quinta
+@{used_roles}   tender_owner  viewer
 
 
 *** Test Cases ***
@@ -17,8 +16,7 @@ ${broker}       Quinta
   ...      minimal
   Завантажити дані про тендер
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
-  \   ${resp}=  Викликати для учасника  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
-  Log  ${resp}
+  \   Викликати для учасника  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
 
 ##############################################################################################
 #             CONTRACT

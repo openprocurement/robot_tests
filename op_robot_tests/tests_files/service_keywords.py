@@ -16,13 +16,10 @@ from robot.output.loggerhelper import Message
 # can access them by simply importing library "service_keywords".
 # Please ignore the warning given by Flake8 or other linter.
 from .initial_data import (
-    auction_bid,
     create_fake_doc,
     create_fake_sentence,
-    test_additional_items_data,
     test_award_data,
     test_bid_data,
-    test_bid_data_meat_tender,
     test_cancel_claim_data,
     test_cancel_tender_data,
     test_change_cancellation_document_field_data,
@@ -40,14 +37,13 @@ from .initial_data import (
     test_lot_data,
     test_lot_document_data,
     test_lot_question_data,
-    test_lots_bid_data,
-    test_meat_tender_data,
     test_question_answer_data,
     test_question_data,
     test_submit_claim_data,
     test_supplier_data,
     test_tender_data,
     test_tender_data_limited,
+    test_tender_data_meat,
     test_tender_data_multiple_items,
     test_tender_data_multiple_lots,
     test_tender_data_openeu,
@@ -64,7 +60,7 @@ def get_current_tzdate():
 
 
 def add_minutes_to_date(date, minutes):
-    return (parse_date(date) + timedelta(minutes=int(minutes))).isoformat()
+    return (parse(date) + timedelta(minutes=float(minutes))).isoformat()
 
 
 def get_file_contents(path):
@@ -72,16 +68,54 @@ def get_file_contents(path):
         return unicode(f.read()) or u''
 
 
-def compare_date(date1, date2, accuracy):
+def compare_date(date1, date2, accuracy="minute", absolute_delta=True):
+    '''Compares dates with specified accuracy
+
+    Before comparison dates are parsed into datetime.datetime format
+    and localized.
+
+    :param date1:           First date
+    :param date2:           Second date
+    :param accuracy:        Max difference between dates to consider them equal
+                            Default value   - "minute"
+                            Possible values - "day", "hour", "minute" or float value
+                            of seconds
+    :param absolute_delta:  Type of comparison. If set to True, then no matter which date order. If set to
+                            False then date2 must be lower then date1 for accuracy value.
+                            Default value   - True
+                            Possible values - True and False or something what can be casted into them
+    :returns:               Boolean value
+
+    :error:                 ValueError when there is problem with converting accuracy
+                            into float value. When it will be catched warning will be
+                            given and accuracy will be set to 60.
+
+    '''
     date1 = parse(date1)
     date2 = parse(date2)
+
     if date1.tzinfo is None:
         date1 = TZ.localize(date1)
     if date2.tzinfo is None:
         date2 = TZ.localize(date2)
 
     delta = (date1 - date2).total_seconds()
-    if abs(delta) > accuracy:
+
+    if accuracy == "day":
+        accuracy = 24 * 60 * 60 - 1
+    elif accuracy == "hour":
+        accuracy = 60 * 60 - 1
+    elif accuracy == "minute":
+        accuracy = 60 - 1
+    else:
+        try:
+            accuracy = float(accuracy)
+        except ValueError:
+            LOGGER.log_message(Message("Could not convert from {} to float. Accuracy is set to 60 seconds.".format(accuracy), "WARN"))
+            accuracy = 60
+    if absolute_delta:
+        delta = abs(delta)
+    if delta > accuracy:
         return False
     return True
 
@@ -142,14 +176,65 @@ def munch_to_object(data, format="yaml"):
         return data.toYAML(allow_unicode=True, default_flow_style=False)
 
 
-def load_initial_data_from(file_name):
+def load_data_from(file_name, mode=None):
     if not os.path.exists(file_name):
         file_name = os.path.join(os.path.dirname(__file__), 'data', file_name)
     with open(file_name) as file_obj:
         if file_name.endswith(".json"):
-            return Munch.fromDict(load(file_obj))
+            file_data = Munch.fromDict(load(file_obj))
         elif file_name.endswith(".yaml"):
-            return fromYAML(file_obj)
+            file_data = fromYAML(file_obj)
+    if mode == "brokers":
+        default = file_data.pop('Default')
+        brokers = {}
+        for k, v in file_data.iteritems():
+            brokers[k] = merge_dicts(default, v)
+        return brokers
+    else:
+        return file_data
+
+
+def compute_intrs(brokers_data, used_brokers):
+    """Compute optimal values for period intervals.
+
+    Notice: This function is maximally effective if ``brokers_data``
+    does not contain ``Default`` entry.
+    Using `load_data_from` with ``mode='brokers'`` is recommended.
+    """
+    num_types = (int, long, float)
+
+    def recur(l, r):
+        l, r = deepcopy(l), deepcopy(r)
+        if isinstance(l, list) and isinstance(r, list) and len(l) == len(r):
+            lst = []
+            for ll, rr in zip(l, r):
+                lst.append(recur(ll, rr))
+            return lst
+        elif isinstance(l, num_types) and isinstance(r, num_types):
+            if l == r:
+                return l
+            if l > r:
+                return l
+            if l < r:
+                return r
+        elif isinstance(l, dict) and isinstance(r, dict):
+            for k, v in r.iteritems():
+                if k not in l.keys():
+                    l[k] = v
+                else:
+                    l[k] = recur(l[k], v)
+            return l
+        else:
+            raise TypeError("Couldn't recur({0}, {1})".format(
+                str(type(l)), str(type(r))))
+
+    intrs = []
+    for i in used_brokers:
+        intrs.append(brokers_data[i]['intervals'])
+    result = intrs.pop(0)
+    for i in intrs:
+        result = recur(result, i)
+    return result
 
 
 def prepare_test_tender_data(procedure_intervals, mode):
@@ -171,20 +256,24 @@ def prepare_test_tender_data(procedure_intervals, mode):
         assert 'accelerator' not in intervals.keys(), \
                "Accelerator is not available for mode '{0}'".format(mode)
 
-    if mode == 'single':
-        return munchify({'data': test_tender_data(intervals)})
-    elif mode == 'multi':
+    if mode == 'meat':
+        return munchify({'data': test_tender_data_meat(intervals)})
+    elif mode == 'multiItem':
         return munchify({'data': test_tender_data_multiple_items(intervals)})
-    elif mode == 'reporting':
-        return munchify({'data': test_tender_data_limited(intervals, 'reporting')})
+    elif mode == 'multiLot':
+        return munchify({'data': test_tender_data_multiple_lots(intervals)})
     elif mode == 'negotiation':
         return munchify({'data': test_tender_data_limited(intervals, 'negotiation')})
     elif mode == 'negotiation.quick':
         return munchify({'data': test_tender_data_limited(intervals, 'negotiation.quick')})
-    elif mode == 'openua':
-        return munchify({'data': test_tender_data_openua(intervals)})
     elif mode == 'openeu':
         return munchify({'data': test_tender_data_openeu(intervals)})
+    elif mode == 'openua':
+        return munchify({'data': test_tender_data_openua(intervals)})
+    elif mode == 'reporting':
+        return munchify({'data': test_tender_data_limited(intervals, 'reporting')})
+    elif mode == 'single':
+        return munchify({'data': test_tender_data(intervals)})
     raise ValueError("Invalid mode for prepare_test_tender_data")
 
 
@@ -205,14 +294,6 @@ def run_keyword_and_ignore_keyword_definitions(name, *args, **kwargs):
     except ExecutionFailed as e:
         status, _ = "FAIL", e.message
     return status, _
-
-
-def set_tender_periods(tender):
-    now = get_now()
-    tender.data.enquiryPeriod.endDate = (now + timedelta(minutes=2)).isoformat()
-    tender.data.tenderPeriod.startDate = (now + timedelta(minutes=2)).isoformat()
-    tender.data.tenderPeriod.endDate = (now + timedelta(minutes=4)).isoformat()
-    return tender
 
 
 def set_access_key(tender, access_token):
@@ -279,57 +360,6 @@ def create_data_dict(path_to_value=None, value=None):
     return data_dict
 
 
-def cancel_tender(cancellation_reason):
-    return {
-        'data': {
-            'reason': cancellation_reason
-        }
-    }
-
-
-def confirm_supplier(supplier_id):
-    return {
-        "data": {
-            "status": "active",
-            "id": supplier_id
-        }
-    }
-
-
-def change_cancellation_document_field(key, value):
-    data = {
-        "data": {
-            key: value
-        }
-    }
-    return data
-
-
-def confirm_cancellation(cancellation_id):
-    data = {
-        "data": {
-            "status": "active",
-            "id": cancellation_id
-        }
-    }
-    return data
-
-
-def confirm_contract(contract_id):
-    data = {
-        "data": {
-            "id": contract_id,
-            "status": "active"
-        }
-    }
-    return data
-
-
-def additional_items_data(tender_id, access_token):
-    data = {"access": {"token": access_token}, "data": {"id": tender_id, "items": [{"unit": {"code": "MON", "name": "month"}, "quantity": 9}]}}
-    return data
-
-
 def munch_dict(arg=None, data=False):
     if arg is None:
         arg = {}
@@ -338,8 +368,11 @@ def munch_dict(arg=None, data=False):
     return munchify(arg)
 
 
-def get_id_from_field(field):
-    return re.match(r'(^[filq]-[0-9a-fA-F]{8}): ', field).group(1)
+def get_id_from_object(obj):
+    obj_id = re.match(r'(^[filq]-[0-9a-fA-F]{8}): ', obj.get('title', ''))
+    if not obj_id:
+        obj_id = re.match(r'(^[filq]-[0-9a-fA-F]{8}): ', obj.get('description', ''))
+    return obj_id.group(1)
 
 
 def get_object_type_by_id(object_id):
@@ -348,12 +381,14 @@ def get_object_type_by_id(object_id):
 
 
 def get_object_index_by_id(data, object_id):
+    if not data:
+        return 0
     for index, element in enumerate(data):
-        element_id = get_id_from_field(element['description'])
+        element_id = get_id_from_object(element)
         if element_id == object_id:
             break
     else:
-        index = 0
+        index += 1
     return index
 
 # GUI Frontends common
