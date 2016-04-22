@@ -190,14 +190,6 @@ def test_tender_data_limited(intervals, procurement_method_type):
     return data
 
 
-def test_tender_data_multiple_items(intervals):
-    t_data = test_tender_data(intervals)
-    for _ in range(4):
-        new_item = test_item_data()
-        t_data['items'].append(new_item)
-    return t_data
-
-
 def test_tender_data_multiple_lots(intervals):
     tender = test_tender_data(intervals)
     first_lot_id = "3c8f387879de4c38957402dbdb8b31af"
@@ -290,6 +282,11 @@ def test_question_data():
         }
     })
     return data
+
+
+def test_related_question(question, relation, obj_id):
+    question.data.update({"questionOf": relation, "relatedItem": obj_id})
+    return munchify(question)
 
 
 def test_question_answer_data():
@@ -431,7 +428,7 @@ def test_complaint_reply_data():
     })
 
 
-def test_bid_data(mode):
+def test_bid_data(mode, number_of_lots):
     bid = munchify({
         "data": {
             "tenderers": [
@@ -461,9 +458,9 @@ def test_bid_data(mode):
     if 'open' in mode:
         bid.data['selfEligible'] = True
         bid.data['selfQualified'] = True
-    if mode == 'multiLot':
+    if mode == 'with_lots':
         bid.data.lotValues = list()
-        for _ in range(2):
+        for _ in range(number_of_lots):
             bid.data.lotValues.append(test_bid_value())
     else:
         bid.data.update(test_bid_value())
@@ -639,11 +636,6 @@ def test_lot_data():
 def test_lot_document_data(document, lot_id):
     document.data.update({"documentOf": "lot", "relatedItem": lot_id})
     return munchify(document)
-
-
-def test_lot_question_data(question, lot_id):
-    question.data.update({"questionOf": "lot", "relatedItem": lot_id})
-    return munchify(question)
 
 
 def test_lot_complaint_data(complaint, lot_id):
