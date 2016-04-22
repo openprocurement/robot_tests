@@ -95,7 +95,7 @@ ${mode}         meat
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${bid}=  Підготувати дані для подання пропозиції
+  ${bid}=  Підготувати дані для подання пропозиції  ${USERS.users['${tender_owner}'].initial_data.data.value.amount}
   ${bidresponses}=  Create Dictionary  bid=${bid}
   Set To Dictionary  ${USERS.users['${provider}']}   bidresponses=${bidresponses}
   ${resp}=  Викликати для учасника   ${provider}   Подати цінову пропозицію   ${TENDER['TENDER_UAID']}   ${bid}
@@ -129,7 +129,7 @@ ${mode}         meat
   ...      ${USERS.users['${provider1}'].broker}
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider1}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${bid}=  Підготувати дані для подання пропозиції
+  ${bid}=  Підготувати дані для подання пропозиції  ${USERS.users['${tender_owner}'].initial_data.data.value.amount}
   Log  ${bid}
   ${bidresponses}=  Create Dictionary
   Set To Dictionary  ${bidresponses}                 bid  ${bid}

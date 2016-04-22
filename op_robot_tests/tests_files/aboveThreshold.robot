@@ -115,7 +115,7 @@ ${mode}         openeu
   ...      ${USERS.users['${provider}'].broker}
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${bid}=  Підготувати дані для подання пропозиції
+  ${bid}=  Підготувати дані для подання пропозиції  ${USERS.users['${tender_owner}'].initial_data.data.value.amount}
   Log  ${bid}
   ${bidresponses}=  Create Dictionary
   Set To Dictionary  ${bidresponses}  bid=${bid}
@@ -199,7 +199,7 @@ ${mode}         openeu
   ...      ${USERS.users['${provider1}'].broker}
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider1}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${bid}=  Підготувати дані для подання пропозиції
+  ${bid}=  Підготувати дані для подання пропозиції  ${USERS.users['${tender_owner}'].initial_data.data.value.amount}
   Log  ${bid}
   ${bidresponses}=  Create Dictionary
   Set To Dictionary  ${bidresponses}  bid=${bid}
@@ -255,7 +255,7 @@ ${mode}         openeu
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${bid}=  Підготувати дані для подання пропозиції
+  ${bid}=  Підготувати дані для подання пропозиції  ${USERS.users['${tender_owner}'].initial_data.data.value.amount}
   Log  ${bid}
   ${bidresponses}=  Create Dictionary
   Set To Dictionary  ${bidresponses}  bid=${bid}
@@ -384,7 +384,7 @@ ${mode}         openeu
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${bid}=  Підготувати дані для подання пропозиції
+  ${bid}=  Підготувати дані для подання пропозиції  ${USERS.users['${tender_owner}'].initial_data.data.value.amount}
   Log  ${bid}
   ${bidresponses}=  Create Dictionary
   Set To Dictionary  ${bidresponses}  bid=${bid}

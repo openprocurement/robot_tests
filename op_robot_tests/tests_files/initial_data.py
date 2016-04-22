@@ -130,7 +130,7 @@ def test_tender_data_multiple_lots(intervals):
     tender = test_tender_data(intervals)
     first_lot_id = "3c8f387879de4c38957402dbdb8b31af"
     tender['items'][0]['relatedLot'] = first_lot_id
-    tender['lots'] = [test_lot_data()]
+    tender['lots'] = [test_lot_data(tender['value']['amount'])]
     tender['lots'][0]['id'] = first_lot_id
     return munchify(tender)
 
@@ -299,25 +299,25 @@ def test_complaint_reply_data():
     })
 
 
-def test_bid_data(mode):
+def test_bid_data(mode, max_value_amount):
     bid = munchify({
         "data": {
             "tenderers": [
                 fake.procuringEntity()
             ]
         }
-    }
-    bid["data"]["tenderers"][0]["address"]["countryName_en"] = translate_country_en(bid["data"]["tenderers"][0]["address"]["countryName"])
-    bid["data"]["tenderers"][0]["address"]["countryName_ru"] = translate_country_ru(bid["data"]["tenderers"][0]["address"]["countryName"])
+    })
+    bid.data.tenderers[0].address.countryName_en = translate_country_en(bid.data.tenderers[0].address.countryName)
+    bid.data.tenderers[0].address.countryName_ru = translate_country_ru(bid.data.tenderers[0].address.countryName)
     if 'open' in mode:
         bid.data['selfEligible'] = True
         bid.data['selfQualified'] = True
     if mode == 'multiLot':
         bid.data.lotValues = list()
         for _ in range(2):
-            bid.data.lotValues.append(test_bid_value())
+            bid.data.lotValues.append(test_bid_value(max_value_amount))
     else:
-        bid.data.update(test_bid_value())
+        bid.data.update(test_bid_value(max_value_amount))
     if mode == 'meat':
         bid.data.update(test_bid_params())
     return bid
@@ -337,11 +337,11 @@ def test_bid_params():
         ]
     })
 
-def test_bid_value():
+def test_bid_value(max_value_amount):
     return munchify({
                 "value": {
                     "currency": "UAH",
-                    "amount": fake.random_int(max=1999),
+                    "amount": round(random.uniform(1, max_value_amount), 2),
                     "valueAddedTaxIncluded": True
                 }
             })
@@ -410,8 +410,8 @@ def test_invalid_features_data():
     ]
 
 
-def test_lot_data():
-    value_amount = round(random.uniform(3000, 250000000000), 2) #max value equals to budget of Ukraine in hryvnias
+def test_lot_data(max_value_amount):
+    value_amount = round(random.uniform(1, max_value_amount), 2)
     return munchify(
         {
             "description": fake.description(),
