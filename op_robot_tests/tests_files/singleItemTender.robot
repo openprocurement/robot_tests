@@ -369,7 +369,7 @@ ${mode}         single
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
-  ${bid}=  Підготувати дані для подання пропозиції
+  ${bid}=  Підготувати дані для подання пропозиції  ${USERS.users['${tender_owner}'].initial_data.data.value.amount}
   Log  ${bid}
   ${bidresponses}=  Create Dictionary  bid=${bid}
   Set To Dictionary  ${USERS.users['${provider}']}  bidresponses=${bidresponses}
@@ -420,7 +420,7 @@ ${mode}         single
   ...      ${USERS.users['${provider}'].broker}
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${bid}=  Підготувати дані для подання пропозиції
+  ${bid}=  Підготувати дані для подання пропозиції  ${USERS.users['${tender_owner}'].initial_data.data.value.amount}
   Log  ${bid}
   ${bidresponses}=  Create Dictionary  bid=${bid}
   Set To Dictionary  ${USERS.users['${provider}']}  bidresponses=${bidresponses}
@@ -445,7 +445,7 @@ ${mode}         single
   ...      minimal
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${bid}=  Підготувати дані для подання пропозиції
+  ${bid}=  Підготувати дані для подання пропозиції  ${USERS.users['${tender_owner}'].initial_data.data.value.amount}
   Log  ${bid}
   ${bidresponses}=  Create Dictionary  bid=${bid}
   Set To Dictionary  ${USERS.users['${provider}']}  bidresponses=${bidresponses}
@@ -516,7 +516,7 @@ ${mode}         single
   ...      minimal
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider1}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${bid}=  Підготувати дані для подання пропозиції
+  ${bid}=  Підготувати дані для подання пропозиції  ${USERS.users['${tender_owner}'].initial_data.data.value.amount}
   Log  ${bid}
   ${bidresponses}=  Create Dictionary  bid=${bid}
   Set To Dictionary  ${USERS.users['${provider1}']}  bidresponses=${bidresponses}
