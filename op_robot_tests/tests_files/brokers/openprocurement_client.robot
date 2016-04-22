@@ -115,29 +115,11 @@ Library  openprocurement_client_helper.py
 
 
 Видалити предмет закупівлі
-  [Arguments]  ${username}  ${tender_uaid}  ${item_id}
+  [Arguments]  ${username}  ${tender_uaid}  ${item_id}  ${lot_id}=${None}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${item_index}=  get_object_index_by_id  ${tender.data['items']}  ${item_id}
   Remove From List  ${tender.data['items']}  ${item_index}
   Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
-
-
-Задати питання
-  [Arguments]  ${username}  ${tender_uaid}  ${question}
-  Log  ${question}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${biddingresponse}=  Call Method  ${USERS.users['${username}'].client}  create_question  ${tender}  ${question}
-  [return]  ${biddingresponse}
-
-
-Відповісти на питання
-  [Arguments]  ${username}  ${tender_uaid}  ${question}  ${answer_data}  ${question_id}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
-  ${answer_data.data.id}=  openprocurement_client.Отримати інформацію із запитання  ${username}  ${question_id}  id
-  ${question_with_answer}=  Call Method  ${USERS.users['${username}'].client}  patch_question  ${tender}  ${answer_data}
-  Log object data   ${question_with_answer}  question_with_answer
-  [return]  ${question_with_answer}
 
 
 Подати цінову пропозицію
@@ -308,16 +290,6 @@ Library  openprocurement_client_helper.py
   Call Method   ${USERS.users['${username}'].client}   patch_tender   ${tender}
 
 
-Задати питання до лоту
-  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}  ${question}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${lot_index}=  get_object_index_by_id  ${tender.data.lots}  ${lot_id}
-  ${lot_id}=  Get Variable Value  ${tender.data.lots[${lot_index}].id}
-  ${question}=  test_lot_question_data  ${question}  ${lot_id}
-  ${biddingresponse}=  Call Method  ${USERS.users['${username}'].client}  create_question  ${tender}  ${question}
-  [return]  ${biddingresponse}
-
-
 Завантажити документ в лот
   [Arguments]  ${username}  ${filepath}  ${tender_uaid}  ${lot_id}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
@@ -347,6 +319,49 @@ Library  openprocurement_client_helper.py
   \    Set To Dictionary  ${bid.data.lotValues[${index}]}  relatedLot=${lot_id}
   ${reply}=  openprocurement_client.Подати цінову пропозицію  ${username}  ${tender_uaid}  ${bid}
   [return]  ${reply}
+
+
+##############################################################################
+#             Questions
+##############################################################################
+
+Задати питання на предмет
+  [Arguments]  ${username}  ${tender_uaid}  ${item_id}  ${question}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${item_index}=  get_object_index_by_id  ${tender.data['items']}  ${item_id}
+  ${item_id}=  Get Variable Value  ${tender.data['items'][${item_index}].id}
+  ${question}=  test_relation_question  ${question}  item  ${item_id}
+  Log  ${question}
+  ${biddingresponse}=  Call Method  ${USERS.users['${username}'].client}  create_question  ${tender}  ${question}
+  [return]  ${biddingresponse}
+
+
+Задати питання на лот
+  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}  ${question}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${lot_index}=  get_object_index_by_id  ${tender.data.lots}  ${lot_id}
+  ${lot_id}=  Get Variable Value  ${tender.data.lots[${lot_index}].id}
+  ${question}=  test_relation_question  ${question}  lot  ${lot_id}
+  ${biddingresponse}=  Call Method  ${USERS.users['${username}'].client}  create_question  ${tender}  ${question}
+  [return]  ${biddingresponse}
+
+
+Задати питання
+  [Arguments]  ${username}  ${tender_uaid}  ${question}
+  Log  ${question}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${biddingresponse}=  Call Method  ${USERS.users['${username}'].client}  create_question  ${tender}  ${question}
+  [return]  ${biddingresponse}
+
+
+Відповісти на питання
+  [Arguments]  ${username}  ${tender_uaid}  ${question}  ${answer_data}  ${question_id}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
+  ${answer_data.data.id}=  openprocurement_client.Отримати інформацію із запитання  ${username}  ${question_id}  id
+  ${question_with_answer}=  Call Method  ${USERS.users['${username}'].client}  patch_question  ${tender}  ${answer_data}
+  Log object data   ${question_with_answer}  question_with_answer
+  [return]  ${question_with_answer}
 
 ##############################################################################
 #             Claims
