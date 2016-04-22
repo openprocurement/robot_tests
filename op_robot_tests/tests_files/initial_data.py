@@ -468,7 +468,7 @@ def test_bid_data(mode):
     else:
         bid.data.update(test_bid_value())
     if mode == 'meat':
-        bid.update(test_bid_params())
+        bid.data.update(test_bid_params())
     return bid
 
 
