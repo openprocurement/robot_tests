@@ -39,6 +39,7 @@ setup(name='op_robot_tests',
       entry_points={
           'console_scripts': [
               'openprocurement_tests = op_robot_tests.runner:runner',
+              'op_tests = op_robot_tests.runner:runner',
           ],
       }
       )
