@@ -54,6 +54,7 @@ Set Suite Variable With Default Value
   Log  ${commit}
   Log  ${repo}
   Log  ${branch}
+  Log  ${status}
   Log  ${diff}
   Log  ${reflog}
 
