@@ -652,7 +652,11 @@ Require Failure
 
 
 Оновити LAST_MODIFICATION_DATE
+  [Documentation]
+  ...      Variable ``${TEST_STATUS}`` is only available in test case teardown.
+  ...      When we call this keyword from elswere, we need to presume that
+  ...      test status is ``PASS`` (since previous keywords passed and this
+  ...      one was called).
   ${LAST_MODIFICATION_DATE}=  Get Current TZdate
-  ${status}=  Get Variable Value  ${TEST_STATUS}
+  ${status}=  Get Variable Value  ${TEST_STATUS}  PASS
   Run Keyword If  '${status}' == 'PASS'  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE=${LAST_MODIFICATION_DATE}
-  ...         ELSE IF  '${status}' == '${Empty}'  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE=${LAST_MODIFICATION_DATE}
