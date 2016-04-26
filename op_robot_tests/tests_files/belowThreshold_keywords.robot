@@ -7,7 +7,7 @@ Resource           resource.robot
 
 *** Keywords ***
 Можливість оголосити тендер
-  ${tender_data}=  Підготовка даних для створення тендера
+  ${tender_data}=  Підготувати дані для створення тендера
   ${adapted_data}=  Адаптувати дані для оголошення тендера  ${tender_owner}  ${tender_data}
   ${TENDER_UAID}=  Run As  ${tender_owner}  Створити тендер  ${adapted_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data=${adapted_data}
@@ -26,7 +26,7 @@ Resource           resource.robot
 
 
 Можливість додати предмет закупівлі в тендер
-  ${item}=  Підготовка даних для створення предмету закупівлі
+  ${item}=  Підготувати дані для створення предмету закупівлі
   Run As   ${tender_owner}   Додати предмет закупівлі    ${TENDER['TENDER_UAID']}   ${item}
   ${item_id}=  get_id_from_object  ${item}
   ${item_data}=  Create Dictionary  item=${item}  item_id=${item_id}
@@ -53,7 +53,7 @@ Resource           resource.robot
 
 Можливість додати предмет закупівлі в ${lot_index} лот
   ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}]}
-  ${item}=  Підготовка даних для створення предмету закупівлі
+  ${item}=  Підготувати дані для створення предмету закупівлі
   Run As   ${tender_owner}   Додати предмет закупівлі в лот    ${TENDER['TENDER_UAID']}  ${lot_id}   ${item}
   ${item_id}=  get_id_from_object  ${item}
   ${item_data}=  Create Dictionary  item=${item}  item_id=${item_id}
@@ -67,7 +67,7 @@ Resource           resource.robot
 
 
 Можливість створення лоту
-  ${lot}=  Підготовка даних для створення лоту
+  ${lot}=  Підготувати дані для створення лоту
   ${lot_resp}=  Run As   ${tender_owner}  Створити лот  ${TENDER['TENDER_UAID']}  ${lot}
   ${lot_id}=  get_id_from_object  ${lot.data}
   ${lot_data}=  Create Dictionary  lot=${lot}  lot_resp=${lot_resp}  lot_id=${lot_id}
@@ -115,7 +115,7 @@ Resource           resource.robot
 ##############################################################################################
 
 Можливість задати запитання на тендер користувачем ${username}
-  ${question}=  Підготовка даних для запитання
+  ${question}=  Підготувати дані для запитання
   ${question_resp}=  Run As  ${username}  Задати запитання на тендер  ${TENDER['TENDER_UAID']}  ${question}
   ${now}=  Get Current TZdate
   ${question.data.date}=  Set variable  ${now}
@@ -127,7 +127,7 @@ Resource           resource.robot
 
 Можливість задати запитання на ${lot_index} лот користувачем ${username}
   ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}]}
-  ${question}=  Підготовка даних для запитання
+  ${question}=  Підготувати дані для запитання
   ${question_resp}=  Run As   ${username}   Задати запитання на лот  ${TENDER['TENDER_UAID']}  ${lot_id}  ${question}
   ${now}=  Get Current TZdate
   ${question.data.date}=  Set variable  ${now}
@@ -138,7 +138,7 @@ Resource           resource.robot
 
 Можливість задати запитання на ${item_index} предмет користувачем ${username}
   ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data['items'][${item_index}]}
-  ${question}=  Підготовка даних для запитання
+  ${question}=  Підготувати дані для запитання
   ${question_resp}=  Run As   ${username}   Задати запитання на предмет  ${TENDER['TENDER_UAID']}  ${item_id}  ${question}
   ${now}=  Get Current TZdate
   ${question.data.date}=  Set variable  ${now}
@@ -148,7 +148,7 @@ Resource           resource.robot
 
 
 Можливість відповісти на запитання
-  ${answer}=  Підготовка даних для відповіді на запитання
+  ${answer}=  Підготувати дані для відповіді на запитання
   ${answer_resp}=  Run As  ${tender_owner}
   ...      Відповісти на запитання  ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${provider}']['question_data']['question_resp']}  ${answer}
