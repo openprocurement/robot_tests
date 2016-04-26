@@ -190,14 +190,6 @@ def test_tender_data_limited(intervals, procurement_method_type):
     return data
 
 
-def test_tender_data_multiple_items(intervals):
-    t_data = test_tender_data(intervals)
-    for _ in range(4):
-        new_item = test_item_data()
-        t_data['items'].append(new_item)
-    return t_data
-
-
 def test_tender_data_multiple_lots(intervals):
     tender = test_tender_data(intervals)
     first_lot_id = "3c8f387879de4c38957402dbdb8b31af"
@@ -466,9 +458,9 @@ def test_bid_data(mode, number_of_lots):
     if 'open' in mode:
         bid.data['selfEligible'] = True
         bid.data['selfQualified'] = True
-    if mode == 'multiLot':
+    if mode == 'with_lots':
         bid.data.lotValues = list()
-        for _ in range(2):
+        for _ in range(number_of_lots):
             bid.data.lotValues.append(test_bid_value())
     else:
         bid.data.update(test_bid_value())
