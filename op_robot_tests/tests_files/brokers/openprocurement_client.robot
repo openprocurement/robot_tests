@@ -28,6 +28,44 @@ Library  openprocurement_client_helper.py
   Log Variables
 
 
+Отримати інформацію із запитання
+  [Arguments]  ${username}  ${question_id}  ${field_name}
+  ${field_name}=  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${question_id}
+  Run Keyword And Return  openprocurement_client.Отримати інформацію із тендера  ${username}  ${field_name}
+
+
+Завантажити документ
+  [Arguments]  ${username}  ${filepath}  ${tender_uaid}
+  Log  ${username}
+  Log  ${tender_uaid}
+  Log  ${filepath}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${tender}=  set_access_key  ${tender}   ${USERS.users['${username}'].access_token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  upload_document  ${filepath}  ${tender}
+  Log object data   ${reply}  reply
+  [return]   ${reply}
+
+
+Отримати документ
+  [Arguments]  ${username}  ${tender_uaid}  ${url}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${token}=    Get Variable Value  ${USERS.users['${username}'].bidresponses['resp'].access.token}
+  ${contents}  ${filename}=  Call Method  ${USERS.users['${username}'].client}  get_file   ${tender}   ${url}   ${token}
+  Log   ${filename}
+  [return]   ${contents}  ${filename}
+
+
+Отримати посилання на аукціон для глядача
+  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${auctionUrl}=  Run Keyword IF  '${lot_id}'  Set Variable  ${tender.data.lots[${lot_index}].auctionUrl}
+  ...                         ELSE  Set Variable  ${tender.data.auctionUrl}
+  [return]  ${auctionUrl}
+
+##############################################################################
+#             Tender operations
+##############################################################################
+
 Підготувати дані для оголошення тендера
   [Documentation]  Це слово використовується в майданчиків, тому потрібно, щоб воно було і тут
   [Arguments]  ${username}  ${tender_data}
@@ -41,8 +79,6 @@ Library  openprocurement_client_helper.py
   ${access_token}=  Get Variable Value  ${tender.access.token}
   Set To Dictionary  ${USERS.users['${username}']}   access_token=${access_token}
   Set To Dictionary  ${USERS.users['${username}']}   tender_data=${tender}
-  Log   ${access_token}
-  Log   ${tender.data.id}
   Log   ${USERS.users['${username}'].tender_data}
   [return]  ${tender.data.tenderID}
 
@@ -56,8 +92,7 @@ Library  openprocurement_client_helper.py
 
 Оновити сторінку з тендером
   [Arguments]  ${username}  ${tender_uaid}
-  ${tender_data}=  openprocurement_client.Пошук тендера по ідентифікатору    ${username}  ${tender_uaid}
-  Log  ${tender_data}
+  openprocurement_client.Пошук тендера по ідентифікатору    ${username}  ${tender_uaid}
 
 
 Отримати інформацію із тендера
@@ -99,35 +134,6 @@ Library  openprocurement_client_helper.py
   Set To Dictionary  ${USERS.users['${username}']}  tender_data=${tender}
   Log  ${tender}
   [Return]  ${tender}
-
-
-Завантажити документ
-  [Arguments]  ${username}  ${filepath}  ${tender_uaid}
-  Log  ${username}
-  Log  ${tender_uaid}
-  Log  ${filepath}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${tender}=  set_access_key  ${tender}   ${USERS.users['${username}'].access_token}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  upload_document  ${filepath}  ${tender}
-  Log object data   ${reply}  reply
-  [return]   ${reply}
-
-
-Отримати посилання на аукціон для глядача
-  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${auctionUrl}=  Run Keyword IF  '${lot_id}'  Set Variable  ${tender.data.lots[${lot_index}].auctionUrl}
-  ...                         ELSE  Set Variable  ${tender.data.auctionUrl}
-  [return]  ${auctionUrl}
-
-
-Отримати документ
-  [Arguments]  ${username}  ${tender_uaid}  ${url}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${token}=    Get Variable Value  ${USERS.users['${username}'].bidresponses['resp'].access.token}
-  ${contents}  ${filename}=  Call Method  ${USERS.users['${username}'].client}  get_file   ${tender}   ${url}   ${token}
-  Log   ${filename}
-  [return]   ${contents}  ${filename}
 
 ##############################################################################
 #             Item operations
