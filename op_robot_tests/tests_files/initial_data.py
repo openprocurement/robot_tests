@@ -292,6 +292,11 @@ def test_question_data():
     return data
 
 
+def test_related_question(question, relation, obj_id):
+    question.data.update({"questionOf": relation, "relatedItem": obj_id})
+    return munchify(question)
+
+
 def test_question_answer_data():
     return munchify({
         "data": {
@@ -431,7 +436,7 @@ def test_complaint_reply_data():
     })
 
 
-def test_bid_data(mode):
+def test_bid_data(mode, number_of_lots):
     bid = munchify({
         "data": {
             "tenderers": [
@@ -639,11 +644,6 @@ def test_lot_data():
 def test_lot_document_data(document, lot_id):
     document.data.update({"documentOf": "lot", "relatedItem": lot_id})
     return munchify(document)
-
-
-def test_lot_question_data(question, lot_id):
-    question.data.update({"questionOf": "lot", "relatedItem": lot_id})
-    return munchify(question)
 
 
 def test_lot_complaint_data(complaint, lot_id):

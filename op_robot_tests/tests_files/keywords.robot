@@ -238,7 +238,8 @@ Get Broker Property By Username
 
 
 Підготувати дані для подання пропозиції
-  ${supplier_data}=  test_bid_data  ${mode}
+  [Arguments]  ${number_of_lots}=0
+  ${supplier_data}=  test_bid_data  ${mode}  ${number_of_lots}
   [Return]  ${supplier_data}
 
 

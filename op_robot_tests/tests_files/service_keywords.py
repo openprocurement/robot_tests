@@ -38,7 +38,7 @@ from .initial_data import (
     test_lot_complaint_data,
     test_lot_data,
     test_lot_document_data,
-    test_lot_question_data,
+    test_related_question,
     test_question_answer_data,
     test_question_data,
     test_submit_claim_data,

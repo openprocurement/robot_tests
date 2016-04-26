@@ -115,7 +115,7 @@ Library  openprocurement_client_helper.py
 
 
 Видалити предмет закупівлі
-  [Arguments]  ${username}  ${tender_uaid}  ${item_id}
+  [Arguments]  ${username}  ${tender_uaid}  ${item_id}  ${lot_id}=${None}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${item_index}=  get_object_index_by_id  ${tender.data['items']}  ${item_id}
   Remove From List  ${tender.data['items']}  ${item_index}
@@ -143,14 +143,6 @@ Library  openprocurement_client_helper.py
 Подати цінову пропозицію
   [Arguments]  ${username}  ${tender_uaid}  ${bid}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${lots}=  Run Keyword If  "${mode}" == "single"  Get Variable Value  ${tender.data.lots}
-  ${bid}=  Run Keyword If  ${lots}  test_bid_data  multiLot
-  ...                  ELSE  Set Variable  ${bid}
-  Run Keyword If  ${lots}
-  ...       Run Keywords
-  ...       Remove From List  ${bid.data.lotValues}  1
-  ...       AND
-  ...       Set_To_Object  ${bid.data.lotValues[0]}  relatedLot  ${lots[0].id}
   ${biddingresponse}=  Call Method  ${USERS.users['${username}'].client}  create_bid  ${tender}  ${bid}
   Set To Dictionary   ${USERS.users['${username}'].bidresponses['bid'].data}  id=${biddingresponse['data']['id']}
   Log  ${biddingresponse}
@@ -160,9 +152,6 @@ Library  openprocurement_client_helper.py
 Змінити цінову пропозицію
   [Arguments]  ${username}  ${tender_uaid}  ${fieldname}  ${fieldvalue}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${lots}=  Run Keyword If  "${mode}" == "single"  Get Variable Value  ${tender.data.lots}
-  ${fieldname}=  Run Keyword If  ${lots}  Set Variable  lotValues.0.${fieldname}
-  ...                        ELSE  Set Variable  ${fieldname}
   ${bid}=  openprocurement_client.Отримати пропозицію  ${username}  ${tender_uaid}
   Set_To_Object  ${bid.data}   ${fieldname}   ${fieldvalue}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
@@ -238,9 +227,7 @@ Library  openprocurement_client_helper.py
 Отримати посилання на аукціон для глядача
   [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${lot_auctionUrl}=  Run Keyword If  "${mode}" == "single"  Get Variable Value  ${tender.data.lots[0].auctionUrl}
-  ${auctionUrl}=  Run Keyword If  ${lot_auctionUrl}  Set Variable  ${lot_auctionUrl}
-  ...                         ELSE IF  '${lot_id}'  Set Variable  ${tender.data.lots[${lot_index}].auctionUrl}
+  ${auctionUrl}=  Run Keyword IF  '${lot_id}'  Set Variable  ${tender.data.lots[${lot_index}].auctionUrl}
   ...                         ELSE  Set Variable  ${tender.data.auctionUrl}
   [return]  ${auctionUrl}
 
