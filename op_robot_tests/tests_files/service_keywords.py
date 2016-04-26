@@ -121,10 +121,7 @@ def compare_date(left, right, accuracy="minute", absolute_delta=True):
 
 
 def compare_coordinates(left_lat, left_lon, right_lat, right_lon, accuracy=0.1):
-    '''Compares dates with specified accuracy
-
-    Before comparison dates are parsed into datetime.datetime format
-    and localized.
+    '''Compares coordinates with specified accuracy
 
     :param left_lat:        First coordinate latitude
     :param left_lon:        First coordinate longitude
@@ -139,7 +136,6 @@ def compare_coordinates(left_lat, left_lon, right_lat, right_lon, accuracy=0.1):
     :error:                 ValueError when there is problem with converting accuracy
                             into float value. When it will be catched warning will be
                             given and accuracy will be set to 0.1.
-
     '''
     for key, value in {'left_lat': left_lat, 'left_lon': left_lon, 'right_lat': right_lat, 'right_lon': right_lon}.iteritems():
         if not isinstance(value, NUM_TYPES):
