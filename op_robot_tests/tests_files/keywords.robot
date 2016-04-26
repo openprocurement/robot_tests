@@ -637,14 +637,15 @@ Require Failure
   Дочекатись дати  ${date}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
+  ${next_status}=  Set variable if  'open' in '${mode}'  active.pre-qualification  active.auction
   Wait until keyword succeeds
   ...      5 min 15 sec
   ...      15 sec
   ...      Звірити статус тендера
   ...      ${username}
   ...      ${tender_uaid}
-  ...      active.auction
-  Sleep  120  # Auction sync
+  ...      ${next_status}
+  Run keyword if  '${next_status}' == 'active.auction'  Sleep  120  # Auction sync
 
 
 Дочекатись дати початку аукціону
