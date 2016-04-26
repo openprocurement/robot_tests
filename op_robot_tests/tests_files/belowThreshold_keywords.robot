@@ -62,6 +62,7 @@ Resource           resource.robot
   ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}]}
   Звірити дату тендера із значенням  ${username}  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}].${date}}  ${date}  ${item_id}
 
+
 Звірити відображення координат ${item_index} предмету для користувача ${username}
   Звірити координати доставки тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${item_index}]
 
@@ -181,6 +182,10 @@ Resource           resource.robot
   ${answer.data.date}=  Set variable  ${now}
   ${answer_data}=  Create Dictionary  answer=${answer}  answer_resp=${answer_resp}
   Set To Dictionary  ${USERS.users['${provider}']}  answer_data=${answer_data}
+
+
+Звірити відображення поля ${field} запитання для користувача ${username}
+  Звірити поле тендера із значенням  ${username}  ${USERS.users['${username}'].question_data.data.${field}}  ${field}  ${USERS.users['${username}'].question_data.question_id}
 
 ##############################################################################################
 #             BIDDING
