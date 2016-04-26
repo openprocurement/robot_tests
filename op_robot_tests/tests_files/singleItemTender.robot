@@ -66,7 +66,7 @@ ${mode}         single
   ...      minimal
   :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}
   \  Дочекатись синхронізації з майданчиком  ${username}
-  \  Звірити поле тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  title
+  \  Звірити поле тендера  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  title
 
 
 Відображення опису однопредметного тендера
@@ -74,7 +74,7 @@ ${mode}         single
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  description
+  Звірити поле тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  description
 
 
 Відображення бюджету однопредметного тендера
@@ -82,7 +82,7 @@ ${mode}         single
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      level2
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  value.amount
+  Звірити поле тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  value.amount
 
 
 Відображення валюти однопредметного тендера
@@ -90,6 +90,7 @@ ${mode}         single
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      value.currency
 
@@ -99,6 +100,7 @@ ${mode}         single
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      value.valueAddedTaxIncluded
 
@@ -108,7 +110,7 @@ ${mode}         single
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      level2
-  Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}  tenderID
+  Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}  ${TENDER['TENDER_UAID']}  tenderID
 
 
 Відображення procuringEntity.name однопредметного тендера
@@ -116,14 +118,14 @@ ${mode}         single
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      level2
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  procuringEntity.name
+  Звірити поле тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  procuringEntity.name
 
 
 Відображення початку періоду уточнення однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити дату тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  enquiryPeriod.startDate
+  Звірити дату тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  enquiryPeriod.startDate
 
 
 Відображення закінчення періоду уточнення однопредметного тендера
@@ -131,7 +133,7 @@ ${mode}         single
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      minimal
-  Звірити дату тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  enquiryPeriod.endDate
+  Звірити дату тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  enquiryPeriod.endDate
 
 
 Відображення початку періоду прийому пропозицій однопредметного тендера
@@ -141,7 +143,7 @@ ${mode}         single
   ...      minimal
   :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}
   \  Дочекатись синхронізації з майданчиком  ${username}
-  \  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.startDate
+  \  Звірити дату тендера  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.startDate
 
 
 Відображення закінчення періоду прийому пропозицій однопредметного тендера
@@ -151,14 +153,14 @@ ${mode}         single
   ...      minimal
   :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}
   \  Дочекатись синхронізації з майданчиком  ${username}
-  \  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.endDate
+  \  Звірити дату тендера  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.endDate
 
 
 Відображення мінімального кроку однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  minimalStep.amount
+  Звірити поле тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  minimalStep.amount
 
 
 Відображення дати доставки номенклатури однопредметного тендера
@@ -166,14 +168,14 @@ ${mode}         single
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      level3
-  Звірити дату тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryDate.endDate  day  absolute_delta=${True}
+  Звірити дату тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryDate.endDate  day  absolute_delta=${True}
 
 
 Відображення координати доставки позицій закупівлі однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити координати доставки тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0]
+  Звірити координати доставки тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  items[0]
 
 
 Відображення назви нас. пункту доставки номенклатури однопредметного тендера
@@ -181,14 +183,14 @@ ${mode}         single
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      level3
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.countryName
+  Звірити поле тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.countryName
 
 
 Відображення пошт. коду доставки номенклатури однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.postalCode
+  Звірити поле тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.postalCode
 
 
 Відображення регіону доставки номенклатури однопредметного тендера
@@ -196,28 +198,28 @@ ${mode}         single
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      level3
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.region
+  Звірити поле тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.region
 
 
 Відображення locality адреси доставки номенклатури однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.locality
+  Звірити поле тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.locality
 
 
 Відображення вулиці доставки номенклатури однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.streetAddress
+  Звірити поле тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.streetAddress
 
 
 Відображення схеми класифікації номенклатури однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].classification.scheme
+  Звірити поле тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  items[0].classification.scheme
 
 
 Відображення ідентифікатора класифікації номенклатури однопредметного тендера
@@ -225,7 +227,7 @@ ${mode}         single
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      level3
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].classification.id
+  Звірити поле тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  items[0].classification.id
 
 
 Відображення опису класифікації номенклатури однопредметного тендера
@@ -233,14 +235,14 @@ ${mode}         single
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      level3
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].classification.description
+  Звірити поле тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  items[0].classification.description
 
 
 Відображення схеми додаткової класифікації номенклатури однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].additionalClassifications[0].scheme
+  Звірити поле тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  items[0].additionalClassifications[0].scheme
 
 
 Відображення ідентифікатора додаткової класифікації номенклатури однопредметного тендера
@@ -248,7 +250,7 @@ ${mode}         single
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      level3
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].additionalClassifications[0].id
+  Звірити поле тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  items[0].additionalClassifications[0].id
 
 
 Відображення опису додаткової класифікації номенклатури однопредметного тендера
@@ -256,7 +258,7 @@ ${mode}         single
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      level3
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].additionalClassifications[0].description
+  Звірити поле тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  items[0].additionalClassifications[0].description
 
 
 Відображення назви одиниці номенклатури однопредметного тендера
@@ -264,14 +266,14 @@ ${mode}         single
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      level3
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].unit.name
+  Звірити поле тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  items[0].unit.name
 
 
 Відображення коду одиниці номенклатури однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].unit.code
+  Звірити поле тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  items[0].unit.code
 
 
 Відображення кількості номенклатури однопредметного тендера
@@ -279,7 +281,7 @@ ${mode}         single
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      level3
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].quantity
+  Звірити поле тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  items[0].quantity
 
 ##############################################################################################
 #             МОЖЛИВІСТЬ
@@ -304,7 +306,7 @@ ${mode}         single
   ...      ${USERS.users['${viewer}'].broker}
   ...      level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].description
+  Звірити поле тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  items[0].description
 
 ##############################################################################################
 #             МОЖЛИВІСТЬ
@@ -337,7 +339,7 @@ ${mode}         single
   ...      level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Викликати для учасника  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
-  Звірити поле тендера із значенням  ${viewer}
+  Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${provider}'].question_data.question.data.title}  title
   ...      object_id=${USERS.users['${provider}'].question_data.question_id}
 
@@ -347,7 +349,7 @@ ${mode}         single
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      level2
-  Звірити поле тендера із значенням  ${viewer}
+  Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${provider}'].question_data.question.data.description}  description
   ...      object_id=${USERS.users['${provider}'].question_data.question_id}
 
@@ -356,7 +358,7 @@ ${mode}         single
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення запитання
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити дату тендера із значенням  ${viewer}
+  Звірити дату тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${provider}'].question_data.question.data.date}  date
   ...      object_id=${USERS.users['${provider}'].question_data.question_id}
 
@@ -406,7 +408,7 @@ ${mode}         single
   ...      level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Викликати для учасника  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
-  Звірити поле тендера із значенням  ${viewer}
+  Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${provider}']['answer_data']['answer'].data.answer}  answer
   ...      object_id=${USERS.users['${provider}'].question_data.question_id}
 
@@ -418,7 +420,7 @@ ${mode}         single
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}
+  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${bid}=  Підготувати дані для подання пропозиції
   Log  ${bid}
@@ -443,7 +445,7 @@ ${mode}         single
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      minimal
-  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}
+  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${bid}=  Підготувати дані для подання пропозиції
   Log  ${bid}
@@ -514,7 +516,7 @@ ${mode}         single
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      minimal
-  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider1}
+  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider1}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${bid}=  Підготувати дані для подання пропозиції
   Log  ${bid}
@@ -531,7 +533,7 @@ ${mode}         single
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Require Failure  ${viewer}  Отримати інформацію із тендера  bids
+  Require Failure  ${viewer}  Отримати інформацію із тендера  ${TENDER['TENDER_UAID']}  bids
 
 
 Можливість завантажити документ другим учасником
@@ -551,7 +553,7 @@ ${mode}         single
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
-  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${provider1}
+  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${provider1}  ${TENDER['TENDER_UAID']}
   ${failfixbidto50000resp}=  Require Failure  ${provider1}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  value.amount  50000
   Set To Dictionary  ${USERS.users['${provider1}'].bidresponses}  failfixbidto50000resp=${failfixbidto50000resp}
   Log  ${failfixbidto50000resp}
@@ -599,7 +601,7 @@ ${mode}         single
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      minimal
-  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}
+  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}  ${TENDER['TENDER_UAID']}
   ${url}=  Викликати для учасника  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
   Should Be True  '${url}'
   Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.openprocurement\.org\/tenders\/([0-9A-Fa-f]{32})
