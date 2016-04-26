@@ -82,6 +82,7 @@ Library  openprocurement_client_helper.py
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   Set To Dictionary  ${USERS.users['${username}']}  tender_data=${tender}
+  Log  ${tender}
   [return]   ${tender}
 
 

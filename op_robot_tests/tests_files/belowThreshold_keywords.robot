@@ -38,8 +38,32 @@ Resource           resource.robot
   Run As  ${tender_owner}  Видалити предмет закупівлі  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].item_data.item_id}
 
 
-Відображення дати ${date} тендера для користувача ${username}
-  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  ${date}
+Звірити відображення поля ${field} тендера для усіх користувачів
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  \  Звірити відображення поля ${field} тендера для користувача ${username}
+
+Звірити відображення поля ${field} тендера із ${data} для користувача ${username}
+  Звірити поле тендера із значенням  ${username}  ${data}  ${field}
+
+Звірити відображення поля ${field} тендера для користувача ${username}
+  Звірити поле тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  ${field}
+
+
+Звірити відображення дати ${date} тендера для користувача ${username}
+  Звірити дату тендера   ${username}  ${USERS.users['${tender_owner}'].initial_data}  ${date}
+
+
+Звірити відображення поля ${field} ${item_index} предмету для користувача ${username}
+  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}]}
+  Звірити поле тендера із значенням  ${username}  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}].${field}}  ${field}  ${item_id}
+
+
+Звірити відображення дати ${date} ${item_index} предмету для користувача ${username}
+  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}]}
+  Звірити дату тендера із значенням  ${username}  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}].${date}}  ${date}  ${item_id}
+
+Звірити відображення координат ${item_index} предмету для користувача ${username}
+  Звірити координати доставки тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${item_index}]
 
 ##############################################################################################
 #             LOTS
@@ -81,17 +105,17 @@ Resource           resource.robot
   Remove From List   ${USERS.users['${tender_owner}'].tender_data.data.lots}  ${lot_index}
 
 
-Відображення ${field} ${lot_index} лоту для усіх користувачів
+Звірити відображення поля ${field} ${lot_index} лоту для усіх користувачів
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
-  \  Відображення ${field} 0 лоту для користувача ${username}
+  \  Звірити відображення поля ${field} 0 лоту для користувача ${username}
 
 
-Відображення ${field} ${lot_index} новоствореного лоту для усіх користувачів
+Звірити відображення поля ${field} ${lot_index} новоствореного лоту для усіх користувачів
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
-  \  Відображення ${field} новоствореного лоту для користувача ${username}
+  \  Звірити відображення поля ${field} новоствореного лоту для користувача ${username}
 
 
-Відображення ${field} ${lot_index} лоту для користувача ${username}
+Звірити відображення поля ${field} ${lot_index} лоту для користувача ${username}
   Дочекатись синхронізації з майданчиком    ${username}
   ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data.lots[${lot_index}]}
   Звірити поле тендера із значенням  ${username}
@@ -99,7 +123,7 @@ Resource           resource.robot
   ...      object_id=${lot_id}
 
 
-Відображення ${field} ${lot_index} новоствореного лоту для користувача ${username}
+Звірити відображення поля ${field} ${lot_index} новоствореного лоту для користувача ${username}
   Дочекатись синхронізації з майданчиком    ${username}
   Звірити поле тендера із значенням  ${username}
   ...      ${USERS.users['${tender_owner}'].lot_data.lot.data.${field}}  ${field}
