@@ -116,36 +116,6 @@ Library  openprocurement_client_helper.py
   Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
 
 
-Подати цінову пропозицію
-  [Arguments]  ${username}  ${tender_uaid}  ${bid}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${biddingresponse}=  Call Method  ${USERS.users['${username}'].client}  create_bid  ${tender}  ${bid}
-  Set To Dictionary   ${USERS.users['${username}'].bidresponses['bid'].data}  id=${biddingresponse['data']['id']}
-  Log  ${biddingresponse}
-  [return]  ${biddingresponse}
-
-
-Змінити цінову пропозицію
-  [Arguments]  ${username}  ${tender_uaid}  ${fieldname}  ${fieldvalue}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${bid}=  openprocurement_client.Отримати пропозицію  ${username}  ${tender_uaid}
-  Set_To_Object  ${bid.data}   ${fieldname}   ${fieldvalue}
-  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
-  ${changed_bid}=  Call Method  ${USERS.users['${username}'].client}  patch_bid  ${tender}  ${bid}
-  Log  ${changed_bid}
-  [return]   ${changed_bid}
-
-
-Скасувати цінову пропозицію
-  [Arguments]  ${username}  ${tender_uaid}  ${bid}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  Set To Dictionary   ${bid.data}  id=${USERS.users['${username}'].bidresponses['bid'].data.id}
-  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
-  ${changed_bid}=  Call Method  ${USERS.users['${username}'].client}  delete_bid   ${tender}  ${bid}
-  Log  ${changed_bid}
-  [return]   ${changed_bid}
-
-
 Прийняти цінову пропозицію
   [Arguments]  ${username}  ${tender_uaid}  ${award}
   ${internalid}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
@@ -154,38 +124,6 @@ Library  openprocurement_client_helper.py
   ${award_activeted_response}=  Call Method  ${USERS.users['${username}'].client}  patch_award  ${tender}  ${award}
   Log  ${award_activeted_response}
   [return]  ${award_activeted_response}
-
-
-Завантажити документ в ставку
-  [Arguments]  ${username}  ${path}  ${tender_uaid}  ${doc_type}=documents
-  ${bid_id}=  Get Variable Value   ${USERS.users['${username}'].bidresponses['resp'].data.id}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
-  ${response}=  Call Method  ${USERS.users['${username}'].client}  upload_bid_document  ${path}  ${tender}  ${bid_id}  ${doc_type}
-  ${uploaded_file} =  Create Dictionary   filepath=${path}   upload_response=${response}
-  Log  ${response}
-  Log object data   ${uploaded_file}
-  [return]  ${uploaded_file}
-
-
-Змінити документ в ставці
-  [Arguments]  ${username}  ${path}  ${bidid}  ${docid}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${TENDER['TENDER_UAID']}
-  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
-  ${response}=  Call Method  ${USERS.users['${username}'].client}  update_bid_document  ${path}  ${tender}   ${bidid}   ${docid}
-  ${uploaded_file} =  Create Dictionary   filepath=${path}   upload_response=${response}
-  Log  ${response}
-  Log object data   ${uploaded_file}
-  [return]  ${uploaded_file}
-
-
-Змінити документацію в ставці
-  [Arguments]  ${username}  ${doc_data}  ${bidid}  ${docid}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${TENDER['TENDER_UAID']}
-  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
-  ${response}=  Call Method  ${USERS.users['${username}'].client}  patch_bid_document   ${tender}   ${doc_data}   ${bidid}   ${docid}
-  Log  ${response}
-  [return]  ${response}
 
 
 Завантажити документ
@@ -206,24 +144,6 @@ Library  openprocurement_client_helper.py
   ${auctionUrl}=  Run Keyword IF  '${lot_id}'  Set Variable  ${tender.data.lots[${lot_index}].auctionUrl}
   ...                         ELSE  Set Variable  ${tender.data.auctionUrl}
   [return]  ${auctionUrl}
-
-
-Отримати посилання на аукціон для учасника
-  [Arguments]  ${username}  ${tender_uaid}
-  ${bid}=  openprocurement_client.Отримати пропозицію  ${username}  ${tender_uaid}
-  ${lot_participationUrl}=  Run Keyword If  "${mode}" == "single"  Get Variable Value  ${bid.data.lots[0].participationUrl}
-  ${participationUrl}=  Run Keyword If  ${lot_participationUrl}  Set Variable  ${participationUrl}
-  ...                               ELSE  Set Variable  ${bid.data.participationUrl}
-  [return]  ${participationUrl}
-
-
-Отримати пропозицію
-  [Arguments]  ${username}  ${tender_uaid}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${bid_id}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['resp'].data.id}
-  ${token}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['resp'].access.token}
-  ${bid}=  Call Method  ${USERS.users['${username}'].client}  get_bid  ${tender}  ${bid_id}  ${token}
-  [return]  ${bid}
 
 
 Отримати документ
@@ -422,6 +342,86 @@ Library  openprocurement_client_helper.py
   ${tender}=  set_access_key  ${tender}  ${claim.access.token}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${escalating_data}
   Log  ${reply}
+
+##############################################################################
+#             Bid operations
+##############################################################################
+
+Подати цінову пропозицію
+  [Arguments]  ${username}  ${tender_uaid}  ${bid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_bid  ${tender}  ${bid}
+  Set To Dictionary   ${USERS.users['${username}'].bidresponses['bid'].data}  id=${reply['data']['id']}
+  Log  ${reply}
+  [return]  ${reply}
+
+
+Змінити цінову пропозицію
+  [Arguments]  ${username}  ${tender_uaid}  ${fieldname}  ${fieldvalue}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${bid}=  openprocurement_client.Отримати пропозицію  ${username}  ${tender_uaid}
+  Set_To_Object  ${bid.data}   ${fieldname}   ${fieldvalue}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_bid  ${tender}  ${bid}
+  Log  ${reply}
+  [return]   ${reply}
+
+
+Скасувати цінову пропозицію
+  [Arguments]  ${username}  ${tender_uaid}  ${bid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  Set To Dictionary   ${bid.data}  id=${USERS.users['${username}'].bidresponses['bid'].data.id}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  delete_bid   ${tender}  ${bid}
+  Log  ${reply}
+  [return]   ${reply}
+
+
+Завантажити документ в ставку
+  [Arguments]  ${username}  ${path}  ${tender_uaid}  ${doc_type}=documents
+  ${bid_id}=  Get Variable Value   ${USERS.users['${username}'].bidresponses['resp'].data.id}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
+  ${response}=  Call Method  ${USERS.users['${username}'].client}  upload_bid_document  ${path}  ${tender}  ${bid_id}  ${doc_type}
+  ${uploaded_file} =  Create Dictionary   filepath=${path}   upload_response=${response}
+  Log object data   ${uploaded_file}
+  [return]  ${uploaded_file}
+
+
+Змінити документ в ставці
+  [Arguments]  ${username}  ${path}  ${bidid}  ${docid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${TENDER['TENDER_UAID']}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
+  ${response}=  Call Method  ${USERS.users['${username}'].client}  update_bid_document  ${path}  ${tender}   ${bidid}   ${docid}
+  ${uploaded_file} =  Create Dictionary   filepath=${path}   upload_response=${response}
+  Log object data   ${uploaded_file}
+  [return]  ${uploaded_file}
+
+
+Змінити документацію в ставці
+  [Arguments]  ${username}  ${doc_data}  ${bidid}  ${docid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${TENDER['TENDER_UAID']}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_bid_document   ${tender}   ${doc_data}   ${bidid}   ${docid}
+  [return]  ${reply}
+
+
+Отримати пропозицію
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${bid_id}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['resp'].data.id}
+  ${token}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['resp'].access.token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  get_bid  ${tender}  ${bid_id}  ${token}
+  [return]  ${reply}
+
+
+Отримати посилання на аукціон для учасника
+  [Arguments]  ${username}  ${tender_uaid}
+  ${bid}=  openprocurement_client.Отримати пропозицію  ${username}  ${tender_uaid}
+  ${lot_participationUrl}=  Run Keyword If  "${mode}" == "single"  Get Variable Value  ${bid.data.lots[0].participationUrl}
+  ${participationUrl}=  Run Keyword If  ${lot_participationUrl}  Set Variable  ${participationUrl}
+  ...                               ELSE  Set Variable  ${bid.data.participationUrl}
+  [return]  ${participationUrl}
 
 ##############################################################################
 #             Qualification operations
