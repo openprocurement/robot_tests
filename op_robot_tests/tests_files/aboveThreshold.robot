@@ -17,7 +17,7 @@ ${mode}         openeu
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      minimal
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${tender_data}=  Підготовка даних для створення тендера
+  ${tender_data}=  Підготувати дані для створення тендера
   ${adapted_data}=  Адаптувати дані для оголошення тендера  ${tender_owner}  ${tender_data}
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${adapted_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data=${adapted_data}
@@ -77,7 +77,7 @@ ${mode}         openeu
   [Documentation]  Користувач ${USERS.users['${provider}'].broker} намагається подати скаргу на умови оголошеного тендера
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати початку прийому пропозицій  ${provider}
-  ${claim}=  Підготовка даних для подання вимоги
+  ${claim}=  Підготувати дані для подання вимоги
   ${claim_resp}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
@@ -279,7 +279,7 @@ ${mode}         openeu
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Documentation]  Користувач ${USERS.users['${provider}'].broker} намагається подати скаргу на умови оголошеного тендера
-  ${claim}=  Підготовка даних для подання вимоги
+  ${claim}=  Підготувати дані для подання вимоги
   ${claim_resp}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
@@ -313,7 +313,7 @@ ${mode}         openeu
   [Documentation]  Користувач ${USERS.users['${provider}'].broker} намагається подати скаргу на умови оголошеного тендера
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${provider}
-  ${claim}=  Підготовка даних для подання вимоги
+  ${claim}=  Підготувати дані для подання вимоги
   ${claim_resp}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
@@ -400,7 +400,7 @@ ${mode}         openeu
   ...      ${USERS.users['${provider}'].broker}
   [Documentation]  Користувач ${USERS.users['${provider}'].broker} намагається подати скаргу на умови оголошеного тендера
   [Setup]  Дочекатись дати закінчення періоду подання скарг  ${provider}
-  ${claim}=  Підготовка даних для подання вимоги
+  ${claim}=  Підготувати дані для подання вимоги
   ${claim_resp}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
