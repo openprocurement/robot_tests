@@ -24,24 +24,28 @@ Resource           resource.robot
 
 Відображення активного статусу скасування закупівлі
   Звірити поле тендера із значенням  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      active
   ...      cancellations[${CANCEL_NUM}].status
 
 
 Відображення причини скасування закупівлі
   Звірити поле тендера із значенням  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}']['cancellation_data']['cancellation_reason']}
   ...      cancellations[${CANCEL_NUM}].reason
 
 
 Відображення опису документа скасування закупівлі
   Звірити поле тендера із значенням  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}']['cancellation_data']['description']}
   ...      cancellations[${CANCEL_NUM}].documents[${DOC_NUM}].description
 
 
 Відображення заголовку документа скасування закупівлі
   Звірити поле тендера із значенням  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}']['cancellation_data']['document']}
   ...      cancellations[${CANCEL_NUM}].documents[${DOC_NUM}].title
 
@@ -91,18 +95,21 @@ Resource           resource.robot
 
 Відображення заголовку закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      title
 
 
 Відображення заголовку закупівлі англійською мовою
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      title_en
 
 
 Відображення заголовку закупівлі російською мовою
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      title_ru
 
@@ -110,35 +117,41 @@ Resource           resource.robot
 Відображення ідентифікатора закупівлі
   Звірити поле тендера із значенням  ${viewer}
   ...      ${TENDER['TENDER_UAID']}
+  ...      ${TENDER['TENDER_UAID']}
   ...      tenderID
 
 
 Відображення опису закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      description
 
 
 Відображення опису закупівлі англійською мовою
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      description_en
 
 
 Відображення опису закупівлі російською мовою
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      description_ru
 
 
 Відображення підстави вибору закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      causeDescription
 
 
 Відображення обгрунтування причини вибору закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      cause
 
@@ -148,18 +161,21 @@ Resource           resource.robot
 
 Відображення бюджету закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      value.amount
 
 
 Відображення валюти закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      value.currency
 
 
 Відображення врахованого податку в бюджет закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      value.valueAddedTaxIncluded
 
@@ -169,72 +185,84 @@ Resource           resource.robot
 
 Відображення країни замовника закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      procuringEntity.address.countryName
 
 
 Відображення населеного пункту замовника закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      procuringEntity.address.locality
 
 
 Відображення поштового коду замовника закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      procuringEntity.address.postalCode
 
 
 Відображення області замовника закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      procuringEntity.address.region
 
 
 Відображення вулиці замовника закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      procuringEntity.address.streetAddress
 
 
 Відображення контактного імені замовника закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      procuringEntity.contactPoint.name
 
 
 Відображення контактного телефону замовника закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      procuringEntity.contactPoint.telephone
 
 
 Відображення сайту замовника закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      procuringEntity.contactPoint.url
 
 
 Відображення офіційного імені замовника закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      procuringEntity.identifier.legalName
 
 
 Відображення схеми ідентифікації замовника закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      procuringEntity.identifier.scheme
 
 
 Відображення ідентифікатора замовника закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      procuringEntity.identifier.id
 
 
 Відображення імені замовника закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      procuringEntity.name
 
@@ -248,66 +276,77 @@ Resource           resource.robot
   ${ADDITIONAL_CLASS_NUM}=  Set variable  0
   Set Suite Variable  ${ADDITIONAL_CLASS_NUM}
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      items[${ITEMS_NUM}].additionalClassifications[${ADDITIONAL_CLASS_NUM}].description
 
 
 Відображення ідентифікатора додаткової класифікації номенклатури закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      items[${ITEMS_NUM}].additionalClassifications[${ADDITIONAL_CLASS_NUM}].id
 
 
 Відображення схеми додаткової класифікації номенклатури закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      items[${ITEMS_NUM}].additionalClassifications[${ADDITIONAL_CLASS_NUM}].scheme
 
 
 Відображення схеми класифікації номенклатури закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      items[${ITEMS_NUM}].classification.scheme
 
 
 Відображення ідентифікатора класифікації номенклатури закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      items[${ITEMS_NUM}].classification.id
 
 
 Відображення опису класифікації номенклатури закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      items[${ITEMS_NUM}].classification.description
 
 
 Відображення опису номенклатури закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      items[${ITEMS_NUM}].description
 
 
 Відображення кількості номенклатури закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      items[${ITEMS_NUM}].quantity
 
 
 Відображення назви одиниці номенклатури закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      items[${ITEMS_NUM}].unit.name
 
 
 Відображення коду одиниці номенклатури закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      items[${ITEMS_NUM}].unit.code
 
 
 Відображення дати доставки номенклатури закупівлі
   Звірити дату тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      items[${ITEMS_NUM}].deliveryDate.endDate
   ...      day
@@ -316,48 +355,56 @@ Resource           resource.robot
 
 Відображення координат доставки номенклатури закупівлі
   Звірити координати доставки тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      items[${ITEMS_NUM}]
 
 
 Відображення назви нас. пункту доставки номенклатури закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      items[${ITEMS_NUM}].deliveryAddress.countryName
 
 
 Відображення назви нас. пункту російською мовою доставки номенклатури закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      items[${ITEMS_NUM}].deliveryAddress.countryName_ru
 
 
 Відображення назви нас. пункту англійською мовою доставки номенклатури закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      items[${ITEMS_NUM}].deliveryAddress.countryName_en
 
 
 Відображення пошт. коду доставки номенклатури закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      items[${ITEMS_NUM}].deliveryAddress.postalCode
 
 
 Відображення регіону доставки номенклатури закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      items[${ITEMS_NUM}].deliveryAddress.region
 
 
 Відображення населеного пункту адреси доставки номенклатури закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      items[${ITEMS_NUM}].deliveryAddress.locality
 
 
 Відображення вулиці доставки номенклатури закупівлі
   Звірити поле тендера  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data}
   ...      items[${ITEMS_NUM}].deliveryAddress.streetAddress
 
@@ -368,6 +415,7 @@ Resource           resource.robot
 Відображення заголовку документа закупівлі
   ${doc_num}=  Set variable  0
   Звірити поле тендера із значенням  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}']['documents']['filepath']}
   ...      documents[${doc_num}].title
 
@@ -379,96 +427,112 @@ Resource           resource.robot
   ${AWARD_NUM}=  Set variable  0
   Set Suite Variable  ${AWARD_NUM}
   Звірити поле тендера із значенням  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      active
   ...      awards[${AWARD_NUM}].status
 
 
 Відображення країни постачальника закупівлі
   Звірити поле тендера із значенням  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][${SUPP_NUM}]['address']['countryName']}
   ...      awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].address.countryName
 
 
 Відображення міста постачальника закупівлі
   Звірити поле тендера із значенням  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][${SUPP_NUM}]['address']['locality']}
   ...      awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].address.locality
 
 
 Відображення поштового коду постачальника закупівлі
   Звірити поле тендера із значенням  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][${SUPP_NUM}]['address']['postalCode']}
   ...      awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].address.postalCode
 
 
 Відображення області постачальника закупівлі
   Звірити поле тендера із значенням  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][${SUPP_NUM}]['address']['region']}
   ...      awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].address.region
 
 
 Відображення вулиці постачальника закупівлі
   Звірити поле тендера із значенням  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][${SUPP_NUM}]['address']['streetAddress']}
   ...      awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].address.streetAddress
 
 
 Відображення контактного телефону постачальника закупівлі
   Звірити поле тендера із значенням  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][${SUPP_NUM}]['contactPoint']['telephone']}
   ...      awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].contactPoint.telephone
 
 
 Відображення контактного імені постачальника закупівлі
   Звірити поле тендера із значенням  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][${SUPP_NUM}]['contactPoint']['name']}
   ...      awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].contactPoint.name
 
 
 Відображення контактного імейлу постачальника закупівлі
   Звірити поле тендера із значенням  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][${SUPP_NUM}]['contactPoint']['email']}
   ...      awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].contactPoint.email
 
 
 Відображення схеми ідентифікації постачальника закупівлі
   Звірити поле тендера із значенням  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][${SUPP_NUM}]['identifier']['scheme']}
   ...      awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].identifier.scheme
 
 
 Відображення офіційного імені постачальника закупівлі
   Звірити поле тендера із значенням  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][${SUPP_NUM}]['identifier']['legalName']}
   ...      awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].identifier.legalName
 
 
 Відображення ідентифікатора постачальника закупівлі
   Звірити поле тендера із значенням  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][${SUPP_NUM}]['identifier']['id']}
   ...      awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].identifier.id
 
 
 Відображення імені постачальника закупівлі
   Звірити поле тендера із значенням  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][${SUPP_NUM}]['name']}
   ...      awards[${AWARD_NUM}].suppliers[${SUPP_NUM}].name
 
 
 Відображення врахованого податку до ціни номенклатури постачальника закупівлі
   Звірити поле тендера із значенням  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['value']['valueAddedTaxIncluded']}
   ...      awards[${AWARD_NUM}].value.valueAddedTaxIncluded
 
 
 Відображення валюти ціни номенклатури постачальника закупівлі
   Звірити поле тендера із значенням  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['value']['currency']}
   ...      awards[${AWARD_NUM}].value.currency
 
 
 Відображення вартості номенклатури постачальника закупівлі
   Звірити поле тендера із значенням  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}']['supplier_data']['data']['value']['amount']}
   ...      awards[${AWARD_NUM}].value.amount
 
@@ -487,6 +551,7 @@ Resource           resource.robot
 
 Відображення статусу непідписаної угоди з постачальником закупівлі
   Звірити поле тендера із значенням  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      pending
   ...      contracts[${CONTR_NUM}].status
 
@@ -504,5 +569,6 @@ Resource           resource.robot
 
 Відображення статусу підписаної угоди з постачальником закупівлі
   Звірити поле тендера із значенням  ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
   ...      active
   ...      contracts[${CONTR_NUM}].status
