@@ -194,9 +194,8 @@ Resource           resource.robot
 
 Можливість змінити документацію цінової пропозиції користувачем ${username}
   ${filepath}=  create_fake_doc
-  ${bidid}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['resp'].data.id}
   ${docid}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['bid_doc_upload']['upload_response'].data.id}
-  ${bid_doc_modified}=  Run As  ${username}  Змінити документ в ставці  ${filepath}  ${bidid}  ${docid}
+  ${bid_doc_modified}=  Run As  ${username}  Змінити документ в ставці  ${filepath}  ${docid}
   Set To Dictionary  ${USERS.users['${username}'].bidresponses}  bid_doc_modified=${bid_doc_modified}
 
 
