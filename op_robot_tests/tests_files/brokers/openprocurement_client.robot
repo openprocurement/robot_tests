@@ -28,12 +28,6 @@ Library  openprocurement_client_helper.py
   Log Variables
 
 
-Отримати інформацію із запитання
-  [Arguments]  ${username}  ${question_id}  ${field_name}
-  ${field_name}=  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${question_id}
-  Run Keyword And Return  openprocurement_client.Отримати інформацію із тендера  ${username}  ${field_name}
-
-
 Завантажити документ
   [Arguments]  ${username}  ${filepath}  ${tender_uaid}
   Log  ${username}
@@ -51,7 +45,6 @@ Library  openprocurement_client_helper.py
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${token}=    Get Variable Value  ${USERS.users['${username}'].bidresponses['resp'].access.token}
   ${contents}  ${filename}=  Call Method  ${USERS.users['${username}'].client}  get_file   ${tender}   ${url}   ${token}
-  Log   ${filename}
   [return]   ${contents}  ${filename}
 
 
@@ -86,7 +79,9 @@ Library  openprocurement_client_helper.py
 Пошук тендера по ідентифікатору
   [Arguments]  ${username}  ${tender_uaid}
   ${internalid}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
-  ${tender}=  openprocurement_client.Отримати тендер  ${username}  ${internalid}
+  ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
+  Set To Dictionary  ${USERS.users['${username}']}  tender_data=${tender}
   [return]   ${tender}
 
 
@@ -123,17 +118,6 @@ Library  openprocurement_client_helper.py
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
   Set_To_Object   ${USERS.users['${username}'].tender_data}   ${fieldname}   ${fieldvalue}
-
-
-Отримати тендер
-  [Arguments]  ${username}  ${internalid}
-  Log  ${username}
-  Log  ${internalid}
-  ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
-  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
-  Set To Dictionary  ${USERS.users['${username}']}  tender_data=${tender}
-  Log  ${tender}
-  [Return]  ${tender}
 
 ##############################################################################
 #             Item operations
