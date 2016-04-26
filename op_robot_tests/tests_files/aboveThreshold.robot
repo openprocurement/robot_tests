@@ -40,7 +40,7 @@ ${mode}         openeu
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  procurementMethodType
+  Звірити поле тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  procurementMethodType
 
 
 Відображення початку періоду прийому пропозицій понадпорогового тендера
@@ -49,7 +49,7 @@ ${mode}         openeu
   ...      ${USERS.users['${viewer}'].broker}
   ...      minimal
   :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}
-  \  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.startDate
+  \  Звірити дату тендера  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.startDate
 
 
 Відображення закінчення періоду прийому пропозицій понадпорогового тендера
@@ -58,7 +58,7 @@ ${mode}         openeu
   ...      ${USERS.users['${viewer}'].broker}
   ...      minimal
   :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}
-  \  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.endDate
+  \  Звірити дату тендера  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  tenderPeriod.endDate
 
 
 Відображення закінчення періоду подання скарг на оголошений тендер
@@ -67,7 +67,7 @@ ${mode}         openeu
   ...      ${USERS.users['${viewer}'].broker}
   ...      minimal
   :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}
-  \  Отримати дані із тендера  ${username}  complaintPeriod.endDate
+  \  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  complaintPeriod.endDate
 
 
 Можливість подати вимогу на умови більше ніж за 10 днів до завершення періоду подання пропозицій
@@ -76,7 +76,7 @@ ${mode}         openeu
   ...      ${USERS.users['${provider}'].broker}
   [Documentation]  Користувач ${USERS.users['${provider}'].broker} намагається подати скаргу на умови оголошеного тендера
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Дочекатись дати початку прийому пропозицій  ${provider}
+  Дочекатись дати початку прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
   ${claim}=  Підготовка даних для подання вимоги
   ${claim_resp}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
@@ -113,7 +113,7 @@ ${mode}         openeu
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}
+  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${bid}=  Підготувати дані для подання пропозиції
   Log  ${bid}
@@ -197,7 +197,7 @@ ${mode}         openeu
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
-  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider1}
+  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider1}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${bid}=  Підготувати дані для подання пропозиції
   Log  ${bid}
@@ -311,8 +311,8 @@ ${mode}         openeu
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Documentation]  Користувач ${USERS.users['${provider}'].broker} намагається подати скаргу на умови оголошеного тендера
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Дочекатись синхронізації з майданчиком  ${provider}
   ${claim}=  Підготовка даних для подання вимоги
   ${claim_resp}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
@@ -427,8 +427,8 @@ ${mode}         openeu
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      openeu
-  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${tender_owner}
-  Звірити поле тендера із значенням  ${tender_owner}  pending  qualifications[0].status
+  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${tender_owner}  ${TENDER['TENDER_UAID']}
+  Звірити поле тендера із значенням  ${tender_owner}  ${TENDER['TENDER_UAID']}  pending  qualifications[0].status
 
 
 Відображення статусу другої пропозиції кваліфікації
@@ -436,8 +436,8 @@ ${mode}         openeu
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      openeu
-  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${tender_owner}
-  Звірити поле тендера із значенням  ${tender_owner}  pending  qualifications[1].status
+  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${tender_owner}  ${TENDER['TENDER_UAID']}
+  Звірити поле тендера із значенням  ${tender_owner}  ${TENDER['TENDER_UAID']}  pending  qualifications[1].status
 
 
 Можливість завантажити документ у кваліфікацію пропозиції першого учасника
@@ -446,7 +446,6 @@ ${mode}         openeu
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      openeu
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  log  ${USERS.users['${tender_owner}'].broker}
   ${filepath}=  create_fake_doc
   Викликати для учасника  ${tender_owner}  Завантажити документ у кваліфікацію  ${filepath}  ${TENDER['TENDER_UAID']}  0
 
@@ -466,7 +465,6 @@ ${mode}         openeu
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      openeu
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  log  ${USERS.users['${tender_owner}'].broker}
   ${filepath}=  create_fake_doc
   Викликати для учасника  ${tender_owner}  Завантажити документ у кваліфікацію  ${filepath}  ${TENDER['TENDER_UAID']}  1
 
