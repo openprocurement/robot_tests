@@ -394,14 +394,6 @@ def test_cancel_claim_data(claim_id, cancellation_reason):
     })
 
 
-def test_change_cancellation_document_field_data(key, value):
-    return munchify({
-        "data": {
-            key: value
-        }
-    })
-
-
 def test_confirm_data(id):
     return munchify({
         "data": {
@@ -526,10 +518,6 @@ def test_supplier_data():
             }
         }
     })
-
-
-def test_award_data():
-    return munchify({'data': {}})
 
 
 def test_item_data():
