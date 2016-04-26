@@ -116,16 +116,6 @@ Library  openprocurement_client_helper.py
   Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
 
 
-Прийняти цінову пропозицію
-  [Arguments]  ${username}  ${tender_uaid}  ${award}
-  ${internalid}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
-  ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
-  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
-  ${award_activeted_response}=  Call Method  ${USERS.users['${username}'].client}  patch_award  ${tender}  ${award}
-  Log  ${award_activeted_response}
-  [return]  ${award_activeted_response}
-
-
 Завантажити документ
   [Arguments]  ${username}  ${filepath}  ${tender_uaid}
   Log  ${username}
