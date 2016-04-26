@@ -447,7 +447,7 @@ Library  openprocurement_client_helper.py
   ...      [Arguments] Username, tender uaid and award number
   ...      [Description] Find tender using uaid, create data dict with unsuccessful status and call patch_award
   ...      [Return] Reply of API
-  [Arguments]  ${username}  ${tender_uid}  ${award_num}
+  [Arguments]  ${username}  ${tender_uaid}  ${award_num}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
   ${award}=  create_data_dict   data.status  unsuccessful
   Set To Dictionary  ${award.data}  id=${tender.data.awards[${award_num}].id}
@@ -461,7 +461,7 @@ Library  openprocurement_client_helper.py
   ...      [Arguments] Username, tender uaid and award number
   ...      [Description] Find tender using uaid, create data dict with unsuccessful status and call patch_award
   ...      [Return] Reply of API
-  [Arguments]  ${username}  ${tender_uid}  ${award_num}
+  [Arguments]  ${username}  ${tender_uaid}  ${award_num}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
   ${award}=  create_data_dict   data.status  cancelled
   Set To Dictionary  ${award.data}  id=${tender.data.awards[${award_num}].id}
@@ -584,7 +584,7 @@ Library  openprocurement_client_helper.py
   ...      [Arguments] Username, tender uaid and qualification number
   ...      [Description] Find tender using uaid, create data dict with active status and call patch_qualification
   ...      [Return] Reply of API
-  [Arguments]  ${username}  ${tender_uid}  ${qualification_num}
+  [Arguments]  ${username}  ${tender_uaid}  ${qualification_num}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
   ${qualification}=  create_data_dict   data.status  active
   Set To Dictionary  ${qualification.data}  id=${tender.data.qualifications[${qualification_num}].id}  eligible=${True}  qualified=${True}
@@ -598,7 +598,7 @@ Library  openprocurement_client_helper.py
   ...      [Arguments] Username, tender uaid and qualification number
   ...      [Description] Find tender using uaid, create data dict with unsuccessful status and call patch_qualification
   ...      [Return] Reply of API
-  [Arguments]  ${username}  ${tender_uid}  ${qualification_num}
+  [Arguments]  ${username}  ${tender_uaid}  ${qualification_num}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
   ${qualification}=  create_data_dict   data.status  unsuccessful
   Set To Dictionary  ${qualification.data}  id=${tender.data.qualifications[${qualification_num}].id}
@@ -624,7 +624,7 @@ Library  openprocurement_client_helper.py
   ...      [Arguments] Username, tender uaid and qualification number
   ...      [Description] Find tender using uaid, create data dict with cancelled status and call patch_qualification
   ...      [Return] Reply of API
-  [Arguments]  ${username}  ${tender_uid}  ${qualification_num}
+  [Arguments]  ${username}  ${tender_uaid}  ${qualification_num}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
   ${qualification}=  create_data_dict   data.status  cancelled
   Set To Dictionary  ${qualification.data}  id=${tender.data.qualifications[${qualification_num}].id}
