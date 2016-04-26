@@ -360,14 +360,14 @@ Get Broker Property By Username
 
 
 Звірити поле тендера
-  [Arguments]  ${username}  ${tender_data}  ${field}
+  [Arguments]  ${username}  ${tender_uaid}  ${tender_data}  ${field}
   ${left}=  Get_From_Object  ${tender_data.data}  ${field}
-  Звірити поле тендера із значенням  ${username}  ${left}  ${field}
+  Звірити поле тендера із значенням  ${username}  ${tender_uaid}  ${left}  ${field}
 
 
 Звірити поле тендера із значенням
-  [Arguments]  ${username}  ${left}  ${field}  ${object_id}=${None}
-  ${right}=  Отримати дані із тендера  ${username}  ${field}  ${object_id}
+  [Arguments]  ${username}  ${tender_uaid}  ${left}  ${field}  ${object_id}=${None}
+  ${right}=  Отримати дані із тендера  ${username}  ${tender_uaid}  ${field}  ${object_id}
   Порівняти об'єкти  ${left}  ${right}
 
 
@@ -381,14 +381,14 @@ Get Broker Property By Username
 
 
 Звірити дату тендера
-  [Arguments]  ${username}  ${tender_data}  ${field}  ${accuracy}=60  ${absolute_delta}=${False}
+  [Arguments]  ${username}  ${tender_uaid}  ${tender_data}  ${field}  ${accuracy}=60  ${absolute_delta}=${False}
   ${left}=  Get_From_Object  ${tender_data.data}  ${field}
-  Звірити дату тендера із значенням  ${username}  ${left}  ${field}  accuracy=${accuracy}  absolute_delta=${absolute_delta}
+  Звірити дату тендера із значенням  ${username}  ${tender_uaid}  ${left}  ${field}  accuracy=${accuracy}  absolute_delta=${absolute_delta}
 
 
 Звірити дату тендера із значенням
-  [Arguments]  ${username}  ${left}  ${field}  ${object_id}=${None}  ${accuracy}=60  ${absolute_delta}=${False}
-  ${right}=  Отримати дані із тендера  ${username}  ${field}  ${object_id}
+  [Arguments]  ${username}  ${tender_uaid}  ${left}  ${field}  ${object_id}=${None}  ${accuracy}=60  ${absolute_delta}=${False}
+  ${right}=  Отримати дані із тендера  ${username}  ${tender_uaid}  ${field}  ${object_id}
   Порівняти дати  ${left}  ${right}  accuracy=${accuracy}  absolute_delta=${absolute_delta}
 
 
@@ -410,11 +410,11 @@ Get Broker Property By Username
 
 
 Звірити координати доставки тендера
-  [Arguments]  ${username}  ${tender_data}  ${field}  ${object_id}=${None}
+  [Arguments]  ${username}  ${tender_uaid}  ${tender_data}  ${field}  ${object_id}=${None}
   ${left_lat}=  Get_From_Object  ${tender_data.data}  ${field}.deliveryLocation.latitude
   ${left_lon}=  Get_From_Object  ${tender_data.data}  ${field}.deliveryLocation.longitude
-  ${right_lat}=  Отримати дані із тендера  ${username}  ${field}.deliveryLocation.latitude  ${object_id}
-  ${right_lon}=  Отримати дані із тендера  ${username}  ${field}.deliveryLocation.longitude  ${object_id}
+  ${right_lat}=  Отримати дані із тендера  ${username}  ${tender_uaid}  ${field}.deliveryLocation.latitude  ${object_id}
+  ${right_lon}=  Отримати дані із тендера  ${username}  ${tender_uaid}  ${field}.deliveryLocation.longitude  ${object_id}
   Порівняти координати  ${left_lat}  ${left_lon}  ${right_lat}  ${right_lon}
 
 
@@ -461,7 +461,7 @@ Get Broker Property By Username
 
 
 Отримати дані із тендера
-  [Arguments]  ${username}  ${field_name}  ${object_id}=${None}
+  [Arguments]  ${username}  ${tender_uaid}  ${field_name}  ${object_id}=${None}
   Log  ${username}
   Log  ${field_name}
   ${field}=  Run Keyword If  '${object_id}'=='${None}'  Set Variable  ${field_name}
@@ -473,8 +473,8 @@ Get Broker Property By Username
   # If field in cache, return its value
   Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
   # Else call broker to find field
-  ${field_value}=  Run Keyword IF  '${object_id}'=='${None}'  Run As  ${username}  Отримати інформацію із тендера  ${field}
-  ...                          ELSE  Отримати дані із об’єкта тендера  ${username}  ${object_id}  ${field_name}
+  ${field_value}=  Run Keyword IF  '${object_id}'=='${None}'  Run As  ${username}  Отримати інформацію із тендера  ${tender_uaid}  ${field}
+  ...                          ELSE  Отримати дані із об’єкта тендера  ${username}  ${tender_uaid}  ${object_id}  ${field_name}
   # And caching its value before return
   Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${field_value}
   [return]  ${field_value}
@@ -489,15 +489,15 @@ Get Broker Property By Username
 
 
 Отримати дані із об’єкта тендера
-  [Arguments]  ${username}  ${object_id}  ${field_name}
-  ${object_type}=   get_object_type_by_id  ${object_id}
+  [Arguments]  ${username}  ${tender_uaid}  ${object_id}  ${field_name}
+  ${object_type}=  get_object_type_by_id  ${object_id}
   ${status}  ${value}=  Run Keyword If  '${object_type}'=='question'
-  ...                     Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із запитання  ${object_id}  ${field_name}
-  ...                   ELSE IF  '${object_type}'=='lots'
-  ...                     Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із лоту  ${object_id}  ${field_name}
+  ...      Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із запитання  ${tender_uaid}  ${object_id}  ${field_name}
+  ...      ELSE IF  '${object_type}'=='lots'
+  ...      Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із лоту  ${tender_uaid}  ${object_id}  ${field_name}
   ${field}=  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${object_id}
   ${field_value}=  Run Keyword IF  '${status}'=='PASS'  Set Variable  ${value}
-  ...                          ELSE  Run As  ${username}  Отримати інформацію із тендера  ${field}
+  ...      ELSE  Run As  ${username}  Отримати інформацію із тендера  ${tender_uaid}  ${field}
   [return]  ${field_value}
 
 
@@ -565,7 +565,7 @@ Require Failure
 
 
 Дочекатись дати початку періоду уточнень
-  [Arguments]  ${username}
+  [Arguments]  ${username}  ${tender_uaid}
   Log  ${username}
   # XXX: HACK: Same as below
   ${status}  ${date}=  Run Keyword And Ignore Error
@@ -576,11 +576,25 @@ Require Failure
   ...      ${USERS.users['${tender_owner}'].initial_data.data.enquiryPeriod.startDate}
   ...      ${date}
   Дочекатись дати  ${date}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      active.enquiries
+
+
+Звірити статус тендера
+  [Arguments]  ${username}  ${tender_uaid}  ${left}
+  ${right}=  Run as  ${username}  Отримати інформацію із тендера  ${tender_uaid}  status
+  Порівняти об'єкти  ${left}  ${right}
 
 
 Дочекатись дати початку прийому пропозицій
-  [Arguments]  ${username}
-  Log  ${username}
+  [Arguments]  ${username}  ${tender_uaid}
   # This tries to get the date from current user's procurement data cache.
   # On failure, it reads from tender_owner's cached initial_data.
   # XXX: This is a dirty hack!
@@ -601,11 +615,17 @@ Require Failure
   Дочекатись дати  ${date}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      active.tendering
 
 
 Дочекатись дати закінчення прийому пропозицій
-  [Arguments]  ${username}
-  Log  ${username}
+  [Arguments]  ${username}  ${tender_uaid}
   # XXX: HACK: Same as above
   ${status}  ${date}=  Run Keyword And Ignore Error
   ...      Set Variable
@@ -614,17 +634,24 @@ Require Failure
   ...      '${status}' == 'FAIL'
   ...      ${USERS.users['${tender_owner}'].initial_data.data.tenderPeriod.endDate}
   ...      ${date}
-  ${date}=  add_minutes_to_date  ${date}  2  # Auction sync
   Дочекатись дати  ${date}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      active.auction
+  Sleep  120  # Auction sync
 
 
 Дочекатись дати початку аукціону
   [Arguments]  ${username}
   # Can't use that dirty hack here since we don't know
   # the date of auction when creating the procurement :)
-  ${auctionStart}=  Отримати дані із тендера   ${username}   auctionPeriod.startDate  ${TENDER['LOT_ID']}
+  ${auctionStart}=  Отримати дані із тендера  ${username}  ${tender_uaid}  auctionPeriod.startDate  ${TENDER['LOT_ID']}
   Дочекатись дати  ${auctionStart}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
@@ -638,7 +665,7 @@ Require Failure
 Дочекатись дати закінчення аукціону
   [Arguments]  ${username}
   Log  ${username}
-  ${auctionEnd}=  Отримати дані із тендера   ${username}   auctionPeriod.endDate  ${TENDER['LOT_ID']}
+  ${auctionEnd}=  Отримати дані із тендера  ${username}  ${tender_uaid}  auctionPeriod.endDate  ${TENDER['LOT_ID']}
   Дочекатись дати  ${auctionEnd}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}

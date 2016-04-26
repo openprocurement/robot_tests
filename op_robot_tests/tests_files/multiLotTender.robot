@@ -322,7 +322,7 @@ ${complaint_id}  1
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
-  Require Failure  ${viewer}  Отримати інформацію із тендера  bids
+  Require Failure  ${viewer}  Отримати інформацію із тендера  ${TENDER['TENDER_UAID']}  bids
 
 Неможливість змінити цінову пропозицію до 2000 після закінчення прийому пропозицій
   [Documentation]
