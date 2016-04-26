@@ -45,8 +45,6 @@ from .initial_data import (
     test_supplier_data,
     test_tender_data,
     test_tender_data_limited,
-    test_tender_data_meat,
-    test_tender_data_multiple_items,
     test_tender_data_multiple_lots,
     test_tender_data_openeu,
     test_tender_data_openua
@@ -289,14 +287,7 @@ def prepare_test_tender_data(procedure_intervals, mode):
     else:
         assert 'accelerator' not in intervals.keys(), \
                "Accelerator is not available for mode '{0}'".format(mode)
-
-    if mode == 'meat':
-        return munchify({'data': test_tender_data_meat(intervals)})
-    elif mode == 'multiItem':
-        return munchify({'data': test_tender_data_multiple_items(intervals)})
-    elif mode == 'multiLot':
-        return munchify({'data': test_tender_data_multiple_lots(intervals)})
-    elif mode == 'negotiation':
+    if mode == 'negotiation':
         return munchify({'data': test_tender_data_limited(intervals, 'negotiation')})
     elif mode == 'negotiation.quick':
         return munchify({'data': test_tender_data_limited(intervals, 'negotiation.quick')})
@@ -306,8 +297,10 @@ def prepare_test_tender_data(procedure_intervals, mode):
         return munchify({'data': test_tender_data_openua(intervals)})
     elif mode == 'reporting':
         return munchify({'data': test_tender_data_limited(intervals, 'reporting')})
-    elif mode == 'single':
+    elif mode == 'without_lots':
         return munchify({'data': test_tender_data(intervals)})
+    elif mode == 'with_lots':
+        return munchify({'data': test_tender_data_multiple_lots(intervals)})
     raise ValueError("Invalid mode for prepare_test_tender_data")
 
 
