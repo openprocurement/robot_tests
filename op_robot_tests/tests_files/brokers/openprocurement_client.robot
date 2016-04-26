@@ -101,21 +101,6 @@ Library  openprocurement_client_helper.py
   [Return]  ${tender}
 
 
-Додати предмет закупівлі
-  [Arguments]  ${username}  ${tender_uaid}  ${item}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  Append To List  ${tender.data['items']}  ${item}
-  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
-
-
-Видалити предмет закупівлі
-  [Arguments]  ${username}  ${tender_uaid}  ${item_id}  ${lot_id}=${None}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${item_index}=  get_object_index_by_id  ${tender.data['items']}  ${item_id}
-  Remove From List  ${tender.data['items']}  ${item_index}
-  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
-
-
 Завантажити документ
   [Arguments]  ${username}  ${filepath}  ${tender_uaid}
   Log  ${username}
@@ -143,6 +128,24 @@ Library  openprocurement_client_helper.py
   ${contents}  ${filename}=  Call Method  ${USERS.users['${username}'].client}  get_file   ${tender}   ${url}   ${token}
   Log   ${filename}
   [return]   ${contents}  ${filename}
+
+##############################################################################
+#             Item operations
+##############################################################################
+
+Додати предмет закупівлі
+  [Arguments]  ${username}  ${tender_uaid}  ${item}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  Append To List  ${tender.data['items']}  ${item}
+  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+
+
+Видалити предмет закупівлі
+  [Arguments]  ${username}  ${tender_uaid}  ${item_id}  ${lot_id}=${None}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${item_index}=  get_object_index_by_id  ${tender.data['items']}  ${item_id}
+  Remove From List  ${tender.data['items']}  ${item_index}
+  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
 
 ##############################################################################
 #             Lot operations
