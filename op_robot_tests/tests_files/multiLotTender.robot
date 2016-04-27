@@ -80,7 +80,7 @@ ${complaint_id}  1
   ...      ${USERS.users['${tender_owner}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${lot}=  Підготовка даних для створення лоту
+  ${lot}=  Підготовка даних для створення лоту  ${USERS.users['${tender_owner}'].initial_data.data.value.amount}
   ${lot_resp}=  Run As   ${tender_owner}  Створити лот  ${TENDER['TENDER_UAID']}  ${lot}
   ${lot_id}=  get_id_from_object  ${lot.data}
   ${lot_data}=  Create Dictionary  lot=${lot}  lot_resp=${lot_resp}  lot_id=${lot_id}
@@ -238,7 +238,7 @@ ${complaint_id}  1
   ...      ${USERS.users['${provider}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${provider}
   @{lots_ids}=  Отримати ідентифікатори об’єктів  ${provider}  lots
-  ${bid}=  Підготувати дані для подання пропозиції
+  ${bid}=  Підготувати дані для подання пропозиції  ${USERS.users['${tender_owner}'].initial_data.data.value.amount}
   ${bid_before_bidperiod_resp}=  Require Failure  ${provider}  Подати цінову пропозицію на лоти  ${TENDER['TENDER_UAID']}  ${bid}  ${lots_ids}
   log   ${bid_before_bidperiod_resp}
 
@@ -249,7 +249,7 @@ ${complaint_id}  1
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}
-  ${bid}=  Підготувати дані для подання пропозиції
+  ${bid}=  Підготувати дані для подання пропозиції  ${USERS.users['${tender_owner}'].initial_data.data.value.amount}
   ${no_lot_bid_resp}=  Require Failure  ${provider}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}
   log   ${no_lot_bid_resp}
 
@@ -259,7 +259,7 @@ ${complaint_id}  1
   ...      ${USERS.users['${provider}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   @{lots_ids}=  Отримати ідентифікатори об’єктів  ${provider}  lots
-  ${bid}=  Підготувати дані для подання пропозиції
+  ${bid}=  Підготувати дані для подання пропозиції  ${USERS.users['${tender_owner}'].initial_data.data.value.amount}
   ${bidresponses}=  Create Dictionary  bid=${bid}
   Set To Dictionary  ${USERS.users['${provider}']}   bidresponses=${bidresponses}
   ${resp}=  Run As  ${provider}  Подати цінову пропозицію на лоти  ${TENDER['TENDER_UAID']}  ${bid}  ${lots_ids}
@@ -281,7 +281,7 @@ ${complaint_id}  1
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати початку прийому пропозицій  ${provider}
   @{lots_ids}=  Отримати ідентифікатори об’єктів  ${provider}  lots
-  ${bid}=  Підготувати дані для подання пропозиції
+  ${bid}=  Підготувати дані для подання пропозиції  ${USERS.users['${tender_owner}'].initial_data.data.value.amount}
   ${bidresponses}=  Create Dictionary  bid=${bid}
   Set To Dictionary  ${USERS.users['${provider}']}   bidresponses=${bidresponses}
   ${resp}=  Run As  ${provider}  Подати цінову пропозицію на лоти  ${TENDER['TENDER_UAID']}  ${bid}  ${lots_ids}
@@ -311,7 +311,7 @@ ${complaint_id}  1
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати початку прийому пропозицій  ${provider1}
   @{lots_ids}=  Отримати ідентифікатори об’єктів  ${provider1}  lots
-  ${bid}=  Підготувати дані для подання пропозиції
+  ${bid}=  Підготувати дані для подання пропозиції  ${USERS.users['${tender_owner}'].initial_data.data.value.amount}
   ${bidresponses}=  Create Dictionary  bid=${bid}
   Set To Dictionary  ${USERS.users['${provider1}']}   bidresponses=${bidresponses}
   ${resp}=  Run As  ${provider1}  Подати цінову пропозицію на лоти  ${TENDER['TENDER_UAID']}  ${bid}  ${lots_ids}

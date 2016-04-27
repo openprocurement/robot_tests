@@ -206,7 +206,8 @@ Get Broker Property By Username
 
 
 Підготовка даних для створення лоту
-  ${lot}=  test_lot_data
+  [Arguments]  ${max_lot_value_amount}
+  ${lot}=  test_lot_data  ${max_lot_value_amount}
   ${reply}=  Create Dictionary  data=${lot}
   [Return]  ${reply}
 
@@ -238,8 +239,9 @@ Get Broker Property By Username
 
 
 Підготувати дані для подання пропозиції
-  ${supplier_data}=  test_bid_data  ${mode}
-  [Return]  ${supplier_data}
+  [Arguments]  ${max_value_amount}
+  ${bid_data}=  test_bid_data  ${mode}  ${max_value_amount}
+  [Return]  ${bid_data}
 
 
 Підготувати дані про постачальника
