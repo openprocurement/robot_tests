@@ -47,7 +47,7 @@ def create_fake_doc():
 
 def test_tender_data(intervals, periods=("enquiry", "tender")):
     now = get_now()
-    value_amount = round(random.uniform(3000, 250000000000), 2) #max value equals to budget of Ukraine in hryvnias
+    value_amount = round(random.uniform(3000, 250000000000), 2)  # max value equals to budget of Ukraine in hryvnias
     data = {
         "mode": "test",
         "submissionMethodDetails": "quick",
@@ -211,7 +211,7 @@ def test_question_answer_data():
 
 def test_complaint_data(lot=False):
     data = munchify({
-        "data" : {
+        "data": {
             "author": fake.procuringEntity(),
             "description": fake.description(),
             "title": fake.title()
@@ -339,14 +339,15 @@ def test_bid_params():
         ]
     })
 
+
 def test_bid_value(max_value_amount):
     return munchify({
-                "value": {
-                    "currency": "UAH",
-                    "amount": round(random.uniform(1, max_value_amount), 2),
-                    "valueAddedTaxIncluded": True
-                }
-            })
+        "value": {
+            "currency": "UAH",
+            "amount": round(random.uniform(1, max_value_amount), 2),
+            "valueAddedTaxIncluded": True
+        }
+    })
 
 
 def test_supplier_data():

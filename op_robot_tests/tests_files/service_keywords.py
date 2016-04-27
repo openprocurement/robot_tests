@@ -1,19 +1,18 @@
 # -*- coding: utf-8 -
+from .local_time import get_now, TZ
 from copy import deepcopy
 from datetime import timedelta
 from dateutil.parser import parse
 from dpath.util import new as xpathnew
+from haversine import haversine
 from iso8601 import parse_date
 from json import load
 from jsonpath_rw import parse as parse_path
 from munch import fromYAML, Munch, munchify
-from restkit import request
 from robot.errors import ExecutionFailed
 from robot.libraries.BuiltIn import BuiltIn
 from robot.output import LOGGER
 from robot.output.loggerhelper import Message
-from haversine import haversine
-from math import radians, cos, sin, asin, sqrt
 # These imports are not pointless. Robot's resource and testsuite files
 # can access them by simply importing library "service_keywords".
 # Please ignore the warning given by Flake8 or other linter.
@@ -48,9 +47,10 @@ from .initial_data import (
     test_tender_data_openeu,
     test_tender_data_openua
 )
-from .local_time import get_now, TZ
-import os
 from barbecue import chef
+from restkit import request
+# End of non-pointless imports
+import os
 import re
 
 NUM_TYPES = (int, long, float)
@@ -421,6 +421,7 @@ def get_object_index_by_id(data, object_id):
     else:
         index += 1
     return index
+
 
 # GUI Frontends common
 def add_data_for_gui_frontends(tender_data):

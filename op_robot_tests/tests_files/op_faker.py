@@ -108,8 +108,8 @@ class OP_Provider(BaseProvider):
         Generate a random item for openprocurement tenders
 
         :param cpv_group: gives possibility to generate items
-            from one cpv group. Cpv group is three digits in the beginning
-            of each cpv id.
+            from a specific cpv group. Cpv group is three digits
+            in the beginning of each cpv id.
         """
         if cpv_group is None:
             item_base_data = self.random_element(self.items_base_data)
