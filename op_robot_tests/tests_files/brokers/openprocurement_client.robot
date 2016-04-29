@@ -41,8 +41,6 @@ Library  openprocurement_client_helper.py
   ${access_token}=  Get Variable Value  ${tender.access.token}
   Set To Dictionary  ${USERS.users['${username}']}   access_token=${access_token}
   Set To Dictionary  ${USERS.users['${username}']}   tender_data=${tender}
-  Log   ${access_token}
-  Log   ${tender.data.id}
   Log   ${USERS.users['${username}'].tender_data}
   [return]  ${tender.data.tenderID}
 
