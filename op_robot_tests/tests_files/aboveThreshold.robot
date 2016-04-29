@@ -140,9 +140,8 @@ ${mode}         openeu
   log  ${USERS.users['${provider}'].broker}
   ${privat_doc}=  create_data_dict  data.confidentialityRationale  "Only our company sells badgers with pink hair."
   Set To Dictionary  ${privat_doc.data}  confidentiality=buyerOnly
-  ${bidid}=  Get Variable Value  ${USERS.users['${provider}'].bidresponses['resp'].data.id}
   ${docid}=  Get Variable Value  ${USERS.users['${provider}'].bidresponses['bid_doc_upload']['upload_response'].data.id}
-  ${bid_doc_modified}=  Викликати для учасника  ${provider}  Змінити документацію в ставці  ${privat_doc}  ${bidid}  ${docid}
+  ${bid_doc_modified}=  Викликати для учасника  ${provider}  Змінити документацію в ставці  ${privat_doc}  ${docid}
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}  bid_doc_modified=${bid_doc_modified}
 
 
