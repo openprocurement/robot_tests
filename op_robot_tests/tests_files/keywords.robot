@@ -240,9 +240,9 @@ Get Broker Property By Username
 
 
 Підготувати дані для подання пропозиції
-  [Arguments]  ${max_value_amount}
-  ${bid_data}=  test_bid_data  ${mode}  ${max_value_amount}
-  [Return]  ${bid_data}
+  [Arguments]  ${username}
+  ${bid}=  generate_test_bid_data  ${USERS.users['${username}'].tender_data}
+  [Return]  ${bid}
 
 
 Підготувати дані про постачальника
