@@ -196,7 +196,6 @@ Get Broker Property By Username
   ${tender_data}=  prepare_test_tender_data  ${period_intervals}  ${mode}  ${number_of_lots}  ${meat}
   ${TENDER}=  Create Dictionary
   Set Global Variable  ${TENDER}
-  Log  ${TENDER}
   Log  ${tender_data}
   [return]  ${tender_data}
 
@@ -272,7 +271,6 @@ Get Broker Property By Username
   ${adapted_data}=  Set variable if  '${status}' == 'FAIL'  ${tender_data_copy}  ${adapted_data}
   # munchify is used to make nice log output
   ${adapted_data}=  munchify  ${adapted_data}
-  Log  ${tender_data}
   Log  ${adapted_data}
   ${status}=  Run keyword and return status  Dictionaries Should Be Equal  ${adapted_data.data}  ${tender_data.data}
   Run keyword if  ${status} == ${False}  Log  Initial tender data was changed  WARN
@@ -377,8 +375,6 @@ Get Broker Property By Username
 
 Порівняти об'єкти
   [Arguments]  ${left}  ${right}
-  Log  ${left}
-  Log  ${right}
   Should Not Be Equal  ${left}  ${None}
   Should Not Be Equal  ${right}  ${None}
   Should Be Equal  ${left}  ${right}  msg=Objects are not equal
@@ -405,8 +401,6 @@ Get Broker Property By Username
   ...      ``left`` and ``right`` dates is more than ``accuracy``,
   ...      otherwise it will pass.
   [Arguments]  ${left}  ${right}  ${accuracy}=60  ${absolute_delta}=${False}
-  Log  ${left}
-  Log  ${right}
   Should Not Be Equal  ${left}  ${None}
   Should Not Be Equal  ${right}  ${None}
   ${status}=  compare_date  ${left}  ${right}  accuracy=${accuracy}  absolute_delta=${absolute_delta}
@@ -444,7 +438,6 @@ Get Broker Property By Username
   @{items}=  Get_From_Object  ${tender_data.data}  items
   ${len_of_items}=  Get Length  ${items}
   :FOR  ${index}  IN RANGE  ${len_of_items}
-  \  Log  ${index}
   \  Звірити поле тендера  ${viewer}  ${tender_data}  items[${index}].${field}
 
 
@@ -452,7 +445,6 @@ Get Broker Property By Username
   [Arguments]  ${username}  ${tender_data}  ${field}  ${accuracy}=60  ${absolute_delta}=${False}
   @{items}=  Get_From_Object  ${tender_data.data}  items
   :FOR  ${index}  ${_}  IN ENUMERATE  @{items}
-  \  Log  ${index}
   \  Звірити дату тендера  ${viewer}  ${tender_data}  items[${index}].${field}  accuracy=${accuracy}  absolute_delta=${absolute_delta}
 
 
@@ -460,14 +452,11 @@ Get Broker Property By Username
   [Arguments]  ${username}  ${tender_data}
   @{items}=  Get_From_Object  ${tender_data.data}  items
   :FOR  ${index}  ${_}  IN ENUMERATE  @{items}
-  \  Log  ${index}
   \  Звірити координати тендера  ${viewer}  ${tender_data}  items[${index}]
 
 
 Отримати дані із тендера
   [Arguments]  ${username}  ${field_name}  ${object_id}=${None}
-  Log  ${username}
-  Log  ${field_name}
   ${field}=  Run Keyword If  '${object_id}'=='${None}'  Set Variable  ${field_name}
   ...             ELSE  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${object_id}
   ${status}  ${field_value}=  Run keyword and ignore error
@@ -565,9 +554,6 @@ Run As
   [Documentation]
   ...      Run the given keyword (``command``) with given ``arguments``
   ...      using driver (keyword library) of user ``username``.
-  Log  ${username}
-  Log  ${command}
-  Log Many  @{arguments}
   ${keywords_file}=  Get Broker Property By Username  ${username}  keywords_file
   ${status}  ${value}=  Run keyword and ignore keyword definitions  ${keywords_file}.${command}  ${username}  @{arguments}
   ${unexpected_args}=  Get Regexp Matches  '${value}'  expected [0-9] arguments, got [0-9]
@@ -584,9 +570,6 @@ Require Failure
   ...
   ...      This keyword works just like `Run As`, but it passes only
   ...      if ``command`` with ``arguments`` fails and vice versa.
-  Log  ${username}
-  Log  ${command}
-  Log Many  ${command}  @{arguments}
   ${keywords_file}=  Get Broker Property By Username  ${username}  keywords_file
   ${status}  ${value}=  Run keyword and ignore keyword definitions  ${keywords_file}.${command}  ${username}  @{arguments}
   Run keyword if  '${status}' == 'PASS'  Fail  Користувач ${username} зміг виконати "${command}"
@@ -601,7 +584,6 @@ Require Failure
 
 Дочекатись дати початку періоду уточнень
   [Arguments]  ${username}
-  Log  ${username}
   # XXX: HACK: Same as below
   ${status}  ${date}=  Run Keyword And Ignore Error
   ...      Set Variable
@@ -615,7 +597,6 @@ Require Failure
 
 Дочекатись дати початку прийому пропозицій
   [Arguments]  ${username}
-  Log  ${username}
   # This tries to get the date from current user's procurement data cache.
   # On failure, it reads from tender_owner's cached initial_data.
   # XXX: This is a dirty hack!
@@ -640,7 +621,6 @@ Require Failure
 
 Дочекатись дати закінчення прийому пропозицій
   [Arguments]  ${username}
-  Log  ${username}
   # XXX: HACK: Same as above
   ${status}  ${date}=  Run Keyword And Ignore Error
   ...      Set Variable
@@ -672,7 +652,6 @@ Require Failure
 
 Дочекатись дати закінчення аукціону
   [Arguments]  ${username}
-  Log  ${username}
   ${auctionEnd}=  Отримати дані із тендера   ${username}   auctionPeriod.endDate  ${TENDER['LOT_ID']}
   Дочекатись дати  ${auctionEnd}
   Оновити LAST_MODIFICATION_DATE
@@ -681,7 +660,6 @@ Require Failure
 
 Дочекатись дати закінчення періоду подання скарг
   [Arguments]  ${username}
-  log  ${username}
   Дочекатись дати  ${USERS.users['${username}'].tender_data.data.complaintPeriod.endDate}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
