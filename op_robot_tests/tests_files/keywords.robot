@@ -190,9 +190,10 @@ Get Broker Property By Username
   log_object_data  ${ARTIFACT}  artifact
 
 
-Підготовка даних для створення тендера
+Підготувати дані для створення тендера
+  [Arguments]  ${number_of_lots}=0  ${meat}=${False}
   ${period_intervals}=  compute_intrs  ${BROKERS}  ${used_brokers}
-  ${tender_data}=  prepare_test_tender_data  ${period_intervals}  ${mode}
+  ${tender_data}=  prepare_test_tender_data  ${period_intervals}  ${mode}  ${number_of_lots}  ${meat}
   ${TENDER}=  Create Dictionary
   Set Global Variable  ${TENDER}
   Log  ${TENDER}
@@ -200,40 +201,41 @@ Get Broker Property By Username
   [return]  ${tender_data}
 
 
-Підготовка даних для створення предмету закупівлі
-  ${item}=  test_item_data
+Підготувати дані для створення предмету закупівлі
+  [Arguments]  ${cpv}
+  ${item}=  test_item_data  ${cpv[0:3]}
   [Return]  ${item}
 
 
-Підготовка даних для створення лоту
+Підготувати дані для створення лоту
   [Arguments]  ${max_lot_value_amount}
   ${lot}=  test_lot_data  ${max_lot_value_amount}
   ${reply}=  Create Dictionary  data=${lot}
   [Return]  ${reply}
 
 
-Підготовка даних для подання вимоги
+Підготувати дані для подання вимоги
   ${claim}=  test_claim_data
   [Return]  ${claim}
 
 
-Підготовка даних для подання скарги
+Підготувати дані для подання скарги
   [Arguments]  ${lot}=${False}
   ${complaint}=  test_complaint_data  ${lot}
   [Return]  ${complaint}
 
 
-Підготовка даних для відповіді на скаргу
+Підготувати дані для відповіді на скаргу
   ${reply}=  test_complaint_reply_data
   [Return]  ${reply}
 
 
-Підготовка даних для запитання
+Підготувати дані для запитання
   ${question}=  test_question_data
   [Return]  ${question}
 
 
-Підготовка даних для відповіді на запитання
+Підготувати дані для відповіді на запитання
   ${answer}=  test_question_answer_data
   [Return]  ${answer}
 

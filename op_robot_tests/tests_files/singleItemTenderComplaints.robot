@@ -21,7 +21,7 @@ ${mode}         single
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  from-0.12
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${tender_data}=  Підготовка даних для створення тендера
+  ${tender_data}=  Підготувати дані для створення тендера
   ${adapted_data}=  Адаптувати дані для оголошення тендера  ${tender_owner}  ${tender_data}
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}
   ...      Створити тендер
@@ -59,7 +59,7 @@ ${mode}         single
   ...  from-0.12
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${claim}=  Підготовка даних для подання вимоги
+  ${claim}=  Підготувати дані для подання вимоги
   ${document}=  create_fake_doc
   ${complaintID}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
@@ -347,7 +347,7 @@ ${mode}         single
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${claim}=  Підготовка даних для подання вимоги
+  ${claim}=  Підготувати дані для подання вимоги
   ${complaintID}=  Викликати для учасника  ${provider}
   ...      Створити чернетку вимоги
   ...      ${TENDER['TENDER_UAID']}
@@ -429,7 +429,7 @@ ${mode}         single
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${claim}=  Підготовка даних для подання вимоги
+  ${claim}=  Підготувати дані для подання вимоги
   ${complaintID}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
@@ -489,7 +489,7 @@ ${mode}         single
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${claim}=  Підготовка даних для подання вимоги
+  ${claim}=  Підготувати дані для подання вимоги
   ${complaintID}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
@@ -557,7 +557,7 @@ ${mode}         single
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${claim}=  Підготовка даних для подання вимоги
+  ${claim}=  Підготувати дані для подання вимоги
   ${complaintID}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
