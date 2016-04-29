@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from faker import Faker
 from faker.providers import BaseProvider
 from munch import Munch
 from json import load
@@ -13,7 +12,7 @@ def load_data_from_file(file_name):
         if file_name.endswith(".json"):
             return Munch.fromDict(load(file_obj))
         elif file_name.endswith(".yaml"):
-            return fromYAML(file_obj)
+            return Munch.fromYAML(file_obj)
 
 
 class OP_Provider(BaseProvider):
@@ -22,10 +21,8 @@ class OP_Provider(BaseProvider):
     procuringEntities = __fake_data.procuringEntities
     addresses = __fake_data.addresses
     classifications = __fake_data.classifications
-    units = __fake_data.units
     cpvs = __fake_data.cpvs
     items_base_data = __fake_data.items_base_data
-
 
     @classmethod
     def randomize_nb_elements(self, number=10, le=60, ge=140):
@@ -42,14 +39,12 @@ class OP_Provider(BaseProvider):
             raise Exception("Lower bound: {} is greater then upper: {}.".format(le, ge))
         return int(number * self.random_int(min=le, max=ge) / 100) + 1
 
-
     @classmethod
     def word(self):
         """
         :example 'Курка'
         """
         return self.random_element(self.word_list)
-
 
     @classmethod
     def words(self, nb=3):
@@ -59,7 +54,6 @@ class OP_Provider(BaseProvider):
         :param nb: how many words to return
         """
         return [self.word() for _ in range(0, nb)]
-
 
     @classmethod
     def sentence(self, nb_words=5, variable_nb_words=True):
@@ -81,26 +75,21 @@ class OP_Provider(BaseProvider):
 
         return " ".join(words) + '.'
 
-
     @classmethod
     def title(self):
-        return self.sentence(nb_words = 3)
-
+        return self.sentence(nb_words=3)
 
     @classmethod
     def description(self):
-        return self.sentence(nb_words = 10)
-
+        return self.sentence(nb_words=10)
 
     @classmethod
     def procuringEntity(self):
         return self.random_element(self.procuringEntities)
 
-
     @classmethod
     def cpv(self):
         return self.random_element(self.cpvs)
-
 
     @classmethod
     def fake_item(self, cpv_group=None):
@@ -132,7 +121,6 @@ class OP_Provider(BaseProvider):
                 break
 
         address = self.random_element(self.addresses)
-        unit = self.random_element(self.units)
         item = {
             "description": item_base_data["description"],
             "classification": classification["classification"],
