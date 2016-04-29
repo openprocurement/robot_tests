@@ -100,7 +100,7 @@ ${complaint_id}  1
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${lot}=  Підготовка даних для створення лоту
+  ${lot}=  Підготовка даних для створення лоту  ${USERS.users['${tender_owner}'].initial_data.data.value.amount}
   ${lot_resp}=  Run As   ${tender_owner}  Створити лот  ${TENDER['TENDER_UAID']}  ${lot}
   ${lot_id}=  get_id_from_object  ${lot.data}
   ${lot_data}=  Create Dictionary  lot=${lot}  lot_resp=${lot_resp}  lot_id=${lot_id}
