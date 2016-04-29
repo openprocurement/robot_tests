@@ -78,20 +78,21 @@ ${mode}         openeu
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати початку прийому пропозицій  ${provider}
   ${claim}=  Підготовка даних для подання вимоги
-  ${claim_resp}=  Викликати для учасника  ${provider}
+  ${complaintID}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
-  ${claim_data}=  Create Dictionary  claim=${claim}  claim_resp=${claim_resp}
+  ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data=${claim_data}
 
-  ${confrimation_data}=  test_submit_claim_data  ${USERS.users['${provider}']['claim_data']['claim_resp']['data']['id']}
-  Log  ${confrimation_data}
+
+  ${data}=  Create Dictionary  status=claim
+  ${confirmation_data}=  Create Dictionary  data=${data}
   Викликати для учасника  ${provider}
   ...      Подати вимогу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['claim_resp']}
-  ...      ${confrimation_data}
+  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${confirmation_data}
 
 
 Можливість скасувати вимогу на умови
@@ -99,12 +100,13 @@ ${mode}         openeu
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${cancellation_reason}=  Set variable  create_fake_sentence
-  ${cancellation_data}=  test_cancel_claim_data  ${USERS.users['${provider}']['claim_data']['claim_resp']['data']['id']}  ${cancellation_reason}
+  ${cancellation_reason}=  create_fake_sentence
+  ${data}=  Create Dictionary  status=cancelled  cancellationReason=${cancellation_reason}
+  ${cancellation_data}=  Create Dictionary  data=${data}
   Викликати для учасника  ${provider}
   ...      Скасувати вимогу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['claim_resp']}
+  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
   ...      ${cancellation_data}
   Set To Dictionary  ${USERS.users['${provider}'].claim_data}  cancellation=${cancellation_data}
 
@@ -280,12 +282,11 @@ ${mode}         openeu
   ...      ${USERS.users['${provider}'].broker}
   [Documentation]  Користувач ${USERS.users['${provider}'].broker} намагається подати скаргу на умови оголошеного тендера
   ${claim}=  Підготовка даних для подання вимоги
-  ${claim_resp}=  Викликати для учасника  ${provider}
+  ${complaintID}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
-  ${claim_data2}=  Create Dictionary  claim=${claim}  claim_resp=${claim_resp}
-  Log  ${claim_data2}
+  ${claim_data2}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data2=${claim_data2}
 
   ${confrimation_data}=  test_submit_claim_data  ${USERS.users['${provider}']['claim_data2']['claim_resp']['data']['id']}
@@ -293,8 +294,8 @@ ${mode}         openeu
   Require Failure  ${provider}
   ...      Подати вимогу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data2']['claim_resp']}
-  ...      ${confrimation_data}
+  ...      ${USERS.users['${provider}']['claim_data2']['complaintID']}
+  ...      ${confirmation_data}
 
 
 Можливість продовжити період подання пропозиції на 7 днів
@@ -314,20 +315,19 @@ ${mode}         openeu
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${provider}
   ${claim}=  Підготовка даних для подання вимоги
-  ${claim_resp}=  Викликати для учасника  ${provider}
+  ${complaintID}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
-  ${claim_data3}=  Create Dictionary  claim=${claim}  claim_resp=${claim_resp}
-  Log  ${claim_data3}
+  ${claim_data3}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data3=${claim_data3}
 
-  ${escalation_data}=  test_escalate_claim_data  ${USERS.users['${provider}']['claim_data3']['claim_resp']['data']['id']}
-  Log  ${escalation_data}
-  Викликати для учасника  ${tender_owner}
+  ${data}=  Create Dictionary  status=pending  satisfied=${False}
+  ${escalation_data}=  Create Dictionary  data=${data}
+  Викликати для учасника  ${provider}
   ...      Перетворити вимогу в скаргу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data3']['claim_resp']}
+  ...      ${USERS.users['${provider}']['claim_data3']['complaintID']}
   ...      ${escalation_data}
   Set To Dictionary  ${USERS.users['${provider}'].claim_data3}  escalation=${escalation_data}
 
@@ -337,12 +337,13 @@ ${mode}         openeu
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${cancellation_reason}=  Set variable  create_fake_sentence
-  ${cancellation_data}=  test_cancel_claim_data  ${USERS.users['${provider}']['claim_data3']['claim_resp']['data']['id']}  ${cancellation_reason}
+  ${cancellation_reason}=  create_fake_sentence
+  ${data}=  Create Dictionary  status=cancelled  cancellationReason=${cancellation_reason}
+  ${cancellation_data}=  Create Dictionary  data=${data}
   Викликати для учасника  ${provider}
   ...      Скасувати вимогу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data3']['claim_resp']}
+  ...      ${USERS.users['${provider}']['claim_data3']['complaintID']}
   ...      ${cancellation_data}
   Set To Dictionary  ${USERS.users['${provider}'].claim_data3}  cancellation=${cancellation_data}
 
@@ -401,20 +402,20 @@ ${mode}         openeu
   [Documentation]  Користувач ${USERS.users['${provider}'].broker} намагається подати скаргу на умови оголошеного тендера
   [Setup]  Дочекатись дати закінчення періоду подання скарг  ${provider}
   ${claim}=  Підготовка даних для подання вимоги
-  ${claim_resp}=  Викликати для учасника  ${provider}
+  ${complaintID}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
-  ${claim_data4}=  Create Dictionary  claim=${claim}  claim_resp=${claim_resp}
-  Log  ${claim_data4}
+  ${claim_data4}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data4=${claim_data4}
 
-  ${escalation_data}=  test_escalate_claim_data  ${USERS.users['${provider}']['claim_data4']['claim_resp']['data']['id']}
-  Log  ${escalation_data}
-  Require Failure  ${tender_owner}
+
+  ${data}=  Create Dictionary  status=pending  satisfied=${False}
+  ${escalation_data}=  Create Dictionary  data=${data}
+  Викликати для учасника  ${provider}
   ...      Перетворити вимогу в скаргу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data4']['claim_resp']}
+  ...      ${USERS.users['${provider}']['claim_data4']['complaintID']}
   ...      ${escalation_data}
   Set To Dictionary  ${USERS.users['${provider}'].claim_data4}  escalation=${escalation_data}
 
