@@ -48,7 +48,7 @@ def create_fake_doc():
 
 def test_tender_data(intervals, periods=("enquiry", "tender")):
     now = get_now()
-    value_amount = round(random.uniform(3000, 250000000000), 2)  # max value equals to budget of Ukraine in hryvnias
+    value_amount = round(random.uniform(3000, 99999999999.99), 2)  # max value equals to budget of Ukraine in hryvnias
     data = {
         "mode": "test",
         "submissionMethodDetails": "quick",
