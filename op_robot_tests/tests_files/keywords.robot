@@ -267,7 +267,7 @@ Get Broker Property By Username
   [Arguments]  ${username}  ${tender_data}
   # munchify is used to make deep copy of ${tender_data}
   ${tender_data_copy}=  munchify  ${tender_data}
-  ${status}  ${adapted_data}=  Run Keyword And Ignore Error  Викликати для учасника  ${username}  Підготувати дані для оголошення тендера  ${tender_data_copy}
+  ${status}  ${adapted_data}=  Run Keyword And Ignore Error  Run As  ${username}  Підготувати дані для оголошення тендера  ${tender_data_copy}
   ${adapted_data}=  Set variable if  '${status}' == 'FAIL'  ${tender_data_copy}  ${adapted_data}
   # munchify is used to make nice log output
   ${adapted_data}=  munchify  ${adapted_data}
@@ -357,7 +357,7 @@ Get Broker Property By Username
   ...      ${USERS.users['${username}']['LAST_REFRESH_DATE']}
   ${LAST_REFRESH_DATE}=  Get Current TZdate
   Run Keyword If  ${time_diff} > 0  Run keywords
-  ...      Викликати для учасника  ${username}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  ...      Run As  ${username}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
   ...      AND
   ...      Set To Dictionary  ${USERS.users['${username}']}  LAST_REFRESH_DATE=${LAST_REFRESH_DATE}
 
@@ -563,12 +563,7 @@ Run As
   Log  ${command}
   Log Many  @{arguments}
   ${keywords_file}=  Get Broker Property By Username  ${username}  keywords_file
-  ${status}  ${value}=  Run keyword and ignore keyword definitions  ${keywords_file}.${command}  ${username}  @{arguments}
-  ${unexpected_args}=  Get Regexp Matches  '${value}'  expected [0-9] arguments, got [0-9]
-  ${status}  ${value}=  Run Keyword If  "${unexpected_args}"=="[]"  Set Variable  ${status}  ${value}
-  ...      ELSE  Run keyword and ignore keyword definitions  ${keywords_file}.${command}  ${username}  @{arguments[:-1]}
-  Run Keyword If  '${status}' == 'FAIL'  Fail  ${value}
-  [return]  ${value}
+  Run Keyword And Return  ${keywords_file}.${command}  ${username}  @{arguments}
 
 
 Require Failure
