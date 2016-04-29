@@ -52,51 +52,22 @@ ${mode}         single
   ...      ${TENDER['TENDER_UAID']}
 
 
-Можливість створити вимогу про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${provider}'].broker}: Можливість подати вимогу про виправлення умов закупівлі
+Можливість створити вимогу про виправлення умов закупівлі, додати до неї документацію і подати її
+  [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити вимогу про виправлення умов закупівлі, додати до неї документацію і подати її
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${claim}=  Підготовка даних для подання вимоги
-  ${claim_resp}=  Викликати для учасника  ${provider}
+  ${document}=  create_fake_doc
+  ${complaintID}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
-  ${claim_data}=  Create Dictionary  claim=${claim}  claim_resp=${claim_resp}
-  Set To Dictionary  ${USERS.users['${provider}']}  claim_data  ${claim_data}
-  ${CLAIM_NUM}=  Set variable  0
-  Set suite variable  ${CLAIM_NUM}
-
-
-Можливість додати документацію до вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${provider}'].broker}: Можливість додати документацію до вимоги про виправлення умов закупівлі
-  ...  provider
-  ...  ${USERS.users['${provider}'].broker}
-  ...  from-0.12
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${document}=  create_fake_doc
-  Викликати для учасника  ${provider}
-  ...      Завантажити документацію до вимоги
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['claim_resp']}
   ...      ${document}
-  Set To Dictionary  ${USERS.users['${provider}']['claim_data']}  document  ${document}
-
-
-Можливість подати вимогу про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${provider}'].broker}: Можливість подати вимогу про виправлення умов закупівлі
-  ...  provider
-  ...  ${USERS.users['${provider}'].broker}
-  ...  from-0.12
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${confrimation_data}=  test_submit_claim_data  ${USERS.users['${provider}']['claim_data']['claim_resp']['data']['id']}
-  Log  ${confrimation_data}
-  Викликати для учасника  ${provider}
-  ...      Подати вимогу
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['claim_resp']}
-  ...      ${confrimation_data}
+  ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}  document=${document}
+  Set To Dictionary  ${USERS.users['${provider}']}  claim_data  ${claim_data}
 
 ##############################################################################################
 #             ВІДОБРАЖЕННЯ ДЛЯ ГЛЯДАЧА
@@ -108,9 +79,11 @@ ${mode}         single
   ...  ${USERS.users['${viewer}'].broker}
   ...  from-0.12
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити поле тендера із значенням  ${viewer}
+  Викликати для учасника  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  Звірити поле скарги із значенням  ${viewer}
   ...      ${USERS.users['${provider}'].claim_data['claim'].data.description}
-  ...      complaints[${CLAIM_NUM}].description
+  ...      description
+  ...      ${USERS.users['${provider}'].claim_data['complaintID']}
 
 
 Відображення заголовку вимоги для глядача
@@ -118,9 +91,10 @@ ${mode}         single
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  from-0.12
-  Звірити поле тендера із значенням  ${viewer}
+  Звірити поле скарги із значенням  ${viewer}
   ...      ${USERS.users['${provider}'].claim_data['claim'].data.title}
-  ...      complaints[${CLAIM_NUM}].title
+  ...      title
+  ...      ${USERS.users['${provider}'].claim_data['complaintID']}
 
 
 Відображення заголовку документації вимоги для глядача
@@ -129,9 +103,10 @@ ${mode}         single
   ...  ${USERS.users['${viewer}'].broker}
   ...  from-0.12
   ${doc_num}=  Set variable  0
-  Звірити поле тендера із значенням  ${viewer}
+  Звірити поле скарги із значенням  ${viewer}
   ...      ${USERS.users['${provider}'].claim_data['document']}
-  ...      complaints[${CLAIM_NUM}].documents[${doc_num}].title
+  ...      document.title
+  ...      ${USERS.users['${provider}'].claim_data['complaintID']}
 
 
 Відображення поданого статусу вимоги для глядача
@@ -139,9 +114,10 @@ ${mode}         single
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  from-0.12
-  Звірити поле тендера із значенням  ${viewer}
+  Звірити поле скарги із значенням  ${viewer}
   ...      claim
-  ...      complaints[${CLAIM_NUM}].status
+  ...      status
+  ...      ${USERS.users['${provider}'].claim_data['complaintID']}
 
 ##############################################################################################
 #             ВІДОБРАЖЕННЯ ДЛЯ КОРИСТУВАЧА
@@ -153,9 +129,11 @@ ${mode}         single
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
-  Звірити поле тендера із значенням  ${provider}
+  Викликати для учасника  ${provider}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  Звірити поле скарги із значенням  ${provider}
   ...      ${USERS.users['${provider}'].claim_data['claim'].data.description}
-  ...      complaints[${CLAIM_NUM}].description
+  ...      description
+  ...      ${USERS.users['${provider}'].claim_data['complaintID']}
 
 
 Відображення заголовку вимоги для користувача
@@ -163,9 +141,10 @@ ${mode}         single
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
-  Звірити поле тендера із значенням  ${provider}
+  Звірити поле скарги із значенням  ${provider}
   ...      ${USERS.users['${provider}'].claim_data['claim'].data.title}
-  ...      complaints[${CLAIM_NUM}].title
+  ...      title
+  ...      ${USERS.users['${provider}'].claim_data['complaintID']}
 
 
 Відображення заголовку документації вимоги для користувача
@@ -173,10 +152,10 @@ ${mode}         single
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
-  ${doc_num}=  Set variable  0
-  Звірити поле тендера із значенням  ${provider}
+  Звірити поле скарги із значенням  ${provider}
   ...      ${USERS.users['${provider}'].claim_data['document']}
-  ...      complaints[${CLAIM_NUM}].documents[${doc_num}].title
+  ...      document.title
+  ...      ${USERS.users['${provider}'].claim_data['complaintID']}
 
 
 Відображення поданого статусу вимоги для користувача
@@ -184,9 +163,10 @@ ${mode}         single
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
-  Звірити поле тендера із значенням  ${provider}
+  Звірити поле скарги із значенням  ${provider}
   ...      claim
-  ...      complaints[${CLAIM_NUM}].status
+  ...      status
+  ...      ${USERS.users['${provider}'].claim_data['complaintID']}
 
 ##############################################################################################
 #             МОЖЛИВІСТЬ
@@ -198,12 +178,12 @@ ${mode}         single
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  from-0.12
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${answer_data}=  test_claim_answer_data  ${USERS.users['${provider}']['claim_data']['claim_resp']['data']['id']}
+  ${answer_data}=  test_claim_answer_data
   Log  ${answer_data}
   Викликати для учасника  ${tender_owner}
   ...      Відповісти на вимогу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['claim_resp']}
+  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
   ...      ${answer_data}
   ${claim_data}=  Create Dictionary  claim_answer=${answer_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  claim_data  ${claim_data}
@@ -218,9 +198,11 @@ ${mode}         single
   ...  ${USERS.users['${viewer}'].broker}
   ...  from-0.12
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${tender_owner}'].claim_data['claim_answer']['data']['status']}
-  ...      complaints[${CLAIM_NUM}].status
+  Викликати для учасника  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  Звірити поле скарги із значенням  ${viewer}
+  ...      answered
+  ...      status
+  ...      ${USERS.users['${provider}'].claim_data['complaintID']}
 
 
 Відображення типу вирішення вимоги для глядача
@@ -228,9 +210,10 @@ ${mode}         single
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  from-0.12
-  Звірити поле тендера із значенням  ${viewer}
+  Звірити поле скарги із значенням  ${viewer}
   ...      ${USERS.users['${tender_owner}'].claim_data['claim_answer']['data']['resolutionType']}
-  ...      complaints[${CLAIM_NUM}].resolutionType
+  ...      resolutionType
+  ...      ${USERS.users['${provider}'].claim_data['complaintID']}
 
 
 Відображення вирішення вимоги для глядача
@@ -238,9 +221,10 @@ ${mode}         single
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  from-0.12
-  Звірити поле тендера із значенням  ${viewer}
+  Звірити поле скарги із значенням  ${viewer}
   ...      ${USERS.users['${tender_owner}'].claim_data['claim_answer']['data']['resolution']}
-  ...      complaints[${CLAIM_NUM}].resolution
+  ...      resolution
+  ...      ${USERS.users['${provider}'].claim_data['complaintID']}
 
 ##############################################################################################
 #             ВІДОБРАЖЕННЯ ДЛЯ КОРИСТУВАЧА
@@ -252,9 +236,11 @@ ${mode}         single
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
-  Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${tender_owner}'].claim_data['claim_answer']['data']['status']}
-  ...      complaints[${CLAIM_NUM}].status
+  Викликати для учасника  ${provider}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  Звірити поле скарги із значенням  ${provider}
+  ...      answered
+  ...      status
+  ...      ${USERS.users['${provider}'].claim_data['complaintID']}
 
 
 Відображення типу вирішення вимоги для користувача
@@ -262,9 +248,10 @@ ${mode}         single
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
-  Звірити поле тендера із значенням  ${provider}
+  Звірити поле скарги із значенням  ${provider}
   ...      ${USERS.users['${tender_owner}'].claim_data['claim_answer']['data']['resolutionType']}
-  ...      complaints[${CLAIM_NUM}].resolutionType
+  ...      resolutionType
+  ...      ${USERS.users['${provider}'].claim_data['complaintID']}
 
 
 Відображення вирішення вимоги для користувача
@@ -272,9 +259,10 @@ ${mode}         single
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
-  Звірити поле тендера із значенням  ${provider}
+  Звірити поле скарги із значенням  ${provider}
   ...      ${USERS.users['${tender_owner}'].claim_data['claim_answer']['data']['resolution']}
-  ...      complaints[${CLAIM_NUM}].resolution
+  ...      resolution
+  ...      ${USERS.users['${provider}'].claim_data['complaintID']}
 
 ##############################################################################################
 #             МОЖЛИВІСТЬ
@@ -286,13 +274,12 @@ ${mode}         single
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${confirmation_data}=  test_claim_answer_satisfying_data
-  ...      ${USERS.users['${provider}']['claim_data']['claim_resp']['data']['id']}
-  Log  ${confirmation_data}
+  ${data}=  Create Dictionary  status=resolved  satisfied=${True}
+  ${confirmation_data}=  Create Dictionary  data=${data}
   Викликати для учасника  ${provider}
   ...      Підтвердити вирішення вимоги
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['claim_resp']}
+  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
   ...      ${confirmation_data}
   Set To Dictionary  ${USERS.users['${provider}']['claim_data']}  claim_answer_confirm  ${confirmation_data}
 
@@ -306,9 +293,11 @@ ${mode}         single
   ...  ${USERS.users['${viewer}'].broker}
   ...  from-0.12
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${provider}'].claim_data['claim_answer_confirm']['data']['status']}
-  ...      complaints[${CLAIM_NUM}].status
+  Викликати для учасника  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  Звірити поле скарги із значенням  ${viewer}
+  ...      resolved
+  ...      status
+  ...      ${USERS.users['${provider}'].claim_data['complaintID']}
 
 
 Відображення задоволення вимоги для глядача
@@ -316,9 +305,10 @@ ${mode}         single
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  from-0.12
-  Звірити поле тендера із значенням  ${viewer}
+  Звірити поле скарги із значенням  ${viewer}
   ...      ${USERS.users['${provider}'].claim_data['claim_answer_confirm']['data']['satisfied']}
-  ...      complaints[${CLAIM_NUM}].satisfied
+  ...      satisfied
+  ...      ${USERS.users['${provider}'].claim_data['complaintID']}
 
 ##############################################################################################
 #             ВІДОБРАЖЕННЯ ДЛЯ КОРИСТУВАЧА
@@ -330,9 +320,11 @@ ${mode}         single
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
-  Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${provider}'].claim_data['claim_answer_confirm']['data']['status']}
-  ...      complaints[${CLAIM_NUM}].status
+  Викликати для учасника  ${provider}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  Звірити поле скарги із значенням  ${provider}
+  ...      resolved
+  ...      status
+  ...      ${USERS.users['${provider}'].claim_data['complaintID']}
 
 
 Відображення задоволення вимоги для користувача
@@ -340,38 +332,36 @@ ${mode}         single
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
-  Звірити поле тендера із значенням  ${provider}
+  Звірити поле скарги із значенням  ${provider}
   ...      ${USERS.users['${provider}'].claim_data['claim_answer_confirm']['data']['satisfied']}
-  ...      complaints[${CLAIM_NUM}].satisfied
+  ...      satisfied
+  ...      ${USERS.users['${provider}'].claim_data['complaintID']}
 
 ##############################################################################################
 #             МОЖЛИВІСТЬ
 ##############################################################################################
 
-Можливість створити і скасувати вимогу про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити і скасувати вимогу про виправлення умов закупівлі
+Можливість створити чернетку вимоги про виправлення умов закупівлі і скасувати її
+  [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити чернетку вимоги про виправлення умов закупівлі і скасувати її
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${claim}=  Підготовка даних для подання вимоги
-  ${claim_resp}=  Викликати для учасника  ${provider}
-  ...      Створити вимогу
+  ${complaintID}=  Викликати для учасника  ${provider}
+  ...      Створити чернетку вимоги
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
-  ${claim_data2}=  Create Dictionary  claim=${claim}  claim_resp=${claim_resp}
-  Log  ${claim_data2}
+  ${claim_data2}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data2  ${claim_data2}
-  ${CLAIM_NUM}=  Set variable  1
-  Set suite variable  ${CLAIM_NUM}
 
-
-  ${cancellation_reason}=  Set variable  prosto tak :)
-  ${cancellation_data}=  test_cancel_claim_data  ${USERS.users['${provider}']['claim_data2']['claim_resp']['data']['id']}  ${cancellation_reason}
+  ${cancellation_reason}=  create_fake_sentence
+  ${data}=  Create Dictionary  status=cancelled  cancellationReason=${cancellation_reason}
+  ${cancellation_data}=  Create Dictionary  data=${data}
   Викликати для учасника  ${provider}
   ...      Скасувати вимогу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data2']['claim_resp']}
+  ...      ${USERS.users['${provider}']['claim_data2']['complaintID']}
   ...      ${cancellation_data}
   Set To Dictionary  ${USERS.users['${provider}'].claim_data2}  cancellation  ${cancellation_data}
 
@@ -379,49 +369,55 @@ ${mode}         single
 #             ВІДОБРАЖЕННЯ ДЛЯ ГЛЯДАЧА
 ##############################################################################################
 
-Відображення статусу 'cancelled' вимоги для глядача
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу 'cancelled' вимоги для глядача
+Відображення статусу 'cancelled' чернетки вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу 'cancelled' чернетки вимоги для глядача
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  from-0.12
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${provider}'].claim_data2['cancellation']['data']['status']}
-  ...      complaints[${CLAIM_NUM}].status
+  Викликати для учасника  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  Звірити поле скарги із значенням  ${viewer}
+  ...      cancelled
+  ...      status
+  ...      ${USERS.users['${provider}'].claim_data2['complaintID']}
 
 
-Відображення причини скасування вимоги для глядача
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення причини скасування вимоги для глядача
+Відображення причини скасування чернетки вимоги для глядача
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення причини скасування чернетки вимоги для глядача
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  from-0.12
-  Звірити поле тендера із значенням  ${provider}
+  Звірити поле скарги із значенням  ${viewer}
   ...      ${USERS.users['${provider}'].claim_data2['cancellation']['data']['cancellationReason']}
-  ...      complaints[${CLAIM_NUM}].cancellationReason
+  ...      cancellationReason
+  ...      ${USERS.users['${provider}'].claim_data2['complaintID']}
 
 ##############################################################################################
 #             ВІДОБРАЖЕННЯ ДЛЯ КОРИСТУВАЧА
 ##############################################################################################
 
-Відображення статусу 'cancelled' вимоги для користувача
-  [Tags]  ${USERS.users['${provider}'].broker}: Відображення статусу 'cancelled' вимоги для користувача
+Відображення статусу 'cancelled' чернетки вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення статусу 'cancelled' чернетки вимоги для користувача
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
-  Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${provider}'].claim_data2['cancellation']['data']['status']}
-  ...      complaints[${CLAIM_NUM}].status
+  Викликати для учасника  ${provider}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  Звірити поле скарги із значенням  ${provider}
+  ...      cancelled
+  ...      status
+  ...      ${USERS.users['${provider}'].claim_data2['complaintID']}
 
 
-Відображення причини скасування вимоги для користувача
-  [Tags]  ${USERS.users['${provider}'].broker}: Відображення причини скасування вимоги для користувача
+Відображення причини скасування чернетки вимоги для користувача
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення причини скасування чернетки вимоги для користувача
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
-  Звірити поле тендера із значенням  ${provider}
+  Звірити поле скарги із значенням  ${provider}
   ...      ${USERS.users['${provider}'].claim_data2['cancellation']['data']['cancellationReason']}
-  ...      complaints[${CLAIM_NUM}].cancellationReason
+  ...      cancellationReason
+  ...      ${USERS.users['${provider}'].claim_data2['complaintID']}
 
 ##############################################################################################
 #             МОЖЛИВІСТЬ
@@ -434,32 +430,20 @@ ${mode}         single
   ...  from-0.12
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${claim}=  Підготовка даних для подання вимоги
-  ${claim_resp}=  Викликати для учасника  ${provider}
+  ${complaintID}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
-  ${claim_data3}=  Create Dictionary  claim=${claim}  claim_resp=${claim_resp}
-  Log  ${claim_data3}
+  ${claim_data3}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data3  ${claim_data3}
-  ${CLAIM_NUM}=  Set variable  2
-  Set suite variable  ${CLAIM_NUM}
 
-
-  ${confrimation_data}=  test_submit_claim_data  ${USERS.users['${provider}']['claim_data3']['claim_resp']['data']['id']}
-  Log  ${confrimation_data}
-  Викликати для учасника  ${provider}
-  ...      Подати вимогу
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data3']['claim_resp']}
-  ...      ${confrimation_data}
-
-
-  ${cancellation_reason}=  Set variable  prosto tak :)
-  ${cancellation_data}=  test_cancel_claim_data  ${USERS.users['${provider}']['claim_data3']['claim_resp']['data']['id']}  ${cancellation_reason}
+  ${cancellation_reason}=  create_fake_sentence
+  ${data}=  Create Dictionary  status=cancelled  cancellationReason=${cancellation_reason}
+  ${cancellation_data}=  Create Dictionary  data=${data}
   Викликати для учасника  ${provider}
   ...      Скасувати вимогу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data3']['claim_resp']}
+  ...      ${USERS.users['${provider}']['claim_data3']['complaintID']}
   ...      ${cancellation_data}
   Set To Dictionary  ${USERS.users['${provider}'].claim_data3}  cancellation  ${cancellation_data}
 
@@ -473,9 +457,11 @@ ${mode}         single
   ...  ${USERS.users['${viewer}'].broker}
   ...  from-0.12
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${provider}'].claim_data3['cancellation']['data']['status']}
-  ...      complaints[${CLAIM_NUM}].status
+  Викликати для учасника  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  Звірити поле скарги із значенням  ${viewer}
+  ...      cancelled
+  ...      status
+  ...      ${USERS.users['${provider}'].claim_data3['complaintID']}
 
 ##############################################################################################
 #             ВІДОБРАЖЕННЯ ДЛЯ КОРИСТУВАЧА
@@ -487,9 +473,11 @@ ${mode}         single
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
-  Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${provider}'].claim_data3['cancellation']['data']['status']}
-  ...      complaints[${CLAIM_NUM}].status
+  Викликати для учасника  ${provider}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  Звірити поле скарги із значенням  ${provider}
+  ...      cancelled
+  ...      status
+  ...      ${USERS.users['${provider}'].claim_data3['complaintID']}
 
 ##############################################################################################
 #             МОЖЛИВІСТЬ
@@ -502,41 +490,28 @@ ${mode}         single
   ...  from-0.12
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${claim}=  Підготовка даних для подання вимоги
-  ${claim_resp}=  Викликати для учасника  ${provider}
+  ${complaintID}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
-  ${claim_data4}=  Create Dictionary  claim=${claim}  claim_resp=${claim_resp}
-  Log  ${claim_data4}
+  ${claim_data4}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data4  ${claim_data4}
-  ${CLAIM_NUM}=  Set variable  3
-  Set suite variable  ${CLAIM_NUM}
 
-
-  ${confrimation_data}=  test_submit_claim_data  ${USERS.users['${provider}']['claim_data4']['claim_resp']['data']['id']}
-  Log  ${confrimation_data}
-  Викликати для учасника  ${provider}
-  ...      Подати вимогу
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data4']['claim_resp']}
-  ...      ${confrimation_data}
-
-
-  ${answer_data}=  test_claim_answer_data  ${USERS.users['${provider}']['claim_data4']['claim_resp']['data']['id']}
+  ${answer_data}=  test_claim_answer_data
   Log  ${answer_data}
   Викликати для учасника  ${tender_owner}
   ...      Відповісти на вимогу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data4']['claim_resp']}
+  ...      ${USERS.users['${provider}']['claim_data4']['complaintID']}
   ...      ${answer_data}
 
-
-  ${cancellation_reason}=  Set variable  prosto tak :)
-  ${cancellation_data}=  test_cancel_claim_data  ${USERS.users['${provider}']['claim_data4']['claim_resp']['data']['id']}  ${cancellation_reason}
+  ${cancellation_reason}=  create_fake_sentence
+  ${data}=  Create Dictionary  status=cancelled  cancellationReason=${cancellation_reason}
+  ${cancellation_data}=  Create Dictionary  data=${data}
   Викликати для учасника  ${provider}
   ...      Скасувати вимогу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data4']['claim_resp']}
+  ...      ${USERS.users['${provider}']['claim_data4']['complaintID']}
   ...      ${cancellation_data}
   Set To Dictionary  ${USERS.users['${provider}'].claim_data4}  cancellation  ${cancellation_data}
 
@@ -550,10 +525,11 @@ ${mode}         single
   ...  ${USERS.users['${viewer}'].broker}
   ...  from-0.12
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Log  ${USERS.users['${viewer}'].tender_data}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${provider}'].claim_data4['cancellation']['data']['status']}
-  ...      complaints[${CLAIM_NUM}].status
+  Викликати для учасника  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  Звірити поле скарги із значенням  ${viewer}
+  ...      cancelled
+  ...      status
+  ...      ${USERS.users['${provider}'].claim_data4['complaintID']}
 
 ##############################################################################################
 #             ВІДОБРАЖЕННЯ ДЛЯ КОРИСТУВАЧА
@@ -565,9 +541,11 @@ ${mode}         single
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
-  Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${provider}'].claim_data4['cancellation']['data']['status']}
-  ...      complaints[${CLAIM_NUM}].status
+  Викликати для учасника  ${provider}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  Звірити поле скарги із значенням  ${provider}
+  ...      cancelled
+  ...      status
+  ...      ${USERS.users['${provider}'].claim_data4['complaintID']}
 
 ##############################################################################################
 #             МОЖЛИВІСТЬ
@@ -580,41 +558,27 @@ ${mode}         single
   ...  from-0.12
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${claim}=  Підготовка даних для подання вимоги
-  ${claim_resp}=  Викликати для учасника  ${provider}
+  ${complaintID}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
-  ${claim_data5}=  Create Dictionary  claim=${claim}  claim_resp=${claim_resp}
-  Log  ${claim_data5}
+  ${claim_data5}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data5  ${claim_data5}
-  ${CLAIM_NUM}=  Set variable  4
-  Set suite variable  ${CLAIM_NUM}
 
-
-  ${confrimation_data}=  test_submit_claim_data  ${USERS.users['${provider}']['claim_data5']['claim_resp']['data']['id']}
-  Log  ${confrimation_data}
-  Викликати для учасника  ${provider}
-  ...      Подати вимогу
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data5']['claim_resp']}
-  ...      ${confrimation_data}
-
-
-  ${answer_data}=  test_claim_answer_data  ${USERS.users['${provider}']['claim_data5']['claim_resp']['data']['id']}
+  ${answer_data}=  test_claim_answer_data
   Log  ${answer_data}
   Викликати для учасника  ${tender_owner}
   ...      Відповісти на вимогу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data5']['claim_resp']}
+  ...      ${USERS.users['${provider}']['claim_data5']['complaintID']}
   ...      ${answer_data}
 
-
-  ${escalation_data}=  test_escalate_claim_data  ${USERS.users['${provider}']['claim_data5']['claim_resp']['data']['id']}
-  Log  ${escalation_data}
-  Викликати для учасника  ${tender_owner}
+  ${data}=  Create Dictionary  status=pending  satisfied=${False}
+  ${escalation_data}=  Create Dictionary  data=${data}
+  Викликати для учасника  ${provider}
   ...      Перетворити вимогу в скаргу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data5']['claim_resp']}
+  ...      ${USERS.users['${provider}']['claim_data5']['complaintID']}
   ...      ${escalation_data}
   Set To Dictionary  ${USERS.users['${provider}'].claim_data5}  escalation  ${escalation_data}
 
@@ -628,10 +592,11 @@ ${mode}         single
   ...  ${USERS.users['${viewer}'].broker}
   ...  from-0.12
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Log  ${USERS.users['${viewer}'].tender_data}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${provider}'].claim_data5['escalation']['data']['status']}
-  ...      complaints[${CLAIM_NUM}].status
+  Викликати для учасника  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  Звірити поле скарги із значенням  ${viewer}
+  ...      pending
+  ...      status
+  ...      ${USERS.users['${provider}'].claim_data5['complaintID']}
 
 
 Відображення незадоволення вимоги для глядача
@@ -639,9 +604,10 @@ ${mode}         single
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  from-0.12
-  Звірити поле тендера із значенням  ${viewer}
+  Звірити поле скарги із значенням  ${viewer}
   ...      ${USERS.users['${provider}'].claim_data5['escalation']['data']['satisfied']}
-  ...      complaints[${CLAIM_NUM}].satisfied
+  ...      satisfied
+  ...      ${USERS.users['${provider}'].claim_data5['complaintID']}
 
 ##############################################################################################
 #             ВІДОБРАЖЕННЯ ДЛЯ КОРИСТУВАЧА
@@ -653,9 +619,11 @@ ${mode}         single
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
-  Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${provider}'].claim_data5['escalation']['data']['status']}
-  ...      complaints[${CLAIM_NUM}].status
+  Викликати для учасника  ${provider}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  Звірити поле скарги із значенням  ${provider}
+  ...      pending
+  ...      status
+  ...      ${USERS.users['${provider}'].claim_data5['complaintID']}
 
 
 Відображення незадоволення вимоги для користувача
@@ -663,9 +631,10 @@ ${mode}         single
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
-  Звірити поле тендера із значенням  ${provider}
+  Звірити поле скарги із значенням  ${provider}
   ...      ${USERS.users['${provider}'].claim_data5['escalation']['data']['satisfied']}
-  ...      complaints[${CLAIM_NUM}].satisfied
+  ...      satisfied
+  ...      ${USERS.users['${provider}'].claim_data5['complaintID']}
 
 ##############################################################################################
 #             МОЖЛИВІСТЬ
@@ -677,12 +646,13 @@ ${mode}         single
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${cancellation_reason}=  Set variable  prosto tak :)
-  ${cancellation_data}=  test_cancel_claim_data  ${USERS.users['${provider}']['claim_data5']['claim_resp']['data']['id']}  ${cancellation_reason}
+  ${cancellation_reason}=  create_fake_sentence
+  ${data}=  Create Dictionary  status=cancelled  cancellationReason=${cancellation_reason}
+  ${cancellation_data}=  Create Dictionary  data=${data}
   Викликати для учасника  ${provider}
   ...      Скасувати вимогу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data5']['claim_resp']}
+  ...      ${USERS.users['${provider}']['claim_data5']['complaintID']}
   ...      ${cancellation_data}
   Set To Dictionary  ${USERS.users['${provider}'].claim_data5}  cancellation  ${cancellation_data}
 
@@ -696,9 +666,11 @@ ${mode}         single
   ...  ${USERS.users['${viewer}'].broker}
   ...  from-0.12
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити поле тендера із значенням  ${viewer}
-  ...      ${USERS.users['${provider}'].claim_data5['cancellation']['data']['status']}
-  ...      complaints[${CLAIM_NUM}].status
+  Викликати для учасника  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  Звірити поле скарги із значенням  ${viewer}
+  ...      cancelled
+  ...      status
+  ...      ${USERS.users['${provider}'].claim_data5['complaintID']}
 
 
 Відображення причини скасування скарги для глядача
@@ -706,9 +678,10 @@ ${mode}         single
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  from-0.12
-  Звірити поле тендера із значенням  ${provider}
+  Звірити поле скарги із значенням  ${viewer}
   ...      ${USERS.users['${provider}'].claim_data5['cancellation']['data']['cancellationReason']}
-  ...      complaints[${CLAIM_NUM}].cancellationReason
+  ...      cancellationReason
+  ...      ${USERS.users['${provider}'].claim_data5['complaintID']}
 
 ##############################################################################################
 #             ВІДОБРАЖЕННЯ ДЛЯ КОРИСТУВАЧА
@@ -720,9 +693,11 @@ ${mode}         single
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
-  Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${provider}'].claim_data5['cancellation']['data']['status']}
-  ...      complaints[${CLAIM_NUM}].status
+  Викликати для учасника  ${provider}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  Звірити поле скарги із значенням  ${provider}
+  ...      cancelled
+  ...      status
+  ...      ${USERS.users['${provider}'].claim_data5['complaintID']}
 
 
 Відображення причини скасування скарги для користувача
@@ -730,6 +705,7 @@ ${mode}         single
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  from-0.12
-  Звірити поле тендера із значенням  ${provider}
-  ...      ${USERS.users['${provider}'].claim_data2['cancellation']['data']['cancellationReason']}
-  ...      complaints[${CLAIM_NUM}].cancellationReason
+  Звірити поле скарги із значенням  ${provider}
+  ...      ${USERS.users['${provider}'].claim_data5['cancellation']['data']['cancellationReason']}
+  ...      cancellationReason
+  ...      ${USERS.users['${provider}'].claim_data5['complaintID']}

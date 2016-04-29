@@ -39,7 +39,8 @@ def translate_country_ru(country):
 def create_fake_doc():
     content = fake.text()
     suffix = fake.random_element(('.doc', '.docx', '.pdf'))
-    tf = NamedTemporaryFile(delete=False, suffix=suffix)
+    prefix = "{}-{}{}".format("d", fake.uuid4()[:8], fake_en.word())
+    tf = NamedTemporaryFile(delete=False, suffix=suffix, prefix=prefix)
     tf.write(content)
     tf.close()
     return tf.name
@@ -225,52 +226,13 @@ def test_complaint_data(lot=False):
 test_claim_data = test_complaint_data
 
 
-def test_claim_answer_satisfying_data(claim_id):
-    return munchify({
-        "data": {
-            "id": claim_id,
-            "status": "resolved",
-            "satisfied": True
-        }
-    })
-
-
-def test_claim_answer_data(claim_id):
+def test_claim_answer_data():
     return munchify({
         "data": {
             "status": "answered",
             "resolutionType": "resolved",
             "tendererAction": fake.sentence(nb_words=10, variable_nb_words=True),
-            "resolution": fake.sentence(nb_words=15, variable_nb_words=True),
-            "id": claim_id
-        }
-    })
-
-
-def test_escalate_claim_data(claim_id):
-    return munchify({
-        "data": {
-            "status": "pending",
-            "satisfied": False,
-            "id": claim_id
-        }
-    })
-
-
-def test_cancel_tender_data(cancellation_reason):
-    return munchify({
-        'data': {
-            'reason': cancellation_reason
-        }
-    })
-
-
-def test_cancel_claim_data(claim_id, cancellation_reason):
-    return munchify({
-        'data': {
-            'cancellationReason': cancellation_reason,
-            'status': 'cancelled',
-            'id': claim_id
+            "resolution": fake.sentence(nb_words=15, variable_nb_words=True)
         }
     })
 

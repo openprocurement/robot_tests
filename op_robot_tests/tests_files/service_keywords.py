@@ -20,15 +20,11 @@ from .initial_data import (
     create_fake_doc,
     create_fake_sentence,
     test_bid_data,
-    test_cancel_claim_data,
-    test_cancel_tender_data,
     test_claim_answer_data,
-    test_claim_answer_satisfying_data,
     test_claim_data,
     test_complaint_data,
     test_complaint_reply_data,
     test_confirm_data,
-    test_escalate_claim_data,
     test_invalid_features_data,
     test_item_data,
     test_lot_complaint_data,
@@ -37,7 +33,6 @@ from .initial_data import (
     test_lot_question_data,
     test_question_answer_data,
     test_question_data,
-    test_submit_claim_data,
     test_supplier_data,
     test_tender_data,
     test_tender_data_limited,
@@ -421,6 +416,21 @@ def get_object_index_by_id(data, object_id):
     else:
         index += 1
     return index
+
+
+def get_complaint_index_by_complaintID(data, complaintID):
+    for index, element in enumerate(data):
+        if element['complaintID'] == complaintID:
+            return index
+    raise IndexError
+
+
+def get_document_index_by_id(data, document_id):
+    for index, element in enumerate(data):
+        if element['title'] == document_id:
+            return index
+    raise IndexError
+
 
 
 # GUI Frontends common
