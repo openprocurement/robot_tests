@@ -196,7 +196,6 @@ Get Broker Property By Username
   ${tender_data}=  prepare_test_tender_data  ${period_intervals}  ${mode}  ${number_of_lots}  ${meat}
   ${TENDER}=  Create Dictionary
   Set Global Variable  ${TENDER}
-  Log  ${TENDER}
   Log  ${tender_data}
   [return]  ${tender_data}
 
@@ -444,7 +443,6 @@ Get Broker Property By Username
   @{items}=  Get_From_Object  ${tender_data.data}  items
   ${len_of_items}=  Get Length  ${items}
   :FOR  ${index}  IN RANGE  ${len_of_items}
-  \  Log  ${index}
   \  Звірити поле тендера  ${viewer}  ${tender_data}  items[${index}].${field}
 
 
@@ -452,7 +450,6 @@ Get Broker Property By Username
   [Arguments]  ${username}  ${tender_data}  ${field}  ${accuracy}=60  ${absolute_delta}=${False}
   @{items}=  Get_From_Object  ${tender_data.data}  items
   :FOR  ${index}  ${_}  IN ENUMERATE  @{items}
-  \  Log  ${index}
   \  Звірити дату тендера  ${viewer}  ${tender_data}  items[${index}].${field}  accuracy=${accuracy}  absolute_delta=${absolute_delta}
 
 
@@ -460,14 +457,11 @@ Get Broker Property By Username
   [Arguments]  ${username}  ${tender_data}
   @{items}=  Get_From_Object  ${tender_data.data}  items
   :FOR  ${index}  ${_}  IN ENUMERATE  @{items}
-  \  Log  ${index}
   \  Звірити координати тендера  ${viewer}  ${tender_data}  items[${index}]
 
 
 Отримати дані із тендера
   [Arguments]  ${username}  ${tender_uaid}  ${field_name}  ${object_id}=${None}
-  Log  ${username}
-  Log  ${field_name}
   ${field}=  Run Keyword If  '${object_id}'=='${None}'  Set Variable  ${field_name}
   ...             ELSE  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${object_id}
   ${status}  ${field_value}=  Run keyword and ignore error
@@ -601,7 +595,6 @@ Require Failure
 
 Дочекатись дати початку періоду уточнень
   [Arguments]  ${username}  ${tender_uaid}
-  Log  ${username}
   # XXX: HACK: Same as below
   ${status}  ${date}=  Run Keyword And Ignore Error
   ...      Set Variable
@@ -700,7 +693,6 @@ Require Failure
 
 Дочекатись дати закінчення аукціону
   [Arguments]  ${username}
-  Log  ${username}
   ${auctionEnd}=  Отримати дані із тендера  ${username}  ${tender_uaid}  auctionPeriod.endDate  ${TENDER['LOT_ID']}
   Дочекатись дати  ${auctionEnd}
   Оновити LAST_MODIFICATION_DATE
@@ -709,7 +701,6 @@ Require Failure
 
 Дочекатись дати закінчення періоду подання скарг
   [Arguments]  ${username}
-  log  ${username}
   Дочекатись дати  ${USERS.users['${username}'].tender_data.data.complaintPeriod.endDate}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
