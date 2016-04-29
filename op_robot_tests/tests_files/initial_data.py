@@ -4,7 +4,7 @@ from faker import Factory
 from munch import munchify
 from tempfile import NamedTemporaryFile
 from .local_time import get_now
-from .op_faker import OP_Provider
+from op_faker import OP_Provider
 import random
 
 

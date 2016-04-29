@@ -7,7 +7,7 @@ import os
 
 def load_data_from_file(file_name):
     if not os.path.exists(file_name):
-        file_name = os.path.join(os.path.dirname(__file__), 'data', file_name)
+        file_name = os.path.join(os.path.dirname(__file__), file_name)
     with open(file_name) as file_obj:
         if file_name.endswith(".json"):
             return Munch.fromDict(load(file_obj))
@@ -16,7 +16,7 @@ def load_data_from_file(file_name):
 
 
 class OP_Provider(BaseProvider):
-    __fake_data = load_data_from_file("faker_data.json")
+    __fake_data = load_data_from_file("op_faker_data.json")
     word_list = __fake_data.words
     procuringEntities = __fake_data.procuringEntities
     addresses = __fake_data.addresses
