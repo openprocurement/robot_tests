@@ -419,6 +419,21 @@ def get_object_index_by_id(data, object_id):
     return index
 
 
+def get_complaint_index_by_complaintID(data, complaintID):
+    for index, element in enumerate(data):
+        if element['complaintID'] == complaintID:
+            return index
+    raise IndexError
+
+
+def get_document_index_by_id(data, document_id):
+    for index, element in enumerate(data):
+        if element['title'] == document_id:
+            return index
+    raise IndexError
+
+
+
 # GUI Frontends common
 def add_data_for_gui_frontends(tender_data):
     now = get_now()
