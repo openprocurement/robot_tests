@@ -237,14 +237,6 @@ def test_claim_answer_data():
     })
 
 
-def test_cancel_tender_data(cancellation_reason):
-    return munchify({
-        'data': {
-            'reason': cancellation_reason
-        }
-    })
-
-
 def test_confirm_data(id):
     return munchify({
         "data": {
