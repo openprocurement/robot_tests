@@ -2,6 +2,7 @@
 from datetime import timedelta
 from faker import Factory
 from munch import munchify
+from uuid import uuid4
 from tempfile import NamedTemporaryFile
 from .local_time import get_now
 from op_faker import OP_Provider
@@ -46,7 +47,7 @@ def create_fake_doc():
     return tf.name
 
 
-def test_tender_data(intervals, periods=("enquiry", "tender")):
+def test_tender_data(intervals, periods=("enquiry", "tender"), number_of_lots=0, meat=False):
     now = get_now()
     value_amount = round(random.uniform(3000, 99999999999.99), 2)  # max value equals to budget of Ukraine in hryvnias
     data = {
@@ -71,8 +72,6 @@ def test_tender_data(intervals, periods=("enquiry", "tender")):
         "items": []
     }
     data["procuringEntity"]["kind"] = "other"
-    new_item = test_item_data()
-    data["items"].append(new_item)
     if data.get("mode") == "test":
         data["title"] = u"[ТЕСТУВАННЯ] {}".format(data["title"])
         data["title_en"] = u"[TESTING] {}".format(data["title_en"])
@@ -85,6 +84,54 @@ def test_tender_data(intervals, periods=("enquiry", "tender")):
             inc_dt += timedelta(minutes=intervals[period_name][i])
             period_dict[period_name + "Period"][j + "Date"] = inc_dt.isoformat()
     data.update(period_dict)
+    number_of_lots = int(number_of_lots)
+    cpv_group = fake.cpv()[:3]
+    if number_of_lots:
+        data['lots'] = []
+        for lot_number in range(number_of_lots):
+            lot_id = uuid4().hex
+            new_lot = test_lot_data(data['value']['amount'])
+            data['lots'].append(new_lot)
+            data['lots'][lot_number]['id'] = lot_id
+            for i in range(fake.random_int(min=1, max=5)):
+                new_item = test_item_data(cpv_group)
+                data['items'].append(new_item)
+                data['items'][lot_number]['relatedLot'] = lot_id
+        value_amount = sum(lot['value']['amount'] for lot in data['lots'])
+        minimalStep = min(lot['minimalStep']['amount'] for lot in data['lots'])
+        data['value']['amount'] = value_amount
+        data['minimalStep']['amount'] = minimalStep
+    else:
+        for i in range(fake.random_int(min=1, max=5)):
+            new_item = test_item_data(cpv_group)
+            data['items'].append(new_item)
+    if meat:
+        data['features'] = [
+            {
+                "code": uuid4().hex,
+                "featureOf": "tenderer",
+                "title": field_with_id("f", fake.title()),
+                "description": fake.description(),
+                "enum": [
+                    {
+                        "value": 0.15,
+                        "title": fake.word()
+                    },
+                    {
+                        "value": 0.10,
+                        "title": fake.word()
+                    },
+                    {
+                        "value": 0.05,
+                        "title": fake.word()
+                    },
+                    {
+                        "value": 0,
+                        "title": fake.word()
+                    }
+                ]
+            }
+        ]
     return munchify(data)
 
 
@@ -119,79 +166,6 @@ def test_tender_data_limited(intervals, procurement_method_type):
     return munchify(data)
 
 
-def test_tender_data_multiple_items(intervals):
-    t_data = test_tender_data(intervals)
-    for _ in range(4):
-        new_item = test_item_data()
-        t_data['items'].append(new_item)
-    return munchify(t_data)
-
-
-def test_tender_data_multiple_lots(intervals):
-    tender = test_tender_data(intervals)
-    first_lot_id = "3c8f387879de4c38957402dbdb8b31af"
-    tender['items'][0]['relatedLot'] = first_lot_id
-    tender['lots'] = [test_lot_data(tender['value']['amount'])]
-    tender['lots'][0]['id'] = first_lot_id
-    max_lot_value_amount = max([lot['value']['amount'] for lot in tender['lots']])
-    tender['value']['amount'] = max_lot_value_amount
-    return munchify(tender)
-
-
-def test_tender_data_meat(intervals):
-    tender = munchify(test_tender_data(intervals))
-    item_id = "edd0032574bf4402877ad5f362df225a"
-    tender['items'][0].id = item_id
-    tender.features = [
-        {
-            "code": "ee3e24bc17234a41bd3e3a04cc28e9c6",
-            "featureOf": "tenderer",
-            "title": field_with_id("f", fake.title()),
-            "description": fake.description(),
-            "enum": [
-                {
-                    "value": 0.15,
-                    "title": fake.word()
-                },
-                {
-                    "value": 0.1,
-                    "title": fake.word()
-                },
-                {
-                    "value": 0.05,
-                    "title": fake.word()
-                },
-                {
-                    "value": 0,
-                    "title": fake.word()
-                }
-            ]
-        },
-        {
-            "code": "48cfd91612c04125ab406374d7cc8d93",
-            "featureOf": "item",
-            "relatedItem": item_id,
-            "title": field_with_id("f", fake.title()),
-            "description": fake.description(),
-            "enum": [
-                {
-                    "value": 0.05,
-                    "title": fake.word()
-                },
-                {
-                    "value": 0.01,
-                    "title": fake.word()
-                },
-                {
-                    "value": 0,
-                    "title": fake.word()
-                }
-            ]
-        }
-    ]
-    return munchify(tender)
-
-
 def test_question_data():
     return munchify({
         "data": {
@@ -200,6 +174,11 @@ def test_question_data():
             "title": field_with_id("q", fake.title())
         }
     })
+
+
+def test_related_question(question, relation, obj_id):
+    question.data.update({"questionOf": relation, "relatedItem": obj_id})
+    return munchify(question)
 
 
 def test_question_answer_data():
@@ -263,7 +242,7 @@ def test_complaint_reply_data():
     })
 
 
-def test_bid_data(mode, max_value_amount):
+def test_bid_data():
     bid = munchify({
         "data": {
             "tenderers": [
@@ -273,33 +252,7 @@ def test_bid_data(mode, max_value_amount):
     })
     bid.data.tenderers[0].address.countryName_en = translate_country_en(bid.data.tenderers[0].address.countryName)
     bid.data.tenderers[0].address.countryName_ru = translate_country_ru(bid.data.tenderers[0].address.countryName)
-    if 'open' in mode:
-        bid.data['selfEligible'] = True
-        bid.data['selfQualified'] = True
-    if mode == 'multiLot':
-        bid.data.lotValues = list()
-        for _ in range(2):
-            bid.data.lotValues.append(test_bid_value(max_value_amount))
-    else:
-        bid.data.update(test_bid_value(max_value_amount))
-    if mode == 'meat':
-        bid.data.update(test_bid_params())
     return bid
-
-
-def test_bid_params():
-    return munchify({
-        "parameters": [
-            {
-                "code": "ee3e24bc17234a41bd3e3a04cc28e9c6",
-                "value": fake.random_element(elements=(0.15, 0.1, 0.05, 0))
-            },
-            {
-                "code": "48cfd91612c04125ab406374d7cc8d93",
-                "value": fake.random_element(elements=(0.05, 0.01, 0))
-            }
-        ]
-    })
 
 
 def test_bid_value(max_value_amount):
@@ -354,23 +307,6 @@ def test_invalid_features_data():
                     "title": fake.word()
                 }
             ]
-        },
-        {
-            "code": "48cfd91612c04125ab406374d7cc8d93",
-            "featureOf": "item",
-            "relatedItem": "edd0032574bf4402877ad5f362df225a",
-            "title": fake.title(),
-            "description": fake.description(),
-            "enum": [
-                {
-                    "value": 0.35,
-                    "title": fake.word()
-                },
-                {
-                    "value": 0,
-                    "title": fake.word()
-                }
-            ]
         }
     ]
 
@@ -400,11 +336,6 @@ def test_lot_document_data(document, lot_id):
     return munchify(document)
 
 
-def test_lot_question_data(question, lot_id):
-    question.data.update({"questionOf": "lot", "relatedItem": lot_id})
-    return munchify(question)
-
-
 def test_lot_complaint_data(complaint, lot_id):
     complaint.data.update({"complaintOf": "lot", "relatedItem": lot_id})
     return munchify(complaint)
@@ -418,12 +349,12 @@ def test_tender_data_openua(intervals):
     # We should not provide any values for `enquiryPeriod` when creating
     # an openUA or openEU procedure. That field should not be present at all.
     # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
-    t_data = test_tender_data(intervals, periods=('tender',))
-    t_data['procurementMethodType'] = 'aboveThresholdUA'
-    t_data['procurementMethodDetails'] = 'quick, ' \
+    data = test_tender_data(intervals, periods=('tender',))
+    data['procurementMethodType'] = 'aboveThresholdUA'
+    data['procurementMethodDetails'] = 'quick, ' \
         'accelerator={}'.format(accelerator)
-    t_data['procuringEntity']['kind'] = 'general'
-    return t_data
+    data['procuringEntity']['kind'] = 'general'
+    return data
 
 
 def test_tender_data_openeu(intervals):
@@ -434,15 +365,15 @@ def test_tender_data_openeu(intervals):
     # We should not provide any values for `enquiryPeriod` when creating
     # an openUA or openEU procedure. That field should not be present at all.
     # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
-    t_data = test_tender_data(intervals, periods=('tender',))
-    t_data['procurementMethodType'] = 'aboveThresholdEU'
-    t_data['procurementMethodDetails'] = 'quick, ' \
+    data = test_tender_data(intervals, periods=('tender',))
+    data['procurementMethodType'] = 'aboveThresholdEU'
+    data['procurementMethodDetails'] = 'quick, ' \
         'accelerator={}'.format(accelerator)
-    t_data['title_en'] = "[TESTING]"
-    for item_number, item in enumerate(t_data['items']):
+    data['title_en'] = "[TESTING]"
+    for item_number, item in enumerate(data['items']):
         item['description_en'] = "Test item #{}".format(item_number)
-    t_data['procuringEntity']['contactPoint']['name_en'] = fake_en.name()
-    t_data['procuringEntity']['contactPoint']['availableLanguage'] = "en"
-    t_data['procuringEntity']['identifier']['legalName_en'] = "Institution \"Vinnytsia City Council primary and secondary general school № 10\""
-    t_data['procuringEntity']['kind'] = 'general'
-    return t_data
+    data['procuringEntity']['contactPoint']['name_en'] = fake_en.name()
+    data['procuringEntity']['contactPoint']['availableLanguage'] = "en"
+    data['procuringEntity']['identifier']['legalName_en'] = "Institution \"Vinnytsia City Council primary and secondary general school № 10\""
+    data['procuringEntity']['kind'] = 'general'
+    return data
