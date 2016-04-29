@@ -555,10 +555,10 @@ Library  openprocurement_client_helper.py
   ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}  ${cancellation_reason}  ${document}  ${new_description}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${data}=  test_cancel_tender_data  ${cancellation_reason}
-  Log  ${data}
-  ${cancel_reply}=  Call Method  ${USERS.users['${username}'].client}  create_cancellation  ${tender}  ${data}
-  Log  ${cancel_reply}
+  ${data}=  Create dictionary  reason=${cancellation_reason}
+  ${cancellation_data}=  Create dictionary  data=${data}
+  ${cancellation_data}=  munch_dict  arg=${cancellation_data}
+  ${cancel_reply}=  Call Method  ${USERS.users['${username}'].client}  create_cancellation  ${tender}  ${cancellation_data}
   ${cancellation_id}=  Set variable  ${cancel_reply.data.id}
 
   ${document_id}=  openprocurement_client.Завантажити документацію до запиту на скасування  ${username}  ${tender_uaid}  ${cancellation_id}  ${document}

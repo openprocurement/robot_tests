@@ -20,7 +20,6 @@ from .initial_data import (
     create_fake_doc,
     create_fake_sentence,
     test_bid_data,
-    test_cancel_tender_data,
     test_claim_answer_data,
     test_claim_data,
     test_complaint_data,
