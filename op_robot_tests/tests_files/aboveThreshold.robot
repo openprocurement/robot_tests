@@ -17,7 +17,7 @@ ${mode}         openeu
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      minimal
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${tender_data}=  Підготовка даних для створення тендера
+  ${tender_data}=  Підготувати дані для створення тендера
   ${adapted_data}=  Адаптувати дані для оголошення тендера  ${tender_owner}  ${tender_data}
   ${TENDER_UAID}=  Викликати для учасника  ${tender_owner}  Створити тендер  ${adapted_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data=${adapted_data}
@@ -77,7 +77,7 @@ ${mode}         openeu
   [Documentation]  Користувач ${USERS.users['${provider}'].broker} намагається подати скаргу на умови оголошеного тендера
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати початку прийому пропозицій  ${provider}
-  ${claim}=  Підготовка даних для подання вимоги
+  ${claim}=  Підготувати дані для подання вимоги
   ${complaintID}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
@@ -140,9 +140,8 @@ ${mode}         openeu
   log  ${USERS.users['${provider}'].broker}
   ${privat_doc}=  create_data_dict  data.confidentialityRationale  "Only our company sells badgers with pink hair."
   Set To Dictionary  ${privat_doc.data}  confidentiality=buyerOnly
-  ${bidid}=  Get Variable Value  ${USERS.users['${provider}'].bidresponses['resp'].data.id}
   ${docid}=  Get Variable Value  ${USERS.users['${provider}'].bidresponses['bid_doc_upload']['upload_response'].data.id}
-  ${bid_doc_modified}=  Викликати для учасника  ${provider}  Змінити документацію в ставці  ${privat_doc}  ${bidid}  ${docid}
+  ${bid_doc_modified}=  Викликати для учасника  ${provider}  Змінити документацію в ставці  ${privat_doc}  ${docid}
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}  bid_doc_modified=${bid_doc_modified}
 
 
@@ -272,7 +271,7 @@ ${mode}         openeu
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Documentation]  Користувач ${USERS.users['${provider}'].broker} намагається подати скаргу на умови оголошеного тендера
-  ${claim}=  Підготовка даних для подання вимоги
+  ${claim}=  Підготувати дані для подання вимоги
   ${complaintID}=  Require failure  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
@@ -298,7 +297,7 @@ ${mode}         openeu
   [Documentation]  Користувач ${USERS.users['${provider}'].broker} намагається подати скаргу на умови оголошеного тендера
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${provider}
-  ${claim}=  Підготовка даних для подання вимоги
+  ${claim}=  Підготувати дані для подання вимоги
   ${complaintID}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}
@@ -385,7 +384,7 @@ ${mode}         openeu
   ...      ${USERS.users['${provider}'].broker}
   [Documentation]  Користувач ${USERS.users['${provider}'].broker} намагається подати скаргу на умови оголошеного тендера
   [Setup]  Дочекатись дати закінчення періоду подання скарг  ${provider}
-  ${claim}=  Підготовка даних для подання вимоги
+  ${claim}=  Підготувати дані для подання вимоги
   ${complaintID}=  Викликати для учасника  ${provider}
   ...      Створити вимогу
   ...      ${TENDER['TENDER_UAID']}

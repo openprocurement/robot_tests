@@ -6,7 +6,7 @@ Suite Teardown  Test Suite Teardown
 
 
 *** Variables ***
-@{used_roles}   viewer
+@{used_roles}   viewer  provider  provider1
 
 *** Test Cases ***
 Можливість знайти закупівлю по ідентифікатору
@@ -32,6 +32,39 @@ Suite Teardown  Test Suite Teardown
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   Дочекатись дати початку аукціону  ${viewer}
+
+
+Можливість вичитати посилання на аукціон для глядача
+  [Tags]   ${USERS.users['${viewer}'].broker}: Участь в аукціоні
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}
+  ${url}=  Викликати для учасника  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
+  Should Be True  '${url}'
+  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.openprocurement\.org\/tenders\/([0-9A-Fa-f]{32})
+  Log  URL аукціону для глядача: ${url}
+
+
+Можливість вичитати посилання на участь в аукціоні для першого учасника
+  [Tags]   ${USERS.users['${provider}'].broker}: Участь в аукціоні
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  ${url}=  Викликати для учасника  ${provider}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
+  Should Be True  '${url}'
+  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.openprocurement\.org\/tenders\/([0-9A-Fa-f]{32})
+  Log  URL аукціону для першого учасника: ${url}
+
+
+Можливість вичитати посилання на участь в аукціоні для другого учасника
+  [Tags]   ${USERS.users['${provider1}'].broker}: Участь в аукціоні
+  ...      provider1
+  ...      ${USERS.users['${provider1}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider1}
+  ${url}=  Викликати для учасника  ${provider1}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
+  Should Be True  '${url}'
+  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.openprocurement\.org\/tenders\/([0-9A-Fa-f]{32})
+  Log  URL аукціону для другого учасника: ${url}
 
 
 Можливість дочекатися завершення аукціону

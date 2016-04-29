@@ -19,7 +19,9 @@ from robot.output.loggerhelper import Message
 from .initial_data import (
     create_fake_doc,
     create_fake_sentence,
+    fake,
     test_bid_data,
+    test_bid_value,
     test_claim_answer_data,
     test_claim_data,
     test_complaint_data,
@@ -30,17 +32,14 @@ from .initial_data import (
     test_lot_complaint_data,
     test_lot_data,
     test_lot_document_data,
-    test_lot_question_data,
+    test_related_question,
     test_question_answer_data,
     test_question_data,
     test_supplier_data,
     test_tender_data,
     test_tender_data_limited,
-    test_tender_data_meat,
-    test_tender_data_multiple_items,
-    test_tender_data_multiple_lots,
     test_tender_data_openeu,
-    test_tender_data_openua
+    test_tender_data_openua,
 )
 from barbecue import chef
 from restkit import request
@@ -117,10 +116,7 @@ def compare_date(left, right, accuracy="minute", absolute_delta=True):
 
 
 def compare_coordinates(left_lat, left_lon, right_lat, right_lon, accuracy=0.1):
-    '''Compares dates with specified accuracy
-
-    Before comparison dates are parsed into datetime.datetime format
-    and localized.
+    '''Compares coordinates with specified accuracy
 
     :param left_lat:        First coordinate latitude
     :param left_lon:        First coordinate longitude
@@ -135,7 +131,6 @@ def compare_coordinates(left_lat, left_lon, right_lat, right_lon, accuracy=0.1):
     :error:                 ValueError when there is problem with converting accuracy
                             into float value. When it will be catched warning will be
                             given and accuracy will be set to 0.1.
-
     '''
     for key, value in {'left_lat': left_lat, 'left_lon': left_lon, 'right_lat': right_lat, 'right_lon': right_lon}.iteritems():
         if not isinstance(value, NUM_TYPES):
@@ -263,7 +258,7 @@ def compute_intrs(brokers_data, used_brokers):
     return result
 
 
-def prepare_test_tender_data(procedure_intervals, mode):
+def prepare_test_tender_data(procedure_intervals, mode, number_of_lots=0, meat=False):
     # Get actual intervals by mode name
     if mode in procedure_intervals:
         intervals = procedure_intervals[mode]
@@ -281,14 +276,7 @@ def prepare_test_tender_data(procedure_intervals, mode):
     else:
         assert 'accelerator' not in intervals.keys(), \
                "Accelerator is not available for mode '{0}'".format(mode)
-
-    if mode == 'meat':
-        return munchify({'data': test_tender_data_meat(intervals)})
-    elif mode == 'multiItem':
-        return munchify({'data': test_tender_data_multiple_items(intervals)})
-    elif mode == 'multiLot':
-        return munchify({'data': test_tender_data_multiple_lots(intervals)})
-    elif mode == 'negotiation':
+    if mode == 'negotiation':
         return munchify({'data': test_tender_data_limited(intervals, 'negotiation')})
     elif mode == 'negotiation.quick':
         return munchify({'data': test_tender_data_limited(intervals, 'negotiation.quick')})
@@ -298,8 +286,8 @@ def prepare_test_tender_data(procedure_intervals, mode):
         return munchify({'data': test_tender_data_openua(intervals)})
     elif mode == 'reporting':
         return munchify({'data': test_tender_data_limited(intervals, 'reporting')})
-    elif mode == 'single':
-        return munchify({'data': test_tender_data(intervals)})
+    elif mode == 'belowThreshold':
+        return munchify({'data': test_tender_data(intervals, number_of_lots=number_of_lots, meat=meat)})
     raise ValueError("Invalid mode for prepare_test_tender_data")
 
 
@@ -431,6 +419,26 @@ def get_document_index_by_id(data, document_id):
             return index
     raise IndexError
 
+
+def generate_test_bid_data(tender_data):
+    bid = test_bid_data()
+    if 'open' in tender_data['data']['mode']:
+        bid.data.selfEligible = True
+        bid.data.selfQualified = True
+    if 'lots' in tender_data['data']:
+        bid.data.lotValues = []
+        for lot in tender_data['data']['lots']:
+            value = test_bid_value(lot['value']['amount'])
+            value['relatedLot'] = lot['id']
+            bid.data.lotValues.append(value)
+    else:
+        bid.data.update(test_bid_value(tender_data['data']['value']['amount']))
+    if 'features' in tender_data['data']:
+        bid.data.parameters = []
+        for feature in tender_data['data']['features']:
+            parameter = {"value": fake.random_element(elements=(0.15, 0.1, 0.05, 0)), "code": feature['code']}
+            bid.data.parameters.append(parameter)
+    return bid
 
 
 # GUI Frontends common

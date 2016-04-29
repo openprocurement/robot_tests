@@ -190,58 +190,59 @@ Get Broker Property By Username
   log_object_data  ${ARTIFACT}  artifact
 
 
-Підготовка даних для створення тендера
+Підготувати дані для створення тендера
+  [Arguments]  ${number_of_lots}=0  ${meat}=${False}
   ${period_intervals}=  compute_intrs  ${BROKERS}  ${used_brokers}
-  ${tender_data}=  prepare_test_tender_data  ${period_intervals}  ${mode}
+  ${tender_data}=  prepare_test_tender_data  ${period_intervals}  ${mode}  ${number_of_lots}  ${meat}
   ${TENDER}=  Create Dictionary
   Set Global Variable  ${TENDER}
-  Log  ${TENDER}
   Log  ${tender_data}
   [return]  ${tender_data}
 
 
-Підготовка даних для створення предмету закупівлі
-  ${item}=  test_item_data
+Підготувати дані для створення предмету закупівлі
+  [Arguments]  ${cpv}
+  ${item}=  test_item_data  ${cpv[0:3]}
   [Return]  ${item}
 
 
-Підготовка даних для створення лоту
+Підготувати дані для створення лоту
   [Arguments]  ${max_lot_value_amount}
   ${lot}=  test_lot_data  ${max_lot_value_amount}
   ${reply}=  Create Dictionary  data=${lot}
   [Return]  ${reply}
 
 
-Підготовка даних для подання вимоги
+Підготувати дані для подання вимоги
   ${claim}=  test_claim_data
   [Return]  ${claim}
 
 
-Підготовка даних для подання скарги
+Підготувати дані для подання скарги
   [Arguments]  ${lot}=${False}
   ${complaint}=  test_complaint_data  ${lot}
   [Return]  ${complaint}
 
 
-Підготовка даних для відповіді на скаргу
+Підготувати дані для відповіді на скаргу
   ${reply}=  test_complaint_reply_data
   [Return]  ${reply}
 
 
-Підготовка даних для запитання
+Підготувати дані для запитання
   ${question}=  test_question_data
   [Return]  ${question}
 
 
-Підготовка даних для відповіді на запитання
+Підготувати дані для відповіді на запитання
   ${answer}=  test_question_answer_data
   [Return]  ${answer}
 
 
 Підготувати дані для подання пропозиції
-  [Arguments]  ${max_value_amount}
-  ${bid_data}=  test_bid_data  ${mode}  ${max_value_amount}
-  [Return]  ${bid_data}
+  [Arguments]  ${username}
+  ${bid}=  generate_test_bid_data  ${USERS.users['${username}'].tender_data}
+  [Return]  ${bid}
 
 
 Підготувати дані про постачальника
@@ -266,11 +267,10 @@ Get Broker Property By Username
   [Arguments]  ${username}  ${tender_data}
   # munchify is used to make deep copy of ${tender_data}
   ${tender_data_copy}=  munchify  ${tender_data}
-  ${status}  ${adapted_data}=  Run Keyword And Ignore Error  Викликати для учасника  ${username}  Підготувати дані для оголошення тендера  ${tender_data_copy}
+  ${status}  ${adapted_data}=  Run Keyword And Ignore Error  Run As  ${username}  Підготувати дані для оголошення тендера  ${tender_data_copy}
   ${adapted_data}=  Set variable if  '${status}' == 'FAIL'  ${tender_data_copy}  ${adapted_data}
   # munchify is used to make nice log output
   ${adapted_data}=  munchify  ${adapted_data}
-  Log  ${tender_data}
   Log  ${adapted_data}
   ${status}=  Run keyword and return status  Dictionaries Should Be Equal  ${adapted_data.data}  ${tender_data.data}
   Run keyword if  ${status} == ${False}  Log  Initial tender data was changed  WARN
@@ -356,7 +356,7 @@ Get Broker Property By Username
   ...      ${USERS.users['${username}']['LAST_REFRESH_DATE']}
   ${LAST_REFRESH_DATE}=  Get Current TZdate
   Run Keyword If  ${time_diff} > 0  Run keywords
-  ...      Викликати для учасника  ${username}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  ...      Run As  ${username}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
   ...      AND
   ...      Set To Dictionary  ${USERS.users['${username}']}  LAST_REFRESH_DATE=${LAST_REFRESH_DATE}
 
@@ -375,8 +375,6 @@ Get Broker Property By Username
 
 Порівняти об'єкти
   [Arguments]  ${left}  ${right}
-  Log  ${left}
-  Log  ${right}
   Should Not Be Equal  ${left}  ${None}
   Should Not Be Equal  ${right}  ${None}
   Should Be Equal  ${left}  ${right}  msg=Objects are not equal
@@ -403,8 +401,6 @@ Get Broker Property By Username
   ...      ``left`` and ``right`` dates is more than ``accuracy``,
   ...      otherwise it will pass.
   [Arguments]  ${left}  ${right}  ${accuracy}=60  ${absolute_delta}=${False}
-  Log  ${left}
-  Log  ${right}
   Should Not Be Equal  ${left}  ${None}
   Should Not Be Equal  ${right}  ${None}
   ${status}=  compare_date  ${left}  ${right}  accuracy=${accuracy}  absolute_delta=${absolute_delta}
@@ -442,7 +438,6 @@ Get Broker Property By Username
   @{items}=  Get_From_Object  ${tender_data.data}  items
   ${len_of_items}=  Get Length  ${items}
   :FOR  ${index}  IN RANGE  ${len_of_items}
-  \  Log  ${index}
   \  Звірити поле тендера  ${viewer}  ${tender_data}  items[${index}].${field}
 
 
@@ -450,7 +445,6 @@ Get Broker Property By Username
   [Arguments]  ${username}  ${tender_data}  ${field}  ${accuracy}=60  ${absolute_delta}=${False}
   @{items}=  Get_From_Object  ${tender_data.data}  items
   :FOR  ${index}  ${_}  IN ENUMERATE  @{items}
-  \  Log  ${index}
   \  Звірити дату тендера  ${viewer}  ${tender_data}  items[${index}].${field}  accuracy=${accuracy}  absolute_delta=${absolute_delta}
 
 
@@ -458,14 +452,11 @@ Get Broker Property By Username
   [Arguments]  ${username}  ${tender_data}
   @{items}=  Get_From_Object  ${tender_data.data}  items
   :FOR  ${index}  ${_}  IN ENUMERATE  @{items}
-  \  Log  ${index}
   \  Звірити координати тендера  ${viewer}  ${tender_data}  items[${index}]
 
 
 Отримати дані із тендера
   [Arguments]  ${username}  ${field_name}  ${object_id}=${None}
-  Log  ${username}
-  Log  ${field_name}
   ${field}=  Run Keyword If  '${object_id}'=='${None}'  Set Variable  ${field_name}
   ...             ELSE  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${object_id}
   ${status}  ${field_value}=  Run keyword and ignore error
@@ -563,16 +554,8 @@ Run As
   [Documentation]
   ...      Run the given keyword (``command``) with given ``arguments``
   ...      using driver (keyword library) of user ``username``.
-  Log  ${username}
-  Log  ${command}
-  Log Many  @{arguments}
   ${keywords_file}=  Get Broker Property By Username  ${username}  keywords_file
-  ${status}  ${value}=  Run keyword and ignore keyword definitions  ${keywords_file}.${command}  ${username}  @{arguments}
-  ${unexpected_args}=  Get Regexp Matches  '${value}'  expected [0-9] arguments, got [0-9]
-  ${status}  ${value}=  Run Keyword If  "${unexpected_args}"=="[]"  Set Variable  ${status}  ${value}
-  ...      ELSE  Run keyword and ignore keyword definitions  ${keywords_file}.${command}  ${username}  @{arguments[:-1]}
-  Run Keyword If  '${status}' == 'FAIL'  Fail  ${value}
-  [return]  ${value}
+  Run Keyword And Return  ${keywords_file}.${command}  ${username}  @{arguments}
 
 
 Require Failure
@@ -582,9 +565,6 @@ Require Failure
   ...
   ...      This keyword works just like `Run As`, but it passes only
   ...      if ``command`` with ``arguments`` fails and vice versa.
-  Log  ${username}
-  Log  ${command}
-  Log Many  ${command}  @{arguments}
   ${keywords_file}=  Get Broker Property By Username  ${username}  keywords_file
   ${status}  ${value}=  Run keyword and ignore keyword definitions  ${keywords_file}.${command}  ${username}  @{arguments}
   Run keyword if  '${status}' == 'PASS'  Fail  Користувач ${username} зміг виконати "${command}"
@@ -599,7 +579,6 @@ Require Failure
 
 Дочекатись дати початку періоду уточнень
   [Arguments]  ${username}
-  Log  ${username}
   # XXX: HACK: Same as below
   ${status}  ${date}=  Run Keyword And Ignore Error
   ...      Set Variable
@@ -613,7 +592,6 @@ Require Failure
 
 Дочекатись дати початку прийому пропозицій
   [Arguments]  ${username}
-  Log  ${username}
   # This tries to get the date from current user's procurement data cache.
   # On failure, it reads from tender_owner's cached initial_data.
   # XXX: This is a dirty hack!
@@ -631,6 +609,7 @@ Require Failure
   ...      '${status}' == 'FAIL'
   ...      ${USERS.users['${tender_owner}'].initial_data.data.tenderPeriod.startDate}
   ...      ${date}
+  ${date}=  add_minutes_to_date  ${date}  5
   Дочекатись дати  ${date}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
@@ -638,7 +617,6 @@ Require Failure
 
 Дочекатись дати закінчення прийому пропозицій
   [Arguments]  ${username}
-  Log  ${username}
   # XXX: HACK: Same as above
   ${status}  ${date}=  Run Keyword And Ignore Error
   ...      Set Variable
@@ -670,7 +648,6 @@ Require Failure
 
 Дочекатись дати закінчення аукціону
   [Arguments]  ${username}
-  Log  ${username}
   ${auctionEnd}=  Отримати дані із тендера   ${username}   auctionPeriod.endDate  ${TENDER['LOT_ID']}
   Дочекатись дати  ${auctionEnd}
   Оновити LAST_MODIFICATION_DATE
@@ -679,7 +656,6 @@ Require Failure
 
 Дочекатись дати закінчення періоду подання скарг
   [Arguments]  ${username}
-  log  ${username}
   Дочекатись дати  ${USERS.users['${username}'].tender_data.data.complaintPeriod.endDate}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
