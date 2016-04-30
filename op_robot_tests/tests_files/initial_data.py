@@ -372,6 +372,7 @@ def test_tender_data_openeu(intervals):
     data['title_en'] = "[TESTING]"
     for item_number, item in enumerate(data['items']):
         item['description_en'] = "Test item #{}".format(item_number)
+    data['procuringEntity']['name_en'] = fake_en.name()
     data['procuringEntity']['contactPoint']['name_en'] = fake_en.name()
     data['procuringEntity']['contactPoint']['availableLanguage'] = "en"
     data['procuringEntity']['identifier']['legalName_en'] = "Institution \"Vinnytsia City Council primary and secondary general school № 10\""
