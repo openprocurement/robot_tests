@@ -22,6 +22,10 @@ Resource           resource.robot
   \  Run As  ${username}  Пошук тендера по ідентифікатору  ${TENDER['TENDER_UAID']}
 
 
+Можливість змінити поле ${field_name} тендера на ${field_value}
+  Run As  ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  ${field_name}  ${field_value}
+
+
 Можливість додати документацію до тендера
   ${filepath}=  create_fake_doc
   Run As  ${tender_owner}  Завантажити документ  ${filepath}  ${TENDER['TENDER_UAID']}

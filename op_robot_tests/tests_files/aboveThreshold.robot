@@ -1,7 +1,5 @@
 *** Settings ***
-Resource        keywords.robot
-Resource        resource.robot
-Resource        base_keywords.robot
+Resource        aboveThreshold_keywords.robot
 Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
@@ -67,7 +65,6 @@ ${meat}            ${0}
   [Tags]   ${USERS.users['${provider}'].broker}: Подання скарги
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  [Documentation]  Користувач ${USERS.users['${provider}'].broker} намагається подати скаргу на умови оголошеного тендера
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість створити вимогу із документацією
@@ -106,12 +103,7 @@ ${meat}            ${0}
   ...      ${USERS.users['${provider}'].broker}
   ...      openeu
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  log  ${USERS.users['${provider}'].broker}
-  ${privat_doc}=  create_data_dict  data.confidentialityRationale  "Only our company sells badgers with pink hair."
-  Set To Dictionary  ${privat_doc.data}  confidentiality=buyerOnly
-  ${docid}=  Get Variable Value  ${USERS.users['${provider}'].bidresponses['bid_doc_upload']['upload_response'].data.id}
-  ${bid_doc_modified}=  Run As  ${provider}  Змінити документацію в ставці  ${privat_doc}  ${docid}
-  Set To Dictionary  ${USERS.users['${provider}'].bidresponses}  bid_doc_modified=${bid_doc_modified}
+  Можливість змінити документацію цінової пропозиції з публічної на приватну учасником ${provider}
 
 
 Можливість завантажити фінансовий документ до пропозиції першим учасником
@@ -120,11 +112,7 @@ ${meat}            ${0}
   ...      ${USERS.users['${provider}'].broker}
   ...      openeu
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  log  ${USERS.users['${provider}'].broker}
-  ${filepath}=  create_fake_doc
-  ${doc_type}=  Set variable  financial_documents
-  ${bid_doc_upload}=  Run As  ${provider}  Завантажити документ в ставку  ${filepath}  ${TENDER['TENDER_UAID']}  ${doc_type}
-  Set To Dictionary  ${USERS.users['${provider}'].bidresponses}  bid_doc_upload=${bid_doc_upload}
+  Можливість завантажити financial_documents документ до пропозиції учасником ${provider}
 
 
 Можливість завантажити кваліфікаційний документ до пропозиції першим учасником
@@ -133,11 +121,7 @@ ${meat}            ${0}
   ...      ${USERS.users['${provider}'].broker}
   ...      openeu
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  log  ${USERS.users['${provider}'].broker}
-  ${filepath}=  create_fake_doc
-  ${doc_type}=  Set variable  eligibility_documents
-  ${bid_doc_upload}=  Run As  ${provider}  Завантажити документ в ставку  ${filepath}  ${TENDER['TENDER_UAID']}  ${doc_type}
-  Set To Dictionary  ${USERS.users['${provider}'].bidresponses}  bid_doc_upload=${bid_doc_upload}
+  Можливість завантажити eligibility_documents документ до пропозиції учасником ${provider}
 
 
 Можливість завантажити документ для критеріїв прийнятності до пропозиції першим учасником
@@ -146,11 +130,7 @@ ${meat}            ${0}
   ...      ${USERS.users['${provider}'].broker}
   ...      openeu
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  log  ${USERS.users['${provider}'].broker}
-  ${filepath}=  create_fake_doc
-  ${doc_type}=  Set variable  qualification_documents
-  ${bid_doc_upload}=  Run As  ${provider}  Завантажити документ в ставку  ${filepath}  ${TENDER['TENDER_UAID']}  ${doc_type}
-  Set To Dictionary  ${USERS.users['${provider}'].bidresponses}  bid_doc_upload=${bid_doc_upload}
+  Можливість завантажити qualification_documents документ до пропозиції учасником ${provider}
 
 ##############################################################################################
 
@@ -168,19 +148,21 @@ ${meat}            ${0}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Run As  ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  description  description
+  Можливість змінити поле description тендера на description
 
 
-Відображення зміни статусу пропозицій після редагування інформації про тендер
+Відображення зміни статусу першої пропозицій після редагування інформації про тендер
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
-  ...      provider  provider1
-  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
-  :FOR  ${username}  IN  ${provider}  ${provider1}
-  \  Дочекатись синхронізації з майданчиком  ${username}
-  \  Run As  ${username}  Пошук тендера по ідентифікатору  ${TENDER['TENDER_UAID']}
-  \  ${bid}=  Run As  ${username}  Отримати пропозицію  ${TENDER['TENDER_UAID']}
-  \  Should Be Equal  ${bid.data.status}  invalid
-  \  Log  ${bid}
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  Відображення зміни статусу пропозицій на invalid для учасника ${provider}
+
+
+Відображення зміни статусу другої пропозицій після редагування інформації про тендер
+  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
+  ...      provider1
+  ...      ${USERS.users['${provider1}'].broker}
+  Відображення зміни статусу пропозицій на invalid для учасника ${provider1}
 
 
 Можливість оновити статус цінової пропозиції першого учасника
@@ -188,11 +170,7 @@ ${meat}            ${0}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${status}=  Run Keyword IF  '${mode}'=='openeu'  Set Variable  pending
-  ...                     ELSE IF  '${mode}'=='openua'  Set Variable  active
-  ${activestatusresp}=  Run As  ${provider}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  status  ${status}
-  Set To Dictionary  ${USERS.users['${provider}'].bidresponses}  activestatusresp=${activestatusresp}
-  log  ${activestatusresp}
+  Можливість оновити статус цінової пропозиції учасником ${provider}
 
 
 Можливість скасувати цінову пропозицію другого учасника
@@ -215,9 +193,7 @@ ${meat}            ${0}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ${no_edit_time}=  add_minutes_to_date  ${USERS.users['${tender_owner}'].tender_data.data.tenderPeriod.endDate}  -6
-  Дочекатись дати  ${no_edit_time}
-  Require Failure  ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  description  description
+  Неможливість редагувати однопредметний тендер менше ніж за 7 днів до завершення періоду подання пропозицій
 
 
 Неможливість подати вимогу на умови менше ніж за 10 днів до завершення періоду подання пропозицій
@@ -234,8 +210,7 @@ ${meat}            ${0}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${endDate}=  add_minutes_to_date  ${USERS.users['${tender_owner}'].tender_data.data.tenderPeriod.endDate}  7
-  Run As  ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  tenderPeriod.endDate  ${endDate}
+  Можливість продовжити період подання пропозиції на 7 днів
 
 
 Можливість подати скаргу на умови більше ніж за 4 дні до завершення періоду подання пропозицій
@@ -261,19 +236,21 @@ ${meat}            ${0}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Run As  ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  description  description
+  Можливість змінити поле description тендера на description
 
 
-Відображення зміни статусу пропозицій після другої зміни
+Відображення зміни статусу першої пропозицій після другого редагування інформації про тендер
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
-  ...      provider  provider1
-  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
-  :FOR  ${username}  IN  ${provider}  ${provider1}
-  \  Дочекатись синхронізації з майданчиком  ${username}
-  \  Run As  ${username}  Пошук тендера по ідентифікатору  ${TENDER['TENDER_UAID']}
-  \  ${bid}=  Run As  ${username}  Отримати пропозицію  ${TENDER['TENDER_UAID']}
-  \  Should Be Equal  ${bid.data.status}  invalid
-  \  Log  ${bid}
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  Відображення зміни статусу пропозицій на invalid для учасника ${provider}
+
+
+Відображення зміни статусу другої пропозицій після другого редагування інформації про тендер
+  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
+  ...      provider1
+  ...      ${USERS.users['${provider1}'].broker}
+  Відображення зміни статусу пропозицій на invalid для учасника ${provider1}
 
 
 Можливість оновити статус цінової пропозиції першого учасника після другої зміни
@@ -281,11 +258,7 @@ ${meat}            ${0}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${status}=  Run Keyword IF  '${mode}'=='openeu'  Set Variable  pending
-  ...                     ELSE IF  '${mode}'=='openua'  Set Variable  active
-  ${activestatusresp}=  Run As  ${provider}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  status  ${status}
-  Set To Dictionary  ${USERS.users['${provider}'].bidresponses}  activestatusresp=${activestatusresp}
-  log  ${activestatusresp}
+  Можливість оновити статус цінової пропозиції учасником ${provider}
 
 
 Можливість повторно подати цінову пропозицію другим учасником після другої зміни
@@ -332,9 +305,7 @@ ${meat}            ${0}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      openeu
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  log  ${USERS.users['${tender_owner}'].broker}
-  ${filepath}=  create_fake_doc
-  Run As  ${tender_owner}  Завантажити документ у кваліфікацію  ${filepath}  ${TENDER['TENDER_UAID']}  0
+  Можливість завантажити документ у кваліфікацію 0 пропозиції
 
 
 Можливість підтвердити першу пропозицію кваліфікації
@@ -343,7 +314,7 @@ ${meat}            ${0}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      openeu
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Run As  ${tender_owner}  Підтвердити кваліфікацію  ${TENDER['TENDER_UAID']}  0
+  Можливість підтвердити 0 пропозицію кваліфікації
 
 
 Можливість завантажити документ у кваліфікацію пропозиції другого учасника
@@ -352,9 +323,7 @@ ${meat}            ${0}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      openeu
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  log  ${USERS.users['${tender_owner}'].broker}
-  ${filepath}=  create_fake_doc
-  Run As  ${tender_owner}  Завантажити документ у кваліфікацію  ${filepath}  ${TENDER['TENDER_UAID']}  1
+  Можливість завантажити документ у кваліфікацію 1 пропозиції
 
 
 Можливість відхилити другу пропозицію кваліфікації
@@ -363,7 +332,7 @@ ${meat}            ${0}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      openeu
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Run As  ${tender_owner}  Відхилити кваліфікацію  ${TENDER['TENDER_UAID']}  1
+  Можливість відхилити 1 пропозиції кваліфікації
 
 
 Можливість скасувати рішення кваліфікації для другої пропопозиції
@@ -372,7 +341,7 @@ ${meat}            ${0}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      openeu
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Run As  ${tender_owner}  Скасувати кваліфікацію  ${TENDER['TENDER_UAID']}  1
+  Можливість скасувати рішення кваліфікації для 1 пропопозиції
 
 
 Можливість підтвердити другу пропозицію кваліфікації
@@ -381,7 +350,7 @@ ${meat}            ${0}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      openeu
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Run As  ${tender_owner}  Підтвердити кваліфікацію  ${TENDER['TENDER_UAID']}  2
+  Можливість підтвердити 2 пропозицію кваліфікації
 
 
 Можливість затвердити остаточне рішення кваліфікації
@@ -390,4 +359,4 @@ ${meat}            ${0}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      openeu
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Run As  ${tender_owner}  Затвердити остаточне рішення кваліфікації  ${TENDER['TENDER_UAID']}
+  Можливість затвердити остаточне рішення кваліфікації
