@@ -431,12 +431,17 @@ Library  openprocurement_client_helper.py
   [return]  ${reply}
 
 
-Отримати посилання на аукціон для учасника
-  [Arguments]  ${username}  ${tender_uaid}
+Отримати інформацію із пропозиції
+  [Arguments]  ${username}  ${tender_uaid}  ${field}
   ${bid}=  openprocurement_client.Отримати пропозицію  ${username}  ${tender_uaid}
-  ${lot_participationUrl}=  Run Keyword If  "${mode}" == "single"  Get Variable Value  ${bid.data.lots[0].participationUrl}
-  ${participationUrl}=  Run Keyword If  ${lot_participationUrl}  Set Variable  ${participationUrl}
-  ...                               ELSE  Set Variable  ${bid.data.participationUrl}
+  [return]  ${bid.data.${field}}
+
+
+Отримати посилання на аукціон для учасника
+  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
+  ${bid}=  openprocurement_client.Отримати пропозицію  ${username}  ${tender_uaid}
+  ${participationUrl}=  Run Keyword IF  '${lot_id}'  Set Variable  ${bid.data.lotValues[${lot_index}].participationUrl}
+  ...                         ELSE  Set Variable  ${bid.data.participationUrl}
   [return]  ${participationUrl}
 
 ##############################################################################
