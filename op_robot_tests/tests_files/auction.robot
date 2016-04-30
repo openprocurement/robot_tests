@@ -39,7 +39,7 @@ Suite Teardown  Test Suite Teardown
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}
-  ${url}=  Викликати для учасника  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
+  ${url}=  Викликати для учасника  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}  ${TENDER['LOT_ID']}
   Should Be True  '${url}'
   Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.openprocurement\.org\/tenders\/([0-9A-Fa-f]{32})
   Log  URL аукціону для глядача: ${url}
@@ -50,7 +50,7 @@ Suite Teardown  Test Suite Teardown
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
-  ${url}=  Викликати для учасника  ${provider}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
+  ${url}=  Викликати для учасника  ${provider}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}  ${TENDER['LOT_ID']}
   Should Be True  '${url}'
   Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.openprocurement\.org\/tenders\/([0-9A-Fa-f]{32})
   Log  URL аукціону для першого учасника: ${url}
@@ -61,7 +61,7 @@ Suite Teardown  Test Suite Teardown
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider1}
-  ${url}=  Викликати для учасника  ${provider1}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
+  ${url}=  Викликати для учасника  ${provider1}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}  ${TENDER['LOT_ID']}
   Should Be True  '${url}'
   Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.openprocurement\.org\/tenders\/([0-9A-Fa-f]{32})
   Log  URL аукціону для другого учасника: ${url}
