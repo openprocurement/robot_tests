@@ -25,8 +25,8 @@ Resource           base_keywords.robot
 Відображення зміни статусу пропозицій на ${status} для учасника ${username}
   Дочекатись синхронізації з майданчиком  ${username}
   Run As  ${username}  Пошук тендера по ідентифікатору  ${TENDER['TENDER_UAID']}
-  ${bid}=  Run As  ${username}  Отримати пропозицію  ${TENDER['TENDER_UAID']}
-  Should Be Equal  ${bid.data.status}  ${status}
+  ${bid_status}=  Run As  ${username}  Отримати інформацію із пропозиції  ${TENDER['TENDER_UAID']}  status
+  Should Be Equal  ${bid_status}  ${status}
 
 
 Можливість оновити статус цінової пропозиції учасником ${username}
