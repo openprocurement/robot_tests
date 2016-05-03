@@ -317,7 +317,7 @@ users:
         broker:   proztorg
         homepage: "http://proztorg.com.ua/user/statePurchase"
         login:    yuliya.belousova@mail.ru
-        password: 646086646086
+        password: '646086646086'
         browser:  chrome
         position: [0, 0]
         size:     [1000, 500]
