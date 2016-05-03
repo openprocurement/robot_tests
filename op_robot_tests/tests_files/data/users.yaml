@@ -228,34 +228,37 @@ users:
         size:     [740, 550]
     ubiz_Owner:
         broker:   ubiz
-        homepage: "http://fgvfo.com.ua/user/purchase"
+        homepage: "http://dz.ubiz.ua/user/purchase"
         login:    test1@test.com
         password: qwe123qwe
         browser:  chrome
         position: [0, 0]
-        size:     [1000, 500]
+        size:     [1000, 1000]
     ubiz_Provider1:
         broker:   ubiz
-        homepage: "http://fgvfo.com.ua/user/purchase"
-        login:    test2@test.com
+        homepage: "http://dz.ubiz.ua/user/purchase"
+        #login:    test2@test.com
+        login:    iov.mail.zt@gmail.com
         password: qwe123qwe
         browser:  chrome
-        position: [0, 800]
-        size:     [800, 800]
+        position: [0, 0]
+        size:     [1000, 1000]
     ubiz_Provider2:
         broker:   ubiz
-        homepage: "http://fgvfo.com.ua/user/purchase"
+        homepage: "http://dz.ubiz.ua/user/purchase"
         login:    test3@test.com
         password: qwe123qwe
         browser:  chrome
-        position: [800, 0]
-        size:     [800, 800]
+        position: [0, 0]
+        size:     [1000, 1000]
     ubiz_Viewer:
         broker:   ubiz
-        homepage: "http://fgvfo.com.ua/"
+        homepage: "http://dz.ubiz.ua/"
+        login:    test4@test.com
+        password: qwe123qwe
         browser:  chrome
-        position: [0, 500]
-        size:     [1000, 500]
+        position: [0, 0]
+        size:     [1000, 1000]
     zakpro_Owner:
         broker:   zakpro
         homepage: "https://market.zakupkipro.com/"
@@ -289,7 +292,7 @@ users:
     proztorg_Owner:
         broker:   proztorg
         homepage: "http://proztorg.com.ua/user/statePurchase"
-        login:    i.brus@ts.com
+        login:    i.brus@ts.ua
         password: zloyvizl
         browser:  chrome
         position: [0, 0]
@@ -314,7 +317,7 @@ users:
         broker:   proztorg
         homepage: "http://proztorg.com.ua/user/statePurchase"
         login:    yuliya.belousova@mail.ru
-        password: 646086646086
+        password: '646086646086'
         browser:  chrome
         position: [0, 0]
         size:     [1000, 500]

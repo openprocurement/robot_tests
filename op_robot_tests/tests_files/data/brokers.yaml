@@ -152,15 +152,17 @@ uatenders:
 ubiz:
     intervals:
         default:
-            enquiry: [0, 5]
+            enquiry: [1, 5]
+            tender: [0, 10]
     keywords_file: ubiz
-    homepage: 'http://fgvfo.com.ua/'
+    homepage: 'http://dz.ubiz.ua/'
+    syncpage: 'http://dz.ubiz.ua/develop/sync?psw=369369'
     roles:
         provider:       ubiz_Provider1
         provider1:      ubiz_Provider2
         tender_owner:   ubiz_Owner
         viewer:         ubiz_Viewer
-    timeout_on_wait: 50
+    timeout_on_wait: 15
 zakpro:
     intervals:
         default:
@@ -176,12 +178,14 @@ zakpro:
 proztorg:
     intervals:
         default:
-            enquiry: [0, 5]
+             enquiry: [1, 3]
+             tender:  [0, 5]
     keywords_file: proztorg
-    homepage: 'http://proztorg.com.ua/'
+    homepage: 'http://www.proztorg.com.ua/'
+    syncpage: 'http://www.proztorg.com.ua/develop/sync?psw=369369'
     roles:
         provider:       proztorg_Provider1
         provider1:      proztorg_Provider2
         tender_owner:   proztorg_Owner
         viewer:         proztorg_Viewer
-    timeout_on_wait: 50
+    timeout_on_wait: 15
