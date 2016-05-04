@@ -29,7 +29,7 @@ Suite Teardown  Test Suite Teardown
   ...      ${USERS.users['${tender_owner}'].broker}
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \   ${qualification_status}=  Отримати дані із тендера  ${tender_owner}  status  ${TENDER['LOT_ID']}
-  \   Run Keyword IF  '${TENDER['LOT_ID']}'  Should Be Equal  ${qualification_status}  active
+  \   Run Keyword IF  ${TENDER['LOT_ID']}  Should Be Equal  ${qualification_status}  active
   \   ...         ELSE  Should Be Equal  ${qualification_status}  active.qualification
 
 Відображення вартості номенклатури постачальника
