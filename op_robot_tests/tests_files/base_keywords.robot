@@ -232,7 +232,7 @@ Resource           resource.robot
   ${question_id}=  get_id_from_object  ${question.data}
   ${question_data}=  Create Dictionary  question=${question}  question_resp=${question_resp}  question_id=${question_id}
   ${question_data}=  munch_dict  arg=${question_data}
-
+  Set To Dictionary  ${USERS.users['${username}']}  question_data=${question_data}
 
 Можливість задати запитання на ${item_index} предмет користувачем ${username}
   ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data['items'][${item_index}]}
@@ -243,7 +243,7 @@ Resource           resource.robot
   ${question_id}=  get_id_from_object  ${question.data}
   ${question_data}=  Create Dictionary  question=${question}  question_resp=${question_resp}  question_id=${question_id}
   ${question_data}=  munch_dict  arg=${question_data}
-
+  Set To Dictionary  ${USERS.users['${username}']}  question_data=${question_data}
 
 Можливість відповісти на запитання
   ${answer}=  Підготувати дані для відповіді на запитання
