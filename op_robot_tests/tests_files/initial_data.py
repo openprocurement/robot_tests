@@ -341,7 +341,7 @@ def test_lot_complaint_data(complaint, lot_id):
     return munchify(complaint)
 
 
-def test_tender_data_openua(intervals):
+def test_tender_data_openua(intervals, number_of_lots, meat):
     accelerator = intervals['accelerator']
     # Since `accelerator` field is not really a list containing timings
     # for a period called `acceleratorPeriod`, let's remove it :)
@@ -349,7 +349,7 @@ def test_tender_data_openua(intervals):
     # We should not provide any values for `enquiryPeriod` when creating
     # an openUA or openEU procedure. That field should not be present at all.
     # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
-    data = test_tender_data(intervals, periods=('tender',))
+    data = test_tender_data(intervals, periods=('tender',), number_of_lots=number_of_lots, meat=meat)
     data['procurementMethodType'] = 'aboveThresholdUA'
     data['procurementMethodDetails'] = 'quick, ' \
         'accelerator={}'.format(accelerator)
@@ -357,7 +357,7 @@ def test_tender_data_openua(intervals):
     return data
 
 
-def test_tender_data_openeu(intervals):
+def test_tender_data_openeu(intervals, number_of_lots, meat):
     accelerator = intervals['accelerator']
     # Since `accelerator` field is not really a list containing timings
     # for a period called `acceleratorPeriod`, let's remove it :)
@@ -365,7 +365,7 @@ def test_tender_data_openeu(intervals):
     # We should not provide any values for `enquiryPeriod` when creating
     # an openUA or openEU procedure. That field should not be present at all.
     # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
-    data = test_tender_data(intervals, periods=('tender',))
+    data = test_tender_data(intervals, periods=('tender',), number_of_lots=number_of_lots, meat=meat)
     data['procurementMethodType'] = 'aboveThresholdEU'
     data['procurementMethodDetails'] = 'quick, ' \
         'accelerator={}'.format(accelerator)
