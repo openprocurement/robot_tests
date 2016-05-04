@@ -180,7 +180,7 @@ Get Broker Property By Username
   ${file_path}=  Get Variable Value  ${ARTIFACT_FILE}  artifact.yaml
   ${ARTIFACT}=  load_data_from  ${file_path}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token=${ARTIFACT.access_token}
-  ${TENDER}=  Create Dictionary   TENDER_UAID=${ARTIFACT.tender_uaid}   LAST_MODIFICATION_DATE=${ARTIFACT.last_modification_date}   LOT_ID=${Empty}
+  ${TENDER}=  Create Dictionary   TENDER_UAID=${ARTIFACT.tender_uaid}   LAST_MODIFICATION_DATE=${ARTIFACT.last_modification_date}   LOT_ID=${None}
   ${lot_index}=  Get Variable Value  ${lot_index}  0
   Run Keyword And Ignore Error  Set To Dictionary  ${TENDER}  LOT_ID=${ARTIFACT.lots[${lot_index}]}
   ${mode}=  Get Variable Value  ${mode}  ${ARTIFACT.mode}
@@ -481,7 +481,7 @@ Get Broker Property By Username
 Отримати шлях до поля об’єкта
   [Arguments]  ${username}  ${field_name}  ${object_id}
   ${object_type}=  get_object_type_by_id  ${object_id}
-  ${objects}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data['${object_type}']}  ${empty}
+  ${objects}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data['${object_type}']}  ${None}
   ${object_index}=  get_object_index_by_id  ${objects}  ${object_id}
   [return]  ${object_type}[${object_index}].${field_name}
 

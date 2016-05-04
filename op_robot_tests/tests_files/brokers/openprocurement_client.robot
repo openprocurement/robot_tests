@@ -49,9 +49,9 @@ Library  openprocurement_client_helper.py
 
 
 Отримати посилання на аукціон для глядача
-  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
+  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${None}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${auctionUrl}=  Run Keyword IF  '${lot_id}'  Set Variable  ${tender.data.lots[${lot_index}].auctionUrl}
+  ${auctionUrl}=  Run Keyword IF  ${lot_id}  Set Variable  ${tender.data.lots[${lot_index}].auctionUrl}
   ...                         ELSE  Set Variable  ${tender.data.auctionUrl}
   [return]  ${auctionUrl}
 
@@ -435,9 +435,9 @@ Library  openprocurement_client_helper.py
 
 
 Отримати посилання на аукціон для учасника
-  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
+  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${None}
   ${bid}=  openprocurement_client.Отримати пропозицію  ${username}  ${tender_uaid}
-  ${participationUrl}=  Run Keyword IF  '${lot_id}'  Set Variable  ${bid.data.lotValues[${lot_index}].participationUrl}
+  ${participationUrl}=  Run Keyword IF  ${lot_id}  Set Variable  ${bid.data.lotValues[${lot_index}].participationUrl}
   ...                         ELSE  Set Variable  ${bid.data.participationUrl}
   [return]  ${participationUrl}
 
@@ -450,11 +450,11 @@ Library  openprocurement_client_helper.py
   ...      [Arguments] Username, tender uaid, qualification number and document to upload
   ...      [Description] Find tender using uaid,  and call upload_qualification_document
   ...      [Return] Reply of API
-  [Arguments]  ${username}  ${document}  ${tender_uaid}  ${award_num}  ${lot_id}=${Empty}
+  [Arguments]  ${username}  ${document}  ${tender_uaid}  ${award_num}  ${lot_id}=${None}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${doc}=  Call Method  ${USERS.users['${username}'].client}  upload_award_document  ${document}  ${tender}  ${tender.data.awards[${award_num}].id}
-  ${lot_index}=  Run Keyword If  '${lot_id}'  get_object_index_by_id  ${tender.data.lots}  ${lot_id}
-  Run Keyword If  '${lot_id}'
+  ${lot_index}=  Run Keyword If  ${lot_id}  get_object_index_by_id  ${tender.data.lots}  ${lot_id}
+  Run Keyword If  ${lot_id}
   ...      Set To Object  ${doc.data}  documentOf  lot
   ...      Set To Object  ${doc.data}  relatedItem  ${tender.data.lots[${lot_index}].id}
   ...      Call Method  ${USERS.users['${username}'].client}  patch_document   ${tender}   ${doc}
