@@ -281,9 +281,9 @@ def prepare_test_tender_data(procedure_intervals, mode, number_of_lots=0, meat=F
     elif mode == 'negotiation.quick':
         return munchify({'data': test_tender_data_limited(intervals, 'negotiation.quick')})
     elif mode == 'openeu':
-        return munchify({'data': test_tender_data_openeu(intervals)})
+        return munchify({'data': test_tender_data_openeu(intervals, number_of_lots=number_of_lots, meat=meat)})
     elif mode == 'openua':
-        return munchify({'data': test_tender_data_openua(intervals)})
+        return munchify({'data': test_tender_data_openua(intervals, number_of_lots=number_of_lots, meat=meat)})
     elif mode == 'reporting':
         return munchify({'data': test_tender_data_limited(intervals, 'reporting')})
     elif mode == 'belowThreshold':
