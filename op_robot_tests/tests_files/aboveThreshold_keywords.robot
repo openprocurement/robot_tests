@@ -16,7 +16,7 @@ Resource           base_keywords.robot
 
 Можливість продовжити період подання пропозиції на 7 днів
   ${endDate}=  add_minutes_to_date  ${USERS.users['${tender_owner}'].tender_data.data.tenderPeriod.endDate}  7
-  Run As  ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  tenderPeriod.endDate  ${endDate}
+  Можливість змінити поле tenderPeriod.endDate тендера на ${endDate}
 
 ##############################################################################################
 #             BIDDING
