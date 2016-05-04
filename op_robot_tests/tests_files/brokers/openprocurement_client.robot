@@ -484,7 +484,7 @@ Library  openprocurement_client_helper.py
   ...      [Description] Find tender using uaid, create data dict with unsuccessful status and call patch_award
   ...      [Return] Reply of API
   [Arguments]  ${username}  ${tender_uaid}  ${award_num}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${award}=  create_data_dict   data.status  unsuccessful
   Set To Dictionary  ${award.data}  id=${tender.data.awards[${award_num}].id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_award  ${tender}  ${award}
@@ -498,7 +498,7 @@ Library  openprocurement_client_helper.py
   ...      [Description] Find tender using uaid, create data dict with unsuccessful status and call patch_award
   ...      [Return] Reply of API
   [Arguments]  ${username}  ${tender_uaid}  ${award_num}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${award}=  create_data_dict   data.status  cancelled
   Set To Dictionary  ${award.data}  id=${tender.data.awards[${award_num}].id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_award  ${tender}  ${award}
@@ -621,7 +621,7 @@ Library  openprocurement_client_helper.py
   ...      [Description] Find tender using uaid, create data dict with active status and call patch_qualification
   ...      [Return] Reply of API
   [Arguments]  ${username}  ${tender_uaid}  ${qualification_num}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${qualification}=  create_data_dict   data.status  active
   Set To Dictionary  ${qualification.data}  id=${tender.data.qualifications[${qualification_num}].id}  eligible=${True}  qualified=${True}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_qualification  ${tender}  ${qualification}
@@ -635,7 +635,7 @@ Library  openprocurement_client_helper.py
   ...      [Description] Find tender using uaid, create data dict with unsuccessful status and call patch_qualification
   ...      [Return] Reply of API
   [Arguments]  ${username}  ${tender_uaid}  ${qualification_num}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${qualification}=  create_data_dict   data.status  unsuccessful
   Set To Dictionary  ${qualification.data}  id=${tender.data.qualifications[${qualification_num}].id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_qualification  ${tender}  ${qualification}
@@ -661,7 +661,7 @@ Library  openprocurement_client_helper.py
   ...      [Description] Find tender using uaid, create data dict with cancelled status and call patch_qualification
   ...      [Return] Reply of API
   [Arguments]  ${username}  ${tender_uaid}  ${qualification_num}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${qualification}=  create_data_dict   data.status  cancelled
   Set To Dictionary  ${qualification.data}  id=${tender.data.qualifications[${qualification_num}].id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_qualification  ${tender}  ${qualification}
