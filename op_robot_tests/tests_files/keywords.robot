@@ -576,6 +576,21 @@ Require Failure
   ...      ${USERS.users['${tender_owner}'].initial_data.data.enquiryPeriod.startDate}
   ...      ${date}
   Дочекатись дати  ${date}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      active.enquiries
+
+
+Звірити статус тендера
+  [Arguments]  ${username}  ${tender_uaid}  ${left}
+  ${right}=  Run as  ${username}  Отримати інформацію із тендера  ${tender_uaid}  status
+  Порівняти об'єкти  ${left}  ${right}
 
 
 Дочекатись дати початку прийому пропозицій
@@ -619,10 +634,18 @@ Require Failure
   ...      '${status}' == 'FAIL'
   ...      ${USERS.users['${tender_owner}'].initial_data.data.tenderPeriod.endDate}
   ...      ${date}
-  ${date}=  add_minutes_to_date  ${date}  2  # Auction sync
   Дочекатись дати  ${date}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
+  ${next_status}=  Set variable if  'open' in '${mode}'  active.pre-qualification  active.auction
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      ${next_status}
+  Run keyword if  '${next_status}' == 'active.auction'  Sleep  120  # Auction sync
 
 
 Дочекатись дати початку аукціону
