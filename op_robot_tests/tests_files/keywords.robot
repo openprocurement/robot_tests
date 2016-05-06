@@ -575,7 +575,7 @@ Require Failure
   ...      if ``command`` with ``arguments`` fails and vice versa.
   Log  ${username}
   Log  ${command}
-  Log Many  ${command}  @{arguments}
+  Log Many  @{arguments}
   ${keywords_file}=  Get Broker Property By Username  ${username}  keywords_file
   ${status}  ${value}=  Run keyword and ignore keyword definitions  ${keywords_file}.${command}  ${username}  @{arguments}
   Run keyword if  '${status}' == 'PASS'  Fail  Користувач ${username} зміг виконати "${command}"
@@ -669,29 +669,6 @@ Require Failure
   ...      ${tender_uaid}
   ...      ${next_status}
   Run keyword if  '${next_status}' == 'active.auction'  Sleep  120  # Auction sync
-
-
-Дочекатись дати початку аукціону
-  [Arguments]  ${username}
-  # Can't use that dirty hack here since we don't know
-  # the date of auction when creating the procurement :)
-  ${auctionStart}=  Отримати дані із тендера  ${username}  ${tender_uaid}  auctionPeriod.startDate  ${TENDER['LOT_ID']}
-  Дочекатись дати  ${auctionStart}
-  Оновити LAST_MODIFICATION_DATE
-  Дочекатись синхронізації з майданчиком  ${username}
-
-
-Відкрити сторінку аукціону для глядача
-  ${url}=  Run as  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}  ${TENDER['LOT_ID']}
-  Open browser  ${url}  ${USERS.users['${viewer}'].browser}
-
-
-Дочекатись дати закінчення аукціону
-  [Arguments]  ${username}
-  ${auctionEnd}=  Отримати дані із тендера  ${username}  ${tender_uaid}  auctionPeriod.endDate  ${TENDER['LOT_ID']}
-  Дочекатись дати  ${auctionEnd}
-  Оновити LAST_MODIFICATION_DATE
-  Дочекатись синхронізації з майданчиком  ${username}
 
 
 Дочекатись дати закінчення періоду подання скарг
