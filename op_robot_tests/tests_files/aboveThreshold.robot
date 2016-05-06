@@ -8,6 +8,7 @@ Suite Teardown  Test Suite Teardown
 ${mode}         openeu
 @{used_roles}   tender_owner  provider  provider1  viewer
 
+${number_of_items} ${1}
 ${number_of_lots}  ${0}
 ${meat}            ${0}
 
