@@ -368,7 +368,7 @@ Get Broker Property By Username
 
 
 Звірити поле тендера із значенням
-  [Arguments]  ${username}  ${left}  ${field}  ${object_id}=${None}
+  [Arguments]  ${username}  ${left}  ${field}  ${object_id}=${Empty}
   ${right}=  Отримати дані із тендера  ${username}  ${field}  ${object_id}
   Порівняти об'єкти  ${left}  ${right}
 
@@ -387,7 +387,7 @@ Get Broker Property By Username
 
 
 Звірити дату тендера із значенням
-  [Arguments]  ${username}  ${left}  ${field}  ${object_id}=${None}  ${accuracy}=60  ${absolute_delta}=${False}
+  [Arguments]  ${username}  ${left}  ${field}  ${object_id}=${Empty}  ${accuracy}=60  ${absolute_delta}=${False}
   ${right}=  Отримати дані із тендера  ${username}  ${field}  ${object_id}
   Порівняти дати  ${left}  ${right}  accuracy=${accuracy}  absolute_delta=${absolute_delta}
 
@@ -408,7 +408,7 @@ Get Broker Property By Username
 
 
 Звірити координати доставки тендера
-  [Arguments]  ${username}  ${tender_data}  ${field}  ${object_id}=${None}
+  [Arguments]  ${username}  ${tender_data}  ${field}  ${object_id}=${Empty}
   ${left_lat}=  Get_From_Object  ${tender_data.data}  ${field}.deliveryLocation.latitude
   ${left_lon}=  Get_From_Object  ${tender_data.data}  ${field}.deliveryLocation.longitude
   ${right_lat}=  Отримати дані із тендера  ${username}  ${field}.deliveryLocation.latitude  ${object_id}
@@ -456,9 +456,9 @@ Get Broker Property By Username
 
 
 Отримати дані із тендера
-  [Arguments]  ${username}  ${field_name}  ${object_id}=${None}
-  ${field}=  Run Keyword If  '${object_id}'=='${None}'  Set Variable  ${field_name}
-  ...             ELSE  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${object_id}
+  [Arguments]  ${username}  ${field_name}  ${object_id}=${Empty}
+  ${field}=  Run Keyword If  '${object_id}'  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${object_id}
+  ...             ELSE  Set Variable  ${field_name}
   ${status}  ${field_value}=  Run keyword and ignore error
   ...      Get from object
   ...      ${USERS.users['${username}'].tender_data.data}
@@ -466,8 +466,8 @@ Get Broker Property By Username
   # If field in cache, return its value
   Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
   # Else call broker to find field
-  ${field_value}=  Run Keyword IF  '${object_id}'=='${None}'  Run As  ${username}  Отримати інформацію із тендера  ${field}
-  ...                          ELSE  Отримати дані із об’єкта тендера  ${username}  ${object_id}  ${field_name}
+  ${field_value}=  Run Keyword IF  '${object_id}'  Отримати дані із об’єкта тендера  ${username}  ${object_id}  ${field_name}
+  ...                          ELSE  Run As  ${username}  Отримати інформацію із тендера  ${field}
   # And caching its value before return
   Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${field_value}
   [return]  ${field_value}
