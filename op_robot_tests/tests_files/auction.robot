@@ -48,7 +48,7 @@ Suite Teardown  Test Suite Teardown
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Дочекатись дати закінчення аукціону
+  Дочекатись дати закінчення аукціону користувачем ${viewer}
 
 
 Відображення дати завершення аукціону
