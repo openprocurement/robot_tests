@@ -29,8 +29,9 @@ Suite Teardown  Test Suite Teardown
   ...      ${USERS.users['${tender_owner}'].broker}
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \   ${qualification_status}=  Отримати дані із тендера  ${tender_owner}  status  ${TENDER['LOT_ID']}
-  \   Run Keyword IF  ${TENDER['LOT_ID']}  Should Be Equal  ${qualification_status}  active
+  \   Run Keyword IF  '${TENDER['LOT_ID']}'  Should Be Equal  ${qualification_status}  active
   \   ...         ELSE  Should Be Equal  ${qualification_status}  active.qualification
+
 
 Відображення вартості номенклатури постачальника
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних оголошеного тендера
@@ -63,7 +64,8 @@ Suite Teardown  Test Suite Teardown
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ${filepath}=   create_fake_doc
-  Викликати для учасника   ${tender_owner}   Завантажити документ рішення кваліфікаційної комісії   ${filepath}   ${TENDER['TENDER_UAID']}   0  ${TENDER['LOT_ID']}
+  Викликати для учасника   ${tender_owner}   Завантажити документ рішення кваліфікаційної комісії   ${filepath}   ${TENDER['TENDER_UAID']}   0
+
 
 Можливість підтвердити постачальника
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість зареєструвати і підтвердити постачальника до прямої закупівлі
@@ -78,12 +80,14 @@ Suite Teardown  Test Suite Teardown
   ...  minimal
   Викликати для учасника  ${tender_owner}  Скасування рішення кваліфікаційної комісії  ${TENDER['TENDER_UAID']}  0
 
+
 Можливість завантажити документ рішення кваліфікаційної комісії для підтвердження нового постачальника
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість укласти угоду для прямої закупівлі
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ${filepath}=   create_fake_doc
-  Викликати для учасника   ${tender_owner}   Завантажити документ рішення кваліфікаційної комісії   ${filepath}   ${TENDER['TENDER_UAID']}   1   ${TENDER['LOT_ID']}
+  Викликати для учасника   ${tender_owner}   Завантажити документ рішення кваліфікаційної комісії   ${filepath}   ${TENDER['TENDER_UAID']}   1
+
 
 Можливість підтвердити нового постачальника
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість зареєструвати і підтвердити постачальника до прямої закупівлі
