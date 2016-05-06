@@ -8,8 +8,9 @@ Resource           resource.robot
 *** Keywords ***
 Можливість оголосити тендер
   ${number_of_lots}=  Convert To Integer  ${number_of_lots}
+  ${number_of_items}=  Convert To Integer  ${number_of_items}
   ${meat}=  Convert To Integer  ${meat}
-  ${tender_data}=  Підготувати дані для створення тендера  ${number_of_lots}  ${meat}
+  ${tender_data}=  Підготувати дані для створення тендера  ${number_of_items}  ${number_of_lots}  ${meat}
   ${adapted_data}=  Адаптувати дані для оголошення тендера  ${tender_owner}  ${tender_data}
   ${TENDER_UAID}=  Run As  ${tender_owner}  Створити тендер  ${adapted_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data=${adapted_data}
