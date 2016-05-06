@@ -631,29 +631,6 @@ Require Failure
   Дочекатись синхронізації з майданчиком  ${username}
 
 
-Дочекатись дати початку аукціону
-  [Arguments]  ${username}
-  # Can't use that dirty hack here since we don't know
-  # the date of auction when creating the procurement :)
-  ${auctionStart}=  Отримати дані із тендера   ${username}   auctionPeriod.startDate  ${TENDER['LOT_ID']}
-  Дочекатись дати  ${auctionStart}
-  Оновити LAST_MODIFICATION_DATE
-  Дочекатись синхронізації з майданчиком  ${username}
-
-
-Відкрити сторінку аукціону для глядача
-  ${url}=  Run as  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}  ${TENDER['LOT_ID']}
-  Open browser  ${url}  ${USERS.users['${viewer}'].browser}
-
-
-Дочекатись дати закінчення аукціону
-  [Arguments]  ${username}
-  ${auctionEnd}=  Отримати дані із тендера   ${username}   auctionPeriod.endDate  ${TENDER['LOT_ID']}
-  Дочекатись дати  ${auctionEnd}
-  Оновити LAST_MODIFICATION_DATE
-  Дочекатись синхронізації з майданчиком  ${username}
-
-
 Дочекатись дати закінчення періоду подання скарг
   [Arguments]  ${username}
   Дочекатись дати  ${USERS.users['${username}'].tender_data.data.complaintPeriod.endDate}
