@@ -180,7 +180,7 @@ Get Broker Property By Username
   ${file_path}=  Get Variable Value  ${ARTIFACT_FILE}  artifact.yaml
   ${ARTIFACT}=  load_data_from  ${file_path}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token=${ARTIFACT.access_token}
-  ${TENDER}=  Create Dictionary   TENDER_UAID=${ARTIFACT.tender_uaid}   LAST_MODIFICATION_DATE=${ARTIFACT.last_modification_date}   LOT_ID=${None}
+  ${TENDER}=  Create Dictionary   TENDER_UAID=${ARTIFACT.tender_uaid}   LAST_MODIFICATION_DATE=${ARTIFACT.last_modification_date}   LOT_ID=${Empty}
   ${lot_index}=  Get Variable Value  ${lot_index}  0
   Run Keyword And Ignore Error  Set To Dictionary  ${TENDER}  LOT_ID=${ARTIFACT.lots[${lot_index}]}
   ${mode}=  Get Variable Value  ${mode}  ${ARTIFACT.mode}
@@ -627,29 +627,6 @@ Require Failure
   ...      ${date}
   ${date}=  add_minutes_to_date  ${date}  2  # Auction sync
   Дочекатись дати  ${date}
-  Оновити LAST_MODIFICATION_DATE
-  Дочекатись синхронізації з майданчиком  ${username}
-
-
-Дочекатись дати початку аукціону
-  [Arguments]  ${username}
-  # Can't use that dirty hack here since we don't know
-  # the date of auction when creating the procurement :)
-  ${auctionStart}=  Отримати дані із тендера   ${username}   auctionPeriod.startDate  ${TENDER['LOT_ID']}
-  Дочекатись дати  ${auctionStart}
-  Оновити LAST_MODIFICATION_DATE
-  Дочекатись синхронізації з майданчиком  ${username}
-
-
-Відкрити сторінку аукціону для глядача
-  ${url}=  Run as  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}  ${TENDER['LOT_ID']}
-  Open browser  ${url}  ${USERS.users['${viewer}'].browser}
-
-
-Дочекатись дати закінчення аукціону
-  [Arguments]  ${username}
-  ${auctionEnd}=  Отримати дані із тендера   ${username}   auctionPeriod.endDate  ${TENDER['LOT_ID']}
-  Дочекатись дати  ${auctionEnd}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
 
