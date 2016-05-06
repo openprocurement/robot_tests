@@ -56,6 +56,10 @@ Resource           resource.robot
 Звірити відображення поля ${field} тендера для користувача ${username}
   Звірити поле тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  ${field}
 
+Звірити відображення дати ${date} тендера для усіх користувачів
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  \  Звірити відображення дати ${date} тендера для користувача ${username}
+
 
 Звірити відображення дати ${date} тендера для користувача ${username}
   Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  ${date}
