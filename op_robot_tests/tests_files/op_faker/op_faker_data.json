@@ -1465,7 +1465,7 @@
                 "longitude": 34.579872
             },
             "deliveryAddress": {
-                "postalCode": "51939 ",
+                "postalCode": "51939",
                 "countryName": "Україна",
                 "streetAddress": "Харківська вулиця, 49",
                 "region": "Дніпропетровська область",
@@ -7909,7 +7909,7 @@
         },
         {
             "cpv_id": "24910000-6",
-            "description": "Клей СМ-11 ",
+            "description": "Клей СМ-11",
             "quantity": 50,
             "unit": {
                 "code": "KGM",
