@@ -47,7 +47,7 @@ def create_fake_doc():
     return tf.name
 
 
-def test_tender_data(intervals, periods=("enquiry", "tender"), number_of_lots=0, meat=False):
+def test_tender_data(intervals, periods=("enquiry", "tender"), number_of_items=1, number_of_lots=0, meat=False):
     now = get_now()
     value_amount = round(random.uniform(3000, 99999999999.99), 2)  # max value equals to budget of Ukraine in hryvnias
     data = {
@@ -93,7 +93,7 @@ def test_tender_data(intervals, periods=("enquiry", "tender"), number_of_lots=0,
             new_lot = test_lot_data(data['value']['amount'])
             data['lots'].append(new_lot)
             data['lots'][lot_number]['id'] = lot_id
-            for i in range(fake.random_int(min=1, max=5)):
+            for i in range(number_of_items):
                 new_item = test_item_data(cpv_group)
                 data['items'].append(new_item)
                 data['items'][lot_number]['relatedLot'] = lot_id
@@ -102,7 +102,7 @@ def test_tender_data(intervals, periods=("enquiry", "tender"), number_of_lots=0,
         data['value']['amount'] = value_amount
         data['minimalStep']['amount'] = minimalStep
     else:
-        for i in range(fake.random_int(min=1, max=5)):
+        for i in range(number_of_items):
             new_item = test_item_data(cpv_group)
             data['items'].append(new_item)
     if meat:
@@ -341,7 +341,7 @@ def test_lot_complaint_data(complaint, lot_id):
     return munchify(complaint)
 
 
-def test_tender_data_openua(intervals, number_of_lots, meat):
+def test_tender_data_openua(intervals, number_of_items, number_of_lots, meat):
     accelerator = intervals['accelerator']
     # Since `accelerator` field is not really a list containing timings
     # for a period called `acceleratorPeriod`, let's remove it :)
@@ -349,7 +349,7 @@ def test_tender_data_openua(intervals, number_of_lots, meat):
     # We should not provide any values for `enquiryPeriod` when creating
     # an openUA or openEU procedure. That field should not be present at all.
     # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
-    data = test_tender_data(intervals, periods=('tender',), number_of_lots=number_of_lots, meat=meat)
+    data = test_tender_data(intervals, ('tender',), number_of_items, number_of_lots, meat)
     data['procurementMethodType'] = 'aboveThresholdUA'
     data['procurementMethodDetails'] = 'quick, ' \
         'accelerator={}'.format(accelerator)
@@ -365,7 +365,7 @@ def test_tender_data_openeu(intervals, number_of_lots, meat):
     # We should not provide any values for `enquiryPeriod` when creating
     # an openUA or openEU procedure. That field should not be present at all.
     # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
-    data = test_tender_data(intervals, periods=('tender',), number_of_lots=number_of_lots, meat=meat)
+    data = test_tender_data(intervals, ('tender',), number_of_items, number_of_lots, meat)
     data['procurementMethodType'] = 'aboveThresholdEU'
     data['procurementMethodDetails'] = 'quick, ' \
         'accelerator={}'.format(accelerator)

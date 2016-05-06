@@ -7,6 +7,7 @@ Suite Teardown  Test Suite Teardown
 ${mode}         belowThreshold
 @{used_roles}   tender_owner  provider  provider1  viewer
 
+${number_of_items} ${1}
 ${number_of_lots}  ${1}
 ${meat}            ${1}
 
