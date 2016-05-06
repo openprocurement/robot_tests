@@ -424,7 +424,7 @@ ${meat}             ${1}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      new_item  delete_item
+  ...      delete_item
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Run Keyword IF  ${number_of_lots} == 0
   ...      Можливість видалити предмет закупівлі з тендера
@@ -475,7 +475,7 @@ ${meat}             ${1}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відповідь на запитання
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      question_to_tender  answer_question_to_tender
+  ...      answer_question_to_tender
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість відповісти на запитання
@@ -485,7 +485,7 @@ ${meat}             ${1}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення відповіді на запитання
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      question_to_tender  answer_question_to_tender
+  ...      answer_question_to_tender
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля answer запитання для користувача ${viewer}
 
@@ -521,7 +521,7 @@ ${meat}             ${1}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відповідь на запитання
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      question_to_item  answer_question_to_item
+  ...      answer_question_to_item
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість відповісти на запитання
@@ -531,7 +531,7 @@ ${meat}             ${1}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення відповіді на запитання
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      question_to_item  answer_question_to_item
+  ...      answer_question_to_item
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля answer запитання для користувача ${viewer}
 
@@ -567,7 +567,7 @@ ${meat}             ${1}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відповідь на запитання
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      lots  question_to_lot  answer_question_to_item
+  ...      lots  answer_question_to_lot
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість відповісти на запитання
@@ -577,7 +577,7 @@ ${meat}             ${1}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення відповіді на запитання
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      lots  question_to_lot  answer_question_to_item
+  ...      lots  answer_question_to_lot
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля answer запитання для користувача ${viewer}
 
@@ -625,7 +625,7 @@ ${meat}             ${1}
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      provider_bid  provider_bid_modify
+  ...      provider_bid_modify
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість змінити пропозицію до 50000 користувачем ${provider}
 
@@ -634,7 +634,7 @@ ${meat}             ${1}
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      provider_bid  provider_bid_modify
+  ...      provider_bid_modify
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість змінити пропозицію до 10 користувачем ${provider}
 
@@ -643,7 +643,7 @@ ${meat}             ${1}
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      provider_bid  provider_bid_modify
+  ...      provider_bid_modify
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість завантажити документ в пропозицію користувачем ${provider}
 
@@ -652,7 +652,7 @@ ${meat}             ${1}
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      provider_bid  provider_bid_modify  add_documentation_to_bid
+  ...      add_documentation_to_bid
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість змінити документацію цінової пропозиції користувачем ${provider}
 
@@ -661,7 +661,7 @@ ${meat}             ${1}
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      provider_bid  provider_bid_canceled
+  ...      provider_bid_canceled
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість скасувати цінову пропозицію користувачем ${provider}
 
@@ -680,6 +680,7 @@ ${meat}             ${1}
   [Tags]   ${USERS.users['${viewer}'].broker}: Подання пропозиції
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
+  ...      provider_bid  provider1_bid
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Require Failure  ${viewer}  Отримати інформацію із тендера  bids
 
