@@ -39,6 +39,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${viewer}'].broker}: Участь в аукціоні
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
+  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}
   Можливість вичитати посилання на аукціон для ${viewer}
 
 
