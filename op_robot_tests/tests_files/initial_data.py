@@ -357,7 +357,7 @@ def test_tender_data_openua(intervals, number_of_items, number_of_lots, meat):
     return data
 
 
-def test_tender_data_openeu(intervals, number_of_lots, meat):
+def test_tender_data_openeu(intervals, number_of_items, number_of_lots, meat):
     accelerator = intervals['accelerator']
     # Since `accelerator` field is not really a list containing timings
     # for a period called `acceleratorPeriod`, let's remove it :)
