@@ -200,7 +200,7 @@ def test_question_answer_data():
     })
 
 
-def test_complaint_data(lot=False):
+def test_complaint_data():
     data = munchify({
         "data": {
             "author": fake.procuringEntity(),
@@ -208,8 +208,6 @@ def test_complaint_data(lot=False):
             "title": fake.title()
         }
     })
-    if lot:
-        data = test_lot_complaint_data(data)
     return data
 
 
@@ -346,10 +344,6 @@ def test_lot_document_data(document, lot_id):
     document.data.update({"documentOf": "lot", "relatedItem": lot_id})
     return munchify(document)
 
-
-def test_lot_complaint_data(complaint, lot_id):
-    complaint.data.update({"complaintOf": "lot", "relatedItem": lot_id})
-    return munchify(complaint)
 
 
 def test_tender_data_openua(params):
