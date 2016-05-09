@@ -14,7 +14,7 @@ ${lot_index}        ${0}
 
 *** Test Cases ***
 Можливість оголосити однопредметний тендер
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Оголошення тендера
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  lot_complaint
@@ -25,7 +25,7 @@ ${lot_index}        ${0}
 
 
 Можливість знайти однопредметний тендер по ідентифікатору
-  [Tags]  ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
+  [Tags]  ${USERS.users['${viewer}'].broker}: Пошук тендера
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  lot_complaint
@@ -35,7 +35,7 @@ ${lot_index}        ${0}
 
 
 Можливість створити вимогу про виправлення умов закупівлі, додати до неї документацію і подати її користувачем
-  [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити вимогу про виправлення умов закупівлі, додати до неї документацію і подати її
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  tender_complaint
@@ -45,7 +45,7 @@ ${lot_index}        ${0}
 
 
 Можливість створити вимогу про виправлення умов лоту, додати до неї документацію і подати її користувачем
-  [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити вимогу
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  lot_complaint
@@ -58,7 +58,7 @@ ${lot_index}        ${0}
 ##############################################################################################
 
 Відображення опису вимоги
-  [Tags]  ${USERS.users['${viewer}'].broker}: опису Відображення вимоги
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  lot_complaint
@@ -68,7 +68,7 @@ ${lot_index}        ${0}
 
 
 Відображення заголовку вимоги
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення заголовку вимоги
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  lot_complaint
@@ -78,7 +78,7 @@ ${lot_index}        ${0}
 
 
 Відображення заголовку документації вимоги
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення заголовку документації
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  lot_complaint
@@ -87,7 +87,7 @@ ${lot_index}        ${0}
 
 
 Відображення стосунку вимоги до лоту
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення заголовку документації
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  lot_complaint
@@ -95,7 +95,7 @@ ${lot_index}        ${0}
 
 
 Відображення поданого статусу вимоги
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення поданого статусу вимоги
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  lot_complaint
@@ -104,7 +104,7 @@ ${lot_index}        ${0}
 
 
 Можливість відповісти на вимогу про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${tender_owner}'].broker}:Можливість відповісти на вирішену вимогу про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес оскарження
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  tender_complaint
@@ -113,7 +113,7 @@ ${lot_index}        ${0}
 
 
 Можливість відповісти на вимогу про виправлення умов лоту
-  [Tags]  ${USERS.users['${tender_owner}'].broker}:Можливість відповісти на вирішену вимогу про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес оскарження
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  lot_complaint
@@ -122,7 +122,7 @@ ${lot_index}        ${0}
 
 
 Відображення статусу 'answered' вимоги
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу 'answered' вимоги
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  lot_complaint
@@ -132,7 +132,7 @@ ${lot_index}        ${0}
 
 
 Відображення типу вирішення вимоги
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення типу вирішення вимоги
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  lot_complaint
@@ -141,7 +141,7 @@ ${lot_index}        ${0}
 
 
 Відображення вирішення вимоги
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення вирішення вимоги
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  lot_complaint
@@ -150,7 +150,7 @@ ${lot_index}        ${0}
 
 
 Можливість підтвердити задоволення вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${provider}'].broker}:Можливість підтвердити задоволення вимоги про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  tender_complaint
@@ -159,7 +159,7 @@ ${lot_index}        ${0}
 
 
 Можливість підтвердити задоволення вимоги про виправлення умов лоту
-  [Tags]  ${USERS.users['${provider}'].broker}:Можливість підтвердити задоволення вимоги про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  lot_complaint
@@ -168,7 +168,7 @@ ${lot_index}        ${0}
 
 
 Відображення статусу 'resolved' вимоги
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу 'resolved' вимоги
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  lot_complaint
@@ -178,7 +178,7 @@ ${lot_index}        ${0}
 
 
 Відображення задоволення вимоги
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення задоволення вимоги
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  lot_complaint
@@ -187,7 +187,7 @@ ${lot_index}        ${0}
 
 
 Можливість створити чернетку вимоги про виправлення умов закупівлі і скасувати її
-  [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити чернетку вимоги про виправлення умов закупівлі і скасувати її
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  tender_complaint
@@ -197,7 +197,7 @@ ${lot_index}        ${0}
 
 
 Можливість створити чернетку вимоги про виправлення умов закупівлі і скасувати її
-  [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити чернетку вимоги про виправлення умов закупівлі і скасувати її
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  lot_complaint
@@ -210,7 +210,7 @@ ${lot_index}        ${0}
 ##############################################################################################
 
 Відображення статусу 'cancelled' чернетки вимоги
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу 'cancelled' чернетки вимоги
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  lot_complaint
@@ -220,7 +220,7 @@ ${lot_index}        ${0}
 
 
 Відображення причини скасування чернетки вимоги
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення причини скасування чернетки вимоги
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  lot_complaint
@@ -229,7 +229,7 @@ ${lot_index}        ${0}
 
 
 Можливість створити, подати і скасувати вимогу про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити, подати і скасувати вимогу про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  tender_complaint
@@ -239,7 +239,7 @@ ${lot_index}        ${0}
 
 
 Можливість створити, подати і скасувати вимогу про виправлення умов лоту
-  [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити, подати і скасувати вимогу про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  lot_complaint
@@ -249,7 +249,7 @@ ${lot_index}        ${0}
 
 
 Відображення статусу 'cancelled' після 'draft -> claim' вимоги
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу 'cancelled' вимоги
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  lot_complaint
@@ -259,7 +259,7 @@ ${lot_index}        ${0}
 
 
 Можливість створити, подати, відповісти і після того скасувати вимогу про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити, подати, відповісти і після того скасувати вимогу про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  tender_complaint
@@ -270,7 +270,7 @@ ${lot_index}        ${0}
 
 
 Можливість створити, подати, відповісти і після того скасувати вимогу про виправлення умов лоту
-  [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити, подати, відповісти і після того скасувати вимогу про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  lot_complaint
@@ -281,7 +281,7 @@ ${lot_index}        ${0}
 
 
 Відображення статусу 'cancelled' після 'draft -> claim -> answered' вимоги
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу 'cancelled' після 'draft -> claim -> answered' вимоги
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  lot_complaint
@@ -291,7 +291,7 @@ ${lot_index}        ${0}
 
 
 Можливість створити, подати, відповісти на вимогу про виправлення умов закупівлі і перетворити її в скаргу
-  [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити, подати, відповісти і після того скасувати вимогу про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  tender_complaint
@@ -302,7 +302,7 @@ ${lot_index}        ${0}
 
 
 Можливість створити, подати, відповісти на вимогу про виправлення умов лоту і перетворити її в скаргу
-  [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити, подати, відповісти і після того скасувати вимогу про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  lot_complaint
@@ -316,7 +316,7 @@ ${lot_index}        ${0}
 ##############################################################################################
 
 Відображення статусу 'pending' після 'draft -> claim -> answered' вимоги
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу 'cancelled' після 'draft -> claim -> answered' вимоги
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  lot_complaint
@@ -326,7 +326,7 @@ ${lot_index}        ${0}
 
 
 Відображення незадоволення вимоги
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення незадоволення вимоги
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  lot_complaint
@@ -335,7 +335,7 @@ ${lot_index}        ${0}
 
 
 Можливість скасувати скаргу про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${provider}'].broker}: Можливість скасувати скаргу
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  tender_complaint
@@ -344,7 +344,7 @@ ${lot_index}        ${0}
 
 
 Можливість скасувати скаргу про виправлення умов лоту
-  [Tags]  ${USERS.users['${provider}'].broker}: Можливість скасувати скаргу
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  lot_complaint
@@ -353,7 +353,7 @@ ${lot_index}        ${0}
 
 
 Відображення статусу 'cancelled' скарги
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу 'cancelled' скарги
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  lot_complaint
@@ -363,7 +363,7 @@ ${lot_index}        ${0}
 
 
 Відображення причини скасування скарги
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення причини скасування скарги
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  lot_complaint
