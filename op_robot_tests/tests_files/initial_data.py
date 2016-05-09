@@ -3,6 +3,7 @@ from datetime import timedelta
 from faker import Factory
 from munch import munchify
 from uuid import uuid4
+from copy import deepcopy
 from tempfile import NamedTemporaryFile
 from .local_time import get_now
 from .op_faker import OP_Provider
@@ -59,7 +60,7 @@ def test_tender_data(intervals, periods=("enquiry", "tender"), number_of_items=1
         "title": fake.title(),
         "title_en": fake_en.catch_phrase(),
         "title_ru": fake_ru.catch_phrase(),
-        "procuringEntity": fake.procuringEntity(),
+        "procuringEntity": deepcopy(fake.procuringEntity()),
         "value": {
             "amount": value_amount,
             "currency": u"UAH",

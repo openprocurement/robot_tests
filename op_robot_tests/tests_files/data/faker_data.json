@@ -1469,7 +1469,7 @@
                 "longitude": 34.579872
             },
             "deliveryAddress": {
-                "postalCode": "51939 ",
+                "postalCode": "51939",
                 "countryName": "Україна",
                 "streetAddress": "Харківська вулиця, 49",
                 "region": "Дніпропетровська область",
@@ -7905,6 +7905,7 @@
         {
             "cpv_id": "30199000-0",
             "description": "Папір для офісної техніки А4",
+            "description_en": "Paper for office equipment А4",
             "quantity": 15,
             "unit": {
                 "code": "PK",
@@ -7913,7 +7914,8 @@
         },
         {
             "cpv_id": "24910000-6",
-            "description": "Клей СМ-11 ",
+            "description": "Клей СМ-11",
+            "description_en": "Glue SM-11",
             "quantity": 50,
             "unit": {
                 "code": "KGM",
@@ -7923,6 +7925,7 @@
         {
             "cpv_id": "22990000-6",
             "description": "Вироби канцелярські, паперові",
+            "description_en": "Paper stationery",
             "quantity": 116,
             "unit": {
                 "code": "H87",
@@ -7932,6 +7935,7 @@
         {
             "cpv_id": "22800000-8",
             "description": "Бланки та журнали відповідної форми (наведені в додатку)",
+            "description_en": "Forms and journals the appropriate form (listed in Annex)",
             "quantity": 5,
             "unit": {
                 "code": "LO",
@@ -7941,6 +7945,7 @@
         {
             "cpv_id": "30192121-5",
             "description": "ручки кулькові",
+            "description_en": "Ballpoint pens",
             "quantity": 10,
             "unit": {
                 "code": "PK",
@@ -7950,6 +7955,7 @@
         {
             "cpv_id": "30192130-1",
             "description": "олівці прості",
+            "description_en": "Plain pencils",
             "quantity": 3,
             "unit": {
                 "code": "PK",
@@ -7959,6 +7965,7 @@
         {
             "cpv_id": "30197600-2",
             "description": "Папір офісний призначений для друку та копіювання на лазерній, струменевій техніці, формат А4 - 210 х 297 мм, щільність 80г/м2.",
+            "description_en": "Paper for office equipment А4",
             "quantity": 20,
             "unit": {
                 "code": "NMP",
@@ -7968,6 +7975,7 @@
         {
             "cpv_id": "22200000-2",
             "description": "Періодичні видання оригінальні на 2016 рік (газети України, журнали України, журнали Росії)",
+            "description_en": "Periodicals original in 2016 (Ukraine newspapers, magazines Ukraine, magazines Russia,)",
             "quantity": 126,
             "unit": {
                 "code": "H87",
@@ -7977,6 +7985,7 @@
         {
             "cpv_id": "22212000-9",
             "description": "Додаток № 1 до документації",
+            "description_en": "Supplement # 1 to documentation",
             "quantity": 12,
             "unit": {
                 "code": "SET",

@@ -123,6 +123,7 @@ class OP_Provider(BaseProvider):
         address = self.random_element(self.addresses)
         item = {
             "description": item_base_data["description"],
+            "description_en": item_base_data["description_en"],
             "classification": classification["classification"],
             "additionalClassifications": classification["additionalClassifications"],
             "deliveryAddress": address["deliveryAddress"],
