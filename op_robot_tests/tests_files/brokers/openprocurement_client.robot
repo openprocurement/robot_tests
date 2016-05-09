@@ -61,13 +61,10 @@ Library  openprocurement_client_helper.py
 
 
 Отримати інформацію із тендера
-  [Arguments]  ${username}  ${field_name}
-  Log  ${username}
-  Log  ${field_name}
-
+  [Arguments]  ${username}  ${tender_uaid}  ${field_name}
   openprocurement_client.Пошук тендера по ідентифікатору
   ...      ${username}
-  ...      ${TENDER['TENDER_UAID']}
+  ...      ${tender_uaid}
 
   ${status}  ${field_value}=  Run keyword and ignore error
   ...      Get from object
@@ -79,9 +76,9 @@ Library  openprocurement_client_helper.py
 
 
 Отримати інформацію із запитання
-  [Arguments]  ${username}  ${question_id}  ${field_name}
+  [Arguments]  ${username}  ${tender_uaid}  ${question_id}  ${field_name}
   ${field_name}=  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${question_id}
-  Run Keyword And Return  openprocurement_client.Отримати інформацію із тендера  ${username}  ${field_name}
+  Run Keyword And Return  openprocurement_client.Отримати інформацію із тендера  ${username}  ${tender_uaid}  ${field_name}
 
 
 Внести зміни в тендер
@@ -134,7 +131,7 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uaid}  ${question}  ${answer_data}  ${question_id}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
-  ${answer_data.data.id}=  openprocurement_client.Отримати інформацію із запитання  ${username}  ${question_id}  id
+  ${answer_data.data.id}=  openprocurement_client.Отримати інформацію із запитання  ${username}  ${tender_uaid}  ${question_id}  id
   ${question_with_answer}=  Call Method  ${USERS.users['${username}'].client}  patch_question  ${tender}  ${answer_data}
   Log object data   ${question_with_answer}  question_with_answer
   [return]  ${question_with_answer}
@@ -283,9 +280,9 @@ Library  openprocurement_client_helper.py
 
 
 Отримати інформацію із лоту
-  [Arguments]  ${username}  ${lot_id}  ${field_name}
+  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}  ${field_name}
   ${field_name}=  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${lot_id}
-  Run Keyword And Return  openprocurement_client.Отримати інформацію із тендера  ${username}  ${field_name}
+  Run Keyword And Return  openprocurement_client.Отримати інформацію із тендера  ${username}  ${tender_uaid}  ${field_name}
 
 
 Змінити лот
