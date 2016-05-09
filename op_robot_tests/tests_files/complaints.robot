@@ -16,6 +16,8 @@ ${meat}             ${1}
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість оголосити тендер
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
+  ...  lot_complaint
+  ...  tender_complaint
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість оголосити тендер
 
@@ -24,6 +26,8 @@ ${meat}             ${1}
   [Tags]  ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
+  ...  lot_complaint
+  ...  tender_complaint
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Можливість знайти тендер по ідентифікатору для усіх учасників
 
@@ -32,10 +36,20 @@ ${meat}             ${1}
   [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити вимогу про виправлення умов закупівлі, додати до неї документацію і подати її
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
-  ...  from-0.12
+  ...  tender_complaint
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість створити вимогу із документацією
+  Можливість створити вимогу про виправлення умов закупівлі із документацією
+
+
+Можливість створити вимогу про виправлення умов лоту, додати до неї документацію і подати її користувачем
+  [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити вимогу
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  lot_complaint
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість створити вимогу про виправлення умов 0 лоту із документацією
 
 ##############################################################################################
 #             ВІДОБРАЖЕННЯ ДЛЯ ГЛЯДАЧА
@@ -45,6 +59,8 @@ ${meat}             ${1}
   [Tags]  ${USERS.users['${viewer}'].broker}: опису Відображення вимоги
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
+  ...  lot_complaint
+  ...  tender_complaint
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля description вимоги із ${USERS.users['${provider}'].claim_data.claim.data.description} для користувача ${viewer}
 
@@ -53,6 +69,8 @@ ${meat}             ${1}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення заголовку вимоги
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
+  ...  lot_complaint
+  ...  tender_complaint
   Звірити відображення поля title вимоги із ${USERS.users['${provider}'].claim_data.claim.data.title} для користувача ${viewer}
 
 
@@ -61,13 +79,25 @@ ${meat}             ${1}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення заголовку документації
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
+  ...  lot_complaint
+  ...  tender_complaint
   Звірити відображення поля document.title вимоги із ${USERS.users['${provider}'].claim_data.document} для користувача ${viewer}
+
+
+Відображення стосунку вимоги до лоту
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення заголовку документації
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  lot_complaint
+  Звірити відображення поля relatedLot вимоги із ${USERS.users['${provider}'].claim_data.claim.data.relatedLot} для користувача ${viewer}
 
 
 Відображення поданого статусу вимоги
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення поданого статусу вимоги
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
+  ...  lot_complaint
+  ...  tender_complaint
   Звірити відображення поля status вимоги із claim для користувача ${viewer}
 
 
@@ -75,14 +105,26 @@ ${meat}             ${1}
   [Tags]  ${USERS.users['${tender_owner}'].broker}:Можливість відповісти на вирішену вимогу про виправлення умов закупівлі
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
+  ...  tender_complaint
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість відповісти на вимогу
+  Можливість відповісти на вимогу про виправлення умов закупівлі
+
+
+Можливість відповісти на вимогу про виправлення умов лоту
+  [Tags]  ${USERS.users['${tender_owner}'].broker}:Можливість відповісти на вирішену вимогу про виправлення умов закупівлі
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  lot_complaint
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість відповісти на вимогу про виправлення умов лоту
 
 
 Відображення статусу 'answered' вимоги
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу 'answered' вимоги
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
+  ...  lot_complaint
+  ...  tender_complaint
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля status вимоги із answered для користувача ${viewer}
 
@@ -91,6 +133,8 @@ ${meat}             ${1}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення типу вирішення вимоги
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
+  ...  lot_complaint
+  ...  tender_complaint
   Звірити відображення поля resolutionType вимоги із ${USERS.users['${tender_owner}'].claim_data.claim_answer.data.resolutionType} для користувача ${viewer}
 
 
@@ -98,6 +142,8 @@ ${meat}             ${1}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення вирішення вимоги
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
+  ...  lot_complaint
+  ...  tender_complaint
   Звірити відображення поля resolution вимоги із ${USERS.users['${tender_owner}'].claim_data.claim_answer.data.resolution} для користувача ${viewer}
 
 
@@ -105,13 +151,26 @@ ${meat}             ${1}
   [Tags]  ${USERS.users['${provider}'].broker}:Можливість підтвердити задоволення вимоги про виправлення умов закупівлі
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
+  ...  tender_complaint
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість підтвердити задоволення вимоги про виправлення умов закупівлі
+
+
+Можливість підтвердити задоволення вимоги про виправлення умов лоту
+  [Tags]  ${USERS.users['${provider}'].broker}:Можливість підтвердити задоволення вимоги про виправлення умов закупівлі
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  lot_complaint
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість підтвердити задоволення вимоги про виправлення умов лоту
+
 
 Відображення статусу 'resolved' вимоги
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу 'resolved' вимоги
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
+  ...  lot_complaint
+  ...  tender_complaint
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля status вимоги із resolved для користувача ${viewer}
 
@@ -120,6 +179,8 @@ ${meat}             ${1}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення задоволення вимоги
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
+  ...  lot_complaint
+  ...  tender_complaint
   Звірити відображення поля satisfied вимоги із ${USERS.users['${provider}'].claim_data.claim_answer_confirm.data.satisfied} для користувача ${viewer}
 
 
@@ -127,9 +188,20 @@ ${meat}             ${1}
   [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити чернетку вимоги про виправлення умов закупівлі і скасувати її
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
+  ...  tender_complaint
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість створити чернетку вимоги
-  Можливість скасувати вимогу
+  Можливість створити чернетку вимоги про виправлення умов закупівлі
+  Можливість скасувати вимогу про виправлення умов закупівлі
+
+
+Можливість створити чернетку вимоги про виправлення умов закупівлі і скасувати її
+  [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити чернетку вимоги про виправлення умов закупівлі і скасувати її
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  lot_complaint
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість створити чернетку вимоги про виправлення умов 0 лоту
+  Можливість скасувати вимогу про виправлення умов лоту
 
 ##############################################################################################
 #             ВІДОБРАЖЕННЯ ДЛЯ ГЛЯДАЧА
@@ -139,6 +211,8 @@ ${meat}             ${1}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу 'cancelled' чернетки вимоги
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
+  ...  lot_complaint
+  ...  tender_complaint
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля status вимоги із cancelled для користувача ${viewer}
 
@@ -147,6 +221,8 @@ ${meat}             ${1}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення причини скасування чернетки вимоги
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
+  ...  lot_complaint
+  ...  tender_complaint
   Звірити відображення поля cancellationReason вимоги із ${USERS.users['${provider}'].claim_data.cancellation.data.cancellationReason} для користувача ${viewer}
 
 
@@ -154,15 +230,28 @@ ${meat}             ${1}
   [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити, подати і скасувати вимогу про виправлення умов закупівлі
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
+  ...  tender_complaint
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість створити вимогу із документацією
-  Можливість скасувати вимогу
+  Можливість створити вимогу про виправлення умов закупівлі із документацією
+  Можливість скасувати вимогу про виправлення умов закупівлі
+
+
+Можливість створити, подати і скасувати вимогу про виправлення умов лоту
+  [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити, подати і скасувати вимогу про виправлення умов закупівлі
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  lot_complaint
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість створити вимогу про виправлення умов 0 лоту із документацією
+  Можливість скасувати вимогу про виправлення умов лоту
 
 
 Відображення статусу 'cancelled' після 'draft -> claim' вимоги
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу 'cancelled' вимоги
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
+  ...  lot_complaint
+  ...  tender_complaint
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля status вимоги із cancelled для користувача ${viewer}
 
@@ -171,28 +260,54 @@ ${meat}             ${1}
   [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити, подати, відповісти і після того скасувати вимогу про виправлення умов закупівлі
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
+  ...  tender_complaint
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість створити вимогу із документацією
-  Можливість відповісти на вимогу
-  Можливість скасувати вимогу
+  Можливість створити вимогу про виправлення умов закупівлі із документацією
+  Можливість відповісти на вимогу про виправлення умов закупівлі
+  Можливість скасувати вимогу про виправлення умов закупівлі
+
+
+Можливість створити, подати, відповісти і після того скасувати вимогу про виправлення умов лоту
+  [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити, подати, відповісти і після того скасувати вимогу про виправлення умов закупівлі
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  lot_complaint
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість створити вимогу про виправлення умов 0 лоту із документацією
+  Можливість відповісти на вимогу про виправлення умов лоту
+  Можливість скасувати вимогу про виправлення умов лоту
 
 
 Відображення статусу 'cancelled' після 'draft -> claim -> answered' вимоги
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу 'cancelled' після 'draft -> claim -> answered' вимоги
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
+  ...  lot_complaint
+  ...  tender_complaint
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля status вимоги із cancelled для користувача ${viewer}
 
 
-Можливість створити, подати, відповісти на вимогу і перетворити її в скаргу
+Можливість створити, подати, відповісти на вимогу про виправлення умов закупівлі і перетворити її в скаргу
   [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити, подати, відповісти і після того скасувати вимогу про виправлення умов закупівлі
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
+  ...  tender_complaint
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість створити вимогу із документацією
-  Можливість відповісти на вимогу
-  Можливість перетворити вимогу в скаргу
+  Можливість створити вимогу про виправлення умов закупівлі із документацією
+  Можливість відповісти на вимогу про виправлення умов закупівлі
+  Можливість перетворити вимогу про виправлення умов закупівлі в скаргу
+
+
+Можливість створити, подати, відповісти на вимогу про виправлення умов лоту і перетворити її в скаргу
+  [Tags]  ${USERS.users['${provider}'].broker}: Можливість створити, подати, відповісти і після того скасувати вимогу про виправлення умов закупівлі
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  lot_complaint
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість створити вимогу про виправлення умов 0 лоту із документацією
+  Можливість відповісти на вимогу про виправлення умов лоту
+  Можливість перетворити вимогу про виправлення умов лоту в скаргу
 
 ##############################################################################################
 #             ВІДОБРАЖЕННЯ ДЛЯ ГЛЯДАЧА
@@ -202,6 +317,8 @@ ${meat}             ${1}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу 'cancelled' після 'draft -> claim -> answered' вимоги
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
+  ...  lot_complaint
+  ...  tender_complaint
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля status вимоги із pending для користувача ${viewer}
 
@@ -210,21 +327,35 @@ ${meat}             ${1}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення незадоволення вимоги
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
+  ...  lot_complaint
+  ...  tender_complaint
   Звірити відображення поля satisfied вимоги із ${USERS.users['${provider}'].claim_data.escalation.data.satisfied} для користувача ${viewer}
 
 
-Можливість скасувати скаргу
+Можливість скасувати скаргу про виправлення умов закупівлі
   [Tags]  ${USERS.users['${provider}'].broker}: Можливість скасувати скаргу
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
+  ...  tender_complaint
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість скасувати вимогу
+  Можливість скасувати вимогу про виправлення умов закупівлі
+
+
+Можливість скасувати скаргу про виправлення умов лоту
+  [Tags]  ${USERS.users['${provider}'].broker}: Можливість скасувати скаргу
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  lot_complaint
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість скасувати вимогу про виправлення умов лоту
 
 
 Відображення статусу 'cancelled' скарги
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу 'cancelled' скарги
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
+  ...  lot_complaint
+  ...  tender_complaint
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля status вимоги із cancelled для користувача ${viewer}
 
@@ -233,4 +364,6 @@ ${meat}             ${1}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення причини скасування скарги
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
+  ...  lot_complaint
+  ...  tender_complaint
   Звірити відображення поля cancellationReason вимоги із ${USERS.users['${provider}'].claim_data.cancellation.data.cancellationReason} для користувача ${viewer}
