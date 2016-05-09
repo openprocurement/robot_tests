@@ -2,6 +2,7 @@
 from faker.providers import BaseProvider
 from munch import Munch
 from json import load
+from copy import deepcopy
 import os
 
 
@@ -85,7 +86,7 @@ class OP_Provider(BaseProvider):
 
     @classmethod
     def procuringEntity(self):
-        return self.random_element(self.procuringEntities)
+        return deepcopy(self.random_element(self.procuringEntities))
 
     @classmethod
     def cpv(self):
@@ -130,4 +131,4 @@ class OP_Provider(BaseProvider):
             "unit": item_base_data["unit"],
             "quantity": self.randomize_nb_elements(number=item_base_data["quantity"], le=80, ge=120)
         }
-        return item
+        return deepcopy(item)
