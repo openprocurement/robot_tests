@@ -1,5 +1,6 @@
 *** Settings ***
 Resource        base_keywords.robot
+Resource        aboveThreshold_keywords.robot
 Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
@@ -136,6 +137,22 @@ ${meat}             ${1}
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
   Звірити відображення поля minimalStep.amount тендера для користувача ${viewer}
+
+
+Відображення типу оголошеного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      open_tender_view
+  Звірити відображення поля procurementMethodType тендера для користувача ${viewer}
+
+
+Відображення закінчення періоду подання скарг на оголошений тендер
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      open_tender_view
+  Отримати дані із поля complaintPeriod.endDate тендера для усіх користувачів
 
 ##############################################################################################
 #             Відображення основних даних предмету
@@ -589,7 +606,7 @@ ${meat}             ${1}
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      below
+  ...      bid_before_bid_period
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   Run Keyword And Expect Error  *  Можливість подати цінову пропозицію користувачем ${provider}
 
@@ -657,15 +674,6 @@ ${meat}             ${1}
   Можливість змінити документацію цінової пропозиції користувачем ${provider}
 
 
-Можливість скасувати пропозицію
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
-  ...      provider
-  ...      ${USERS.users['${provider}'].broker}
-  ...      provider_bid_canceled
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість скасувати цінову пропозицію користувачем ${provider}
-
-
 Можливість подати пропозицію другим учасником
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
   ...      provider1
@@ -674,6 +682,100 @@ ${meat}             ${1}
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider1}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider1}
+
+##############################################################################################
+#             ABOVETRHESHOLD  BIDDING
+##############################################################################################
+
+Можливість змінити документацію цінової пропозиції з публічної на приватну
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      openeu_private_tender_doc
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість змінити документацію цінової пропозиції з публічної на приватну учасником ${provider}
+
+
+Можливість завантажити фінансовий документ до пропозиції першим учасником
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      openeu_financial_documents
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити financial_documents документ до пропозиції учасником ${provider}
+
+
+Можливість завантажити кваліфікаційний документ до пропозиції першим учасником
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      openeu_eligibility_documents
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити eligibility_documents документ до пропозиції учасником ${provider}
+
+
+Можливість завантажити документ для критеріїв прийнятності до пропозиції першим учасником
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      openeu_qualification_documents
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити qualification_documents документ до пропозиції учасником ${provider}
+
+
+Можливість редагувати однопредметний тендер більше ніж за 7 днів до завершення періоду подання пропозицій
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      open_modify_tender_in_tendering_perion
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість змінити поле description тендера на description
+
+
+Відображення зміни статусу першої пропозицій після редагування інформації про тендер
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      open_confirm_first_bid
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  Відображення зміни статусу пропозицій на invalid для учасника ${provider}
+
+
+Відображення зміни статусу другої пропозицій після редагування інформації про тендер
+  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
+  ...      provider1
+  ...      ${USERS.users['${provider1}'].broker}
+  ...      open_confirm_second_bid
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider1}
+  Відображення зміни статусу пропозицій на invalid для учасника ${provider1}
+
+
+Можливість оновити статус цінової пропозиції першим учасником
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      open_confirm_first_bid
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість оновити статус цінової пропозиції учасником ${provider}
+
+
+Можливість оновити статус цінової пропозиції другим учасником
+  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
+  ...      provider1
+  ...      ${USERS.users['${provider1}'].broker}
+  ...      open_confirm_second_bid
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість оновити статус цінової пропозиції учасником ${provider1}
+
+##############################################################################################
+
+Можливість скасувати пропозицію
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      provider_bid_canceled
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість скасувати цінову пропозицію користувачем ${provider}
 
 
 Неможливість побачити цінові пропозиції учасників під час прийому пропозицій
@@ -751,3 +853,88 @@ ${meat}             ${1}
   ...      ${USERS.users['${provider1}'].broker}
   ...      provider1_bid
   Run Keyword And Expect Error  *  Можливість скасувати цінову пропозицію користувачем ${provider1}
+
+
+##############################################################################################
+#             OPENEU  Pre-Qualification
+##############################################################################################
+
+Відображення статусу першої пропозиції кваліфікації
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      pre-qualification_view
+  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${tender_owner}
+  Звірити відображення поля qualifications[0].status тендера із pending для користувача ${tender_owner}
+
+
+Відображення статусу другої пропозиції кваліфікації
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      pre-qualification_view
+  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${tender_owner}
+  Звірити відображення поля qualifications[1].status тендера із pending для користувача ${tender_owner}
+
+
+Можливість завантажити документ у кваліфікацію пропозиції першого учасника
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      pre-qualification_fist_bid_doc
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ у кваліфікацію 0 пропозиції
+
+
+Можливість підтвердити першу пропозицію кваліфікації
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      pre-qualification_approve_first_bid
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість підтвердити 0 пропозицію кваліфікації
+
+
+Можливість завантажити документ у кваліфікацію пропозиції другого учасника
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      pre-qualification_second_bid_doc
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ у кваліфікацію 1 пропозиції
+
+
+Можливість відхилити другу пропозицію кваліфікації
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      pre-qualification_reject_second_bid
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість відхилити 1 пропозиції кваліфікації
+
+
+Можливість скасувати рішення кваліфікації для другої пропопозиції
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      pre-qualification_cancel_second_bid_qualification
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість скасувати рішення кваліфікації для 1 пропопозиції
+
+
+Можливість підтвердити другу пропозицію кваліфікації
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      pre-qualification_approve_first_bid
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість підтвердити 2 пропозицію кваліфікації
+
+
+Можливість затвердити остаточне рішення кваліфікації
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      pre-qualification_approve qualifications
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість затвердити остаточне рішення кваліфікації
