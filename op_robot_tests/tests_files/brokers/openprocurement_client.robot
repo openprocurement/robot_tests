@@ -79,6 +79,8 @@ Library  openprocurement_client_helper.py
 Пошук тендера по ідентифікатору
   [Arguments]  ${username}  ${tender_uaid}
   ${internalid}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
+  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}  #we need this to force start of indexation in cdb
+  Sleep  2
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   Set To Dictionary  ${USERS.users['${username}']}  tender_data=${tender}
