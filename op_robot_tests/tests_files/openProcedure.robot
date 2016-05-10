@@ -926,7 +926,7 @@ ${meat}             ${1}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      pre-qualification_approve_first_bid
+  ...      pre-qualification_approve_second_bid
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість підтвердити 2 пропозицію кваліфікації
 
@@ -935,6 +935,6 @@ ${meat}             ${1}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      pre-qualification_approve qualifications
+  ...      pre-qualification_approve_qualifications
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість затвердити остаточне рішення кваліфікації
