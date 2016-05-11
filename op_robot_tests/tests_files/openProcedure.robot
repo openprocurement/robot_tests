@@ -30,7 +30,7 @@ ${meat}             ${1}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      search_tender
-  Можливість знайти тендер по ідентифікатору для усіх учасників
+  Можливість знайти тендер по ідентифікатору для усіх користувачів
 
 ##############################################################################################
 #             Відображення основних даних тендера
@@ -58,7 +58,7 @@ ${meat}             ${1}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
-  Звірити відображення поля value.amount тендера для користувача ${viewer}
+  Звірити відображення поля value.amount тендера для усіх користувачів
 
 
 Відображення валюти тендера
@@ -99,9 +99,9 @@ ${meat}             ${1}
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
   Run Keyword IF  'open' in '${mode}'
-  ...      Отримати дані із поля enquiryPeriod.startDate тендера для користувача ${viewer}
+  ...      Отримати дані із поля enquiryPeriod.startDate тендера для усіх користувачів
   ...      ELSE
-  ...      Звірити відображення дати enquiryPeriod.startDate тендера для користувача ${viewer}
+  ...      Звірити відображення дати enquiryPeriod.startDate тендера для усіх користувачів
 
 
 Відображення закінчення періоду уточнення тендера
@@ -110,9 +110,9 @@ ${meat}             ${1}
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
   Run Keyword IF  'open' in '${mode}'
-  ...      Отримати дані із поля enquiryPeriod.endDate тендера для користувача ${viewer}
+  ...      Отримати дані із поля enquiryPeriod.endDate тендера для усіх користувачів
   ...      ELSE
-  ...      Звірити відображення дати enquiryPeriod.endDate тендера для користувача ${viewer}
+  ...      Звірити відображення дати enquiryPeriod.endDate тендера для усіх користувачів
 
 
 Відображення початку періоду прийому пропозицій тендера
@@ -144,7 +144,7 @@ ${meat}             ${1}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      open_tender_view
-  Звірити відображення поля procurementMethodType тендера для користувача ${viewer}
+  Звірити відображення поля procurementMethodType тендера для усіх користувачів
 
 
 Відображення закінчення періоду подання скарг на оголошений тендер
@@ -320,7 +320,7 @@ ${meat}             ${1}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      lots  lot_view
-  Звірити відображення поля value.amount усіх лотів для користувача ${viewer}
+  Звірити відображення поля value.amount усіх лотів для усіх користувачів
 
 
 Відображення валюти лотів

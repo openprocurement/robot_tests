@@ -490,10 +490,12 @@ Get Broker Property By Username
 Отримати дані із об’єкта тендера
   [Arguments]  ${username}  ${object_id}  ${field_name}
   ${object_type}=   get_object_type_by_id  ${object_id}
-  ${status}  ${value}=  Run Keyword If  '${object_type}'=='question'
+  ${status}  ${value}=  Run Keyword If  '${object_type}'=='questions'
   ...                     Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із запитання  ${object_id}  ${field_name}
   ...                   ELSE IF  '${object_type}'=='lots'
   ...                     Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із лоту  ${object_id}  ${field_name}
+  ...                   ELSE IF  '${object_type}'=='items'
+  ...                     Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із предмету  ${object_id}  ${field_name}
   ${field}=  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${object_id}
   ${field_value}=  Run Keyword IF  '${status}'=='PASS'  Set Variable  ${value}
   ...                          ELSE  Run As  ${username}  Отримати інформацію із тендера  ${field}
