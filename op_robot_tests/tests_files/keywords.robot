@@ -197,9 +197,9 @@ Get Broker Property By Username
 
 
 Підготувати дані для створення тендера
-  [Arguments]  ${number_of_items}=1  ${number_of_lots}=0  ${meat}=${False}
+  [Arguments]  ${tender_parameters}
   ${period_intervals}=  compute_intrs  ${BROKERS}  ${used_brokers}
-  ${tender_data}=  prepare_test_tender_data  ${period_intervals}  ${mode}  ${number_of_items}  ${number_of_lots}  ${meat}
+  ${tender_data}=  prepare_test_tender_data  ${period_intervals}  ${tender_parameters}
   ${TENDER}=  Create Dictionary
   Set Global Variable  ${TENDER}
   Log  ${tender_data}
