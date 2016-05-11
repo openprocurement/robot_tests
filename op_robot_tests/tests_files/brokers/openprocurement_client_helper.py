@@ -7,8 +7,18 @@ def prepare_api_wrapper(key, host_url, api_version):
     return Client(key, host_url, api_version)
 
 def get_complaint_internal_id(tender, complaintID):
-    for complaint in tender.data.complaints:
-        if complaint.complaintID == complaintID:
-            return complaint.id
+    try:
+        for complaint in tender.data.complaints:
+            if complaint.complaintID == complaintID:
+                return complaint.id
+    except AttributeError:
+        pass
+    try:
+        for award in tender.data.awards:
+            for complaint in award.complaints:
+                if complaint.complaintID == complaintID:
+                    return complaint.id
+    except AttributeError:
+        pass
     raise IdNotFound
 
