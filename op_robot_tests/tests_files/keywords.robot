@@ -247,7 +247,7 @@ Get Broker Property By Username
 
 Підготувати дані для подання пропозиції
   [Arguments]  ${username}
-  ${bid}=  generate_test_bid_data  ${USERS.users['${username}'].tender_data}
+  ${bid}=  generate_test_bid_data  ${USERS.users['${username}'].tender_data.data}
   [Return]  ${bid}
 
 
@@ -466,7 +466,7 @@ Get Broker Property By Username
   ${field}=  Run Keyword If  '${object_id}'  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${object_id}
   ...             ELSE  Set Variable  ${field_name}
   ${status}  ${field_value}=  Run keyword and ignore error
-  ...      Get from object
+  ...      Get_From_Object
   ...      ${USERS.users['${username}'].tender_data.data}
   ...      ${field}
   # If field in cache, return its value
@@ -476,6 +476,9 @@ Get Broker Property By Username
   ...                          ELSE  Run As  ${username}  Отримати інформацію із тендера  ${field}
   # And caching its value before return
   Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${field_value}
+  ${munchify_data}=  munch_dict  arg=${USERS.users['${username}'].tender_data.data}
+  Set To Dictionary  ${USERS.users['${username}'].tender_data}  data=${munchify_data}
+  Log  ${USERS.users['${username}'].tender_data.data}
   [return]  ${field_value}
 
 
@@ -490,10 +493,12 @@ Get Broker Property By Username
 Отримати дані із об’єкта тендера
   [Arguments]  ${username}  ${object_id}  ${field_name}
   ${object_type}=   get_object_type_by_id  ${object_id}
-  ${status}  ${value}=  Run Keyword If  '${object_type}'=='question'
+  ${status}  ${value}=  Run Keyword If  '${object_type}'=='questions'
   ...                     Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із запитання  ${object_id}  ${field_name}
   ...                   ELSE IF  '${object_type}'=='lots'
   ...                     Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із лоту  ${object_id}  ${field_name}
+  ...                   ELSE IF  '${object_type}'=='items'
+  ...                     Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із предмету  ${object_id}  ${field_name}
   ${field}=  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${object_id}
   ${field_value}=  Run Keyword IF  '${status}'=='PASS'  Set Variable  ${value}
   ...                          ELSE  Run As  ${username}  Отримати інформацію із тендера  ${field}

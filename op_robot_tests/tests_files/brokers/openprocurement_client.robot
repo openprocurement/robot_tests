@@ -82,6 +82,7 @@ Library  openprocurement_client_helper.py
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   Set To Dictionary  ${USERS.users['${username}']}  tender_data=${tender}
+  ${tender}=  munch_dict  arg=${tender}
   Log  ${tender}
   [return]   ${tender}
 
@@ -129,6 +130,12 @@ Library  openprocurement_client_helper.py
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   Append To List  ${tender.data['items']}  ${item}
   Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+
+
+Отримати інформацію із предмету
+  [Arguments]  ${username}  ${item_id}  ${field_name}
+  ${field_name}=  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${item_id}
+  Run Keyword And Return  openprocurement_client.Отримати інформацію із тендера  ${username}  ${field_name}
 
 
 Видалити предмет закупівлі

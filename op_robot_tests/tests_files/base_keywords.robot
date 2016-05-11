@@ -17,7 +17,7 @@ Resource           resource.robot
   Set To Dictionary  ${TENDER}  TENDER_UAID=${TENDER_UAID}
 
 
-Можливість знайти тендер по ідентифікатору для усіх учасників
+Можливість знайти тендер по ідентифікатору для усіх користувачів
   :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${provider1}  ${viewer}
   \  Дочекатись синхронізації з майданчиком  ${username}
   \  Run As  ${username}  Пошук тендера по ідентифікатору  ${TENDER['TENDER_UAID']}
@@ -380,9 +380,8 @@ Resource           resource.robot
 
 
 Можливість змінити пропозицію до ${amount} користувачем ${username}
-  ${field}=  Set Variable If  ${number_of_lots} == 0  value.amount  lotValues.0.value.amount
+  ${field}=  Set Variable If  ${number_of_lots} == 0  value.amount  lotValues[0].value.amount
   ${fixbidto10resp}=  Run As  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  ${field}  ${amount}
-  Set To Dictionary  ${USERS.users['${username}'].bidresponses}  fixbidto10resp=${fixbidto10resp}
 
 
 Можливість завантажити документ в пропозицію користувачем ${username}
