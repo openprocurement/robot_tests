@@ -380,9 +380,8 @@ Resource           resource.robot
 
 
 Можливість змінити пропозицію до ${amount} користувачем ${username}
-  ${field}=  Set Variable If  ${number_of_lots} == 0  value.amount  lotValues.0.value.amount
+  ${field}=  Set Variable If  ${number_of_lots} == 0  value.amount  lotValues[0].value.amount
   ${fixbidto10resp}=  Run As  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  ${field}  ${amount}
-  Set To Dictionary  ${USERS.users['${username}'].bidresponses}  fixbidto10resp=${fixbidto10resp}
 
 
 Можливість завантажити документ в пропозицію користувачем ${username}
