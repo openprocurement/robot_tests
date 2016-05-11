@@ -47,7 +47,7 @@ def create_fake_doc():
     return tf.name
 
 
-def test_tender_data(intervals, periods=("enquiry", "tender"), number_of_items=1, number_of_lots=0, meat=False):
+def test_tender_data(params, periods=("enquiry", "tender")):
     now = get_now()
     value_amount = round(random.uniform(3000, 99999999999.99), 2)  # max value equals to budget of Ukraine in hryvnias
     data = {
@@ -69,7 +69,8 @@ def test_tender_data(intervals, periods=("enquiry", "tender"), number_of_items=1
             "amount": round(random.uniform(0.005, 0.03) * value_amount, 2),
             "currency": u"UAH"
         },
-        "items": []
+        "items": [],
+        "features": []
     }
     data["procuringEntity"]["kind"] = "other"
     if data.get("mode") == "test":
@@ -81,19 +82,18 @@ def test_tender_data(intervals, periods=("enquiry", "tender"), number_of_items=1
     for period_name in periods:
         period_dict[period_name + "Period"] = {}
         for i, j in zip(range(2), ("start", "end")):
-            inc_dt += timedelta(minutes=intervals[period_name][i])
+            inc_dt += timedelta(minutes=params['intervals'][period_name][i])
             period_dict[period_name + "Period"][j + "Date"] = inc_dt.isoformat()
     data.update(period_dict)
-    number_of_lots = int(number_of_lots)
     cpv_group = fake.cpv()[:3]
-    if number_of_lots:
+    if params['number_of_lots']:
         data['lots'] = []
-        for lot_number in range(number_of_lots):
+        for lot_number in range(params['number_of_lots']):
             lot_id = uuid4().hex
             new_lot = test_lot_data(data['value']['amount'])
             data['lots'].append(new_lot)
             data['lots'][lot_number]['id'] = lot_id
-            for i in range(number_of_items):
+            for i in range(params['number_of_items']):
                 new_item = test_item_data(cpv_group)
                 data['items'].append(new_item)
                 data['items'][lot_number]['relatedLot'] = lot_id
@@ -102,48 +102,37 @@ def test_tender_data(intervals, periods=("enquiry", "tender"), number_of_items=1
         data['value']['amount'] = value_amount
         data['minimalStep']['amount'] = minimalStep
     else:
-        for i in range(number_of_items):
+        for i in range(params['number_of_items']):
             new_item = test_item_data(cpv_group)
             data['items'].append(new_item)
-    if meat:
-        data['features'] = [
-            {
-                "code": uuid4().hex,
-                "featureOf": "tenderer",
-                "title": field_with_id("f", fake.title()),
-                "description": fake.description(),
-                "enum": [
-                    {
-                        "value": 0.15,
-                        "title": fake.word()
-                    },
-                    {
-                        "value": 0.10,
-                        "title": fake.word()
-                    },
-                    {
-                        "value": 0.05,
-                        "title": fake.word()
-                    },
-                    {
-                        "value": 0,
-                        "title": fake.word()
-                    }
-                ]
-            }
-        ]
+    if params['tender_meat']:
+        new_feature = test_feature_data()
+        new_feature.featureOf = "tenderer"
+        data['features'].append(new_feature)
+    if params['lot_meat'] and params['number_of_lots']:
+        new_feature = test_feature_data()
+        new_feature['featureOf'] = "lot"
+        data['lots'][0]['id'] =  data['lots'][0].get('id', uuid4().hex)
+        new_feature['relatedItem'] = data['lots'][0]['id']
+        data['features'].append(new_feature)
+    if params['item_meat'] and params['number_of_items']:
+        new_feature = test_feature_data()
+        new_feature['featureOf'] = "item"
+        data['items'][0]['id'] =  data['items'][0].get('id', uuid4().hex)
+        new_feature['relatedItem'] = data['items'][0]['id']
+        data['features'].append(new_feature)
     return munchify(data)
 
 
-def test_tender_data_limited(intervals, procurement_method_type):
-    data = test_tender_data(intervals)
+def test_tender_data_limited(params):
+    data = test_tender_data(params)
     del data["submissionMethodDetails"]
     del data["minimalStep"]
     del data["enquiryPeriod"]
     del data["tenderPeriod"]
     data["procuringEntity"]["kind"] = "general"
-    data.update({"procurementMethodType": procurement_method_type, "procurementMethod": "limited"})
-    if procurement_method_type == "negotiation":
+    data.update({"procurementMethodType": params['mode'], "procurementMethod": "limited"})
+    if params['mode'] == "negotiation":
         cause_variants = (
             "artContestIP",
             "noCompetition",
@@ -154,16 +143,38 @@ def test_tender_data_limited(intervals, procurement_method_type):
         )
         cause = fake.random_element(cause_variants)
         data.update({"cause": cause})
-    if procurement_method_type == "negotiation.quick":
+    if params['mode'] == "negotiation.quick":
         cause_variants = ('quick',)
         cause = fake.random_element(cause_variants)
         data.update({"cause": cause})
-    if procurement_method_type in ("negotiation", "negotiation.quick"):
+    if params['mode'] in ("negotiation", "negotiation.quick"):
         data.update({
             "procurementMethodDetails": "quick, accelerator=1440",
             "causeDescription": fake.description()
         })
     return munchify(data)
+
+
+def test_feature_data():
+    return munchify({
+        "code": uuid4().hex,
+        "title": field_with_id("f", fake.title()),
+        "description": fake.description(),
+        "enum": [
+            {
+                "value": 0.05,
+                "title": fake.word()
+            },
+            {
+                "value": 0.01,
+                "title": fake.word()
+            },
+            {
+                "value": 0,
+                "title": fake.word()
+            }
+        ]
+    })
 
 
 def test_question_data():
@@ -341,15 +352,15 @@ def test_lot_complaint_data(complaint, lot_id):
     return munchify(complaint)
 
 
-def test_tender_data_openua(intervals, number_of_items, number_of_lots, meat):
-    accelerator = intervals['accelerator']
+def test_tender_data_openua(params):
+    accelerator = params['intervals']['accelerator']
     # Since `accelerator` field is not really a list containing timings
     # for a period called `acceleratorPeriod`, let's remove it :)
-    del intervals['accelerator']
+    del params['intervals']['accelerator']
     # We should not provide any values for `enquiryPeriod` when creating
     # an openUA or openEU procedure. That field should not be present at all.
     # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
-    data = test_tender_data(intervals, ('tender',), number_of_items, number_of_lots, meat)
+    data = test_tender_data(params, ('tender',))
     data['procurementMethodType'] = 'aboveThresholdUA'
     data['procurementMethodDetails'] = 'quick, ' \
         'accelerator={}'.format(accelerator)
@@ -357,15 +368,15 @@ def test_tender_data_openua(intervals, number_of_items, number_of_lots, meat):
     return data
 
 
-def test_tender_data_openeu(intervals, number_of_items, number_of_lots, meat):
-    accelerator = intervals['accelerator']
+def test_tender_data_openeu(params):
+    accelerator = params['intervals']['accelerator']
     # Since `accelerator` field is not really a list containing timings
     # for a period called `acceleratorPeriod`, let's remove it :)
-    del intervals['accelerator']
+    del params['intervals']['accelerator']
     # We should not provide any values for `enquiryPeriod` when creating
     # an openUA or openEU procedure. That field should not be present at all.
     # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
-    data = test_tender_data(intervals, ('tender',), number_of_items, number_of_lots, meat)
+    data = test_tender_data(params, ('tender',))
     data['procurementMethodType'] = 'aboveThresholdEU'
     data['procurementMethodDetails'] = 'quick, ' \
         'accelerator={}'.format(accelerator)
