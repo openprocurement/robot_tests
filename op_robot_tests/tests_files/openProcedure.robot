@@ -6,7 +6,7 @@ Suite Teardown  Test Suite Teardown
 
 
 *** Variables ***
-${mode}             belowThreshold
+${mode}             openeu
 @{used_roles}       tender_owner  provider  provider1  viewer
 
 ${number_of_items}  ${1}
@@ -858,6 +858,24 @@ ${meat}             ${1}
 ##############################################################################################
 #             OPENEU  Pre-Qualification
 ##############################################################################################
+
+Неможливість додати документацію до тендера під час кваліфікації
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      pre-qualificationadd_documentation_to_tender
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Run Keyword And Expect Error  *  Можливість додати документацію до тендера
+
+
+Неможливість додати документацію до першого лоту під час кваліфікації
+  [Tags]    ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      pre-qualification_add_documentation_to_lot
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Run Keyword And Expect Error  *  Можливість додати документацію до 0 лоту
+
 
 Відображення статусу першої пропозиції кваліфікації
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
