@@ -258,13 +258,15 @@ def compute_intrs(brokers_data, used_brokers):
     return result
 
 
-def prepare_test_tender_data(procedure_intervals, mode, number_of_items=1, number_of_lots=0, meat=False):
+def prepare_test_tender_data(procedure_intervals, tender_parameters):
     # Get actual intervals by mode name
+    mode = tender_parameters['mode']
     if mode in procedure_intervals:
         intervals = procedure_intervals[mode]
     else:
         intervals = procedure_intervals['default']
     LOGGER.log_message(Message(intervals))
+    tender_parameters['intervals'] = intervals
 
     # Set acceleration value for certain modes
     if mode in ['openua', 'openeu']:
@@ -276,18 +278,19 @@ def prepare_test_tender_data(procedure_intervals, mode, number_of_items=1, numbe
     else:
         assert 'accelerator' not in intervals.keys(), \
                "Accelerator is not available for mode '{0}'".format(mode)
+
     if mode == 'negotiation':
-        return munchify({'data': test_tender_data_limited(intervals, 'negotiation')})
+        return munchify({'data': test_tender_data_limited(tender_parameters)})
     elif mode == 'negotiation.quick':
-        return munchify({'data': test_tender_data_limited(intervals, 'negotiation.quick')})
+        return munchify({'data': test_tender_data_limited(tender_parameters)})
     elif mode == 'openeu':
-        return munchify({'data': test_tender_data_openeu(intervals, number_of_items, number_of_lots, meat)})
+        return munchify({'data': test_tender_data_openeu(tender_parameters)})
     elif mode == 'openua':
-        return munchify({'data': test_tender_data_openua(intervals, number_of_items, number_of_lots, meat)})
+        return munchify({'data': test_tender_data_openua(tender_parameters)})
     elif mode == 'reporting':
-        return munchify({'data': test_tender_data_limited(intervals, 'reporting')})
+        return munchify({'data': test_tender_data_limited(tender_parameters)})
     elif mode == 'belowThreshold':
-        return munchify({'data': test_tender_data(intervals, number_of_items=number_of_items, number_of_lots=number_of_lots, meat=meat)})
+        return munchify({'data': test_tender_data(tender_parameters)})
     raise ValueError("Invalid mode for prepare_test_tender_data")
 
 
@@ -456,7 +459,7 @@ def generate_test_bid_data(tender_data):
     if 'features' in tender_data:
         bid.data.parameters = []
         for feature in tender_data['features']:
-            parameter = {"value": fake.random_element(elements=(0.15, 0.1, 0.05, 0)), "code": feature.get('code', '')}
+            parameter = {"value": fake.random_element(elements=(0.05, 0.01, 0)), "code": feature.get('code', '')}
             bid.data.parameters.append(parameter)
     return bid
 
