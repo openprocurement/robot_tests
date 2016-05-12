@@ -541,6 +541,7 @@ Require Failure
   ...      '${status}' == 'FAIL'
   ...      ${USERS.users['${tender_owner}'].initial_data.data.enquiryPeriod.startDate}
   ...      ${date}
+
   Дочекатись дати  ${date}
 
 
@@ -564,7 +565,10 @@ Require Failure
   ...      '${status}' == 'FAIL'
   ...      ${USERS.users['${tender_owner}'].initial_data.data.tenderPeriod.startDate}
   ...      ${date}
-  Дочекатись дати  ${date}
+
+  ${new_date}=	add_minutes_to_date	${date}	5
+  Дочекатись дати	${new_date}
+
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
 
@@ -581,7 +585,10 @@ Require Failure
   ...      ${USERS.users['${tender_owner}'].initial_data.data.tenderPeriod.endDate}
   ...      ${date}
   ${date}=  add_minutes_to_date  ${date}  2  # Auction sync
-  Дочекатись дати  ${date}
+
+  ${new_date}=	add_minutes_to_date	${date}	5
+  Дочекатись дати	${new_date}
+
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
 
