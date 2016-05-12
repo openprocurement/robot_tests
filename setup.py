@@ -32,7 +32,6 @@ setup(name='op_robot_tests',
           'dateutils',
           'pytz',
           'parse',
-          'chromedriver',
           'barbecue'
       ],
       entry_points={
