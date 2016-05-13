@@ -459,7 +459,7 @@ Get Broker Property By Username
   [Arguments]  ${username}  ${tender_data}  ${field}  ${accuracy}=60  ${absolute_delta}=${False}
   @{items}=  get_from_object  ${tender_data.data}  items
   :FOR  ${index}  ${_}  IN ENUMERATE  @{items}
-  \  Звірити дату тендера  ${viewer}  ${tender_data}  items[${index}].${field}  accuracy=${accuracy}  absolute_delta=${absolute_delta}
+  \  Звірити дату тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${tender_data}  items[${index}].${field}  accuracy=${accuracy}  absolute_delta=${absolute_delta}
 
 
 Звірити координати доставки предметів закупівлі багатопредметного тендера
@@ -505,8 +505,10 @@ Get Broker Property By Username
   ...      Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із запитання  ${tender_uaid}  ${object_id}  ${field_name}
   ...      ELSE IF  '${object_type}'=='lots'
   ...      Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із лоту  ${tender_uaid}  ${object_id}  ${field_name}
-  ...                   ELSE IF  '${object_type}'=='items'
-  ...                     Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із предмету  ${object_id}  ${field_name}
+  ...      ELSE IF  '${object_type}'=='items'
+  ...      Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із предмету  ${tender_uaid}  ${object_id}  ${field_name}
+  ...      ELSE IF  '${object_type}'=='features'
+  ...      Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із нецінового показника  ${tender_uaid}  ${object_id}  ${field_name}
   ${field}=  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${object_id}
   ${field_value}=  Run Keyword IF  '${status}'=='PASS'  Set Variable  ${value}
   ...      ELSE  Run As  ${username}  Отримати інформацію із тендера  ${tender_uaid}  ${field}
