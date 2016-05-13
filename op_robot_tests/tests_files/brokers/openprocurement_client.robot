@@ -220,6 +220,51 @@ Library  openprocurement_client_helper.py
 
 
 ##############################################################################
+#             Feature operations
+##############################################################################
+
+Додати неціновий показник на тендер
+  [Arguments]  ${username}  ${tender_uaid}  ${feature}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  Append To List  ${tender.data['features']}  ${feature}
+  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+
+
+Додати неціновий показник на предмет
+  [Arguments]  ${username}  ${tender_uaid}  ${feature}  ${item_id}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${item_index}=  get_object_index_by_id  ${tender.data['items']}  ${item_id}
+  ${item_id}=  Get Variable Value  ${tender.data['items'][${item_index}].id}
+  Set To Dictionary  ${feature}  relatedItem=${item_id}
+  Append To List  ${tender.data['features']}  ${feature}
+  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+
+
+Додати неціновий показник на лот
+  [Arguments]  ${username}  ${tender_uaid}  ${feature}  ${lot_id}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${lot_index}=  get_object_index_by_id  ${tender.data['lots']}  ${lot_id}
+  ${lot_id}=  Get Variable Value  ${tender.data['lots'][${lot_index}].id}
+  Set To Dictionary  ${feature}  relatedItem=${lot_id}
+  Append To List  ${tender.data['features']}  ${feature}
+  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+
+
+Отримати інформацію із нецінового показника
+  [Arguments]  ${username}  ${feature_id}  ${field_name}
+  ${field_name}=  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${feature_id}
+  Run Keyword And Return  openprocurement_client.Отримати інформацію із тендера  ${username}  ${field_name}
+
+
+Видалити неціновий показник
+  [Arguments]  ${username}  ${tender_uaid}  ${feature_id}  ${obj_id}=${Empty}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${feature_index}=  get_object_index_by_id  ${tender.data['features']}  ${feature_id}
+  Remove From List  ${tender.data['features']}  ${feature_index}
+  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+
+
+##############################################################################
 #             Questions
 ##############################################################################
 
