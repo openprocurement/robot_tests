@@ -98,6 +98,8 @@ users:
         broker:   PrivatMarket
         homepage: "https://pmarket-rc.privatbank.ua/business/tenders"
         browser:  chrome
+        position: [-1500, 0]
+        size:     [1000, 1000]
     PrivatMarket_Provider:
         broker:   PrivatMarket
         homepage: "https://pmarket-rc.privatbank.ua/business/tenders"
@@ -105,6 +107,8 @@ users:
         login:    +380980704168
         password: password4168
         browser:  chrome
+        position: [-1500, 0]
+        size:     [1000, 1000]
     PrivatMarket_Provider1:
         broker:   PrivatMarket
         homepage: "https://pmarket-rc.privatbank.ua/business/tenders"
@@ -112,6 +116,8 @@ users:
         login:    +380639405094
         password: password5094
         browser:  chrome
+        position: [-1500, 0]
+        size:     [1000, 1000]
     Prom_Owner:
         broker:   Prom
         homepage: "http://zakupki.dz-test.net/"
