@@ -218,6 +218,9 @@ Get Broker Property By Username
   ${reply}=  Create Dictionary  data=${lot}
   [Return]  ${reply}
 
+Підготувати дані для створення нецінового показника
+  ${reply}=  test_feature_data
+  [Return]  ${reply}
 
 Підготувати дані для подання вимоги
   ${claim}=  test_claim_data

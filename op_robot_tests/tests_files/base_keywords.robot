@@ -203,6 +203,50 @@ Resource           resource.robot
 #             FEATURES
 ##############################################################################################
 
+Можливість добавити неціновий показник на тендер
+  ${feature}=  Підготувати дані для створення нецінового показника
+  Set To Dictionary  ${feature}  featureOf=tenderer
+  Run As  ${tender_owner}  Додати неціновий показник на тендер  ${TENDER['TENDER_UAID']}  ${feature}
+  ${feature_id}=  get_id_from_object  ${feature}
+  ${feature_data}=  Create Dictionary  feature=${feature}  feature_id=${feature_id}
+  ${feature_data}=  munch_dict  arg=${feature_data}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  feature_data=${feature_data}
+
+
+Можливість добавити неціновий показник на ${lot_index} лот
+  ${feature}=  Підготувати дані для створення нецінового показника
+  Set To Dictionary  ${feature}  featureOf=lot
+  ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}]}
+  Run As  ${tender_owner}  Додати неціновий показник на лот  ${TENDER['TENDER_UAID']}  ${feature}  ${lot_id}
+  ${feature_id}=  get_id_from_object  ${feature}
+  ${feature_data}=  Create Dictionary  feature=${feature}  feature_id=${feature_id}
+  ${feature_data}=  munch_dict  arg=${feature_data}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  feature_data=${feature_data}
+
+
+Можливість добавити неціновий показник на ${item_index} предмет
+  ${feature}=  Підготувати дані для створення нецінового показника
+  Set To Dictionary  ${feature}  featureOf=item
+  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data['items'][${item_index}]}
+  Run As  ${tender_owner}  Додати неціновий показник на предмет  ${TENDER['TENDER_UAID']}  ${feature}  ${item_id}
+  ${feature_id}=  get_id_from_object  ${feature}
+  ${feature_data}=  Create Dictionary  feature=${feature}  feature_id=${feature_id}
+  ${feature_data}=  munch_dict  arg=${feature_data}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  feature_data=${feature_data}
+
+
+Звірити відображення поля ${field} у новоствореному неціновому показнику для усіх користувачів
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  \  Звірити відображення поля ${field} у новоствореному неціновому показнику для користувача ${username}
+
+
+Звірити відображення поля ${field} у новоствореному неціновому показнику для користувача ${username}
+  Дочекатись синхронізації з майданчиком  ${username}
+  Звірити поле тендера із значенням  ${username}
+  ...      ${USERS.users['${tender_owner}'].feature_data.feature.${field}}  ${field}
+  ...      object_id=${USERS.users['${tender_owner}'].feature_data.feature_id}
+
+
 Звірити відображення поля ${field} усіх нецінових показників для усіх користувачів
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
   \  Звірити відображення поля ${field} усіх нецінових показників для користувача ${username}
@@ -221,6 +265,13 @@ Resource           resource.robot
   ...      ${USERS.users['${tender_owner}'].initial_data.data.features[${feature_index}].${field}}  ${field}
   ...      object_id=${feature_id}
 
+
+Можливість видалити ${feature_index} неціновий показник
+  ${feature_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data['features'][${feature_index}]}
+  Run As  ${tender_owner}  Видалити неціновий показник  ${TENDER['TENDER_UAID']}  ${feature_id}
+  ${feature_index}=  get_object_index_by_id  ${USERS.users['${tender_owner}'].tender_data.data['features']}  ${feature_id}
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  \  Remove From List  ${USERS.users['${username}'].tender_data.data['features']}  ${feature_index}
 
 ##############################################################################################
 #             QUESTIONS
