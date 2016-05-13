@@ -345,27 +345,27 @@ ${item_meat}        ${1}
 ##############################################################################################
 
 Відображення заголовку нецінових показників
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
   ...      viewer  tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
-  ...      meat  meat_view
+  ...      meat_view
   Звірити відображення поля title усіх нецінових показників для усіх користувачів
 
 
 Відображення опису нецінових показників
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      meat  meat_view
+  ...      meat_view
   Звірити відображення поля description усіх нецінових показників для користувача ${viewer}
 
 
 Відображення відношення нецінових показників
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      meat  meat_view
+  ...      meat_view
   Звірити відображення поля featureOf усіх нецінових показників для користувача ${viewer}
 
 ##############################################################################################
@@ -458,6 +458,129 @@ ${item_meat}        ${1}
   ...      lots  new_lot  delete_lot
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість видалення -1 лоту
+
+
+Можливість додати неціновий показник на тендер
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_meat
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість добавити неціновий показник на тендер
+
+
+Відображення заголовку нецінового показника на тендер
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  Звірити відображення поля title у новоствореному неціновому показнику для усіх користувачів
+
+
+Відображення опису нецінових показників на тендер
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      add_tender_meat
+  Звірити відображення поля description у новоствореному неціновому показнику для користувача ${viewer}
+
+
+Відображення відношення нецінових показників на тендер
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      add_tender_meat
+  Звірити відображення поля featureOf у новоствореному неціновому показнику для користувача ${viewer}
+
+Можливість видалити неціновий показник на тендер
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      delete_tender_meat
+  Можливість видалити -1 неціновий показник
+
+Можливість додати неціновий показник на перший лот
+  [Tags]    ${USERS.users['${tender_owner}'].broker}:  Редагування тендера
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_lot_meat
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість добавити неціновий показник на 0 лот
+
+
+Відображення заголовку нецінового показника на лот
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      add_lot_meat
+  Звірити відображення поля title у новоствореному неціновому показнику для усіх користувачів
+
+
+Відображення опису нецінових показників на лот
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      add_lot_meat
+  Звірити відображення поля description у новоствореному неціновому показнику для користувача ${viewer}
+
+
+Відображення відношення нецінових показників на лот
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      add_lot_meat
+  Звірити відображення поля featureOf у новоствореному неціновому показнику для користувача ${viewer}
+
+
+Можливість видалити неціновий показник на лот
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      delete_tender_meat
+  Можливість видалити -1 неціновий показник
+
+
+Можливість додати неціновий показник на перший предмет
+  [Tags]    ${USERS.users['${tender_owner}'].broker}:  Редагування тендера
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_item_meat
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість добавити неціновий показник на 0 предмет
+
+
+Відображення заголовку нецінового показника на предмет
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      add_item_meat
+  Звірити відображення поля title у новоствореному неціновому показнику для усіх користувачів
+
+
+Відображення опису нецінових показників на предмет
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      add_item_meat
+  Звірити відображення поля description у новоствореному неціновому показнику для користувача ${viewer}
+
+
+Відображення відношення нецінових показників на предмет
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      add_item_meat
+  Звірити відображення поля featureOf у новоствореному неціновому показнику для користувача ${viewer}
+
+
+Можливість видалити неціновий показник на предмет
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      delete_tender_meat
+  Можливість видалити -1 неціновий показник
 
 ##############################################################################################
 #             QUESTIONS
@@ -626,7 +749,7 @@ ${item_meat}        ${1}
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      meat  bid_without_parameters
+  ...      bid_without_parameters
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}
   Неможливість подати цінову пропозицію без нецінових показників користувачем ${provider}
 
@@ -865,7 +988,7 @@ ${item_meat}        ${1}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      pre-qualificationadd_documentation_to_tender
+  ...      pre-qualification_add_documentation_to_tender
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Run Keyword And Expect Error  *  Можливість додати документацію до тендера
 
