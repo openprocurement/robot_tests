@@ -84,7 +84,7 @@ Resource           resource.robot
 Звірити відображення дати ${field} усіх предметів для користувача ${username}
   ${number_of_items}=  Get Length  ${USERS.users['${tender_owner}'].initial_data.data['items']}
   :FOR  ${item_index}  IN RANGE  ${number_of_items}
-  \  Звірити відображення поля ${field} ${item_index} предмету для користувача ${username}
+  \  Звірити відображення дати ${field} ${item_index} предмету для користувача ${username}
 
 
 Звірити відображення дати ${date} ${item_index} предмету для користувача ${username}
