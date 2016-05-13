@@ -474,6 +474,7 @@ ${item_meat}        ${1}
   ...      viewer  tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      add_tender_meat
   Звірити відображення поля title у новоствореному неціновому показнику для усіх користувачів
 
 
