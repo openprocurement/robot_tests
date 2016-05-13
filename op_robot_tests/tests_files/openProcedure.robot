@@ -638,7 +638,7 @@ ${item_meat}        ${1}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      question_to_item
-  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  [Setup]  Дочекатись дати початку періоду уточнень  ${provider}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість задати запитання на 0 предмет користувачем ${provider}
 
@@ -684,7 +684,7 @@ ${item_meat}        ${1}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      lots  question_to_lot
-  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  [Setup]  Дочекатись дати початку періоду уточнень  ${provider}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість задати запитання на 0 лот користувачем ${provider}
 
