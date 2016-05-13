@@ -93,6 +93,10 @@ PrivatMarket:
         default:
             enquiry: [0, 10]
             tender:  [0, 15]
+        openua:
+            tender:  [1, 20]
+        openeu:
+            tender:  [1, 30]
     keywords_file: privatmarket
     roles:
         provider:       PrivatMarket_Provider

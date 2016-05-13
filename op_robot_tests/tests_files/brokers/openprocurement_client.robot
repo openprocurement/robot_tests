@@ -37,6 +37,8 @@ Library  openprocurement_client_helper.py
 Створити тендер
   [Arguments]  ${username}  ${tender_data}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  create_tender  ${tender_data}
+  Call Method  ${USERS.users['${username}'].client}  get_tenders  #we need this to force start of indexation in cdb
+  Wait until keyword succeeds  5 min  5 sec  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender.data.tenderID}
   Log object data  ${tender}  created_tender
   ${access_token}=  Get Variable Value  ${tender.access.token}
   Set To Dictionary  ${USERS.users['${username}']}   access_token=${access_token}
