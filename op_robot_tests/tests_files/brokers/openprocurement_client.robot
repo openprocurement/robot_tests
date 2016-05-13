@@ -130,9 +130,9 @@ Library  openprocurement_client_helper.py
 
 
 Отримати інформацію із предмету
-  [Arguments]  ${username}  ${item_id}  ${field_name}
+  [Arguments]  ${username}  ${tender_uaid}  ${item_id}  ${field_name}
   ${field_name}=  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${item_id}
-  Run Keyword And Return  openprocurement_client.Отримати інформацію із тендера  ${username}  ${field_name}
+  Run Keyword And Return  openprocurement_client.Отримати інформацію із тендера  ${username}  ${tender_uaid}  ${field_name}
 
 
 Видалити предмет закупівлі
@@ -248,9 +248,9 @@ Library  openprocurement_client_helper.py
 
 
 Отримати інформацію із нецінового показника
-  [Arguments]  ${username}  ${feature_id}  ${field_name}
+  [Arguments]  ${username}  ${tender_uaid}  ${feature_id}  ${field_name}
   ${field_name}=  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${feature_id}
-  Run Keyword And Return  openprocurement_client.Отримати інформацію із тендера  ${username}  ${field_name}
+  Run Keyword And Return  openprocurement_client.Отримати інформацію із тендера  ${username}  ${tender_uaid}  ${field_name}
 
 
 Видалити неціновий показник
@@ -293,16 +293,16 @@ Library  openprocurement_client_helper.py
 
 
 Отримати інформацію із запитання
-  [Arguments]  ${username}  ${question_id}  ${field_name}
+  [Arguments]  ${username}  ${tender_uaid}  ${question_id}  ${field_name}
   ${field_name}=  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${question_id}
-  Run Keyword And Return  openprocurement_client.Отримати інформацію із тендера  ${username}  ${field_name}
+  Run Keyword And Return  openprocurement_client.Отримати інформацію із тендера  ${username}  ${tender_uaid}  ${field_name}
 
 
 Відповісти на запитання
   [Arguments]  ${username}  ${tender_uaid}  ${answer_data}  ${question_id}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
-  ${answer_data.data.id}=  openprocurement_client.Отримати інформацію із запитання  ${username}  ${question_id}  id
+  ${answer_data.data.id}=  openprocurement_client.Отримати інформацію із запитання  ${username}  ${tender_uaid}  ${question_id}  id
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_question  ${tender}  ${answer_data}
   [return]  ${reply}
 

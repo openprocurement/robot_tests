@@ -25,7 +25,7 @@ Suite Teardown  Test Suite Teardown
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
-  Отримати дані із тендера  ${viewer}  auctionPeriod.startDate  ${TENDER['LOT_ID']}
+  Отримати дані із тендера  ${viewer}  ${TENDER['TENDER_UAID']}  auctionPeriod.startDate  ${TENDER['LOT_ID']}
 
 
 Можливість дочекатися початку аукціону
@@ -56,7 +56,7 @@ Suite Teardown  Test Suite Teardown
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
-  Отримати дані із тендера  ${viewer}  auctionPeriod.endDate  ${TENDER['LOT_ID']}
+  Отримати дані із тендера  ${viewer}  ${TENDER['TENDER_UAID']}  auctionPeriod.endDate  ${TENDER['LOT_ID']}
 
 
 *** Keywords ***
@@ -64,7 +64,7 @@ Suite Teardown  Test Suite Teardown
   [Arguments]  ${username}
   # Can't use that dirty hack here since we don't know
   # the date of auction when creating the procurement :)
-  ${auctionStart}=  Отримати дані із тендера   ${username}   auctionPeriod.startDate  ${TENDER['LOT_ID']}
+  ${auctionStart}=  Отримати дані із тендера   ${username}  ${TENDER['TENDER_UAID']}   auctionPeriod.startDate  ${TENDER['LOT_ID']}
   Дочекатись дати  ${auctionStart}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}

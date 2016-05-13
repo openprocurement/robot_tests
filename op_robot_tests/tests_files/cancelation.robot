@@ -142,24 +142,24 @@ Suite Teardown  Test Suite Teardown
 
 
 Відображення активного статусу скасування
-  Звірити поле тендера із значенням  ${viewer}
+  Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}
   ...      active
   ...      cancellations[0].status
 
 
 Відображення причини скасування
-  Звірити поле тендера із значенням  ${viewer}
+  Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}']['cancellation_data']['cancellation_reason']}
   ...      cancellations[0].reason
 
 
 Відображення опису документа скасування
-  Звірити поле тендера із значенням  ${viewer}
+  Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}']['cancellation_data']['description']}
   ...      cancellations[0].documents[0].description
 
 
 Відображення заголовку документа скасування
-  Звірити поле тендера із значенням  ${viewer}
+  Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}']['cancellation_data']['document']}
   ...      cancellations[0].documents[0].title

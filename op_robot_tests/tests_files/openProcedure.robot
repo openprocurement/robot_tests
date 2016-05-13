@@ -592,7 +592,7 @@ ${item_meat}        ${1}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      question_to_tender
-  [Setup]  Дочекатись дати початку періоду уточнень  ${provider}
+  [Setup]  Дочекатись дати початку періоду уточнень  ${provider}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість задати запитання на тендер користувачем ${provider}
 
@@ -742,7 +742,7 @@ ${item_meat}        ${1}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      lots  bid_without_related_lot
-  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}
+  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
   Неможливість подати цінову пропозицію без прив’язки до лоту користувачем ${provider}
 
 
@@ -751,7 +751,7 @@ ${item_meat}        ${1}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      bid_without_parameters
-  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}
+  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
   Неможливість подати цінову пропозицію без нецінових показників користувачем ${provider}
 
 
@@ -760,7 +760,7 @@ ${item_meat}        ${1}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      provider_bid
-  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}
+  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider}
 
@@ -805,7 +805,7 @@ ${item_meat}        ${1}
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      provider1_bid
-  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider1}
+  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider1}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider1}
 
@@ -910,7 +910,7 @@ ${item_meat}        ${1}
   ...      ${USERS.users['${viewer}'].broker}
   ...      provider_bid  provider1_bid
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Require Failure  ${viewer}  Отримати інформацію із тендера  bids
+  Require Failure  ${viewer}  Отримати інформацію із тендера  ${TENDER['TENDER_UAID']}  bids
 
 ##############################################################################################
 #             AUCTION PERIOD
@@ -921,7 +921,7 @@ ${item_meat}        ${1}
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      provider1_bid
-  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}
+  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}  ${TENDER['TENDER_UAID']}
   Run Keyword And Expect Error  *  Можливість завантажити документ в пропозицію користувачем ${provider}
 
 Неможливість змінити існуючу документацію пропозиції першим учасником після закінчення прийому пропозицій
@@ -937,7 +937,7 @@ ${item_meat}        ${1}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      question_to_tender_after_bid_period
-  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${provider}
+  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
   Run Keyword And Expect Error  *  Можливість задати запитання на тендер користувачем ${provider}
 
 Неможливість задати запитання на перший предмет після закінчення періоду уточнень
@@ -962,7 +962,7 @@ ${item_meat}        ${1}
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      provider1_bid
-  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${provider1}
+  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${provider1}  ${TENDER['TENDER_UAID']}
   Run Keyword And Expect Error  *  Можливість змінити пропозицію до 50000 користувачем ${provider1}
 
 

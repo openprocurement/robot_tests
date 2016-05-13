@@ -27,7 +27,7 @@ Suite Teardown  Test Suite Teardown
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
-  \   ${qualification_status}=  Отримати дані із тендера  ${tender_owner}  status  ${TENDER['LOT_ID']}
+  \   ${qualification_status}=  Отримати дані із тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  status  ${TENDER['LOT_ID']}
   \   Run Keyword IF  '${TENDER['LOT_ID']}'  Should Be Equal  ${qualification_status}  active
   \   ...         ELSE  Should Be Equal  ${qualification_status}  active.qualification
 
@@ -37,7 +37,7 @@ Suite Teardown  Test Suite Teardown
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
-  \  Отримати дані із тендера  ${username}  awards[0].value.amount
+  \  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  awards[0].value.amount
 
 
 Відображення імені постачальника
@@ -45,7 +45,7 @@ Suite Teardown  Test Suite Teardown
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
-  \  Отримати дані із тендера  ${username}  awards[0].suppliers[0].name
+  \  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  awards[0].suppliers[0].name
 
 
 Відображення ідентифікатора постачальника
@@ -53,7 +53,7 @@ Suite Teardown  Test Suite Teardown
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
-  \  Отримати дані із тендера  ${username}  awards[0].suppliers[0].identifier.id
+  \  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  awards[0].suppliers[0].identifier.id
 
 ##############################################################################################
 #             QUALIFICATION

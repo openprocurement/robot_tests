@@ -55,11 +55,11 @@ Resource           resource.robot
 
 
 Звірити відображення поля ${field} тендера із ${data} для користувача ${username}
-  Звірити поле тендера із значенням  ${username}  ${data}  ${field}
+  Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${data}  ${field}
 
 
 Звірити відображення поля ${field} тендера для користувача ${username}
-  Звірити поле тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  ${field}
+  Звірити поле тендера  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${field}
 
 Звірити відображення дати ${date} тендера для усіх користувачів
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
@@ -67,7 +67,7 @@ Resource           resource.robot
 
 
 Звірити відображення дати ${date} тендера для користувача ${username}
-  Звірити дату тендера  ${username}  ${USERS.users['${tender_owner}'].initial_data}  ${date}
+  Звірити дату тендера  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${date}
 
 
 Звірити відображення поля ${field} усіх предметів для користувача ${username}
@@ -78,7 +78,7 @@ Resource           resource.robot
 
 Звірити відображення поля ${field} ${item_index} предмету для користувача ${username}
   ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}]}
-  Звірити поле тендера із значенням  ${username}  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}].${field}}  ${field}  ${item_id}
+  Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}].${field}}  ${field}  ${item_id}
 
 
 Звірити відображення дати ${field} усіх предметів для користувача ${username}
@@ -89,7 +89,7 @@ Resource           resource.robot
 
 Звірити відображення дати ${date} ${item_index} предмету для користувача ${username}
   ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}]}
-  Звірити дату тендера із значенням  ${username}  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}].${date}}  ${date}  ${item_id}
+  Звірити дату тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}].${date}}  ${date}  ${item_id}
 
 
 Звірити відображення координат усіх предметів для користувача ${username}
@@ -99,7 +99,7 @@ Resource           resource.robot
 
 
 Звірити відображення координат ${item_index} предмету для користувача ${username}
-  Звірити координати доставки тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[${item_index}]
+  Звірити координати доставки тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  items[${item_index}]
 
 
 Отримати дані із поля ${field} тендера для усіх користувачів
@@ -108,7 +108,7 @@ Resource           resource.robot
 
 
 Отримати дані із поля ${field} тендера для користувача ${username}
-  Отримати дані із тендера  ${username}  ${field}
+  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}
 
 
 
@@ -167,7 +167,7 @@ Resource           resource.robot
 Звірити відображення поля ${field} ${lot_index} лоту для користувача ${username}
   Дочекатись синхронізації з майданчиком  ${username}
   ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data.lots[${lot_index}]}
-  Звірити поле тендера із значенням  ${username}
+  Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data.data.lots[${lot_index}].${field}}  ${field}
   ...      object_id=${lot_id}
 
@@ -179,7 +179,7 @@ Resource           resource.robot
 
 Звірити відображення поля ${field} у новоствореному лоті для користувача ${username}
   Дочекатись синхронізації з майданчиком  ${username}
-  Звірити поле тендера із значенням  ${username}
+  Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].lot_data.lot.data.${field}}  ${field}
   ...      object_id=${USERS.users['${tender_owner}'].lot_data.lot_id}
 
@@ -237,7 +237,7 @@ Resource           resource.robot
 
 Звірити відображення поля ${field} у новоствореному неціновому показнику для користувача ${username}
   Дочекатись синхронізації з майданчиком  ${username}
-  Звірити поле тендера із значенням  ${username}
+  Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].feature_data.feature.${field}}  ${field}
   ...      object_id=${USERS.users['${tender_owner}'].feature_data.feature_id}
 
@@ -256,7 +256,7 @@ Resource           resource.robot
 Звірити відображення поля ${field} ${feature_index} нецінового показника для користувача ${username}
   Дочекатись синхронізації з майданчиком  ${username}
   ${feature_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data.features[${feature_index}]}
-  Звірити поле тендера із значенням  ${username}
+  Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data.data.features[${feature_index}].${field}}  ${field}
   ...      object_id=${feature_id}
 
@@ -320,7 +320,7 @@ Resource           resource.robot
 
 
 Звірити відображення поля ${field} запитання для користувача ${username}
-  Звірити поле тендера із значенням  ${username}  ${USERS.users['${provider}'].question_data.question.data.${field}}  ${field}  ${USERS.users['${provider}'].question_data.question_id}
+  Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}'].question_data.question.data.${field}}  ${field}  ${USERS.users['${provider}'].question_data.question_id}
 
 ##############################################################################################
 #             COMPLAINTS
