@@ -247,7 +247,7 @@ Get Broker Property By Username
 
 Підготувати дані для подання пропозиції
   [Arguments]  ${username}
-  ${bid}=  generate_test_bid_data  ${USERS.users['${username}'].tender_data}
+  ${bid}=  generate_test_bid_data  ${USERS.users['${username}'].tender_data.data}
   [Return]  ${bid}
 
 
@@ -370,7 +370,7 @@ Get Broker Property By Username
 
 Звірити поле тендера
   [Arguments]  ${username}  ${tender_uaid}  ${tender_data}  ${field}
-  ${left}=  Get_From_Object  ${tender_data.data}  ${field}
+  ${left}=  get_from_object  ${tender_data.data}  ${field}
   Звірити поле тендера із значенням  ${username}  ${tender_uaid}  ${left}  ${field}
 
 
@@ -391,7 +391,7 @@ Get Broker Property By Username
 
 Звірити дату тендера
   [Arguments]  ${username}  ${tender_uaid}  ${tender_data}  ${field}  ${accuracy}=60  ${absolute_delta}=${False}
-  ${left}=  Get_From_Object  ${tender_data.data}  ${field}
+  ${left}=  get_from_object  ${tender_data.data}  ${field}
   Звірити дату тендера із значенням  ${username}  ${tender_uaid}  ${left}  ${field}  accuracy=${accuracy}  absolute_delta=${absolute_delta}
 
 
@@ -420,8 +420,8 @@ Get Broker Property By Username
 
 Звірити координати доставки тендера
   [Arguments]  ${username}  ${tender_uaid}  ${tender_data}  ${field}  ${object_id}=${Empty}
-  ${left_lat}=  Get_From_Object  ${tender_data.data}  ${field}.deliveryLocation.latitude
-  ${left_lon}=  Get_From_Object  ${tender_data.data}  ${field}.deliveryLocation.longitude
+  ${left_lat}=  get_from_object  ${tender_data.data}  ${field}.deliveryLocation.latitude
+  ${left_lon}=  get_from_object  ${tender_data.data}  ${field}.deliveryLocation.longitude
   ${right_lat}=  Отримати дані із тендера  ${username}  ${tender_uaid}  ${field}.deliveryLocation.latitude  ${object_id}
   ${right_lon}=  Отримати дані із тендера  ${username}  ${tender_uaid}  ${field}.deliveryLocation.longitude  ${object_id}
   Порівняти координати  ${left_lat}  ${left_lon}  ${right_lat}  ${right_lon}
@@ -446,7 +446,7 @@ Get Broker Property By Username
 
 Звірити поля предметів закупівлі багатопредметного тендера
   [Arguments]  ${username}  ${tender_data}  ${field}
-  @{items}=  Get_From_Object  ${tender_data.data}  items
+  @{items}=  get_from_object  ${tender_data.data}  items
   ${len_of_items}=  Get Length  ${items}
   :FOR  ${index}  IN RANGE  ${len_of_items}
   \  Звірити поле тендера  ${viewer}  ${tender_data}  items[${index}].${field}
@@ -454,14 +454,14 @@ Get Broker Property By Username
 
 Звірити дату предметів закупівлі багатопредметного тендера
   [Arguments]  ${username}  ${tender_data}  ${field}  ${accuracy}=60  ${absolute_delta}=${False}
-  @{items}=  Get_From_Object  ${tender_data.data}  items
+  @{items}=  get_from_object  ${tender_data.data}  items
   :FOR  ${index}  ${_}  IN ENUMERATE  @{items}
   \  Звірити дату тендера  ${viewer}  ${tender_data}  items[${index}].${field}  accuracy=${accuracy}  absolute_delta=${absolute_delta}
 
 
 Звірити координати доставки предметів закупівлі багатопредметного тендера
   [Arguments]  ${username}  ${tender_data}
-  @{items}=  Get_From_Object  ${tender_data.data}  items
+  @{items}=  get_from_object  ${tender_data.data}  items
   :FOR  ${index}  ${_}  IN ENUMERATE  @{items}
   \  Звірити координати тендера  ${viewer}  ${tender_data}  items[${index}]
 
@@ -471,7 +471,7 @@ Get Broker Property By Username
   ${field}=  Run Keyword If  '${object_id}'  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${object_id}
   ...             ELSE  Set Variable  ${field_name}
   ${status}  ${field_value}=  Run keyword and ignore error
-  ...      Get from object
+  ...      get_from_object
   ...      ${USERS.users['${username}'].tender_data.data}
   ...      ${field}
   # If field in cache, return its value
@@ -481,6 +481,9 @@ Get Broker Property By Username
   ...                          ELSE  Run As  ${username}  Отримати інформацію із тендера  ${tender_uaid}  ${field}
   # And caching its value before return
   Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${field_value}
+  ${data}=  munch_dict  arg=${USERS.users['${username}'].tender_data.data}
+  Set To Dictionary  ${USERS.users['${username}'].tender_data}  data=${data}
+  Log  ${USERS.users['${username}'].tender_data.data}
   [return]  ${field_value}
 
 

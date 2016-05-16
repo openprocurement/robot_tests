@@ -442,21 +442,21 @@ def get_document_index_by_id(data, document_id):
 
 def generate_test_bid_data(tender_data):
     bid = test_bid_data()
-    if 'aboveThreshold' in tender_data['data']['procurementMethodType']:
+    if 'aboveThreshold' in tender_data['procurementMethodType']:
         bid.data.selfEligible = True
         bid.data.selfQualified = True
-    if 'lots' in tender_data['data']:
+    if 'lots' in tender_data:
         bid.data.lotValues = []
-        for lot in tender_data['data']['lots']:
+        for lot in tender_data['lots']:
             value = test_bid_value(lot['value']['amount'])
-            value['relatedLot'] = lot['id']
+            value['relatedLot'] = lot.get('id', '')
             bid.data.lotValues.append(value)
     else:
-        bid.data.update(test_bid_value(tender_data['data']['value']['amount']))
-    if 'features' in tender_data['data']:
+        bid.data.update(test_bid_value(tender_data['value']['amount']))
+    if 'features' in tender_data:
         bid.data.parameters = []
-        for feature in tender_data['data']['features']:
-            parameter = {"value": fake.random_element(elements=(0.15, 0.1, 0.05, 0)), "code": feature['code']}
+        for feature in tender_data['features']:
+            parameter = {"value": fake.random_element(elements=(0.15, 0.1, 0.05, 0)), "code": feature.get('code', '')}
             bid.data.parameters.append(parameter)
     return bid
 
