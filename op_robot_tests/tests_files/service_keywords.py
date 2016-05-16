@@ -315,11 +315,6 @@ def set_access_key(tender, access_token):
     return tender
 
 
-def set_to_object(obj, attribute, value):
-    xpathnew(obj, attribute, value, separator='.')
-    return obj
-
-
 def get_from_object(obj, attribute):
     """Gets data from a dictionary using a dotted accessor-string"""
     jsonpath_expr = parse_path(attribute)
@@ -328,6 +323,31 @@ def get_from_object(obj, attribute):
         return return_list[0]
     else:
         raise AttributeError('Attribute not found: {0}'.format(attribute))
+
+
+def set_to_object(obj, attribute, value):
+    # Search the list index in path to value
+    list_index = re.search('\d+', attribute)
+    if list_index:
+        list_index = list_index.group(0)
+        parent, child = attribute.split('[' + list_index + '].')[:2]
+        # Split attribute to path to lits (parent) and path to value in list element (child)
+        try:
+            # Get list from parent
+            listing = get_from_object(obj, parent)
+            # Create object with list_index if he don`t exist
+            if len(listing) < int(list_index) + 1:
+                listing.append({})
+        except AttributeError:
+            # Create list if he don`t exist
+            listing = [{}]
+        # Update list in parent
+        xpathnew(obj, parent, listing, separator='.')
+        # Set value in obj
+        xpathnew(obj, '.'.join([parent, list_index,  child]), value, separator='.')
+    else:
+        xpathnew(obj, attribute, value, separator='.')
+    return munchify(obj)
 
 
 def wait_to_date(date_stamp):
