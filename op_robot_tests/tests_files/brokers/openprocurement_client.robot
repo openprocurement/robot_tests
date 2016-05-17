@@ -10,7 +10,8 @@ Library  openprocurement_client_helper.py
   Log Many  ${USERS.users['${username}'].id_map}
   ${status}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${USERS.users['${username}'].id_map}  ${tender_uaid}
   Run Keyword And Return If  ${status}  Get From Dictionary  ${USERS.users['${username}'].id_map}  ${tender_uaid}
-  ${tender_id}=  get_tender_id_by_uaid  ${tender_uaid}  ${USERS.users['${username}'].client}
+  Call Method  ${USERS.users['${username}'].client}  get_tenders
+  ${tender_id}=  Wait Until Keyword Succeeds  5x  30 sec  get_tender_id_by_uaid  ${tender_uaid}  ${USERS.users['${username}'].client}
   Set To Dictionary  ${USERS.users['${username}'].id_map}  ${tender_uaid}  ${tender_id}
   [return]  ${tender_id}
 
