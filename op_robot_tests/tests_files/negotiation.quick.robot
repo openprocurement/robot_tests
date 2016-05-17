@@ -8,6 +8,11 @@ Suite Teardown     Close all browsers
 ${mode}         negotiation.quick
 @{used_roles}   tender_owner  viewer
 
+${number_of_items}  ${1}
+${number_of_lots}   ${0}
+${tender_meat}      ${False}
+${lot_meat}         ${False}
+${item_meat}        ${False}
 
 *** Test Cases ***
 ##############################################################################################

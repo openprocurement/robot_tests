@@ -121,6 +121,8 @@ def test_tender_data(params, periods=("enquiry", "tender")):
         data['items'][0]['id'] =  data['items'][0].get('id', uuid4().hex)
         new_feature['relatedItem'] = data['items'][0]['id']
         data['features'].append(new_feature)
+    if not data['features']:
+        del data['features']
     return munchify(data)
 
 
