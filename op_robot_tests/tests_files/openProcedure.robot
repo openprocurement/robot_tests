@@ -305,7 +305,7 @@ ${item_meat}        ${1}
   ...      viewer  tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
-  ...      lots  lot_view
+  ...      lot_view
   Звірити відображення поля title усіх лотів для усіх користувачів
 
 
@@ -313,7 +313,7 @@ ${item_meat}        ${1}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      lots  lot_view
+  ...      lot_view
   Звірити відображення поля description усіх лотів для користувача ${viewer}
 
 
@@ -321,7 +321,7 @@ ${item_meat}        ${1}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      lots  lot_view
+  ...      lot_view
   Звірити відображення поля value.amount усіх лотів для усіх користувачів
 
 
@@ -329,7 +329,7 @@ ${item_meat}        ${1}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      lots  lot_view
+  ...      lot_view
   Звірити відображення поля value.currency усіх лотів для користувача ${viewer}
 
 
@@ -337,7 +337,7 @@ ${item_meat}        ${1}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      lots  lot_view
+  ...      lot_view
   Звірити відображення поля value.valueAddedTaxIncluded усіх лотів для користувача ${viewer}
 
 ##############################################################################################
@@ -376,7 +376,7 @@ ${item_meat}        ${1}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      add_documentation_to_tender
+  ...      add_tender_doc
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість додати документацію до тендера
 
@@ -385,7 +385,7 @@ ${item_meat}        ${1}
   [Tags]    ${USERS.users['${tender_owner}'].broker}: Додання документації
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      lots  add_documentation_to_lot
+  ...      add_lot_doc
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість додати документацію до 0 лоту
 
@@ -394,7 +394,7 @@ ${item_meat}        ${1}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      lots  lot_modify
+  ...      lot_modify
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість змінити на 99 відсотки бюджет 0 лоту
 
@@ -403,7 +403,7 @@ ${item_meat}        ${1}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      lots  lot_modify
+  ...      lot_modify
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість змінити на 101 відсотки бюджет 0 лоту
 
@@ -412,7 +412,7 @@ ${item_meat}        ${1}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      lots  new_lot
+  ...      add_lot
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість створення лоту
@@ -423,7 +423,7 @@ ${item_meat}        ${1}
   ...      viewer  tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
-  ...      lots  new_lot
+  ...      add_lot
   Звірити відображення поля title у новоствореному лоті для усіх користувачів
 
 
@@ -431,7 +431,7 @@ ${item_meat}        ${1}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      new_item
+  ...      add_item
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Run Keyword IF  ${number_of_lots} == 0
   ...      Можливість додати предмет закупівлі в тендер
@@ -455,7 +455,7 @@ ${item_meat}        ${1}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      lots  new_lot  delete_lot
+  ...      delete_lot
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість видалення -1 лоту
 
@@ -683,7 +683,7 @@ ${item_meat}        ${1}
   [Tags]   ${USERS.users['${provider}'].broker}: Задання запитання
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      lots  question_to_lot
+  ...      question_to_lot
   [Setup]  Дочекатись дати початку періоду уточнень  ${provider}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість задати запитання на 0 лот користувачем ${provider}
@@ -693,7 +693,7 @@ ${item_meat}        ${1}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення запитання
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      lots  question_to_lot
+  ...      question_to_lot
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля title запитання для усіх користувачів
 
@@ -702,7 +702,7 @@ ${item_meat}        ${1}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення запитання
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      lots  question_to_lot
+  ...      question_to_lot
   Звірити відображення поля description запитання для користувача ${viewer}
 
 
@@ -710,7 +710,7 @@ ${item_meat}        ${1}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відповідь на запитання
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      lots  answer_question_to_lot
+  ...      answer_question_to_lot
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість відповісти на запитання
@@ -720,7 +720,7 @@ ${item_meat}        ${1}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення відповіді на запитання
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      lots  answer_question_to_lot
+  ...      answer_question_to_lot
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля answer запитання для користувача ${viewer}
 
@@ -741,7 +741,7 @@ ${item_meat}        ${1}
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      lots  bid_without_related_lot
+  ...      bid_without_related_lot
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
   Неможливість подати цінову пропозицію без прив’язки до лоту користувачем ${provider}
 
@@ -795,7 +795,7 @@ ${item_meat}        ${1}
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      add_documentation_to_bid
+  ...      add_bid_doc
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість змінити документацію цінової пропозиції користувачем ${provider}
 
@@ -817,7 +817,7 @@ ${item_meat}        ${1}
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      openeu_private_tender_doc
+  ...      openeu_provider_bid_private_doc
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість змінити документацію цінової пропозиції з публічної на приватну учасником ${provider}
 
@@ -826,7 +826,7 @@ ${item_meat}        ${1}
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      openeu_financial_documents
+  ...      openeu_provider_bid_financial_doc
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість завантажити financial_documents документ до пропозиції учасником ${provider}
 
@@ -835,18 +835,18 @@ ${item_meat}        ${1}
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      openeu_eligibility_documents
+  ...      openeu_provider_bid_qualification_doc
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість завантажити eligibility_documents документ до пропозиції учасником ${provider}
+  Можливість завантажити qualification_documents документ до пропозиції учасником ${provider}
 
 
 Можливість завантажити документ для критеріїв прийнятності до пропозиції першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      openeu_qualification_documents
+  ...      openeu_provider_bid_eligibility_doc
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість завантажити qualification_documents документ до пропозиції учасником ${provider}
+  Можливість завантажити eligibility_documents документ до пропозиції учасником ${provider}
 
 
 Можливість редагувати однопредметний тендер більше ніж за 7 днів до завершення періоду подання пропозицій
@@ -952,7 +952,7 @@ ${item_meat}        ${1}
   [Tags]   ${USERS.users['${provider}'].broker}: Задання запитання
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      lots  question_to_lot_after_bid_period
+  ...      question_to_lot_after_bid_period
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   Run Keyword And Expect Error  *  Можливість задати запитання на 0 лот користувачем ${provider}
 
@@ -989,7 +989,7 @@ ${item_meat}        ${1}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      pre-qualification_add_documentation_to_tender
+  ...      pre-qualification_add_doc_to_tender
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Run Keyword And Expect Error  *  Можливість додати документацію до тендера
 
@@ -998,7 +998,7 @@ ${item_meat}        ${1}
   [Tags]    ${USERS.users['${tender_owner}'].broker}: Додання документації
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      pre-qualification_add_documentation_to_lot
+  ...      pre-qualification_add_doc_to_lot
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Run Keyword And Expect Error  *  Можливість додати документацію до 0 лоту
 
