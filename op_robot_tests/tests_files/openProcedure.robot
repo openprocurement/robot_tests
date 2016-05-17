@@ -11,9 +11,9 @@ ${mode}             openeu
 
 ${number_of_items}  ${1}
 ${number_of_lots}   ${1}
-${tender_meat}      ${1}
-${lot_meat}         ${1}
-${item_meat}        ${1}
+${tender_meat}      ${True}
+${lot_meat}         ${True}
+${item_meat}        ${True}
 
 
 *** Test Cases ***

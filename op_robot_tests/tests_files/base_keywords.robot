@@ -9,16 +9,13 @@ Resource           resource.robot
 Можливість оголосити тендер
   ${number_of_lots}=  Convert To Integer  ${number_of_lots}
   ${number_of_items}=  Convert To Integer  ${number_of_items}
-  ${tender_meat}=  Convert To Integer  ${tender_meat}
-  ${lot_meat}=  Convert To Integer  ${lot_meat}
-  ${item_meat}=  Convert To Integer  ${item_meat}
   ${tender_parameters}=  Create Dictionary
   ...      mode=${mode}
   ...      number_of_items=${number_of_items}
   ...      number_of_lots=${number_of_lots}
-  ...      tender_meat=${tender_meat}
-  ...      lot_meat=${lot_meat}
-  ...      item_meat=${item_meat}
+  ...      tender_meat=${${tender_meat}}
+  ...      lot_meat=${${lot_meat}}
+  ...      item_meat=${${item_meat}}
   ${tender_data}=  Підготувати дані для створення тендера  ${tender_parameters}
   ${adapted_data}=  Адаптувати дані для оголошення тендера  ${tender_owner}  ${tender_data}
   ${TENDER_UAID}=  Run As  ${tender_owner}  Створити тендер  ${adapted_data}
