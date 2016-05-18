@@ -9,7 +9,9 @@ ${mode}         belowThreshold
 
 ${number_of_items}  ${1}
 ${number_of_lots}   ${1}
-${meat}             ${1}
+${tender_meat}      ${1}
+${item_meat}        ${1}
+${lot_meat}         ${1}
 ${lot_index}        ${0}
 ${award_index}      ${0}
 
@@ -34,7 +36,7 @@ ${award_index}      ${0}
   ...  lot_complaint
   ...  tender_complaint
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Можливість знайти тендер по ідентифікатору для усіх учасників
+  Можливість знайти тендер по ідентифікатору для усіх користувачів
 
 
 Можливість знайти закупівлю по ідентифікатору
