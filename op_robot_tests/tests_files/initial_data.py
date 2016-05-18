@@ -97,7 +97,7 @@ def test_tender_data(params, periods=("enquiry", "tender")):
                 new_item = test_item_data(cpv_group)
                 new_item['relatedLot'] = lot_id
                 data['items'].append(new_item)
-        value_amount = sum(lot['value']['amount'] for lot in data['lots'])
+        value_amount = round(sum(lot['value']['amount'] for lot in data['lots']))
         minimalStep = min(lot['minimalStep']['amount'] for lot in data['lots'])
         data['value']['amount'] = value_amount
         data['minimalStep']['amount'] = minimalStep
