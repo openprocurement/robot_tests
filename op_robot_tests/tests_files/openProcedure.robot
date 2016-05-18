@@ -726,7 +726,7 @@ ${item_meat}        ${True}
 
 
 Можливість внести зміни у тендер після запитання
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення відповіді на запитання
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      tender_modify_after_questions
@@ -737,10 +737,189 @@ ${item_meat}        ${True}
 
 
 Можливість внести зміни у лот після запитання
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення відповіді на запитання
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      lot_modify_after_questions
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${new_description}=  create_fake_sentence
+  Можливість змінити поле description 0 лоту на ${new_description}
+
+##############################################################################################
+#             TENDER COMPLAINTS
+##############################################################################################
+
+Можливість створити вимогу про виправлення умов закупівлі, додати до неї документацію і подати її користувачем
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  tender_claim
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість створити вимогу про виправлення умов закупівлі із документацією
+
+Відображення опису вимоги про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  tender_claim
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля description вимоги із ${USERS.users['${provider}'].claim_data.claim.data.description} для користувача ${viewer}
+
+
+Відображення заголовку вимоги про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  tender_claim
+  Звірити відображення поля title вимоги із ${USERS.users['${provider}'].claim_data.claim.data.title} для користувача ${viewer}
+
+
+Відображення заголовку документації вимоги про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  tender_claim
+  Звірити відображення поля document.title вимоги із ${USERS.users['${provider}'].claim_data.document} для користувача ${viewer}
+
+
+Відображення поданого статусу вимоги про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  tender_claim
+  Звірити відображення поля status вимоги із claim для користувача ${viewer}
+
+
+Можливість відповісти на вимогу про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес оскарження
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  answer_tender_claim
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість відповісти на вимогу про виправлення умов закупівлі
+
+
+Відображення статусу 'answered' вимоги про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  answer_tender_claim
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля status вимоги із answered для користувача ${viewer}
+
+
+Відображення типу вирішення вимоги про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  answer_tender_claim
+  Звірити відображення поля resolutionType вимоги із ${USERS.users['${tender_owner}'].claim_data.claim_answer.data.resolutionType} для користувача ${viewer}
+
+
+Відображення вирішення вимоги
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  answer_tender_claim
+  Звірити відображення поля resolution вимоги із ${USERS.users['${tender_owner}'].claim_data.claim_answer.data.resolution} для користувача ${viewer}
+
+
+Можливість підтвердити задоволення вимоги про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  resolve_tender_claim
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість підтвердити задоволення вимоги про виправлення умов закупівлі
+
+
+Відображення статусу 'resolved' вимоги
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  resolve_tender_claim
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля status вимоги із resolved для користувача ${viewer}
+
+
+Відображення задоволення вимоги
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  resolve_tender_claim
+  Звірити відображення поля satisfied вимоги із ${USERS.users['${provider}'].claim_data.claim_answer_confirm.data.satisfied} для користувача ${viewer}
+
+
+Можливість перетворити вимогу про виправлення умов закупівлі в скаргу
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  escalate_tender_claim
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість перетворити вимогу про виправлення умов закупівлі в скаргу
+
+
+Відображення статусу 'pending' після 'claim -> answered' вимоги
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  escalate_tender_claim
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля status вимоги із pending для користувача ${viewer}
+
+
+Відображення незадоволення вимоги
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  escalate_tender_claim
+  Звірити відображення поля satisfied вимоги із ${USERS.users['${provider}'].claim_data.escalation.data.satisfied} для користувача ${viewer}
+
+
+Можливість скасувати вимогу/скаргу
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  cancel_tender_claim
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість скасувати вимогу про виправлення умов закупівлі
+
+
+Відображення статусу 'cancelled' вимоги/скарги
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  cancel_tender_claim
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля status вимоги із cancelled для користувача ${viewer}
+
+
+Відображення причини скасування вимоги/скарги
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  cancel_tender_claim
+  Звірити відображення поля cancellationReason вимоги із ${USERS.users['${provider}'].claim_data.cancellation.data.cancellationReason} для користувача ${viewer}
+
+
+Можливість внести зміни у тендер після оскарження
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      tender_modify_after_claim
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${new_description}=  create_fake_sentence
+  Можливість змінити поле description тендера на ${new_description}
+
+
+Можливість внести зміни у лот після оскарження
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      lot_modify_after_claim
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_description}=  create_fake_sentence
