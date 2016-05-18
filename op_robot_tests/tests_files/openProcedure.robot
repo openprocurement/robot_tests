@@ -724,6 +724,28 @@ ${item_meat}        ${True}
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля answer запитання для користувача ${viewer}
 
+
+Можливість внести зміни у тендер після запитання
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення відповіді на запитання
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      tender_modify_after_questions
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${new_description}=  create_fake_sentence
+  Можливість змінити поле description тендера на ${new_description}
+
+
+Можливість внести зміни у лот після запитання
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення відповіді на запитання
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      lot_modify_after_questions
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${new_description}=  create_fake_sentence
+  Можливість змінити поле description 0 лоту на ${new_description}
+
 ##############################################################################################
 #             BIDDING
 ##############################################################################################
@@ -855,7 +877,8 @@ ${item_meat}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      open_modify_tender_in_tendering_perion
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість змінити поле description тендера на description
+  ${new_description}=  create_fake_sentence
+  Можливість змінити поле description тендера на ${new_description}
 
 
 Відображення зміни статусу першої пропозицій після редагування інформації про тендер
