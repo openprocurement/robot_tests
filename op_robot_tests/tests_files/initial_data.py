@@ -86,7 +86,7 @@ def test_tender_data(params, periods=("enquiry", "tender")):
             period_dict[period_name + "Period"][j + "Date"] = inc_dt.isoformat()
     data.update(period_dict)
     cpv_group = fake.cpv()[:3]
-    if params['number_of_lots']:
+    if params.get('number_of_lots'):
         data['lots'] = []
         for lot_number in range(params['number_of_lots']):
             lot_id = uuid4().hex
@@ -101,21 +101,21 @@ def test_tender_data(params, periods=("enquiry", "tender")):
         minimalStep = min(lot['minimalStep']['amount'] for lot in data['lots'])
         data['value']['amount'] = value_amount
         data['minimalStep']['amount'] = minimalStep
+        if params.get('lot_meat'):
+            new_feature = test_feature_data()
+            new_feature['featureOf'] = "lot"
+            data['lots'][0]['id'] =  data['lots'][0].get('id', uuid4().hex)
+            new_feature['relatedItem'] = data['lots'][0]['id']
+            data['features'].append(new_feature)
     else:
         for i in range(params['number_of_items']):
             new_item = test_item_data(cpv_group)
             data['items'].append(new_item)
-    if params['tender_meat']:
+    if params.get('tender_meat'):
         new_feature = test_feature_data()
         new_feature.featureOf = "tenderer"
         data['features'].append(new_feature)
-    if params['lot_meat'] and params['number_of_lots']:
-        new_feature = test_feature_data()
-        new_feature['featureOf'] = "lot"
-        data['lots'][0]['id'] =  data['lots'][0].get('id', uuid4().hex)
-        new_feature['relatedItem'] = data['lots'][0]['id']
-        data['features'].append(new_feature)
-    if params['item_meat'] and params['number_of_items']:
+    if params.get('item_meat'):
         new_feature = test_feature_data()
         new_feature['featureOf'] = "item"
         data['items'][0]['id'] =  data['items'][0].get('id', uuid4().hex)
