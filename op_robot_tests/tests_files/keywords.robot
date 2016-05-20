@@ -580,20 +580,6 @@ Get Broker Property By Username
   [Return]  ${field_value}
 
 
-Викликати для учасника
-  [Arguments]  ${username}  ${command}  @{arguments}
-  Run keyword unless  '${WARN_RUN_AS}' == '${True}'
-  ...      Run keywords
-  ...
-  ...      Set Suite Variable  ${WARN_RUN_AS}  ${True}
-  ...
-  ...      AND
-  ...
-  ...      Log  Keyword 'Викликати для учасника' is deprecated. Please use 'Run As' and 'Require Failure' instead.
-  ...      WARN
-  Run Keyword And Return  Run As  ${username}  ${command}  @{arguments}
-
-
 Run As
   [Arguments]  ${username}  ${command}  @{arguments}
   [Documentation]
