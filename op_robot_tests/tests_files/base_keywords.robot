@@ -25,8 +25,12 @@ Resource           resource.robot
 
 Можливість знайти тендер по ідентифікатору для усіх користувачів
   :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${provider1}  ${viewer}
-  \  Дочекатись синхронізації з майданчиком  ${username}
-  \  Run As  ${username}  Пошук тендера по ідентифікатору  ${TENDER['TENDER_UAID']}
+  \  Можливість знайти тендер по ідентифікатору для користувача ${username}
+
+
+Можливість знайти тендер по ідентифікатору для користувача ${username}
+  Дочекатись синхронізації з майданчиком  ${username}
+  Run as  ${username}  Пошук тендера по ідентифікатору  ${TENDER['TENDER_UAID']}
 
 
 Можливість змінити поле ${field_name} тендера на ${field_value}
@@ -36,6 +40,8 @@ Resource           resource.robot
 Можливість додати документацію до тендера
   ${filepath}=  create_fake_doc
   Run As  ${tender_owner}  Завантажити документ  ${filepath}  ${TENDER['TENDER_UAID']}
+  ${documents}=  Create Dictionary  filepath=${filepath}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  documents=${documents}
 
 
 Можливість додати предмет закупівлі в тендер
@@ -62,6 +68,7 @@ Resource           resource.robot
 
 Звірити відображення поля ${field} тендера для користувача ${username}
   Звірити поле тендера  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${field}
+
 
 Звірити відображення дати ${date} тендера для усіх користувачів
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
@@ -111,8 +118,6 @@ Resource           resource.robot
 
 Отримати дані із поля ${field} тендера для користувача ${username}
   Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}
-
-
 
 ##############################################################################################
 #             LOTS
@@ -296,6 +301,7 @@ Resource           resource.robot
   ${question_data}=  munch_dict  arg=${question_data}
   Set To Dictionary  ${USERS.users['${username}']}  question_data=${question_data}
 
+
 Можливість задати запитання на ${item_index} предмет користувачем ${username}
   ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data['items'][${item_index}]}
   ${question}=  Підготувати дані для запитання
@@ -306,6 +312,7 @@ Resource           resource.robot
   ${question_data}=  Create Dictionary  question=${question}  question_resp=${question_resp}  question_id=${question_id}
   ${question_data}=  munch_dict  arg=${question_data}
   Set To Dictionary  ${USERS.users['${username}']}  question_data=${question_data}
+
 
 Можливість відповісти на запитання
   ${answer}=  Підготувати дані для відповіді на запитання
@@ -616,6 +623,40 @@ Resource           resource.robot
   ${bid_doc_modified}=  Run As  ${username}  Змінити документ в ставці  ${filepath}  ${docid}
   Set To Dictionary  ${USERS.users['${username}'].bidresponses}  bid_doc_modified=${bid_doc_modified}
 
+##############################################################################################
+#             Cancellations
+##############################################################################################
 
 Можливість скасувати цінову пропозицію користувачем ${username}
   ${canceledbidresp}=  Run As  ${username}  Скасувати цінову пропозицію  ${TENDER['TENDER_UAID']}
+
+
+Можливість скасувати закупівлю
+  ${cancellation_data}=  Підготувати дані про скасування  ${tender_owner}
+  Run as  ${tender_owner}
+  ...      Скасувати закупівлю
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${cancellation_data['cancellation_reason']}
+  ...      ${cancellation_data['document']}
+  ...      ${cancellation_data['description']}
+
+##############################################################################################
+#             Awarding
+##############################################################################################
+
+Можливість зареєструвати, додати документацію і підтвердити постачальника до закупівлі
+  ${supplier_data}=  Підготувати дані про постачальника  ${tender_owner}
+  ${filepath}=  create_fake_doc
+  Run as  ${tender_owner}
+  ...      Створити постачальника, додати документацію і підтвердити його
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${supplier_data}
+  ...      ${filepath}
+  Set to dictionary  ${USERS.users['${tender_owner}']}  award_document=${filepath}
+
+
+Можливість укласти угоду для закупівлі
+  Run as  ${tender_owner}
+  ...      Підтвердити підписання контракту
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${0}

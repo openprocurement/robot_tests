@@ -758,16 +758,17 @@ Library  openprocurement_client_helper.py
 #             Limited procurement
 ##############################################################################
 
-Додати і підтвердити постачальника
+Створити постачальника, додати документацію і підтвердити його
   [Documentation]
   ...      [Arguments] Username, tender uaid and supplier data
-  ...      Find tender using uaid and call create_award
+  ...      Find tender using uaid and call create_award, add documentation to that award and update his status to active
   ...      [Return] Nothing
-  [Arguments]  ${username}  ${tender_uaid}  ${supplier_data}
+  [Arguments]  ${username}  ${tender_uaid}  ${supplier_data}  ${document}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_award  ${tender}  ${supplier_data}
   Log  ${reply}
   ${supplier_number}=  Set variable  0
+  openprocurement_client.Завантажити документ рішення кваліфікаційної комісії  ${username}  ${document}  ${tender_uaid}  ${supplier_number}
   openprocurement_client.Підтвердити постачальника  ${username}  ${tender_uaid}  ${supplier_number}
 
 

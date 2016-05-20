@@ -1,5 +1,5 @@
 *** Settings ***
-Resource           limited_keywords.robot
+Resource           base_keywords.robot
 Suite Setup        Test Suite Setup
 Suite Teardown     Close all browsers
 
@@ -8,7 +8,11 @@ Suite Teardown     Close all browsers
 ${mode}         negotiation
 @{used_roles}   tender_owner  viewer
 
-${number_of_items}  ${1}
+${number_of_items}  ${2}
+${number_of_lots}   ${0}
+${tender_meat}      ${False}
+${lot_meat}      ${False}
+${item_meat}      ${False}
 
 *** Test Cases ***
 ##############################################################################################
@@ -20,7 +24,7 @@ ${number_of_items}  ${1}
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  minimal
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість створити закупівлю
+  Можливість оголосити тендер
 
 
 Можливість скасувати переговорну процедуру
@@ -37,28 +41,28 @@ ${number_of_items}  ${1}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Відображення активного статусу скасування закупівлі
+    Звірити відображення поля cancellations[0].status тендера із active для користувача ${viewer}
 
 
 Відображення причини скасування переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення причини скасування закупівлі
+  Звірити відображення поля cancellations[0].reason тендера із ${USERS.users['${tender_owner}']['cancellation_data']['cancellation_reason']} для користувача ${viewer}
 
 
 Відображення опису документа скасування переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення опису документа скасування закупівлі
+  Звірити відображення поля cancellations[0].documents[0].description тендера із ${USERS.users['${tender_owner}']['cancellation_data']['description']} для користувача ${viewer}
 
 
 Відображення заголовку документа скасування переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення заголовку документа скасування закупівлі
+  Звірити відображення поля cancellations[0].documents[0].title тендера із ${USERS.users['${tender_owner}']['cancellation_data']['document']} для користувача ${viewer}
 
 ##############################################################################################
 #             MAIN
@@ -70,7 +74,7 @@ ${number_of_items}  ${1}
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  minimal
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість створити закупівлю
+  Можливість оголосити тендер
 
 
 Можливість додати документацію до переговорної процедури
@@ -79,7 +83,7 @@ ${number_of_items}  ${1}
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  level2
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість додати документацію до закупівлі
+  Можливість додати документацію до тендера
 
 
 Можливість зареєструвати і підтвердити постачальника до переговорної процедури
@@ -88,7 +92,7 @@ ${number_of_items}  ${1}
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  minimal
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість зареєструвати і підтвердити постачальника до закупівлі
+  Можливість зареєструвати, додати документацію і підтвердити постачальника до закупівлі
 
 
 Можливість знайти переговорну процедуру по ідентифікатору
@@ -96,8 +100,7 @@ ${number_of_items}  ${1}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  minimal
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Можливість знайти закупівлю по ідентифікатору
+  Можливість знайти тендер по ідентифікатору для користувача ${viewer}
 
 ##############################################################################################
 #             MAIN DATA
@@ -108,63 +111,63 @@ ${number_of_items}  ${1}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Відображення заголовку закупівлі
+  Звірити відображення поля title тендера для користувача ${viewer}
 
 
 Відображення заголовку переговорної процедури англійською мовою
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення заголовку закупівлі англійською мовою
+  Звірити відображення поля title_en тендера для користувача ${viewer}
 
 
 Відображення заголовку переговорної процедури російською мовою
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення заголовку закупівлі російською мовою
+  Звірити відображення поля title_ru тендера для користувача ${viewer}
 
 
 Відображення ідентифікатора переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення ідентифікатора закупівлі
+  Звірити відображення поля tenderID тендера із ${TENDER['TENDER_UAID']} для користувача ${viewer}
 
 
 Відображення опису переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення опису закупівлі
+  Звірити відображення поля description тендера для користувача ${viewer}
 
 
 Відображення опису переговорної процедури англійською мовою
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення опису закупівлі англійською мовою
+  Звірити відображення поля description_en тендера для користувача ${viewer}
 
 
 Відображення опису переговорної процедури російською мовою
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення опису закупівлі російською мовою
+  Звірити відображення поля description_ru тендера для користувача ${viewer}
 
 
 Відображення підстави вибору переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення підстави вибору закупівлі
+  Звірити відображення поля causeDescription тендера для користувача ${viewer}
 
 
 Відображення обгрунтування причини вибору переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення обгрунтування причини вибору закупівлі
+  Звірити відображення поля cause тендера для користувача ${viewer}
 
 ##############################################################################################
 #             MAIN DATA.VALUE
@@ -174,21 +177,21 @@ ${number_of_items}  ${1}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення бюджету процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення бюджету закупівлі
+  Звірити відображення поля value.amount тендера для користувача ${viewer}
 
 
 Відображення валюти переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення бюджету процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення валюти закупівлі
+  Звірити відображення поля value.currency тендера для користувача ${viewer}
 
 
 Відображення врахованого податку в бюджет переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення бюджету процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення врахованого податку в бюджет закупівлі
+  Звірити відображення поля value.valueAddedTaxIncluded тендера для користувача ${viewer}
 
 ##############################################################################################
 #             MAIN DATA.PROCURING ENTITY
@@ -198,84 +201,84 @@ ${number_of_items}  ${1}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення замовника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення країни замовника закупівлі
+  Звірити відображення поля procuringEntity.address.countryName тендера для користувача ${viewer}
 
 
 Відображення населеного пункту замовника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення замовника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення населеного пункту замовника закупівлі
+  Звірити відображення поля procuringEntity.address.locality тендера для користувача ${viewer}
 
 
 Відображення поштового коду замовника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення замовника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення поштового коду замовника закупівлі
+  Звірити відображення поля procuringEntity.address.postalCode тендера для користувача ${viewer}
 
 
 Відображення області замовника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення замовника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення області замовника закупівлі
+  Звірити відображення поля procuringEntity.address.region тендера для користувача ${viewer}
 
 
 Відображення вулиці замовника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення замовника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення вулиці замовника закупівлі
+  Звірити відображення поля procuringEntity.address.streetAddress тендера для користувача ${viewer}
 
 
 Відображення контактного імені замовника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення замовника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення контактного імені замовника закупівлі
+  Звірити відображення поля procuringEntity.contactPoint.name тендера для користувача ${viewer}
 
 
 Відображення контактного телефону замовника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення замовника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення контактного телефону замовника закупівлі
+  Звірити відображення поля procuringEntity.contactPoint.telephone тендера для користувача ${viewer}
 
 
 Відображення сайту замовника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення замовника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення сайту замовника закупівлі
+  Звірити відображення поля procuringEntity.contactPoint.url тендера для користувача ${viewer}
 
 
 Відображення офіційного імені замовника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення замовника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення офіційного імені замовника закупівлі
+  Звірити відображення поля procuringEntity.identifier.legalName тендера для користувача ${viewer}
 
 
 Відображення схеми ідентифікації замовника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення замовника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення схеми ідентифікації замовника закупівлі
+  Звірити відображення поля procuringEntity.identifier.scheme тендера для користувача ${viewer}
 
 
 Відображення ідентифікатора замовника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення замовника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення ідентифікатора замовника закупівлі
+  Звірити відображення поля procuringEntity.identifier.id тендера для користувача ${viewer}
 
 
 Відображення імені замовника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення замовника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення імені замовника закупівлі
+  Звірити відображення поля procuringEntity.name тендера для користувача ${viewer}
 
 ##############################################################################################
 #             MAIN DATA.ITEMS
@@ -285,133 +288,133 @@ ${number_of_items}  ${1}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення опису додаткової класифікації номенклатури закупівлі
+  Звірити відображення поля additionalClassifications[0].description усіх предметів для користувача ${viewer}
 
 
 Відображення ідентифікатора додаткової класифікації номенклатури переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення ідентифікатора додаткової класифікації номенклатури закупівлі
+  Звірити відображення поля additionalClassifications[0].id усіх предметів для користувача ${viewer}
 
 
 Відображення схеми додаткової класифікації номенклатури переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення схеми додаткової класифікації номенклатури закупівлі
+  Звірити відображення поля additionalClassifications[0].scheme усіх предметів для користувача ${viewer}
 
 
 Відображення схеми класифікації номенклатури переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення схеми класифікації номенклатури закупівлі
+  Звірити відображення поля classification.scheme усіх предметів для користувача ${viewer}
 
 
 Відображення ідентифікатора класифікації номенклатури переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення ідентифікатора класифікації номенклатури закупівлі
+  Звірити відображення поля classification.id усіх предметів для користувача ${viewer}
 
 
 Відображення опису класифікації номенклатури переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення опису класифікації номенклатури закупівлі
+  Звірити відображення поля classification.description усіх предметів для користувача ${viewer}
 
 
 Відображення опису номенклатури переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення опису номенклатури закупівлі
+  Звірити відображення поля description усіх предметів для користувача ${viewer}
 
 
 Відображення кількості номенклатури переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення кількості номенклатури закупівлі
+  Звірити відображення поля quantity усіх предметів для користувача ${viewer}
 
 
 Відображення назви одиниці номенклатури переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення назви одиниці номенклатури закупівлі
+  Звірити відображення поля unit.name усіх предметів для користувача ${viewer}
 
 
 Відображення коду одиниці номенклатури переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення коду одиниці номенклатури закупівлі
+  Звірити відображення поля unit.code усіх предметів для користувача ${viewer}
 
 
 Відображення дати доставки номенклатури переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення дати доставки номенклатури закупівлі
+  Звірити відображення дати deliveryDate.endDate усіх предметів для користувача ${viewer}
 
 
 Відображення координат доставки номенклатури переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення координат доставки номенклатури закупівлі
+  Звірити відображення координат усіх предметів для користувача ${viewer}
 
 
 Відображення назви нас. пункту доставки номенклатури переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення назви нас. пункту доставки номенклатури закупівлі
+  Звірити відображення поля deliveryAddress.countryName усіх предметів для користувача ${viewer}
 
 
 Відображення назви нас. пункту російською мовою доставки номенклатури переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення назви нас. пункту російською мовою доставки номенклатури закупівлі
+  Звірити відображення поля deliveryAddress.countryName_ru усіх предметів для користувача ${viewer}
 
 
 Відображення назви нас. пункту англійською мовою доставки номенклатури переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення назви нас. пункту англійською мовою доставки номенклатури закупівлі
+  Звірити відображення поля deliveryAddress.countryName_en усіх предметів для користувача ${viewer}
 
 
 Відображення пошт. коду доставки номенклатури переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення пошт. коду доставки номенклатури закупівлі
+  Звірити відображення поля deliveryAddress.postalCode усіх предметів для користувача ${viewer}
 
 
 Відображення регіону доставки номенклатури переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення регіону доставки номенклатури закупівлі
+  Звірити відображення поля deliveryAddress.region усіх предметів для користувача ${viewer}
 
 
 Відображення населеного пункту адреси доставки номенклатури переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення населеного пункту адреси доставки номенклатури закупівлі
+  Звірити відображення поля deliveryAddress.locality усіх предметів для користувача ${viewer}
 
 
 Відображення вулиці доставки номенклатури переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення вулиці доставки номенклатури закупівлі
+  Звірити відображення поля deliveryAddress.streetAddress усіх предметів для користувача ${viewer}
 
 ##############################################################################################
 #             DOCUMENTS
@@ -421,122 +424,129 @@ ${number_of_items}  ${1}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення документації процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення заголовку документа закупівлі
+  Звірити відображення поля documents[0].title тендера із ${USERS.users['${tender_owner}']['documents']['filepath']} для користувача ${viewer}
 
 ##############################################################################################
 #             AWARDS
 ##############################################################################################
 
+Відображення документації до постачальника
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення постачальника процедури
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  Звірити відображення поля awards[0].documents[0].title тендера із ${USERS.users['${tender_owner}'].award_document} для користувача ${viewer}
+
+
 Відображення підтвердженого постачальника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення постачальника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення підтвердженого постачальника закупівлі
+  Звірити відображення поля awards[0].status тендера із active для користувача ${viewer}
 
 
 Відображення країни постачальника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення постачальника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення країни постачальника закупівлі
+  Звірити відображення поля awards[0].suppliers[0].address.countryName тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][0]['address']['countryName']} для користувача ${viewer}
 
 
 Відображення міста постачальника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення постачальника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення міста постачальника закупівлі
+  Звірити відображення поля awards[0].suppliers[0].address.locality тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][0]['address']['locality']} для користувача ${viewer}
 
 
 Відображення поштового коду постачальника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення постачальника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення поштового коду постачальника закупівлі
+  Звірити відображення поля awards[0].suppliers[0].address.postalCode тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][0]['address']['postalCode']} для користувача ${viewer}
 
 
 Відображення області постачальника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення постачальника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення області постачальника закупівлі
+  Звірити відображення поля awards[0].suppliers[0].address.region тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][0]['address']['region']} для користувача ${viewer}
 
 
 Відображення вулиці постачальника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення постачальника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення вулиці постачальника закупівлі
+  Звірити відображення поля awards[0].suppliers[0].address.streetAddress тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][0]['address']['streetAddress']} для користувача ${viewer}
 
 
 Відображення контактного телефону постачальника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення постачальника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення контактного телефону постачальника закупівлі
+  Звірити відображення поля awards[0].suppliers[0].contactPoint.telephone тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][0]['contactPoint']['telephone']} для користувача ${viewer}
 
 
 Відображення контактного імені постачальника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення постачальника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення контактного імені постачальника закупівлі
+  Звірити відображення поля awards[0].suppliers[0].contactPoint.name тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][0]['contactPoint']['name']} для користувача ${viewer}
 
 
 Відображення контактного імейлу постачальника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення постачальника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення контактного імейлу постачальника закупівлі
+  Звірити відображення поля awards[0].suppliers[0].contactPoint.email тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][0]['contactPoint']['email']} для користувача ${viewer}
 
 
 Відображення схеми ідентифікації постачальника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення постачальника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення схеми ідентифікації постачальника закупівлі
+  Звірити відображення поля awards[0].suppliers[0].identifier.scheme тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][0]['identifier']['scheme']} для користувача ${viewer}
 
 
 Відображення офіційного імені постачальника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення постачальника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення офіційного імені постачальника закупівлі
+  Звірити відображення поля awards[0].suppliers[0].identifier.legalName тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][0]['identifier']['legalName']} для користувача ${viewer}
 
 
 Відображення ідентифікатора постачальника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення постачальника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення ідентифікатора постачальника закупівлі
+  Звірити відображення поля awards[0].suppliers[0].identifier.id тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][0]['identifier']['id']} для користувача ${viewer}
 
 
 Відображення імені постачальника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення постачальника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення імені постачальника закупівлі
+  Звірити відображення поля awards[0].suppliers[0].name тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][0]['name']} для користувача ${viewer}
 
 
 Відображення врахованого податку до ціни номенклатури постачальника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення постачальника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення врахованого податку до ціни номенклатури постачальника закупівлі
+  Звірити відображення поля awards[0].value.valueAddedTaxIncluded тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['value']['valueAddedTaxIncluded']} для користувача ${viewer}
 
 
 Відображення валюти ціни номенклатури постачальника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення постачальника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення валюти ціни номенклатури постачальника закупівлі
+  Звірити відображення поля awards[0].value.currency тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['value']['currency']} для користувача ${viewer}
 
 
 Відображення вартості номенклатури постачальника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення постачальника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Відображення вартості номенклатури постачальника закупівлі
+  Звірити відображення поля awards[0].value.amount тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['value']['amount']} для користувача ${viewer}
 
 ##############################################################################################
 #             CONTRACTS
@@ -547,7 +557,7 @@ ${number_of_items}  ${1}
   ...  ${tender_owner}
   ...  ${USERS.users['${tender_owner}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  Неможливість укласти угоду для закупівлі поки не пройде stand-still період
+  Run keyword and expect error  *  Можливість укласти угоду для закупівлі
 
 
 Відображення статусу непідписаної угоди з постачальником переговорної процедури
@@ -555,7 +565,7 @@ ${number_of_items}  ${1}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Відображення статусу непідписаної угоди з постачальником закупівлі
+  Звірити відображення поля contracts[0].status тендера із pending для користувача ${viewer}
 
 
 Можливість укласти угоду для переговорної процедури
@@ -564,6 +574,7 @@ ${number_of_items}  ${1}
   ...  ${USERS.users['${tender_owner}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Дочекатись дати  ${USERS.users['${tender_owner}'].tender_data.data.awards[0].complaintPeriod.endDate}
   Можливість укласти угоду для закупівлі
 
 
@@ -572,4 +583,4 @@ ${number_of_items}  ${1}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Відображення статусу підписаної угоди з постачальником закупівлі
+  Звірити відображення поля contracts[0].status тендера із active для користувача ${viewer}
