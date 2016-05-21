@@ -11,7 +11,7 @@ Suite Teardown  Test Suite Teardown
 
 *** Test Cases ***
 Можливість знайти закупівлю по ідентифікатору
-  [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
+  [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера
   ...      ${USERS.users['${viewer}'].broker}
   Завантажити дані про тендер
   Run As  ${viewer}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
@@ -21,7 +21,7 @@ Suite Teardown  Test Suite Teardown
 ##############################################################################################
 
 Відображення дати початку аукціону
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
@@ -29,21 +29,21 @@ Suite Teardown  Test Suite Teardown
 
 
 Можливість дочекатися початку аукціону
-  [Tags]   ${USERS.users['${viewer}'].broker}: Можливість дочекатися початку аукціону
+  [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   Дочекатись дати початку аукціону  ${viewer}
 
 
 Можливість вичитати посилання на аукціон для глядача
-  [Tags]   ${USERS.users['${viewer}'].broker}: Участь в аукціоні
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   Можливість вичитати посилання на аукціон для ${viewer}
 
 
 Можливість дочекатися завершення аукціону
-  [Tags]   ${USERS.users['${viewer}'].broker}: Можливість дочекатися завершення аукціону
+  [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
@@ -51,7 +51,7 @@ Suite Teardown  Test Suite Teardown
 
 
 Відображення дати завершення аукціону
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних оголошеного тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
