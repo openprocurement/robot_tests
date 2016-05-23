@@ -190,3 +190,21 @@ proztorg:
         tender_owner:   proztorg_Owner
         viewer:         proztorg_Viewer
     timeout_on_wait: 50
+uub:
+    intervals:
+        default:
+            enquiry: [0, 5]
+            tender:  [0, 10]
+        openua:
+            accelerator: 1440
+            tender:  [0, 15]
+        openeu:
+            tender:  [0, 30]
+            accelerator: 1440
+    keywords_file: uub
+    roles:
+        tender_owner:   UUB_Owner
+        provider:       UUB_Provider
+        provider1:      UUB_Provider1
+        viewer:         UUB_Viewer
+    timeout_on_wait: 300
