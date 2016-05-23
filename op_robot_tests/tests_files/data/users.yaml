@@ -321,3 +321,35 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1000, 500]
+    uub_Owner:
+        broker:   uub
+        homepage: "https://prozorro.uub.com.ua/Registration.aspx?CN=-1"
+        default_page: "https://prozorro.uub.com.ua/PositionList.aspx?CN=-1"
+        login:    UUB_Owner@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    uub_Provider:
+        broker:   uub
+        homepage: "https://prozorro.uub.com.ua/Registration.aspx?CN=-2"
+        default_page: "https://prozorro.uub.com.ua/PositionList.aspx?CN=-2"
+        login:    UUB_Provider@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    uub_Provider1:
+        broker:   uub
+        homepage: "https://prozorro.uub.com.ua/Registration.aspx?CN=-3"
+        default_page: "https://prozorro.uub.com.ua/PositionList.aspx?CN=-3"
+        login:    UUB_Provider1@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    uub_Viewer:
+        broker:   uub
+        homepage: "https://prozorro.uub.com.ua/Registration.aspx?CN=-4"
+        default_page: "https://prozorro.uub.com.ua/PositionList.aspx?CN=-4"
+        login:    UUB_Viewer@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
