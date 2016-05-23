@@ -538,7 +538,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      delete_tender_meat
+  ...      delete_lot_meat
   Можливість видалити -1 неціновий показник
 
 
@@ -580,7 +580,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      delete_tender_meat
+  ...      delete_item_meat
   Можливість видалити -1 неціновий показник
 
 ##############################################################################################
