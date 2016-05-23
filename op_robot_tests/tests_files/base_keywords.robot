@@ -79,6 +79,18 @@ Resource           resource.robot
   Звірити дату тендера  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${date}
 
 
+Звірити відображення поля ${field} у новоствореному предметі для усіх користувачів
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  \  Звірити відображення поля ${field} у новоствореному предметі для користувача ${username}
+
+
+Звірити відображення поля ${field} у новоствореному предметі для користувача ${username}
+  Дочекатись синхронізації з майданчиком  ${username}
+  Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${tender_owner}'].item_data.item.${field}}  ${field}
+  ...      object_id=${USERS.users['${tender_owner}'].item_data.item_id}
+
+
 Звірити відображення поля ${field} усіх предметів для користувача ${username}
   ${number_of_items}=  Get Length  ${USERS.users['${tender_owner}'].initial_data.data['items']}
   :FOR  ${item_index}  IN RANGE  ${number_of_items}
@@ -144,13 +156,17 @@ Resource           resource.robot
   Run As  ${tender_owner}  Видалити предмет закупівлі  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].item_data.item_id}  ${lot_id}
 
 
-Можливість створення лоту
+Можливість створення лоту із прив’язаним предметом закупівлі
   ${lot}=  Підготувати дані для створення лоту  ${USERS.users['${tender_owner}'].tender_data.data.value.amount}
-  ${lot_resp}=  Run As  ${tender_owner}  Створити лот  ${TENDER['TENDER_UAID']}  ${lot}
+  ${item}=  Підготувати дані для створення предмету закупівлі  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['id']}
+  ${lot_resp}=  Run As  ${tender_owner}  Створити лот із предметом закупівлі  ${TENDER['TENDER_UAID']}  ${lot}  ${item}
+  ${item_id}=  get_id_from_object  ${item}
+  ${item_data}=  Create Dictionary  item=${item}  item_id=${item_id}
+  ${item_data}=  munch_dict  arg=${item_data}
   ${lot_id}=  get_id_from_object  ${lot.data}
   ${lot_data}=  Create Dictionary  lot=${lot}  lot_resp=${lot_resp}  lot_id=${lot_id}
   ${lot_data}=  munch_dict  arg=${lot_data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  lot_data=${lot_data}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  item_data=${item_data}  lot_data=${lot_data}
 
 
 Можливість видалення ${lot_index} лоту

@@ -154,6 +154,14 @@ Library  openprocurement_client_helper.py
   [return]  ${reply}
 
 
+Створити лот із предметом закупівлі
+  [Arguments]  ${username}  ${tender_uaid}  ${lot}  ${item}
+  ${reply}=  Створити лот  ${username}  ${tender_uaid}  ${lot}
+  ${lot_id}=  get_id_from_object  ${lot.data}
+  Додати предмет закупівлі в лот  ${username}  ${tender_uaid}  ${lot_id}  ${item}
+  [return]  ${reply}
+
+
 Отримати інформацію із лоту
   [Arguments]  ${username}  ${tender_uaid}  ${lot_id}  ${field_name}
   ${field_name}=  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${lot_id}
@@ -196,6 +204,10 @@ Library  openprocurement_client_helper.py
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${lot_index}=  get_object_index_by_id  ${tender.data.lots}  ${lot_id}
   ${lot}=  Create Dictionary  data=${tender.data.lots[${lot_index}]}
+  :FOR  ${item}  IN  @{tender.data['items']}
+  \  ${item_id}=  get_id_from_object  ${item}
+  \  Run Keyword If  '${item.relatedLot}'=='${lot.data.id}'
+  \  ...     Видалити предмет закупівлі  ${username}  ${tender_uaid}  ${item_id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}   delete_lot   ${tender}    ${lot}
   [return]  ${reply}
 
