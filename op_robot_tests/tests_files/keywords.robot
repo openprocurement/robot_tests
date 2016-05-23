@@ -501,7 +501,7 @@ Get Broker Property By Username
 Отримати дані із об’єкта тендера
   [Arguments]  ${username}  ${tender_uaid}  ${object_id}  ${field_name}
   ${object_type}=  get_object_type_by_id  ${object_id}
-  ${status}  ${value}=  Run Keyword If  '${object_type}'=='question'
+  ${status}  ${value}=  Run Keyword If  '${object_type}'=='questions'
   ...      Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із запитання  ${tender_uaid}  ${object_id}  ${field_name}
   ...      ELSE IF  '${object_type}'=='lots'
   ...      Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із лоту  ${tender_uaid}  ${object_id}  ${field_name}
