@@ -430,10 +430,14 @@ def get_object_index_by_id(data, object_id):
 
 
 def get_complaint_index_by_complaintID(data, complaintID):
+    if not data:
+        return 0
     for index, element in enumerate(data):
         if element['complaintID'] == complaintID:
-            return index
-    raise IndexError
+            break
+    else:
+        index += 1
+    return index
 
 
 def get_document_index_by_id(data, document_id):
