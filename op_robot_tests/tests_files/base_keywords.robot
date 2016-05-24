@@ -91,6 +91,11 @@ Resource           resource.robot
   ...      object_id=${USERS.users['${tender_owner}'].item_data.item_id}
 
 
+Звірити відображення поля ${field} усіх предметів для усіх користувачів
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  \  Звірити відображення поля ${field} усіх предметів для користувача ${username}
+
+
 Звірити відображення поля ${field} усіх предметів для користувача ${username}
   ${number_of_items}=  Get Length  ${USERS.users['${tender_owner}'].initial_data.data['items']}
   :FOR  ${item_index}  IN RANGE  ${number_of_items}
