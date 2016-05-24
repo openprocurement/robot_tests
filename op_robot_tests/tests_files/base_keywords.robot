@@ -125,7 +125,8 @@ Resource           resource.robot
 
 
 Звірити відображення координат ${item_index} предмету для користувача ${username}
-  Звірити координати доставки тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  items[${item_index}]
+  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}]}
+  Звірити координати доставки тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${item_id}
 
 
 Отримати дані із поля ${field} тендера для усіх користувачів

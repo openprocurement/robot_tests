@@ -422,11 +422,12 @@ Get Broker Property By Username
 
 
 Звірити координати доставки тендера
-  [Arguments]  ${username}  ${tender_uaid}  ${tender_data}  ${field}  ${object_id}=${Empty}
-  ${left_lat}=  get_from_object  ${tender_data.data}  ${field}.deliveryLocation.latitude
-  ${left_lon}=  get_from_object  ${tender_data.data}  ${field}.deliveryLocation.longitude
-  ${right_lat}=  Отримати дані із тендера  ${username}  ${tender_uaid}  ${field}.deliveryLocation.latitude  ${object_id}
-  ${right_lon}=  Отримати дані із тендера  ${username}  ${tender_uaid}  ${field}.deliveryLocation.longitude  ${object_id}
+  [Arguments]  ${username}  ${tender_uaid}  ${tender_data}  ${item_id}
+  ${item_index}=  get_object_index_by_id  ${tender_data.data['items']}  ${item_id}
+  ${left_lat}=  get_from_object  ${tender_data.data}  items[${item_index}].deliveryLocation.latitude
+  ${left_lon}=  get_from_object  ${tender_data.data}  items[${item_index}].deliveryLocation.longitude
+  ${right_lat}=  Отримати дані із тендера  ${username}  ${tender_uaid}  deliveryLocation.latitude  ${item_id}
+  ${right_lon}=  Отримати дані із тендера  ${username}  ${tender_uaid}  deliveryLocation.longitude  ${item_id}
   Порівняти координати  ${left_lat}  ${left_lon}  ${right_lat}  ${right_lon}
 
 
