@@ -1290,7 +1290,7 @@ ${item_meat}        ${True}
   Require Failure  ${viewer}  Отримати інформацію із тендера  ${TENDER['TENDER_UAID']}  bids
 
 ##############################################################################################
-#             AUCTION PERIOD
+#             AFTER BIDDING
 ##############################################################################################
 
 Неможливість завантажити документ першим учасником після закінчення прийому пропозицій
@@ -1300,6 +1300,7 @@ ${item_meat}        ${True}
   ...      provider1_bid
   [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}  ${TENDER['TENDER_UAID']}
   Run Keyword And Expect Error  *  Можливість завантажити документ в пропозицію користувачем ${provider}
+
 
 Неможливість змінити існуючу документацію пропозиції першим учасником після закінчення прийому пропозицій
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
@@ -1317,6 +1318,7 @@ ${item_meat}        ${True}
   [Setup]  Дочекатись дати закінчення прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
   Run Keyword And Expect Error  *  Можливість задати запитання на тендер користувачем ${provider}
 
+
 Неможливість задати запитання на перший предмет після закінчення періоду уточнень
   [Tags]   ${USERS.users['${provider}'].broker}: Задання запитання
   ...      provider
@@ -1324,6 +1326,7 @@ ${item_meat}        ${True}
   ...      question_to_item_after_bid_period
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   Run Keyword And Expect Error  *  Можливість задати запитання на 0 предмет користувачем ${provider}
+
 
 Неможливість задати запитання на перший лот після закінчення періоду уточнень
   [Tags]   ${USERS.users['${provider}'].broker}: Задання запитання
@@ -1349,6 +1352,7 @@ ${item_meat}        ${True}
   ...      ${USERS.users['${provider1}'].broker}
   ...      provider1_bid
   Run Keyword And Expect Error  *  Можливість змінити пропозицію до 1 користувачем ${provider1}
+
 
 Неможливість скасувати пропозицію другим учасником після закінчення прийому пропозицій
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
@@ -1385,7 +1389,7 @@ ${item_meat}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_view
-  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${tender_owner}    ${TENDER['TENDER_UAID']}
+  [Setup]  Дочекатись дати початку періоду прекваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
   Звірити відображення поля qualifications[0].status тендера із pending для користувача ${tender_owner}
 
 
@@ -1394,7 +1398,7 @@ ${item_meat}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_view
-  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${tender_owner}    ${TENDER['TENDER_UAID']}
+  [Setup]  Дочекатись дати початку періоду прекваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
   Звірити відображення поля qualifications[1].status тендера із pending для користувача ${tender_owner}
 
 
@@ -1457,5 +1461,23 @@ ${item_meat}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_approve_qualifications
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість затвердити остаточне рішення кваліфікації
+
+
+Відображення статусу блокування перед початком аукціону
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      pre-qualification_view
+  Звірити відображення поля status тендера із active.pre-qualification.stand-still для користувача ${tender_owner}
+
+
+Відображення дати закінчення періоду блокування перед початком аукціону
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      pre-qualification_view
+  [Teardown]  Дочекатись дати закінчення періоду прекваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
+  Отримати дані із поля qualificationPeriod.endDate тендера для усіх користувачів

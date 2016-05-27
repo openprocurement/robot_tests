@@ -688,15 +688,65 @@ Require Failure
   Дочекатись дати  ${date}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
-  ${next_status}=  Set variable if  'open' in '${mode}'  active.pre-qualification  active.auction
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Run Keyword And Expect Error  *
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      active.tendering
+
+
+Дочекатись дати початку періоду прекваліфікації
+  [Arguments]  ${username}  ${tender_uaid}
+  # XXX: HACK: Same as above
+  ${status}  ${date}=  Run Keyword And Ignore Error
+  ...      Set Variable
+  ...      ${USERS.users['${username}'].tender_data.data.tenderPeriod.endDate}
+  ${date}=  Set Variable If
+  ...      '${status}' == 'FAIL'
+  ...      ${USERS.users['${tender_owner}'].initial_data.data.tenderPeriod.endDate}
+  ...      ${date}
+  Дочекатись дати  ${date}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
   ...      5 min 15 sec
   ...      15 sec
   ...      Звірити статус тендера
   ...      ${username}
   ...      ${tender_uaid}
-  ...      ${next_status}
-  Run keyword if  '${next_status}' == 'active.auction'  Sleep  120  # Auction sync
+  ...      active.pre-qualification
+
+
+Дочекатись дати закінчення періоду прекваліфікації
+  [Arguments]  ${username}  ${tender_uaid}
+  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.qualificationPeriod.endDate}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Run Keyword And Expect Error  *
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      active.pre-qualification.stand-still
+
+
+Дочекатись дати початку періоду аукціону
+  [Arguments]  ${username}  ${tender_uaid}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      active.auction
+  Sleep  120  # Auction sync
 
 
 Дочекатись дати закінчення періоду подання скарг
