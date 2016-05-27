@@ -394,7 +394,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      view_tender_doc
+  ...      view_tender_doc_title
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля documents[0].title тендера із ${USERS.users['${tender_owner}']['documents']['filepath']} для користувача ${viewer}
 
@@ -403,7 +403,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      view_lot_doc
+  ...      view_lot_doc_title
   Звірити відображення заголовку документації до всіх лотів для користувача ${viewer}
 
 
