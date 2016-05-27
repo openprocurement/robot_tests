@@ -449,7 +449,7 @@ def get_document_index_by_id(data, document_id):
 
 def generate_test_bid_data(tender_data):
     bid = test_bid_data()
-    if 'aboveThreshold' in tender_data['procurementMethodType']:
+    if 'aboveThreshold' in tender_data.get('procurementMethodType', ''):
         bid.data.selfEligible = True
         bid.data.selfQualified = True
     if 'lots' in tender_data:
