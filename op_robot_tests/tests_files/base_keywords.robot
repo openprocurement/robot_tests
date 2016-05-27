@@ -194,7 +194,7 @@ Resource           resource.robot
   Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${data}  ${field}  ${lot_id}
 
 
-Звірити відображення документації до всіх лотів для користувача ${username}
+Звірити відображення заголовку документації до всіх лотів для користувача ${username}
   ${number_of_lots}=  Get Length  ${USERS.users['${tender_owner}'].initial_data.data.lots}
   :FOR  ${lot_index}  IN RANGE  ${number_of_lots}
   \  ${lot_index}=  Convert to integer  ${lot_index}

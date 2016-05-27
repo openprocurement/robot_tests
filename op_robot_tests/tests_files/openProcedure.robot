@@ -381,13 +381,30 @@ ${item_meat}        ${True}
   Можливість додати документацію до тендера
 
 
-Можливість додати документацію до першого лоту
+Можливість додати документацію до всіх лотів
   [Tags]    ${USERS.users['${tender_owner}'].broker}: Додання документації
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      add_lot_doc
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість додати документацію до 0 лоту
+  Можливість додати документацію до всіх лотів
+
+
+Відображення заголовку документації до тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      view_tender_doc
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля documents[0].title тендера із ${USERS.users['${tender_owner}']['documents']['filepath']} для користувача ${viewer}
+
+
+Відображення заголовку документації до всіх лотів
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      view_lot_doc
+  Звірити відображення заголовку документації до всіх лотів для користувача ${viewer}
 
 
 Можливість зменшити бюджет першого лоту
@@ -493,12 +510,14 @@ ${item_meat}        ${True}
   ...      add_tender_meat
   Звірити відображення поля featureOf у новоствореному неціновому показнику для користувача ${viewer}
 
+
 Можливість видалити неціновий показник на тендер
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_tender_meat
   Можливість видалити -1 неціновий показник
+
 
 Можливість додати неціновий показник на перший лот
   [Tags]    ${USERS.users['${tender_owner}'].broker}:  Редагування тендера
