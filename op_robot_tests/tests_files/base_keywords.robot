@@ -127,6 +127,16 @@ Resource           resource.robot
   ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}]}
   ${filepath}=  create_fake_doc
   Run As  ${tender_owner}  Завантажити документ в лот  ${filepath}  ${TENDER['TENDER_UAID']}  ${lot_id}
+  ${empty_list}=  Create List
+  ${lots_documents}=  Get variable value  ${USERS.users['${tender_owner}'].lots_documents}  ${empty_list}
+  Append to list  ${lots_documents}  ${filepath}
+  Set to dictionary  ${USERS.users['${tender_owner}']}  lots_documents=${lots_documents}
+  Log  ${USERS.users['${tender_owner}'].lots_documents}
+
+Можливість додати документацію до всіх лотів
+  ${number_of_lots}=  Get Length  ${USERS.users['${tender_owner}'].initial_data.data.lots}
+  :FOR  ${lot_index}  IN RANGE  ${number_of_lots}
+  \  Можливість додати документацію до ${lot_index} лоту
 
 
 Можливість додати предмет закупівлі в ${lot_index} лот
