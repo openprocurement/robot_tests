@@ -189,6 +189,19 @@ Resource           resource.robot
   ...      object_id=${lot_id}
 
 
+Звірити відображення поля ${field} ${lot_index} лоту з ${data} для користувача ${username}
+  ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data.lots[${lot_index}]}
+  Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${data}  ${field}  ${lot_id}
+
+
+Звірити відображення документації до всіх лотів для користувача ${username}
+  ${number_of_lots}=  Get Length  ${USERS.users['${tender_owner}'].initial_data.data.lots}
+  :FOR  ${lot_index}  IN RANGE  ${number_of_lots}
+  \  ${lot_index}=  Convert to integer  ${lot_index}
+  \  ${doc_index}=  get_document_index_by_id  ${USERS.users['${username}'].tender_data.data.documents}  ${USERS.users['${tender_owner}'].lots_documents[${lot_index}]}
+  \  Звірити відображення поля documents[${doc_index}].title тендера із ${USERS.users['${tender_owner}'].lots_documents[${lot_index}]} для користувача ${username}
+
+
 Звірити відображення поля ${field} у новоствореному лоті для усіх користувачів
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
   \  Звірити відображення поля ${field} у новоствореному лоті для користувача ${username}
