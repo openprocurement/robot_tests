@@ -1471,7 +1471,8 @@ ${item_meat}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_view
-  Звірити відображення поля status тендера із active.pre-qualification.stand-still для користувача ${tender_owner}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  Звірити статус тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  active.pre-qualification.stand-still
 
 
 Відображення дати закінчення періоду блокування перед початком аукціону
