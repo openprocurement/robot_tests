@@ -353,6 +353,15 @@ ${item_meat}        ${True}
   Звірити відображення поля title усіх нецінових показників для усіх користувачів
 
 
+Відображення коду нецінових показників
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      meat_view
+  Звірити відображення поля code усіх нецінових показників для усіх користувачів
+
+
 Відображення опису нецінових показників
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
   ...      viewer
