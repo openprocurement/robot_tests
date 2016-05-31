@@ -381,6 +381,24 @@ ${item_meat}        ${True}
 #             Редагування тендера
 ##############################################################################################
 
+Можливість мінити дату закінчення періоду подання пропозиції на 1 день
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      extend_tendering_period
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${endDate}=  add_minutes_to_date  ${USERS.users['${tender_owner}'].tender_data.data.tenderPeriod.endDate}  1
+  Можливість змінити поле tenderPeriod.endDate тендера на ${endDate}
+
+
+Відображення зміни закінчення періоду прийому пропозицій тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      extend_tendering_period
+  Звірити відображення дати tenderPeriod.endDate тендера для усіх користувачів
+
+
 Можливість додати документацію до тендера
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
   ...      tender_owner

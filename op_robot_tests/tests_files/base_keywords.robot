@@ -35,6 +35,8 @@ Resource           resource.robot
 
 Можливість змінити поле ${field_name} тендера на ${field_value}
   Run As  ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  ${field_name}  ${field_value}
+  ${path_to_field}  ${field_name}=  Split String From Right  ${field_name}  .  ${1}
+  Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data.${path_to_field}}  ${field_name}
 
 
 Можливість додати документацію до тендера
