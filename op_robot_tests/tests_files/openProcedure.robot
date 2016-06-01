@@ -1129,7 +1129,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      bid_before_bid_period
+  ...      bid_before_tendering_period
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   Run Keyword And Expect Error  *  Можливість подати цінову пропозицію користувачем ${provider}
 
@@ -1307,7 +1307,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Подання пропозиції
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      provider_bid  provider1_bid
+  ...      bid_view_in_tendering_period
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Require Failure  ${viewer}  Отримати інформацію із тендера  ${TENDER['TENDER_UAID']}  bids
 
@@ -1319,7 +1319,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
-  ...      provider1_bid
+  ...      provider1_bid_add_doc_after_tendering_period
   [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}  ${TENDER['TENDER_UAID']}
   Run Keyword And Expect Error  *  Можливість завантажити документ в пропозицію користувачем ${provider}
 
@@ -1328,7 +1328,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
-  ...      provider1_bid
+  ...      provider1_bid_doc_modify_after_tendering_period
   Run Keyword And Expect Error  *  Можливість змінити документацію цінової пропозиції користувачем ${provider}
 
 
@@ -1336,7 +1336,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${provider}'].broker}: Задання запитання
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      question_to_tender_after_bid_period
+  ...      question_to_tender_after_tendering_period
   [Setup]  Дочекатись дати закінчення прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
   Run Keyword And Expect Error  *  Можливість задати запитання на тендер користувачем ${provider}
 
@@ -1345,7 +1345,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${provider}'].broker}: Задання запитання
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      question_to_item_after_bid_period
+  ...      question_to_item_after_tendering_period
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   Run Keyword And Expect Error  *  Можливість задати запитання на 0 предмет користувачем ${provider}
 
@@ -1354,7 +1354,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${provider}'].broker}: Задання запитання
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      question_to_lot_after_bid_period
+  ...      question_to_lot_after_tendering_period
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   Run Keyword And Expect Error  *  Можливість задати запитання на 0 лот користувачем ${provider}
 
@@ -1363,7 +1363,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
-  ...      provider1_bid
+  ...      provider1_bid_modify_after_tendering_period
   [Setup]  Дочекатись дати закінчення прийому пропозицій  ${provider1}  ${TENDER['TENDER_UAID']}
   Run Keyword And Expect Error  *  Можливість змінити пропозицію до 50000 користувачем ${provider1}
 
@@ -1372,7 +1372,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
-  ...      provider1_bid
+  ...      provider1_bid_modify_after_tendering_period
   Run Keyword And Expect Error  *  Можливість змінити пропозицію до 1 користувачем ${provider1}
 
 
@@ -1380,7 +1380,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
-  ...      provider1_bid
+  ...      provider1_bid_cancel_after_tendering_period
   Run Keyword And Expect Error  *  Можливість скасувати цінову пропозицію користувачем ${provider1}
 
 
