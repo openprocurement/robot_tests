@@ -1438,6 +1438,7 @@ ${item_meat}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_approve_first_bid
+  [Setup]  Дочекатись дати початку періоду прекваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість підтвердити 0 пропозицію кваліфікації
 
@@ -1475,7 +1476,7 @@ ${item_meat}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_approve_second_bid
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість підтвердити 2 пропозицію кваліфікації
+  Можливість підтвердити -1 пропозицію кваліфікації
 
 
 Можливість затвердити остаточне рішення кваліфікації
