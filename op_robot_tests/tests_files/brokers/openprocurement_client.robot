@@ -624,8 +624,16 @@ Library  openprocurement_client_helper.py
 ##############################################################################
 
 Подати цінову пропозицію
-  [Arguments]  ${username}  ${tender_uaid}  ${bid}
+  [Arguments]  ${username}  ${tender_uaid}  ${bid}  ${lots_ids}=${empty_list}  ${features_ids}=${empty_list}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  : FOR    ${index}    ${lot_id}    IN ENUMERATE    @{lots_ids}
+  \    ${lot_index}=  get_object_index_by_id  ${tender.data.lots}  ${lot_id}
+  \    ${lot_id}=  Get Variable Value  ${tender.data.lots[${lot_index}].id}
+  \    Set To Dictionary  ${bid.data.lotValues[${index}]}  relatedLot=${lot_id}
+  : FOR    ${index}    ${feature_id}    IN ENUMERATE    @{features_ids}
+  \    ${feature_index}=  get_object_index_by_id  ${tender.data.features}  ${feature_id}
+  \    ${code}=  Get Variable Value  ${tender.data.features[${feature_index}].code}
+  \    Set To Dictionary  ${bid.data.parameters[${index}]}  code=${code}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_bid  ${tender}  ${bid}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${reply['access']['token']}
   Set To Dictionary   ${USERS.users['${username}'].bidresponses['bid'].data}  id=${reply['data']['id']}

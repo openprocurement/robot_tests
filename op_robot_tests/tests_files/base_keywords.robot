@@ -610,7 +610,9 @@ Resource           resource.robot
   ${bid}=  Підготувати дані для подання пропозиції  ${username}
   ${bidresponses}=  Create Dictionary  bid=${bid}
   Set To Dictionary  ${USERS.users['${username}']}  bidresponses=${bidresponses}
-  ${resp}=  Run As  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}
+  ${lots_ids}=  Отримати ідентифікатори об’єктів  ${username}  lots
+  ${features_ids}=  Отримати ідентифікатори об’єктів  ${username}  features
+  ${resp}=  Run As  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}  ${lots_ids}  ${features_ids}
   Set To Dictionary  ${USERS.users['${username}'].bidresponses}  resp=${resp}
 
 
