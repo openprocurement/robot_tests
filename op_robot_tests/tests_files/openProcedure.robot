@@ -31,7 +31,7 @@ ${item_meat}        ${True}
   ...      viewer  tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
-  ...      search_tender
+  ...      find_tender
   Можливість знайти тендер по ідентифікатору для усіх користувачів
 
 ##############################################################################################
