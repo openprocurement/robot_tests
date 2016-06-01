@@ -208,3 +208,15 @@ uub:
         provider1:      UUB_Provider1
         viewer:         UUB_Viewer
     timeout_on_wait: 300
+APStender:
+    keywords_file: aps
+    roles:
+        viewer:         aps_Viewer
+        provider:       aps_Provider
+        provider1:      aps_Provider1
+        tender_owner:   aps_Owner
+    intervals:
+        default:
+            enquiry: [0, 21]
+            tender:  [0, 25] 
+    timeout_on_wait: 10
