@@ -274,7 +274,7 @@ Resource           resource.robot
 #             FEATURES
 ##############################################################################################
 
-Можливість добавити неціновий показник на тендер
+Можливість додати неціновий показник на тендер
   ${feature}=  Підготувати дані для створення нецінового показника
   Set To Dictionary  ${feature}  featureOf=tenderer
   Run As  ${tender_owner}  Додати неціновий показник на тендер  ${TENDER['TENDER_UAID']}  ${feature}
@@ -284,7 +284,7 @@ Resource           resource.robot
   Set To Dictionary  ${USERS.users['${tender_owner}']}  feature_data=${feature_data}
 
 
-Можливість добавити неціновий показник на ${lot_index} лот
+Можливість додати неціновий показник на ${lot_index} лот
   ${feature}=  Підготувати дані для створення нецінового показника
   Set To Dictionary  ${feature}  featureOf=lot
   ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}]}
@@ -295,7 +295,7 @@ Resource           resource.robot
   Set To Dictionary  ${USERS.users['${tender_owner}']}  feature_data=${feature_data}
 
 
-Можливість добавити неціновий показник на ${item_index} предмет
+Можливість додати неціновий показник на ${item_index} предмет
   ${feature}=  Підготувати дані для створення нецінового показника
   Set To Dictionary  ${feature}  featureOf=item
   ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data['items'][${item_index}]}
