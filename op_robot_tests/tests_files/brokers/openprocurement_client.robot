@@ -443,7 +443,8 @@ Library  openprocurement_client_helper.py
   ...      ${award_index}
   ...      ${document}
 
-  ${data}=  Create Dictionary  status=claim
+  ${status}=  Set variable if  'open' in '${mode}'  pending  claim
+  ${data}=  Create Dictionary  status=${status}
   ${confirmation_data}=  Create Dictionary  data=${data}
   Подати вимогу про виправлення визначення переможця
   ...      ${username}
