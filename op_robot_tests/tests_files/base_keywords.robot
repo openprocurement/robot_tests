@@ -509,7 +509,8 @@ Resource           resource.robot
 
 Можливість скасувати вимогу про виправлення визначення ${award_index} переможця
   ${cancellation_reason}=  create_fake_sentence
-  ${data}=  Create Dictionary  status=cancelled  cancellationReason=${cancellation_reason}
+  ${status}=  Set variable if  'open' in '${mode}'  stopping  cancelled
+  ${data}=  Create Dictionary  status=${status}  cancellationReason=${cancellation_reason}
   ${cancellation_data}=  Create Dictionary  data=${data}
   ${cancellation_data}=  munch_dict  arg=${cancellation_data}
   Run As  ${provider}
