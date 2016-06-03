@@ -446,7 +446,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      lot_value_amount_modify
+  ...      modify_lot_value_amount
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість змінити на 99 відсотки бюджет 0 лоту
 
@@ -455,7 +455,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      lot_value_amount_modify
+  ...      modify_lot_value_amount
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість змінити на 101 відсотки бюджет 0 лоту
 
@@ -717,7 +717,7 @@ ${item_meat}        ${True}
 
 Відображення заголовку анонімного запитання на перший предмет без відповіді
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення запитання
-  ...      viewer
+  ...      viewer tender_owner provider provider1
   ...      ${USERS.users['${viewer}'].broker}
   ...      ask_question_to_item
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
@@ -763,7 +763,7 @@ ${item_meat}        ${True}
 
 Відображення заголовку анонімного запитання на перший лот без відповіді
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення запитання
-  ...      viewer
+  ...      viewer tender_owner provider provider1
   ...      ${USERS.users['${viewer}'].broker}
   ...      ask_question_to_lot
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
@@ -801,7 +801,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      tender_modify_after_questions
+  ...      modify_tender_after_questions
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_description}=  create_fake_sentence
@@ -813,7 +813,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      lot_modify_after_questions
+  ...      modify_lot_after_questions
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_description}=  create_fake_sentence
@@ -982,7 +982,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      tender_modify_after_claim
+  ...      modify_tender_after_claim
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_description}=  create_fake_sentence
@@ -997,7 +997,7 @@ ${item_meat}        ${True}
   [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
-  ...  lot_claim
+  ...  create_lot_claim
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість створити вимогу про виправлення умов 0 лоту із документацією
@@ -1006,7 +1006,7 @@ ${item_meat}        ${True}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  lot_claim
+  ...  create_lot_claim
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля description вимоги із ${USERS.users['${provider}'].claim_data.claim.data.description} для користувача ${viewer}
 
@@ -1015,7 +1015,7 @@ ${item_meat}        ${True}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  lot_claim
+  ...  create_lot_claim
   Звірити відображення поля title вимоги із ${USERS.users['${provider}'].claim_data.claim.data.title} для користувача ${viewer}
 
 
@@ -1023,7 +1023,7 @@ ${item_meat}        ${True}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  lot_claim
+  ...  create_lot_claim
   Звірити відображення поля document.title вимоги із ${USERS.users['${provider}'].claim_data.document} для користувача ${viewer}
 
 
@@ -1031,7 +1031,7 @@ ${item_meat}        ${True}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  lot_claim
+  ...  create_lot_claim
   Звірити відображення поля status вимоги із claim для користувача ${viewer}
 
 
@@ -1151,7 +1151,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      lot_modify_after_claim
+  ...      modify_lot_after_claim
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_description}=  create_fake_sentence
@@ -1166,7 +1166,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      bid_before_tendering_period
+  ...      make_bid_before_tendering_period
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   Run Keyword And Expect Error  *  Можливість подати цінову пропозицію користувачем ${provider}
 
@@ -1175,7 +1175,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      bid_without_related_lot
+  ...      make_bid_without_related_lot
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
   Неможливість подати цінову пропозицію без прив’язки до лоту користувачем ${provider}
 
@@ -1184,7 +1184,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      bid_without_parameters
+  ...      make_bid_without_parameters
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
   Неможливість подати цінову пропозицію без нецінових показників користувачем ${provider}
 
@@ -1202,7 +1202,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      modify_provider_bid
+  ...      modify_bid_by_provider
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість змінити пропозицію до 50000 користувачем ${provider}
 
@@ -1211,7 +1211,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      modify_provider_bid
+  ...      modify_bid_by_provider
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість змінити пропозицію до 10 користувачем ${provider}
 
@@ -1220,7 +1220,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      modify_provider_bid
+  ...      modify_bid_by_provider
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість завантажити документ в пропозицію користувачем ${provider}
 
@@ -1335,7 +1335,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      cancel_provider_bid
+  ...      cancel_bid_by_provider
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість скасувати цінову пропозицію користувачем ${provider}
 
@@ -1354,18 +1354,18 @@ ${item_meat}        ${True}
 
 Неможливість завантажити документ першим учасником після закінчення прийому пропозицій
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
-  ...      provider1
+  ...      provider
   ...      ${USERS.users['${provider1}'].broker}
-  ...      provider_add_bid_doc_after_tendering_period
+  ...      add_bid_doc_after_tendering_period_by_provider
   [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}  ${TENDER['TENDER_UAID']}
   Run Keyword And Expect Error  *  Можливість завантажити документ в пропозицію користувачем ${provider}
 
 
 Неможливість змінити існуючу документацію пропозиції першим учасником після закінчення прийому пропозицій
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
-  ...      provider1
+  ...      provider
   ...      ${USERS.users['${provider1}'].broker}
-  ...      provider_modify_bid_doc_after_tendering_period
+  ...      modify_bid_doc_after_tendering_period_by_provider
   Run Keyword And Expect Error  *  Можливість змінити документацію цінової пропозиції користувачем ${provider}
 
 
@@ -1400,7 +1400,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
-  ...      provider1_bid_modify_after_tendering_period
+  ...      modify_bid_after_tendering_period_by_provider1
   [Setup]  Дочекатись дати закінчення прийому пропозицій  ${provider1}  ${TENDER['TENDER_UAID']}
   Run Keyword And Expect Error  *  Можливість змінити пропозицію до 50000 користувачем ${provider1}
 
@@ -1409,7 +1409,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
-  ...      provider1_bid_modify_after_tendering_period
+  ...      modify_bid_after_tendering_period_by_provider1
   Run Keyword And Expect Error  *  Можливість змінити пропозицію до 1 користувачем ${provider1}
 
 
@@ -1417,7 +1417,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
-  ...      provider1_bid_cancel_after_tendering_period
+  ...      cancel_bid_after_tendering_period_by_provider1
   Run Keyword And Expect Error  *  Можливість скасувати цінову пропозицію користувачем ${provider1}
 
 
@@ -1465,7 +1465,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      pre-qualification_add_fist_bid_doc
+  ...      pre-qualification_add_doc_to_first_bid
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість завантажити документ у кваліфікацію 0 пропозиції
 
@@ -1484,7 +1484,7 @@ ${item_meat}        ${True}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      pre-qualification_add_second_bid_doc
+  ...      pre-qualification_add_doc_to_second_bid
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість завантажити документ у кваліфікацію 1 пропозиції
 
