@@ -621,7 +621,7 @@ Library  openprocurement_client_helper.py
   Log  ${reply}
 
 
-Отримати дані із скарги на умови
+Отримати інформацію із скарги на умови
   [Arguments]  ${username}  ${complaintID}  ${field_name}
   ${complaints}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.complaints}
   ${complaint_index}=  get_complaint_index_by_complaintID  ${complaints}  ${complaintID}
@@ -629,7 +629,7 @@ Library  openprocurement_client_helper.py
   [Return]  ${field_value}
 
 
-Отримати дані із скарги про виправлення визначення переможця
+Отримати інформацію із скарги про виправлення визначення переможця
   [Arguments]  ${username}  ${award_index}  ${complaintID}  ${field_name}
   ${complaints}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.awards[${award_index}].complaints}
   ${complaint_index}=  get_complaint_index_by_complaintID  ${complaints}  ${complaintID}

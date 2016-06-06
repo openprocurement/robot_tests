@@ -536,7 +536,7 @@ Get Broker Property By Username
   ...      ${given_value}
   ...      ${field_name}
   ...      ELSE
-  ...      Run as  ${username}  Отримати дані із скарги на умови  ${complaintID}  ${field_name}
+  ...      Run as  ${username}  Отримати інформацію із скарги на умови  ${complaintID}  ${field_name}
   Порівняти об'єкти  ${given_value}  ${received_value}
 
 
@@ -551,7 +551,7 @@ Get Broker Property By Username
   ...      ${field_name}
   ...      ${award_index}
   ...      ELSE
-  ...      Run as  ${username}  Отримати дані із скарги про виправлення визначення переможця  ${award_index}  ${complaintID}  ${field_name}
+  ...      Run as  ${username}  Отримати інформацію із скарги про виправлення визначення переможця  ${award_index}  ${complaintID}  ${field_name}
   Порівняти об'єкти  ${given_value}  ${received_value}
 
 
