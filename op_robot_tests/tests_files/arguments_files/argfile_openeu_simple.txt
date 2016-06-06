@@ -13,8 +13,8 @@
 
 -i create_tender
 -i find_tender
--i tender_viewANDminimal
--i lot_viewANDminimal
+-i tender_view
+-i lot_view
 
 
 -i make_bid_by_provider
