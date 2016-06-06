@@ -620,6 +620,32 @@ Library  openprocurement_client_helper.py
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_award_complaint  ${tender}  ${escalating_data}  ${tender.data.awards[${award_index}].id}
   Log  ${reply}
 
+
+Отримати дані із скарги на умови
+  [Arguments]  ${username}  ${complaintID}  ${field_name}
+  ${complaints}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.complaints}
+  ${complaint_index}=  get_complaint_index_by_complaintID  ${complaints}  ${complaintID}
+  ${field_value}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.complaints[${complaint_index}]['${field_name}']}
+  [Return]  ${field_value}
+
+
+Отримати дані із скарги про виправлення визначення переможця
+  [Arguments]  ${username}  ${award_index}  ${complaintID}  ${field_name}
+  ${complaints}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.awards[${award_index}].complaints}
+  ${complaint_index}=  get_complaint_index_by_complaintID  ${complaints}  ${complaintID}
+  ${field_value}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.awards[${award_index}].complaints[${complaint_index}]['${field_name}']}
+  [Return]  ${field_value}
+
+
+Отримати поле документації до скарги
+  [Arguments]  ${username}  ${complaintID}  ${document_id}  ${field_name}  ${award_index}=${None}
+  ${complaints}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.awards[${award_index}].complaints}  ${USERS.users['${username}'].tender_data.data.complaints}
+  ${complaint_index}=  get_complaint_index_by_complaintID  ${complaints}  ${complaintID}
+  Log  ${complaints}
+  ${document_index}=  get_document_index_by_id  ${complaints[${complaint_index}].documents}  ${document_id}
+  ${field_value}=  Get Variable Value  ${complaints[${complaint_index}].documents[${document_index}]['${field_name}']}
+  [Return]  ${field_value}
+
 ##############################################################################
 #             Bid operations
 ##############################################################################

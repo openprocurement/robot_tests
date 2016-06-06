@@ -528,57 +528,31 @@ Get Broker Property By Username
 
 Звірити поле скарги із значенням
   [Arguments]  ${username}  ${given_value}  ${field_name}  ${complaintID}
-  ${received_value}=  Отримати дані із скарги на умови  ${username}  ${complaintID}  ${field_name}  ${given_value}
-  Порівняти об'єкти  ${given_value}  ${received_value}
-
-
-Отримати дані із скарги на умови
-  [Arguments]  ${username}  ${complaintID}  ${field_name}  ${given_value}
-  ${complaints}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.complaints}
-  ${complaint_index}=  get_complaint_index_by_complaintID  ${complaints}  ${complaintID}
   ${status}=  Call method  ${field_name}  startswith  document.
   ${fetched_field_name}=  Run keyword if  ${status} == ${True}  Fetch From Right  ${field_name}  .
   ${field_name}=  Set variable if  ${status} == ${True}  ${fetched_field_name}  ${field_name}
-  Run keyword And Return if  ${status} == ${True}  Отримати поле документа
-  ...      ${username}
-  ...      ${complaints[${complaint_index}].documents}
+  ${received_value}=  Run keyword if  ${status} == ${True}  Run as  ${username}  Отримати поле документації до скарги
+  ...      ${complaintID}
   ...      ${given_value}
   ...      ${field_name}
-  ${field_value}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.complaints[${complaint_index}]['${field_name}']}
-  Log  ${field_value}
-  [Return]  ${field_value}
+  ...      ELSE
+  ...      Run as  ${username}  Отримати дані із скарги на умови  ${complaintID}  ${field_name}
+  Порівняти об'єкти  ${given_value}  ${received_value}
 
 
 Звірити поле скарги про виправлення визначення переможця із значенням
   [Arguments]  ${username}  ${given_value}  ${field_name}  ${award_index}  ${complaintID}
-  ${received_value}=  Отримати дані із скарги про виправлення визначення переможця  ${username}  ${award_index}  ${complaintID}  ${field_name}  ${given_value}
-  Порівняти об'єкти  ${given_value}  ${received_value}
-
-
-Отримати дані із скарги про виправлення визначення переможця
-  [Arguments]  ${username}  ${award_index}  ${complaintID}  ${field_name}  ${given_value}
-  ${complaints}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.awards[${award_index}].complaints}
-  ${complaint_index}=  get_complaint_index_by_complaintID  ${complaints}  ${complaintID}
   ${status}=  Call method  ${field_name}  startswith  document.
   ${fetched_field_name}=  Run keyword if  ${status} == ${True}  Fetch From Right  ${field_name}  .
   ${field_name}=  Set variable if  ${status} == ${True}  ${fetched_field_name}  ${field_name}
-  Run keyword And Return if  ${status} == ${True}  Отримати поле документа
-  ...      ${username}
-  ...      ${complaints[${complaint_index}].documents}
+  ${received_value}=  Run keyword if  ${status} == ${True}  Run as  ${username}  Отримати поле документації до скарги
+  ...      ${complaintID}
   ...      ${given_value}
   ...      ${field_name}
-  Log  ${USERS.users['${username}'].tender_data}
-  ${field_value}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.awards[${award_index}].complaints[${complaint_index}]['${field_name}']}
-  Log  ${field_value}
-  [Return]  ${field_value}
-
-
-Отримати поле документа
-  [Arguments]  ${username}  ${documents}  ${document_id}  ${field_name}
-  ${document_index}=  get_document_index_by_id  ${documents}  ${document_id}
-  ${field_value}=  Get Variable Value  ${documents[${document_index}]['${field_name}']}
-  Log  ${field_value}
-  [Return]  ${field_value}
+  ...      ${award_index}
+  ...      ELSE
+  ...      Run as  ${username}  Отримати дані із скарги про виправлення визначення переможця  ${award_index}  ${complaintID}  ${field_name}
+  Порівняти об'єкти  ${given_value}  ${received_value}
 
 
 Run As
