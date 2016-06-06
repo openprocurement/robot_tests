@@ -44,7 +44,7 @@ Library  openprocurement_client_helper.py
 Отримати документ
   [Arguments]  ${username}  ${tender_uaid}  ${url}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${token}=  Get Variable Value  ${USERS.users['${username}'].access_token}  no_token
+  ${token}=  Get Variable Value  ${USERS.users['${username}'].access_token}
   ${contents}  ${filename}=  Call Method  ${USERS.users['${username}'].client}  get_file   ${tender}   ${url}   ${token}
   [return]   ${contents}  ${filename}
 
