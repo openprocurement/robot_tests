@@ -1,0 +1,21 @@
+-s openProcedure
+
+
+-v mode:openua
+
+-v number_of_items:1
+-v number_of_lots:1
+
+-v tender_meat:False
+-v item_meat:False
+-v lot_meat:False
+
+
+-i create_tender
+-i find_tender
+-i tender_viewANDminimal
+-i lot_viewANDminimal
+
+
+-i make_bid_by_provider
+-i make_bid_by_provider1
