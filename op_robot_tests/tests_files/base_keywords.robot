@@ -706,17 +706,7 @@ Resource           resource.robot
 ##############################################################################################
 
 Можливість скасувати цінову пропозицію користувачем ${username}
-  ${canceledbidresp}=  Run As  ${username}  Скасувати цінову пропозицію  ${TENDER['TENDER_UAID']}
-
-
-Можливість скасувати закупівлю
-  ${cancellation_data}=  Підготувати дані про скасування  ${tender_owner}
-  Run as  ${tender_owner}
-  ...      Скасувати закупівлю
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${cancellation_data['cancellation_reason']}
-  ...      ${cancellation_data['document']}
-  ...      ${cancellation_data['description']}
+  Run As  ${username}  Скасувати цінову пропозицію  ${TENDER['TENDER_UAID']}
 
 ##############################################################################################
 #             Awarding
