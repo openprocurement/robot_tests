@@ -16,55 +16,6 @@ ${item_meat}      ${False}
 
 *** Test Cases ***
 ##############################################################################################
-#             CANCELLATIONS
-##############################################################################################
-Можливість створити переговорну процедуру за нагальною потребою для тестування скасування
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість створити процедуру
-  ...  tender_owner
-  ...  ${USERS.users['${tender_owner}'].broker}
-  ...  minimal
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість оголосити тендер
-
-
-Можливість скасувати переговорну процедуру за нагальною потребою
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість скасувати процедуру
-  ...  tender_owner
-  ...  ${USERS.users['${tender_owner}'].broker}
-  ...  level2
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість скасувати закупівлю
-
-
-Відображення активного статусу скасування переговорної процедури за нагальною потребою
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування процедури
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля cancellations[0].status тендера із active для користувача ${viewer}
-
-
-Відображення причини скасування переговорної процедури за нагальною потребою
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування процедури
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  Звірити відображення поля cancellations[0].reason тендера із ${USERS.users['${tender_owner}']['cancellation_data']['cancellation_reason']} для користувача ${viewer}
-
-
-Відображення опису документа скасування переговорної процедури за нагальною потребою
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування процедури
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  Звірити відображення поля cancellations[0].documents[0].description тендера із ${USERS.users['${tender_owner}']['cancellation_data']['description']} для користувача ${viewer}
-
-
-Відображення заголовку документа скасування переговорної процедури за нагальною потребою
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування процедури
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  Звірити відображення поля cancellations[0].documents[0].title тендера із ${USERS.users['${tender_owner}']['cancellation_data']['document']} для користувача ${viewer}
-
-##############################################################################################
 #             MAIN
 ##############################################################################################
 
