@@ -42,10 +42,10 @@ Default:
 Quinta:
     intervals:
         default:
-            enquiry: [0, 10]
-            tender:  [0, 10]
+            enquiry: [0, 20]
+            tender:  [0, 20]
         openua:
-            tender:  [1, 15]
+            tender:  [1, 30]
         openeu:
             tender:  [1, 30]
     keywords_file: openprocurement_client
