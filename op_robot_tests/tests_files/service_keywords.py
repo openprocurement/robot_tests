@@ -143,7 +143,7 @@ def compare_coordinates(left_lat, left_lon, right_lat, right_lon, accuracy=0.1):
     return True
 
 
-def log_object_data(data, file_name=None, format="yaml", update=False):
+def log_object_data(data, file_name=None, format="yaml", update=False, artifact=False):
     """Log object data in pretty format (JSON or YAML)
 
     Two output formats are supported: "yaml" and "json".
@@ -164,8 +164,11 @@ def log_object_data(data, file_name=None, format="yaml", update=False):
     if not isinstance(data, Munch):
         data = munchify(data)
     if file_name:
-        output_dir = BuiltIn().get_variable_value("${OUTPUT_DIR}")
-        file_path = os.path.join(output_dir, file_name + '.' + format)
+        if artifact:
+            file_path = os.path.join(os.path.dirname(__file__), 'data', file_name + '.' + format)
+        else:
+            output_dir = BuiltIn().get_variable_value("${OUTPUT_DIR}")
+            file_path = os.path.join(output_dir, file_name + '.' + format)
         if update:
             try:
                 with open(file_path, "r+") as file_obj:

@@ -176,7 +176,7 @@ Get Broker Property By Username
   Run Keyword If  '${status}'=='PASS'
   ...      Set To Dictionary   ${artifact}   lots=${lots_ids}
   Log   ${artifact}
-  log_object_data  ${artifact}  artifact  update=${True}
+  log_object_data  ${artifact}  file_name=artifact  update=${True}  artifact=${True}
 
 
 Завантажити дані про тендер
@@ -193,7 +193,7 @@ Get Broker Property By Username
   Set Suite Variable  ${mode}
   Set Suite Variable  ${lot_index}
   Set Suite Variable  ${TENDER}
-  log_object_data  ${ARTIFACT}  artifact
+  log_object_data  ${ARTIFACT}  file_name=artifact  update=${True}  artifact=${True}
 
 
 Підготувати дані для створення тендера
