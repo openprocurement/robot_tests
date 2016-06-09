@@ -621,24 +621,18 @@ Library  openprocurement_client_helper.py
   Log  ${reply}
 
 
-Отримати інформацію із скарги на умови
-  [Arguments]  ${username}  ${complaintID}  ${field_name}
-  ${complaints}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.complaints}
+Отримати інформацію із скарги
+  [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${field_name}  ${award_index}=${None}
+  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${complaints}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.awards[${award_index}].complaints}  ${USERS.users['${username}'].tender_data.data.complaints}
   ${complaint_index}=  get_complaint_index_by_complaintID  ${complaints}  ${complaintID}
-  ${field_value}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.complaints[${complaint_index}]['${field_name}']}
-  [Return]  ${field_value}
-
-
-Отримати інформацію із скарги про виправлення визначення переможця
-  [Arguments]  ${username}  ${award_index}  ${complaintID}  ${field_name}
-  ${complaints}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.awards[${award_index}].complaints}
-  ${complaint_index}=  get_complaint_index_by_complaintID  ${complaints}  ${complaintID}
-  ${field_value}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.awards[${award_index}].complaints[${complaint_index}]['${field_name}']}
+  ${field_value}=  Get Variable Value  ${complaints[${complaint_index}]['${field_name}']}
   [Return]  ${field_value}
 
 
 Отримати поле документації до скарги
-  [Arguments]  ${username}  ${complaintID}  ${document_id}  ${field_name}  ${award_index}=${None}
+  [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${document_id}  ${field_name}  ${award_index}=${None}
+  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${complaints}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.awards[${award_index}].complaints}  ${USERS.users['${username}'].tender_data.data.complaints}
   ${complaint_index}=  get_complaint_index_by_complaintID  ${complaints}  ${complaintID}
   Log  ${complaints}
