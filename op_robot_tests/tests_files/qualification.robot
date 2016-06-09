@@ -44,6 +44,15 @@ ${award_index}      ${0}
   Звірити відображення поля description вимоги про виправлення визначення ${award_index} переможця із ${USERS.users['${provider}'].claim_data.claim.data.description} для користувача ${viewer}
 
 
+Відображення ідентифікатора вимоги про виправлення визначення переможця
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  create_tender_claim
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля complaintID вимоги із ${USERS.users['${provider}'].claim_data.complaintID} для користувача ${viewer}
+
+
 Відображення заголовку вимоги про виправлення визначення переможця
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
