@@ -25,10 +25,11 @@ Default:
             # Second number in list: Duration of period (for endDate)
             enquiry: [0, 11]
             tender:  [0, 31]
-        openua:
             # accelerator: Integer value
             # This is not a name of period
             # Please refer to API documentation to find out what's this
+            accelerator: 1440
+        openua:
             accelerator: 1440
             tender:  [0, 15]
             # Please remember that openUA and openEU procedures

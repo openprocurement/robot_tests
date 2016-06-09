@@ -52,7 +52,6 @@ def test_tender_data(params, periods=("enquiry", "tender")):
     value_amount = round(random.uniform(3000, 99999999999.99), 2)  # max value equals to budget of Ukraine in hryvnias
     data = {
         "mode": "test",
-        "submissionMethodDetails": "quick",
         "description": fake.description(),
         "description_en": fake_en.sentence(nb_words=10, variable_nb_words=True),
         "description_ru": fake_ru.sentence(nb_words=10, variable_nb_words=True),
@@ -72,6 +71,9 @@ def test_tender_data(params, periods=("enquiry", "tender")):
         "items": [],
         "features": []
     }
+    accelerator = params['intervals']['accelerator']
+    data['procurementMethodDetails'] = 'quick, ' \
+        'accelerator={}'.format(accelerator)
     data["procuringEntity"]["kind"] = "other"
     if data.get("mode") == "test":
         data["title"] = u"[ТЕСТУВАННЯ] {}".format(data["title"])
@@ -128,7 +130,6 @@ def test_tender_data(params, periods=("enquiry", "tender")):
 
 def test_tender_data_limited(params):
     data = test_tender_data(params)
-    del data["submissionMethodDetails"]
     del data["minimalStep"]
     del data["enquiryPeriod"]
     del data["tenderPeriod"]
@@ -144,14 +145,12 @@ def test_tender_data_limited(params):
             "stateLegalServices"
         )
         cause = fake.random_element(cause_variants)
-        data.update({"cause": cause})
-    if params['mode'] == "negotiation.quick":
+    elif params['mode'] == "negotiation.quick":
         cause_variants = ('quick',)
-        cause = fake.random_element(cause_variants)
-        data.update({"cause": cause})
     if params['mode'] in ("negotiation", "negotiation.quick"):
+        cause = fake.random_element(cause_variants)
         data.update({
-            "procurementMethodDetails": "quick, accelerator=1440",
+            "cause": cause,
             "causeDescription": fake.description()
         })
     return munchify(data)
@@ -350,33 +349,21 @@ def test_lot_document_data(document, lot_id):
 
 
 def test_tender_data_openua(params):
-    accelerator = params['intervals']['accelerator']
-    # Since `accelerator` field is not really a list containing timings
-    # for a period called `acceleratorPeriod`, let's remove it :)
-    del params['intervals']['accelerator']
     # We should not provide any values for `enquiryPeriod` when creating
     # an openUA or openEU procedure. That field should not be present at all.
     # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
     data = test_tender_data(params, ('tender',))
     data['procurementMethodType'] = 'aboveThresholdUA'
-    data['procurementMethodDetails'] = 'quick, ' \
-        'accelerator={}'.format(accelerator)
     data['procuringEntity']['kind'] = 'general'
     return data
 
 
 def test_tender_data_openeu(params):
-    accelerator = params['intervals']['accelerator']
-    # Since `accelerator` field is not really a list containing timings
-    # for a period called `acceleratorPeriod`, let's remove it :)
-    del params['intervals']['accelerator']
     # We should not provide any values for `enquiryPeriod` when creating
     # an openUA or openEU procedure. That field should not be present at all.
     # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
     data = test_tender_data(params, ('tender',))
     data['procurementMethodType'] = 'aboveThresholdEU'
-    data['procurementMethodDetails'] = 'quick, ' \
-        'accelerator={}'.format(accelerator)
     data['title_en'] = "[TESTING]"
     for item_number, item in enumerate(data['items']):
         item['description_en'] = "Test item #{}".format(item_number)
