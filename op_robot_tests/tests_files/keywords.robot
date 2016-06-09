@@ -527,31 +527,18 @@ Get Broker Property By Username
 
 
 Звірити поле скарги із значенням
-  [Arguments]  ${username}  ${given_value}  ${field_name}  ${complaintID}
+  [Arguments]  ${username}  ${tender_uaid}  ${given_value}  ${field_name}  ${complaintID}  ${award_index}=${None}
   ${status}=  Call method  ${field_name}  startswith  document.
   ${fetched_field_name}=  Run keyword if  ${status} == ${True}  Fetch From Right  ${field_name}  .
   ${field_name}=  Set variable if  ${status} == ${True}  ${fetched_field_name}  ${field_name}
   ${received_value}=  Run keyword if  ${status} == ${True}  Run as  ${username}  Отримати поле документації до скарги
-  ...      ${complaintID}
-  ...      ${given_value}
-  ...      ${field_name}
-  ...      ELSE
-  ...      Run as  ${username}  Отримати інформацію із скарги на умови  ${complaintID}  ${field_name}
-  Порівняти об'єкти  ${given_value}  ${received_value}
-
-
-Звірити поле скарги про виправлення визначення переможця із значенням
-  [Arguments]  ${username}  ${given_value}  ${field_name}  ${award_index}  ${complaintID}
-  ${status}=  Call method  ${field_name}  startswith  document.
-  ${fetched_field_name}=  Run keyword if  ${status} == ${True}  Fetch From Right  ${field_name}  .
-  ${field_name}=  Set variable if  ${status} == ${True}  ${fetched_field_name}  ${field_name}
-  ${received_value}=  Run keyword if  ${status} == ${True}  Run as  ${username}  Отримати поле документації до скарги
+  ...      ${tender_uaid}
   ...      ${complaintID}
   ...      ${given_value}
   ...      ${field_name}
   ...      ${award_index}
   ...      ELSE
-  ...      Run as  ${username}  Отримати інформацію із скарги про виправлення визначення переможця  ${award_index}  ${complaintID}  ${field_name}
+  ...      Run as  ${username}  Отримати інформацію із скарги  ${tender_uaid}  ${complaintID}  ${field_name}  ${award_index}
   Порівняти об'єкти  ${given_value}  ${received_value}
 
 
@@ -615,6 +602,12 @@ Require Failure
 Звірити статус тендера
   [Arguments]  ${username}  ${tender_uaid}  ${left}
   ${right}=  Run as  ${username}  Отримати інформацію із тендера  ${tender_uaid}  status
+  Порівняти об'єкти  ${left}  ${right}
+
+
+Звірити статус вимоги/скарги
+  [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${left}  ${award_index}=${None}
+  ${right}=  Run as  ${username}  Отримати інформацію із скарги  ${tender_uaid}  ${complaintID}  status  ${award_index}
   Порівняти об'єкти  ${left}  ${right}
 
 
