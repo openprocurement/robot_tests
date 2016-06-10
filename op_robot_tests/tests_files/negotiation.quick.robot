@@ -25,6 +25,7 @@ ${item_meat}      ${False}
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  create_tender
   ...  minimal
+  ...  level1
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість оголосити тендер
 
@@ -45,6 +46,7 @@ ${item_meat}      ${False}
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  add_award
   ...  minimal
+  ...  level1
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість зареєструвати, додати документацію і підтвердити постачальника до закупівлі
 
@@ -54,6 +56,7 @@ ${item_meat}      ${False}
   ...  ${USERS.users['${viewer}'].broker}
   ...  find_tender
   ...  minimal
+  ...  level1
   Можливість знайти тендер по ідентифікатору для користувача ${viewer}
 
 ##############################################################################################
@@ -589,6 +592,7 @@ ${item_meat}      ${False}
   ...  ${tender_owner}
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  add_contract
+  ...  level1
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати  ${USERS.users['${tender_owner}'].tender_data.data.awards[0].complaintPeriod.endDate}
@@ -600,5 +604,6 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  add_contract
+  ...  level1
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля contracts[0].status тендера із active для користувача ${viewer}
