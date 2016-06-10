@@ -128,6 +128,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level3
   Звірити відображення поля description тендера для користувача ${viewer}
 
 
@@ -164,6 +165,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level3
   Звірити відображення поля value.currency тендера для користувача ${viewer}
 
 
@@ -172,6 +174,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level3
   Звірити відображення поля value.valueAddedTaxIncluded тендера для користувача ${viewer}
 
 ##############################################################################################
@@ -191,6 +194,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level3
   Звірити відображення поля procuringEntity.address.locality тендера для користувача ${viewer}
 
 
@@ -199,6 +203,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level3
   Звірити відображення поля procuringEntity.address.postalCode тендера для користувача ${viewer}
 
 
@@ -207,6 +212,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level3
   Звірити відображення поля procuringEntity.address.region тендера для користувача ${viewer}
 
 
@@ -215,6 +221,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level3
   Звірити відображення поля procuringEntity.address.streetAddress тендера для користувача ${viewer}
 
 
@@ -223,6 +230,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level3
   Звірити відображення поля procuringEntity.contactPoint.name тендера для користувача ${viewer}
 
 
@@ -231,6 +239,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level3
   Звірити відображення поля procuringEntity.contactPoint.telephone тендера для користувача ${viewer}
 
 
@@ -239,6 +248,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level3
   Звірити відображення поля procuringEntity.contactPoint.url тендера для користувача ${viewer}
 
 
@@ -247,6 +257,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level3
   Звірити відображення поля procuringEntity.identifier.legalName тендера для користувача ${viewer}
 
 
@@ -263,6 +274,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level3
   Звірити відображення поля procuringEntity.identifier.id тендера для користувача ${viewer}
 
 
@@ -271,6 +283,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level3
   Звірити відображення поля procuringEntity.name тендера для користувача ${viewer}
 
 ##############################################################################################
@@ -282,6 +295,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level3
   Звірити відображення поля additionalClassifications[0].description усіх предметів для користувача ${viewer}
 
 
@@ -290,6 +304,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level3
   Звірити відображення поля additionalClassifications[0].id усіх предметів для користувача ${viewer}
 
 
@@ -314,6 +329,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level3
   Звірити відображення поля classification.id усіх предметів для користувача ${viewer}
 
 
@@ -322,6 +338,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level3
   Звірити відображення поля classification.description усіх предметів для користувача ${viewer}
 
 
@@ -365,6 +382,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level3
   Звірити відображення дати deliveryDate.endDate усіх предметів для користувача ${viewer}
 
 
@@ -381,6 +399,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level3
   Звірити відображення поля deliveryAddress.countryName усіх предметів для користувача ${viewer}
 
 
@@ -405,6 +424,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level3
   Звірити відображення поля deliveryAddress.postalCode усіх предметів для користувача ${viewer}
 
 
@@ -413,6 +433,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level3
   Звірити відображення поля deliveryAddress.region усіх предметів для користувача ${viewer}
 
 
@@ -421,6 +442,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level3
   Звірити відображення поля deliveryAddress.locality усіх предметів для користувача ${viewer}
 
 
@@ -429,6 +451,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level3
   Звірити відображення поля deliveryAddress.streetAddress усіх предметів для користувача ${viewer}
 
 ##############################################################################################
@@ -440,6 +463,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  add_tender_doc
+  ...  level3
     Звірити відображення поля documents[0].title тендера із ${USERS.users['${tender_owner}']['documents']['filepath']} для користувача ${viewer}
 
 ##############################################################################################
@@ -477,6 +501,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_view
+  ...  level3
   Звірити відображення поля awards[0].suppliers[0].address.locality тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][0]['address']['locality']} для користувача ${viewer}
 
 
@@ -485,6 +510,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_view
+  ...  level3
   Звірити відображення поля awards[0].suppliers[0].address.postalCode тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][0]['address']['postalCode']} для користувача ${viewer}
 
 
@@ -493,6 +519,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_view
+  ...  level3
   Звірити відображення поля awards[0].suppliers[0].address.region тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][0]['address']['region']} для користувача ${viewer}
 
 
@@ -501,6 +528,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_view
+  ...  level3
   Звірити відображення поля awards[0].suppliers[0].address.streetAddress тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][0]['address']['streetAddress']} для користувача ${viewer}
 
 
@@ -509,6 +537,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_view
+  ...  level3
   Звірити відображення поля awards[0].suppliers[0].contactPoint.telephone тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][0]['contactPoint']['telephone']} для користувача ${viewer}
 
 
@@ -517,6 +546,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_view
+  ...  level3
   Звірити відображення поля awards[0].suppliers[0].contactPoint.name тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][0]['contactPoint']['name']} для користувача ${viewer}
 
 
@@ -525,6 +555,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_view
+  ...  level3
   Звірити відображення поля awards[0].suppliers[0].contactPoint.email тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][0]['contactPoint']['email']} для користувача ${viewer}
 
 
@@ -541,6 +572,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_view
+  ...  level3
   Звірити відображення поля awards[0].suppliers[0].identifier.legalName тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][0]['identifier']['legalName']} для користувача ${viewer}
 
 
@@ -549,6 +581,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_view
+  ...  level3
   Звірити відображення поля awards[0].suppliers[0].identifier.id тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][0]['identifier']['id']} для користувача ${viewer}
 
 
@@ -557,6 +590,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_view
+  ...  level3
   Звірити відображення поля awards[0].suppliers[0].name тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][0]['name']} для користувача ${viewer}
 
 
@@ -565,6 +599,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_view
+  ...  level3
   Звірити відображення поля awards[0].value.valueAddedTaxIncluded тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['value']['valueAddedTaxIncluded']} для користувача ${viewer}
 
 
@@ -573,6 +608,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_view
+  ...  level3
   Звірити відображення поля awards[0].value.currency тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['value']['currency']} для користувача ${viewer}
 
 
