@@ -93,6 +93,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля title тендера для користувача ${viewer}
 
@@ -118,6 +119,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level2
   Звірити відображення поля tenderID тендера із ${TENDER['TENDER_UAID']} для користувача ${viewer}
 
 
@@ -153,6 +155,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level2
   Звірити відображення поля value.amount тендера для користувача ${viewer}
 
 
@@ -327,6 +330,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level2
   Звірити відображення поля description усіх предметів для користувача ${viewer}
 
 
@@ -335,6 +339,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level2
   Звірити відображення поля quantity усіх предметів для користувача ${viewer}
 
 
@@ -343,6 +348,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
+  ...  level2
   Звірити відображення поля unit.name усіх предметів для користувача ${viewer}
 
 
@@ -445,6 +451,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_view
+  ...  level2
   Звірити відображення поля awards[0].documents[0].title тендера із ${USERS.users['${tender_owner}'].award_document} для користувача ${viewer}
 
 
@@ -453,6 +460,7 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_view
+  ...  level2
   Звірити відображення поля awards[0].status тендера із active для користувача ${viewer}
 
 
@@ -573,4 +581,5 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_view
+  ...  level2
   Звірити відображення поля awards[0].value.amount тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['value']['amount']} для користувача ${viewer}
