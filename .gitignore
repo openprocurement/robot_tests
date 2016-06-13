@@ -16,3 +16,6 @@ __pycache__/
 
 # Output of robot_tests
 /test_output/
+
+# Robot framework artifact
+op_robot_tests/tests_files/data/artifact.yaml
