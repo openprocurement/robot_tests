@@ -690,7 +690,6 @@ def test_tender_data_openeu(intervals):
 
 
 def test_tender_data_competitive_dialogue_eu(intervals):
-    print(intervals)
     accelerator = intervals['accelerator']
     # Since `accelerator` field is not really a list containing timings
     # for a period called `acceleratorPeriod`, let's remove it :)
