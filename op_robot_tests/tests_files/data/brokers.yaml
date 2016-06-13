@@ -81,6 +81,18 @@ DZO:
         provider1:      DZO_Provider1
         viewer:         DZO_Viewer
     timeout_on_wait: 300
+ztv:
+    intervals:
+        default:
+            enquiry: [0, 25]
+            tender:  [0, 20]
+    keywords_file: ztv
+    roles:
+        tender_owner:   ZTV_Owner
+        provider:   ZTV_Provider
+        provider1:   ZTV_Provider1
+        viewer:   ZTV_Viewer
+    timeout_on_wait: 300
 Newtend:
     keywords_file: newtend
     roles:
