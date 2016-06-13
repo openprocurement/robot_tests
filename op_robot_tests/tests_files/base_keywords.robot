@@ -262,8 +262,10 @@ Resource           resource.robot
 
 Можливість змінити на ${percent} відсотки бюджет ${lot_index} лоту
   ${percent}=  Convert To Number  ${percent}
-  ${value}=  Evaluate  ${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}].value.amount}*${percent}/${100}
+  ${value}=  Evaluate  round(${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}].value.amount} * ${percent} / ${100}, 2)
+  ${step_value}=  Evaluate  round(${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}].minimalStep.amount} * ${percent} / ${100}, 2)
   Можливість змінити поле value.amount ${lot_index} лоту на ${value}
+  Можливість змінити поле minimalStep.amount ${lot_index} лоту на ${step_value}
 
 
 Можливість змінити поле ${field} ${lot_index} лоту на ${value}
