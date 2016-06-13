@@ -1,0 +1,4 @@
+-s reporting
+
+-i level1
+
