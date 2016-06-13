@@ -144,8 +144,8 @@ ${item_meat}      ${False}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  Звірити відображення поля description_ru тенд
-  ...  tender_viewера для користувача ${viewer}
+  ...  tender_view
+  Звірити відображення поля description_ru тендера для користувача ${viewer}
 
 ##############################################################################################
 #             MAIN DATA.VALUE
