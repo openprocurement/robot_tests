@@ -8,6 +8,7 @@ Suite Teardown  Test Suite Teardown
 *** Variables ***
 ${mode}             openeu
 @{used_roles}       tender_owner  provider  provider1  viewer
+${dialogue_type}    EU
 
 ${number_of_items}  ${1}
 ${number_of_lots}   ${1}
