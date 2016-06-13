@@ -543,9 +543,9 @@ Resource           resource.robot
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${award_index}
   ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
   ...      ${status}
+  ...      ${award_index}
 
 
 Можливість перетворити вимогу про виправлення умов закупівлі в скаргу
