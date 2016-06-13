@@ -47,7 +47,8 @@ from .initial_data import (
     test_tender_data_multiple_items,
     test_tender_data_multiple_lots,
     test_tender_data_openeu,
-    test_tender_data_openua
+    test_tender_data_openua,
+    test_tender_data_competitive_dialogue_eu
 )
 from .local_time import get_now, TZ
 import os
@@ -246,7 +247,7 @@ def prepare_test_tender_data(procedure_intervals, mode):
     LOGGER.log_message(Message(intervals))
 
     # Set acceleration value for certain modes
-    if mode in ['openua', 'openeu']:
+    if mode in ['openua', 'openeu', 'competitive_dialogue_eu']:
         assert isinstance(intervals['accelerator'], int), \
             "Accelerator should be an 'int', " \
             "not '{}'".format(type(intervals['accelerator']).__name__)
@@ -270,6 +271,8 @@ def prepare_test_tender_data(procedure_intervals, mode):
         return munchify({'data': test_tender_data_openeu(intervals)})
     elif mode == 'openua':
         return munchify({'data': test_tender_data_openua(intervals)})
+    elif mode == 'competitive_dialogue_eu':
+        return munchify({'data': test_tender_data_competitive_dialogue_eu(intervals)})
     elif mode == 'reporting':
         return munchify({'data': test_tender_data_limited(intervals, 'reporting')})
     elif mode == 'single':
