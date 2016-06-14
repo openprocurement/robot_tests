@@ -796,6 +796,14 @@ Resource           resource.robot
   ${fixbidto10resp}=  Run As  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  ${field}  ${amount}
 
 
+//Можливість зменшити пропозицію до ${percent} відсотків користувачем ${username}
+  ${percent}=  Convert To Number  ${percent}
+  ${field}=  Set variable if  ${number_of_lots} == 0  value.amount  lots[0].value.amount
+  ${value}=  Get variable value  ${USERS.users['${username}'].tender_data.data['${field}']}
+  ${value}=  Evaluate  round(${value} * ${percent} / 100, 2)
+  Run as  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  ${field}  ${amount}
+
+
 Можливість завантажити документ в пропозицію користувачем ${username}
   ${filepath}=  create_fake_doc
   ${bid_doc_upload}=  Run As  ${username}  Завантажити документ в ставку  ${filepath}  ${TENDER['TENDER_UAID']}

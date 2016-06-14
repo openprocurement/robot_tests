@@ -1216,22 +1216,14 @@ ${item_meat}        ${True}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider}
 
-Можливість змінити пропозицію до 50000 першим учасником
+
+Можливість зменшити пропозицію на 5% першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      modify_bid_by_provider
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість змінити пропозицію до 50000 користувачем ${provider}
-
-
-Можливість змінити пропозицію до 10 першим учасником
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
-  ...      provider
-  ...      ${USERS.users['${provider}'].broker}
-  ...      modify_bid_by_provider
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість змінити пропозицію до 10 користувачем ${provider}
+  Можливість зменшити пропозицію до 95 відсотків користувачем ${provider}
 
 
 Можливість завантажити документ в пропозицію першим учасником
@@ -1414,21 +1406,13 @@ ${item_meat}        ${True}
   Run Keyword And Expect Error  *  Можливість задати запитання на 0 лот користувачем ${provider}
 
 
-Неможливість змінити цінову пропозицію до 50000 другим учасником після закінчення прийому пропозицій
+Неможливість зменшити цінову пропозицію на 5% другим учасником після закінчення прийому пропозицій
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      modify_bid_after_tendering_period_by_provider1
   [Setup]  Дочекатись дати закінчення прийому пропозицій  ${provider1}  ${TENDER['TENDER_UAID']}
-  Run Keyword And Expect Error  *  Можливість змінити пропозицію до 50000 користувачем ${provider1}
-
-
-Неможливість змінити цінову пропозицію до 1 другим учасником після закінчення прийому пропозицій
-  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
-  ...      provider1
-  ...      ${USERS.users['${provider1}'].broker}
-  ...      modify_bid_after_tendering_period_by_provider1
-  Run Keyword And Expect Error  *  Можливість змінити пропозицію до 1 користувачем ${provider1}
+  Run Keyword And Expect Error  *  Можливість зменшити пропозицію до 95 відсотків користувачем ${provider1}
 
 
 Неможливість скасувати пропозицію другим учасником після закінчення прийому пропозицій
