@@ -3,11 +3,6 @@
 
 -v mode:open_competitive_dialogue
 
--v api_version:2.3
-
--v dialogue_type:EU
-
--v api_host_url:http://localhost:6543/
 
 -v number_of_items:1
 -v number_of_lots:1
