@@ -43,7 +43,7 @@ Quinta:
     intervals:
         default:
             enquiry: [0, 8]
-            tender:  [0, 5]
+            tender:  [0, 10]
         openua:
             tender:  [1, 15]
         openeu:
