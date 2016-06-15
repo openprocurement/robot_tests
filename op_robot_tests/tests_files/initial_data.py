@@ -458,7 +458,7 @@ def test_bid_data(mode):
             ]
         }
     })
-    if 'open' in mode:
+    if 'open' in mode or 'competitive_dialogue' in mode:
         bid.data['selfEligible'] = True
         bid.data['selfQualified'] = True
     if mode == 'multiLot':
@@ -677,6 +677,29 @@ def test_tender_data_openeu(intervals):
     # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
     t_data = test_tender_data(intervals, periods=('tender',))
     t_data['procurementMethodType'] = 'aboveThresholdEU'
+    t_data['procurementMethodDetails'] = 'quick, ' \
+        'accelerator={}'.format(accelerator)
+    t_data['title_en'] = "[TESTING]"
+    for item_number, item in enumerate(t_data['items']):
+        item['description_en'] = "Test item #{}".format(item_number)
+    t_data['procuringEntity']['contactPoint']['name_en'] = fake_en.name()
+    t_data['procuringEntity']['contactPoint']['availableLanguage'] = "en"
+    t_data['procuringEntity']['identifier']['legalName_en'] = "Institution \"Vinnytsia City Council primary and secondary general school № 10\""
+    t_data['procuringEntity']['kind'] = 'general'
+    return t_data
+
+
+def test_tender_data_competitive_dialogue_eu(intervals):
+    accelerator = intervals['accelerator']
+    # Since `accelerator` field is not really a list containing timings
+    # for a period called `acceleratorPeriod`, let's remove it :)
+    del intervals['accelerator']
+    # We should not provide any values for `enquiryPeriod` when creating
+    # an openUA or openEU procedure. That field should not be present at all.
+    # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
+    t_data = test_tender_data(intervals, periods=('tender',))
+    t_data['procurementMethodType'] = 'competitiveDialogue.aboveThresholdEU'
+    # t_data['procurementMethodType'] = 'aboveThresholdEU'
     t_data['procurementMethodDetails'] = 'quick, ' \
         'accelerator={}'.format(accelerator)
     t_data['title_en'] = "[TESTING]"

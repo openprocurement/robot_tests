@@ -37,6 +37,9 @@ Default:
         openeu:
             accelerator: 1440
             tender:  [0, 30]
+        competitive_dialogue_eu:
+            accelerator: 1440
+            tender:  [0, 30]
     # Synchronization delay, in seconds
     timeout_on_wait: 300
 Quinta:
@@ -47,6 +50,8 @@ Quinta:
         openua:
             tender:  [1, 15]
         openeu:
+            tender:  [1, 30]
+        competitive_dialogue_eu:
             tender:  [1, 30]
     keywords_file: openprocurement_client
     roles:
