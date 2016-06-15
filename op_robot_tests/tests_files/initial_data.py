@@ -286,7 +286,8 @@ def test_supplier_data():
                 "amount": fake.random_int(min=1),
                 "currency": "UAH",
                 "valueAddedTaxIncluded": True
-            }
+            },
+            "qualified": True
         }
     })
 
