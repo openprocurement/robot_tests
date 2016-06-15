@@ -37,6 +37,7 @@ from .initial_data import (
     test_question_data,
     test_supplier_data,
     test_tender_data,
+    test_tender_data_competitive_dialogue,
     test_tender_data_limited,
     test_tender_data_openeu,
     test_tender_data_openua,
@@ -285,6 +286,8 @@ def prepare_test_tender_data(procedure_intervals, tender_parameters):
         return munchify({'data': test_tender_data_openeu(tender_parameters)})
     elif mode == 'openua':
         return munchify({'data': test_tender_data_openua(tender_parameters)})
+    elif mode == 'open_competitive_dialogue':
+        return munchify({'data': test_tender_data_competitive_dialogue(tender_parameters)})
     elif mode == 'reporting':
         return munchify({'data': test_tender_data_limited(tender_parameters)})
     elif mode == 'belowThreshold':
