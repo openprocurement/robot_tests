@@ -16,7 +16,7 @@ Resource           resource.robot
   ...      tender_meat=${${tender_meat}}
   ...      lot_meat=${${lot_meat}}
   ...      item_meat=${${item_meat}}
-  ...      dialogue_type=${dialogue_type}
+  Run keyword if  '{dialogue_type}' != '${None}'  Set to dictionary  ${tender_parameters}  dialogue_type=${dialogue_type}
   ${tender_data}=  Підготувати дані для створення тендера  ${tender_parameters}
   ${adapted_data}=  Адаптувати дані для оголошення тендера  ${tender_owner}  ${tender_data}
   ${TENDER_UAID}=  Run As  ${tender_owner}  Створити тендер  ${adapted_data}
