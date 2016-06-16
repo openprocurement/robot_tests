@@ -723,6 +723,7 @@ Library  openprocurement_client_helper.py
   ${bid_id}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['resp'].data.id}
   ${token}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['resp'].access.token}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  get_bid  ${tender}  ${bid_id}  ${token}
+  ${reply}=  munch_dict  arg=${reply}
   [return]  ${reply}
 
 

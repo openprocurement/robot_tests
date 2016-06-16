@@ -791,17 +791,12 @@ Resource           resource.robot
   Require Failure  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}
 
 
-Можливість змінити пропозицію до ${amount} користувачем ${username}
-  ${field}=  Set Variable If  ${number_of_lots} == 0  value.amount  lotValues[0].value.amount
-  ${fixbidto10resp}=  Run As  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  ${field}  ${amount}
-
-
 Можливість зменшити пропозицію до ${percent} відсотків користувачем ${username}
   ${percent}=  Convert To Number  ${percent}
-  ${field}=  Set variable if  ${number_of_lots} == 0  value.amount  lots[0].value.amount
-  ${value}=  Get variable value  ${USERS.users['${username}'].tender_data.data['${field}']}
+  ${field}=  Set variable if  ${number_of_lots} == 0  value.amount  lotValues[0].value.amount
+  ${value}=  Run As  ${username}  Отримати інформацію із пропозиції  ${TENDER['TENDER_UAID']}  ${field}
   ${value}=  Evaluate  round(${value} * ${percent} / 100, 2)
-  Run as  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  ${field}  ${amount}
+  Run as  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  ${field}  ${value}
 
 
 Можливість завантажити документ в пропозицію користувачем ${username}
