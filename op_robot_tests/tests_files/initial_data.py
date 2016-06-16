@@ -386,7 +386,7 @@ def test_tender_data_competitive_dialogue(params):
     data = test_tender_data(params, ('tender',))
     data['procurementMethodType'] = 'competitiveDialogue.aboveThreshold' + params.get('dialogue_type', 'EU')
     if data['procurementMethodType'].endswith('EU'):
-        data['title_en'] = fake_en.sentence(nb_words=3, variable_nb_words=True)
+        data['title_en'] = "[TESTING] {}".format(fake_en.sentence(nb_words=3, variable_nb_words=True))
     else:
         del data['title_en']
     data['procurementMethodDetails'] = 'quick, ' \
