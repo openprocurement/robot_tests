@@ -1,6 +1,3 @@
--s openProcedure
-
-
 -v mode:belowThreshold
 
 -v number_of_items:1
@@ -71,3 +68,17 @@
 -i ask_question_to_item_after_tendering_period
 -i ask_question_to_lot_after_tendering_period
 
+-i auction
+
+-i create_award_claim
+-i answer_award_claim
+-i escalate_award_claim
+-i cancel_award_claim
+
+-i qualification_add_doc_to_first_award
+-i qualification_approve_first_award
+-i qualification_cancel_first_award_qualification
+-i qualification_add_doc_to_second_award
+-i qualification_approve_second_award
+
+-i contract_sign

@@ -1,6 +1,3 @@
--s openProcedure
-
-
 -v mode:openeu
 
 -v number_of_items:1
@@ -93,3 +90,12 @@
 
 -i pre-qualification_approve_qualifications
 
+-i auction
+
+-i qualification_add_doc_to_first_award
+-i qualification_approve_first_award
+-i qualification_cancel_first_award_qualification
+-i qualification_add_doc_to_second_award
+-i qualification_approve_second_award
+
+-i contract_sign
