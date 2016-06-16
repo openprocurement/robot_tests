@@ -1,6 +1,3 @@
--s openProcedure
-
-
 -v mode:openeu
 
 -v number_of_items:1
@@ -16,14 +13,17 @@
 -i tender_view
 -i lot_view
 
-
 -i make_bid_by_provider
 -i make_bid_by_provider1
 
-
 -i open_tender_view
-
 
 -i pre-qualification_approve_first_bid
 -i pre-qualification_approve_second_bid
 -i pre-qualification_approve_qualifications
+
+-i auction
+
+-i qualification_approve_first_award
+
+-i contract_sign

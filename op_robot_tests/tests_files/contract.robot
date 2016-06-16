@@ -13,7 +13,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера
   ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
-  ...      minimal
+  ...      find_tender  level1
   Завантажити дані про тендер
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \   Run As  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
@@ -26,11 +26,16 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  ...      tender_view
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  awards[1].complaintPeriod.endDate
 
 
 Дочекатися закічення stand still періоду
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Процес укладання угоди
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      contract_sign
   ${standstillEnd}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data.awards[1].complaintPeriod.endDate}
   Дочекатись дати  ${standstillEnd}
 
@@ -39,6 +44,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес укладання угоди
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
+  ...  contract_sign  level1
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Run As  ${tender_owner}  Підтвердити підписання контракту  ${TENDER['TENDER_UAID']}  1
 
@@ -47,6 +53,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних угоди
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
+  ...  contract_sign
   [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
   Run As  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
   Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}  active  contracts[1].status

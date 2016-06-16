@@ -13,6 +13,7 @@ Suite Teardown  Test Suite Teardown
 Можливість знайти закупівлю по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера
   ...      ${USERS.users['${viewer}'].broker}
+  ...      find_tender  level1
   Завантажити дані про тендер
   Run As  ${viewer}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
 
@@ -24,6 +25,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view  level2
   [Setup]  Дочекатись дати початку періоду аукціону  ${viewer}  ${TENDER['TENDER_UAID']}
   Отримати дані із тендера  ${viewer}  ${TENDER['TENDER_UAID']}  auctionPeriod.startDate  ${TENDER['LOT_ID']}
 
@@ -32,6 +34,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
+  ...      auction
   Дочекатись дати початку аукціону  ${viewer}
 
 
@@ -39,6 +42,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
+  ...      auction  level1
   Можливість вичитати посилання на аукціон для ${viewer}
 
 
@@ -46,6 +50,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
+  ...      auction
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати закінчення аукціону користувачем ${viewer}
 
@@ -54,6 +59,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Отримати дані із тендера  ${viewer}  ${TENDER['TENDER_UAID']}  auctionPeriod.endDate  ${TENDER['LOT_ID']}
 

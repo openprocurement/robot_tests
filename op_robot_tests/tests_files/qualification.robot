@@ -18,8 +18,7 @@ ${award_index}      ${0}
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера
   ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
-  ...      minimal
-  ...      find_tender
+  ...      find_tender  level1
   Завантажити дані про тендер
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \   ${resp}=  Run As  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
@@ -48,7 +47,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  create_tender_claim
+  ...  create_award_claim
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля complaintID вимоги із ${USERS.users['${provider}'].claim_data.complaintID} для користувача ${viewer}
 
@@ -201,7 +200,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ...  qualification
+  ...  qualification_add_doc_to_first_award  level3
   ${filepath}=   create_fake_doc
   Run As   ${tender_owner}   Завантажити документ рішення кваліфікаційної комісії   ${filepath}   ${TENDER['TENDER_UAID']}   0
 
@@ -210,8 +209,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ...  minimal
-  ...  qualification
+  ...  qualification_approve_first_award  level1
   Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  0
 
 
@@ -219,8 +217,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ...  minimal
-  ...  qualification
+  ...  qualification_cancel_first_award_qualification  level1
   Run As  ${tender_owner}  Скасування рішення кваліфікаційної комісії  ${TENDER['TENDER_UAID']}  0
 
 
@@ -228,7 +225,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ...  qualification
+  ...  qualification_add_doc_to_second_award  level3
   ${filepath}=   create_fake_doc
   Run As   ${tender_owner}   Завантажити документ рішення кваліфікаційної комісії   ${filepath}   ${TENDER['TENDER_UAID']}   1
 
@@ -237,6 +234,5 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ...  minimal
-  ...  qualification
-  Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  1
+  ...  qualification_approve_second_award  level1
+  Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  -1
