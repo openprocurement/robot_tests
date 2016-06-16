@@ -1,8 +1,3 @@
--s 00_negotiation.quick
-
 -i create_tender
-
--s 90_cancelation
-
 -i find_tender
 -i tender_cancelation
