@@ -24,7 +24,6 @@ ${item_meat}      ${False}
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  create_tender
-  ...  minimal
   ...  level1
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість оголосити тендер
@@ -45,7 +44,6 @@ ${item_meat}      ${False}
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  add_award
-  ...  minimal
   ...  level1
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість зареєструвати, додати документацію і підтвердити постачальника до закупівлі
@@ -67,7 +65,6 @@ ${item_meat}      ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  find_tender
-  ...  minimal
   ...  level1
   Можливість знайти тендер по ідентифікатору для користувача ${viewer}
 
