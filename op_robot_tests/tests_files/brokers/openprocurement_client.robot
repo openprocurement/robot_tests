@@ -1279,3 +1279,29 @@ Library  openprocurement_client.utils
   Log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract  ${tender}  ${data}
   Log  ${reply}
+  [Return]  ${reply}
+
+##############################################################################
+#             CONTRACT MANAGEMENT
+##############################################################################
+
+Отримати internal id по UAid для договору
+  [Arguments]  ${username}  ${contract_uaid}
+  Log  ${contract_uaid}
+  Log  ${USERS.users['${username}'].contracts_id_map}
+  ${status}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${USERS.users['${username}'].contracts_id_map}  ${contract_uaid}
+  Run Keyword and Return If  ${status}  Get From Dictionary  ${USERS.users['${username}'].contracts_id_map}  ${contract_uaid}
+  Call Method  ${USERS.users['${username}'].contracting_client}  get_contracts
+  ${contract_id}=  Wait Until Keyword Succeeds  15x  10 sec  get_contract_id_by_uaid  ${contract_uaid}  ${USERS.users['${username}'].contracting_client}
+  Set To Dictionary  ${USERS.users['${username}'].contracts_id_map}  ${contract_uaid}  ${contract_id}
+  [Return]  ${contract_id}
+
+
+Пошук договору по ідентифікатору
+  [Arguments]  ${username}  ${contract_uaid}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${contract}=  Call Method  ${USERS.users['${username}'].contracting_client}  get_contract  ${internalid}
+  Set To Dictionary  ${USERS.users['${username}']}  contract_data=${contract}
+  ${contract}=  munch_dict  arg=${contract}
+  Log  ${contract}
+  [return]  ${contract}
