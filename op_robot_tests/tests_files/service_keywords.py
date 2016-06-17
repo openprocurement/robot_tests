@@ -273,11 +273,16 @@ def prepare_test_tender_data(procedure_intervals, tender_parameters):
     tender_parameters['intervals'] = intervals
 
     # Set acceleration value for certain modes
-    assert isinstance(intervals['accelerator'], int), \
-        "Accelerator should be an 'int', " \
-        "not '{}'".format(type(intervals['accelerator']).__name__)
-    assert intervals['accelerator'] >= 0, \
-        "Accelerator should not be less than 0"
+    if mode in ['openua', 'openeu', 'open_competitive_dialogue']:
+        assert isinstance(intervals['accelerator'], int), \
+            "Accelerator should be an 'int', " \
+            "not '{}'".format(type(intervals['accelerator']).__name__)
+        assert intervals['accelerator'] >= 0, \
+            "Accelerator should not be less than 0"
+    else:
+        assert 'accelerator' not in intervals.keys(), \
+               "Accelerator is not available for mode '{0}'".format(mode)
+
     if mode == 'negotiation':
         return munchify({'data': test_tender_data_limited(tender_parameters)})
     elif mode == 'negotiation.quick':
