@@ -376,6 +376,7 @@ def test_tender_data_openeu(params):
     data['procuringEntity']['kind'] = 'general'
     return data
 
+
 def test_tender_data_competitive_dialogue(params):
     # We should not provide any values for `enquiryPeriod` when creating
     # an openUA or openEU procedure. That field should not be present at all.
@@ -386,7 +387,7 @@ def test_tender_data_competitive_dialogue(params):
         data['title_en'] = "[TESTING] {}".format(fake_en.sentence(nb_words=3, variable_nb_words=True))
     else:
         del data['title_en']
-    for item_number, item in enumerate(data['items']):
+    for item in enumerate(data['items']):
         item['description_en'] = fake_en.sentence(nb_words=3, variable_nb_words=True)
     data['procuringEntity']['name_en'] = fake_en.name()
     data['procuringEntity']['contactPoint']['name_en'] = fake_en.name()
@@ -394,4 +395,3 @@ def test_tender_data_competitive_dialogue(params):
     data['procuringEntity']['identifier']['legalName_en'] = fake_en.sentence(nb_words=10, variable_nb_words=True)
     data['procuringEntity']['kind'] = 'general'
     return data
-
