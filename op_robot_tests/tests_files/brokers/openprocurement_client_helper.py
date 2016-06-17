@@ -2,6 +2,7 @@ from openprocurement_client.client import Client, EDRClient
 from openprocurement_client.document_service_client \
     import DocumentServiceClient
 from openprocurement_client.plan import PlansClient
+from openprocurement_client.contract import ContractingClient
 from openprocurement_client.exceptions import IdNotFound
 from restkit.errors import RequestFailed, BadStatusLine, ResourceError
 from retrying import retry
@@ -41,6 +42,16 @@ def prepare_api_wrapper(key, resource, host_url, api_version, ds_client=None):
 
 def prepare_ds_api_wrapper(ds_host_url, auth_ds):
     return StableDsClient(ds_host_url, auth_ds)
+
+
+class ContractingStableClient(ContractingClient):
+    @retry(stop_max_attempt_number=100, wait_random_min=500, wait_random_max=4000, retry_on_exception=retry_if_request_failed)
+    def request(self, *args, **kwargs):
+        return super(ContractingStableClient, self).request(*args, **kwargs)
+
+
+def prepare_contract_api_wrapper(key, host_url, api_version):
+    return ContractingStableClient(key, host_url, api_version)
 
 
 class StableEDRClient(EDRClient):
