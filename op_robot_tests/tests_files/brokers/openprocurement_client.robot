@@ -41,6 +41,13 @@ Library  openprocurement_client.utils
   Log  ${EDR_VERSION}
   ${edr_wrapper}=  prepare_edr_wrapper  ${EDR_HOST_URL}  ${EDR_VERSION}  ${USERS.users['${username}'].auth_edr[0]}  ${USERS.users['${username}'].auth_edr[1]}
   Set To Dictionary  ${USERS.users['${username}']}  edr_client=${edr_wrapper}
+  #Variables for contracting_management module
+  ${contract_api_wrapper}=  prepare_contract_api_wrapper  ${USERS.users['${username}'].api_key}  ${api_host_url}  ${api_version}
+  Set To Dictionary  ${USERS.users['${username}']}  contracting_client=${contract_api_wrapper}
+  Set To Dictionary  ${USERS.users['${username}']}  contract_access_token=${EMPTY}
+  ${contracts_id_map}=  Create Dictionary
+  Set To Dictionary  ${USERS.users['${username}']}  contracts_id_map=${contracts_id_map}
+  Log Variables
 
 
 Завантажити документ
