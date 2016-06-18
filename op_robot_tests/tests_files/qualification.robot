@@ -49,7 +49,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${viewer}'].broker}
   ...  create_award_claim
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля complaintID вимоги із ${USERS.users['${provider}'].claim_data.complaintID} для користувача ${viewer}
+  Звірити відображення поля complaintID вимоги про виправлення визначення ${award_index} переможця із ${USERS.users['${provider}'].claim_data.complaintID} для користувача ${viewer}
 
 
 Відображення заголовку вимоги про виправлення визначення переможця
