@@ -28,7 +28,7 @@ Suite Teardown  Test Suite Teardown
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      tender_view
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
-  \  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  awards[1].complaintPeriod.endDate
+  \  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  awards[-1].complaintPeriod.endDate
 
 
 Дочекатися закічення stand still періоду
@@ -46,7 +46,7 @@ Suite Teardown  Test Suite Teardown
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  contract_sign  level1
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Run As  ${tender_owner}  Підтвердити підписання контракту  ${TENDER['TENDER_UAID']}  1
+  Run As  ${tender_owner}  Підтвердити підписання контракту  ${TENDER['TENDER_UAID']}  -1
 
 
 Відображення статусу підписаної угоди з постачальником закупівлі
@@ -56,4 +56,4 @@ Suite Teardown  Test Suite Teardown
   ...  contract_sign
   [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
   Run As  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
-  Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}  active  contracts[1].status
+  Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}  active  contracts[-1].status
