@@ -51,7 +51,7 @@ Quinta:
         openua:
             tender:  [1, 30]
         openeu:
-            tender:  [1, 30]
+            tender:  [1, 35]
         open_competitive_dialogue:
             accelerator: 1440
             tender:  [0, 30]
