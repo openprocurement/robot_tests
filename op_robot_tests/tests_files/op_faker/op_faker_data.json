@@ -7997,5 +7997,15 @@
                 "name": "набір"
             }
         }
+    ],
+    "rationale_types": [
+        "volumeCuts",
+        "itemPriceVariation",
+        "qualityImprovement",
+        "durationExtension",
+        "priceReduction",
+        "taxRate",
+        "thirdParty",
+        "fiscalYearExtension"
     ]
 }
