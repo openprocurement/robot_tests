@@ -84,14 +84,14 @@ DZO:
 ztv:
     intervals:
         default:
-            enquiry: [0, 25]
-            tender:  [0, 20]
+            enquiry: [0, 17]
+            tender:  [0, 16]
     keywords_file: ztv
     roles:
-        tender_owner:   ZTV_Owner
-        provider:   ZTV_Provider
-        provider1:   ZTV_Provider1
-        viewer:   ZTV_Viewer
+        tender_owner:   ztv_Owner
+        provider:   ztv_Provider
+        provider1:   ztv_Provider1
+        viewer:   ztv_Viewer
     timeout_on_wait: 300
 Newtend:
     keywords_file: newtend

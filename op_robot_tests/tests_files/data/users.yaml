@@ -75,7 +75,7 @@ users:
         position: [0, 0]
         size:     [1366, 800]
     ztv_Owner:
-        broker:   ZTV
+        broker:   ztv
         homepage: "http://ztv.byustudio.in.ua/web/"
         login:    ztvtenderowner@gmail.com
         password: 123456
@@ -83,7 +83,7 @@ users:
         position: [0, 0]
         size:     [1366, 800]
     ztv_Provider:
-        broker:   ZTV
+        broker:   ztv
         homepage: "http://ztv.byustudio.in.ua/web/"
         login:    ztvprovider1@gmail.com
         password: 123456
@@ -91,7 +91,7 @@ users:
         position: [0, 0]
         size:     [1366, 800]
     ztv_Provider1:
-        broker:   ZTV
+        broker:   ztv
         homepage: "http://ztv.byustudio.in.ua/web/"
         login:    ztvprovider2@gmail.com
         password: 123456
@@ -99,7 +99,7 @@ users:
         position: [0, 0]
         size:     [1366, 800]
     ztv_Viewer:
-        broker:   ZTV
+        broker:   ztv
         homepage: "http://ztv.byustudio.in.ua/web/"
         browser:  firefox
         position: [0, 0]
