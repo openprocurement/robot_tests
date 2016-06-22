@@ -1324,3 +1324,9 @@ Library  openprocurement_client.utils
   ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  create_change  ${internalid}  ${USERS.users['${username}'].contract_access_token}  ${change_data}
   Log  ${change_data}
   Log  ${reply}
+
+
+Додати документацію до зміни в договорі
+  [Arguments]  ${username}  ${contract_uaid}  ${document}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  upload_document  ${document}  ${internalid}  ${USERS.users['${username}'].contract_access_token}
