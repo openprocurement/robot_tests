@@ -28,3 +28,10 @@ Suite Teardown  Test Suite Teardown
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   :FOR  ${username}  IN  @{used_roles}
   \  Run As  ${${username}}  Пошук договору по ідентифікатору  ${CONTRACT_UAID}
+
+
+Можливість отримати доступ до договору
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Отримання прав доступу до договору
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  Run As  ${tender_owner}  Отримати доступ до договору  ${CONTRACT_UAID}
