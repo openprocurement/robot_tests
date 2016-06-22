@@ -310,6 +310,13 @@ Get Broker Property By Username
   [Return]  ${cancellation_data}
 
 
+Підготувати дані про зміну до контракту
+  [Arguments]  ${username}
+  ${change_data}=  test_change_data
+  Set To Dictionary  ${USERS.users['${username}']}  change_data=${change_data}
+  Log  ${change_data}
+  [Return]  ${change_data}
+
 Адаптувати дані для оголошення тендера
   [Arguments]  ${tender_data}
   # munchify is used to make deep copy of ${tender_data}
