@@ -26,6 +26,7 @@ from .initial_data import (
     field_with_id,
     test_bid_data,
     test_bid_value,
+    test_change_data,
     test_claim_answer_data,
     test_claim_data,
     test_complaint_data,
