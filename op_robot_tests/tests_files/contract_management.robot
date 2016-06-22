@@ -35,3 +35,11 @@ Suite Teardown  Test Suite Teardown
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   Run As  ${tender_owner}  Отримати доступ до договору  ${CONTRACT_UAID}
+
+
+Можливість внести зміни до договору
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ${change_data}=  Підготувати дані про зміну до контракту  ${tender_owner}
+  Run As  ${tender_owner}  Внести зміни в договір  ${CONTRACT_UAID}  ${change_data}
