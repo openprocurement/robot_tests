@@ -43,7 +43,7 @@ Quinta:
     intervals:
         default:
             enquiry: [0, 8]
-            tender:  [0, 5]
+            tender:  [0, 10]
         openua:
             tender:  [1, 15]
         openeu:
@@ -205,7 +205,7 @@ proztorg:
 uub:
     intervals:
         default:
-            enquiry: [0, 5]
+            enquiry: [0, 8]
             tender:  [0, 10]
         openua:
             accelerator: 1440
@@ -215,11 +215,11 @@ uub:
             accelerator: 1440
     keywords_file: uub
     roles:
-        tender_owner:   UUB_Owner
-        provider:       UUB_Provider
-        provider1:      UUB_Provider1
-        viewer:         UUB_Viewer
-    timeout_on_wait: 300
+        tender_owner:   uub_Owner
+        provider:       uub_Provider
+        provider1:      uub_Provider1
+        viewer:         uub_Viewer
+    timeout_on_wait: 15
 APStender:
     keywords_file: aps
     roles:
