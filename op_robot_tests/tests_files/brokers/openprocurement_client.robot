@@ -1344,3 +1344,13 @@ Library  openprocurement_client.utils
   ${reply_doc_patch}=  Call Method  ${USERS.users['${username}'].contracting_client}  patch_document  ${internalid}  ${reply_doc_create.data.id}  ${USERS.users['${username}'].contract_access_token}  ${data}
   Log  ${reply_doc_create}
   Log  ${reply_doc_patch}
+
+
+Редагувати договір
+  [Arguments]  ${username}  ${contract_uaid}  ${fieldname}  ${fieldvalue}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${contract}=  openprocurement_client.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+  Set_To_Object  ${contract.data}   ${fieldname}   ${fieldvalue}
+  Log  ${contract}
+  ${contract}=  Call Method  ${USERS.users['${username}'].contracting_client}  patch_contract  ${internalid}  ${USERS.users['${username}'].contract_access_token}  ${contract}
+  Log  ${contract}
