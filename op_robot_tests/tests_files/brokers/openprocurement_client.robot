@@ -1328,11 +1328,19 @@ Library  openprocurement_client.utils
   [Arguments]  ${username}  ${contract_uaid}  ${change_data}
   ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
   ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  create_change  ${internalid}  ${USERS.users['${username}'].contract_access_token}  ${change_data}
+  ${empty_list}=  Create List
+  ${changes}=  Get variable value  ${USERS.users['${username}'].changes}  ${empty_list}
+  Append to list  ${changes}  ${reply}
+  Set to dictionary  ${USERS.users['${username}']}  changes=${changes}
   Log  ${change_data}
   Log  ${reply}
-
 
 Додати документацію до зміни в договорі
   [Arguments]  ${username}  ${contract_uaid}  ${document}
   ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
-  ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  upload_document  ${document}  ${internalid}  ${USERS.users['${username}'].contract_access_token}
+  ${reply_doc_create}=  Call Method  ${USERS.users['${username}'].contracting_client}  upload_document  ${document}  ${internalid}  ${USERS.users['${username}'].contract_access_token}
+  ${data}=  Create Dictionary  documentOf=change  relatedItem=${USERS.users['${username}'].changes[0].data.id}
+  ${data}=  Create Dictionary  data=${data}
+  ${reply_doc_patch}=  Call Method  ${USERS.users['${username}'].contracting_client}  patch_document  ${internalid}  ${reply_doc_create.data.id}  ${USERS.users['${username}'].contract_access_token}  ${data}
+  Log  ${reply_doc_create}
+  Log  ${reply_doc_patch}
