@@ -1231,7 +1231,7 @@ Library  openprocurement_client.utils
   [return]  ${contract}
 
 
-Внести зміни в договір
+Внести зміну в договір
   [Arguments]  ${username}  ${contract_uaid}  ${change_data}
   ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
   ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  create_change  ${internalid}  ${USERS.users['${username}'].contract_access_token}  ${change_data}
