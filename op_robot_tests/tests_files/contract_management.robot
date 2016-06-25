@@ -51,4 +51,3 @@ Suite Teardown  Test Suite Teardown
   ...      ${USERS.users['${tender_owner}'].broker}
   ${document}=  create_fake_doc
   Run As  ${tender_owner}  Додати документацію до зміни в договорі  ${CONTRACT_UAID}  ${document}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  change_doc=${document}
