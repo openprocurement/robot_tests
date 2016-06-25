@@ -42,7 +42,7 @@ Default:
 Quinta:
     intervals:
         default:
-            enquiry: [0, 10]
+            enquiry: [0, 8]
             tender:  [0, 10]
         openua:
             tender:  [1, 15]
@@ -230,5 +230,5 @@ APStender:
     intervals:
         default:
             enquiry: [0, 21]
-            tender:  [0, 25] 
+            tender:  [0, 25]
     timeout_on_wait: 10
