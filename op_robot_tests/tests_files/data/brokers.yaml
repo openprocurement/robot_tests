@@ -42,7 +42,7 @@ Default:
 Quinta:
     intervals:
         default:
-            enquiry: [0, 10]
+            enquiry: [0, 8]
             tender:  [0, 10]
         openua:
             tender:  [1, 15]
@@ -55,6 +55,17 @@ Quinta:
         tender_owner:   Tender_Owner
         viewer:         Tender_Viewer
     timeout_on_wait: 15
+Epu:
+    intervals:
+        default:
+            enquiry: [0, 5]
+    keywords_file: epu
+    roles:
+        provider:       Epu_Provider1
+        provider1:      Epu_Provider2
+        tender_owner:   Epu_Owner
+        viewer:         Epu_Viewer
+    timeout_on_wait: 600
 E-tender:
     intervals:
         default:
@@ -230,5 +241,5 @@ APStender:
     intervals:
         default:
             enquiry: [0, 21]
-            tender:  [0, 25] 
+            tender:  [0, 25]
     timeout_on_wait: 10
