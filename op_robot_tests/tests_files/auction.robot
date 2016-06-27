@@ -13,6 +13,7 @@ Suite Teardown  Test Suite Teardown
 Можливість знайти закупівлю по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера
   ...      ${USERS.users['${viewer}'].broker}
+  ...      find_tender  level1
   Завантажити дані про тендер
   Run As  ${viewer}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
 
@@ -24,7 +25,9 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  [Setup]  Дочекатись дати початку періоду аукціону  ${viewer}  ${TENDER['TENDER_UAID']}
+  ...      tender_view  level2
+  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}  ${TENDER['TENDER_UAID']}
+  Дочекатись дати початку періоду аукціону  ${viewer}  ${TENDER['TENDER_UAID']}
   Отримати дані із тендера  ${viewer}  ${TENDER['TENDER_UAID']}  auctionPeriod.startDate  ${TENDER['LOT_ID']}
 
 
@@ -32,6 +35,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
+  ...      auction
   Дочекатись дати початку аукціону  ${viewer}
 
 
@@ -39,6 +43,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
+  ...      auction  level1
   Можливість вичитати посилання на аукціон для ${viewer}
 
 
@@ -46,6 +51,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
+  ...      auction
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати закінчення аукціону користувачем ${viewer}
 
@@ -54,6 +60,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Отримати дані із тендера  ${viewer}  ${TENDER['TENDER_UAID']}  auctionPeriod.endDate  ${TENDER['LOT_ID']}
 
@@ -83,6 +90,16 @@ Suite Teardown  Test Suite Teardown
 
 Дочекатись дати закінчення аукціону користувачем ${username}
   Відкрити сторінку аукціону для ${username}
-  Wait Until Keyword Succeeds  61 times  30 s  Page should contain  Аукціон завершився
-  Wait Until Keyword Succeeds  5 times  30 s  Page should not contain  очікуємо розкриття учасників
-  Close browser
+  ${status}  ${_}=  Run Keyword And Ignore Error  Wait Until Keyword Succeeds  61 times  30 s  Page should contain  Аукціон завершився
+  Run Keyword If  '${status}' == 'FAIL'
+  ...      Run Keywords
+  ...      Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  auctionPeriod.startDate  ${TENDER['LOT_ID']}
+  ...      AND
+  ...      Дочекатись дати початку аукціону  ${username}
+  ...      AND
+  ...      Дочекатись дати закінчення аукціону користувачем ${username}
+  ...      ELSE
+  ...      Run Keywords
+  ...      Wait Until Keyword Succeeds  5 times  30 s  Page should not contain  очікуємо розкриття учасників
+  ...      AND
+  ...      Close browser

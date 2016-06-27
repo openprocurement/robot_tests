@@ -16,6 +16,8 @@ Resource           resource.robot
   ...      tender_meat=${${tender_meat}}
   ...      lot_meat=${${lot_meat}}
   ...      item_meat=${${item_meat}}
+  ${dialogue_type}=  Get Variable Value  ${dialogue_type}
+  Run keyword if  '${dialogue_type}' != '${None}'  Set to dictionary  ${tender_parameters}  dialogue_type=${dialogue_type}
   ${tender_data}=  Підготувати дані для створення тендера  ${tender_parameters}
   ${adapted_data}=  Адаптувати дані для оголошення тендера  ${tender_owner}  ${tender_data}
   ${TENDER_UAID}=  Run As  ${tender_owner}  Створити тендер  ${adapted_data}
@@ -68,6 +70,14 @@ Resource           resource.robot
 
 Звірити відображення поля ${field} тендера для користувача ${username}
   Звірити поле тендера  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${field}
+
+
+Звірити відображення вмісту документації до тендера для користувача ${username}
+  ${file_content_loaded}  ${file_name_loaded}=  Run as  ${viewer}  Отримати документ  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].tender_data.data.documents[0].url}
+  ${doc_title}=  Set variable  ${USERS.users['${tender_owner}'].documents.filepath}
+  ${document_content_uploaded}=  get_file_contents  ${doc_title}
+  Порівняти об'єкти  ${file_content_loaded}  ${document_content_uploaded}
+  Порівняти об'єкти  ${file_name_loaded}  ${doc_title}
 
 
 Звірити відображення дати ${date} тендера для усіх користувачів
@@ -145,6 +155,16 @@ Resource           resource.robot
   ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}]}
   ${filepath}=  create_fake_doc
   Run As  ${tender_owner}  Завантажити документ в лот  ${filepath}  ${TENDER['TENDER_UAID']}  ${lot_id}
+  ${empty_list}=  Create List
+  ${lots_documents}=  Get variable value  ${USERS.users['${tender_owner}'].lots_documents}  ${empty_list}
+  Append to list  ${lots_documents}  ${filepath}
+  Set to dictionary  ${USERS.users['${tender_owner}']}  lots_documents=${lots_documents}
+  Log  ${USERS.users['${tender_owner}'].lots_documents}
+
+Можливість додати документацію до всіх лотів
+  ${number_of_lots}=  Get Length  ${USERS.users['${tender_owner}'].initial_data.data.lots}
+  :FOR  ${lot_index}  IN RANGE  ${number_of_lots}
+  \  Можливість додати документацію до ${lot_index} лоту
 
 
 Можливість додати предмет закупівлі в ${lot_index} лот
@@ -201,6 +221,35 @@ Resource           resource.robot
   ...      object_id=${lot_id}
 
 
+Звірити відображення поля ${field} ${lot_index} лоту з ${data} для користувача ${username}
+  ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data.lots[${lot_index}]}
+  Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${data}  ${field}  ${lot_id}
+
+
+Звірити відображення заголовку документації до всіх лотів для користувача ${username}
+  ${number_of_lots}=  Get Length  ${USERS.users['${tender_owner}'].initial_data.data.lots}
+  :FOR  ${lot_index}  IN RANGE  ${number_of_lots}
+  \  ${lot_index}=  Convert to integer  ${lot_index}
+  \  ${doc_index}=  get_document_index_by_id  ${USERS.users['${username}'].tender_data.data.documents}  ${USERS.users['${tender_owner}'].lots_documents[${lot_index}]}
+  \  Звірити відображення поля documents[${doc_index}].title тендера із ${USERS.users['${tender_owner}'].lots_documents[${lot_index}]} для користувача ${username}
+
+
+Звірити відображення вмісту ${doc_index} документа до ${lot_index} лоту для користувача ${username}
+  ${file_content_loaded}  ${file_name_loaded}=  Run as  ${username}  Отримати документ  ${TENDER['TENDER_UAID']}  ${USERS.users['${username}'].tender_data.data.documents[${doc_index}].url}
+  ${doc_title}=  Set variable  ${USERS.users['${tender_owner}'].lots_documents[${lot_index}]}
+  ${document_content_uploaded}=  get_file_contents  ${doc_title}
+  Порівняти об'єкти  ${file_content_loaded}  ${document_content_uploaded}
+  Порівняти об'єкти  ${file_name_loaded}  ${doc_title}
+
+
+Звірити відображення вмісту документації до всіх лотів для користувача ${username}
+  ${number_of_lots}=  Get Length  ${USERS.users['${tender_owner}'].initial_data.data.lots}
+  :FOR  ${lot_index}  IN RANGE  ${number_of_lots}
+  \  ${lot_index}=  Convert to integer  ${lot_index}
+  \  ${doc_index}=  get_document_index_by_id  ${USERS.users['${username}'].tender_data.data.documents}  ${USERS.users['${tender_owner}'].lots_documents[${lot_index}]}
+  \  Звірити відображення вмісту ${doc_index} документа до ${lot_index} лоту для користувача ${username}
+
+
 Звірити відображення поля ${field} у новоствореному лоті для усіх користувачів
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
   \  Звірити відображення поля ${field} у новоствореному лоті для користувача ${username}
@@ -215,8 +264,10 @@ Resource           resource.robot
 
 Можливість змінити на ${percent} відсотки бюджет ${lot_index} лоту
   ${percent}=  Convert To Number  ${percent}
-  ${value}=  Evaluate  ${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}].value.amount}*${percent}/${100}
+  ${value}=  Evaluate  round(${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}].value.amount} * ${percent} / ${100}, 2)
+  ${step_value}=  Evaluate  round(${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}].minimalStep.amount} * ${percent} / ${100}, 2)
   Можливість змінити поле value.amount ${lot_index} лоту на ${value}
+  Можливість змінити поле minimalStep.amount ${lot_index} лоту на ${step_value}
 
 
 Можливість змінити поле ${field} ${lot_index} лоту на ${value}
@@ -227,7 +278,7 @@ Resource           resource.robot
 #             FEATURES
 ##############################################################################################
 
-Можливість добавити неціновий показник на тендер
+Можливість додати неціновий показник на тендер
   ${feature}=  Підготувати дані для створення нецінового показника
   Set To Dictionary  ${feature}  featureOf=tenderer
   Run As  ${tender_owner}  Додати неціновий показник на тендер  ${TENDER['TENDER_UAID']}  ${feature}
@@ -237,7 +288,7 @@ Resource           resource.robot
   Set To Dictionary  ${USERS.users['${tender_owner}']}  feature_data=${feature_data}
 
 
-Можливість добавити неціновий показник на ${lot_index} лот
+Можливість додати неціновий показник на ${lot_index} лот
   ${feature}=  Підготувати дані для створення нецінового показника
   Set To Dictionary  ${feature}  featureOf=lot
   ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}]}
@@ -248,7 +299,7 @@ Resource           resource.robot
   Set To Dictionary  ${USERS.users['${tender_owner}']}  feature_data=${feature_data}
 
 
-Можливість добавити неціновий показник на ${item_index} предмет
+Можливість додати неціновий показник на ${item_index} предмет
   ${feature}=  Підготувати дані для створення нецінового показника
   Set To Dictionary  ${feature}  featureOf=item
   ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data['items'][${item_index}]}
@@ -371,11 +422,12 @@ Resource           resource.robot
 
 Можливість створити чернетку вимоги про виправлення умов ${lot_index} лоту
   ${claim}=  Підготувати дані для подання вимоги
+  ${lot_id}=  get_id_from_object  ${USERS.users['${provider}'].tender_data.data.lots[${lot_index}]}
   ${complaintID}=  Run As  ${provider}
   ...      Створити чернетку вимоги про виправлення умов лоту
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
-  ...      ${lot_index}
+  ...      ${lot_id}
   ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}
   ${claim_data}=  munch_dict  arg=${claim_data}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data  ${claim_data}
@@ -408,12 +460,13 @@ Resource           resource.robot
 
 Можливість створити вимогу про виправлення умов ${lot_index} лоту із документацією
   ${claim}=  Підготувати дані для подання вимоги
+  ${lot_id}=  get_id_from_object  ${USERS.users['${provider}'].tender_data.data.lots[${lot_index}]}
   ${document}=  create_fake_doc
   ${complaintID}=  Run As  ${provider}
   ...      Створити вимогу про виправлення умов лоту
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
-  ...      ${lot_index}
+  ...      ${lot_id}
   ...      ${document}
   ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}  document=${document}
   ${claim_data}=  munch_dict  arg=${claim_data}
@@ -445,6 +498,14 @@ Resource           resource.robot
   ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
   ...      ${cancellation_data}
   Set To Dictionary  ${USERS.users['${provider}'].claim_data}  cancellation  ${cancellation_data}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус вимоги/скарги
+  ...      ${provider}
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      cancelled
 
 
 Можливість скасувати вимогу про виправлення умов лоту
@@ -458,11 +519,20 @@ Resource           resource.robot
   ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
   ...      ${cancellation_data}
   Set To Dictionary  ${USERS.users['${provider}'].claim_data}  cancellation  ${cancellation_data}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус вимоги/скарги
+  ...      ${provider}
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      cancelled
 
 
 Можливість скасувати вимогу про виправлення визначення ${award_index} переможця
   ${cancellation_reason}=  create_fake_sentence
-  ${data}=  Create Dictionary  status=cancelled  cancellationReason=${cancellation_reason}
+  ${status}=  Set variable if  'open' in '${mode}'  stopping  cancelled
+  ${data}=  Create Dictionary  status=${status}  cancellationReason=${cancellation_reason}
   ${cancellation_data}=  Create Dictionary  data=${data}
   ${cancellation_data}=  munch_dict  arg=${cancellation_data}
   Run As  ${provider}
@@ -472,6 +542,16 @@ Resource           resource.robot
   ...      ${cancellation_data}
   ...      ${award_index}
   Set To Dictionary  ${USERS.users['${provider}'].claim_data}  cancellation  ${cancellation_data}
+  ${status}=  Set variable if  'open' in '${mode}'  stopping  cancelled
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус вимоги/скарги
+  ...      ${provider}
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${status}
+  ...      ${award_index}
 
 
 Можливість перетворити вимогу про виправлення умов закупівлі в скаргу
@@ -484,6 +564,14 @@ Resource           resource.robot
   ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
   ...      ${escalation_data}
   Set To Dictionary  ${USERS.users['${provider}'].claim_data}  escalation  ${escalation_data}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус вимоги/скарги
+  ...      ${provider}
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      pending
 
 
 Можливість перетворити вимогу про виправлення умов лоту в скаргу
@@ -496,6 +584,14 @@ Resource           resource.robot
   ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
   ...      ${escalation_data}
   Set To Dictionary  ${USERS.users['${provider}'].claim_data}  escalation  ${escalation_data}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус вимоги/скарги
+  ...      ${provider}
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      pending
 
 
 Можливість перетворити вимогу про виправлення визначення ${award_index} переможця в скаргу
@@ -509,21 +605,34 @@ Resource           resource.robot
   ...      ${escalation_data}
   ...      ${award_index}
   Set To Dictionary  ${USERS.users['${provider}'].claim_data}  escalation  ${escalation_data}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус вимоги/скарги
+  ...      ${provider}
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      pending
+  ...      ${award_index}
 
 
 Звірити відображення поля ${field} вимоги із ${data} для користувача ${username}
-  Звірити поле скарги із значенням  ${username}
+  Звірити поле скарги із значенням
+  ...      ${username}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${data}
   ...      ${field}
   ...      ${USERS.users['${provider}'].claim_data['complaintID']}
 
 
 Звірити відображення поля ${field} вимоги про виправлення визначення ${award_index} переможця із ${data} для користувача ${username}
-  Звірити поле скарги про виправлення визначення переможця із значенням  ${username}
+  Звірити поле скарги із значенням
+  ...      ${username}
+  ...      ${TENDER['TENDER_UAID']}
   ...      ${data}
   ...      ${field}
-  ...      ${award_index}
   ...      ${USERS.users['${provider}'].claim_data['complaintID']}
+  ...      ${award_index}
 
 
 Можливість відповісти на вимогу про виправлення умов закупівлі
@@ -537,6 +646,14 @@ Resource           resource.robot
   ${claim_data}=  Create Dictionary  claim_answer=${answer_data}
   ${claim_data}=  munch_dict  arg=${claim_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  claim_data  ${claim_data}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус вимоги/скарги
+  ...      ${provider}
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      answered
 
 
 Можливість відповісти на вимогу про виправлення умов лоту
@@ -550,6 +667,14 @@ Resource           resource.robot
   ${claim_data}=  Create Dictionary  claim_answer=${answer_data}
   ${claim_data}=  munch_dict  arg=${claim_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  claim_data  ${claim_data}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус вимоги/скарги
+  ...      ${provider}
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      answered
 
 
 Можливість відповісти на вимогу про виправлення визначення ${award_index} переможця
@@ -564,6 +689,15 @@ Resource           resource.robot
   ${claim_data}=  Create Dictionary  claim_answer=${answer_data}
   ${claim_data}=  munch_dict  arg=${claim_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  claim_data  ${claim_data}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус вимоги/скарги
+  ...      ${provider}
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      answered
+  ...      ${award_index}
 
 
 Можливість підтвердити задоволення вимоги про виправлення умов закупівлі
@@ -576,6 +710,14 @@ Resource           resource.robot
   ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
   ...      ${confirmation_data}
   Set To Dictionary  ${USERS.users['${provider}']['claim_data']}  claim_answer_confirm  ${confirmation_data}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус вимоги/скарги
+  ...      ${provider}
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      resolved
 
 
 Можливість підтвердити задоволення вимоги про виправлення умов лоту
@@ -588,6 +730,14 @@ Resource           resource.robot
   ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
   ...      ${confirmation_data}
   Set To Dictionary  ${USERS.users['${provider}']['claim_data']}  claim_answer_confirm  ${confirmation_data}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус вимоги/скарги
+  ...      ${provider}
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      resolved
 
 
 Можливість підтвердити задоволення вимоги про виправлення визначення ${award_index} переможця
@@ -601,6 +751,15 @@ Resource           resource.robot
   ...      ${confirmation_data}
   ...      ${award_index}
   Set To Dictionary  ${USERS.users['${provider}']['claim_data']}  claim_answer_confirm  ${confirmation_data}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус вимоги/скарги
+  ...      ${provider}
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      resolved
+  ...      ${award_index}
 
 ##############################################################################################
 #             BIDDING
@@ -636,9 +795,12 @@ Resource           resource.robot
   Require Failure  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}
 
 
-Можливість змінити пропозицію до ${amount} користувачем ${username}
-  ${field}=  Set Variable If  ${number_of_lots} == 0  value.amount  lotValues[0].value.amount
-  ${fixbidto10resp}=  Run As  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  ${field}  ${amount}
+Можливість зменшити пропозицію до ${percent} відсотків користувачем ${username}
+  ${percent}=  Convert To Number  ${percent}
+  ${field}=  Set variable if  ${number_of_lots} == 0  value.amount  lotValues[0].value.amount
+  ${value}=  Run As  ${username}  Отримати інформацію із пропозиції  ${TENDER['TENDER_UAID']}  ${field}
+  ${value}=  Evaluate  round(${value} * ${percent} / 100, 2)
+  Run as  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  ${field}  ${value}
 
 
 Можливість завантажити документ в пропозицію користувачем ${username}
@@ -658,17 +820,7 @@ Resource           resource.robot
 ##############################################################################################
 
 Можливість скасувати цінову пропозицію користувачем ${username}
-  ${canceledbidresp}=  Run As  ${username}  Скасувати цінову пропозицію  ${TENDER['TENDER_UAID']}
-
-
-Можливість скасувати закупівлю
-  ${cancellation_data}=  Підготувати дані про скасування  ${tender_owner}
-  Run as  ${tender_owner}
-  ...      Скасувати закупівлю
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${cancellation_data['cancellation_reason']}
-  ...      ${cancellation_data['document']}
-  ...      ${cancellation_data['description']}
+  Run As  ${username}  Скасувати цінову пропозицію  ${TENDER['TENDER_UAID']}
 
 ##############################################################################################
 #             Awarding

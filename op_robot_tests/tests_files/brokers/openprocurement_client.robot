@@ -44,7 +44,7 @@ Library  openprocurement_client_helper.py
 Отримати документ
   [Arguments]  ${username}  ${tender_uaid}  ${url}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${token}=    Get Variable Value  ${USERS.users['${username}'].bidresponses['resp'].access.token}
+  ${token}=  Get Variable Value  ${USERS.users['${username}'].access_token}
   ${contents}  ${filename}=  Call Method  ${USERS.users['${username}'].client}  get_file   ${tender}   ${url}   ${token}
   [return]   ${contents}  ${filename}
 
@@ -333,20 +333,6 @@ Library  openprocurement_client_helper.py
 Створити чернетку вимоги про виправлення умов закупівлі
   [Documentation]  Створює вимогу у статусі "draft"
   [Arguments]  ${username}  ${tender_uaid}  ${claim}
-  ${complaintID}=  openprocurement_client.Створити чернетку вимоги про виправлення умов лоту
-  ...      ${username}
-  ...      ${tender_uaid}
-  ...      ${claim}
-  ...      ${None}  #lot_index
-  [return]  ${complaintID}
-
-
-Створити чернетку вимоги про виправлення умов лоту
-  [Documentation]  Створює вимогу у статусі "draft"
-  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${lot_index}
-  Run keyword if  ${lot_index} != ${None}
-  ...      Set to dictionary  ${claim.data}
-  ...      relatedLot=${USERS.users['${tender_owner}'].initial_data.data.lots[${lot_index}].id}
   Log  ${claim}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору
   ...      ${username}
@@ -359,6 +345,21 @@ Library  openprocurement_client_helper.py
   Log  ${reply}
   Set To Dictionary  ${USERS.users['${username}']}  complaint_access_token=${reply.access.token}
   [return]  ${reply.data.complaintID}
+
+
+Створити чернетку вимоги про виправлення умов лоту
+  [Documentation]  Створює вимогу у статусі "draft"
+  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${lot_id}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору
+  ...      ${username}
+  ...      ${tender_uaid}
+  ${lot_index}=  get_object_index_by_id  ${tender.data.lots}  ${lot_id}
+  Set to dictionary  ${claim.data}  relatedLot=${tender.data.lots[${lot_index}].id}
+  ${complaintID}=  openprocurement_client.Створити чернетку вимоги про виправлення умов закупівлі
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      ${claim}
+  [return]  ${complaintID}
 
 
 Створити чернетку вимоги про виправлення визначення переможця
@@ -385,12 +386,27 @@ Library  openprocurement_client_helper.py
   [Documentation]  Створює вимогу у статусі "claim"
   ...      Можна створити вимогу як з документацією, так і без неї
   [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${document}=${None}
-  ${complaintID}=  openprocurement_client.Створити вимогу про виправлення умов лоту
+
+  ${complaintID}=  Створити чернетку вимоги про виправлення умов закупівлі
   ...      ${username}
   ...      ${tender_uaid}
   ...      ${claim}
-  ...      ${None}  #lot_index
+
+  ${status}=  Run keyword and return status  Should not be equal  ${document}  ${None}
+  Log  ${status}
+  Run keyword if  ${status} == ${True}  Завантажити документацію до вимоги
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      ${complaintID}
   ...      ${document}
+
+  ${data}=  Create Dictionary  status=claim
+  ${confirmation_data}=  Create Dictionary  data=${data}
+  Подати вимогу
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      ${complaintID}
+  ...      ${confirmation_data}
   [return]  ${complaintID}
 
 
@@ -398,12 +414,12 @@ Library  openprocurement_client_helper.py
   [Documentation]  Створює вимогу у статусі "claim"
   ...      Можна створити вимогу як з документацією, так і без неї
   ...      Якщо lot_index == None, то створюється вимога про виправлення умов тендера.
-  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${lot_index}  ${document}=${None}
+  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${lot_id}  ${document}=${None}
   ${complaintID}=  Створити чернетку вимоги про виправлення умов лоту
   ...      ${username}
   ...      ${tender_uaid}
   ...      ${claim}
-  ...      ${lot_index}
+  ...      ${lot_id}
 
   ${status}=  Run keyword and return status  Should not be equal  ${document}  ${None}
   Log  ${status}
@@ -443,7 +459,8 @@ Library  openprocurement_client_helper.py
   ...      ${award_index}
   ...      ${document}
 
-  ${data}=  Create Dictionary  status=claim
+  ${status}=  Set variable if  'open' in '${mode}'  pending  claim
+  ${data}=  Create Dictionary  status=${status}
   ${confirmation_data}=  Create Dictionary  data=${data}
   Подати вимогу про виправлення визначення переможця
   ...      ${username}
@@ -619,6 +636,26 @@ Library  openprocurement_client_helper.py
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_award_complaint  ${tender}  ${escalating_data}  ${tender.data.awards[${award_index}].id}
   Log  ${reply}
 
+
+Отримати інформацію із скарги
+  [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${field_name}  ${award_index}=${None}
+  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${complaints}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.awards[${award_index}].complaints}  ${USERS.users['${username}'].tender_data.data.complaints}
+  ${complaint_index}=  get_complaint_index_by_complaintID  ${complaints}  ${complaintID}
+  ${field_value}=  Get Variable Value  ${complaints[${complaint_index}]['${field_name}']}
+  [Return]  ${field_value}
+
+
+Отримати поле документації до скарги
+  [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${document_id}  ${field_name}  ${award_index}=${None}
+  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${complaints}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.awards[${award_index}].complaints}  ${USERS.users['${username}'].tender_data.data.complaints}
+  ${complaint_index}=  get_complaint_index_by_complaintID  ${complaints}  ${complaintID}
+  Log  ${complaints}
+  ${document_index}=  get_document_index_by_id  ${complaints[${complaint_index}].documents}  ${document_id}
+  ${field_value}=  Get Variable Value  ${complaints[${complaint_index}].documents[${document_index}]['${field_name}']}
+  [Return]  ${field_value}
+
 ##############################################################################
 #             Bid operations
 ##############################################################################
@@ -702,6 +739,7 @@ Library  openprocurement_client_helper.py
   ${bid_id}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['resp'].data.id}
   ${token}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['resp'].access.token}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  get_bid  ${tender}  ${bid_id}  ${token}
+  ${reply}=  munch_dict  arg=${reply}
   [return]  ${reply}
 
 

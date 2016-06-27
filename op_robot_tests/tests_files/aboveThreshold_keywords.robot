@@ -29,7 +29,7 @@ Resource           base_keywords.robot
   Should Be Equal  ${bid_status}  ${status}
 
 
-Можливість оновити статус цінової пропозиції учасником ${username}
+Можливість підтвердити цінову пропозицію учасником ${username}
   ${status}=  Run Keyword IF  '${mode}'=='openeu'  Set Variable  pending
   ...                     ELSE IF  '${mode}'=='openua'  Set Variable  active
   ${activestatusresp}=  Run As  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  status  ${status}

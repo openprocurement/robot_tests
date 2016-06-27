@@ -72,6 +72,9 @@ def test_tender_data(params, periods=("enquiry", "tender")):
         "items": [],
         "features": []
     }
+    accelerator = params['intervals']['accelerator']
+    data['procurementMethodDetails'] = 'quick, ' \
+        'accelerator={}'.format(accelerator)
     data["procuringEntity"]["kind"] = "other"
     if data.get("mode") == "test":
         data["title"] = u"[ТЕСТУВАННЯ] {}".format(data["title"])
@@ -144,14 +147,12 @@ def test_tender_data_limited(params):
             "stateLegalServices"
         )
         cause = fake.random_element(cause_variants)
-        data.update({"cause": cause})
-    if params['mode'] == "negotiation.quick":
+    elif params['mode'] == "negotiation.quick":
         cause_variants = ('quick',)
-        cause = fake.random_element(cause_variants)
-        data.update({"cause": cause})
     if params['mode'] in ("negotiation", "negotiation.quick"):
+        cause = fake.random_element(cause_variants)
         data.update({
-            "procurementMethodDetails": "quick, accelerator=1440",
+            "cause": cause,
             "causeDescription": fake.description()
         })
     return munchify(data)
@@ -286,7 +287,8 @@ def test_supplier_data():
                 "amount": fake.random_int(min=1),
                 "currency": "UAH",
                 "valueAddedTaxIncluded": True
-            }
+            },
+            "qualified": True
         }
     })
 
@@ -349,33 +351,21 @@ def test_lot_document_data(document, lot_id):
 
 
 def test_tender_data_openua(params):
-    accelerator = params['intervals']['accelerator']
-    # Since `accelerator` field is not really a list containing timings
-    # for a period called `acceleratorPeriod`, let's remove it :)
-    del params['intervals']['accelerator']
     # We should not provide any values for `enquiryPeriod` when creating
     # an openUA or openEU procedure. That field should not be present at all.
     # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
     data = test_tender_data(params, ('tender',))
     data['procurementMethodType'] = 'aboveThresholdUA'
-    data['procurementMethodDetails'] = 'quick, ' \
-        'accelerator={}'.format(accelerator)
     data['procuringEntity']['kind'] = 'general'
     return data
 
 
 def test_tender_data_openeu(params):
-    accelerator = params['intervals']['accelerator']
-    # Since `accelerator` field is not really a list containing timings
-    # for a period called `acceleratorPeriod`, let's remove it :)
-    del params['intervals']['accelerator']
     # We should not provide any values for `enquiryPeriod` when creating
     # an openUA or openEU procedure. That field should not be present at all.
     # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
     data = test_tender_data(params, ('tender',))
     data['procurementMethodType'] = 'aboveThresholdEU'
-    data['procurementMethodDetails'] = 'quick, ' \
-        'accelerator={}'.format(accelerator)
     data['title_en'] = "[TESTING]"
     for item_number, item in enumerate(data['items']):
         item['description_en'] = "Test item #{}".format(item_number)
@@ -383,5 +373,22 @@ def test_tender_data_openeu(params):
     data['procuringEntity']['contactPoint']['name_en'] = fake_en.name()
     data['procuringEntity']['contactPoint']['availableLanguage'] = "en"
     data['procuringEntity']['identifier']['legalName_en'] = "Institution \"Vinnytsia City Council primary and secondary general school № 10\""
+    data['procuringEntity']['kind'] = 'general'
+    return data
+
+
+def test_tender_data_competitive_dialogue(params):
+    # We should not provide any values for `enquiryPeriod` when creating
+    # an openUA or openEU procedure. That field should not be present at all.
+    # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
+    data = test_tender_data(params, ('tender',))
+    data['procurementMethodType'] = 'competitiveDialogue.aboveThreshold' + params.get('dialogue_type', 'EU')
+    data['title_en'] = "[TESTING] {}".format(fake_en.sentence(nb_words=3, variable_nb_words=True))
+    for item in data['items']:
+        item['description_en'] = fake_en.sentence(nb_words=3, variable_nb_words=True)
+    data['procuringEntity']['name_en'] = fake_en.name()
+    data['procuringEntity']['contactPoint']['name_en'] = fake_en.name()
+    data['procuringEntity']['contactPoint']['availableLanguage'] = "en"
+    data['procuringEntity']['identifier']['legalName_en'] = fake_en.sentence(nb_words=10, variable_nb_words=True)
     data['procuringEntity']['kind'] = 'general'
     return data

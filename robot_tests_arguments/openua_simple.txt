@@ -1,0 +1,22 @@
+-v mode:openua
+
+-v number_of_items:1
+-v number_of_lots:1
+
+-v tender_meat:False
+-v item_meat:False
+-v lot_meat:False
+
+-i create_tender
+-i find_tender
+-i tender_view
+-i lot_view
+
+-i make_bid_by_provider
+-i make_bid_by_provider1
+
+-i auction
+
+-i qualification_approve_first_award
+
+-i contract_sign

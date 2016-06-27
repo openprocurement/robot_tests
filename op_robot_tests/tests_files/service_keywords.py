@@ -37,6 +37,7 @@ from .initial_data import (
     test_question_data,
     test_supplier_data,
     test_tender_data,
+    test_tender_data_competitive_dialogue,
     test_tender_data_limited,
     test_tender_data_openeu,
     test_tender_data_openua,
@@ -143,7 +144,7 @@ def compare_coordinates(left_lat, left_lon, right_lat, right_lon, accuracy=0.1):
     return True
 
 
-def log_object_data(data, file_name=None, format="yaml", update=False):
+def log_object_data(data, file_name=None, format="yaml", update=False, artifact=False):
     """Log object data in pretty format (JSON or YAML)
 
     Two output formats are supported: "yaml" and "json".
@@ -164,8 +165,11 @@ def log_object_data(data, file_name=None, format="yaml", update=False):
     if not isinstance(data, Munch):
         data = munchify(data)
     if file_name:
-        output_dir = BuiltIn().get_variable_value("${OUTPUT_DIR}")
-        file_path = os.path.join(output_dir, file_name + '.' + format)
+        if artifact:
+            file_path = os.path.join(os.path.dirname(__file__), 'data', file_name + '.' + format)
+        else:
+            output_dir = BuiltIn().get_variable_value("${OUTPUT_DIR}")
+            file_path = os.path.join(output_dir, file_name + '.' + format)
         if update:
             try:
                 with open(file_path, "r+") as file_obj:
@@ -269,16 +273,11 @@ def prepare_test_tender_data(procedure_intervals, tender_parameters):
     tender_parameters['intervals'] = intervals
 
     # Set acceleration value for certain modes
-    if mode in ['openua', 'openeu']:
-        assert isinstance(intervals['accelerator'], int), \
-            "Accelerator should be an 'int', " \
-            "not '{}'".format(type(intervals['accelerator']).__name__)
-        assert intervals['accelerator'] >= 0, \
-            "Accelerator should not be less than 0"
-    else:
-        assert 'accelerator' not in intervals.keys(), \
-               "Accelerator is not available for mode '{0}'".format(mode)
-
+    assert isinstance(intervals['accelerator'], int), \
+        "Accelerator should be an 'int', " \
+        "not '{}'".format(type(intervals['accelerator']).__name__)
+    assert intervals['accelerator'] >= 0, \
+        "Accelerator should not be less than 0"
     if mode == 'negotiation':
         return munchify({'data': test_tender_data_limited(tender_parameters)})
     elif mode == 'negotiation.quick':
@@ -287,6 +286,8 @@ def prepare_test_tender_data(procedure_intervals, tender_parameters):
         return munchify({'data': test_tender_data_openeu(tender_parameters)})
     elif mode == 'openua':
         return munchify({'data': test_tender_data_openua(tender_parameters)})
+    elif mode == 'open_competitive_dialogue':
+        return munchify({'data': test_tender_data_competitive_dialogue(tender_parameters)})
     elif mode == 'reporting':
         return munchify({'data': test_tender_data_limited(tender_parameters)})
     elif mode == 'belowThreshold':
