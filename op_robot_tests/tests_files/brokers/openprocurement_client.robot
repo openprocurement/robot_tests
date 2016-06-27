@@ -333,20 +333,6 @@ Library  openprocurement_client_helper.py
 Створити чернетку вимоги про виправлення умов закупівлі
   [Documentation]  Створює вимогу у статусі "draft"
   [Arguments]  ${username}  ${tender_uaid}  ${claim}
-  ${complaintID}=  openprocurement_client.Створити чернетку вимоги про виправлення умов лоту
-  ...      ${username}
-  ...      ${tender_uaid}
-  ...      ${claim}
-  ...      ${None}  #lot_index
-  [return]  ${complaintID}
-
-
-Створити чернетку вимоги про виправлення умов лоту
-  [Documentation]  Створює вимогу у статусі "draft"
-  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${lot_index}
-  Run keyword if  ${lot_index} != ${None}
-  ...      Set to dictionary  ${claim.data}
-  ...      relatedLot=${USERS.users['${tender_owner}'].initial_data.data.lots[${lot_index}].id}
   Log  ${claim}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору
   ...      ${username}
@@ -359,6 +345,21 @@ Library  openprocurement_client_helper.py
   Log  ${reply}
   Set To Dictionary  ${USERS.users['${username}']}  complaint_access_token=${reply.access.token}
   [return]  ${reply.data.complaintID}
+
+
+Створити чернетку вимоги про виправлення умов лоту
+  [Documentation]  Створює вимогу у статусі "draft"
+  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${lot_id}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору
+  ...      ${username}
+  ...      ${tender_uaid}
+  ${lot_index}=  get_object_index_by_id  ${tender.data.lots}  ${lot_id}
+  Set to dictionary  ${claim.data}  relatedLot=${tender.data.lots[${lot_index}].id}
+  ${complaintID}=  openprocurement_client.Створити чернетку вимоги про виправлення умов закупівлі
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      ${claim}
+  [return]  ${complaintID}
 
 
 Створити чернетку вимоги про виправлення визначення переможця
@@ -385,12 +386,27 @@ Library  openprocurement_client_helper.py
   [Documentation]  Створює вимогу у статусі "claim"
   ...      Можна створити вимогу як з документацією, так і без неї
   [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${document}=${None}
-  ${complaintID}=  openprocurement_client.Створити вимогу про виправлення умов лоту
+
+  ${complaintID}=  Створити чернетку вимоги про виправлення умов закупівлі
   ...      ${username}
   ...      ${tender_uaid}
   ...      ${claim}
-  ...      ${None}  #lot_index
+
+  ${status}=  Run keyword and return status  Should not be equal  ${document}  ${None}
+  Log  ${status}
+  Run keyword if  ${status} == ${True}  Завантажити документацію до вимоги
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      ${complaintID}
   ...      ${document}
+
+  ${data}=  Create Dictionary  status=claim
+  ${confirmation_data}=  Create Dictionary  data=${data}
+  Подати вимогу
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      ${complaintID}
+  ...      ${confirmation_data}
   [return]  ${complaintID}
 
 
@@ -398,12 +414,12 @@ Library  openprocurement_client_helper.py
   [Documentation]  Створює вимогу у статусі "claim"
   ...      Можна створити вимогу як з документацією, так і без неї
   ...      Якщо lot_index == None, то створюється вимога про виправлення умов тендера.
-  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${lot_index}  ${document}=${None}
+  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${lot_id}  ${document}=${None}
   ${complaintID}=  Створити чернетку вимоги про виправлення умов лоту
   ...      ${username}
   ...      ${tender_uaid}
   ...      ${claim}
-  ...      ${lot_index}
+  ...      ${lot_id}
 
   ${status}=  Run keyword and return status  Should not be equal  ${document}  ${None}
   Log  ${status}

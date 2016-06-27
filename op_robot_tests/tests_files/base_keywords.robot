@@ -422,11 +422,12 @@ Resource           resource.robot
 
 Можливість створити чернетку вимоги про виправлення умов ${lot_index} лоту
   ${claim}=  Підготувати дані для подання вимоги
+  ${lot_id}=  get_id_from_object  ${USERS.users['${provider}'].tender_data.data.lots[${lot_index}]}
   ${complaintID}=  Run As  ${provider}
   ...      Створити чернетку вимоги про виправлення умов лоту
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
-  ...      ${lot_index}
+  ...      ${lot_id}
   ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}
   ${claim_data}=  munch_dict  arg=${claim_data}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data  ${claim_data}
@@ -459,12 +460,13 @@ Resource           resource.robot
 
 Можливість створити вимогу про виправлення умов ${lot_index} лоту із документацією
   ${claim}=  Підготувати дані для подання вимоги
+  ${lot_id}=  get_id_from_object  ${USERS.users['${provider}'].tender_data.data.lots[${lot_index}]}
   ${document}=  create_fake_doc
   ${complaintID}=  Run As  ${provider}
   ...      Створити вимогу про виправлення умов лоту
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
-  ...      ${lot_index}
+  ...      ${lot_id}
   ...      ${document}
   ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}  document=${document}
   ${claim_data}=  munch_dict  arg=${claim_data}
