@@ -1348,3 +1348,34 @@ Library  openprocurement_client.utils
   Log  ${contract}
   ${contract}=  Call Method  ${USERS.users['${username}'].contracting_client}  patch_contract  ${internalid}  ${USERS.users['${username}'].contract_access_token}  ${contract}
   Log  ${contract}
+
+
+Застосувати зміну
+  [Arguments]  ${username}  ${contract_uaid}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${data}=  Create Dictionary  status=active
+  ${data}=  Create Dictionary  data=${data}
+  ${changes}=  Get variable value  ${USERS.users['${username}'].changes}
+  ${change}=  munchify  ${changes[-1]}
+  Log  ${change}
+  ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  patch_change  ${internalid}  ${USERS.users['${username}'].changes[-1].data.id}  ${USERS.users['${username}'].contract_access_token}  ${data}
+  Log  ${data}
+  Log  ${reply}
+
+
+Завантажити документацію до договору
+  [Arguments]  ${username}  ${contract_uaid}  ${document}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  upload_document  ${document}  ${internalid}  ${USERS.users['${username}'].contract_access_token}
+  Log  ${reply}
+
+
+Завершити договір
+  [Arguments]  ${username}  ${contract_uaid}  ${amount}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${data}=  Create Dictionary  status=terminated
+  ${amountPaid}=  Create Dictionary  amount=${amount}
+  ${data}=  Create Dictionary  data=${data}
+  Set to dictionary  ${data.data}  amountPaid=${amountPaid}
+  ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  patch_contract  ${internalid}  ${USERS.users['${username}'].contract_access_token}  ${data}
+  Log  ${reply}
