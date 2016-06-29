@@ -60,7 +60,6 @@ def test_tender_data(intervals, periods=("enquiry", "tender")):
                 "name": fake.name(),
                 "telephone": fake.phone_number()
             },
-            "kind": "other"
         },
         "value": {
             "amount": value_amount,
@@ -490,7 +489,7 @@ def test_bid_value():
     return munchify({
                 "value": {
                     "currency": "UAH",
-                    "amount": fake.random_int(max=1999),
+                    "amount": fake.random_int(min=50001, max=60000),
                     "valueAddedTaxIncluded": True
                 }
             })
@@ -663,7 +662,6 @@ def test_tender_data_openua(intervals):
     t_data['procurementMethodType'] = 'aboveThresholdUA'
     t_data['procurementMethodDetails'] = 'quick, ' \
         'accelerator={}'.format(accelerator)
-    t_data['procuringEntity']['kind'] = 'general'
     return t_data
 
 
@@ -685,5 +683,4 @@ def test_tender_data_openeu(intervals):
     t_data['procuringEntity']['contactPoint']['name_en'] = fake_en.name()
     t_data['procuringEntity']['contactPoint']['availableLanguage'] = "en"
     t_data['procuringEntity']['identifier']['legalName_en'] = "Institution \"Vinnytsia City Council primary and secondary general school № 10\""
-    t_data['procuringEntity']['kind'] = 'general'
     return t_data
