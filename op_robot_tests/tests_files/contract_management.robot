@@ -57,3 +57,27 @@ Suite Teardown  Test Suite Teardown
 Можливість редагувати договір
   ${description}=  create_fake_sentence
   Run As  ${tender_owner}  Редагувати договір  ${CONTRACT_UAID}  description  ${description}
+
+
+Можливість застосувати зміну
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  Run As  ${tender_owner}  Застосувати зміну  ${CONTRACT_UAID}
+
+
+Можливість завантажити документацію до договору
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації до договору
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ${document}=  create_fake_doc
+  Run As  ${tender_owner}  Завантажити документацію до договору  ${CONTRACT_UAID}  ${document}
+
+
+Можливість завершити договір
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Завершення договору
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  Log  ${USERS.users['${tender_owner}'].contract_data}
+  ${amount}=  Get variable value  ${USERS.users['${tender_owner}'].contract_data.data.value.amount}
+  Run As  ${tender_owner}  Завершити договір  ${CONTRACT_UAID}  ${amount}
