@@ -54,6 +54,19 @@ Suite Teardown  Test Suite Teardown
   Звірити відображення поля rationale зміни до договору для користувача ${viewer}
 
 
+Відображення причин зміни договору
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення зміни договору
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  # here we need to receive list of rationale types from broker
+  ${rationale_types_from_broker}=  Run as  ${viewer}  Отримати інформацію із договору  ${CONTRACT_UAID}  changes[0].rationaleTypes 
+  ${rationale_types_from_robot}=  Get variable value  ${USERS.users['${tender_owner}'].change_data.data.rationaleTypes}
+  Log  ${rationale_types_from_broker}
+  Log  ${rationale_types_from_robot}
+  ${result}=  compare_rationale_types  ${rationale_types_from_broker}  ${rationale_types_from_robot}
+  Run keyword if  ${result} == ${False}  Fail  Rationale types are not equal
+
+
 Можливість додати документацію до зміни в договорі
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
   ...      tender_owner
