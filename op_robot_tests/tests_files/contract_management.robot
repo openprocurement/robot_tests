@@ -55,6 +55,9 @@ Suite Teardown  Test Suite Teardown
 
 
 Можливість редагувати договір
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
   ${description}=  create_fake_sentence
   Run As  ${tender_owner}  Редагувати договір  ${CONTRACT_UAID}  description  ${description}
 
