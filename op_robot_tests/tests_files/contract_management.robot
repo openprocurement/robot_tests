@@ -46,6 +46,14 @@ Suite Teardown  Test Suite Teardown
   Run As  ${tender_owner}  Внести зміну в договір  ${CONTRACT_UAID}  ${change_data}
 
 
+Відображення опису причини зміни договору
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення зміни договору
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля rationale зміни до договору для користувача ${viewer}
+
+
 Можливість додати документацію до зміни в договорі
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
   ...      tender_owner
