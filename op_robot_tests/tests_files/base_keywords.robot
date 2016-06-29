@@ -354,6 +354,12 @@ Resource           resource.robot
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
   \  Remove From List  ${USERS.users['${username}'].tender_data.data['features']}  ${feature_index}
 
+
+Звірити відображення поля ${field} зміни до договору для користувача ${username}
+  Звірити поле зміни до договору  ${username}  ${CONTRACT_UAID}
+  ...      ${USERS.users['${tender_owner}'].change_data}
+  ...      ${field}
+
 ##############################################################################################
 #             QUESTIONS
 ##############################################################################################
