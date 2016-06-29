@@ -1064,8 +1064,8 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${contract_uaid}
   ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
   ${contract}=  Call Method  ${USERS.users['${username}'].contracting_client}  get_contract  ${internalid}
-  Set To Dictionary  ${USERS.users['${username}']}  contract_data=${contract}
   ${contract}=  munch_dict  arg=${contract}
+  Set To Dictionary  ${USERS.users['${username}']}  contract_data=${contract}
   Log  ${contract}
   [return]  ${contract}
 
@@ -1073,7 +1073,7 @@ Library  openprocurement_client_helper.py
 Отримати доступ до договору
   [Arguments]  ${username}  ${contract_uaid}
   ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
-  ${contract}=  Call Method  ${USERS.users['${username}'].contracting_client}  get_contract_credentials  ${internalid}  ${USERS.users['${username}'].access_token}  ${EMPTY}
+  ${contract}=  Call Method  ${USERS.users['${username}'].contracting_client}  get_contract_credentials  ${internalid}  ${USERS.users['${username}'].access_token}
   ${contract}=  munch_dict  arg=${contract}
   Set To Dictionary  ${USERS.users['${username}']}  contract_data=${contract}
   Set To Dictionary  ${USERS.users['${username}']}  contract_access_token=${contract.access.token}
@@ -1085,12 +1085,14 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${contract_uaid}  ${change_data}
   ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
   ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  create_change  ${internalid}  ${USERS.users['${username}'].contract_access_token}  ${change_data}
+  # we need this to have change id in `Додати документацію до зміни в договорі` and `Застосувати зміну` keywords
   ${empty_list}=  Create List
   ${changes}=  Get variable value  ${USERS.users['${username}'].changes}  ${empty_list}
   Append to list  ${changes}  ${reply}
   Set to dictionary  ${USERS.users['${username}']}  changes=${changes}
   Log  ${change_data}
   Log  ${reply}
+
 
 Додати документацію до зміни в договорі
   [Arguments]  ${username}  ${contract_uaid}  ${document}
