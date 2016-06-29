@@ -1,6 +1,7 @@
 *** Settings ***
 Resource        keywords.robot
 Resource        resource.robot
+Resource        base_keywords.robot
 Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
