@@ -1381,3 +1381,18 @@ Library  openprocurement_client.utils
   Set to dictionary  ${data.data}  amountPaid=${amountPaid}
   ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  patch_contract  ${internalid}  ${USERS.users['${username}'].contract_access_token}  ${data}
   Log  ${reply}
+
+
+Отримати інформацію із договору
+  [Arguments]  ${username}  ${contract_uaid}  ${field_name}
+  openprocurement_client.Пошук договору по ідентифікатору
+  ...      ${username}
+  ...      ${contract_uaid}
+
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      Get from object
+  ...      ${USERS.users['${username}'].contract_data.data}
+  ...      ${field_name}
+  Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
+
+  Fail  Field not found: ${field_name}
