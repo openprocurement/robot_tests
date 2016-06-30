@@ -389,6 +389,7 @@ ${item_meat}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      extend_tendering_period  level2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення дати tenderPeriod.endDate тендера для усіх користувачів
 
 
