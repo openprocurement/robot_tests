@@ -459,6 +459,18 @@ Log differences between dicts
   Порівняти об'єкти  ${left}  ${right}
 
 
+Звірити поле договору
+  [Arguments]  ${username}  ${contract_uaid}  ${cotract_data}  ${field}
+  ${left}=  get_from_object  ${contract_data.data}  ${field}
+  Звірити поле договору із значенням  ${username}  ${contract_uaid}  ${left}  ${field}
+
+
+Звірити поле договору із значенням
+  [Arguments]  ${username}  ${contract_uaid}  ${left}  ${field}
+  ${right}=  Отримати дані із договору  ${username}  ${contract_uaid}  ${field}
+  Порівняти об'єкти  ${left}  ${right}
+
+
 Звірити поле зміни до договору
   [Arguments]  ${username}  ${contract_uaid}  ${change_data}  ${field}
   ${left}=  get_from_object  ${change_data.data}  ${field}
