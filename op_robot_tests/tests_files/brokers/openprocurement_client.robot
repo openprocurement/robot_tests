@@ -1379,12 +1379,8 @@ Library  openprocurement_client.utils
 
 
 Завершити договір
-  [Arguments]  ${username}  ${contract_uaid}  ${amount}
+  [Arguments]  ${username}  ${contract_uaid}  ${data}
   ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
-  ${data}=  Create Dictionary  status=terminated
-  ${amountPaid}=  Create Dictionary  amount=${amount}
-  ${data}=  Create Dictionary  data=${data}
-  Set to dictionary  ${data.data}  amountPaid=${amountPaid}
   ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  patch_contract  ${internalid}  ${USERS.users['${username}'].contract_access_token}  ${data}
   Log  ${reply}
 
