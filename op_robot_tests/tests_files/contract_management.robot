@@ -104,4 +104,9 @@ Suite Teardown  Test Suite Teardown
   ...      ${USERS.users['${tender_owner}'].broker}
   Log  ${USERS.users['${tender_owner}'].contract_data}
   ${amount}=  Get variable value  ${USERS.users['${tender_owner}'].contract_data.data.value.amount}
-  Run As  ${tender_owner}  Завершити договір  ${CONTRACT_UAID}  ${amount}
+  ${data}=  Create Dictionary  status=terminated
+  ${amountPaid}=  Create Dictionary  amount=${amount}  valueAddedTaxIncluded=${True}  currency=UAH
+  ${data}=  Create Dictionary  data=${data}
+  Set to dictionary  ${data.data}  amountPaid=${amountPaid}
+  Set to dictionary  ${USERS.users['${tender_owner}']}  terminating_data=${data}
+  Run As  ${tender_owner}  Завершити договір  ${CONTRACT_UAID}  ${data}
