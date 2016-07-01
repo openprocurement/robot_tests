@@ -42,6 +42,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${change_data}=  Підготувати дані про зміну до контракту  ${tender_owner}
   Run As  ${tender_owner}  Внести зміну в договір  ${CONTRACT_UAID}  ${change_data}
 
@@ -70,6 +71,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${document}=  create_fake_doc
   Run As  ${tender_owner}  Додати документацію до зміни в договорі  ${CONTRACT_UAID}  ${document}
 
@@ -78,6 +80,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${description}=  create_fake_sentence
   Run As  ${tender_owner}  Редагувати договір  ${CONTRACT_UAID}  description  ${description}
 
@@ -86,6 +89,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Run As  ${tender_owner}  Застосувати зміну  ${CONTRACT_UAID}
 
 
@@ -93,6 +97,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації до договору
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${document}=  create_fake_doc
   Run As  ${tender_owner}  Завантажити документацію до договору  ${CONTRACT_UAID}  ${document}
 
@@ -101,7 +106,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Завершення договору
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  Log  ${USERS.users['${tender_owner}'].contract_data}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${amount}=  Get variable value  ${USERS.users['${tender_owner}'].contract_data.data.value.amount}
   ${data}=  Create Dictionary  status=terminated
   ${amountPaid}=  Create Dictionary  amount=${amount}  valueAddedTaxIncluded=${True}  currency=UAH
