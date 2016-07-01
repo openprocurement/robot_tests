@@ -67,13 +67,55 @@ Suite Teardown  Test Suite Teardown
   Run keyword if  ${result} == ${False}  Fail  Rationale types are not equal
 
 
-Можливість додати документацію до зміни в договорі
+Відображення пояснення причини зміни договору англійською мовою
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення зміни договору
+  ...      tender_owner
+  ...      ${USERS.users['${viewer}'].broker}
+  Звірити відображення поля rationale_en зміни до договору для користувача ${viewer}
+
+
+Відображення пояснення причини зміни договору російською мовою
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення зміни договору
+  ...      tender_owner
+  ...      ${USERS.users['${viewer}'].broker}
+  Звірити відображення поля rationale_ru зміни до договору для користувача ${viewer}
+
+
+Відображення непідтвердженого статусу зміни договору
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення зміни договору
+  ...      tender_owner
+  ...      ${USERS.users['${viewer}'].broker}
+   Звірити поле зміни до договору із значенням
+  ...     ${viewer}
+  ...     ${CONTRACT_UAID}
+  ...     pending
+  ...     status
+
+
+Можливість додати документацію до зміни договору
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${document}=  create_fake_doc
+  Set to dictionary  ${USERS.users['${tender_owner}']}  change_document=${document}
   Run As  ${tender_owner}  Додати документацію до зміни в договорі  ${CONTRACT_UAID}  ${document}
+
+
+Відображення заголовку документації до зміни договору
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      add_contract_doc  level2
+  Звірити відображення поля documents[0].title договору із ${USERS.users['${tender_owner}']['change_document']} для користувача ${viewer}
+
+
+Відображення належності документа до зміни договору
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      add_contract_doc  level2
+  Звірити відображення поля documents[0].documentOf договору із change для користувача ${viewer}
 
 
 Можливість редагувати договір
@@ -82,6 +124,7 @@ Suite Teardown  Test Suite Teardown
   ...      ${USERS.users['${tender_owner}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${description}=  create_fake_sentence
+  Set to dictionary  ${USERS.users['${tender_owner}']}  new_description=${description}
   Run As  ${tender_owner}  Редагувати договір  ${CONTRACT_UAID}  description  ${description}
 
 
@@ -91,6 +134,30 @@ Suite Teardown  Test Suite Teardown
   ...      ${USERS.users['${tender_owner}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Run As  ${tender_owner}  Застосувати зміну  ${CONTRACT_UAID}
+  Set to dictionary  ${USERS.users['${tender_owner}'].change_data.data}  status=active
+
+
+Відображення зміненого опису договору
+  [Tags]   ${USERS.users['${viewer}'].broker}: Редагування договору
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view  level2
+  Звірити поле договору із значенням
+  ...     ${viewer}
+  ...     ${CONTRACT_UAID}
+  ...     ${USERS.users['${tender_owner}'].new_description}
+  ...     description
+
+
+Відображення підтвердженого статусу зміни договору
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення зміни договору
+  ...      tender_owner
+  ...      ${USERS.users['${viewer}'].broker}
+  Звірити поле зміни до договору із значенням
+  ...     ${viewer}
+  ...     ${CONTRACT_UAID}
+  ...     active
+  ...     status
 
 
 Можливість завантажити документацію до договору
@@ -99,7 +166,16 @@ Suite Teardown  Test Suite Teardown
   ...      ${USERS.users['${tender_owner}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${document}=  create_fake_doc
+  Set to dictionary  ${USERS.users['${tender_owner}']}  contract_document=${document}
   Run As  ${tender_owner}  Завантажити документацію до договору  ${CONTRACT_UAID}  ${document}
+
+
+Відображення заголовку документації до договору
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      add_contract_doc  level2
+  Звірити відображення поля documents[1].title договору із ${USERS.users['${tender_owner}']['contract_document']} для користувача ${viewer}
 
 
 Можливість завершити договір
@@ -114,3 +190,24 @@ Suite Teardown  Test Suite Teardown
   Set to dictionary  ${data.data}  amountPaid=${amountPaid}
   Set to dictionary  ${USERS.users['${tender_owner}']}  terminating_data=${data}
   Run As  ${tender_owner}  Завершити договір  ${CONTRACT_UAID}  ${data}
+
+
+Відображення обсягу дійсно оплаченої суми в договорі
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних договору
+  ...      tender_owner
+  ...      ${USERS.users['${viewer}'].broker}
+  Звірити відображення поля amountPaid.amount договору із ${USERS.users['${tender_owner}']['terminating_data'].data.amountPaid.amount} для користувача ${tender_owner}
+
+
+Відображення врахованого ПДВ в дійсно оплачену суму в договорі
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних договору
+  ...      tender_owner
+  ...      ${USERS.users['${viewer}'].broker}
+  Звірити відображення поля amountPaid.valueAddedTaxIncluded договору із ${USERS.users['${tender_owner}']['terminating_data'].data.amountPaid.valueAddedTaxIncluded} для користувача ${tender_owner}
+
+
+Відображення валюти дійсно оплааченої суми в договорі
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних договору
+  ...      tender_owner
+  ...      ${USERS.users['${viewer}'].broker}
+  Звірити відображення поля amountPaid.currency договору із ${USERS.users['${tender_owner}']['terminating_data'].data.amountPaid.currency} для користувача ${tender_owner}
