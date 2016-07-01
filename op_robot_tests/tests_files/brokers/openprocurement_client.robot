@@ -1060,6 +1060,11 @@ Library  openprocurement_client_helper.py
   [Return]  ${contract_id}
 
 
+Оновити сторінку з договором
+  [Arguments]  ${username}  ${contract_uaid}
+  openprocurement_client.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+
+
 Пошук договору по ідентифікатору
   [Arguments]  ${username}  ${contract_uaid}
   ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
