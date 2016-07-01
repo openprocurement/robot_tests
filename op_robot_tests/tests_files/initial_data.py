@@ -492,6 +492,7 @@ def test_change_data():
             "rationale": fake.description(),
             "rationale_en": fake_en.sentence(nb_words=10, variable_nb_words=True),
             "rationale_ru": fake_ru.sentence(nb_words=10, variable_nb_words=True),
-            "rationaleTypes": fake.rationaleTypes(amount=3)
+            "rationaleTypes": fake.rationaleTypes(amount=3), 
+            "status": "pending"
         }
     })
