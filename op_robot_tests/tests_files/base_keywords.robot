@@ -234,6 +234,14 @@ Resource           resource.robot
   \  Звірити відображення поля documents[${doc_index}].title тендера із ${USERS.users['${tender_owner}'].lots_documents[${lot_index}]} для користувача ${username}
 
 
+Отримати посилання на документацію до всіх лотів для користувача ${username}
+  ${number_of_lots}=  Get Length  ${USERS.users['${tender_owner}'].initial_data.data.lots}
+  :FOR  ${lot_index}  IN RANGE  ${number_of_lots}
+  \  ${lot_index}=  Convert to integer  ${lot_index}
+  \  ${doc_index}=  get_document_index_by_id  ${USERS.users['${username}'].tender_data.data.documents}  ${USERS.users['${tender_owner}'].lots_documents[${lot_index}]}
+  \  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  documents[${doc_index}].url
+
+
 Звірити відображення вмісту ${doc_index} документа до ${lot_index} лоту для користувача ${username}
   ${file_content_loaded}  ${file_name_loaded}=  Run as  ${username}  Отримати документ  ${TENDER['TENDER_UAID']}  ${USERS.users['${username}'].tender_data.data.documents[${doc_index}].url}
   ${doc_title}=  Set variable  ${USERS.users['${tender_owner}'].lots_documents[${lot_index}]}
