@@ -341,6 +341,30 @@ ${item_meat}        ${True}
   ...      lot_view  level2
   Звірити відображення поля value.valueAddedTaxIncluded усіх лотів для користувача ${viewer}
 
+
+Відображення мінімального кроку лотів
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      lot_view  level2
+  Звірити відображення поля minimalStep.amount усіх лотів для усіх користувачів
+
+
+Відображення валюти мінімального кроку лотів
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      lot_view  level2
+  Звірити відображення поля minimalStep.currency усіх лотів для користувача ${viewer}
+
+
+Відображення ПДВ в мінімальному кроці лотів
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      lot_view  level2
+  Звірити відображення поля minimalStep.valueAddedTaxIncluded усіх лотів для користувача ${viewer}
+
 ##############################################################################################
 #             Відображення основних даних предмету
 ##############################################################################################
