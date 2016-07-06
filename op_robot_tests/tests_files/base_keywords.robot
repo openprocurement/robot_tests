@@ -73,11 +73,11 @@ Resource           resource.robot
 
 
 Звірити відображення вмісту документації до тендера для користувача ${username}
-  ${file_content_loaded}  ${file_name_loaded}=  Run as  ${viewer}  Отримати документ  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].tender_data.data.documents[0].url}
-  ${doc_title}=  Set variable  ${USERS.users['${tender_owner}'].documents.filepath}
-  ${document_content_uploaded}=  get_file_contents  ${doc_title}
+  ${file_content_loaded}  ${file_name_loaded}=  Run as  ${viewer}  Отримати документ  ${TENDER['TENDER_UAID']}  ${USERS.users['${username}'].tender_data.data.documents[0].url}
+  ${file_name_uploaded}=  Set variable  ${USERS.users['${tender_owner}'].documents.filepath}
+  ${document_content_uploaded}=  get_file_contents  ${file_name_uploaded}
   Порівняти об'єкти  ${file_content_loaded}  ${document_content_uploaded}
-  Порівняти об'єкти  ${file_name_loaded}  ${doc_title}
+  Порівняти об'єкти  ${file_name_loaded}  ${file_name_uploaded}
 
 
 Звірити відображення дати ${date} тендера для усіх користувачів
