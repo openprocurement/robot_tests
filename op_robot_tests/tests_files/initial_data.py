@@ -91,14 +91,6 @@ def test_tender_data_limited(intervals, procurement_method_type):
         "items":
         [
             {
-                "additionalClassifications":
-                [
-                    {
-                        "description": u"Послуги щодо забезпечення харчуванням, інші",
-                        "id": "56.29",
-                        "scheme": u"ДКПП"
-                    }
-                ],
                 "classification":
                 {
                     "description": u"Послуги з організації шкільного харчування",
@@ -555,19 +547,10 @@ def test_item_data():
             "streetAddress": fake.street_address()
         },
         "classification": {
-            "scheme": u"CPV",
-            "id": u"44617100-9",
-            "description": u"Картонні коробки",
-            "description_ru": u"Большие картонные коробки",
-            "description_en": u"Cartons"
+            "scheme": u"CAV",
+            "id": u"66113000-5",
+            "description": u"Права вимоги"
         },
-        "additionalClassifications": [
-            {
-                "scheme": u"ДКПП",
-                "id": u"17.21.1",
-                "description": u"Папір і картон гофровані, паперова й картонна тара"
-            }
-        ],
         "unit": {
             "name": u"кілограми",
             "name_ru": u"килограммы",
