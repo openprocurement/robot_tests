@@ -996,3 +996,20 @@ Library  openprocurement_client_helper.py
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
   Log  ${reply}
   [Return]  ${reply}
+
+
+Перевести тендер на статус очікування обробки мостом
+  [Documentation]
+  ...      [Arguments] Username and tender uaid
+  ...
+  ...      [Description] Find tender using uaid and call patch_tender
+  ...
+  ...      [Return] Reply of API
+  [Arguments]  ${username}  ${tender_uaid}
+  ${internal_id}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
+  ${tender}=  create_data_dict  data.id  ${internal_id}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
+  set_to_object  ${tender}  data.status  active.stage2.waiting
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+  Log  ${reply}
+  [Return]  ${reply}

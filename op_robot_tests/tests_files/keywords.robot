@@ -687,6 +687,21 @@ Require Failure
   ...      active.pre-qualification
 
 
+Дочекатись дати початку очікування
+  [Arguments]  ${username}  ${tender_uaid}
+  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.qualificationPeriod.endDate}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Run Keyword And Expect Error  *
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      active.stage2.pending
+
+
 Дочекатись дати закінчення періоду прекваліфікації
   [Arguments]  ${username}  ${tender_uaid}
   Дочекатись дати  ${USERS.users['${username}'].tender_data.data.qualificationPeriod.endDate}
@@ -700,6 +715,19 @@ Require Failure
   ...      ${username}
   ...      ${tender_uaid}
   ...      active.pre-qualification.stand-still
+
+
+Дочекатися поки міст створить новий етап
+  [Arguments]  ${username}  ${tender_uaid}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      10 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      complete
 
 
 Дочекатись дати початку періоду аукціону

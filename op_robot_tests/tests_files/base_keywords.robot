@@ -29,7 +29,6 @@ Resource           resource.robot
   :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${provider1}  ${viewer}
   \  Можливість знайти тендер по ідентифікатору для користувача ${username}
 
-
 Можливість знайти тендер по ідентифікатору для користувача ${username}
   Дочекатись синхронізації з майданчиком  ${username}
   Run as  ${username}  Пошук тендера по ідентифікатору  ${TENDER['TENDER_UAID']}
@@ -842,3 +841,10 @@ Resource           resource.robot
   ...      Підтвердити підписання контракту
   ...      ${TENDER['TENDER_UAID']}
   ...      ${0}
+
+Дочекатись дати початку проміжного статусу
+  [Arguments]  ${username}
+  ${pendingStart}=  Отримати дані із тендера   ${username}  ${TENDER['TENDER_UAID']}   qualificationPeriod.endDate
+  Дочекатись дати  ${pendingStart}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}

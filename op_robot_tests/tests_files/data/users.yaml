@@ -8,6 +8,9 @@ users:
     Tender_User1:
         api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
         broker:   Quinta
+    Tender_User2:
+        api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
+        broker:   Quinta
     Tender_Viewer:
         api_key:  ""
         broker:   Quinta

@@ -59,6 +59,7 @@ Quinta:
     roles:
         provider:       Tender_User
         provider1:      Tender_User1
+        provider2:      Tender_User2
         tender_owner:   Tender_Owner
         viewer:         Tender_Viewer
     timeout_on_wait: 15
