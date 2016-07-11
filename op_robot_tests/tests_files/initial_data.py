@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -
 import random
 from datetime import timedelta
+from os import path
 from tempfile import NamedTemporaryFile
 from uuid import uuid4
 
@@ -48,7 +49,7 @@ def create_fake_doc():
     tf = NamedTemporaryFile(delete=False, suffix=suffix, prefix=prefix)
     tf.write(content)
     tf.close()
-    return tf.name
+    return (tf.name, path.basename(tf.name))
 
 
 def test_tender_data(params, periods=("enquiry", "tender")):

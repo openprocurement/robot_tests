@@ -461,7 +461,7 @@ ${item_meat}      ${False}
   ...  ${USERS.users['${viewer}'].broker}
   ...  add_tender_doc
   ...  level3
-    Звірити відображення поля documents[0].title тендера із ${USERS.users['${tender_owner}']['documents']['filepath']} для користувача ${viewer}
+    Звірити відображення поля documents[0].title тендера із ${USERS.users['${tender_owner}']['documents']['filename']} для користувача ${viewer}
 
 ##############################################################################################
 #             AWARDS

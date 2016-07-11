@@ -891,7 +891,7 @@ Library  openprocurement_client_helper.py
   ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}  ${cancel_num}  ${doc_num}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${second_cancel_doc}=  create_fake_doc
+  ${second_cancel_doc}  ${basename}=  create_fake_doc
   Set To Dictionary  ${USERS.users['${tender_owner}']}  second_cancel_doc=${second_cancel_doc}
   Log  ${second_cancel_doc}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  update_cancellation_document  ${second_cancel_doc}  ${tender}  ${tender['data']['cancellations'][${cancel_num}]['id']}  ${tender['data']['cancellations'][${cancel_num}]['documents'][${doc_num}]['id']}
