@@ -30,13 +30,13 @@ Library  openprocurement_client_helper.py
 
 
 Завантажити документ
-  [Arguments]  ${username}  ${filepath}  ${tender_uaid}
+  [Arguments]  ${username}  ${document}  ${tender_uaid}
   Log  ${username}
   Log  ${tender_uaid}
-  Log  ${filepath}
+  Log  ${document}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${tender}=  set_access_key  ${tender}   ${USERS.users['${username}'].access_token}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  upload_document  ${filepath}  ${tender}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  upload_document  ${document}  ${tender}
   Log object data   ${reply}  reply
   [return]   ${reply}
 
@@ -189,11 +189,11 @@ Library  openprocurement_client_helper.py
 
 
 Завантажити документ в лот
-  [Arguments]  ${username}  ${filepath}  ${tender_uaid}  ${lot_id}
+  [Arguments]  ${username}  ${document}  ${tender_uaid}  ${lot_id}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${lot_index}=  get_object_index_by_id  ${tender.data.lots}  ${lot_id}
   ${lot_id}=  Get Variable Value  ${tender.data.lots[${lot_index}].id}
-  ${doc}=  openprocurement_client.Завантажити документ  ${username}  ${filepath}  ${tender_uaid}
+  ${doc}=  openprocurement_client.Завантажити документ  ${username}  ${document}  ${tender_uaid}
   ${lot_doc}=  test_lot_document_data  ${doc}  ${lot_id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_document   ${tender}   ${lot_doc}
   [return]   ${reply}
@@ -703,23 +703,23 @@ Library  openprocurement_client_helper.py
 
 
 Завантажити документ в ставку
-  [Arguments]  ${username}  ${path}  ${tender_uaid}  ${doc_type}=documents
+  [Arguments]  ${username}  ${document}  ${tender_uaid}  ${doc_type}=documents
   ${bid_id}=  Get Variable Value   ${USERS.users['${username}'].bidresponses['resp'].data.id}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
-  ${response}=  Call Method  ${USERS.users['${username}'].client}  upload_bid_document  ${path}  ${tender}  ${bid_id}  ${doc_type}
-  ${uploaded_file} =  Create Dictionary   filepath=${path}   upload_response=${response}
+  ${response}=  Call Method  ${USERS.users['${username}'].client}  upload_bid_document  ${document}  ${tender}  ${bid_id}  ${doc_type}
+  ${uploaded_file} =  Create Dictionary   document=${document}   upload_response=${response}
   Log object data   ${uploaded_file}
   [return]  ${uploaded_file}
 
 
 Змінити документ в ставці
-  [Arguments]  ${username}  ${path}  ${docid}
+  [Arguments]  ${username}  ${document}  ${docid}
   ${bid_id}=  Get Variable Value   ${USERS.users['${username}'].bidresponses['resp'].data.id}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${TENDER['TENDER_UAID']}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
-  ${response}=  Call Method  ${USERS.users['${username}'].client}  update_bid_document  ${path}  ${tender}   ${bid_id}   ${docid}
-  ${uploaded_file} =  Create Dictionary   filepath=${path}   upload_response=${response}
+  ${response}=  Call Method  ${USERS.users['${username}'].client}  update_bid_document  ${document}  ${tender}   ${bid_id}   ${docid}
+  ${uploaded_file} =  Create Dictionary   document=${document}   upload_response=${response}
   Log object data   ${uploaded_file}
   [return]  ${uploaded_file}
 
