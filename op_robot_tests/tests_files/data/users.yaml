@@ -148,6 +148,33 @@ users:
         browser:  chrome
         position: [-1500, 0]
         size:     [1000, 1000]
+    Prom_Owner_auction:
+        broker:   Promauctions
+        homepage: "http://e-auction.dz-test.net/"
+        default_page: "https://my.e-auction.dz-test.net/cabinet/purchases/state_auction/list"
+        login:    autotest.seller@prom.ua
+        password: autotest
+        browser:  chrome
+        position: [0, 0]
+        size:     [1280, 1024]
+    Prom_Viewer_auction:
+        broker:   Promauctions
+        homepage: "http://e-auction.dz-test.net/"
+        default_page: "https://my.e-auction.dz-test.net/cabinet/purchases/state_auction/list"
+        login:    autotest2@prom.ua
+        password: autotest
+        browser:  chrome
+        position: [640, 0]
+        size:     [1280, 1024]
+    Prom_Provider_auction:
+        broker:   Promauctions
+        homepage: "http://e-auction.dz-test.net/"
+        default_page: "https://my.e-auction.dz-test.net/cabinet/purchases/state_auction/list"
+        login:    autotest1@prom.ua
+        password: autotest
+        browser:  chrome
+        position: [640, 0]
+        size:     [1280, 1024]
     Prom_Owner:
         broker:   Prom
         homepage: "http://zakupki.dz-test.net/"

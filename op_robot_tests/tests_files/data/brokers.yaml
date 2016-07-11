@@ -122,6 +122,17 @@ Prom:
         viewer:         Prom_Viewer
         provider:       Prom_Provider1
     timeout_on_wait: 10
+Promauctions:
+    intervals:
+        default:
+            enquiry: [4, 4]
+            tender:  [0,  30]
+    keywords_file: prom
+    roles:
+        tender_owner:   Prom_Owner_auction
+        viewer:         Prom_Viewer_auction
+        provider:       Prom_Provider_auction
+    timeout_on_wait: 10
 Publicbid:
     intervals:
         default:
