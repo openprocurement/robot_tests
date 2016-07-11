@@ -243,29 +243,6 @@ ${mode}         single
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].classification.description
 
 
-Відображення схеми додаткової класифікації номенклатури однопредметного аукціону
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури аукціону
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].additionalClassifications[0].scheme
-
-
-Відображення ідентифікатора додаткової класифікації номенклатури однопредметного аукціону
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури аукціону
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      level3
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].additionalClassifications[0].id
-
-
-Відображення опису додаткової класифікації номенклатури однопредметного аукціону
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури аукціону
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      level3
-  Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].additionalClassifications[0].description
-
-
 Відображення назви одиниці номенклатури однопредметного аукціону
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури аукціону
   ...      viewer
