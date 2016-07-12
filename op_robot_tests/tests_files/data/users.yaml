@@ -353,3 +353,33 @@ users:
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
+    aps_Owner:
+        broker:   APStender
+        homepage: "https://test.aps-market.com/tender"
+        login:    AS22@i.ua
+        password: 1q2w3e
+        browser:  ff
+        position: [0, 0]
+        size:     [1400, 900]
+    aps_Provider:
+        broker:   APStender
+        homepage: "https://test.aps-market.com/tender"
+        login:    emms@meta.ua
+        password: 1q2w3e
+        browser:  ff
+        position: [0, 0]
+        size:     [1400, 900]
+    aps_Provider1:
+        broker:   APStender
+        homepage: "https://test.aps-market.com/tender"
+        login:    emmo@meta.ua
+        password: 1q2w3e
+        browser:  ff
+        position: [0, 0]
+        size:     [1400, 900]
+    aps_Viewer:
+        broker:   APStender
+        homepage: "https://test.aps-market.com/tender"
+        browser:  ff
+        position: [0, 0]
+        size:     [1400, 900]
