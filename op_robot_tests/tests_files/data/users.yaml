@@ -410,4 +410,4 @@ users:
         homepage: "https://test.aps-market.com/tender"
         browser:  ff
         position: [0, 0]
-        size:     [1400, 900] 
+        size:     [1400, 900]
