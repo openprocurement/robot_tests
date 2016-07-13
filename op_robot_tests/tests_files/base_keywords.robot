@@ -40,9 +40,9 @@ Resource           resource.robot
 
 
 Можливість додати документацію до тендера
-  ${filepath}=  create_fake_doc
+  ${filepath}  ${basename}=  create_fake_doc
   Run As  ${tender_owner}  Завантажити документ  ${filepath}  ${TENDER['TENDER_UAID']}
-  ${documents}=  Create Dictionary  filepath=${filepath}
+  ${documents}=  Create Dictionary  filename=${basename}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  documents=${documents}
 
 
@@ -74,7 +74,7 @@ Resource           resource.robot
 
 Звірити відображення вмісту документації до тендера для користувача ${username}
   ${file_content_loaded}  ${file_name_loaded}=  Run as  ${viewer}  Отримати документ  ${TENDER['TENDER_UAID']}  ${USERS.users['${username}'].tender_data.data.documents[0].url}
-  ${file_name_uploaded}=  Set variable  ${USERS.users['${tender_owner}'].documents.filepath}
+  ${file_name_uploaded}=  Set variable  ${USERS.users['${tender_owner}']['documents']['filename']}
   ${document_content_uploaded}=  get_file_contents  ${file_name_uploaded}
   Порівняти об'єкти  ${file_content_loaded}  ${document_content_uploaded}
   Порівняти об'єкти  ${file_name_loaded}  ${file_name_uploaded}
@@ -153,11 +153,11 @@ Resource           resource.robot
 
 Можливість додати документацію до ${lot_index} лоту
   ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}]}
-  ${filepath}=  create_fake_doc
+  ${filepath}  ${basename}=  create_fake_doc
   Run As  ${tender_owner}  Завантажити документ в лот  ${filepath}  ${TENDER['TENDER_UAID']}  ${lot_id}
   ${empty_list}=  Create List
   ${lots_documents}=  Get variable value  ${USERS.users['${tender_owner}'].lots_documents}  ${empty_list}
-  Append to list  ${lots_documents}  ${filepath}
+  Append to list  ${lots_documents}  ${basename}
   Set to dictionary  ${USERS.users['${tender_owner}']}  lots_documents=${lots_documents}
   Log  ${USERS.users['${tender_owner}'].lots_documents}
 
@@ -455,13 +455,13 @@ Resource           resource.robot
 
 Можливість створити вимогу про виправлення умов закупівлі із документацією
   ${claim}=  Підготувати дані для подання вимоги
-  ${document}=  create_fake_doc
+  ${filepath}  ${basename}=  create_fake_doc
   ${complaintID}=  Run As  ${provider}
   ...      Створити вимогу про виправлення умов закупівлі
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
-  ...      ${document}
-  ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}  document=${document}
+  ...      ${filepath}
+  ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}  filename=${basename}
   ${claim_data}=  munch_dict  arg=${claim_data}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data  ${claim_data}
 
@@ -469,28 +469,28 @@ Resource           resource.robot
 Можливість створити вимогу про виправлення умов ${lot_index} лоту із документацією
   ${claim}=  Підготувати дані для подання вимоги
   ${lot_id}=  get_id_from_object  ${USERS.users['${provider}'].tender_data.data.lots[${lot_index}]}
-  ${document}=  create_fake_doc
+  ${filepath}  ${basename}=  create_fake_doc
   ${complaintID}=  Run As  ${provider}
   ...      Створити вимогу про виправлення умов лоту
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
   ...      ${lot_id}
-  ...      ${document}
-  ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}  document=${document}
+  ...      ${filepath}
+  ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}  filename=${basename}
   ${claim_data}=  munch_dict  arg=${claim_data}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data  ${claim_data}
 
 
 Можливість створити вимогу про виправлення визначення ${award_index} переможця із документацією
   ${claim}=  Підготувати дані для подання вимоги
-  ${document}=  create_fake_doc
+  ${filepath}  ${basename}=  create_fake_doc
   ${complaintID}=  Run As  ${provider}
   ...      Створити вимогу про виправлення визначення переможця
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
   ...      ${award_index}
-  ...      ${document}
-  ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}  document=${document}
+  ...      ${filepath}
+  ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}  filename=${basename}
   ${claim_data}=  munch_dict  arg=${claim_data}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data  ${claim_data}
 
@@ -812,13 +812,13 @@ Resource           resource.robot
 
 
 Можливість завантажити документ в пропозицію користувачем ${username}
-  ${filepath}=  create_fake_doc
+  ${filepath}  ${basename}=  create_fake_doc
   ${bid_doc_upload}=  Run As  ${username}  Завантажити документ в ставку  ${filepath}  ${TENDER['TENDER_UAID']}
   Set To Dictionary  ${USERS.users['${username}'].bidresponses}  bid_doc_upload=${bid_doc_upload}
 
 
 Можливість змінити документацію цінової пропозиції користувачем ${username}
-  ${filepath}=  create_fake_doc
+  ${filepath}  ${basename}=  create_fake_doc
   ${docid}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['bid_doc_upload']['upload_response'].data.id}
   ${bid_doc_modified}=  Run As  ${username}  Змінити документ в ставці  ${filepath}  ${docid}
   Set To Dictionary  ${USERS.users['${username}'].bidresponses}  bid_doc_modified=${bid_doc_modified}
@@ -836,13 +836,13 @@ Resource           resource.robot
 
 Можливість зареєструвати, додати документацію і підтвердити постачальника до закупівлі
   ${supplier_data}=  Підготувати дані про постачальника  ${tender_owner}
-  ${filepath}=  create_fake_doc
+  ${filepath}  ${basename}=  create_fake_doc
   Run as  ${tender_owner}
   ...      Створити постачальника, додати документацію і підтвердити його
   ...      ${TENDER['TENDER_UAID']}
   ...      ${supplier_data}
   ...      ${filepath}
-  Set to dictionary  ${USERS.users['${tender_owner}']}  award_document=${filepath}
+  Set to dictionary  ${USERS.users['${tender_owner}']}  award_document=${basename}
 
 
 Можливість укласти угоду для закупівлі

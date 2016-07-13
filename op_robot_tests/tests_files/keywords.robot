@@ -265,9 +265,9 @@ Get Broker Property By Username
 Підготувати дані про скасування
   [Arguments]  ${username}
   ${cancellation_reason}=  create_fake_sentence
-  ${document}=  create_fake_doc
+  ${filepath}  ${basename}=  create_fake_doc
   ${new_description}=  create_fake_sentence
-  ${cancellation_data}=  Create Dictionary  cancellation_reason=${cancellation_reason}  document=${document}  description=${new_description}
+  ${cancellation_data}=  Create Dictionary  cancellation_reason=${cancellation_reason}  filepath=${filepath}  filename=${basename}  description=${new_description}
   Set To Dictionary  ${USERS.users['${username}']}  cancellation_data=${cancellation_data}
   [Return]  ${cancellation_data}
 

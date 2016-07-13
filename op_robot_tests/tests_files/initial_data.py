@@ -1,12 +1,17 @@
 # -*- coding: utf-8 -
-from datetime import timedelta
-from faker import Factory
-from munch import munchify
-from uuid import uuid4
-from tempfile import NamedTemporaryFile
-from .local_time import get_now
-from op_faker import OP_Provider
 import random
+from datetime import timedelta
+from os import path
+from tempfile import NamedTemporaryFile
+from uuid import uuid4
+
+from faker import Factory
+
+from munch import munchify
+
+from op_faker import OP_Provider
+
+from .local_time import get_now
 
 
 fake = Factory.create('uk_UA')
@@ -44,7 +49,7 @@ def create_fake_doc():
     tf = NamedTemporaryFile(delete=False, suffix=suffix, prefix=prefix)
     tf.write(content)
     tf.close()
-    return tf.name
+    return (tf.name, path.basename(tf.name))
 
 
 def test_tender_data(params, periods=("enquiry", "tender")):
@@ -107,7 +112,7 @@ def test_tender_data(params, periods=("enquiry", "tender")):
         if params.get('lot_meat'):
             new_feature = test_feature_data()
             new_feature['featureOf'] = "lot"
-            data['lots'][0]['id'] =  data['lots'][0].get('id', uuid4().hex)
+            data['lots'][0]['id'] = data['lots'][0].get('id', uuid4().hex)
             new_feature['relatedItem'] = data['lots'][0]['id']
             data['features'].append(new_feature)
     else:
@@ -121,7 +126,7 @@ def test_tender_data(params, periods=("enquiry", "tender")):
     if params.get('item_meat'):
         new_feature = test_feature_data()
         new_feature['featureOf'] = "item"
-        data['items'][0]['id'] =  data['items'][0].get('id', uuid4().hex)
+        data['items'][0]['id'] = data['items'][0].get('id', uuid4().hex)
         new_feature['relatedItem'] = data['items'][0]['id']
         data['features'].append(new_feature)
     if not data['features']:
@@ -347,7 +352,6 @@ def test_lot_data(max_value_amount):
 def test_lot_document_data(document, lot_id):
     document.data.update({"documentOf": "lot", "relatedItem": lot_id})
     return munchify(document)
-
 
 
 def test_tender_data_openua(params):

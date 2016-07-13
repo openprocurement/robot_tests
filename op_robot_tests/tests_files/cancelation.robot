@@ -126,7 +126,7 @@ Suite Teardown  Test Suite Teardown
   ...      Скасувати закупівлю
   ...      ${TENDER['TENDER_UAID']}
   ...      ${cancellation_data['cancellation_reason']}
-  ...      ${cancellation_data['document']}
+  ...      ${cancellation_data['filename']}
   ...      ${cancellation_data['description']}
 
 
@@ -137,7 +137,7 @@ Suite Teardown  Test Suite Teardown
   ...      ${TENDER['TENDER_UAID']}
   ...      ${TENDER['LOT_ID']}
   ...      ${cancellation_data['cancellation_reason']}
-  ...      ${cancellation_data['document']}
+  ...      ${cancellation_data['filepath']}
   ...      ${cancellation_data['description']}
 
 
@@ -161,5 +161,5 @@ Suite Teardown  Test Suite Teardown
 
 Відображення заголовку документа скасування
   Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${tender_owner}']['cancellation_data']['document']}
+  ...      ${USERS.users['${tender_owner}']['cancellation_data']['filename']}
   ...      cancellations[0].documents[0].title
