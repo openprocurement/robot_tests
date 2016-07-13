@@ -884,20 +884,6 @@ Library  openprocurement_client_helper.py
   Log  ${reply}
 
 
-Завантажити нову версію документа до запиту на скасування
-  [Documentation]
-  ...      [Arguments] Username, tender uaid, cancallation number and cancellation document number
-  ...      Find tender using uaid, create fake documentation and call update_cancellation_document
-  ...      [Return] Nothing
-  [Arguments]  ${username}  ${tender_uaid}  ${cancel_num}  ${doc_num}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${second_cancel_doc}=  create_fake_doc
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  second_cancel_doc=${second_cancel_doc}
-  Log  ${second_cancel_doc}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  update_cancellation_document  ${second_cancel_doc}  ${tender}  ${tender['data']['cancellations'][${cancel_num}]['id']}  ${tender['data']['cancellations'][${cancel_num}]['documents'][${doc_num}]['id']}
-  Log  ${reply}
-
-
 Підтвердити скасування закупівлі
   [Documentation]
   ...      [Arguments] Username, tender uaid, cancellation number
