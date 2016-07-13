@@ -442,10 +442,14 @@ def get_complaint_index_by_complaintID(data, complaintID):
 
 
 def get_document_index_by_id(data, document_id):
+    if not data:
+        return 0
     for index, element in enumerate(data):
         if element['title'] == document_id:
-            return index
-    raise IndexError
+            break
+    else:
+         index += 1
+    return index
 
 
 def generate_test_bid_data(tender_data):
