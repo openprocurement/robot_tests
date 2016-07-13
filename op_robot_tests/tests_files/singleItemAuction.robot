@@ -166,6 +166,7 @@ ${mode}         single
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      level3
+  ...      delivery
   Звірити дату тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryDate.endDate  day  absolute_delta=${True}
 
 
@@ -173,6 +174,7 @@ ${mode}         single
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
+  ...      delivery
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryLocation.latitude
 
 
@@ -180,6 +182,7 @@ ${mode}         single
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
+  ...      delivery
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryLocation.longitude
 
 
@@ -195,6 +198,7 @@ ${mode}         single
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
+  ...      delivery
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.postalCode
 
 
@@ -203,6 +207,7 @@ ${mode}         single
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      level3
+  ...      delivery
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.region
 
 
@@ -210,6 +215,7 @@ ${mode}         single
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
+  ...      delivery
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.locality
 
 
@@ -217,6 +223,7 @@ ${mode}         single
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
+  ...      delivery
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.streetAddress
 
 
