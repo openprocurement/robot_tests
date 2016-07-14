@@ -151,8 +151,8 @@ PublicPortal:
 SmartTender:
     intervals:
         default:
-            enquiry: [0, 10]
-            tender:  [0, 20]
+            enquiry: [0, 20]
+            tender:  [0, 10]
         openua:
             accelerator: 1440
             tender:  [0, 15]
@@ -165,7 +165,7 @@ SmartTender:
         provider1:      SmartTender_Provider2
         tender_owner:   SmartTender_Owner
         viewer:         SmartTender_Viewer
-    timeout_on_wait: 300
+    timeout_on_wait: 10
 uatenders:
     intervals:
         default:
