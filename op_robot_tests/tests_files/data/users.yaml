@@ -150,7 +150,7 @@ users:
         size:     [1000, 1000]
     Prom_Owner_auction:
         broker:   Promauctions
-        homepage: "http://e-auction.dz-test.net/"
+        homepage: "http://e-auction.dz-test.net/auctions"
         default_page: "https://my.e-auction.dz-test.net/cabinet/purchases/state_auction/list"
         login:    autotest.seller@prom.ua
         password: autotest
@@ -159,7 +159,7 @@ users:
         size:     [1280, 1024]
     Prom_Viewer_auction:
         broker:   Promauctions
-        homepage: "http://e-auction.dz-test.net/"
+        homepage: "http://e-auction.dz-test.net/auctions"
         default_page: "https://my.e-auction.dz-test.net/cabinet/purchases/state_auction/list"
         login:    test@test13.com
         password: 12345678
@@ -168,7 +168,7 @@ users:
         size:     [1280, 1024]
     Prom_Provider_auction:
         broker:   Promauctions
-        homepage: "http://e-auction.dz-test.net/"
+        homepage: "http://e-auction.dz-test.net/auctions"
         default_page: "https://my.e-auction.dz-test.net/cabinet/purchases/state_auction/list"
         login:    autotest1@prom.ua
         password: autotest
