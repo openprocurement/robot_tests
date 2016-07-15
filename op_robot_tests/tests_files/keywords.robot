@@ -260,17 +260,35 @@ Get Broker Property By Username
 
 
 Адаптувати дані для оголошення тендера
-  [Arguments]  ${username}  ${tender_data}
+  [Arguments]  ${tender_data}
   # munchify is used to make deep copy of ${tender_data}
-  ${tender_data_copy}=  munchify  ${tender_data}
-  ${status}  ${adapted_data}=  Run Keyword And Ignore Error  Викликати для учасника  ${username}  Підготувати дані для оголошення тендера  ${tender_data_copy}
-  ${adapted_data}=  Set variable if  '${status}' == 'FAIL'  ${tender_data_copy}  ${adapted_data}
-  # munchify is used to make nice log output
-  ${adapted_data}=  munchify  ${adapted_data}
-  Log  ${tender_data}
+  ${adapted_data}=  munchify  ${tender_data}
+  :FOR  ${username}  IN  viewer  provider  provider1  tender_owner
+  # munchify is used to make deep copy of ${tender_data}
+  \  ${adapted_data_copy}=  munchify  ${adapted_data}
+  \  ${status}  ${adapted_data_from_broker}=  Run keyword and ignore error  Викликати для учасника  ${${username}}  Підготувати дані для оголошення тендера користувачем  ${adapted_data_copy}  ${username}
+  \  Log  ${adapted_data_from_broker}
+  \  ${adapted_data_from_broker}=  Set variable if  '${status}' == 'FAIL'  ${adapted_data}  ${adapted_data_from_broker}
+  \  ${diff_status}  ${diff_message}=  Run Keyword And Ignore Error  Dictionaries Should Be Equal  ${adapted_data.data}  ${adapted_data_from_broker.data}
+  \  Run Keyword If  '${status}' == 'PASS' and '${diff_status}' == 'FAIL'
+  ...      Log  \n\n${${username}} has changed initial tender data  WARN
+  \  Run Keyword If  '${status}' == 'PASS' and '${diff_status}' == 'FAIL'
+  ...      Log  ${diff_message}  WARN
+  \  ${adapted_data}=  Set variable if  '${status}' == 'PASS'  ${adapted_data_from_broker}  ${adapted_data}
+  # because not all brokers are returning munch
+  \  ${adapted_data}=  munchify  ${adapted_data}
+  \  Log  ${adapted_data}
+  ${adapted_data_copy}=  munchify  ${adapted_data}
+  ${status}  ${adapted_data_from_broker}=  Run keyword and ignore error  Викликати для учасника  ${tender_owner}  Підготувати дані для оголошення тендера  ${adapted_data_copy}  ${username}
+  ${adapted_data_from_broker}=  Set variable if  '${status}' == 'FAIL'  ${adapted_data}  ${adapted_data_from_broker}
+  ${diff_status}  ${diff_message}=  Run Keyword And Ignore Error  Dictionaries Should Be Equal  ${adapted_data.data}  ${adapted_data_from_broker.data}
+  Run Keyword If  '${status}' == 'PASS' and '${diff_status}' == 'FAIL'
+  ...      Log  \n\n${tender_owner} has changed initial tender data  WARN
+  Run Keyword If  '${status}' == 'PASS' and '${diff_status}' == 'FAIL'
+  ...      Log  ${diff_message}\n==============================================================================  WARN
+  ${adapted_data}=  Set variable if  '${status}' == 'PASS'  ${adapted_data_from_broker}  ${adapted_data}
   Log  ${adapted_data}
-  ${status}=  Run keyword and return status  Dictionaries Should Be Equal  ${adapted_data.data}  ${tender_data.data}
-  Run keyword if  ${status} == ${False}  Log  Initial tender data was changed  WARN
+  Log  ${tender_data}
   [Return]  ${adapted_data}
 
 
