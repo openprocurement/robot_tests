@@ -35,6 +35,12 @@ Library  openprocurement_client_helper.py
   [return]  ${tender_data}
 
 
+Підготувати дані для оголошення тендера користувачем
+  [Documentation]  Це слово використовується в майданчиків, тому потрібно, щоб воно було і тут
+  [Arguments]  ${username}  ${tender_data}  ${role_name}
+  [return]  ${tender_data}
+
+
 Створити тендер
   [Arguments]  ${username}  ${tender_data}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  create_tender  ${tender_data}
