@@ -260,17 +260,19 @@ Get Broker Property By Username
 
 
 Адаптувати дані для оголошення тендера
-  [Arguments]  ${username}  ${tender_data}
+  [Arguments]  ${tender_data}
   # munchify is used to make deep copy of ${tender_data}
-  ${tender_data_copy}=  munchify  ${tender_data}
-  ${status}  ${adapted_data}=  Run Keyword And Ignore Error  Викликати для учасника  ${username}  Підготувати дані для оголошення тендера  ${tender_data_copy}
-  ${adapted_data}=  Set variable if  '${status}' == 'FAIL'  ${tender_data_copy}  ${adapted_data}
-  # munchify is used to make nice log output
-  ${adapted_data}=  munchify  ${adapted_data}
+  ${adapted_data}=  munchify  ${tender_data}
+  :FOR  ${username}  IN  viewer  provider  provider1  tender_owner
+  \  ${adapted_data}=  Викликати для учасника  ${${username}}  Підготувати дані для оголошення тендера  ${adapted_data}  ${username}
+  # because not all brokers are returning munch
+  \  ${adapted_data}=  munchify  ${adapted_data}
+  \  Log  ${adapted_data}
   Log  ${tender_data}
   Log  ${adapted_data}
-  ${status}=  Run keyword and return status  Dictionaries Should Be Equal  ${adapted_data.data}  ${tender_data.data}
-  Run keyword if  ${status} == ${False}  Log  Initial tender data was changed  WARN
+  ${status}  ${diff_message}=  Run Keyword And Ignore Error  Dictionaries Should Be Equal  ${tender_data.data}  ${adapted_data.data}
+  Run keyword if  '${status}' == 'FAIL'  Log  Initial tender data was changed  WARN
+  Run keyword if  '${status}' == 'FAIL'  Log  ${diff_message}  WARN
   [Return]  ${adapted_data}
 
 
