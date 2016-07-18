@@ -268,11 +268,11 @@ Get Broker Property By Username
   \  ${adapted_data_copy}=  munchify  ${adapted_data}
   \  ${status}  ${adapted_data_from_broker}=  Run keyword and ignore error  Викликати для учасника  ${${username}}  Підготувати дані для оголошення тендера користувачем  ${adapted_data_copy}  ${username}
   \  Log  ${adapted_data_from_broker}
-  # Need this in case ``${${username}}`` don't have `Підготувати дані для оголошення
+  # Need this in case ``${${username}}`` doesn't have `Підготувати дані для оголошення
   # тендера користувачем` keyword, so after `Run keyword and ignore error` call
   # ``${adapted_data_from_broker}`` will be ``${None}``. Else - nothing changes.
   \  ${adapted_data_from_broker}=  Set variable if  '${status}' == 'FAIL'  ${adapted_data}  ${adapted_data_from_broker}
-  \  ${diff_status}=  Log differences between dicts  ${adapted_data.data}  ${adapted_data_from_broker.data}  ${username} has changed initial data!
+  \  Log differences between dicts  ${adapted_data.data}  ${adapted_data_from_broker.data}  ${username} has changed initial data!
   # Update (or not, if nothing changed) ``${adapted_data}``.
   \  ${adapted_data}=  munchify  ${adapted_data_from_broker}
   \  Log  ${adapted_data}
@@ -280,12 +280,12 @@ Get Broker Property By Username
   ${adapted_data_copy}=  munchify  ${adapted_data}
   ${status}  ${adapted_data_from_broker}=  Run keyword and ignore error  Викликати для учасника  ${tender_owner}  Підготувати дані для оголошення тендера  ${adapted_data_copy}  ${username}
   Log  ${adapted_data_from_broker}
-  # Need this in case ``${${username}}`` don't have `Підготувати дані для оголошення
+  # Need this in case ``${${username}}`` doesn't have `Підготувати дані для оголошення
   # тендера` keyword, so after `Run keyword and ignore error` call
   # ``${adapted_data_from_broker}`` will be ``${None}``. Else - nothing changes.
   ${adapted_data_from_broker}=  Set variable if  '${status}' == 'FAIL'  ${adapted_data}  ${adapted_data_from_broker}
   ${last_message_to_log}=  Set variable  ==============================================================================
-  ${diff_status}=  Log differences between dicts  ${adapted_data.data}  ${adapted_data_from_broker.data}  ${tender_owner} has changed initial data!  ${last_message_to_log}
+  Log differences between dicts  ${adapted_data.data}  ${adapted_data_from_broker.data}  ${tender_owner} has changed initial data!  ${last_message_to_log}
   # Update (or not, if nothing changed) ``${adapted_data}``.
   ${adapted_data}=  munchify  ${adapted_data_from_broker}
   Log  ${adapted_data}
