@@ -19,7 +19,7 @@ Resource           resource.robot
   ${dialogue_type}=  Get Variable Value  ${dialogue_type}
   Run keyword if  '${dialogue_type}' != '${None}'  Set to dictionary  ${tender_parameters}  dialogue_type=${dialogue_type}
   ${tender_data}=  Підготувати дані для створення тендера  ${tender_parameters}
-  ${adapted_data}=  Адаптувати дані для оголошення тендера  ${tender_owner}  ${tender_data}
+  ${adapted_data}=  Адаптувати дані для оголошення тендера  ${tender_data}
   ${TENDER_UAID}=  Run As  ${tender_owner}  Створити тендер  ${adapted_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data=${adapted_data}
   Set To Dictionary  ${TENDER}  TENDER_UAID=${TENDER_UAID}

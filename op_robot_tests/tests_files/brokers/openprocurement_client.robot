@@ -62,7 +62,7 @@ Library  openprocurement_client_helper.py
 
 Підготувати дані для оголошення тендера
   [Documentation]  Це слово використовується в майданчиків, тому потрібно, щоб воно було і тут
-  [Arguments]  ${username}  ${tender_data}
+  [Arguments]  ${username}  ${tender_data}  ${role_name}
   [return]  ${tender_data}
 
 

@@ -273,18 +273,32 @@ Get Broker Property By Username
 
 
 Адаптувати дані для оголошення тендера
-  [Arguments]  ${username}  ${tender_data}
+  [Arguments]  ${tender_data}
   # munchify is used to make deep copy of ${tender_data}
-  ${tender_data_copy}=  munchify  ${tender_data}
-  ${status}  ${adapted_data}=  Run Keyword And Ignore Error  Run As  ${username}  Підготувати дані для оголошення тендера  ${tender_data_copy}
-  ${adapted_data}=  Set variable if  '${status}' == 'FAIL'  ${tender_data_copy}  ${adapted_data}
-  # munchify is used to make nice log output
-  ${adapted_data}=  munchify  ${adapted_data}
-  Log  ${tender_data}
+  ${adapted_data}=  munchify  ${tender_data}
+  :FOR  ${username}  IN  @{used_roles}
+  # munchify is used to make deep copy of ${adapted_data}
+  \  ${adapted_data_copy}=  munchify  ${adapted_data}
+  \  ${status}  ${adapted_data_from_broker}=  Run keyword and ignore error  Run As  ${${username}}  Підготувати дані для оголошення тендера  ${adapted_data_copy}  ${username}
+  \  Log  ${adapted_data_from_broker}
+  # Need this in case ``${${username}}`` doesn't have `Підготувати дані для оголошення
+  # тендера користувачем` keyword, so after `Run keyword and ignore error` call
+  # ``${adapted_data_from_broker}`` will be ``${None}``. Else - nothing changes.
+  \  ${adapted_data_from_broker}=  Set variable if  '${status}' == 'FAIL'  ${adapted_data}  ${adapted_data_from_broker}
+  \  Log differences between dicts  ${adapted_data.data}  ${adapted_data_from_broker.data}  ${username} has changed initial data!
+  # Update (or not, if nothing changed) ``${adapted_data}``.
+  \  ${adapted_data}=  munchify  ${adapted_data_from_broker}
+  \  Log  ${adapted_data}
   Log  ${adapted_data}
-  ${status}=  Run keyword and return status  Dictionaries Should Be Equal  ${adapted_data.data}  ${tender_data.data}
-  Run keyword if  ${status} == ${False}  Log  Initial tender data was changed  WARN
+  Log  ${tender_data}
   [Return]  ${adapted_data}
+
+
+Log differences between dicts
+  [Arguments]  ${left}  ${right}  ${begin}  ${end}=${Empty}
+  ${diff_status}  ${diff_message}=  Run Keyword And Ignore Error  Dictionaries Should Be Equal  ${left}  ${right}
+  Run keyword if  '${diff_status}' == 'FAIL'  Log  \n${begin}\n${diff_message}\n${end}  WARN
+  [Return]  ${diff_status}
 
 
 Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
