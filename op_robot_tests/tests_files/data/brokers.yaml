@@ -125,14 +125,14 @@ Prom:
 Promauctions:
     intervals:
         default:
-            enquiry: [4, 4]
-            tender:  [0,  30]
+            enquiry: [0, 15]
+            tender:  [0, 25]
     keywords_file: prom
     roles:
         tender_owner:   Prom_Owner_auction
         viewer:         Prom_Viewer_auction
         provider:       Prom_Provider_auction
-    timeout_on_wait: 10
+    timeout_on_wait: 150
 Publicbid:
     intervals:
         default:
