@@ -413,6 +413,10 @@ def get_id_from_object(obj):
     return obj_id.group(1)
 
 
+def get_id_from_doc_name(name):
+    return re.match(r'd\-[0-9a-fA-F]{8}', name).group(0)
+
+
 def get_object_type_by_id(object_id):
     prefixes = {'q': 'questions', 'f': 'features', 'i': 'items', 'l': 'lots'}
     return prefixes.get(object_id[0])
