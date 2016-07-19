@@ -61,6 +61,11 @@ Resource           resource.robot
   Run As  ${tender_owner}  Видалити предмет закупівлі  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].item_data.item_id}
 
 
+Звірити відображення поля ${field} документа ${doc_id} із ${left} для користувача ${username}
+  ${right}=  Run As  ${username}  Отримати інформацію із документа  ${TENDER['TENDER_UAID']}  ${doc_id}  ${field}
+  Порівняти об'єкти  ${left}  ${right}
+
+
 Звірити відображення поля ${field} тендера для усіх користувачів
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
   \  Звірити відображення поля ${field} тендера для користувача ${username}
@@ -235,9 +240,7 @@ Resource           resource.robot
 Звірити відображення заголовку документації до всіх лотів для користувача ${username}
   ${number_of_lots}=  Get Length  ${USERS.users['${tender_owner}'].initial_data.data.lots}
   :FOR  ${lot_index}  IN RANGE  ${number_of_lots}
-  \  ${lot_index}=  Convert to integer  ${lot_index}
-  \  ${doc_index}=  get_document_index_by_id  ${USERS.users['${username}'].tender_data.data.documents}  ${USERS.users['${tender_owner}'].lots_documents[${lot_index}]}
-  \  Звірити відображення поля documents[${doc_index}].title тендера із ${USERS.users['${tender_owner}'].lots_documents[${lot_index}]} для користувача ${username}
+  \  Звірити відображення поля title документа ${USERS.users['${tender_owner}'].lots_documents[${lot_index}].doc_id} із ${USERS.users['${tender_owner}'].lots_documents[${lot_index}].filepath} для користувача ${username}
 
 
 Отримати посилання на документацію до всіх лотів для користувача ${username}
