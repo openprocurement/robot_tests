@@ -20,8 +20,6 @@ setup(name='op_robot_tests',
           # -*- Extra requirements: -*-
           'robotframework',
           'robotframework-selenium2library',
-          'robotframework-debuglibrary',
-          'robotframework-selenium2screenshots',
           'selenium < 3.0.dev0',
           'Pillow',
           'iso8601',
