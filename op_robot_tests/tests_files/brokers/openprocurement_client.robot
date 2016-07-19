@@ -50,10 +50,11 @@ Library  openprocurement_client_helper.py
 
 
 Отримати документ
-  [Arguments]  ${username}  ${tender_uaid}  ${url}
+  [Arguments]  ${username}  ${tender_uaid}  ${doc_id}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${document}=  get_document_by_id  ${tender.data.documents}  ${doc_id}
   ${token}=  Get Variable Value  ${USERS.users['${username}'].access_token}
-  ${contents}  ${filename}=  Call Method  ${USERS.users['${username}'].client}  get_file   ${tender}   ${url}   ${token}
+  ${contents}  ${filename}=  Call Method  ${USERS.users['${username}'].client}  get_file   ${tender}   ${document.url}   ${token}
   [return]   ${contents}  ${filename}
 
 
