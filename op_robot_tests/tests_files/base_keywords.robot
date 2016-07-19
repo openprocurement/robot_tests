@@ -78,12 +78,9 @@ Resource           resource.robot
   Звірити поле тендера  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${field}
 
 
-Звірити відображення вмісту документації до тендера для користувача ${username}
-  ${file_content_loaded}  ${file_name_loaded}=  Run as  ${viewer}  Отримати документ  ${TENDER['TENDER_UAID']}  ${USERS.users['${username}'].tender_data.data.documents[0].url}
-  ${file_name_uploaded}=  Set variable  ${USERS.users['${tender_owner}'].documents.filepath}
-  ${document_content_uploaded}=  get_file_contents  ${file_name_uploaded}
-  Порівняти об'єкти  ${file_content_loaded}  ${document_content_uploaded}
-  Порівняти об'єкти  ${file_name_loaded}  ${file_name_uploaded}
+Звірити відображення вмісту документа ${doc_id} з ${left} для користувача ${username}
+  ${right}  ${file_name_loaded}=  Run as  ${viewer}  Отримати документ  ${TENDER['TENDER_UAID']}  ${doc_id}
+  Порівняти об'єкти  ${left}  ${right}
 
 
 Звірити відображення дати ${date} тендера для усіх користувачів
@@ -260,9 +257,8 @@ Resource           resource.robot
 Звірити відображення вмісту документації до всіх лотів для користувача ${username}
   ${number_of_lots}=  Get Length  ${USERS.users['${tender_owner}'].initial_data.data.lots}
   :FOR  ${lot_index}  IN RANGE  ${number_of_lots}
-  \  ${lot_index}=  Convert to integer  ${lot_index}
-  \  ${doc_index}=  get_document_index_by_id  ${USERS.users['${username}'].tender_data.data.documents}  ${USERS.users['${tender_owner}'].lots_documents[${lot_index}]}
-  \  Звірити відображення вмісту ${doc_index} документа до ${lot_index} лоту для користувача ${username}
+  \  ${doc_content}=  get_file_contents  ${USERS.users['${tender_owner}'].lots_documents[${lot_index}].filepath}
+  \  Звірити відображення вмісту документа ${USERS.users['${tender_owner}'].lots_documents[${lot_index}].doc_id} з ${doc_content} для користувача ${username}
 
 
 Звірити відображення поля ${field} у новоствореному лоті для усіх користувачів
