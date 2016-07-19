@@ -191,6 +191,7 @@ ${mode}         single
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      level3
+  ...      delivery
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.countryName
 
 
