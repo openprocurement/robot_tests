@@ -42,8 +42,9 @@ Resource           resource.robot
 Можливість додати документацію до тендера
   ${filepath}=  create_fake_doc
   Run As  ${tender_owner}  Завантажити документ  ${filepath}  ${TENDER['TENDER_UAID']}
-  ${documents}=  Create Dictionary  filepath=${filepath}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  documents=${documents}
+  ${doc_id}=  get_id_from_doc_name  ${filepath}
+  ${tender_document}=  Create Dictionary  filepath=${filepath}  doc_id=${doc_id}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  tender_document=${tender_document}
 
 
 Можливість додати предмет закупівлі в тендер
@@ -154,12 +155,15 @@ Resource           resource.robot
 Можливість додати документацію до ${lot_index} лоту
   ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}]}
   ${filepath}=  create_fake_doc
+  ${doc_id}=  get_id_from_doc_name  ${filepath}
+  ${data}=  Create Dictionary  filepath=${filepath}  doc_id=${doc_id}
   Run As  ${tender_owner}  Завантажити документ в лот  ${filepath}  ${TENDER['TENDER_UAID']}  ${lot_id}
   ${empty_list}=  Create List
   ${lots_documents}=  Get variable value  ${USERS.users['${tender_owner}'].lots_documents}  ${empty_list}
-  Append to list  ${lots_documents}  ${filepath}
+  Append to list  ${lots_documents}  ${data}
   Set to dictionary  ${USERS.users['${tender_owner}']}  lots_documents=${lots_documents}
   Log  ${USERS.users['${tender_owner}'].lots_documents}
+
 
 Можливість додати документацію до всіх лотів
   ${number_of_lots}=  Get Length  ${USERS.users['${tender_owner}'].initial_data.data.lots}
