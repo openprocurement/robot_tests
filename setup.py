@@ -41,7 +41,6 @@ setup(name='op_robot_tests',
           'console_scripts': [
               'openprocurement_tests = op_robot_tests.runner:runner',
               'op_tests = op_robot_tests.runner:runner',
-              'rebot = op_robot_tests.rebot:rebot'
           ],
       }
       )
