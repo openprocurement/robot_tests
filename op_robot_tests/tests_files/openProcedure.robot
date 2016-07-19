@@ -441,7 +441,7 @@ ${item_meat}        ${True}
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_tender_doc  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля documents[0].title тендера із ${USERS.users['${tender_owner}']['documents']['filepath']} для користувача ${viewer}
+  Звірити відображення поля title документа ${USERS.users['${tender_owner}']['tender_document']['doc_id']} із ${USERS.users['${tender_owner}'].tender_document.filepath} для користувача ${viewer}
 
 
 Відображення заголовку документації до всіх лотів

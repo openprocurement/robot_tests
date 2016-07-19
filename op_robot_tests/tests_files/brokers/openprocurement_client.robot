@@ -41,6 +41,14 @@ Library  openprocurement_client_helper.py
   [return]   ${reply}
 
 
+Отримати інформацію із документа
+  [Arguments]  ${username}  ${tender_uaid}  ${doc_id}  ${field}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${document}=  get_document_by_id  ${tender.data.documents}  ${doc_id}
+  Log  ${document}
+  [Return]  ${document['${field}']}
+
+
 Отримати документ
   [Arguments]  ${username}  ${tender_uaid}  ${url}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
