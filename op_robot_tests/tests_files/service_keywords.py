@@ -413,6 +413,13 @@ def get_id_from_object(obj):
     return obj_id.group(1)
 
 
+def get_document_by_id(data, doc_id):
+    for document in data:
+        if doc_id in document.get('title'):
+            return document
+    raise Exception('Document with id {} not found'.format(doc_id))
+
+
 def get_id_from_doc_name(name):
     name = name.split(os.path.sep)
     name = name[-1]
