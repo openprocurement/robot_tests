@@ -655,15 +655,15 @@ Library  openprocurement_client_helper.py
   [Return]  ${field_value}
 
 
-Отримати поле документації до скарги
-  [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${document_id}  ${field_name}  ${award_index}=${None}
-  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${complaints}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.awards[${award_index}].complaints}  ${USERS.users['${username}'].tender_data.data.complaints}
+Отримати інформацію із документа до скарги
+  [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${doc_id}  ${field_name}  ${award_index}=${None}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${complaints}=  Get Variable Value  ${tender.data.awards[${award_index}].complaints}  ${tender.data.complaints}
   ${complaint_index}=  get_complaint_index_by_complaintID  ${complaints}  ${complaintID}
   Log  ${complaints}
-  ${document_index}=  get_document_index_by_id  ${complaints[${complaint_index}].documents}  ${document_id}
-  ${field_value}=  Get Variable Value  ${complaints[${complaint_index}].documents[${document_index}]['${field_name}']}
-  [Return]  ${field_value}
+  ${document}=  get_document_by_id  ${complaints[${complaint_index}].documents}  ${doc_id}
+  Log  ${document}
+  [Return]  ${document['${field_name}']}
 
 ##############################################################################
 #             Bid operations
