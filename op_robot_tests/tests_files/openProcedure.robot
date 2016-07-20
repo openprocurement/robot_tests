@@ -891,7 +891,12 @@ ${item_meat}        ${True}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  create_tender_claim
-  Звірити відображення поля document.title вимоги із ${USERS.users['${provider}'].claim_data.document} для користувача ${viewer}
+  ${right}=  Run As  ${viewer}  Отримати інформацію із документа до скарги
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}'].claim_data.complaintID}
+  ...      ${USERS.users['${provider}'].claim_data.doc_id}
+  ...      title
+  Порівняти об'єкти  ${USERS.users['${provider}'].claim_data.document}  ${right}
 
 
 Відображення поданого статусу вимоги про виправлення умов закупівлі
@@ -1038,6 +1043,7 @@ ${item_meat}        ${True}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість створити вимогу про виправлення умов 0 лоту із документацією
 
+
 Відображення опису вимоги про виправлення умов лоту
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
@@ -1064,12 +1070,17 @@ ${item_meat}        ${True}
   Звірити відображення поля title вимоги із ${USERS.users['${provider}'].claim_data.claim.data.title} для користувача ${viewer}
 
 
-Відображення заголовку документації вимоги про виправлення умов лоту
+Відображення заголовку документа до вимоги про виправлення умов лоту
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  create_lot_claim
-  Звірити відображення поля document.title вимоги із ${USERS.users['${provider}'].claim_data.document} для користувача ${viewer}
+  ${right}=  Run As  ${viewer}  Отримати інформацію із документа до скарги
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}'].claim_data.complaintID}
+  ...      ${USERS.users['${provider}'].claim_data.doc_id}
+  ...      title
+  Порівняти об'єкти  ${USERS.users['${provider}'].claim_data.document}  ${right}
 
 
 Відображення поданого статусу вимоги про виправлення умов лоту
