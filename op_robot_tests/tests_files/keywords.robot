@@ -542,17 +542,7 @@ Log differences between dicts
 
 Звірити поле скарги із значенням
   [Arguments]  ${username}  ${tender_uaid}  ${given_value}  ${field_name}  ${complaintID}  ${award_index}=${None}
-  ${status}=  Call method  ${field_name}  startswith  document.
-  ${fetched_field_name}=  Run keyword if  ${status} == ${True}  Fetch From Right  ${field_name}  .
-  ${field_name}=  Set variable if  ${status} == ${True}  ${fetched_field_name}  ${field_name}
-  ${received_value}=  Run keyword if  ${status} == ${True}  Run as  ${username}  Отримати поле документації до скарги
-  ...      ${tender_uaid}
-  ...      ${complaintID}
-  ...      ${given_value}
-  ...      ${field_name}
-  ...      ${award_index}
-  ...      ELSE
-  ...      Run as  ${username}  Отримати інформацію із скарги  ${tender_uaid}  ${complaintID}  ${field_name}  ${award_index}
+  ${received_value}=  Run as  ${username}  Отримати інформацію із скарги  ${tender_uaid}  ${complaintID}  ${field_name}  ${award_index}
   Порівняти об'єкти  ${given_value}  ${received_value}
 
 
