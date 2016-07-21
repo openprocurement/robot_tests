@@ -59,11 +59,6 @@ def add_minutes_to_date(date, minutes):
     return (parse(date) + timedelta(minutes=float(minutes))).isoformat()
 
 
-def get_file_contents(path):
-    with open(path, 'r') as f:
-        return unicode(f.read()) or u''
-
-
 def compare_date(left, right, accuracy="minute", absolute_delta=True):
     '''Compares dates with specified accuracy
 
