@@ -457,9 +457,7 @@ ${item_meat}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_tender_doc  level2
-  ${doc_index}=  get_document_index_by_id  ${USERS.users['${viewer}'].tender_data.data.documents}  ${USERS.users['${tender_owner}'].documents.filepath}
-  Отримати дані із тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  documents[${doc_index}].url
-  Звірити відображення вмісту документації до тендера для користувача ${viewer}
+  Звірити відображення вмісту документа ${USERS.users['${tender_owner}'].tender_document.doc_id} з ${USERS.users['${tender_owner}'].tender_document.doc_content} для користувача ${viewer}
 
 
 Відображення вмісту документації до всіх лотів
@@ -467,7 +465,6 @@ ${item_meat}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_lot_doc  level2
-  Отримати посилання на документацію до всіх лотів для користувача ${viewer}
   Звірити відображення вмісту документації до всіх лотів для користувача ${viewer}
 
 
@@ -861,6 +858,7 @@ ${item_meat}        ${True}
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість створити вимогу про виправлення умов закупівлі із документацією
+
 
 Відображення опису вимоги про виправлення умов закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
