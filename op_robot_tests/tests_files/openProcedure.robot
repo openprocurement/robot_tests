@@ -457,9 +457,8 @@ ${item_meat}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_tender_doc  level2
-  ${doc_index}=  get_document_index_by_id  ${USERS.users['${viewer}'].tender_data.data.documents}  ${USERS.users['${tender_owner}'].documents.filepath}
-  Отримати дані із тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  documents[${doc_index}].url
-  Звірити відображення вмісту документації до тендера для користувача ${viewer}
+  ${doc_content}=  Get File  ${USERS.users['${tender_owner}'].tender_document.filepath}
+  Звірити відображення вмісту документа ${USERS.users['${tender_owner}'].tender_document.doc_id} з ${doc_content} для користувача ${viewer}
 
 
 Відображення вмісту документації до всіх лотів
@@ -467,7 +466,6 @@ ${item_meat}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_lot_doc  level2
-  Отримати посилання на документацію до всіх лотів для користувача ${viewer}
   Звірити відображення вмісту документації до всіх лотів для користувача ${viewer}
 
 

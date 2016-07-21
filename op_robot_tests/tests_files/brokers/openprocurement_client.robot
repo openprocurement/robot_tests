@@ -50,11 +50,15 @@ Library  openprocurement_client_helper.py
 
 
 Отримати документ
-  [Arguments]  ${username}  ${tender_uaid}  ${url}
+  [Arguments]  ${username}  ${tender_uaid}  ${doc_id}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${document}=  get_document_by_id  ${tender.data}  ${doc_id}
   ${token}=  Get Variable Value  ${USERS.users['${username}'].access_token}
-  ${contents}  ${filename}=  Call Method  ${USERS.users['${username}'].client}  get_file   ${tender}   ${url}   ${token}
-  [return]   ${contents}  ${filename}
+  # ${contents} is never used and exists only because get_file returns tuple
+  ${contents}  ${filename}=  Call Method  ${USERS.users['${username}'].client}  get_file   ${tender}   ${document.url}   ${token}
+  ${new_path_to_file}=  Move File  ${filename}  ${OUTPUT_DIR}
+  ${basename}=  get_file_basename  ${new_path_to_file}
+  [return]  ${basename}
 
 
 Отримати посилання на аукціон для глядача

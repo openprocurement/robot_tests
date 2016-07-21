@@ -3,6 +3,7 @@ from openprocurement_client.utils import get_tender_id_by_uaid
 from openprocurement_client.exceptions import IdNotFound
 from restkit.errors import RequestFailed
 from retrying import retry
+import os
 
 
 def retry_if_request_failed(exception):
@@ -34,3 +35,22 @@ def get_complaint_internal_id(tender, complaintID):
     except AttributeError:
         pass
     raise IdNotFound
+
+
+def get_document_by_id(data, doc_id):
+    for document in data.get('documents', []):
+        if doc_id in document.get('title', ''):
+            return document
+    for complaint in data.get('complaints', []):
+        for document in complaint.get('documents', []):
+            if doc_id in document.get('title', ''):
+                return document
+    for award in data.get('awards', []):
+        for document in award.get('documents', []):
+            if doc_id in document.get('title', ''):
+                return document
+    raise Exception('Document with id {} not found'.format(doc_id))
+
+
+def get_file_basename(path_to_file):
+    return os.path.basename(path_to_file)
