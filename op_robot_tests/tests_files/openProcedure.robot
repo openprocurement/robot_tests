@@ -899,6 +899,14 @@ ${item_meat}        ${True}
   Порівняти об'єкти  ${USERS.users['${provider}'].claim_data.doc_name}  ${right}
 
 
+Відображення вмісту документа до вимоги про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  create_tender_claim
+  Звірити відображення вмісту документа ${USERS['${provider}'].claim_data.doc_id} з ${USERS['${provider}'].claim_data.doc_content} для користувача ${viewer}
+
+
 Відображення поданого статусу вимоги про виправлення умов закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
@@ -1081,6 +1089,14 @@ ${item_meat}        ${True}
   ...      ${USERS.users['${provider}'].claim_data.doc_id}
   ...      title
   Порівняти об'єкти  ${USERS.users['${provider}'].claim_data.doc_name}  ${right}
+
+
+Відображення вмісту документа до вимоги про виправлення умов лоту
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  create_lot_claim
+  Звірити відображення вмісту документа ${USERS['${provider}'].claim_data.doc_id} з ${USERS['${provider}'].claim_data.doc_content} для користувача ${viewer}
 
 
 Відображення поданого статусу вимоги про виправлення умов лоту
