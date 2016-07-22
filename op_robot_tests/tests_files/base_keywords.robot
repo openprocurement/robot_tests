@@ -449,7 +449,8 @@ Resource           resource.robot
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
   ...      ${document}
-  ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}  document=${document}
+  ${doc_id}=  get_id_from_doc_name  ${document}
+  ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}  document=${document}  doc_id=${doc_id}
   ${claim_data}=  munch_dict  arg=${claim_data}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data  ${claim_data}
 
@@ -464,7 +465,8 @@ Resource           resource.robot
   ...      ${claim}
   ...      ${lot_id}
   ...      ${document}
-  ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}  document=${document}
+  ${doc_id}=  get_id_from_doc_name  ${document}
+  ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}  document=${document}  doc_id=${doc_id}
   ${claim_data}=  munch_dict  arg=${claim_data}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data  ${claim_data}
 
@@ -478,7 +480,8 @@ Resource           resource.robot
   ...      ${claim}
   ...      ${award_index}
   ...      ${document}
-  ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}  document=${document}
+  ${doc_id}=  get_id_from_doc_name  ${document}
+  ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}  document=${document}  doc_id=${doc_id}
   ${claim_data}=  munch_dict  arg=${claim_data}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data  ${claim_data}
 
