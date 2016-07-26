@@ -808,16 +808,18 @@ Resource           resource.robot
 
 
 Можливість завантажити документ в пропозицію користувачем ${username}
-  ${filepath}=  create_fake_doc
-  ${bid_doc_upload}=  Run As  ${username}  Завантажити документ в ставку  ${filepath}  ${TENDER['TENDER_UAID']}
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
+  ${bid_doc_upload}=  Run As  ${username}  Завантажити документ в ставку  ${file_path}  ${TENDER['TENDER_UAID']}
   Set To Dictionary  ${USERS.users['${username}'].bidresponses}  bid_doc_upload=${bid_doc_upload}
+  Remove File  ${file_path}
 
 
 Можливість змінити документацію цінової пропозиції користувачем ${username}
-  ${filepath}=  create_fake_doc
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   ${docid}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['bid_doc_upload']['upload_response'].data.id}
   ${bid_doc_modified}=  Run As  ${username}  Змінити документ в ставці  ${filepath}  ${docid}
   Set To Dictionary  ${USERS.users['${username}'].bidresponses}  bid_doc_modified=${bid_doc_modified}
+  Remove File  ${file_path}
 
 ##############################################################################################
 #             Cancellations
