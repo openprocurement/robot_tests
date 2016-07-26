@@ -40,11 +40,12 @@ Resource           resource.robot
 
 
 Можливість додати документацію до тендера
-  ${filepath}=  create_fake_doc
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   Run As  ${tender_owner}  Завантажити документ  ${filepath}  ${TENDER['TENDER_UAID']}
-  ${doc_id}=  get_id_from_doc_name  ${filepath}
-  ${tender_document}=  Create Dictionary  filepath=${filepath}  doc_id=${doc_id}
+  ${doc_id}=  get_id_from_doc_name  ${file_name}
+  ${tender_document}=  Create Dictionary  doc_name=${file_name}  doc_id=${doc_id}  doc_content=${file_content}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  tender_document=${tender_document}
+  Remove File  ${file_path}
 
 
 Можливість додати предмет закупівлі в тендер
