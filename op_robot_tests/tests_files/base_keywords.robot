@@ -834,13 +834,14 @@ Resource           resource.robot
 
 Можливість зареєструвати, додати документацію і підтвердити постачальника до закупівлі
   ${supplier_data}=  Підготувати дані про постачальника  ${tender_owner}
-  ${filepath}=  create_fake_doc
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   Run as  ${tender_owner}
   ...      Створити постачальника, додати документацію і підтвердити його
   ...      ${TENDER['TENDER_UAID']}
   ...      ${supplier_data}
-  ...      ${filepath}
-  Set to dictionary  ${USERS.users['${tender_owner}']}  award_document=${filepath}
+  ...      ${file_path}
+  Set to dictionary  ${USERS.users['${tender_owner}']}  award_doc_name=${filepath}  award_doc_id=${doc_id}  award_doc_content=${file_content}
+  Remove File  ${file_path}
 
 
 Можливість укласти угоду для закупівлі
