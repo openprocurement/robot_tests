@@ -171,7 +171,6 @@ Resource           resource.robot
 
 
 Можливість додати документацію до всіх лотів
-  ${number_of_lots}=  Get Length  ${USERS.users['${tender_owner}'].initial_data.data.lots}
   :FOR  ${lot_index}  IN RANGE  ${number_of_lots}
   \  Можливість додати документацію до ${lot_index} лоту
 
@@ -184,6 +183,16 @@ Resource           resource.robot
   ${item_data}=  Create Dictionary  item=${item}  item_id=${item_id}
   ${item_data}=  munch_dict  arg=${item_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  item_data=${item_data}
+
+
+Звірити відображення заголовку документації до всіх лотів для користувача ${username}
+  :FOR  ${lot_index}  IN RANGE  ${number_of_lots}
+  \  Звірити відображення поля title документа ${USERS.users['${tender_owner}'].lots_documents[${lot_index}].doc_id} із ${USERS.users['${tender_owner}'].lots_documents[${lot_index}].doc_name} для користувача ${username}
+
+
+Звірити відображення вмісту документації до всіх лотів для користувача ${username}
+  :FOR  ${lot_index}  IN RANGE  ${number_of_lots}
+  \  Звірити відображення вмісту документа ${USERS.users['${tender_owner}'].lots_documents[${lot_index}].doc_id} з ${USERS.users['${tender_owner}'].lots_documents[${lot_index}].doc_content} для користувача ${username}
 
 
 Можливість видалити предмет закупівлі з ${lot_index} лоту
@@ -233,19 +242,6 @@ Resource           resource.robot
 Звірити відображення поля ${field} ${lot_index} лоту з ${data} для користувача ${username}
   ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data.lots[${lot_index}]}
   Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${data}  ${field}  ${lot_id}
-
-
-Звірити відображення заголовку документації до всіх лотів для користувача ${username}
-  ${number_of_lots}=  Get Length  ${USERS.users['${tender_owner}'].initial_data.data.lots}
-  :FOR  ${lot_index}  IN RANGE  ${number_of_lots}
-  \  Звірити відображення поля title документа ${USERS.users['${tender_owner}'].lots_documents[${lot_index}].doc_id} із ${USERS.users['${tender_owner}'].lots_documents[${lot_index}].filepath} для користувача ${username}
-
-
-Звірити відображення вмісту документації до всіх лотів для користувача ${username}
-  ${number_of_lots}=  Get Length  ${USERS.users['${tender_owner}'].initial_data.data.lots}
-  :FOR  ${lot_index}  IN RANGE  ${number_of_lots}
-  \  ${doc_content}=  Get File  ${USERS.users['${tender_owner}'].lots_documents[${lot_index}].filepath}
-  \  Звірити відображення вмісту документа ${USERS.users['${tender_owner}'].lots_documents[${lot_index}].doc_id} з ${doc_content} для користувача ${username}
 
 
 Звірити відображення поля ${field} у новоствореному лоті для усіх користувачів
