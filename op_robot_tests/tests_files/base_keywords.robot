@@ -158,15 +158,16 @@ Resource           resource.robot
 
 Можливість додати документацію до ${lot_index} лоту
   ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}]}
-  ${filepath}=  create_fake_doc
-  ${doc_id}=  get_id_from_doc_name  ${filepath}
-  ${data}=  Create Dictionary  filepath=${filepath}  doc_id=${doc_id}
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   Run As  ${tender_owner}  Завантажити документ в лот  ${filepath}  ${TENDER['TENDER_UAID']}  ${lot_id}
+  ${doc_id}=  get_id_from_doc_name  ${filepath}
+  ${data}=  Create Dictionary  doc_name=${file_name}  doc_id=${doc_id}  doc_content=${file_content}
   ${empty_list}=  Create List
   ${lots_documents}=  Get variable value  ${USERS.users['${tender_owner}'].lots_documents}  ${empty_list}
   Append to list  ${lots_documents}  ${data}
   Set to dictionary  ${USERS.users['${tender_owner}']}  lots_documents=${lots_documents}
   Log  ${USERS.users['${tender_owner}'].lots_documents}
+  Remove File  ${file_path}
 
 
 Можливість додати документацію до всіх лотів
