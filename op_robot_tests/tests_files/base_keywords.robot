@@ -477,17 +477,18 @@ Resource           resource.robot
 
 Можливість створити вимогу про виправлення визначення ${award_index} переможця із документацією
   ${claim}=  Підготувати дані для подання вимоги
-  ${document}=  create_fake_doc
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   ${complaintID}=  Run As  ${provider}
   ...      Створити вимогу про виправлення визначення переможця
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
   ...      ${award_index}
-  ...      ${document}
-  ${doc_id}=  get_id_from_doc_name  ${document}
-  ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}  document=${document}  doc_id=${doc_id}
+  ...      ${file_path}
+  ${doc_id}=  get_id_from_doc_name  ${file_name}
+  ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}  doc_name=${file_name}  doc_id=${doc_id}  doc_content=${file_content}
   ${claim_data}=  munch_dict  arg=${claim_data}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data  ${claim_data}
+  Remove File  ${file_path}
 
 
 Можливість скасувати вимогу про виправлення умов закупівлі
