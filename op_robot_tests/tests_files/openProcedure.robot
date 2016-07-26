@@ -441,7 +441,7 @@ ${item_meat}        ${True}
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_tender_doc  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля title документа ${USERS.users['${tender_owner}']['tender_document']['doc_id']} із ${USERS.users['${tender_owner}'].tender_document.filepath} для користувача ${viewer}
+  Звірити відображення поля title документа ${USERS.users['${tender_owner}']['tender_document']['doc_id']} із ${USERS.users['${tender_owner}'].tender_document.doc_name} для користувача ${viewer}
 
 
 Відображення заголовку документації до всіх лотів
@@ -457,8 +457,7 @@ ${item_meat}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_tender_doc  level2
-  ${doc_content}=  Get File  ${USERS.users['${tender_owner}'].tender_document.filepath}
-  Звірити відображення вмісту документа ${USERS.users['${tender_owner}'].tender_document.doc_id} з ${doc_content} для користувача ${viewer}
+  Звірити відображення вмісту документа ${USERS.users['${tender_owner}'].tender_document.doc_id} з ${USERS.users['${tender_owner}'].tender_document.doc_content} для користувача ${viewer}
 
 
 Відображення вмісту документації до всіх лотів
@@ -860,6 +859,7 @@ ${item_meat}        ${True}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість створити вимогу про виправлення умов закупівлі із документацією
 
+
 Відображення опису вимоги про виправлення умов закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
@@ -896,7 +896,7 @@ ${item_meat}        ${True}
   ...      ${USERS.users['${provider}'].claim_data.complaintID}
   ...      ${USERS.users['${provider}'].claim_data.doc_id}
   ...      title
-  Порівняти об'єкти  ${USERS.users['${provider}'].claim_data.document}  ${right}
+  Порівняти об'єкти  ${USERS.users['${provider}'].claim_data.doc_name}  ${right}
 
 
 Відображення вмісту документа до вимоги про виправлення умов закупівлі
@@ -904,8 +904,7 @@ ${item_meat}        ${True}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  create_tender_claim
-  ${doc_content}=  Get File  ${USERS['${provider}'].claim_data.document}
-  Звірити відображення вмісту документа ${USERS['${provider}'].claim_data.doc_id} з ${doc_content} для користувача ${viewer}
+  Звірити відображення вмісту документа ${USERS['${provider}'].claim_data.doc_id} з ${USERS['${provider}'].claim_data.doc_content} для користувача ${viewer}
 
 
 Відображення поданого статусу вимоги про виправлення умов закупівлі
@@ -1089,7 +1088,7 @@ ${item_meat}        ${True}
   ...      ${USERS.users['${provider}'].claim_data.complaintID}
   ...      ${USERS.users['${provider}'].claim_data.doc_id}
   ...      title
-  Порівняти об'єкти  ${USERS.users['${provider}'].claim_data.document}  ${right}
+  Порівняти об'єкти  ${USERS.users['${provider}'].claim_data.doc_name}  ${right}
 
 
 Відображення вмісту документа до вимоги про виправлення умов лоту
@@ -1097,8 +1096,7 @@ ${item_meat}        ${True}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  create_lot_claim
-  ${doc_content}=  Get File  ${USERS['${provider}'].claim_data.document}
-  Звірити відображення вмісту документа ${USERS['${provider}'].claim_data.doc_id} з ${doc_content} для користувача ${viewer}
+  Звірити відображення вмісту документа ${USERS['${provider}'].claim_data.doc_id} з ${USERS['${provider}'].claim_data.doc_content} для користувача ${viewer}
 
 
 Відображення поданого статусу вимоги про виправлення умов лоту
