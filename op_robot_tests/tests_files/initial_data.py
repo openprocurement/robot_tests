@@ -6,6 +6,7 @@ from uuid import uuid4
 from tempfile import NamedTemporaryFile
 from .local_time import get_now
 from op_faker import OP_Provider
+import os
 import random
 
 
@@ -44,7 +45,7 @@ def create_fake_doc():
     tf = NamedTemporaryFile(delete=False, suffix=suffix, prefix=prefix)
     tf.write(content)
     tf.close()
-    return tf.name
+    return tf.name, os.path.basename(tf.name), content
 
 
 def test_tender_data(params, periods=("enquiry", "tender")):
