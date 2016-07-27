@@ -203,9 +203,9 @@ users:
     PublicPortal_Viewer:
         broker:   PublicPortal
         homepage: "https://qa23.prozorro.gov.ua/tender/search/"
-        browser:  Chrome
-        position: [450, 0]
-        size:     [1200, 720]
+        browser:  Сhrome
+        position: [0, 0]
+        size:     [1000, 720]
     SmartTender_Viewer:
         broker:   SmartTender
         homepage: "http://test.smarttender.biz/test-tenders?allcat=1"
