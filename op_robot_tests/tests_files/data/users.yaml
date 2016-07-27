@@ -45,17 +45,17 @@ users:
     DZO_Owner:
         broker:   DZO
         homepage: "http://dz2.byustudio.in.ua"
-        login:    ovramet.s@gmail.com
+        login:    dzotenderowner@gmail.com
         password: Password1
-        browser:  firefox
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     DZO_Provider:
         broker:   DZO
         homepage: "http://dz2.byustudio.in.ua"
-        login:    halyna.khimka@gmail.com
-        password: JHO5VUp5n
-        browser:  firefox
+        login:     dzoprovider1@gmail.com
+        password: 3Z5n9Yt59
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     DZO_Provider1:
@@ -63,13 +63,43 @@ users:
         homepage: "http://dz2.byustudio.in.ua"
         login:    dzoprovider2@gmail.com
         password: UxYkGVVfk
-        browser:  firefox
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     DZO_Viewer:
         broker:   DZO
         homepage: "http://dz2.byustudio.in.ua/?test_mode=guest"
-        browser:  firefox
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    DZO_Owner_auction:
+        broker:   DZO
+        homepage: "http://dz3.byustudio.in.ua"
+        login:    dzotenderowner@gmail.com
+        password: Password1
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    DZO_Provider_auction:
+        broker:   DZO
+        homepage: "http://dz3.byustudio.in.ua"
+        login:     dzoprovider1@gmail.com
+        password: 3Z5n9Yt59
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    DZO_Provider1_auction:
+        broker:   DZO
+        homepage: "http://dz3.byustudio.in.ua"
+        login:    dzoprovider2@gmail.com
+        password: UxYkGVVfk
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    DZO_Viewer_auction:
+        broker:   DZO
+        homepage: "http://dz3.byustudio.in.ua/?test_mode=guest"
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     ztv_Owner:
