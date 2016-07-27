@@ -53,7 +53,7 @@ users:
     DZO_Provider:
         broker:   DZO
         homepage: "http://dz2.byustudio.in.ua"
-        login:     dzoprovider1@gmail.com
+        login:    dzoprovider1@gmail.com
         password: 3Z5n9Yt59
         browser:  Firefox
         position: [0, 0]
