@@ -55,17 +55,17 @@ Quinta:
         tender_owner:   Tender_Owner
         viewer:         Tender_Viewer
     timeout_on_wait: 15
-E-tender:
+Etender:
     intervals:
         default:
-            enquiry: [0, 5]
+            enquiry: [0, 8]
     keywords_file: etender
     roles:
-        provider:       E-tender_Provider1
-        provider1:      E-tender_Provider2
-        tender_owner:   E-tender_Owner
-        viewer:         E-tender_Viewer
-    timeout_on_wait: 600
+        provider:       Etender_Provider1
+        provider1:      Etender_Provider2
+        tender_owner:   Etender_Owner
+        viewer:         Etender_Viewer
+    timeout_on_wait: 60
 DZO:
     intervals:
         default:
