@@ -201,8 +201,9 @@ ${award_index}      ${0}
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_add_doc_to_first_award  level3
-  ${filepath}=   create_fake_doc
-  Run As   ${tender_owner}   Завантажити документ рішення кваліфікаційної комісії   ${filepath}   ${TENDER['TENDER_UAID']}   0
+  ${file_path}  ${file_name}  ${file_content}=   create_fake_doc
+  Run As   ${tender_owner}   Завантажити документ рішення кваліфікаційної комісії   ${file_path}   ${TENDER['TENDER_UAID']}   0
+  Remove File  ${file_path}
 
 
 Можливість підтвердити постачальника
@@ -226,8 +227,9 @@ ${award_index}      ${0}
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_add_doc_to_second_award  level3
-  ${filepath}=   create_fake_doc
-  Run As   ${tender_owner}   Завантажити документ рішення кваліфікаційної комісії   ${filepath}   ${TENDER['TENDER_UAID']}   1
+  ${file_path}  ${file_name}  ${file_content}=   create_fake_doc
+  Run As   ${tender_owner}   Завантажити документ рішення кваліфікаційної комісії   ${file_path}   ${TENDER['TENDER_UAID']}   1
+  Remove File  ${file_path}
 
 
 Можливість підтвердити нового постачальника
