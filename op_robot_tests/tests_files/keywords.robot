@@ -689,13 +689,20 @@ Require Failure
 
 Дочекатись дати початку очікування
   [Arguments]  ${username}  ${tender_uaid}
-  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.qualificationPeriod.endDate}
+  # XXX: HACK: Same as above
+  ${status}  ${date}=  Run Keyword And Ignore Error
+  ...      Set Variable
+  ...      ${USERS.users['${username}'].tender_data.data.tenderPeriod.endDate}
+  ${date}=  Set Variable If
+  ...      '${status}' == 'FAIL'
+  ...      ${USERS.users['${tender_owner}'].initial_data.data.tenderPeriod.endDate}
+  ...      ${date}
+  Дочекатись дати  ${date}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
   ...      5 min 15 sec
   ...      15 sec
-  ...      Run Keyword And Expect Error  *
   ...      Звірити статус тендера
   ...      ${username}
   ...      ${tender_uaid}
@@ -717,7 +724,7 @@ Require Failure
   ...      active.pre-qualification.stand-still
 
 
-Дочекатися поки міст створить новий етап
+Дочекатися створення нового етапу мостом
   [Arguments]  ${username}  ${tender_uaid}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}

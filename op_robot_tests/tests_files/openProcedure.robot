@@ -1254,6 +1254,7 @@ ${item_meat}        ${True}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider1}
 
+
 Можливість подати пропозицію третім учасником
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
   ...      provider2
@@ -1536,6 +1537,7 @@ ${item_meat}        ${True}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість підтвердити -1 пропозицію кваліфікації
 
+
 Можливість підтвердити третю пропозицію кваліфікації
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
   ...      tender_owner
@@ -1572,9 +1574,10 @@ ${item_meat}        ${True}
   [Teardown]  Дочекатись дати закінчення періоду прекваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
   Отримати дані із поля qualificationPeriod.endDate тендера для усіх користувачів
 
-Можливість дочекатися початку очікування
+
+Можливість дочекати початку періоду очікування
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес очікування оскаржень
-  ...      viewer
+  ...      tender_owner
   ...      ${USERS.users['${viewer}'].broker}
   ...      stage2_pending_status_view
   Отримати дані із поля qualificationPeriod.endDate тендера для усіх користувачів
@@ -1582,7 +1585,7 @@ ${item_meat}        ${True}
   Звірити статус тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  active.stage2.pending
 
 
-Можливіст перевести статус очікування обробки мостом
+Можливість перевести статус очікування обробки мостом
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Процес переведення статусу у active.stage2.waiting.
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
@@ -1598,6 +1601,6 @@ ${item_meat}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      wait_bridge_for_work
-  Дочекатися поки міст створить новий етап  ${tender_owner}  ${TENDER['TENDER_UAID']}
+  Дочекатися створення нового етапу мостом  ${tender_owner}  ${TENDER['TENDER_UAID']}
   Звірити статус тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  complete
 
