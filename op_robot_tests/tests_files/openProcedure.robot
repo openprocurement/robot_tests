@@ -7,7 +7,7 @@ Suite Teardown  Test Suite Teardown
 
 *** Variables ***
 ${mode}             openeu
-@{used_roles}       tender_owner  provider  provider1  viewer
+@{used_roles}       tender_owner  provider  provider1  provider2  viewer
 ${dialogue_type}    EU
 
 ${number_of_items}  ${1}
@@ -1282,6 +1282,16 @@ ${item_meat}        ${True}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider1}
 
+
+Можливість подати пропозицію третім учасником
+  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
+  ...      provider2
+  ...      ${USERS.users['${provider1}'].broker}
+  ...      make_bid_by_provider2  level1
+  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider2}  ${TENDER['TENDER_UAID']}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість подати цінову пропозицію користувачем ${provider2}
+
 ##############################################################################################
 #             ABOVETRHESHOLD  BIDDING
 ##############################################################################################
@@ -1367,6 +1377,15 @@ ${item_meat}        ${True}
   ...      open_confirm_second_bid
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість підтвердити цінову пропозицію учасником ${provider1}
+
+
+Можливість підтвердити цінову пропозицію після зміни умов третьому учаснику
+  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
+  ...      provider2
+  ...      ${USERS.users['${provider1}'].broker}
+  ...      open_confirm_third_bid
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість підтвердити цінову пропозицію учасником ${provider2}
 
 ##############################################################################################
 
@@ -1547,6 +1566,15 @@ ${item_meat}        ${True}
   Можливість підтвердити -1 пропозицію кваліфікації
 
 
+Можливість підтвердити третю пропозицію кваліфікації
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      pre-qualification_approve_third_bid  level1
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість підтвердити -2 пропозицію кваліфікації
+
+
 Можливість затвердити остаточне рішення кваліфікації
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
   ...      tender_owner
@@ -1573,3 +1601,34 @@ ${item_meat}        ${True}
   ...      pre-qualification_view
   [Teardown]  Дочекатись дати закінчення періоду прекваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
   Отримати дані із поля qualificationPeriod.endDate тендера для усіх користувачів
+
+
+Можливість дочекатися початку періоду очікування
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Процес очікування оскаржень
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      stage2_pending_status_view
+  Отримати дані із поля qualificationPeriod.endDate тендера для усіх користувачів
+  Дочекатись дати закінчення періоду прекваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
+  Звірити статус тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  active.stage2.pending
+
+
+Можливість перевести статус очікування обробки мостом
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Процес переведення статусу у active.stage2.waiting.
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      stage2_pending_status_view
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість перевести тендер на статус очікування обробки мостом
+  Звірити статус тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  active.stage2.waiting
+
+
+Можливість дочекатися завершення роботи мосту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Процес очікування обробки мостом
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      wait_bridge_for_work
+  Дочекатися створення нового етапу мостом  ${tender_owner}  ${TENDER['TENDER_UAID']}
+  Звірити статус тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  complete
+
