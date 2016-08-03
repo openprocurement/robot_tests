@@ -1575,10 +1575,10 @@ ${item_meat}        ${True}
   Отримати дані із поля qualificationPeriod.endDate тендера для усіх користувачів
 
 
-Можливість дочекати початку періоду очікування
-  [Tags]   ${USERS.users['${viewer}'].broker}: Процес очікування оскаржень
+Можливість дочекатися початку періоду очікування
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Процес очікування оскаржень
   ...      tender_owner
-  ...      ${USERS.users['${viewer}'].broker}
+  ...      ${USERS.users['${tender_owner}'].broker}
   ...      stage2_pending_status_view
   Отримати дані із поля qualificationPeriod.endDate тендера для усіх користувачів
   Дочекатись дати закінчення періоду прекваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
