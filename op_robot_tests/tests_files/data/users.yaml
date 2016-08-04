@@ -316,34 +316,36 @@ users:
         size:     [1280, 800]
     ubiz_Owner:
         broker:   ubiz
-        homepage: "http://fgvfo.com.ua/user/purchase"
+        homepage: "http://test.dz.ubiz.ua/user/purchase"
         login:    test1@test.com
         password: qwe123qwe
         browser:  chrome
         position: [0, 0]
-        size:     [1000, 500]
+        size:     [1000, 1000]
     ubiz_Provider1:
         broker:   ubiz
-        homepage: "http://fgvfo.com.ua/user/purchase"
+        homepage: "http://test.dz.ubiz.ua/user/purchase"
         login:    test2@test.com
         password: qwe123qwe
         browser:  chrome
-        position: [0, 800]
-        size:     [800, 800]
+        position: [0, 0]
+        size:     [1000, 1000]
     ubiz_Provider2:
         broker:   ubiz
-        homepage: "http://fgvfo.com.ua/user/purchase"
+        homepage: "http://test.dz.ubiz.ua/user/purchase"
         login:    test3@test.com
         password: qwe123qwe
         browser:  chrome
-        position: [800, 0]
-        size:     [800, 800]
+        position: [0, 0]
+        size:     [1000, 500]
     ubiz_Viewer:
         broker:   ubiz
-        homepage: "http://fgvfo.com.ua/"
+        homepage: "http://test.dz.ubiz.ua/"
+        login:    test4@test.com
+        password: qwe123qwe
         browser:  chrome
-        position: [0, 500]
-        size:     [1000, 500]
+        position: [0, 0]
+        size:     [1000, 1000]
     zakpro_Owner:
         broker:   zakpro
         homepage: "https://market.zakupkipro.com/"
