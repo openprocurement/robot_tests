@@ -195,9 +195,11 @@ uatenders:
 ubiz:
     intervals:
         default:
-            enquiry: [0, 5]
+            enquiry: [1, 10]
+            tender: [0, 10]
     keywords_file: ubiz
-    homepage: 'http://fgvfo.com.ua/'
+    homepage: 'http://test.dz.ubiz.ua/'
+    syncpage: 'http://test.dz.ubiz.ua/develop/sync?psw=369369'
     roles:
         provider:       ubiz_Provider1
         provider1:      ubiz_Provider2
