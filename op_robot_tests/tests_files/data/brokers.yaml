@@ -58,7 +58,7 @@ Quinta:
 Etender:
     intervals:
         default:
-            enquiry: [0, 8]
+            enquiry: [0, 15]
     keywords_file: etender
     roles:
         provider:       Etender_Provider1
