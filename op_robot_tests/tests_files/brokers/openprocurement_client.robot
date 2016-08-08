@@ -661,6 +661,14 @@ Library  openprocurement_client_helper.py
   Log  ${document}
   [Return]  ${document['${field_name}']}
 
+
+Отримати документ до скарги
+  [Arguments]  ${username}  ${tender_uaid}  ${doc_id}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${document}=  get_document_by_id  ${tender.data}  ${doc_id}
+  ${filename}=  download_file_from_url  ${document.url}  ${OUTPUT_DIR}${/}${document.title}
+  [return]  ${filename}
+
 ##############################################################################
 #             Bid operations
 ##############################################################################
