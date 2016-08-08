@@ -657,10 +657,17 @@ Library  openprocurement_client_helper.py
 Отримати інформацію із документа до скарги
   [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${doc_id}  ${field_name}  ${award_index}=${None}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${complaints}=  Get Variable Value  ${tender.data.awards[${award_index}].complaints}  ${tender.data.complaints}
   ${document}=  get_document_by_id  ${tender.data}  ${doc_id}
   Log  ${document}
   [Return]  ${document['${field_name}']}
+
+
+Отримати документ до скарги
+  [Arguments]  ${username}  ${tender_uaid}  ${doc_id}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${document}=  get_document_by_id  ${tender.data}  ${doc_id}
+  ${filename}=  download_file_from_url  ${document.url}  ${OUTPUT_DIR}${/}${document.title}
+  [return]  ${filename}
 
 ##############################################################################
 #             Bid operations
@@ -901,6 +908,22 @@ Library  openprocurement_client_helper.py
   Log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_cancellation  ${tender}  ${data}
   Log  ${reply}
+
+
+Отримати інформацію із документа до скасування
+  [Arguments]  ${username}  ${tender_uaid}  ${doc_id}  ${field_name}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${document}=  get_document_by_id  ${tender.data}  ${doc_id}
+  Log  ${document}
+  [Return]  ${document['${field_name}']}
+
+
+Отримати документ до скасування
+  [Arguments]  ${username}  ${tender_uaid}  ${doc_id}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${document}=  get_document_by_id  ${tender.data}  ${doc_id}
+  ${filename}=  download_file_from_url  ${document.url}  ${OUTPUT_DIR}${/}${document.title}
+  [return]  ${filename}
 
 
 Підтвердити підписання контракту
