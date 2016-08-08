@@ -910,6 +910,22 @@ Library  openprocurement_client_helper.py
   Log  ${reply}
 
 
+Отримати інформацію із документа до скасування
+  [Arguments]  ${username}  ${tender_uaid}  ${doc_id}  ${field_name}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${document}=  get_document_by_id  ${tender.data}  ${doc_id}
+  Log  ${document}
+  [Return]  ${document['${field_name}']}
+
+
+Отримати документ до скасування
+  [Arguments]  ${username}  ${tender_uaid}  ${doc_id}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${document}=  get_document_by_id  ${tender.data}  ${doc_id}
+  ${filename}=  download_file_from_url  ${document.url}  ${OUTPUT_DIR}${/}${document.title}
+  [return]  ${filename}
+
+
 Підтвердити підписання контракту
   [Documentation]
   ...      [Arguments] Username, tender uaid, contract number
