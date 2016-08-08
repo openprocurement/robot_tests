@@ -657,7 +657,6 @@ Library  openprocurement_client_helper.py
 Отримати інформацію із документа до скарги
   [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${doc_id}  ${field_name}  ${award_index}=${None}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${complaints}=  Get Variable Value  ${tender.data.awards[${award_index}].complaints}  ${tender.data.complaints}
   ${document}=  get_document_by_id  ${tender.data}  ${doc_id}
   Log  ${document}
   [Return]  ${document['${field_name}']}
