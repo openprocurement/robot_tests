@@ -237,6 +237,15 @@ Library  openprocurement_client_helper.py
   openprocurement_client.Підтвердити скасування закупівлі  ${username}  ${tender_uaid}  ${cancellation_id}
 
 
+Отримати інформацію з документа до лоту
+  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}  ${doc_id}  ${field}
+  openprocurement_client.Отримати інформацію з документа  ${username}  ${tender_uaid}  ${doc_id}  ${field}
+
+
+Отримати документ до лоту
+  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}  ${doc_id}
+  Run Keyword And Return  openprocurement_client.Отримати документ  ${username}  ${tender_uaid}  ${doc_id}
+
 ##############################################################################
 #             Feature operations
 ##############################################################################
