@@ -79,7 +79,7 @@ Resource           resource.robot
   Звірити поле тендера  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${field}
 
 
-Звірити відображення вмісту документа ${doc_id} з ${left} для користувача ${username}
+Звірити відображення вмісту документа ${doc_id} із ${left} для користувача ${username}
   ${file_name}=  Run as  ${username}  Отримати документ  ${TENDER['TENDER_UAID']}  ${doc_id}
   ${right}=  Get File  ${OUTPUT_DIR}${/}${file_name}
   Порівняти об'єкти  ${left}  ${right}
@@ -192,7 +192,19 @@ Resource           resource.robot
 
 Звірити відображення вмісту документації до всіх лотів для користувача ${username}
   :FOR  ${lot_index}  IN RANGE  ${number_of_lots}
-  \  Звірити відображення вмісту документа ${USERS.users['${tender_owner}'].lots_documents[${lot_index}].doc_id} з ${USERS.users['${tender_owner}'].lots_documents[${lot_index}].doc_content} для користувача ${username}
+  \  ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}]}
+  \  Звірити відображення вмісту документа ${USERS.users['${tender_owner}'].lots_documents[${lot_index}].doc_id} до лоту ${lot_id} з ${USERS.users['${tender_owner}'].lots_documents[${lot_index}].doc_content} для користувача ${username}
+
+
+Звірити відображення поля ${field} документа ${doc_id} до лоту ${lot_id} з ${left} для користувача ${username}
+  ${right}=  Run As  ${username}  Отримати інформацію із документа до лоту  ${TENDER['TENDER_UAID']}  ${lot_id}  ${doc_id}  ${field}
+  Порівняти об'єкти  ${left}  ${right}
+
+
+Звірити відображення вмісту документа ${doc_id} до лоту ${lot_id} з ${left} для користувача ${username}
+  ${file_name}=  Run as  ${username}  Отримати документ до лоту  ${TENDER['TENDER_UAID']}  ${lot_id}  ${doc_id}
+  ${right}=  Get File  ${OUTPUT_DIR}${/}${file_name}
+  Порівняти об'єкти  ${left}  ${right}
 
 
 Можливість видалити предмет закупівлі з ${lot_index} лоту
@@ -760,6 +772,17 @@ Resource           resource.robot
   ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
   ...      resolved
   ...      ${award_index}
+
+
+Звірити відображення поля ${field} документа ${doc_id} до скарги ${complaintID} з ${left} для користувача ${username}
+  ${right}=  Run As  ${username}  Отримати інформацію із документа до скарги  ${TENDER['TENDER_UAID']}  ${complaintID}  ${doc_id}  ${field}
+  Порівняти об'єкти  ${left}  ${right}
+
+
+Звірити відображення вмісту документа ${doc_id} до скарги ${complaintID} з ${left} для користувача ${username}
+  ${file_name}=  Run as  ${username}  Отримати документ до скарги  ${TENDER['TENDER_UAID']}  ${complaintID}  ${doc_id}
+  ${right}=  Get File  ${OUTPUT_DIR}${/}${file_name}
+  Порівняти об'єкти  ${left}  ${right}
 
 ##############################################################################################
 #             BIDDING
