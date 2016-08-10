@@ -23,6 +23,7 @@ ${award_index}      ${0}
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \   ${resp}=  Run As  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
 
+
 Можливість створити вимогу про виправлення визначення переможця, додати до неї документацію і подати її користувачем
   [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...  provider
@@ -65,7 +66,21 @@ ${award_index}      ${0}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  create_award_claim
-  Звірити відображення поля document.title вимоги про виправлення визначення ${award_index} переможця із ${USERS.users['${provider}'].claim_data.document} для користувача ${viewer}
+  ${right}=  Run As  ${viewer}  Отримати інформацію із документа до скарги
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}'].claim_data.complaintID}
+  ...      ${USERS.users['${provider}'].claim_data.doc_id}
+  ...      title
+  ...      ${award_index}
+  Порівняти об'єкти  ${USERS.users['${provider}'].claim_data.doc_name}  ${right}
+
+
+Відображення вмісту документа до вимоги про виправлення визначення переможця
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  create_award_claim
+  Звірити відображення вмісту документа ${USERS['${provider}'].claim_data.doc_id} з ${USERS['${provider}'].claim_data.doc_content} для користувача ${viewer}
 
 
 Відображення поданого статусу вимоги про виправлення визначення переможця
@@ -201,8 +216,9 @@ ${award_index}      ${0}
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_add_doc_to_first_award  level3
-  ${filepath}=   create_fake_doc
-  Run As   ${tender_owner}   Завантажити документ рішення кваліфікаційної комісії   ${filepath}   ${TENDER['TENDER_UAID']}   0
+  ${file_path}  ${file_name}  ${file_content}=   create_fake_doc
+  Run As   ${tender_owner}   Завантажити документ рішення кваліфікаційної комісії   ${file_path}   ${TENDER['TENDER_UAID']}   0
+  Remove File  ${file_path}
 
 
 Можливість підтвердити постачальника
@@ -226,8 +242,9 @@ ${award_index}      ${0}
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_add_doc_to_second_award  level3
-  ${filepath}=   create_fake_doc
-  Run As   ${tender_owner}   Завантажити документ рішення кваліфікаційної комісії   ${filepath}   ${TENDER['TENDER_UAID']}   1
+  ${file_path}  ${file_name}  ${file_content}=   create_fake_doc
+  Run As   ${tender_owner}   Завантажити документ рішення кваліфікаційної комісії   ${file_path}   ${TENDER['TENDER_UAID']}   1
+  Remove File  ${file_path}
 
 
 Можливість підтвердити нового постачальника

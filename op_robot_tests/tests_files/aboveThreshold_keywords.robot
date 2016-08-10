@@ -50,17 +50,19 @@ Resource           base_keywords.robot
 
 
 Можливість завантажити ${doc_type} документ до пропозиції учасником ${username}
-  ${filepath}=  create_fake_doc
-  ${bid_doc_upload}=  Run As  ${username}  Завантажити документ в ставку  ${filepath}  ${TENDER['TENDER_UAID']}  ${doc_type}
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
+  ${bid_doc_upload}=  Run As  ${username}  Завантажити документ в ставку  ${file_path}  ${TENDER['TENDER_UAID']}  ${doc_type}
   Set To Dictionary  ${USERS.users['${username}'].bidresponses}  bid_doc_upload=${bid_doc_upload}
+  Remove File  ${file_path}
 
 ##############################################################################################
 #             OPENEU  Pre-Qualification
 ##############################################################################################
 
 Можливість завантажити документ у кваліфікацію ${bid_index} пропозиції
-  ${filepath}=  create_fake_doc
-  Run As  ${tender_owner}  Завантажити документ у кваліфікацію  ${filepath}  ${TENDER['TENDER_UAID']}  ${bid_index}
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
+  Run As  ${tender_owner}  Завантажити документ у кваліфікацію  ${file_path}  ${TENDER['TENDER_UAID']}  ${bid_index}
+  Remove File  ${file_path}
 
 
 Можливість відхилити ${bid_index} пропозиції кваліфікації

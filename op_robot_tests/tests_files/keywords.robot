@@ -265,9 +265,16 @@ Get Broker Property By Username
 Підготувати дані про скасування
   [Arguments]  ${username}
   ${cancellation_reason}=  create_fake_sentence
-  ${document}=  create_fake_doc
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
+  ${doc_id}=  get_id_from_doc_name  ${file_name}
+  ${document}=  Create Dictionary
+  ...      doc_path=${file_path}
+  ...      doc_name=${file_name}
+  ...      doc_content=${file_content}
+  ...      doc_id=${doc_id}
   ${new_description}=  create_fake_sentence
   ${cancellation_data}=  Create Dictionary  cancellation_reason=${cancellation_reason}  document=${document}  description=${new_description}
+  ${cancellation_data}=  munchify  ${cancellation_data}
   Set To Dictionary  ${USERS.users['${username}']}  cancellation_data=${cancellation_data}
   [Return]  ${cancellation_data}
 
@@ -542,17 +549,7 @@ Log differences between dicts
 
 Звірити поле скарги із значенням
   [Arguments]  ${username}  ${tender_uaid}  ${given_value}  ${field_name}  ${complaintID}  ${award_index}=${None}
-  ${status}=  Call method  ${field_name}  startswith  document.
-  ${fetched_field_name}=  Run keyword if  ${status} == ${True}  Fetch From Right  ${field_name}  .
-  ${field_name}=  Set variable if  ${status} == ${True}  ${fetched_field_name}  ${field_name}
-  ${received_value}=  Run keyword if  ${status} == ${True}  Run as  ${username}  Отримати поле документації до скарги
-  ...      ${tender_uaid}
-  ...      ${complaintID}
-  ...      ${given_value}
-  ...      ${field_name}
-  ...      ${award_index}
-  ...      ELSE
-  ...      Run as  ${username}  Отримати інформацію із скарги  ${tender_uaid}  ${complaintID}  ${field_name}  ${award_index}
+  ${received_value}=  Run as  ${username}  Отримати інформацію із скарги  ${tender_uaid}  ${complaintID}  ${field_name}  ${award_index}
   Порівняти об'єкти  ${given_value}  ${received_value}
 
 

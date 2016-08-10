@@ -59,11 +59,6 @@ def add_minutes_to_date(date, minutes):
     return (parse(date) + timedelta(minutes=float(minutes))).isoformat()
 
 
-def get_file_contents(path):
-    with open(path, 'r') as f:
-        return unicode(f.read()) or u''
-
-
 def compare_date(left, right, accuracy="minute", absolute_delta=True):
     '''Compares dates with specified accuracy
 
@@ -413,6 +408,10 @@ def get_id_from_object(obj):
     return obj_id.group(1)
 
 
+def get_id_from_doc_name(name):
+    return re.match(r'd\-[0-9a-fA-F]{8}', name).group(0)
+
+
 def get_object_type_by_id(object_id):
     prefixes = {'q': 'questions', 'f': 'features', 'i': 'items', 'l': 'lots'}
     return prefixes.get(object_id[0])
@@ -438,17 +437,6 @@ def get_complaint_index_by_complaintID(data, complaintID):
             break
     else:
         index += 1
-    return index
-
-
-def get_document_index_by_id(data, document_id):
-    if not data:
-        return 0
-    for index, element in enumerate(data):
-        if element['title'] == document_id:
-            break
-    else:
-         index += 1
     return index
 
 

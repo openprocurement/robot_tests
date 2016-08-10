@@ -454,7 +454,7 @@ ${item_meat}      ${False}
   ...  ${USERS.users['${viewer}'].broker}
   ...  add_tender_doc
   ...  level3
-  Звірити відображення поля documents[0].title тендера із ${USERS.users['${tender_owner}']['documents']['filepath']} для користувача ${viewer}
+  Звірити відображення поля documents[0].title тендера із ${USERS.users['${tender_owner}']['tender_document']['doc_name']} для користувача ${viewer}
 
 ##############################################################################################
 #             AWARDS
@@ -466,7 +466,7 @@ ${item_meat}      ${False}
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_view
   ...  level2
-  Звірити відображення поля awards[0].documents[0].title тендера із ${USERS.users['${tender_owner}'].award_document} для користувача ${viewer}
+  Звірити відображення поля awards[0].documents[0].title тендера із ${USERS.users['${tender_owner}'].award_doc_name} для користувача ${viewer}
 
 Відображення підтвердженого постачальника переговорної процедури за нагальною потребою
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення постачальника процедури
