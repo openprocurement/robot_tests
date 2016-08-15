@@ -691,6 +691,7 @@ Library  openprocurement_client_helper.py
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_bid  ${tender}  ${bid}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${reply['access']['token']}
   Set To Dictionary   ${USERS.users['${username}'].bidresponses['bid'].data}  id=${reply['data']['id']}
+  Set To Dictionary  ${USERS.users['${username}']}  bid_id=${reply['data']['id']}
   Log  ${reply}
   [return]  ${reply}
 
@@ -749,8 +750,8 @@ Library  openprocurement_client_helper.py
 Отримати пропозицію
   [Arguments]  ${username}  ${tender_uaid}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${bid_id}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['resp'].data.id}
-  ${token}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['resp'].access.token}
+  ${bid_id}=  Get Variable Value  ${USERS.users['${username}'].bid_id}
+  ${token}=  Get Variable Value  ${USERS.users['${username}'].access_token}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  get_bid  ${tender}  ${bid_id}  ${token}
   ${reply}=  munch_dict  arg=${reply}
   [return]  ${reply}
