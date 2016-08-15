@@ -80,7 +80,7 @@ ${award_index}      ${0}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  create_award_claim
-  Звірити відображення вмісту документа ${USERS['${provider}'].claim_data.doc_id} з ${USERS['${provider}'].claim_data.doc_content} для користувача ${viewer}
+  Звірити відображення вмісту документа ${USERS['${provider}'].claim_data.doc_id} до скарги ${complaintID} з ${USERS['${provider}'].claim_data.doc_content} для користувача ${viewer}
 
 
 Відображення поданого статусу вимоги про виправлення визначення переможця

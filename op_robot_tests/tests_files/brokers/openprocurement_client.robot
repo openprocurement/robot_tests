@@ -672,7 +672,7 @@ Library  openprocurement_client_helper.py
 
 
 Отримати документ до скарги
-  [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${doc_id}
+  [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${doc_id}  ${award_id}=${None}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${document}=  get_document_by_id  ${tender.data}  ${doc_id}
   ${filename}=  download_file_from_url  ${document.url}  ${OUTPUT_DIR}${/}${document.title}
