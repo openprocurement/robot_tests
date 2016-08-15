@@ -15,6 +15,7 @@
 
 -i make_bid_by_provider
 -i make_bid_by_provider1
+-i modify_bid_by_provider1
 
 -i auction
 
