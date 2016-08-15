@@ -85,7 +85,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення зміни договору
   ...      tender_owner
   ...      ${USERS.users['${viewer}'].broker}
-   Звірити поле зміни до договору із значенням
+  Звірити поле зміни до договору із значенням
   ...     ${viewer}
   ...     ${CONTRACT_UAID}
   ...     pending
