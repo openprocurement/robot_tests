@@ -408,6 +408,22 @@ Resource           resource.robot
   ...      ${USERS.users['${tender_owner}'].change_data}
   ...      ${field}
 
+
+Звірити відображення поля ${field} договору із ${left} для користувача ${username}
+  ${right}=  Run As  ${username}  Отримати інформацію із договору  ${CONTRACT_UAID}  ${field}
+  Порівняти об'єкти  ${left}  ${right}
+
+
+Звірити відображення поля ${field} документа ${doc_id} до договору з ${left} для користувача ${username}
+  ${right}=  Run As  ${username}  Отримати інформацію із документа до договору  ${CONTRACT_UAID}  ${doc_id}  ${field}
+  Порівняти об'єкти  ${left}  ${right}
+
+
+Звірити відображення вмісту документа ${doc_id} до договору з ${left} для користувача ${username}
+  ${file_name}=  Run as  ${username}  Отримати документ до договору  ${CONTRACT_UAID}  ${doc_id}
+  ${right}=  Get File  ${OUTPUT_DIR}${/}${file_name}
+  Порівняти об'єкти  ${left}  ${right}
+
 ##############################################################################################
 #             QUESTIONS
 ##############################################################################################
