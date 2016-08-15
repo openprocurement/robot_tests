@@ -1204,3 +1204,19 @@ Library  openprocurement_client_helper.py
   Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
 
   Fail  Field not found: ${field_name}
+
+
+Отримати інформацію із документа до договору
+  [Arguments]  ${username}  ${contract_uaid}  ${doc_id}  ${field_name}
+  ${tender}=  openprocurement_client.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+  ${document}=  get_document_by_id  ${tender.data}  ${doc_id}
+  Log  ${document}
+  [Return]  ${document['${field_name}']}
+
+
+Отримати документ до договору
+  [Arguments]  ${username}  ${contract_uaid}  ${doc_id}
+  ${tender}=  openprocurement_client.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+  ${document}=  get_document_by_id  ${tender.data}  ${doc_id}
+  ${filename}=  download_file_from_url  ${document.url}  ${OUTPUT_DIR}${/}${document.title}
+  [return]  ${filename}
