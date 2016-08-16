@@ -163,6 +163,8 @@ def test_feature_data():
     return munchify({
         "code": uuid4().hex,
         "title": field_with_id("f", fake.title()),
+        "title_en": field_with_id('f', fake_en.sentence(nb_words=5, variable_nb_words=True)),
+        "title_ru": field_with_id('f', fake_ru.sentence(nb_words=5, variable_nb_words=True)),
         "description": fake.description(),
         "enum": [
             {
@@ -186,7 +188,9 @@ def test_question_data():
         "data": {
             "author": fake.procuringEntity(),
             "description": fake.description(),
-            "title": field_with_id("q", fake.title())
+            "title": field_with_id("q", fake.title()),
+            "title_en": field_with_id('q', fake_en.sentence(nb_words=5, variable_nb_words=True)),
+            "title_ru": field_with_id('q', fake_ru.sentence(nb_words=5, variable_nb_words=True))
         }
     })
 
@@ -297,6 +301,8 @@ def test_supplier_data():
 def test_item_data(cpv=None):
     data = fake.fake_item(cpv)
     data["description"] = field_with_id("i", data["description"])
+    data["description_en"] = field_with_id("i", data["description_en"])
+    data["description_ru"] = field_with_id("i", data["description_ru"])
     days = fake.random_int(min=1, max=30)
     data["deliveryDate"] = {"endDate": (get_now() + timedelta(days=days)).isoformat()}
     data["deliveryAddress"]["countryName_en"] = translate_country_en(data["deliveryAddress"]["countryName"])
@@ -331,6 +337,8 @@ def test_lot_data(max_value_amount):
         {
             "description": fake.description(),
             "title": field_with_id('l', fake.title()),
+            "title_en": field_with_id('l', fake_en.sentence(nb_words=5, variable_nb_words=True)),
+            "title_ru": field_with_id('l', fake_ru.sentence(nb_words=5, variable_nb_words=True)),
             "value": {
                 "currency": "UAH",
                 "amount": value_amount,
