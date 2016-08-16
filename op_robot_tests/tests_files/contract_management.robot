@@ -97,9 +97,15 @@ Suite Teardown  Test Suite Teardown
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${document}=  create_fake_doc
-  Set to dictionary  ${USERS.users['${tender_owner}']}  change_document=${document}
-  Run As  ${tender_owner}  Додати документацію до зміни в договорі  ${CONTRACT_UAID}  ${document}
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
+  ${doc_id}=  get_id_from_doc_name  ${file_name}
+  ${doc}=  Create Dictionary
+  ...      id=${doc_id}
+  ...      name=${file_name}
+  ...      content=${file_content}
+  Set to dictionary  ${USERS.users['${tender_owner}']}  change_doc=${doc}
+  Run As  ${tender_owner}  Додати документацію до зміни в договорі  ${CONTRACT_UAID}  ${file_path}
+  Remove File  ${file_path}
 
 
 Відображення заголовку документації до зміни договору
@@ -107,7 +113,7 @@ Suite Teardown  Test Suite Teardown
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_contract_doc  level2
-  Звірити відображення поля documents[0].title договору із ${USERS.users['${tender_owner}']['change_document']} для користувача ${viewer}
+  Звірити відображення поля title документа ${USERS.users['${tender_owner}']['change_doc']['id']} до договору з ${USERS.users['${tender_owner}']['change_doc']['name']} для користувача ${viewer}
 
 
 Відображення належності документа до зміни договору
@@ -115,7 +121,15 @@ Suite Teardown  Test Suite Teardown
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_contract_doc  level2
-  Звірити відображення поля documents[0].documentOf договору із change для користувача ${viewer}
+  Звірити відображення поля documentOf документа ${USERS.users['${tender_owner}']['change_doc']['id']} до договору з change для користувача ${viewer}
+
+
+Відображення вмісту документації до зміни договору
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      add_contract_doc  level2
+  Звірити відображення вмісту документа ${USERS.users['${tender_owner}']['change_doc']['id']} до договору з ${USERS.users['${tender_owner}']['change_doc']['content']} для користувача ${viewer}
 
 
 Можливість редагувати договір
@@ -165,9 +179,15 @@ Suite Teardown  Test Suite Teardown
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${document}=  create_fake_doc
-  Set to dictionary  ${USERS.users['${tender_owner}']}  contract_document=${document}
-  Run As  ${tender_owner}  Завантажити документацію до договору  ${CONTRACT_UAID}  ${document}
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
+  ${doc_id}=  get_id_from_doc_name  ${file_name}
+  ${doc}=  Create Dictionary
+  ...      id=${doc_id}
+  ...      name=${file_name}
+  ...      content=${file_content}
+  Set to dictionary  ${USERS.users['${tender_owner}']}  contract_doc=${doc}
+  Run As  ${tender_owner}  Завантажити документацію до договору  ${CONTRACT_UAID}  ${file_path}
+  Remove File  ${file_path}
 
 
 Відображення заголовку документації до договору
@@ -175,7 +195,15 @@ Suite Teardown  Test Suite Teardown
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_contract_doc  level2
-  Звірити відображення поля documents[1].title договору із ${USERS.users['${tender_owner}']['contract_document']} для користувача ${viewer}
+  Звірити відображення поля title документа ${USERS.users['${tender_owner}']['contract_doc']['id']} до договору з ${USERS.users['${tender_owner}']['contract_doc']['name']} для користувача ${viewer}
+
+
+Відображення вмісту документації до договору
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      add_contract_doc  level2
+  Звірити відображення вмісту документа ${USERS.users['${tender_owner}']['contract_doc']['id']} до договору з ${USERS.users['${tender_owner}']['contract_doc']['content']} для користувача ${viewer}
 
 
 Можливість завершити договір
