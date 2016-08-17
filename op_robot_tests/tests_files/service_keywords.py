@@ -485,3 +485,9 @@ def convert_datetime_to_dot_format(isodate):
 
 def local_path_to_file(file_name):
     return os.path.join(os.path.dirname(__file__), 'documents', file_name)
+
+
+def convert_amount_to_number(amount_string):
+    return float(amount_string.replace(' ', '').replace(',', '.'))
+
+    
