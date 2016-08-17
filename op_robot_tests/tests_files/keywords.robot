@@ -301,12 +301,13 @@ Get Broker Property By Username
   [Return]  ${cancellation_data}
 
 
-Підготувати дані про зміну до контракту
+Підготувати дані про зміну до договору
   [Arguments]  ${username}
   ${change_data}=  test_change_data
   Set To Dictionary  ${USERS.users['${username}']}  change_data=${change_data}
   Log  ${change_data}
   [Return]  ${change_data}
+
 
 Адаптувати дані для оголошення тендера
   [Arguments]  ${tender_data}
