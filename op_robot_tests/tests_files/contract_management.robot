@@ -58,13 +58,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення зміни договору
   ...      tender_owner
   ...      ${USERS.users['${viewer}'].broker}
-  # here we need to receive list of rationale types from broker
-  ${rationale_types_from_broker}=  Run as  ${viewer}  Отримати інформацію із договору  ${CONTRACT_UAID}  changes[0].rationaleTypes
-  ${rationale_types_from_robot}=  Get variable value  ${USERS.users['${tender_owner}'].change_data.data.rationaleTypes}
-  Log  ${rationale_types_from_broker}
-  Log  ${rationale_types_from_robot}
-  ${result}=  compare_rationale_types  ${rationale_types_from_broker}  ${rationale_types_from_robot}
-  Run keyword if  ${result} == ${False}  Fail  Rationale types are not equal
+  Звірити відображення причин зміни договору
 
 
 Відображення пояснення причини зміни договору англійською мовою
@@ -97,15 +91,7 @@ Suite Teardown  Test Suite Teardown
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
-  ${doc_id}=  get_id_from_doc_name  ${file_name}
-  ${doc}=  Create Dictionary
-  ...      id=${doc_id}
-  ...      name=${file_name}
-  ...      content=${file_content}
-  Set to dictionary  ${USERS.users['${tender_owner}']}  change_doc=${doc}
-  Run As  ${tender_owner}  Додати документацію до зміни в договорі  ${CONTRACT_UAID}  ${file_path}
-  Remove File  ${file_path}
+  Додати документацію до зміни договору
 
 
 Відображення заголовку документації до зміни договору
@@ -179,15 +165,7 @@ Suite Teardown  Test Suite Teardown
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
-  ${doc_id}=  get_id_from_doc_name  ${file_name}
-  ${doc}=  Create Dictionary
-  ...      id=${doc_id}
-  ...      name=${file_name}
-  ...      content=${file_content}
-  Set to dictionary  ${USERS.users['${tender_owner}']}  contract_doc=${doc}
-  Run As  ${tender_owner}  Завантажити документацію до договору  ${CONTRACT_UAID}  ${file_path}
-  Remove File  ${file_path}
+  Додати документацію до договору
 
 
 Відображення заголовку документації до договору
@@ -211,13 +189,7 @@ Suite Teardown  Test Suite Teardown
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${amount}=  Get variable value  ${USERS.users['${tender_owner}'].contract_data.data.value.amount}
-  ${data}=  Create Dictionary  status=terminated
-  ${amountPaid}=  Create Dictionary  amount=${amount}  valueAddedTaxIncluded=${True}  currency=UAH
-  ${data}=  Create Dictionary  data=${data}
-  Set to dictionary  ${data.data}  amountPaid=${amountPaid}
-  Set to dictionary  ${USERS.users['${tender_owner}']}  terminating_data=${data}
-  Run As  ${tender_owner}  Завершити договір  ${CONTRACT_UAID}  ${data}
+  Закінчити договір
 
 
 Відображення обсягу дійсно оплаченої суми в договорі
