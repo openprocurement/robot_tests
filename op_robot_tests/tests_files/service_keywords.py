@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -
+import operator
 from .local_time import get_now, TZ
 from copy import deepcopy
 from datetime import timedelta
@@ -459,6 +460,10 @@ def generate_test_bid_data(tender_data):
             parameter = {"value": fake.random_element(elements=(0.05, 0.01, 0)), "code": feature.get('code', '')}
             bid.data.parameters.append(parameter)
     return bid
+
+
+def mult_and_round(*args, **kwargs):
+    return round(reduce(operator.mul, args), kwargs.get('precision', 2))
 
 
 # GUI Frontends common
