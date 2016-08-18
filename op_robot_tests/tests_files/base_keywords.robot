@@ -869,4 +869,4 @@ Resource           resource.robot
   ...      Підтвердити підписання контракту
   ...      ${TENDER['TENDER_UAID']}
   ...      ${0}
-  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.contracts[0]}  status
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.contracts[0]}  status
