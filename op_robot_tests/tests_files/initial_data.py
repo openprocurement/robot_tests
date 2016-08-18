@@ -188,9 +188,7 @@ def test_question_data():
         "data": {
             "author": fake.procuringEntity(),
             "description": fake.description(),
-            "title": field_with_id("q", fake.title()),
-            "title_en": field_with_id('q', fake_en.sentence(nb_words=5, variable_nb_words=True)),
-            "title_ru": field_with_id('q', fake_ru.sentence(nb_words=5, variable_nb_words=True))
+            "title": field_with_id("q", fake.title())
         }
     })
 
