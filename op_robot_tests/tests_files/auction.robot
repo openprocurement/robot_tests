@@ -275,7 +275,7 @@ ${USERS}
 Поставити ставку більшу від максимальної на ${extra_amount} грн
   Wait Until Page Contains Element    id=max_bid_amount_price
   ${last_amount}=     Get Text    id=max_bid_amount_price
-  ${last_amount}=     convert_amount_to_number    ${last_amount}
+  ${last_amount}=     convert_amount_string_to_float    ${last_amount}
   ${last_amount}=    Evaluate      ${last_amount}+${extra_amount}
   Поставити ставку   ${last_amount}   Надто висока заявка
 
