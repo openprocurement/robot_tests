@@ -270,8 +270,9 @@ Resource           resource.robot
 
 Можливість змінити на ${percent} відсотки бюджет ${lot_index} лоту
   ${percent}=  Convert To Number  ${percent}
-  ${value}=  mult_and_round  ${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}].value.amount}  ${percent}  ${1/100}  precision=${2}
-  ${step_value}=  mult_and_round  ${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}].minimalStep.amount}  ${percent}  ${1/100}  precision=${2}
+  ${divider}=  Convert To Number  0.01
+  ${value}=  mult_and_round  ${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}].value.amount}  ${percent}  ${divider}  precision=${2}
+  ${step_value}=  mult_and_round  ${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}].minimalStep.amount}  ${percent}  ${divider}  precision=${2}
   Можливість змінити поле value.amount ${lot_index} лоту на ${value}
   Можливість змінити поле minimalStep.amount ${lot_index} лоту на ${step_value}
 
@@ -820,9 +821,10 @@ Resource           resource.robot
 
 Можливість зменшити пропозицію до ${percent} відсотків користувачем ${username}
   ${percent}=  Convert To Number  ${percent}
+  ${divider}=  Convert To Number  0.01
   ${field}=  Set variable if  ${number_of_lots} == 0  value.amount  lotValues[0].value.amount
   ${value}=  Run As  ${username}  Отримати інформацію із пропозиції  ${TENDER['TENDER_UAID']}  ${field}
-  ${value}=  mult_and_round  ${value}  ${percent}  ${1/100}  precision=${2}
+  ${value}=  mult_and_round  ${value}  ${percent}  ${divider}  precision=${2}
   Run as  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  ${field}  ${value}
 
 
