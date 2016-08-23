@@ -367,7 +367,7 @@ Resource           resource.robot
   ${question_id}=  get_id_from_object  ${question.data}
   ${question_data}=  Create Dictionary  question=${question}  question_resp=${question_resp}  question_id=${question_id}
   ${question_data}=  munch_dict  arg=${question_data}
-  Set To Dictionary  ${USERS.users['${username}']}  question_data=${question_data}
+  Set To Dictionary  ${USERS.users['${username}']}  tender_question_data=${question_data}
 
 
 Можливість задати запитання на ${lot_index} лот користувачем ${username}
@@ -379,7 +379,7 @@ Resource           resource.robot
   ${question_id}=  get_id_from_object  ${question.data}
   ${question_data}=  Create Dictionary  question=${question}  question_resp=${question_resp}  question_id=${question_id}
   ${question_data}=  munch_dict  arg=${question_data}
-  Set To Dictionary  ${USERS.users['${username}']}  question_data=${question_data}
+  Set To Dictionary  ${USERS.users['${username}']}  lots_${lot_index}_question_data=${question_data}
 
 
 Можливість задати запитання на ${item_index} предмет користувачем ${username}
@@ -391,25 +391,61 @@ Resource           resource.robot
   ${question_id}=  get_id_from_object  ${question.data}
   ${question_data}=  Create Dictionary  question=${question}  question_resp=${question_resp}  question_id=${question_id}
   ${question_data}=  munch_dict  arg=${question_data}
-  Set To Dictionary  ${USERS.users['${username}']}  question_data=${question_data}
+  Set To Dictionary  ${USERS.users['${username}']}  items_${item_index}_question_data=${question_data}
 
 
-Можливість відповісти на запитання
+Можливість відповісти на запитання на тендер
   ${answer}=  Підготувати дані для відповіді на запитання
   Run As  ${tender_owner}
   ...      Відповісти на запитання  ${TENDER['TENDER_UAID']}
   ...      ${answer}
-  ...      ${USERS.users['${provider}'].question_data.question_id}
-  Set To Dictionary  ${USERS.users['${provider}'].question_data.question.data}  answer=${answer.data.answer}
+  ...      ${USERS.users['${provider}'].tender_question_data.question_id}
+  Set To Dictionary  ${USERS.users['${provider}'].tender_question_data.question.data}  answer=${answer.data.answer}
 
 
-Звірити відображення поля ${field} запитання для усіх користувачів
+Можливість відповісти на запитання на ${item_index} предмет
+  ${answer}=  Підготувати дані для відповіді на запитання
+  Run As  ${tender_owner}
+  ...      Відповісти на запитання  ${TENDER['TENDER_UAID']}
+  ...      ${answer}
+  ...      ${USERS.users['${provider}'].items_${item_index}_question_data.question_id}
+  Set To Dictionary  ${USERS.users['${provider}'].items_${item_index}_question_data.question.data}  answer=${answer.data.answer}
+
+
+Можливість відповісти на запитання на ${lot_index} лот
+  ${answer}=  Підготувати дані для відповіді на запитання
+  Run As  ${tender_owner}
+  ...      Відповісти на запитання  ${TENDER['TENDER_UAID']}
+  ...      ${answer}
+  ...      ${USERS.users['${provider}'].lots_${lot_index}_question_data.question_id}
+  Set To Dictionary  ${USERS.users['${provider}'].lots_${lot_index}_question_data.question.data}  answer=${answer.data.answer}
+
+
+Звірити відображення поля ${field} запитання на тендер для усіх користувачів
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
-  \  Звірити відображення поля ${field} запитання для користувача ${username}
+  \  Звірити відображення поля ${field} запитання на тендер для користувача ${username}
 
 
-Звірити відображення поля ${field} запитання для користувача ${username}
-  Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}'].question_data.question.data.${field}}  ${field}  ${USERS.users['${provider}'].question_data.question_id}
+Звірити відображення поля ${field} запитання на тендер для користувача ${username}
+  Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}'].tender_question_data.question.data.${field}}  ${field}  ${USERS.users['${provider}'].tender_question_data.question_id}
+
+
+Звірити відображення поля ${field} запитання на ${item_index} предмет для усіх користувачів
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  \  Звірити відображення поля ${field} запитання на ${item_index} предмет для користувача ${username}
+
+
+Звірити відображення поля ${field} запитання на ${item_index} предмет для користувача ${username}
+  Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}'].items_${item_index}_question_data.question.data.${field}}  ${field}  ${USERS.users['${provider}'].items_${item_index}_question_data.question_id}
+
+
+Звірити відображення поля ${field} запитання на ${lot_index} лот для усіх користувачів
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  \  Звірити відображення поля ${field} запитання на ${lot_index} лот для користувача ${username}
+
+
+Звірити відображення поля ${field} запитання на ${lot_index} лот для користувача ${username}
+  Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}'].lots_${lot_index}_question_data.question.data.${field}}  ${field}  ${USERS.users['${provider}'].lots_${lot_index}_question_data.question_id}
 
 ##############################################################################################
 #             COMPLAINTS
