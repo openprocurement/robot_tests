@@ -284,7 +284,7 @@ Library  openprocurement_client_helper.py
 
 
 Видалити неціновий показник
-  [Arguments]  ${username}  ${tender_uaid}  ${feature_id}  ${obj_id}=${Empty}
+  [Arguments]  ${username}  ${tender_uaid}  ${feature_id}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${feature_index}=  get_object_index_by_id  ${tender.data['features']}  ${feature_id}
   Remove From List  ${tender.data['features']}  ${feature_index}
