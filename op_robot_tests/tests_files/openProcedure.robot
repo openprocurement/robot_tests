@@ -731,96 +731,106 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля answer запитання на тендер для користувача ${viewer}
 
 
-Можливість задати запитання на перший предмет
+Можливість задати запитання на всі предмети
   [Tags]   ${USERS.users['${provider}'].broker}: Задання запитання
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_to_item
   [Setup]  Дочекатись дати початку періоду уточнень  ${provider}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість задати запитання на 0 предмет користувачем ${provider}
+  :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
+  \  Можливість задати запитання на ${item_index} предмет користувачем ${provider}
 
 
-Відображення заголовку анонімного запитання на перший предмет без відповіді
+Відображення заголовку анонімного запитання на всі предмети без відповіді
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення запитання
   ...      viewer tender_owner provider provider1
   ...      ${USERS.users['${viewer}'].broker}
   ...      ask_question_to_item
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля title запитання на 0 предмет для усіх користувачів
+  :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
+  \  Звірити відображення поля title запитання на ${item_index} предмет для усіх користувачів
 
 
-Відображення опису анонімного запитання на перший предмет без відповіді
+Відображення опису анонімного запитання на всі предмети без відповіді
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення запитання
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      ask_question_to_item
-  Звірити відображення поля description запитання на 0 предмет для користувача ${viewer}
+  :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
+  \  Звірити відображення поля description запитання на ${item_index} предмет для користувача ${viewer}
 
 
-Можливість відповісти на запитання на перший предмет
+Можливість відповісти на запитання на всі предмети
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відповідь на запитання
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      answer_question_to_item
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість відповісти на запитання на 0 предмет
+  :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
+  \  Можливість відповісти на запитання на ${item_index} предмет
 
 
-Відображення відповіді на запитання на перший предмет
+Відображення відповіді на запитання на всі предмети
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення відповіді на запитання
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      answer_question_to_item
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля answer запитання на 0 предмет для користувача ${viewer}
+  :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
+  \  Звірити відображення поля answer запитання на ${item_index} предмет для користувача ${viewer}
 
 
-Можливість задати запитання на перший лот
+Можливість задати запитання на всі лоти
   [Tags]   ${USERS.users['${provider}'].broker}: Задання запитання
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_to_lot
   [Setup]  Дочекатись дати початку періоду уточнень  ${provider}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість задати запитання на 0 лот користувачем ${provider}
+  :FOR  ${lot_index}  IN RANGE  ${NUMBER_OF_LOTS}
+  \  Можливість задати запитання на ${lot_index} лот користувачем ${provider}
 
 
-Відображення заголовку анонімного запитання на перший лот без відповіді
+Відображення заголовку анонімного запитання на всі лоти без відповіді
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення запитання
   ...      viewer tender_owner provider provider1
   ...      ${USERS.users['${viewer}'].broker}
   ...      ask_question_to_lot
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля title запитання на 0 лот для усіх користувачів
+  :FOR  ${lot_index}  IN RANGE  ${NUMBER_OF_LOTS}
+  \  Звірити відображення поля title запитання на ${lot_index} лот для усіх користувачів
 
 
-Відображення опису анонімного запитання на перший лот без відповіді
+Відображення опису анонімного запитання на всі лоти без відповіді
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення запитання
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      ask_question_to_lot
-  Звірити відображення поля description запитання на 0 лот для користувача ${viewer}
+  :FOR  ${lot_index}  IN RANGE  ${NUMBER_OF_LOTS}
+  \  Звірити відображення поля description запитання на ${lot_index} лот для користувача ${viewer}
 
 
-Можливість відповісти на запитання на перший лот
+Можливість відповісти на запитання на всі лоти
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відповідь на запитання
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      answer_question_to_lot
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість відповісти на запитання на 0 лот
+  :FOR  ${lot_index}  IN RANGE  ${NUMBER_OF_LOTS}
+  \  Можливість відповісти на запитання на ${lot_index} лот
 
 
-Відображення відповіді на запитання на перший лот
+Відображення відповіді на запитання на всі лоти
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення відповіді на запитання
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      answer_question_to_lot
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля answer запитання на 0 лот для користувача ${viewer}
+  :FOR  ${lot_index}  IN RANGE  ${NUMBER_OF_LOTS}
+  \  Звірити відображення поля answer запитання на ${lot_index} лот для користувача ${viewer}
 
 
 Можливість внести зміни у тендер після запитання
