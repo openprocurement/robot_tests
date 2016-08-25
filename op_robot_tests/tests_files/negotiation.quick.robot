@@ -6,7 +6,7 @@ Suite Teardown     Test Suite Teardown
 
 *** Variables ***
 ${MODE}         negotiation.quick
-@{used_roles}   tender_owner  viewer
+@{USED_ROLES}   tender_owner  viewer
 
 ${number_of_items}  ${2}
 ${number_of_lots}   ${0}

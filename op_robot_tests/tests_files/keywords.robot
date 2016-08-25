@@ -64,7 +64,7 @@ Set Suite Variable With Default Value
   Log  ${role}
   # Suite variable; should be present in every test suite
   # in `*** Variables ***` section
-  Log Many  @{used_roles}
+  Log Many  @{USED_ROLES}
 
   # Load brokers data
   ${file_path}=  Get Variable Value  ${BROKERS_FILE}  brokers.yaml
@@ -83,7 +83,7 @@ Set Suite Variable With Default Value
   ${used_users}=  Create List
 
   # Handle `-v role:something`
-  Run Keyword Unless  '${role}' in @{used_roles}
+  Run Keyword Unless  '${role}' in @{USED_ROLES}
   ...      Log
   ...      Role ${role} is not used in this test suite.
   ...      WARN
@@ -96,13 +96,13 @@ Set Suite Variable With Default Value
   # fill `used_brokers`.
   #
   # Don't even ask how this works!
-  :FOR  ${tmp_role}  IN  @{used_roles}
+  :FOR  ${tmp_role}  IN  @{USED_ROLES}
   \  Set Suite Variable With Default Value
   \  ...      ${tmp_role}
   \  ...      ${BROKERS['Quinta'].roles.${tmp_role}}
   \  Append To List  ${used_users}  ${${tmp_role}}
   \  Append To List  ${used_brokers}  ${USERS.users.${${tmp_role}}.broker}
-  # Since `@{used_roles}` is already a suite variable,
+  # Since `@{USED_ROLES}` is already a suite variable,
   # let's make `@{used_brokers}` alike.
   ${used_brokers}=  Remove Duplicates  ${used_brokers}
   Set Suite Variable  ${used_brokers}
@@ -283,7 +283,7 @@ Get Broker Property By Username
   [Arguments]  ${tender_data}
   # munchify is used to make deep copy of ${tender_data}
   ${adapted_data}=  munchify  ${tender_data}
-  :FOR  ${username}  IN  @{used_roles}
+  :FOR  ${username}  IN  @{USED_ROLES}
   # munchify is used to make deep copy of ${adapted_data}
   \  ${adapted_data_copy}=  munchify  ${adapted_data}
   \  ${status}  ${adapted_data_from_broker}=  Run keyword and ignore error  Run As  ${${username}}  Підготувати дані для оголошення тендера  ${adapted_data_copy}  ${username}

@@ -6,7 +6,7 @@ Suite Teardown  Test Suite Teardown
 
 
 *** Variables ***
-@{used_roles}   viewer
+@{USED_ROLES}   viewer
 
 
 *** Test Cases ***
