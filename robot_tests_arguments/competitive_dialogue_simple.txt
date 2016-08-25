@@ -10,7 +10,7 @@
 -v number_of_lots:1
 
 -v tender_meat:False
--v item_meat:False
+-v ITEM_MEAT:False
 -v lot_meat:False
 
 

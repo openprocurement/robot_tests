@@ -4,7 +4,7 @@
 -v number_of_lots:1
 
 -v tender_meat:True
--v item_meat:True
+-v ITEM_MEAT:True
 -v lot_meat:True
 
 
