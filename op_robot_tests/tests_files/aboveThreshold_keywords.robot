@@ -30,8 +30,8 @@ Resource           base_keywords.robot
 
 
 Можливість підтвердити цінову пропозицію учасником ${username}
-  ${status}=  Run Keyword IF  '${mode}'=='openeu'  Set Variable  pending
-  ...                     ELSE IF  '${mode}'=='openua'  Set Variable  active
+  ${status}=  Run Keyword IF  '${MODE}'=='openeu'  Set Variable  pending
+  ...                     ELSE IF  '${MODE}'=='openua'  Set Variable  active
   ${activestatusresp}=  Run As  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  status  ${status}
   Set To Dictionary  ${USERS.users['${username}'].bidresponses}  activestatusresp=${activestatusresp}
   log  ${activestatusresp}

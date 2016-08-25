@@ -5,7 +5,7 @@ Suite Teardown     Test Suite Teardown
 
 
 *** Variables ***
-${mode}         reporting
+${MODE}         reporting
 @{used_roles}   tender_owner  viewer
 
 ${number_of_items}  ${2}

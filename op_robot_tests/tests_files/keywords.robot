@@ -164,7 +164,7 @@ Get Broker Property By Username
   ...      api_version=${api_version}
   ...      tender_uaid=${TENDER['TENDER_UAID']}
   ...      last_modification_date=${TENDER['LAST_MODIFICATION_DATE']}
-  ...      mode=${mode}
+  ...      mode=${MODE}
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}
   ...          tender_owner=${USERS.users['${tender_owner}'].broker}
   ...          access_token=${USERS.users['${tender_owner}'].access_token}
@@ -186,11 +186,11 @@ Get Broker Property By Username
   ${TENDER}=  Create Dictionary   TENDER_UAID=${ARTIFACT.tender_uaid}   LAST_MODIFICATION_DATE=${ARTIFACT.last_modification_date}   LOT_ID=${Empty}
   ${lot_index}=  Get Variable Value  ${lot_index}  0
   Run Keyword And Ignore Error  Set To Dictionary  ${TENDER}  LOT_ID=${ARTIFACT.lots[${lot_index}]}
-  ${mode}=  Get Variable Value  ${mode}  ${ARTIFACT.mode}
+  ${MODE}=  Get Variable Value  ${MODE}  ${ARTIFACT.mode}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token=${ARTIFACT.tender_owner_access_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider}']}  access_token=${ARTIFACT.provider_access_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider1}']}  access_token=${ARTIFACT.provider1_access_token}
-  Set Suite Variable  ${mode}
+  Set Suite Variable  ${MODE}
   Set Suite Variable  ${lot_index}
   Set Suite Variable  ${TENDER}
   log_object_data  ${ARTIFACT}  file_name=artifact  update=${True}  artifact=${True}
@@ -600,7 +600,7 @@ Require Failure
   Дочекатись дати  ${date}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
-  ${next_status}=  Set variable if  'open' in '${mode}'  active.tendering  active.enquiries
+  ${next_status}=  Set variable if  'open' in '${MODE}'  active.tendering  active.enquiries
   Wait until keyword succeeds
   ...      5 min 15 sec
   ...      15 sec

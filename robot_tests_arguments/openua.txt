@@ -1,4 +1,4 @@
--v mode:openua
+-v MODE:openua
 
 -v number_of_items:1
 -v number_of_lots:1

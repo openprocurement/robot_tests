@@ -4,7 +4,7 @@ Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
 *** Variables ***
-${mode}         belowThreshold
+${MODE}         belowThreshold
 @{used_roles}   tender_owner  provider  provider1  viewer
 
 ${number_of_items}  ${1}

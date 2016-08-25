@@ -6,7 +6,7 @@ Suite Teardown  Test Suite Teardown
 
 
 *** Variables ***
-${mode}             openeu
+${MODE}             openeu
 @{used_roles}       tender_owner  provider  provider1  provider2  viewer
 ${dialogue_type}    EU
 
@@ -101,7 +101,7 @@ ${item_meat}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
-  Run Keyword IF  'open' in '${mode}'
+  Run Keyword IF  'open' in '${MODE}'
   ...      Отримати дані із поля enquiryPeriod.startDate тендера для усіх користувачів
   ...      ELSE
   ...      Звірити відображення дати enquiryPeriod.startDate тендера для усіх користувачів
@@ -112,7 +112,7 @@ ${item_meat}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
-  Run Keyword IF  'open' in '${mode}'
+  Run Keyword IF  'open' in '${MODE}'
   ...      Отримати дані із поля enquiryPeriod.endDate тендера для усіх користувачів
   ...      ELSE
   ...      Звірити відображення дати enquiryPeriod.endDate тендера для усіх користувачів

@@ -1,6 +1,6 @@
 -s openProcedure
 
--v mode:open_competitive_dialogue
+-v MODE:open_competitive_dialogue
 
 -v number_of_items:1
 -v number_of_lots:1

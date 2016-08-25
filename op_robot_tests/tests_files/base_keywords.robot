@@ -10,7 +10,7 @@ Resource           resource.robot
   ${number_of_lots}=  Convert To Integer  ${number_of_lots}
   ${number_of_items}=  Convert To Integer  ${number_of_items}
   ${tender_parameters}=  Create Dictionary
-  ...      mode=${mode}
+  ...      mode=${MODE}
   ...      number_of_items=${number_of_items}
   ...      number_of_lots=${number_of_lots}
   ...      tender_meat=${${tender_meat}}
@@ -580,7 +580,7 @@ Resource           resource.robot
 
 Можливість скасувати вимогу про виправлення визначення ${award_index} переможця
   ${cancellation_reason}=  create_fake_sentence
-  ${status}=  Set variable if  'open' in '${mode}'  stopping  cancelled
+  ${status}=  Set variable if  'open' in '${MODE}'  stopping  cancelled
   ${data}=  Create Dictionary  status=${status}  cancellationReason=${cancellation_reason}
   ${cancellation_data}=  Create Dictionary  data=${data}
   ${cancellation_data}=  munch_dict  arg=${cancellation_data}
@@ -591,7 +591,7 @@ Resource           resource.robot
   ...      ${cancellation_data}
   ...      ${award_index}
   Set To Dictionary  ${USERS.users['${provider}'].claim_data}  cancellation  ${cancellation_data}
-  ${status}=  Set variable if  'open' in '${mode}'  stopping  cancelled
+  ${status}=  Set variable if  'open' in '${MODE}'  stopping  cancelled
   Wait until keyword succeeds
   ...      5 min 15 sec
   ...      15 sec
