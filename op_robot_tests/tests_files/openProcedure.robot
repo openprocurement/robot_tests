@@ -13,7 +13,7 @@ ${DIALOGUE_TYPE}    EU
 ${number_of_items}  ${1}
 ${number_of_lots}   ${1}
 ${tender_meat}      ${True}
-${lot_meat}         ${True}
+${LOT_MEAT}         ${True}
 ${ITEM_MEAT}        ${True}
 
 

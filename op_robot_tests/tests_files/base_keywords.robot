@@ -14,7 +14,7 @@ Resource           resource.robot
   ...      number_of_items=${number_of_items}
   ...      number_of_lots=${number_of_lots}
   ...      tender_meat=${${tender_meat}}
-  ...      lot_meat=${${lot_meat}}
+  ...      lot_meat=${${LOT_MEAT}}
   ...      item_meat=${${ITEM_MEAT}}
   ${DIALOGUE_TYPE}=  Get Variable Value  ${DIALOGUE_TYPE}
   Run keyword if  '${DIALOGUE_TYPE}' != '${None}'  Set to dictionary  ${tender_parameters}  dialogue_type=${DIALOGUE_TYPE}

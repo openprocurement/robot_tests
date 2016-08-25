@@ -7,7 +7,7 @@
 
 -v tender_meat:True
 -v ITEM_MEAT:True
--v lot_meat:True
+-v LOT_MEAT:True
 
 
 -i create_tender
