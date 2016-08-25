@@ -6,15 +6,15 @@ Suite Teardown  Test Suite Teardown
 
 
 *** Variables ***
-${mode}             openeu
-@{used_roles}       tender_owner  provider  provider1  provider2  viewer
-${dialogue_type}    EU
+${MODE}             openeu
+@{USED_ROLES}       tender_owner  provider  provider1  provider2  viewer
+${DIALOGUE_TYPE}    EU
 
-${number_of_items}  ${1}
-${number_of_lots}   ${1}
-${tender_meat}      ${True}
-${lot_meat}         ${True}
-${item_meat}        ${True}
+${NUMBER_OF_ITEMS}  ${1}
+${NUMBER_OF_LOTS}   ${1}
+${TENDER_MEAT}      ${True}
+${LOT_MEAT}         ${True}
+${ITEM_MEAT}        ${True}
 
 
 *** Test Cases ***
@@ -101,7 +101,7 @@ ${item_meat}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
-  Run Keyword IF  'open' in '${mode}'
+  Run Keyword IF  'open' in '${MODE}'
   ...      Отримати дані із поля enquiryPeriod.startDate тендера для усіх користувачів
   ...      ELSE
   ...      Звірити відображення дати enquiryPeriod.startDate тендера для усіх користувачів
@@ -112,7 +112,7 @@ ${item_meat}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
-  Run Keyword IF  'open' in '${mode}'
+  Run Keyword IF  'open' in '${MODE}'
   ...      Отримати дані із поля enquiryPeriod.endDate тендера для усіх користувачів
   ...      ELSE
   ...      Звірити відображення дати enquiryPeriod.endDate тендера для усіх користувачів
@@ -520,7 +520,7 @@ ${item_meat}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      add_item  level3
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Run Keyword IF  ${number_of_lots} == 0
+  Run Keyword IF  ${NUMBER_OF_LOTS} == 0
   ...      Можливість додати предмет закупівлі в тендер
   ...      ELSE
   ...      Можливість додати предмет закупівлі в -1 лот
@@ -541,7 +541,7 @@ ${item_meat}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_item  level3
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Run Keyword IF  ${number_of_lots} == 0
+  Run Keyword IF  ${NUMBER_OF_LOTS} == 0
   ...      Можливість видалити предмет закупівлі з тендера
   ...      ELSE
   ...      Можливість видалити предмет закупівлі з -1 лоту

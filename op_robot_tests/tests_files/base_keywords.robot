@@ -7,17 +7,17 @@ Resource           resource.robot
 
 *** Keywords ***
 Можливість оголосити тендер
-  ${number_of_lots}=  Convert To Integer  ${number_of_lots}
-  ${number_of_items}=  Convert To Integer  ${number_of_items}
+  ${NUMBER_OF_LOTS}=  Convert To Integer  ${NUMBER_OF_LOTS}
+  ${NUMBER_OF_ITEMS}=  Convert To Integer  ${NUMBER_OF_ITEMS}
   ${tender_parameters}=  Create Dictionary
-  ...      mode=${mode}
-  ...      number_of_items=${number_of_items}
-  ...      number_of_lots=${number_of_lots}
-  ...      tender_meat=${${tender_meat}}
-  ...      lot_meat=${${lot_meat}}
-  ...      item_meat=${${item_meat}}
-  ${dialogue_type}=  Get Variable Value  ${dialogue_type}
-  Run keyword if  '${dialogue_type}' != '${None}'  Set to dictionary  ${tender_parameters}  dialogue_type=${dialogue_type}
+  ...      mode=${MODE}
+  ...      number_of_items=${NUMBER_OF_ITEMS}
+  ...      number_of_lots=${NUMBER_OF_LOTS}
+  ...      tender_meat=${${TENDER_MEAT}}
+  ...      lot_meat=${${LOT_MEAT}}
+  ...      item_meat=${${ITEM_MEAT}}
+  ${DIALOGUE_TYPE}=  Get Variable Value  ${DIALOGUE_TYPE}
+  Run keyword if  '${DIALOGUE_TYPE}' != '${None}'  Set to dictionary  ${tender_parameters}  dialogue_type=${DIALOGUE_TYPE}
   ${tender_data}=  Підготувати дані для створення тендера  ${tender_parameters}
   ${adapted_data}=  Адаптувати дані для оголошення тендера  ${tender_data}
   ${TENDER_UAID}=  Run As  ${tender_owner}  Створити тендер  ${adapted_data}
@@ -112,8 +112,7 @@ Resource           resource.robot
 
 
 Звірити відображення поля ${field} усіх предметів для користувача ${username}
-  ${number_of_items}=  Get Length  ${USERS.users['${tender_owner}'].initial_data.data['items']}
-  :FOR  ${item_index}  IN RANGE  ${number_of_items}
+  :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  Звірити відображення поля ${field} ${item_index} предмету для користувача ${username}
 
 
@@ -123,8 +122,7 @@ Resource           resource.robot
 
 
 Звірити відображення дати ${field} усіх предметів для користувача ${username}
-  ${number_of_items}=  Get Length  ${USERS.users['${tender_owner}'].initial_data.data['items']}
-  :FOR  ${item_index}  IN RANGE  ${number_of_items}
+  :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  Звірити відображення дати ${field} ${item_index} предмету для користувача ${username}
 
 
@@ -134,8 +132,7 @@ Resource           resource.robot
 
 
 Звірити відображення координат усіх предметів для користувача ${username}
-  ${number_of_items}=  Get Length  ${USERS.users['${tender_owner}'].initial_data.data['items']}
-  :FOR  ${item_index}  IN RANGE  ${number_of_items}
+  :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  Звірити відображення координат ${item_index} предмету для користувача ${username}
 
 
@@ -171,7 +168,7 @@ Resource           resource.robot
 
 
 Можливість додати документацію до всіх лотів
-  :FOR  ${lot_index}  IN RANGE  ${number_of_lots}
+  :FOR  ${lot_index}  IN RANGE  ${NUMBER_OF_LOTS}
   \  Можливість додати документацію до ${lot_index} лоту
 
 
@@ -186,12 +183,12 @@ Resource           resource.robot
 
 
 Звірити відображення заголовку документації до всіх лотів для користувача ${username}
-  :FOR  ${lot_index}  IN RANGE  ${number_of_lots}
+  :FOR  ${lot_index}  IN RANGE  ${NUMBER_OF_LOTS}
   \  Звірити відображення поля title документа ${USERS.users['${tender_owner}'].lots_documents[${lot_index}].doc_id} із ${USERS.users['${tender_owner}'].lots_documents[${lot_index}].doc_name} для користувача ${username}
 
 
 Звірити відображення вмісту документації до всіх лотів для користувача ${username}
-  :FOR  ${lot_index}  IN RANGE  ${number_of_lots}
+  :FOR  ${lot_index}  IN RANGE  ${NUMBER_OF_LOTS}
   \  ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}]}
   \  Звірити відображення вмісту документа ${USERS.users['${tender_owner}'].lots_documents[${lot_index}].doc_id} до лоту ${lot_id} з ${USERS.users['${tender_owner}'].lots_documents[${lot_index}].doc_content} для користувача ${username}
 
@@ -238,8 +235,7 @@ Resource           resource.robot
 
 
 Звірити відображення поля ${field} усіх лотів для користувача ${username}
-  ${number_of_lots}=  Get Length  ${USERS.users['${tender_owner}'].initial_data.data.lots}
-  :FOR  ${lot_index}  IN RANGE  ${number_of_lots}
+  :FOR  ${lot_index}  IN RANGE  ${NUMBER_OF_LOTS}
   \  Звірити відображення поля ${field} ${lot_index} лоту для користувача ${username}
 
 
@@ -580,7 +576,7 @@ Resource           resource.robot
 
 Можливість скасувати вимогу про виправлення визначення ${award_index} переможця
   ${cancellation_reason}=  create_fake_sentence
-  ${status}=  Set variable if  'open' in '${mode}'  stopping  cancelled
+  ${status}=  Set variable if  'open' in '${MODE}'  stopping  cancelled
   ${data}=  Create Dictionary  status=${status}  cancellationReason=${cancellation_reason}
   ${cancellation_data}=  Create Dictionary  data=${data}
   ${cancellation_data}=  munch_dict  arg=${cancellation_data}
@@ -591,7 +587,7 @@ Resource           resource.robot
   ...      ${cancellation_data}
   ...      ${award_index}
   Set To Dictionary  ${USERS.users['${provider}'].claim_data}  cancellation  ${cancellation_data}
-  ${status}=  Set variable if  'open' in '${mode}'  stopping  cancelled
+  ${status}=  Set variable if  'open' in '${MODE}'  stopping  cancelled
   Wait until keyword succeeds
   ...      5 min 15 sec
   ...      15 sec
@@ -858,7 +854,7 @@ Resource           resource.robot
 Можливість зменшити пропозицію до ${percent} відсотків користувачем ${username}
   ${percent}=  Convert To Number  ${percent}
   ${divider}=  Convert To Number  0.01
-  ${field}=  Set variable if  ${number_of_lots} == 0  value.amount  lotValues[0].value.amount
+  ${field}=  Set variable if  ${NUMBER_OF_LOTS} == 0  value.amount  lotValues[0].value.amount
   ${value}=  Run As  ${username}  Отримати інформацію із пропозиції  ${TENDER['TENDER_UAID']}  ${field}
   ${value}=  mult_and_round  ${value}  ${percent}  ${divider}  precision=${2}
   Run as  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  ${field}  ${value}

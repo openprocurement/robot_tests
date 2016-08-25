@@ -476,7 +476,7 @@ Library  openprocurement_client_helper.py
   ...      ${award_index}
   ...      ${document}
 
-  ${status}=  Set variable if  'open' in '${mode}'  pending  claim
+  ${status}=  Set variable if  'open' in '${MODE}'  pending  claim
   ${data}=  Create Dictionary  status=${status}
   ${confirmation_data}=  Create Dictionary  data=${data}
   Подати вимогу про виправлення визначення переможця
@@ -803,7 +803,7 @@ Library  openprocurement_client_helper.py
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${award}=  create_data_dict  data.status  active
   Set To Dictionary  ${award.data}  id=${tender.data.awards[${award_num}].id}
-  Run Keyword IF  'open' in '${mode}'
+  Run Keyword IF  'open' in '${MODE}'
   ...      Set To Dictionary  ${award.data}
   ...      qualified=${True}
   ...      eligible=${True}

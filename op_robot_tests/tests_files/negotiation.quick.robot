@@ -5,14 +5,14 @@ Suite Teardown     Test Suite Teardown
 
 
 *** Variables ***
-${mode}         negotiation.quick
-@{used_roles}   tender_owner  viewer
+${MODE}         negotiation.quick
+@{USED_ROLES}   tender_owner  viewer
 
-${number_of_items}  ${2}
-${number_of_lots}   ${0}
-${tender_meat}      ${False}
-${lot_meat}      ${False}
-${item_meat}      ${False}
+${NUMBER_OF_ITEMS}  ${2}
+${NUMBER_OF_LOTS}   ${0}
+${TENDER_MEAT}      ${False}
+${LOT_MEAT}      ${False}
+${ITEM_MEAT}      ${False}
 
 *** Test Cases ***
 ##############################################################################################

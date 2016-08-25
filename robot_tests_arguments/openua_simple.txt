@@ -1,11 +1,11 @@
--v mode:openua
+-v MODE:openua
 
--v number_of_items:1
--v number_of_lots:1
+-v NUMBER_OF_ITEMS:1
+-v NUMBER_OF_LOTS:1
 
--v tender_meat:False
--v item_meat:False
--v lot_meat:False
+-v TENDER_MEAT:False
+-v ITEM_MEAT:False
+-v LOT_MEAT:False
 
 -i create_tender
 -i find_tender

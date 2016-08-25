@@ -4,14 +4,14 @@ Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
 *** Variables ***
-${mode}         belowThreshold
-@{used_roles}   tender_owner  provider  provider1  viewer
+${MODE}         belowThreshold
+@{USED_ROLES}   tender_owner  provider  provider1  viewer
 
-${number_of_items}  ${1}
-${number_of_lots}   ${1}
-${tender_meat}      ${1}
-${item_meat}        ${1}
-${lot_meat}         ${1}
+${NUMBER_OF_ITEMS}  ${1}
+${NUMBER_OF_LOTS}   ${1}
+${TENDER_MEAT}      ${1}
+${ITEM_MEAT}        ${1}
+${LOT_MEAT}         ${1}
 ${lot_index}        ${0}
 ${award_index}      ${0}
 
