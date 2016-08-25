@@ -8,7 +8,7 @@ Suite Teardown     Test Suite Teardown
 ${MODE}         negotiation
 @{USED_ROLES}   tender_owner  viewer
 
-${number_of_items}  ${2}
+${NUMBER_OF_ITEMS}  ${2}
 ${number_of_lots}   ${0}
 ${tender_meat}      ${False}
 ${LOT_MEAT}      ${False}

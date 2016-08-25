@@ -10,7 +10,7 @@ ${MODE}             openeu
 @{USED_ROLES}       tender_owner  provider  provider1  provider2  viewer
 ${DIALOGUE_TYPE}    EU
 
-${number_of_items}  ${1}
+${NUMBER_OF_ITEMS}  ${1}
 ${number_of_lots}   ${1}
 ${tender_meat}      ${True}
 ${LOT_MEAT}         ${True}

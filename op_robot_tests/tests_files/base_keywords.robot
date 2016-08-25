@@ -8,10 +8,10 @@ Resource           resource.robot
 *** Keywords ***
 Можливість оголосити тендер
   ${number_of_lots}=  Convert To Integer  ${number_of_lots}
-  ${number_of_items}=  Convert To Integer  ${number_of_items}
+  ${NUMBER_OF_ITEMS}=  Convert To Integer  ${NUMBER_OF_ITEMS}
   ${tender_parameters}=  Create Dictionary
   ...      mode=${MODE}
-  ...      number_of_items=${number_of_items}
+  ...      number_of_items=${NUMBER_OF_ITEMS}
   ...      number_of_lots=${number_of_lots}
   ...      tender_meat=${${tender_meat}}
   ...      lot_meat=${${LOT_MEAT}}
@@ -112,8 +112,7 @@ Resource           resource.robot
 
 
 Звірити відображення поля ${field} усіх предметів для користувача ${username}
-  ${number_of_items}=  Get Length  ${USERS.users['${tender_owner}'].initial_data.data['items']}
-  :FOR  ${item_index}  IN RANGE  ${number_of_items}
+  :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  Звірити відображення поля ${field} ${item_index} предмету для користувача ${username}
 
 
@@ -123,8 +122,7 @@ Resource           resource.robot
 
 
 Звірити відображення дати ${field} усіх предметів для користувача ${username}
-  ${number_of_items}=  Get Length  ${USERS.users['${tender_owner}'].initial_data.data['items']}
-  :FOR  ${item_index}  IN RANGE  ${number_of_items}
+  :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  Звірити відображення дати ${field} ${item_index} предмету для користувача ${username}
 
 
@@ -134,8 +132,7 @@ Resource           resource.robot
 
 
 Звірити відображення координат усіх предметів для користувача ${username}
-  ${number_of_items}=  Get Length  ${USERS.users['${tender_owner}'].initial_data.data['items']}
-  :FOR  ${item_index}  IN RANGE  ${number_of_items}
+  :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  Звірити відображення координат ${item_index} предмету для користувача ${username}
 
 

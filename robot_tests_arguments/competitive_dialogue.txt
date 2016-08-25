@@ -2,7 +2,7 @@
 
 -v MODE:open_competitive_dialogue
 
--v number_of_items:1
+-v NUMBER_OF_ITEMS:1
 -v number_of_lots:1
 
 -v tender_meat:True
