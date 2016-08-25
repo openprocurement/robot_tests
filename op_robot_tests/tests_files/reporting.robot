@@ -10,7 +10,7 @@ ${MODE}         reporting
 
 ${NUMBER_OF_ITEMS}  ${2}
 ${NUMBER_OF_LOTS}   ${0}
-${tender_meat}      ${False}
+${TENDER_MEAT}      ${False}
 ${LOT_MEAT}      ${False}
 ${ITEM_MEAT}      ${False}
 

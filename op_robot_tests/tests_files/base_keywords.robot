@@ -13,7 +13,7 @@ Resource           resource.robot
   ...      mode=${MODE}
   ...      number_of_items=${NUMBER_OF_ITEMS}
   ...      number_of_lots=${NUMBER_OF_LOTS}
-  ...      tender_meat=${${tender_meat}}
+  ...      tender_meat=${${TENDER_MEAT}}
   ...      lot_meat=${${LOT_MEAT}}
   ...      item_meat=${${ITEM_MEAT}}
   ${DIALOGUE_TYPE}=  Get Variable Value  ${DIALOGUE_TYPE}
