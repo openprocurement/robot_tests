@@ -11,7 +11,7 @@ ${MODE}             openeu
 ${DIALOGUE_TYPE}    EU
 
 ${NUMBER_OF_ITEMS}  ${1}
-${number_of_lots}   ${1}
+${NUMBER_OF_LOTS}   ${1}
 ${tender_meat}      ${True}
 ${LOT_MEAT}         ${True}
 ${ITEM_MEAT}        ${True}
@@ -520,7 +520,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      add_item  level3
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Run Keyword IF  ${number_of_lots} == 0
+  Run Keyword IF  ${NUMBER_OF_LOTS} == 0
   ...      Можливість додати предмет закупівлі в тендер
   ...      ELSE
   ...      Можливість додати предмет закупівлі в -1 лот
@@ -541,7 +541,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_item  level3
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Run Keyword IF  ${number_of_lots} == 0
+  Run Keyword IF  ${NUMBER_OF_LOTS} == 0
   ...      Можливість видалити предмет закупівлі з тендера
   ...      ELSE
   ...      Можливість видалити предмет закупівлі з -1 лоту

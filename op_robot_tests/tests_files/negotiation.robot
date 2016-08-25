@@ -9,7 +9,7 @@ ${MODE}         negotiation
 @{USED_ROLES}   tender_owner  viewer
 
 ${NUMBER_OF_ITEMS}  ${2}
-${number_of_lots}   ${0}
+${NUMBER_OF_LOTS}   ${0}
 ${tender_meat}      ${False}
 ${LOT_MEAT}      ${False}
 ${ITEM_MEAT}      ${False}
