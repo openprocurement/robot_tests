@@ -45,7 +45,7 @@ Resource           base_keywords.robot
   ${privat_doc}=  create_data_dict  data.confidentialityRationale  ${confidentialityRationale}
   Set To Dictionary  ${privat_doc.data}  confidentiality=buyerOnly
   ${docid}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['bid_doc_upload']['upload_response'].data.id}
-  ${bid_doc_modified}=  Run As  ${username}  Змінити документацію в ставці  ${privat_doc}  ${docid}
+  ${bid_doc_modified}=  Run As  ${username}  Змінити документацію в ставці  ${TENDER['TENDER_UAID']}  ${privat_doc}  ${docid}
   Set To Dictionary  ${USERS.users['${username}'].bidresponses}  bid_doc_modified=${bid_doc_modified}
 
 
