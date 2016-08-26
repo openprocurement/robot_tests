@@ -35,6 +35,16 @@ Resource           resource.robot
   Run as  ${username}  Пошук тендера по ідентифікатору  ${TENDER['TENDER_UAID']}
 
 
+Можливість знайти тендер по ідентифікатору ${ident} для користувача ${username}
+  Дочекатись синхронізації з майданчиком  ${username}
+  Run as  ${username}  Пошук тендера по ідентифікатору  ${ident}
+
+
+Можливість знайти тендер по ід ${ident} для користувача ${username}
+  Дочекатись синхронізації з майданчиком  ${username}
+  Run as  ${username}  Пошук тендера по ід  ${ident}
+
+
 Можливість змінити поле ${field_name} тендера на ${field_value}
   Run As  ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  ${field_name}  ${field_value}
 
@@ -79,7 +89,19 @@ Resource           resource.robot
   Звірити поле тендера  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${field}
 
 
-Звірити відображення вмісту документа ${doc_id} із ${left} для користувача ${username}
+Оновити тендер ідентифікатор для всіх користувачей користувача ${username} ${tender_uaid}
+  Дочекатись синхронізації з майданчиком  ${username}
+  Run as  ${username}  Пошук тендера по ідентифікатору  ${tender_uaid}
+
+
+Отримати токен другого етапу та зберегти
+  ${tender_uaid}=  Отрмати новий токен  ${tender_owner}  ${USERS.users['${tender_owner}'].tender_data.data.stage2TenderID}
+  Set to dictionary  ${TENDER}  TENDER_UAID=${tender_uaid}
+  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${provider1}  ${viewer}
+  \  Оновити тендер ідентифікатор для всіх користувачей користувача ${username} ${tender_uaid}
+
+
+Звірити відображення вмісту документа ${doc_id} з ${left} для користувача ${username}
   ${file_name}=  Run as  ${username}  Отримати документ  ${TENDER['TENDER_UAID']}  ${doc_id}
   ${right}=  Get File  ${OUTPUT_DIR}${/}${file_name}
   Порівняти об'єкти  ${left}  ${right}
@@ -836,6 +858,21 @@ Resource           resource.robot
   ${resp}=  Run As  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}  ${lots_ids}  ${features_ids}
   Set To Dictionary  ${USERS.users['${username}'].bidresponses}  resp=${resp}
 
+
+Можливість подати цінову пропозицію на другий етап ${index} користувачем ${username}
+  ${bid}=  Підготувати дані для подання пропозиції для другого етапу  ${username}  ${index}
+  ${bidresponses}=  Create Dictionary  bid=${bid}
+  Set To Dictionary  ${USERS.users['${username}']}  bidresponses=${bidresponses}
+  ${lots}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.lots}  ${None}
+  ${lots_ids}=  Run Keyword IF  ${lots}
+  ...     Отримати ідентифікатори об’єктів  ${username}  lots
+  ...     ELSE  Set Variable  ${None}
+  ${features}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.features}  ${None}
+  ${features_ids}=  Run Keyword IF  ${features}
+  ...     Отримати ідентифікатори об’єктів  ${username}  features
+  ...     ELSE  Set Variable  ${None}
+  ${resp}=  Run As  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}  ${lots_ids}  ${features_ids}
+  Set To Dictionary  ${USERS.users['${username}'].bidresponses}  resp=${resp}
 
 Неможливість подати цінову пропозицію без прив’язки до лоту користувачем ${username}
   ${bid}=  Підготувати дані для подання пропозиції  ${username}

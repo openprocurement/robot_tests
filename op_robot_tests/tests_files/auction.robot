@@ -39,6 +39,14 @@ Suite Teardown  Test Suite Teardown
   Дочекатись дати початку аукціону  ${viewer}
 
 
+Можливість дочекатися початку аукціону на другому етапі
+  [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      auction_second_stage
+  Дочекатись дати початку аукціону  ${viewer}
+
+
 Можливість вичитати посилання на аукціон для глядача
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних аукціону
   ...      viewer
@@ -47,11 +55,28 @@ Suite Teardown  Test Suite Teardown
   Можливість вичитати посилання на аукціон для ${viewer}
 
 
+Можливість вичитати посилання на аукціон для глядача на другому етапі
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних аукціону
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      auction_second_stage
+  Можливість вичитати посилання на аукціон для ${viewer}
+
+
 Можливість дочекатися завершення аукціону
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      auction
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Дочекатись дати закінчення аукціону користувачем ${viewer}
+
+
+Можливість дочекатися завершення аукціону на другому етапі
+  [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      auction_second_stage
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати закінчення аукціону користувачем ${viewer}
 

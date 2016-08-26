@@ -254,6 +254,11 @@ Get Broker Property By Username
   [Return]  ${bid}
 
 
+Підготувати дані для подання пропозиції для другого етапу
+  [Arguments]  ${username}  ${index}=0
+  ${bid}=  generate_test_bid_data_second_stage  ${USERS.users['${username}'].tender_data.data}  ${index}
+  [Return]  ${bid}
+
 Підготувати дані про постачальника
   [Arguments]  ${username}
   ${supplier_data}=  test_supplier_data

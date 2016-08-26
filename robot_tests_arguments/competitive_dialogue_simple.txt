@@ -33,3 +33,25 @@
 -i stage2_pending_status_view
 
 -i wait_bridge_for_work
+
+-i get_second_stage
+
+-i compare_stages
+
+-i get_token_second_stage
+
+-i activate_second_stage
+
+-i make_bid_by_provider_second_stage
+-i make_bid_by_provider1_second_stage
+
+-i pre-qualification_approve_first_bid_second_stage
+-i pre-qualification_approve_second_bid_second_stage
+
+-i pre-qualification_approve_qualifications_second_stage
+
+-i auction_second_stage
+
+-i qualification_approve_first_award_second_stage
+
+-i contract_sign_second_stage

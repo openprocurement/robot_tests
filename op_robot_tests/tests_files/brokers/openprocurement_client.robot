@@ -84,6 +84,12 @@ Library  openprocurement_client_helper.py
   Log   ${USERS.users['${username}'].tender_data}
   [return]  ${tender.data.tenderID}
 
+Пошук тендера по ід
+  [Arguments]  ${username}  ${tender_id}
+  ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${tender_id}
+  Set To Dictionary  ${USERS.users['${username}']}  second_stage_data=${tender}
+  Log  ${tender}
+  [return]  ${tender}
 
 Пошук тендера по ідентифікатору
   [Arguments]  ${username}  ${tender_uaid}
@@ -95,6 +101,16 @@ Library  openprocurement_client_helper.py
   Log  ${tender}
   [return]   ${tender}
 
+Отрмати новий токен
+  [Arguments]  ${username}  ${tender_id}
+  ${response}=  Call Method  ${USERS.users['${username}'].client}  credentials  ${tender_id}  ${USERS.users['${username}'].access_token}
+  ${tender}=  set_access_key  ${response}  ${response.access.token}
+  Set To Dictionary  ${USERS.users['${username}']}   access_token=${response.access.token}
+  Set To Dictionary  ${USERS.users['${username}']}  tender_data=${response}
+  Log  ${tender.data.tenderID}
+  Set To Dictionary  ${TENDER}  TENDER_UAID=${response.data.tenderID}
+  Log  ${TENDER['TENDER_UAID']}
+  [return]  ${TENDER['TENDER_UAID']}
 
 Оновити сторінку з тендером
   [Arguments]  ${username}  ${tender_uaid}
@@ -1034,6 +1050,23 @@ Library  openprocurement_client_helper.py
   ${tender}=  create_data_dict  data.id  ${internal_id}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   set_to_object  ${tender}  data.status  active.stage2.waiting
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+  Log  ${reply}
+  [Return]  ${reply}
+
+
+Активувати другий етап
+  [Documentation]
+  ...      [Arguments] Username and tender uaid
+  ...
+  ...      [Description] Find tender using uaid and call patch_tender
+  ...
+  ...      [Return] Reply of API
+  [Arguments]  ${username}  ${tender_uaid}
+  ${internal_id}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
+  ${tender}=  create_data_dict  data.id  ${internal_id}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
+  set_to_object  ${tender}  data.status  active.tendering
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
   Log  ${reply}
   [Return]  ${reply}

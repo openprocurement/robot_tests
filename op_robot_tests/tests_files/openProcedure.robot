@@ -1657,3 +1657,87 @@ ${ITEM_MEAT}        ${True}
   Дочекатися створення нового етапу мостом  ${tender_owner}  ${TENDER['TENDER_UAID']}
   Звірити статус тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  complete
 
+
+Отрмати дргуий етап
+  [Tags]   ${USERS.user['${tender_owner}'].broker}: Отримати id нового тендеру
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      get_second_stage
+  Отримати дані із поля stage2TenderID тендера для усіх користувачів
+  Можливість знайти тендер по ід ${USERS.users['${tender_owner}'].tender_data.data.stage2TenderID} для користувача ${tender_owner}
+
+
+Порівняти другий етап з перший
+  [Tags]   ${USERS.user['${tender_owner}'].broker}: Порівняти перший та другий етап
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      compare_stages
+  Звірити відображення поля title тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.title} для користувача ${tender_owner}
+  Звірити відображення поля minimalStep тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.minimalStep} для користувача ${tender_owner}
+  Звірити відображення поля value тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.value} для користувача ${tender_owner}
+  Звірити відображення поля procuringEntity тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.procuringEntity} для користувача ${tender_owner}
+
+
+Отримати токен другог етапу
+  [Tags]   ${USERS.user['${tender_owner}'].broker}: Отримати токен для другог етапу
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      get_token_second_stage
+  Отримати токен другого етапу та зберегти
+  Log  ${TENDER}
+
+
+Можливість активувати другий етап
+  [Tags]   ${USERS.users['${viewer}'].broker}: Активувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      activate_second_stage
+  Можливість активувати другий етап
+
+
+Можливість подати пропозицію першим учасником на другому етапі
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      make_bid_by_provider_second_stage
+  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість подати цінову пропозицію на другий етап 1 користувачем ${provider1}
+
+
+Можливість подати пропозицію другим учасником на другому етапі
+  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції на другий етап
+  ...      provider1
+  ...      ${USERS.users['${provider1}'].broker}
+  ...      make_bid_by_provider1_second_stage
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість подати цінову пропозицію на другий етап 1 користувачем ${provider1}
+
+
+Можливість підтвердити першу пропозицію кваліфікації на другому етапі
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація на другому етапі
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      pre-qualification_approve_first_bid_second_stage
+  [Setup]  Дочекатись дати початку періоду прекваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість підтвердити 0 пропозицію кваліфікації
+
+
+Можливість підтвердити другу пропозицію кваліфікації на другогму етапі
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація на другому етапі
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      pre-qualification_approve_second_bid_second_stage
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість підтвердити -1 пропозицію кваліфікації
+
+
+Можливість затвердити остаточне рішення кваліфікації на другому етапі
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація на другому етапі
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      pre-qualification_approve_qualifications_second_stage
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість затвердити остаточне рішення кваліфікації
