@@ -211,8 +211,8 @@ Library  openprocurement_client_helper.py
 
 
 Змінити документ в ставці
-  [Arguments]  ${username}  ${path}  ${bidid}  ${docid}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${TENDER['TENDER_UAID']}
+  [Arguments]  ${username}  ${tender_uaid}  ${path}  ${bidid}  ${docid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
   ${response}=  Call Method  ${USERS.users['${username}'].client}  update_bid_document  ${path}  ${tender}   ${bidid}   ${docid}
   ${uploaded_file} =  Create Dictionary   filepath=${path}   upload_response=${response}
@@ -222,8 +222,8 @@ Library  openprocurement_client_helper.py
 
 
 Змінити документацію в ставці
-  [Arguments]  ${username}  ${doc_data}  ${bidid}  ${docid}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${TENDER['TENDER_UAID']}
+  [Arguments]  ${username}  ${tender_uaid}  ${doc_data}  ${bidid}  ${docid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
   ${response}=  Call Method  ${USERS.users['${username}'].client}  patch_bid_document   ${tender}   ${doc_data}   ${bidid}   ${docid}
   Log  ${response}

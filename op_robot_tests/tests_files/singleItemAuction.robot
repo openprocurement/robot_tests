@@ -487,7 +487,7 @@ ${mode}         single
   ${filepath}=  create_fake_doc
   ${bidid}=  Get Variable Value  ${USERS.users['${provider}'].bidresponses['resp'].data.id}
   ${docid}=  Get Variable Value  ${USERS.users['${provider}'].bidresponses['bid_doc_upload']['upload_response'].data.id}
-  ${bid_doc_modified}=  Викликати для учасника  ${provider}  Змінити документ в ставці  ${filepath}  ${bidid}  ${docid}
+  ${bid_doc_modified}=  Викликати для учасника  ${provider}  Змінити документ в ставці  ${TENDER['TENDER_UAID']}  ${filepath}  ${bidid}  ${docid}
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}  bid_doc_modified=${bid_doc_modified}
 
 
@@ -582,7 +582,7 @@ ${mode}         single
   ${filepath}=  create_fake_doc
   ${bidid}=  Get Variable Value  ${USERS.users['${provider1}'].bidresponses['resp'].data.id}
   ${docid}=  Get Variable Value  ${USERS.users['${provider1}'].bidresponses['bid_doc_upload']['upload_response'].data.id}
-  ${bid_doc_modified_failed}=  Require Failure  ${provider1}  Змінити документ в ставці  ${filepath}  ${bidid}  ${docid}
+  ${bid_doc_modified_failed}=  Require Failure  ${provider1}  Змінити документ в ставці  ${TENDER['TENDER_UAID']}  ${filepath}  ${bidid}  ${docid}
   Set To Dictionary  ${USERS.users['${provider}'].bidresponses}  bid_doc_modified_failed=${bid_doc_modified_failed}
 
 
