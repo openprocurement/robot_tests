@@ -1,14 +1,21 @@
 from openprocurement_client.client import Client
 from openprocurement_client.utils import get_tender_id_by_uaid
 from openprocurement_client.exceptions import IdNotFound
-from restkit.errors import RequestFailed
+from restkit.errors import RequestFailed, BadStatusLine
 from retrying import retry
 import os
 import urllib
 
 
 def retry_if_request_failed(exception):
-    return isinstance(exception, RequestFailed)
+    if isinstance(exception, RequestFailed):
+        status_code = getattr(exception, 'status_int', None)
+        if 500 <= status_code < 600 or status_code == 429:
+            return True
+        else:
+            return False
+    else:
+        return isinstance(exception, BadStatusLine)
 
 
 class StableClient(Client):
