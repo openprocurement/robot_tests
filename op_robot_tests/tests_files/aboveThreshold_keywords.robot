@@ -85,5 +85,5 @@ Resource           base_keywords.robot
   Run As  ${tender_owner}  Перевести тендер на статус очікування обробки мостом  ${TENDER['TENDER_UAID']}
 
 
-Можливість активувати другий етап
+Активувати тендер другого етапу
   Run As  ${tender_owner}  активувати другий етап  ${TENDER['TENDER_UAID']}

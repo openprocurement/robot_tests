@@ -38,7 +38,7 @@
 
 -i compare_stages
 
--i get_token_second_stage
+-i save_tender_second_stage
 
 -i activate_second_stage
 

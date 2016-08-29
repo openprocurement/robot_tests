@@ -40,9 +40,9 @@ Resource           resource.robot
   Run as  ${username}  Пошук тендера по ідентифікатору  ${ident}
 
 
-Можливість знайти тендер по ід ${ident} для користувача ${username}
+Можливість знайти тендер та зберегти в ${save_key} по ідентифікатору ${ident} для користувача ${username}
   Дочекатись синхронізації з майданчиком  ${username}
-  Run as  ${username}  Пошук тендера по ід  ${ident}
+  Run as  ${username}  Пошук тендера по ідентифікатору  ${ident}  ${save_key}
 
 
 Можливість змінити поле ${field_name} тендера на ${field_value}
@@ -89,16 +89,11 @@ Resource           resource.robot
   Звірити поле тендера  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${field}
 
 
-Оновити тендер ідентифікатор для всіх користувачей користувача ${username} ${tender_uaid}
-  Дочекатись синхронізації з майданчиком  ${username}
-  Run as  ${username}  Пошук тендера по ідентифікатору  ${tender_uaid}
-
-
-Отримати токен другого етапу та зберегти
-  ${tender_uaid}=  Отрмати новий токен  ${tender_owner}  ${USERS.users['${tender_owner}'].tender_data.data.stage2TenderID}
+Отримати тендер другого етапу та зберегти
+  ${tender_uaid}=  Отримати тендер другого етапу  ${tender_owner}  ${USERS.users['${tender_owner}'].tender_data.data.stage2TenderID}
   Set to dictionary  ${TENDER}  TENDER_UAID=${tender_uaid}
   :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${provider1}  ${viewer}
-  \  Оновити тендер ідентифікатор для всіх користувачей користувача ${username} ${tender_uaid}
+  \  Можливість знайти тендер по ідентифікатору ${tender_uaid} для користувача ${username}
 
 
 Звірити відображення вмісту документа ${doc_id} з ${left} для користувача ${username}

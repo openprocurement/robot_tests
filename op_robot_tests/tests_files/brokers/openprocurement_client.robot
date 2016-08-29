@@ -84,24 +84,18 @@ Library  openprocurement_client_helper.py
   Log   ${USERS.users['${username}'].tender_data}
   [return]  ${tender.data.tenderID}
 
-Пошук тендера по ід
-  [Arguments]  ${username}  ${tender_id}
-  ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${tender_id}
-  Set To Dictionary  ${USERS.users['${username}']}  second_stage_data=${tender}
-  Log  ${tender}
-  [return]  ${tender}
 
 Пошук тендера по ідентифікатору
-  [Arguments]  ${username}  ${tender_uaid}
+  [Arguments]  ${username}  ${tender_uaid}  ${save_key}=tender_data
   ${internalid}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
-  Set To Dictionary  ${USERS.users['${username}']}  tender_data=${tender}
+  Set To Dictionary  ${USERS.users['${username}']}  ${save_key}=${tender}
   ${tender}=  munch_dict  arg=${tender}
   Log  ${tender}
   [return]   ${tender}
 
-Отрмати новий токен
+Отримати тендер другого етапу
   [Arguments]  ${username}  ${tender_id}
   ${response}=  Call Method  ${USERS.users['${username}'].client}  credentials  ${tender_id}  ${USERS.users['${username}'].access_token}
   ${tender}=  set_access_key  ${response}  ${response.access.token}

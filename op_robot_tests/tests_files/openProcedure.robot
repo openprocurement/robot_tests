@@ -1664,35 +1664,33 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      get_second_stage
   Отримати дані із поля stage2TenderID тендера для усіх користувачів
-  Можливість знайти тендер по ід ${USERS.users['${tender_owner}'].tender_data.data.stage2TenderID} для користувача ${tender_owner}
+  ${tender_UAID_second_stage}=  BuiltIn.Catenate  SEPARATOR=  ${TENDER['TENDER_UAID']}  .2
+  Можливість знайти тендер та зберегти в second_stage_data по ідентифікатору ${tender_UAID_second_stage} для користувача ${tender_owner}
 
 
 Порівняти другий етап з перший
   [Tags]   ${USERS.user['${tender_owner}'].broker}: Порівняти перший та другий етап
-  ...      tender_owner
+  ...      tender_owner  viewer
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      compare_stages
-  Звірити відображення поля title тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.title} для користувача ${tender_owner}
-  Звірити відображення поля minimalStep тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.minimalStep} для користувача ${tender_owner}
-  Звірити відображення поля value тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.value} для користувача ${tender_owner}
-  Звірити відображення поля procuringEntity тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.procuringEntity} для користувача ${tender_owner}
+  :FOR  ${field}  IN  title  minimalStep  value  procuringEntity
+  \  Звірити відображення поля ${field} тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.${field}} для користувача ${viewer}
 
 
-Отримати токен другог етапу
+Отримати тендер другого етапу та зберегти
   [Tags]   ${USERS.user['${tender_owner}'].broker}: Отримати токен для другог етапу
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      get_token_second_stage
-  Отримати токен другого етапу та зберегти
-  Log  ${TENDER}
+  ...      save_tender_second_stage
+  Отримати тендер другого етапу та зберегти
 
 
-Можливість активувати другий етап
+Можливість активувати тендер другого етапу
   [Tags]   ${USERS.users['${viewer}'].broker}: Активувати тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      activate_second_stage
-  Можливість активувати другий етап
+  Активувати тендер другого етапу
 
 
 Можливість подати пропозицію першим учасником на другому етапі

@@ -59,7 +59,6 @@ Suite Teardown  Test Suite Teardown
   Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}  active  contracts[-1].status
 
 
-
 Дочекатися закічення stand still періоду на другому етапі
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Процес укладання угоди
   ...      tender_owner
