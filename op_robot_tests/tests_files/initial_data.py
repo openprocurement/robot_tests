@@ -127,6 +127,7 @@ def test_tender_data(params, periods=("enquiry", "tender")):
         data['features'].append(new_feature)
     if not data['features']:
         del data['features']
+    data['status'] = 'draft'
     return munchify(data)
 
 

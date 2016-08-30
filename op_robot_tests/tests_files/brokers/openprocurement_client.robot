@@ -77,8 +77,14 @@ Library  openprocurement_client_helper.py
 Створити тендер
   [Arguments]  ${username}  ${tender_data}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  create_tender  ${tender_data}
-  Log object data  ${tender}  created_tender
+  Log  ${tender}
   ${access_token}=  Get Variable Value  ${tender.access.token}
+  ${status}=  Set Variable If  'open' in '${MODE}'  active.tendering  ${EMPTY}
+  ${status}=  Set Variable If  'below' in '${MODE}'  active.enquiries  ${status}
+  ${status}=  Set Variable If  '${status}'=='${EMPTY}'  active   ${status}
+  Set To Dictionary  ${tender['data']}  status=${status}
+  ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+  Log  ${tender}
   Set To Dictionary  ${USERS.users['${username}']}   access_token=${access_token}
   Set To Dictionary  ${USERS.users['${username}']}   tender_data=${tender}
   Log   ${USERS.users['${username}'].tender_data}
