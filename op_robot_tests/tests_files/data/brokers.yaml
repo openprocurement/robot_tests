@@ -229,6 +229,6 @@ APStender:
         tender_owner:   aps_Owner
     intervals:
         default:
-            enquiry: [0, 15]
-            tender:  [0, 14] 
+            enquiry: [0, 13]
+            tender:  [0, 13] 
     timeout_on_wait: 10
