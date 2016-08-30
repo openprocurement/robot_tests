@@ -183,7 +183,10 @@ Get Broker Property By Username
   ${file_path}=  Get Variable Value  ${ARTIFACT_FILE}  artifact.yaml
   ${ARTIFACT}=  load_data_from  ${file_path}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token=${ARTIFACT.access_token}
-  ${TENDER}=  Create Dictionary   TENDER_UAID=${ARTIFACT.tender_uaid}   LAST_MODIFICATION_DATE=${ARTIFACT.last_modification_date}   LOT_ID=${Empty}
+  ${TENDER}=  Create Dictionary
+  ...      TENDER_UAID=${ARTIFACT.tender_uaid}
+  ...      LAST_MODIFICATION_DATE=${ARTIFACT.last_modification_date}
+  ...      LOT_ID=${Empty}
   ${lot_index}=  Get Variable Value  ${lot_index}  0
   Run Keyword And Ignore Error  Set To Dictionary  ${TENDER}  LOT_ID=${ARTIFACT.lots[${lot_index}]}
   ${MODE}=  Get Variable Value  ${MODE}  ${ARTIFACT.mode}
@@ -273,7 +276,10 @@ Get Broker Property By Username
   ...      doc_content=${file_content}
   ...      doc_id=${doc_id}
   ${new_description}=  create_fake_sentence
-  ${cancellation_data}=  Create Dictionary  cancellation_reason=${cancellation_reason}  document=${document}  description=${new_description}
+  ${cancellation_data}=  Create Dictionary
+  ...      cancellation_reason=${cancellation_reason}
+  ...      document=${document}
+  ...      description=${new_description}
   ${cancellation_data}=  munchify  ${cancellation_data}
   Set To Dictionary  ${USERS.users['${username}']}  cancellation_data=${cancellation_data}
   [Return]  ${cancellation_data}

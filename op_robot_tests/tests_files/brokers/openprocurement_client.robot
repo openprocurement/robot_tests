@@ -224,7 +224,10 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uaid}  ${lot_id}  ${cancellation_reason}  ${document}  ${new_description}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${lot_id}=  Get Variable Value  ${tender.data.lots[${lot_index}].id}
-  ${data}=  Create dictionary  reason=${cancellation_reason}  cancellationOf=lot  relatedLot=${lot_id}
+  ${data}=  Create dictionary
+  ...      reason=${cancellation_reason}
+  ...      cancellationOf=lot
+  ...      relatedLot=${lot_id}
   ${cancellation_data}=  Create dictionary  data=${data}
   ${cancellation_data}=  munch_dict  arg=${cancellation_data}
   ${cancel_reply}=  Call Method  ${USERS.users['${username}'].client}  create_cancellation  ${tender}  ${cancellation_data}
@@ -730,7 +733,9 @@ Library  openprocurement_client_helper.py
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
   ${response}=  Call Method  ${USERS.users['${username}'].client}  upload_bid_document  ${path}  ${tender}  ${bid_id}  ${doc_type}
-  ${uploaded_file} =  Create Dictionary   filepath=${path}   upload_response=${response}
+  ${uploaded_file} =  Create Dictionary
+  ...      filepath=${path}
+  ...      upload_response=${response}
   Log object data   ${uploaded_file}
   [return]  ${uploaded_file}
 
@@ -741,7 +746,9 @@ Library  openprocurement_client_helper.py
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
   ${response}=  Call Method  ${USERS.users['${username}'].client}  update_bid_document  ${path}  ${tender}   ${bid_id}   ${docid}
-  ${uploaded_file} =  Create Dictionary   filepath=${path}   upload_response=${response}
+  ${uploaded_file} =  Create Dictionary
+  ...      filepath=${path}
+  ...      upload_response=${response}
   Log object data   ${uploaded_file}
   [return]  ${uploaded_file}
 
