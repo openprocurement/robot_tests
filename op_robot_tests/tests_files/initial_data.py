@@ -268,6 +268,7 @@ def test_bid_data():
     })
     bid.data.tenderers[0].address.countryName_en = translate_country_en(bid.data.tenderers[0].address.countryName)
     bid.data.tenderers[0].address.countryName_ru = translate_country_ru(bid.data.tenderers[0].address.countryName)
+    bid.data['status'] = 'draft'
     return bid
 
 
