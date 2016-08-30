@@ -145,6 +145,7 @@ PublicPortal:
     keywords_file: publicportal
     roles:
         viewer:         PublicPortal_Viewer
+    timeout_on_wait: 300
 SmartTender:
     intervals:
         default:
