@@ -43,7 +43,10 @@ Resource           resource.robot
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   Run As  ${tender_owner}  Завантажити документ  ${file_path}  ${TENDER['TENDER_UAID']}
   ${doc_id}=  get_id_from_doc_name  ${file_name}
-  ${tender_document}=  Create Dictionary  doc_name=${file_name}  doc_id=${doc_id}  doc_content=${file_content}
+  ${tender_document}=  Create Dictionary
+  ...      doc_name=${file_name}
+  ...      doc_id=${doc_id}
+  ...      doc_content=${file_content}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  tender_document=${tender_document}
   Remove File  ${file_path}
 
@@ -52,7 +55,9 @@ Resource           resource.robot
   ${item}=  Підготувати дані для створення предмету закупівлі  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['id']}
   Run As  ${tender_owner}  Додати предмет закупівлі  ${TENDER['TENDER_UAID']}  ${item}
   ${item_id}=  get_id_from_object  ${item}
-  ${item_data}=  Create Dictionary  item=${item}  item_id=${item_id}
+  ${item_data}=  Create Dictionary
+  ...      item=${item}
+  ...      item_id=${item_id}
   ${item_data}=  munch_dict  arg=${item_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  item_data=${item_data}
 
@@ -158,7 +163,10 @@ Resource           resource.robot
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   Run As  ${tender_owner}  Завантажити документ в лот  ${file_path}  ${TENDER['TENDER_UAID']}  ${lot_id}
   ${doc_id}=  get_id_from_doc_name  ${file_name}
-  ${data}=  Create Dictionary  doc_name=${file_name}  doc_id=${doc_id}  doc_content=${file_content}
+  ${data}=  Create Dictionary
+  ...      doc_name=${file_name}
+  ...      doc_id=${doc_id}
+  ...      doc_content=${file_content}
   ${empty_list}=  Create List
   ${lots_documents}=  Get variable value  ${USERS.users['${tender_owner}'].lots_documents}  ${empty_list}
   Append to list  ${lots_documents}  ${data}
@@ -177,7 +185,9 @@ Resource           resource.robot
   ${item}=  Підготувати дані для створення предмету закупівлі  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['id']}
   Run As  ${tender_owner}  Додати предмет закупівлі в лот  ${TENDER['TENDER_UAID']}  ${lot_id}  ${item}
   ${item_id}=  get_id_from_object  ${item}
-  ${item_data}=  Create Dictionary  item=${item}  item_id=${item_id}
+  ${item_data}=  Create Dictionary
+  ...      item=${item}
+  ...      item_id=${item_id}
   ${item_data}=  munch_dict  arg=${item_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  item_data=${item_data}
 
@@ -214,10 +224,15 @@ Resource           resource.robot
   ${item}=  Підготувати дані для створення предмету закупівлі  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['id']}
   ${lot_resp}=  Run As  ${tender_owner}  Створити лот із предметом закупівлі  ${TENDER['TENDER_UAID']}  ${lot}  ${item}
   ${item_id}=  get_id_from_object  ${item}
-  ${item_data}=  Create Dictionary  item=${item}  item_id=${item_id}
+  ${item_data}=  Create Dictionary
+  ...      item=${item}
+  ...      item_id=${item_id}
   ${item_data}=  munch_dict  arg=${item_data}
   ${lot_id}=  get_id_from_object  ${lot.data}
-  ${lot_data}=  Create Dictionary  lot=${lot}  lot_resp=${lot_resp}  lot_id=${lot_id}
+  ${lot_data}=  Create Dictionary
+  ...      lot=${lot}
+  ...      lot_resp=${lot_resp}
+  ...      lot_id=${lot_id}
   ${lot_data}=  munch_dict  arg=${lot_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  item_data=${item_data}  lot_data=${lot_data}
 
@@ -286,7 +301,9 @@ Resource           resource.robot
   Set To Dictionary  ${feature}  featureOf=tenderer
   Run As  ${tender_owner}  Додати неціновий показник на тендер  ${TENDER['TENDER_UAID']}  ${feature}
   ${feature_id}=  get_id_from_object  ${feature}
-  ${feature_data}=  Create Dictionary  feature=${feature}  feature_id=${feature_id}
+  ${feature_data}=  Create Dictionary
+  ...      feature=${feature}
+  ...      feature_id=${feature_id}
   ${feature_data}=  munch_dict  arg=${feature_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  feature_data=${feature_data}
 
@@ -297,7 +314,9 @@ Resource           resource.robot
   ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}]}
   Run As  ${tender_owner}  Додати неціновий показник на лот  ${TENDER['TENDER_UAID']}  ${feature}  ${lot_id}
   ${feature_id}=  get_id_from_object  ${feature}
-  ${feature_data}=  Create Dictionary  feature=${feature}  feature_id=${feature_id}
+  ${feature_data}=  Create Dictionary
+  ...      feature=${feature}
+  ...      feature_id=${feature_id}
   ${feature_data}=  munch_dict  arg=${feature_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  feature_data=${feature_data}
 
@@ -308,7 +327,9 @@ Resource           resource.robot
   ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data['items'][${item_index}]}
   Run As  ${tender_owner}  Додати неціновий показник на предмет  ${TENDER['TENDER_UAID']}  ${feature}  ${item_id}
   ${feature_id}=  get_id_from_object  ${feature}
-  ${feature_data}=  Create Dictionary  feature=${feature}  feature_id=${feature_id}
+  ${feature_data}=  Create Dictionary
+  ...      feature=${feature}
+  ...      feature_id=${feature_id}
   ${feature_data}=  munch_dict  arg=${feature_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  feature_data=${feature_data}
 
@@ -361,7 +382,10 @@ Resource           resource.robot
   ${now}=  Get Current TZdate
   ${question.data.date}=  Set variable  ${now}
   ${question_id}=  get_id_from_object  ${question.data}
-  ${question_data}=  Create Dictionary  question=${question}  question_resp=${question_resp}  question_id=${question_id}
+  ${question_data}=  Create Dictionary
+  ...      question=${question}
+  ...      question_resp=${question_resp}
+  ...      question_id=${question_id}
   ${question_data}=  munch_dict  arg=${question_data}
   Set To Dictionary  ${USERS.users['${username}']}  tender_question_data=${question_data}
 
@@ -373,7 +397,10 @@ Resource           resource.robot
   ${now}=  Get Current TZdate
   ${question.data.date}=  Set variable  ${now}
   ${question_id}=  get_id_from_object  ${question.data}
-  ${question_data}=  Create Dictionary  question=${question}  question_resp=${question_resp}  question_id=${question_id}
+  ${question_data}=  Create Dictionary
+  ...      question=${question}
+  ...      question_resp=${question_resp}
+  ...      question_id=${question_id}
   ${question_data}=  munch_dict  arg=${question_data}
   Set To Dictionary  ${USERS.users['${username}']}  lots_${lot_index}_question_data=${question_data}
 
@@ -385,7 +412,10 @@ Resource           resource.robot
   ${now}=  Get Current TZdate
   ${question.data.date}=  Set variable  ${now}
   ${question_id}=  get_id_from_object  ${question.data}
-  ${question_data}=  Create Dictionary  question=${question}  question_resp=${question_resp}  question_id=${question_id}
+  ${question_data}=  Create Dictionary
+  ...      question=${question}
+  ...      question_resp=${question_resp}
+  ...      question_id=${question_id}
   ${question_data}=  munch_dict  arg=${question_data}
   Set To Dictionary  ${USERS.users['${username}']}  items_${item_index}_question_data=${question_data}
 
@@ -454,7 +484,9 @@ Resource           resource.robot
   ...      Створити чернетку вимоги про виправлення умов закупівлі
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
-  ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}
+  ${claim_data}=  Create Dictionary
+  ...      claim=${claim}
+  ...      complaintID=${complaintID}
   ${claim_data}=  munch_dict  arg=${claim_data}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data  ${claim_data}
 
@@ -467,7 +499,9 @@ Resource           resource.robot
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
   ...      ${lot_id}
-  ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}
+  ${claim_data}=  Create Dictionary
+  ...      claim=${claim}
+  ...      complaintID=${complaintID}
   ${claim_data}=  munch_dict  arg=${claim_data}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data  ${claim_data}
 
@@ -479,7 +513,9 @@ Resource           resource.robot
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
   ...      ${award_index}
-  ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}
+  ${claim_data}=  Create Dictionary
+  ...      claim=${claim}
+  ...      complaintID=${complaintID}
   ${claim_data}=  munch_dict  arg=${claim_data}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data  ${claim_data}
 
@@ -493,7 +529,12 @@ Resource           resource.robot
   ...      ${claim}
   ...      ${file_path}
   ${doc_id}=  get_id_from_doc_name  ${file_name}
-  ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}  doc_name=${file_name}  doc_id=${doc_id}  doc_content=${file_content}
+  ${claim_data}=  Create Dictionary
+  ...      claim=${claim}
+  ...      complaintID=${complaintID}
+  ...      doc_name=${file_name}
+  ...      doc_id=${doc_id}
+  ...      doc_content=${file_content}
   ${claim_data}=  munch_dict  arg=${claim_data}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data  ${claim_data}
   Remove File  ${file_path}
@@ -510,7 +551,12 @@ Resource           resource.robot
   ...      ${lot_id}
   ...      ${file_path}
   ${doc_id}=  get_id_from_doc_name  ${file_name}
-  ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}  doc_name=${file_name}  doc_id=${doc_id}  doc_content=${file_content}
+  ${claim_data}=  Create Dictionary
+  ...      claim=${claim}
+  ...      complaintID=${complaintID}
+  ...      doc_name=${file_name}
+  ...      doc_id=${doc_id}
+  ...      doc_content=${file_content}
   ${claim_data}=  munch_dict  arg=${claim_data}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data  ${claim_data}
   Remove File  ${file_path}
@@ -526,7 +572,12 @@ Resource           resource.robot
   ...      ${award_index}
   ...      ${file_path}
   ${doc_id}=  get_id_from_doc_name  ${file_name}
-  ${claim_data}=  Create Dictionary  claim=${claim}  complaintID=${complaintID}  doc_name=${file_name}  doc_id=${doc_id}  doc_content=${file_content}
+  ${claim_data}=  Create Dictionary
+  ...      claim=${claim}
+  ...      complaintID=${complaintID}
+  ...      doc_name=${file_name}
+  ...      doc_id=${doc_id}
+  ...      doc_content=${file_content}
   ${claim_data}=  munch_dict  arg=${claim_data}
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data  ${claim_data}
   Remove File  ${file_path}
@@ -534,7 +585,9 @@ Resource           resource.robot
 
 Можливість скасувати вимогу про виправлення умов закупівлі
   ${cancellation_reason}=  create_fake_sentence
-  ${data}=  Create Dictionary  status=cancelled  cancellationReason=${cancellation_reason}
+  ${data}=  Create Dictionary
+  ...      status=cancelled
+  ...      cancellationReason=${cancellation_reason}
   ${cancellation_data}=  Create Dictionary  data=${data}
   ${cancellation_data}=  munch_dict  arg=${cancellation_data}
   Run As  ${provider}
@@ -555,7 +608,9 @@ Resource           resource.robot
 
 Можливість скасувати вимогу про виправлення умов лоту
   ${cancellation_reason}=  create_fake_sentence
-  ${data}=  Create Dictionary  status=cancelled  cancellationReason=${cancellation_reason}
+  ${data}=  Create Dictionary
+  ...      status=cancelled
+  ...      cancellationReason=${cancellation_reason}
   ${cancellation_data}=  Create Dictionary  data=${data}
   ${cancellation_data}=  munch_dict  arg=${cancellation_data}
   Run As  ${provider}
@@ -577,7 +632,9 @@ Resource           resource.robot
 Можливість скасувати вимогу про виправлення визначення ${award_index} переможця
   ${cancellation_reason}=  create_fake_sentence
   ${status}=  Set variable if  'open' in '${MODE}'  stopping  cancelled
-  ${data}=  Create Dictionary  status=${status}  cancellationReason=${cancellation_reason}
+  ${data}=  Create Dictionary
+  ...      status=${status}
+  ...      cancellationReason=${cancellation_reason}
   ${cancellation_data}=  Create Dictionary  data=${data}
   ${cancellation_data}=  munch_dict  arg=${cancellation_data}
   Run As  ${provider}
@@ -600,7 +657,9 @@ Resource           resource.robot
 
 
 Можливість перетворити вимогу про виправлення умов закупівлі в скаргу
-  ${data}=  Create Dictionary  status=pending  satisfied=${False}
+  ${data}=  Create Dictionary
+  ...      status=pending
+  ...      satisfied=${False}
   ${escalation_data}=  Create Dictionary  data=${data}
   ${escalation_data}=  munch_dict  arg=${escalation_data}
   Run As  ${provider}
@@ -620,7 +679,9 @@ Resource           resource.robot
 
 
 Можливість перетворити вимогу про виправлення умов лоту в скаргу
-  ${data}=  Create Dictionary  status=pending  satisfied=${False}
+  ${data}=  Create Dictionary
+  ...      status=pending
+  ...      satisfied=${False}
   ${escalation_data}=  Create Dictionary  data=${data}
   ${escalation_data}=  munch_dict  arg=${escalation_data}
   Run As  ${provider}
@@ -640,7 +701,9 @@ Resource           resource.robot
 
 
 Можливість перетворити вимогу про виправлення визначення ${award_index} переможця в скаргу
-  ${data}=  Create Dictionary  status=pending  satisfied=${False}
+  ${data}=  Create Dictionary
+  ...      status=pending
+  ...      satisfied=${False}
   ${escalation_data}=  Create Dictionary  data=${data}
   ${escalation_data}=  munch_dict  arg=${escalation_data}
   Run As  ${provider}
@@ -746,7 +809,9 @@ Resource           resource.robot
 
 
 Можливість підтвердити задоволення вимоги про виправлення умов закупівлі
-  ${data}=  Create Dictionary  status=resolved  satisfied=${True}
+  ${data}=  Create Dictionary
+  ...      status=resolved
+  ...      satisfied=${True}
   ${confirmation_data}=  Create Dictionary  data=${data}
   ${confirmation_data}=  munch_dict  arg=${confirmation_data}
   Run As  ${provider}
@@ -766,7 +831,9 @@ Resource           resource.robot
 
 
 Можливість підтвердити задоволення вимоги про виправлення умов лоту
-  ${data}=  Create Dictionary  status=resolved  satisfied=${True}
+  ${data}=  Create Dictionary
+  ...      status=resolved
+  ...      satisfied=${True}
   ${confirmation_data}=  Create Dictionary  data=${data}
   ${confirmation_data}=  munch_dict  arg=${confirmation_data}
   Run As  ${provider}
@@ -786,7 +853,9 @@ Resource           resource.robot
 
 
 Можливість підтвердити задоволення вимоги про виправлення визначення ${award_index} переможця
-  ${data}=  Create Dictionary  status=resolved  satisfied=${True}
+  ${data}=  Create Dictionary
+  ...       status=resolved
+  ...      satisfied=${True}
   ${confirmation_data}=  Create Dictionary  data=${data}
   ${confirmation_data}=  munch_dict  arg=${confirmation_data}
   Run As  ${provider}
