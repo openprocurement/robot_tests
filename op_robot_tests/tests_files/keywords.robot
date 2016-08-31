@@ -60,7 +60,7 @@ Set Suite Variable With Default Value
 
 
 Завантажуємо дані про користувачів і майданчики
-  Log  ${broker}
+  Log  ${BROKER}
   Log  ${role}
   # Suite variable; should be present in every test suite
   # in `*** Variables ***` section
@@ -89,7 +89,7 @@ Set Suite Variable With Default Value
   ...      WARN
   Set Suite Variable With Default Value
   ...      ${role}
-  ...      ${BROKERS['${broker}'].roles.${role}}
+  ...      ${BROKERS['${BROKER}'].roles.${role}}
 
   # Set default value for each role if it is not set yet;
   # fill `used_users`;
