@@ -161,7 +161,7 @@ Get Broker Property By Username
 
 Створити артефакт
   ${artifact}=  Create Dictionary
-  ...      api_version=${api_version}
+  ...      api_version=${API_VERSION}
   ...      tender_uaid=${TENDER['TENDER_UAID']}
   ...      last_modification_date=${TENDER['LAST_MODIFICATION_DATE']}
   ...      mode=${MODE}
