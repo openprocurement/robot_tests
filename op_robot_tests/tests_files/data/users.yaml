@@ -441,3 +441,35 @@ users:
         browser:  ff
         position: [0, 0]
         size:     [1400, 900]
+    upetem_Owner:
+        broker:   upetem
+        homepage: "http://dz.upetem.com.ua/user/purchase"
+        login:    aaa@mail.ru
+        password: '11111111'
+        browser:  chrome
+        position: [0, 0]
+        size:     [1000, 500]
+    upetem_Provider:
+        broker:   upetem
+        homepage: "http://dz.upetem.com.ua/user/purchase"
+        login:    sss@mail.ru
+        password: '11111111'
+        browser:  chrome
+        position: [0, 0]
+        size:     [1000, 500]
+    upetem_Provider1:
+        broker:   upetem
+        homepage: "http://dz.upetem.com.ua/user/purchase"
+        login:    ttr@mail.ru
+        password: '11111111'
+        browser:  chrome
+        position: [0, 0]
+        size:     [1000, 500]
+    upetem_Viewer:
+        broker:   upetem
+        homepage: "http://dz.upetem.com.ua/user/purchase"
+        login:    fefew@mail.ei
+        password: '11111111'
+        browser:  chrome
+        position: [0, 0]
+        size:     [1000, 500]
