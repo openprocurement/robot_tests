@@ -61,7 +61,7 @@ Set Suite Variable With Default Value
 
 Завантажуємо дані про користувачів і майданчики
   Log  ${BROKER}
-  Log  ${role}
+  Log  ${ROLE}
   # Suite variable; should be present in every test suite
   # in `*** Variables ***` section
   Log Many  @{USED_ROLES}
@@ -83,13 +83,13 @@ Set Suite Variable With Default Value
   ${used_users}=  Create List
 
   # Handle `-v role:something`
-  Run Keyword Unless  '${role}' in @{USED_ROLES}
+  Run Keyword Unless  '${ROLE}' in @{USED_ROLES}
   ...      Log
-  ...      Role ${role} is not used in this test suite.
+  ...      Role ${ROLE} is not used in this test suite.
   ...      WARN
   Set Suite Variable With Default Value
-  ...      ${role}
-  ...      ${BROKERS['${BROKER}'].roles.${role}}
+  ...      ${ROLE}
+  ...      ${BROKERS['${BROKER}'].roles.${ROLE}}
 
   # Set default value for each role if it is not set yet;
   # fill `used_users`;
