@@ -19,9 +19,9 @@ Library  openprocurement_client_helper.py
 Підготувати клієнт для користувача
   [Arguments]  ${username}
   [Documentation]  Відкрити браузер, створити об’єкт api wrapper, тощо
-  Log  ${api_host_url}
-  Log  ${api_version}
-  ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${api_host_url}  ${api_version}
+  Log  ${API_HOST_URL}
+  Log  ${API_VERSION}
+  ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${API_HOST_URL}  ${API_VERSION}
   Set To Dictionary  ${USERS.users['${username}']}  client=${api_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${EMPTY}
   ${id_map}=  Create Dictionary
@@ -85,7 +85,7 @@ Library  openprocurement_client_helper.py
   Set To Dictionary  ${tender['data']}  status=${status}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
   Log  ${tender}
-  Log  ${\n}${api_host_url}/api/${api_version}/tenders/${tender.data.id}${\n}  WARN
+  Log  ${\n}${API_HOST_URL}/api/${API_VERSION}/tenders/${tender.data.id}${\n}  WARN
   Set To Dictionary  ${USERS.users['${username}']}   access_token=${access_token}
   Set To Dictionary  ${USERS.users['${username}']}   tender_data=${tender}
   Log   ${USERS.users['${username}'].tender_data}

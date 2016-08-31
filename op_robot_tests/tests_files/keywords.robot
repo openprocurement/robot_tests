@@ -35,7 +35,7 @@ Set Suite Variable With Default Value
 
 
 Порівняти системний і серверний час
-  ${server_time}=  request  ${api_host_url}  HEAD
+  ${server_time}=  request  ${API_HOST_URL}  HEAD
   ${local_time}=  Get current TZdate
   Log  ${server_time.headers['date']}
   Log  ${local_time}
@@ -60,8 +60,8 @@ Set Suite Variable With Default Value
 
 
 Завантажуємо дані про користувачів і майданчики
-  Log  ${broker}
-  Log  ${role}
+  Log  ${BROKER}
+  Log  ${ROLE}
   # Suite variable; should be present in every test suite
   # in `*** Variables ***` section
   Log Many  @{USED_ROLES}
@@ -83,13 +83,13 @@ Set Suite Variable With Default Value
   ${used_users}=  Create List
 
   # Handle `-v role:something`
-  Run Keyword Unless  '${role}' in @{USED_ROLES}
+  Run Keyword Unless  '${ROLE}' in @{USED_ROLES}
   ...      Log
-  ...      Role ${role} is not used in this test suite.
+  ...      Role ${ROLE} is not used in this test suite.
   ...      WARN
   Set Suite Variable With Default Value
-  ...      ${role}
-  ...      ${BROKERS['${broker}'].roles.${role}}
+  ...      ${ROLE}
+  ...      ${BROKERS['${BROKER}'].roles.${ROLE}}
 
   # Set default value for each role if it is not set yet;
   # fill `used_users`;
@@ -161,7 +161,7 @@ Get Broker Property By Username
 
 Створити артефакт
   ${artifact}=  Create Dictionary
-  ...      api_version=${api_version}
+  ...      api_version=${API_VERSION}
   ...      tender_uaid=${TENDER['TENDER_UAID']}
   ...      last_modification_date=${TENDER['LAST_MODIFICATION_DATE']}
   ...      mode=${MODE}
