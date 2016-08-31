@@ -95,6 +95,7 @@ Library  openprocurement_client_helper.py
   Log  ${tender}
   [return]   ${tender}
 
+
 Отримати доступ до тендера другого етапу
   [Arguments]  ${username}  ${tender_id}
   ${response}=  Call Method  ${USERS.users['${username}'].client}  patch_credentials  ${tender_id}  ${USERS.users['${username}'].access_token}
@@ -104,7 +105,7 @@ Library  openprocurement_client_helper.py
   Log  ${tender.data.tenderID}
   Set To Dictionary  ${TENDER}  TENDER_UAID=${response.data.tenderID}
   Log  ${TENDER['TENDER_UAID']}
-  [return]  ${TENDER['TENDER_UAID']}
+
 
 Оновити сторінку з тендером
   [Arguments]  ${username}  ${tender_uaid}

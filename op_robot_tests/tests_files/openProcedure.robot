@@ -1665,7 +1665,7 @@ ${ITEM_MEAT}        ${True}
   ...      get_second_stage
   Отримати дані із поля stage2TenderID тендера для усіх користувачів
   ${tender_UAID_second_stage}=  BuiltIn.Catenate  SEPARATOR=  ${TENDER['TENDER_UAID']}  .2
-  Можливість знайти тендер по ідентифікатору ${tender_UAID_second_stage} та зберегти його в ${second_stage_data} для користувача ${tender_owner}
+  Можливість знайти тендер по ідентифікатору ${tender_UAID_second_stage} та зберегти його в second_stage_data для користувача ${tender_owner}
 
 
 Відображення заголовку закупівлі дургого етапу
@@ -1673,7 +1673,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner  viewer
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      compare_stages
-  Звірити відображення поля title тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.${field}} для користувача ${viewer}
+  Звірити відображення поля title тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.title} для користувача ${viewer}
 
 
 Відображення мінімального кроку закупівлі дургого етапу
@@ -1705,7 +1705,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner  viewer
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      compare_stages
-  Звірити відображення поля procuringEntity.name тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.procuringEntity.name}} для користувача ${viewer}
+  Звірити відображення поля procuringEntity.name тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.procuringEntity.name} для користувача ${viewer}
 
 ##############################################################################################
 #             Відображення основних даних лоту для другого етапу
@@ -1784,7 +1784,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      save_tender_second_stage
-  Отримати доступ до тендера другого етапу
+  base_keywords.Отримати доступ до тендера другого етапу
 
 
 Можливість активувати тендер другого етапу

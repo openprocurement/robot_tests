@@ -35,14 +35,9 @@ Resource           resource.robot
   Run as  ${username}  Пошук тендера по ідентифікатору  ${TENDER['TENDER_UAID']}
 
 
-Можливість знайти тендер по ідентифікатору ${ident} для користувача ${username}
-  Дочекатись синхронізації з майданчиком  ${username}
-  Run as  ${username}  Пошук тендера по ідентифікатору  ${ident}
-
-
 Можливість знайти тендер по ідентифікатору ${tender_id} та зберегти його в ${save_location} для користувача ${username}
   Дочекатись синхронізації з майданчиком  ${username}
-  Run as  ${username}  Пошук тендера по ідентифікатору  ${ident}  ${save_location}
+  Run as  ${username}  Пошук тендера по ідентифікатору  ${tender_id}  ${save_location}
 
 
 Можливість змінити поле ${field_name} тендера на ${field_value}
@@ -90,10 +85,11 @@ Resource           resource.robot
 
 
 Отримати доступ до тендера другого етапу
-  ${tender_uaid}=  Отримати доступ до тендера другого етапу  ${tender_owner}  ${USERS.users['${tender_owner}'].tender_data.data.stage2TenderID}
-  Set to dictionary  ${TENDER}  TENDER_UAID=${tender_uaid}
+  openprocurement_client.Отримати доступ до тендера другого етапу  ${tender_owner}  ${USERS.users['${tender_owner}'].tender_data.data.stage2TenderID}
+  ${TENDER_UAID_second_stage}=  BuiltIn.Catenate  SEPARATOR=  ${TENDER['TENDER_UAID']}  .2
+  Set to dictionary  ${TENDER}  TENDER_UAID=${TENDER_UAID_second_stage}
   :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${provider1}  ${viewer}
-  \  Можливість знайти тендер по ідентифікатору ${tender_uaid} для користувача ${username}
+  \  Можливість знайти тендер по ідентифікатору для користувача ${username}
 
 
 Звірити відображення вмісту документа ${doc_id} з ${left} для користувача ${username}
@@ -251,17 +247,20 @@ Resource           resource.robot
   \  Звірити відображення поля ${field} усіх лотів для користувача ${username}
 
 
+Звірити відображення поля ${field} усіх лотів другого етапу для усіх користувачів
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  \  Звірити відображення поля ${field} усіх лотів другого етапу для користувача ${username}
+
+
 Звірити відображення поля ${field} усіх лотів для користувача ${username}
   :FOR  ${lot_index}  IN RANGE  ${NUMBER_OF_LOTS}
   \  Звірити відображення поля ${field} ${lot_index} лоту для користувача ${username}
+
 
 Звірити відображення поля ${field} усіх лотів другого етапу для користувача ${username}
   :FOR  ${lot_index}  IN RANGE  ${NUMBER_OF_LOTS}
   \  Звірити відображення поля ${field} ${lot_index} лоту другого етапу для користувача ${username}
 
-Звірити відображення поля title усіх лотів другого етапу для усіх користувачів
-  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
-  \  Звірити відображення поля ${field} усіх лотів другого етапу для користувача ${username}
 
 Звірити відображення поля ${field} ${lot_index} лоту для користувача ${username}
   Дочекатись синхронізації з майданчиком  ${username}
