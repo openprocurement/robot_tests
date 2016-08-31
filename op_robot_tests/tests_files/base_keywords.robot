@@ -40,9 +40,9 @@ Resource           resource.robot
   Run as  ${username}  Пошук тендера по ідентифікатору  ${ident}
 
 
-Можливість знайти тендер та зберегти в ${save_key} по ідентифікатору ${ident} для користувача ${username}
+Можливість знайти тендер по ідентифікатору ${tender_id} та зберегти його в ${save_location} для користувача ${username}
   Дочекатись синхронізації з майданчиком  ${username}
-  Run as  ${username}  Пошук тендера по ідентифікатору  ${ident}  ${save_key}
+  Run as  ${username}  Пошук тендера по ідентифікатору  ${ident}  ${save_location}
 
 
 Можливість змінити поле ${field_name} тендера на ${field_value}
@@ -89,8 +89,8 @@ Resource           resource.robot
   Звірити поле тендера  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${field}
 
 
-Отримати тендер другого етапу та зберегти
-  ${tender_uaid}=  Отримати тендер другого етапу  ${tender_owner}  ${USERS.users['${tender_owner}'].tender_data.data.stage2TenderID}
+Отримати доступ до тендера другого етапу
+  ${tender_uaid}=  Отримати доступ до тендера другого етапу  ${tender_owner}  ${USERS.users['${tender_owner}'].tender_data.data.stage2TenderID}
   Set to dictionary  ${TENDER}  TENDER_UAID=${tender_uaid}
   :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${provider1}  ${viewer}
   \  Можливість знайти тендер по ідентифікатору ${tender_uaid} для користувача ${username}
@@ -255,12 +255,26 @@ Resource           resource.robot
   :FOR  ${lot_index}  IN RANGE  ${NUMBER_OF_LOTS}
   \  Звірити відображення поля ${field} ${lot_index} лоту для користувача ${username}
 
+Звірити відображення поля ${field} усіх лотів другого етапу для користувача ${username}
+  :FOR  ${lot_index}  IN RANGE  ${NUMBER_OF_LOTS}
+  \  Звірити відображення поля ${field} ${lot_index} лоту другого етапу для користувача ${username}
+
+Звірити відображення поля title усіх лотів другого етапу для усіх користувачів
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  \  Звірити відображення поля ${field} усіх лотів другого етапу для користувача ${username}
 
 Звірити відображення поля ${field} ${lot_index} лоту для користувача ${username}
   Дочекатись синхронізації з майданчиком  ${username}
   ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data.lots[${lot_index}]}
   Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}'].initial_data.data.lots[${lot_index}].${field}}  ${field}
+  ...      object_id=${lot_id}
+
+Звірити відображення поля ${field} ${lot_index} лоту другого етапу для користувача ${username}
+  Дочекатись синхронізації з майданчиком  ${username}
+  ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data.lots[${lot_index}]}
+  Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${tender_owner}'].second_stage_data.data.lots[${lot_index}].${field}}  ${field}
   ...      object_id=${lot_id}
 
 

@@ -95,9 +95,9 @@ Library  openprocurement_client_helper.py
   Log  ${tender}
   [return]   ${tender}
 
-Отримати тендер другого етапу
+Отримати доступ до тендера другого етапу
   [Arguments]  ${username}  ${tender_id}
-  ${response}=  Call Method  ${USERS.users['${username}'].client}  credentials  ${tender_id}  ${USERS.users['${username}'].access_token}
+  ${response}=  Call Method  ${USERS.users['${username}'].client}  patch_credentials  ${tender_id}  ${USERS.users['${username}'].access_token}
   ${tender}=  set_access_key  ${response}  ${response.access.token}
   Set To Dictionary  ${USERS.users['${username}']}   access_token=${response.access.token}
   Set To Dictionary  ${USERS.users['${username}']}  tender_data=${response}
