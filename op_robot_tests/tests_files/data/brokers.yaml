@@ -42,7 +42,7 @@ Default:
 Quinta:
     intervals:
         default:
-            enquiry: [0, 8]
+            enquiry: [0, 3]
             tender:  [0, 10]
         openua:
             tender:  [1, 15]
@@ -80,30 +80,6 @@ DZO:
         provider:       DZO_Provider
         provider1:      DZO_Provider1
         viewer:         DZO_Viewer
-    timeout_on_wait: 300
-ztv:
-    intervals:
-        default:
-            enquiry: [0, 17]
-            tender:  [0, 16]
-    keywords_file: ztv
-    roles:
-        tender_owner:   ztv_Owner
-        provider:   ztv_Provider
-        provider1:   ztv_Provider1
-        viewer:   ztv_Viewer
-    timeout_on_wait: 300
-brizol:
-    intervals:
-        default:
-            enquiry: [0, 17]
-            tender:  [0, 19]
-    keywords_file: brizol
-    roles:
-        tender_owner:   brizol_Owner
-        provider:   brizol_Provider
-        provider1:   brizol_Provider1
-        viewer:   brizol_Viewer
     timeout_on_wait: 300
 Newtend:
     keywords_file: newtend
@@ -217,7 +193,7 @@ proztorg:
 uub:
     intervals:
         default:
-            enquiry: [0, 8]
+            enquiry: [0, 5]
             tender:  [0, 10]
         openua:
             accelerator: 1440
@@ -227,11 +203,11 @@ uub:
             accelerator: 1440
     keywords_file: uub
     roles:
-        tender_owner:   uub_Owner
-        provider:       uub_Provider
-        provider1:      uub_Provider1
-        viewer:         uub_Viewer
-    timeout_on_wait: 15
+        tender_owner:   UUB_Owner
+        provider:       UUB_Provider
+        provider1:      UUB_Provider1
+        viewer:         UUB_Viewer
+    timeout_on_wait: 300
 APStender:
     keywords_file: aps
     roles:
@@ -241,6 +217,6 @@ APStender:
         tender_owner:   aps_Owner
     intervals:
         default:
-            enquiry: [0, 15]
-            tender:  [0, 15]
+            enquiry: [0, 16]
+            tender:  [0, 16]
     timeout_on_wait: 10
