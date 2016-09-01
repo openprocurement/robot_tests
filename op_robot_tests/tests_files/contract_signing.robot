@@ -48,3 +48,12 @@ Suite Teardown  Test Suite Teardown
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Run As  ${tender_owner}  Підтвердити підписання контракту  ${TENDER['TENDER_UAID']}  -1
 
+
+Відображення статусу підписаної угоди з постачальником закупівлі
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних угоди
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  contract_sign
+  [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
+  Run As  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}  active  contracts[-1].status
