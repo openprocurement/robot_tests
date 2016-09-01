@@ -270,6 +270,6 @@ polonex:
     homepage: 'http://polonex.in.ua/proauctions/public'
     intervals:
         default:
-            enquiry: [0, 5]
-            tender:  [0, 5]
-    timeout_on_wait: 10
+            enquiry: [0, 10]
+            tender:  [0, 15]
+    timeout_on_wait: 180
