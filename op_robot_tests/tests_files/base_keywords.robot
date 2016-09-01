@@ -85,7 +85,7 @@ Resource           resource.robot
 
 
 Отримати доступ до тендера другого етапу та зберегти його
-  Отримати тендера другого етапу та зберегти його  ${tender_owner}  ${USERS.users['${tender_owner}'].tender_data.data.stage2TenderID}
+  Run as  ${tender_owner}  Отримати тендер другого етапу та зберегти його  ${USERS.users['${tender_owner}'].tender_data.data.stage2TenderID}
   ${TENDER_UAID_second_stage}=  BuiltIn.Catenate  SEPARATOR=  ${TENDER['TENDER_UAID']}  .2
   Set to dictionary  ${TENDER}  TENDER_UAID=${TENDER_UAID_second_stage}
   :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${provider1}  ${viewer}

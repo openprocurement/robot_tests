@@ -96,7 +96,7 @@ Library  openprocurement_client_helper.py
   [return]   ${tender}
 
 
-Отримати тендера другого етапу та зберегти його
+Отримати тендер другого етапу та зберегти його
   [Arguments]  ${username}  ${tender_id}
   ${response}=  Call Method  ${USERS.users['${username}'].client}  patch_credentials  ${tender_id}  ${USERS.users['${username}'].access_token}
   ${tender}=  set_access_key  ${response}  ${response.access.token}
