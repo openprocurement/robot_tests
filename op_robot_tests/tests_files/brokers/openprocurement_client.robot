@@ -96,15 +96,13 @@ Library  openprocurement_client_helper.py
   [return]   ${tender}
 
 
-Отримати доступ до тендера другого етапу
+Отримати тендера другого етапу та зберегти його
   [Arguments]  ${username}  ${tender_id}
   ${response}=  Call Method  ${USERS.users['${username}'].client}  patch_credentials  ${tender_id}  ${USERS.users['${username}'].access_token}
   ${tender}=  set_access_key  ${response}  ${response.access.token}
   Set To Dictionary  ${USERS.users['${username}']}   access_token=${response.access.token}
   Set To Dictionary  ${USERS.users['${username}']}  tender_data=${response}
   Log  ${tender.data.tenderID}
-  Set To Dictionary  ${TENDER}  TENDER_UAID=${response.data.tenderID}
-  Log  ${TENDER['TENDER_UAID']}
 
 
 Оновити сторінку з тендером

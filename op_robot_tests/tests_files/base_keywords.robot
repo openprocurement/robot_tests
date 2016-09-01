@@ -84,8 +84,8 @@ Resource           resource.robot
   Звірити поле тендера  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${field}
 
 
-Отримати доступ до тендера другого етапу
-  openprocurement_client.Отримати доступ до тендера другого етапу  ${tender_owner}  ${USERS.users['${tender_owner}'].tender_data.data.stage2TenderID}
+Отримати доступ до тендера другого етапу та зберегти його
+  Отримати тендера другого етапу та зберегти його  ${tender_owner}  ${USERS.users['${tender_owner}'].tender_data.data.stage2TenderID}
   ${TENDER_UAID_second_stage}=  BuiltIn.Catenate  SEPARATOR=  ${TENDER['TENDER_UAID']}  .2
   Set to dictionary  ${TENDER}  TENDER_UAID=${TENDER_UAID_second_stage}
   :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${provider1}  ${viewer}

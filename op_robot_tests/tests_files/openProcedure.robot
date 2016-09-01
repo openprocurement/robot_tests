@@ -1668,8 +1668,8 @@ ${ITEM_MEAT}        ${True}
   Можливість знайти тендер по ідентифікатору ${tender_UAID_second_stage} та зберегти його в second_stage_data для користувача ${tender_owner}
 
 
-Відображення заголовку закупівлі другого етапу
-  [Tags]   ${USERS.user['${tender_owner}'].broker}: Відображення заголовку тендера
+Відображення основних даних тендера другого етапу
+  [Tags]   ${USERS.user['${tender_owner}'].broker}: Відображення основних даних тендера другого етапу
   ...      viewer
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      compare_stages
@@ -1729,7 +1729,7 @@ ${ITEM_MEAT}        ${True}
 
 
 Відображення бюджету лотів для тендера другого етапу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення бюджету лотів для закупівлі другого етапу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення бюджету лотів для тендера другого етапу
   ...      viewer tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
@@ -1737,24 +1737,24 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля value.amount усіх лотів другого етапу для усіх користувачів
 
 
-Відображення валюти лотів для закупівлі другого етапу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення валюти лотів для закупівлі другого етапу
+Відображення валюти лотів для закупівлі тендера етапу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення валюти лотів для тендера другого етапу
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      compare_stages
   Звірити відображення поля value.currency усіх лотів другого етапу для користувача ${viewer}
 
 
-Відображення ПДВ в бюджеті лотів для закупівлі другого етапу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення ПДВ в бюджеті лотів для закупівлі другого етапу
+Відображення ПДВ в бюджеті лотів для тендера другого етапу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення ПДВ в бюджеті лотів для тендера другого етапу
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      compare_stages
   Звірити відображення поля value.valueAddedTaxIncluded усіх лотів другого етапу для користувача ${viewer}
 
 
-Відображення мінімального кроку лотів для закупівлі другого етапу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення мінімального кроку лотів для закупівлі другого етапу
+Відображення мінімального кроку лотів для тендера другого етапу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення мінімального кроку лотів для тендера другого етапу
   ...      viewer tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
@@ -1762,16 +1762,16 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля minimalStep.amount усіх лотів другого етапу для усіх користувачів
 
 
-Відображення валюти мінімального кроку лотів для закупівлі другого етапу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення валюти мінімального кроку лотів для закупівлі другого етапу
+Відображення валюти мінімального кроку лотів для тендера другого етапу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення валюти мінімального кроку лотів для тендера другого етапу
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      compare_stages
   Звірити відображення поля minimalStep.currency усіх лотів другого етапу для користувача ${viewer}
 
 
-Відображення ПДВ в мінімальному кроці лотів для закупівлі другого етапу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення ПДВ в мінімальному кроці лотів для закупівлі другого етапу
+Відображення ПДВ в мінімальному кроці лотів для тендера другого етапу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення ПДВ в мінімальному кроці лотів для тендера другого етапу
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      compare_stages
@@ -1786,7 +1786,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      save_tender_second_stage
-  base_keywords.Отримати доступ до тендера другого етапу
+  base_keywords.Отримати доступ до тендера другого етапу та зберегти його
 
 
 Можливість активувати тендер другого етапу
