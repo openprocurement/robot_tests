@@ -1,4 +1,4 @@
- -s openProcedure
+-s openProcedure
 
 -v MODE:open_competitive_dialogue
 
@@ -50,8 +50,8 @@
 
 -i pre-qualification_approve_qualifications_second_stage
 
--i auction_second_stage
+-i auction
 
--i qualification_approve_first_award_second_stage
+-i qualification
 
--i contract_sign_second_stage
+-i contract_sign
