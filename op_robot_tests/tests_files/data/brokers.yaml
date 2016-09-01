@@ -267,9 +267,9 @@ polonex:
         provider:       polonex_provider
         provider1:      polonex_provider1
         tender_owner:   polonex_owner
-    homepage: 'http://polonex.in.ua/'
+    homepage: 'http://polonex.in.ua/proauctions/public'
     intervals:
         default:
-            enquiry: [0, 21]
-            tender:  [0, 25]
+            enquiry: [0, 5]
+            tender:  [0, 5]
     timeout_on_wait: 10

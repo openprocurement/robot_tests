@@ -473,12 +473,14 @@ users:
     polonex_viewer:
         broker:   polonex
         homepage: "http://polonex.in.ua/proauctions/public"
+        syncpage: "http://polonex.in.ua/proauctions/sync-all"
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
     polonex_provider:
         broker:   polonex
         homepage: "http://polonex.in.ua/proauctions/public"
+        syncpage: "http://polonex.in.ua/proauctions/sync-all"
         login:    testmemb1@test.t
         password: testpass
         browser:  firefox
@@ -487,6 +489,7 @@ users:
     polonex_provider1:
         broker:   polonex
         homepage: "http://polonex.in.ua/proauctions/public"
+        syncpage: "http://polonex.in.ua/proauctions/sync-all"
         login:    testmemb2@test.t
         password: testpass
         browser:  firefox
@@ -495,6 +498,7 @@ users:
     polonex_owner:
         broker:   polonex
         homepage: "http://polonex.in.ua/proauctions/public"
+        syncpage: "http://polonex.in.ua/proauctions/sync-all"
         login:    testadmin@test.t
         password: testpass
         browser:  firefox
