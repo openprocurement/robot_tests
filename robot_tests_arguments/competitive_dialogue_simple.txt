@@ -49,6 +49,6 @@
 
 -i auction
 
--i qualification
+-i qualification_approve_first_award
 
 -i contract_sign
