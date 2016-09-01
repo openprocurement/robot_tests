@@ -1668,33 +1668,33 @@ ${ITEM_MEAT}        ${True}
   Можливість знайти тендер по ідентифікатору ${tender_UAID_second_stage} та зберегти його в second_stage_data для користувача ${tender_owner}
 
 
-Відображення заголовку закупівлі дургого етапу
+Відображення заголовку закупівлі другого етапу
   [Tags]   ${USERS.user['${tender_owner}'].broker}: Відображення заголовку тендера
-  ...      tender_owner  viewer
+  ...      viewer
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      compare_stages
   Звірити відображення поля title тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.title} для користувача ${viewer}
 
 
-Відображення мінімального кроку закупівлі дургого етапу
-  [Tags]   ${USERS.user['${tender_owner}'].broker}: Відображення мінімального кроку закупівлі дургого етапу
-  ...      tender_owner  viewer
+Відображення мінімального кроку закупівлі другого етапу
+  [Tags]   ${USERS.user['${tender_owner}'].broker}: Відображення мінімального кроку закупівлі другого етапу
+  ...      viewer
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      compare_stages
   Звірити відображення поля minimalStep тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.minimalStep} для користувача ${viewer}
 
 
-Відображення доступного бюджету закупівлі дургого етапу
-  [Tags]   ${USERS.user['${tender_owner}'].broker}: Відображення доступного бюджету закупівлі дургого етапу
-  ...      tender_owner  viewer
+Відображення доступного бюджету закупівлі другого етапу
+  [Tags]   ${USERS.user['${tender_owner}'].broker}: Відображення доступного бюджету закупівлі другого етапу
+  ...      viewer
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      compare_stages
   Звірити відображення поля value тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.value} для користувача ${viewer}
 
 
-Відображення опису закупівлі дургого етапу
-  [Tags]   ${USERS.user['${tender_owner}'].broker}: Відображення опису закупівлі дургого етапу
-  ...      tender_owner  viewer
+Відображення опису закупівлі другого етапу
+  [Tags]   ${USERS.user['${tender_owner}'].broker}: Відображення опису закупівлі другого етапу
+  ...      viewer
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      compare_stages
   Звірити відображення поля description тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.description} для користувача ${viewer}
@@ -1702,7 +1702,7 @@ ${ITEM_MEAT}        ${True}
 
 Відображення імені замовника тендера для закупівлі другого етапу
   [Tags]   ${USERS.user['${tender_owner}'].broker}: Відображення імені замовника тендера для закупівлі другого етапу
-  ...      tender_owner  viewer
+  ...      viewer
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      compare_stages
   Звірити відображення поля procuringEntity.name тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.procuringEntity.name} для користувача ${viewer}
@@ -1711,8 +1711,8 @@ ${ITEM_MEAT}        ${True}
 #             Відображення основних даних лоту для другого етапу
 ##############################################################################################
 
-Відображення заголовку лотів для закупівлі другого етапу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення заголовку лотів для закупівлі другого етапу
+Відображення лоту тендера другого етапу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера другого етапу
   ...      viewer  tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
@@ -1720,18 +1720,19 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля title усіх лотів другого етапу для усіх користувачів
 
 
-Відображення опису лотів для закупівлі другого етапу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення опису лотів для закупівлі другого етапу
+Відображення опису лотів для тендера другого етапу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення опису лотів для тендера другого етапу
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      compare_stages
   Звірити відображення поля description усіх лотів другого етапу для користувача ${viewer}
 
 
-Відображення бюджету лотів для закупівлі другого етапу
+Відображення бюджету лотів для тендера другого етапу
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення бюджету лотів для закупівлі другого етапу
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  ...      viewer tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      compare_stages
   Звірити відображення поля value.amount усіх лотів другого етапу для усіх користувачів
 
@@ -1754,8 +1755,9 @@ ${ITEM_MEAT}        ${True}
 
 Відображення мінімального кроку лотів для закупівлі другого етапу
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення мінімального кроку лотів для закупівлі другого етапу
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  ...      viewer tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      compare_stages
   Звірити відображення поля minimalStep.amount усіх лотів другого етапу для усіх користувачів
 
