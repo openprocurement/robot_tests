@@ -260,6 +260,7 @@ Get Broker Property By Username
   ${bid}=  generate_test_bid_data_second_stage  ${USERS.users['${username}'].tender_data.data}  ${index}
   [Return]  ${bid}
 
+
 Підготувати дані про постачальника
   [Arguments]  ${username}
   ${supplier_data}=  test_supplier_data
