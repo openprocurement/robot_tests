@@ -76,16 +76,16 @@ tendermaster:
         tender_owner: Tendermaster_Owner
         viewer: Tendermaster_Viewer
     timeout_on_wait: 170
-E-tender:
+Etender:
     intervals:
         default:
             enquiry: [0, 5]
     keywords_file: etender
     roles:
-        provider:       E-tender_Provider1
-        provider1:      E-tender_Provider2
-        tender_owner:   E-tender_Owner
-        viewer:         E-tender_Viewer
+        provider:       Etender_Provider1
+        provider1:      Etender_Provider2
+        tender_owner:   Etender_Owner
+        viewer:         Etender_Viewer
     timeout_on_wait: 600
 DZO:
     intervals:
