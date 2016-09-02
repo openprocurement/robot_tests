@@ -22,29 +22,29 @@ users:
         password: Password1
         browser:  chrome
         position: [0, 0]
-        size:     [800, 800]
+        size:     [1366, 800]
     Etender_Provider1:
         broker:   Etender
         homepage: "http://bid.uat.e-tender.biz/#/"
         login:    st_org
         password: 12345678
         browser:  chrome
-        position: [700, 0]
-        size:     [700, 800]
+        position: [0, 0]
+        size:     [1366, 800]
     Etender_Provider2:
         broker:   Etender
         homepage: "http://bid.uat.e-tender.biz/#/"
         login:    provider2
         password: Qa123456
         browser:  chrome
-        position: [700, 0]
-        size:     [640, 450]
+        position: [0, 0]
+        size:     [1366, 800]
     Etender_Viewer:
         broker:   Etender
         homepage: "http://bid.uat.e-tender.biz/#/"
         browser:  chrome
         position: [0, 0]
-        size:     [640, 450]
+        size:     [1366, 800]
     DZO_Owner:
         broker:   DZO
         homepage: "http://dz2.byustudio.in.ua"
