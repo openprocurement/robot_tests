@@ -673,5 +673,9 @@ Require Failure
 Оновити LAST_MODIFICATION_DATE
   ${LAST_MODIFICATION_DATE}=  Get Current TZdate
   ${status}=  Get Variable Value  ${TEST_STATUS}
+  #None is added to update LMD not in teardown section.
+  #About empty - i don't know what it is doing here. Maybe there are some workarounds,
+  #so i left it as it was.
   Run Keyword If  '${status}' == 'PASS'  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE=${LAST_MODIFICATION_DATE}
   ...         ELSE IF  '${status}' == '${Empty}'  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE=${LAST_MODIFICATION_DATE}
+  ...         ELSE IF  '${status}' == '${None}'  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE=${LAST_MODIFICATION_DATE}
