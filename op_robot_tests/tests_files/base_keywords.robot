@@ -42,7 +42,7 @@ Resource           resource.robot
 Можливість додати документацію до тендера
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   Run As  ${tender_owner}  Завантажити документ  ${file_path}  ${TENDER['TENDER_UAID']}
-  ${doc_id}=  get_id_from_doc_name  ${file_name}
+  ${doc_id}=  get_id_from_string  ${file_name}
   ${tender_document}=  Create Dictionary
   ...      doc_name=${file_name}
   ...      doc_id=${doc_id}
@@ -162,7 +162,7 @@ Resource           resource.robot
   ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}]}
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   Run As  ${tender_owner}  Завантажити документ в лот  ${file_path}  ${TENDER['TENDER_UAID']}  ${lot_id}
-  ${doc_id}=  get_id_from_doc_name  ${file_name}
+  ${doc_id}=  get_id_from_string  ${file_name}
   ${data}=  Create Dictionary
   ...      doc_name=${file_name}
   ...      doc_id=${doc_id}
@@ -528,7 +528,7 @@ Resource           resource.robot
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
   ...      ${file_path}
-  ${doc_id}=  get_id_from_doc_name  ${file_name}
+  ${doc_id}=  get_id_from_string  ${file_name}
   ${claim_data}=  Create Dictionary
   ...      claim=${claim}
   ...      complaintID=${complaintID}
@@ -550,7 +550,7 @@ Resource           resource.robot
   ...      ${claim}
   ...      ${lot_id}
   ...      ${file_path}
-  ${doc_id}=  get_id_from_doc_name  ${file_name}
+  ${doc_id}=  get_id_from_string  ${file_name}
   ${claim_data}=  Create Dictionary
   ...      claim=${claim}
   ...      complaintID=${complaintID}
@@ -571,7 +571,7 @@ Resource           resource.robot
   ...      ${claim}
   ...      ${award_index}
   ...      ${file_path}
-  ${doc_id}=  get_id_from_doc_name  ${file_name}
+  ${doc_id}=  get_id_from_string  ${file_name}
   ${claim_data}=  Create Dictionary
   ...      claim=${claim}
   ...      complaintID=${complaintID}
@@ -962,7 +962,7 @@ Resource           resource.robot
   ...      ${TENDER['TENDER_UAID']}
   ...      ${supplier_data}
   ...      ${file_path}
-  ${doc_id}=  get_id_from_doc_name  ${file_name}
+  ${doc_id}=  get_id_from_string  ${file_name}
   Set to dictionary  ${USERS.users['${tender_owner}']}  award_doc_name=${file_name}  award_doc_id=${doc_id}  award_doc_content=${file_content}
   Remove File  ${file_path}
 

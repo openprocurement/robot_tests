@@ -269,7 +269,7 @@ Get Broker Property By Username
   [Arguments]  ${username}
   ${cancellation_reason}=  create_fake_sentence
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
-  ${doc_id}=  get_id_from_doc_name  ${file_name}
+  ${doc_id}=  get_id_from_string  ${file_name}
   ${document}=  Create Dictionary
   ...      doc_path=${file_path}
   ...      doc_name=${file_name}
