@@ -3,8 +3,7 @@ Resource        keywords.robot
 Resource        resource.robot
 Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
-Library         DebugLibrary
-Library        op_robot_tests.tests_files.service_keywords
+Library         op_robot_tests.tests_files.service_keywords
 
 *** Variables ***
 ${USERS}
