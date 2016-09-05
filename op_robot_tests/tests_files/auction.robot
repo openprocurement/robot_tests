@@ -6,9 +6,7 @@ Suite Teardown  Test Suite Teardown
 Library         op_robot_tests.tests_files.service_keywords
 
 *** Variables ***
-${USERS}
 @{used_roles}  viewer  provider  provider1
-
 
 *** Test Cases ***
 
