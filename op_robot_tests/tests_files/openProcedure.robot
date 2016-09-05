@@ -1712,7 +1712,7 @@ ${ITEM_MEAT}        ${True}
 ##############################################################################################
 
 Відображення лоту тендера другого етапу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера другого етапу
   ...      viewer  tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
@@ -1721,7 +1721,7 @@ ${ITEM_MEAT}        ${True}
 
 
 Відображення опису лотів для тендера другого етапу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера другого етапу
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      compare_stages
@@ -1729,7 +1729,7 @@ ${ITEM_MEAT}        ${True}
 
 
 Відображення бюджету лотів для тендера другого етапу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера другого етапу
   ...      viewer tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
@@ -1737,8 +1737,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля value.amount усіх лотів другого етапу для усіх користувачів
 
 
-Відображення валюти лотів для закупівлі тендера етапу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
+Відображення валюти лотів для тендера тендера другого етапу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера другого етапу
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      compare_stages
@@ -1746,7 +1746,7 @@ ${ITEM_MEAT}        ${True}
 
 
 Відображення ПДВ в бюджеті лотів для тендера другого етапу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера другого етапу
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      compare_stages
@@ -1754,7 +1754,7 @@ ${ITEM_MEAT}        ${True}
 
 
 Відображення мінімального кроку лотів для тендера другого етапу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера другого етапу
   ...      viewer tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
@@ -1763,7 +1763,7 @@ ${ITEM_MEAT}        ${True}
 
 
 Відображення валюти мінімального кроку лотів для тендера другого етапу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера другого етапу
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      compare_stages
@@ -1771,7 +1771,7 @@ ${ITEM_MEAT}        ${True}
 
 
 Відображення ПДВ в мінімальному кроці лотів для тендера другого етапу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера другого етапу
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      compare_stages
@@ -1790,7 +1790,7 @@ ${ITEM_MEAT}        ${True}
 
 
 Можливість активувати тендер другого етапу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Активувати тендер
+  [Tags]   ${USERS.users['${viewer}'].broker}: Активувати тендер другого етапу
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      activate_second_stage
@@ -1804,7 +1804,7 @@ ${ITEM_MEAT}        ${True}
   ...      make_bid_by_provider_second_stage
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість подати цінову пропозицію на другий етап 1 користувачем ${provider1}
+  Можливість подати цінову пропозицію на другий етап 1 користувачем ${provider}
 
 
 Можливість подати пропозицію другим учасником на другому етапі
@@ -1813,7 +1813,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${provider1}'].broker}
   ...      make_bid_by_provider1_second_stage
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість подати цінову пропозицію на другий етап 1 користувачем ${provider1}
+  Можливість подати цінову пропозицію на другий етап 2 користувачем ${provider1}
 
 
 Можливість підтвердити першу пропозицію кваліфікації на другому етапі
