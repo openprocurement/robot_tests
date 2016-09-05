@@ -33,7 +33,7 @@ Library         op_robot_tests.tests_files.service_keywords
 
 Можливість дочекатися початку аукціону
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
-  ...      viewer  provider  provider1
+  ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      auction
   Дочекатись дати початку аукціону  ${viewer}
