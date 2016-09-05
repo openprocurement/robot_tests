@@ -41,7 +41,7 @@ Library         op_robot_tests.tests_files.service_keywords
 
 Можливість вичитати посилання на аукціон для першого учасника
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
-  ...      viewer
+  ...      provider
   ...      ${USERS.users['${viewer}'].broker}
   ...      auction
   Можливість вичитати посилання на аукціон для ${provider}
@@ -49,7 +49,7 @@ Library         op_robot_tests.tests_files.service_keywords
 
 Можливість вичитати посилання на аукціон для другого учасника
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
-  ...      viewer
+  ...      provider1
   ...      ${USERS.users['${viewer}'].broker}
   ...      auction
   Можливість вичитати посилання на аукціон для ${provider1}
