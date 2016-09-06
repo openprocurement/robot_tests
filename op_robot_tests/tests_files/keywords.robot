@@ -267,6 +267,8 @@ Get Broker Property By Username
 
 Підготувати дані про скасування
   ${cancellation_reason}=  create_fake_sentence
+  ${cancellation_reason}=  field_with_id  c  ${cancellation_reason}
+  ${cancellation_id}=  get_id_from_string  ${cancellation_reason}
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   ${doc_id}=  get_id_from_string  ${file_name}
   ${document}=  Create Dictionary
@@ -277,6 +279,7 @@ Get Broker Property By Username
   ${new_description}=  create_fake_sentence
   ${cancellation_data}=  Create Dictionary
   ...      cancellation_reason=${cancellation_reason}
+  ...      cancellation_id=${cancellation_id}
   ...      document=${document}
   ...      description=${new_description}
   ${cancellation_data}=  munchify  ${cancellation_data}

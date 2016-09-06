@@ -21,6 +21,7 @@ from .initial_data import (
     create_fake_doc,
     create_fake_sentence,
     fake,
+    field_with_id,
     test_bid_data,
     test_bid_value,
     test_claim_answer_data,
