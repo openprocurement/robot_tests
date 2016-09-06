@@ -21,6 +21,7 @@ from .initial_data import (
     create_fake_doc,
     create_fake_sentence,
     fake,
+    field_with_id,
     test_bid_data,
     test_bid_value,
     test_claim_answer_data,
@@ -409,8 +410,8 @@ def get_id_from_object(obj):
     return obj_id.group(1)
 
 
-def get_id_from_doc_name(name):
-    return re.match(r'd\-[0-9a-fA-F]{8}', name).group(0)
+def get_id_from_string(string):
+    return re.match(r'[dc]\-[0-9a-fA-F]{8}', string).group(0)
 
 
 def get_object_type_by_id(object_id):
