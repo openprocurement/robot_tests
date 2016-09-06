@@ -145,17 +145,18 @@ Suite Teardown  Test Suite Teardown
 
 *** Keywords ***
 Можливість скасувати тендер
-  ${cancellation_data}=  Підготувати дані про скасування  ${tender_owner}
+  ${cancellation_data}=  Підготувати дані про скасування
   Run As  ${tender_owner}
   ...      Скасувати закупівлю
   ...      ${TENDER['TENDER_UAID']}
   ...      ${cancellation_data['cancellation_reason']}
   ...      ${cancellation_data['document']['doc_path']}
   ...      ${cancellation_data['description']}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  tender_cancellation_data=${cancellation_data}
 
 
 Можливість скасувати лот
-  ${cancellation_data}=  Підготувати дані про скасування  ${tender_owner}
+  ${cancellation_data}=  Підготувати дані про скасування
   Run As  ${tender_owner}
   ...      Скасувати лот
   ...      ${TENDER['TENDER_UAID']}
@@ -163,6 +164,7 @@ Suite Teardown  Test Suite Teardown
   ...      ${cancellation_data['cancellation_reason']}
   ...      ${cancellation_data['document']['doc_path']}
   ...      ${cancellation_data['description']}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  lot_cancellation_data=${cancellation_data}
 
 
 Звірити відображення поля ${field} документа до скасування ${doc_id} із ${left} для користувача ${username}

@@ -266,7 +266,6 @@ Get Broker Property By Username
 
 
 Підготувати дані про скасування
-  [Arguments]  ${username}
   ${cancellation_reason}=  create_fake_sentence
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   ${doc_id}=  get_id_from_string  ${file_name}
@@ -281,7 +280,6 @@ Get Broker Property By Username
   ...      document=${document}
   ...      description=${new_description}
   ${cancellation_data}=  munchify  ${cancellation_data}
-  Set To Dictionary  ${USERS.users['${username}']}  cancellation_data=${cancellation_data}
   [Return]  ${cancellation_data}
 
 
