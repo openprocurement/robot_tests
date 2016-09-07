@@ -123,7 +123,6 @@ PrivatMarket:
     keywords_file: privatmarket
     roles:
         provider:       PrivatMarket_Provider
-        provider1:      PrivatMarket_Provider1
         viewer:         PrivatMarket_Viewer
     timeout_on_wait: 30
 Prom:
