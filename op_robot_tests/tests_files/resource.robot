@@ -1,5 +1,5 @@
 *** Variables ***
 ${api_host_url}  https://api-sandbox.ea.openprocurement.org
-${api_version}   0.11
+${api_version}   dev
 ${broker}        Quinta
 ${role}          viewer

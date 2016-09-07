@@ -65,7 +65,7 @@ Etender:
         provider1:      Etender_Provider2
         tender_owner:   Etender_Owner
         viewer:         Etender_Viewer
-    timeout_on_wait: 30
+    timeout_on_wait: 120
 DZO:
     intervals:
         default:
@@ -258,5 +258,18 @@ APStender:
     intervals:
         default:
             enquiry: [0, 21]
-            tender:  [0, 25] 
+            tender:  [0, 25]
     timeout_on_wait: 10
+polonex:
+    keywords_file: polonex
+    roles:
+        viewer:         polonex_viewer
+        provider:       polonex_provider
+        provider1:      polonex_provider1
+        tender_owner:   polonex_owner
+    homepage: 'http://polonex.in.ua/proauctions/public'
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 15]
+    timeout_on_wait: 180

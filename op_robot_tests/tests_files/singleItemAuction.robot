@@ -123,6 +123,7 @@ ${mode}         single
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
+  ...      enquiry_period_start_date
   Звірити дату тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  enquiryPeriod.startDate
 
 
@@ -263,6 +264,7 @@ ${mode}         single
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
+  ...      item_unit_code
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].unit.code
 
 
