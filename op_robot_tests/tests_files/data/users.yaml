@@ -245,7 +245,7 @@ users:
         homepage: "https://217.76.194.185:56005/"
         browser:  chrome
         position: [0, 450]
-        size:     [1000, 720]
+        size:     [1300, 720]
     Publicbid_Provider1:
         broker:   Publicbid
         homepage: "https://217.76.194.185:56005/"
@@ -253,7 +253,7 @@ users:
         password: P@ssw0rd
         browser:  chrome
         position: [450, 0]
-        size:     [1000, 720]
+        size:     [1800, 900]
     PublicPortal_Viewer:
         broker:   PublicPortal
         homepage: "http://dev.prozorro.org/"
