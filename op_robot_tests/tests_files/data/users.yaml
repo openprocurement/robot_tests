@@ -132,6 +132,36 @@ users:
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
+    brizol_Owner_auction:
+        broker:   brizolauction
+        homepage: "http://eauction.byustudio.in.ua/"
+        login:    prozorroytenderowner@gmail.com
+        password: 123456
+        browser:  PhantomJS
+        position: [0, 0]
+        size:     [1366, 800]
+    brizol_Provider_auction:
+        broker:   brizolauction
+        homepage: "http://eauction.byustudio.in.ua/"
+        login:    prozorroyprovider1@gmail.com
+        password: 123456
+        browser:  PhantomJS
+        position: [0, 0]
+        size:     [1366, 800]
+    brizol_Provider1_auction:
+        broker:   brizolauction
+        homepage: "http://eauction.byustudio.in.ua/"
+        login:    prozorroyprovider2@gmail.com
+        password: 123456
+        browser:  PhantomJS
+        position: [0, 0]
+        size:     [1366, 800]
+    brizol_Viewer_auction:
+        broker:   brizolauction
+        homepage: "http://eauction.byustudio.in.ua/"
+        browser:  PhantomJS
+        position: [0, 0]
+        size:     [1366, 800]
     Newtend_Owner:
         broker:   Newtend
         homepage: "http://dev23.newtend.com/opc/tenders"
