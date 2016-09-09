@@ -279,7 +279,7 @@ alfa:
         default:
             enquiry: [0, 15]
             tender:  [0, 15]
-    homepage: "https://zorro.azurewebsites.net/"
+    homepage: "https://zorro-test.azurewebsites.net/"
     roles:
         provider:       alfa_Provider
         provider1:      alfa_Provider1
