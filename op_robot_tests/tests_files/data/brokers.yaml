@@ -108,6 +108,18 @@ ztv:
         provider1:   ZTV_Provider1
         viewer:   ZTV_Viewer
     timeout_on_wait: 300
+brizolauction:
+    intervals:
+        default:
+            enquiry: [0, 17]
+            tender:  [0, 19]
+    keywords_file: brizol
+    roles:
+        tender_owner:   brizol_Owner_auction
+        provider:   brizol_Provider_auction
+        provider1:   brizol_Provider1_auction
+        viewer:   brizol_Viewer_auction
+    timeout_on_wait: 300
 Newtend:
     keywords_file: newtend
     roles:
