@@ -255,7 +255,7 @@ users:
         size:     [1280, 1024]
     Publicbid_Owner:
         broker:   Publicbid
-        homepage: "http://192.168.120.150:80/"
+        homepage: "http://10.255.200.224:8089/"
         login:    test_eauction@yopmail.com
         password: P@ssw0rd
         browser:  chrome
@@ -263,13 +263,13 @@ users:
         size:     [1300, 900]
     Publicbid_Viewer:
         broker:   Publicbid
-        homepage: "http://192.168.120.150:80/"
+        homepage: "http://10.255.200.224:8089/"
         browser:  chrome
         position: [0, 450]
         size:     [1300, 900]
     Publicbid_Provider1:
         broker:   Publicbid
-        homepage: "http://192.168.120.150:80/"
+        homepage: "http://10.255.200.224:8089/"
         login:    test_eauction@yopmail.com
         password: P@ssw0rd
         browser:  chrome
