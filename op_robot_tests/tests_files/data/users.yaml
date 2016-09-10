@@ -506,27 +506,27 @@ users:
         size:     [1366, 800]
     alfa_Owner:
         broker:   alfa
-        login:    +380671234501
-        password: 123
+        login:    "+380671234501"
+        sms: 123
         browser:  chrome
         position: [10, 10]
-        size:     [1200, 700]
+        size:     [1200, 600]
     alfa_Provider:
         broker:   alfa
-        login:    +380671234502
+        login:    "+380671234502"
         sms:      123
         browser:  chrome
         position: [15, 15]
-        size:     [1200, 700]
+        size:     [1200, 600]
     alfa_Provider1:
         broker:   alfa
-        login:    +380671234503
-        password: 123
+        login:    "+380671234503"
+        sms: 123
         browser:  chrome
         position: [20, 20]
-        size:     [1200, 700]
+        size:     [1200, 600]
     alfa_Viewer:
         broker:   alfa
         browser:  chrome
         position: [25, 25]
-        size:     [1200, 700]
+        size:     [1200, 600]
