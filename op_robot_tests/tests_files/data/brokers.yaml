@@ -120,6 +120,30 @@ brizolauction:
         provider1:   brizol_Provider1_auction
         viewer:   brizol_Viewer_auction
     timeout_on_wait: 300
+opentenderauction:
+    intervals:
+        default:
+            enquiry: [0, 17]
+            tender:  [0, 19]
+    keywords_file: opentender
+    roles:
+        tender_owner:   opentender_Owner_auction
+        provider:   opentender_Provider_auction
+        provider1:   opentender_Provider1_auction
+        viewer:   opentender_Viewer_auction
+    timeout_on_wait: 300
+uaceauction:
+    intervals:
+        default:
+            enquiry: [0, 17]
+            tender:  [0, 19]
+    keywords_file: uace
+    roles:
+        tender_owner:   uace_Owner_auction
+        provider:   uace_Provider_auction
+        provider1:   uace_Provider1_auction
+        viewer:   uace_Viewer_auction
+    timeout_on_wait: 300
 Newtend:
     keywords_file: newtend
     roles:
