@@ -162,6 +162,66 @@ users:
         browser:  PhantomJS
         position: [0, 0]
         size:     [1366, 800]
+    opentender_Owner_auction:
+        broker:   opentenderauction
+        homepage: "http://eauction.open-tender.com.ua"
+        login:    prozorroytenderowner@gmail.com
+        password: 123456
+        browser:  PhantomJS
+        position: [0, 0]
+        size:     [1366, 800]
+    opentender_Provider_auction:
+        broker:   opentenderauction
+        homepage: "http://eauction.open-tender.com.ua"
+        login:    prozorroyprovider1@gmail.com
+        password: 123456
+        browser:  PhantomJS
+        position: [0, 0]
+        size:     [1366, 800]
+    opentender_Provider1_auction:
+        broker:   opentenderauction
+        homepage: "http://eauction.open-tender.com.ua"
+        login:    prozorroyprovider2@gmail.com
+        password: 123456
+        browser:  PhantomJS
+        position: [0, 0]
+        size:     [1366, 800]
+    opentender_Viewer_auction:
+        broker:   opentenderauction
+        homepage: "http://eauction.open-tender.com.ua"
+        browser:  PhantomJS
+        position: [0, 0]
+        size:     [1366, 800]
+    uace_Owner_auction:
+        broker:   uaceauction
+        homepage: "http://eauction.uace.com.ua"
+        login:    prozorroytenderowner@gmail.com
+        password: 123456
+        browser:  PhantomJS
+        position: [0, 0]
+        size:     [1366, 800]
+    uace_Provider_auction:
+        broker:   uaceauction
+        homepage: "http://eauction.uace.com.ua"
+        login:    prozorroyprovider1@gmail.com
+        password: 123456
+        browser:  PhantomJS
+        position: [0, 0]
+        size:     [1366, 800]
+    uace_Provider1_auction:
+        broker:   uaceauction
+        homepage: "http://eauction.uace.com.ua"
+        login:    prozorroyprovider2@gmail.com
+        password: 123456
+        browser:  PhantomJS
+        position: [0, 0]
+        size:     [1366, 800]
+    uace_Viewer_auction:
+        broker:   uaceauction
+        homepage: "http://eauction.uace.com.ua"
+        browser:  PhantomJS
+        position: [0, 0]
+        size:     [1366, 800]
     Newtend_Owner:
         broker:   Newtend
         homepage: "http://dev23.newtend.com/opc/tenders"
