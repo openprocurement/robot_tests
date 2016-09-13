@@ -145,6 +145,10 @@ uaceauction:
         viewer:   uace_Viewer_auction
     timeout_on_wait: 300
 Newtend:
+    intervals:
+        default:
+            enquiry: [0, 20]
+            tender:  [0, 25]
     keywords_file: newtend
     roles:
         provider:       Newtend_Provider1

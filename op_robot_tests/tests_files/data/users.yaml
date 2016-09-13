@@ -224,23 +224,23 @@ users:
         size:     [1366, 800]
     Newtend_Owner:
         broker:   Newtend
-        homepage: "http://dev23.newtend.com/opc/tenders"
-        login:    ten2312@mailinator.com
+        homepage: "http://ea.newtend.com/provider/#/profile/login"
+        login:    auc001@mailinator.com
         password: 123123
         browser:  chrome
         position: [0, 0]
         size:     [1200, 1200]
     Newtend_Provider1:
         broker:   Newtend
-        homepage: "http://dev23.newtend.com/opc/tenders"
-        login:    ten2316@mailinator.com
+        homepage: "http://ea.newtend.com/provider/#/profile/login"
+        login:    auc101@mailinator.com
         password: 123123
         browser:  chrome
         position: [700, 0]
         size:     [800, 700]
     Newtend_Viewer:
         broker:   Newtend
-        homepage: "http://dev23.newtend.com/opc"
+        homepage: "http://ea.newtend.com/provider/"
         browser:  chrome
         position: [800, 400]
         size:     [800, 700]
