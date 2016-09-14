@@ -635,7 +635,7 @@ Require Failure
   ...      Звірити статус тендера
   ...      ${username}
   ...      ${next_status}
-  Run keyword if  '${next_status}' == 'active.auction'  Sleep  120  # Auction sync
+  Run keyword if  '${next_status}' == 'active.auction'  Sleep  240  # Auction sync
 
 
 Дочекатись дати початку аукціону
