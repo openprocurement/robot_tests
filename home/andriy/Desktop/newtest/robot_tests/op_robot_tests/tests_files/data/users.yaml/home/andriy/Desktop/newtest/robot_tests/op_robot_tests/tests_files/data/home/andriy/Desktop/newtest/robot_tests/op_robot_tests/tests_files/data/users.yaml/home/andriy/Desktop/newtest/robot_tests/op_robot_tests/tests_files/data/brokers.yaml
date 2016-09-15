@@ -1,0 +1,68 @@
+Default:
+    # Default dictionary:
+    # These values are used unless a
+    # specific broker entry overrides them
+    intervals:
+        # intervals: Interval values for each "mode"
+        #
+        # Each field is a mode name
+        # Current modes are:
+        # single, multi, limited, openua, openeu
+        #
+        # See `prepare_test_tender_data()`
+        # in `service_keywords.py` for more details
+        #
+        # If some mode is not specified,
+        # time values are taken from "default"
+        default:
+            # default: Used for modes that are not present in `intervals`
+            #
+            # enquiry, tender: Period names with corresponding time values
+            #
+            # Other mode-specific fields are allowed too
+            #
+            # First number in list:  Delay before period starts (for startDate)
+            # Second number in list: Duration of period (for endDate)
+            enquiry: [0, 15]
+            tender:  [0, 15]
+        openua:
+            # accelerator: Integer value
+            # This is not a name of period
+            # Please refer to API documentation to find out what's this
+            accelerator: 1440
+            tender:  [0, 15]
+            # Please remember that openUA and openEU procedures
+            # forbid anyone to set or modify enquiryPeriod
+            # (it is set automatically)
+        openeu:
+            accelerator: 1440
+            tender:  [0, 30]
+    # Synchronization delay, in seconds
+    timeout_on_wait: 300
+Quinta:
+    intervals:
+        default:
+            enquiry: [0, 8]
+            tender:  [0, 10]
+        openua:
+            tender:  [1, 15]
+        openeu:
+            tender:  [1, 30]
+    keywords_file: openprocurement_client
+    roles:
+        provider:       Tender_User
+        provider1:      Tender_User1
+        tender_owner:   Tender_Owner
+        viewer:         Tender_Viewer
+    timeout_on_wait: 15
+uatenders:
+    intervals:
+        default:
+            enquiry: [0, 15]
+            tender:  [0, 15]
+    keywords_file: uatenders
+    roles:
+        provider:       uatenders_Provider
+        tender_owner:   uatenders_Owner
+        viewer:         uatenders_Viewer
+    timeout_on_wait: 60
