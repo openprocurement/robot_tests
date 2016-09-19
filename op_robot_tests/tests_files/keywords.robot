@@ -6,7 +6,6 @@ Library  Selenium2Library
 Library  OperatingSystem
 Library  DateTime
 Library  DebugLibrary
-Library  BuiltIn
 
 
 Documentation

@@ -1664,7 +1664,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      get_second_stage
   Отримати дані із поля stage2TenderID тендера для усіх користувачів
-  ${tender_UAID_second_stage}=  BuiltIn.Catenate  SEPARATOR=  ${TENDER['TENDER_UAID']}  .2
+  ${tender_UAID_second_stage}=  Catenate  SEPARATOR=  ${TENDER['TENDER_UAID']}  .2
   Можливість знайти тендер по ідентифікатору ${tender_UAID_second_stage} та зберегти його в second_stage_data для користувача ${tender_owner}
 
 
