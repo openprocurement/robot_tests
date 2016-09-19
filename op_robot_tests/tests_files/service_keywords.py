@@ -329,7 +329,7 @@ def get_from_object(obj, attribute):
 def set_to_object(obj, attribute, value):
     # Search the list index in path to value
     list_index = re.search('\d+', attribute)
-    if list_index:
+    if list_index and attribute != 'stage2TenderID':
         list_index = list_index.group(0)
         parent, child = attribute.split('[' + list_index + '].')[:2]
         # Split attribute to path to lits (parent) and path to value in list element (child)
@@ -444,7 +444,7 @@ def get_complaint_index_by_complaintID(data, complaintID):
 
 def generate_test_bid_data(tender_data):
     bid = test_bid_data()
-    if 'aboveThreshold' in tender_data.get('procurementMethodType', '') or 'competitiveDialogue' in tender_data.get('procurementMethodType', ''):
+    if tender_data.get('procurementMethodType', '')[:-2] in ('aboveThreshold', 'competitiveDialogue'):
         bid.data.selfEligible = True
         bid.data.selfQualified = True
     if 'lots' in tender_data:
@@ -465,6 +465,35 @@ def generate_test_bid_data(tender_data):
 
 def mult_and_round(*args, **kwargs):
     return round(reduce(operator.mul, args), kwargs.get('precision', 2))
+
+
+def generate_test_bid_data_second_stage(tender_data, index='0'):
+    bid = test_bid_data()
+    if index.isdigit():
+        index = int(index)
+    else:
+        index = 0
+    bid['data']['tenderers'][0]['identifier']['id'] = tender_data['shortlistedFirms'][index]['identifier']['id']
+    bid['data']['tenderers'][0]['identifier']['scheme'] = tender_data['shortlistedFirms'][index]['identifier']['scheme']
+    bid['data']['tenderers'][0]['identifier']['legalName'] = tender_data['shortlistedFirms'][index]['identifier']['legalName']
+
+    if tender_data.get('procurementMethodType', '')[:-2] in ('aboveThreshold', 'competitiveDialogue'):
+        bid.data.selfEligible = True
+        bid.data.selfQualified = True
+    if 'lots' in tender_data:
+        bid.data.lotValues = []
+        for lot in tender_data['lots']:
+            value = test_bid_value(lot['value']['amount'])
+            value['relatedLot'] = lot.get('id', '')
+            bid.data.lotValues.append(value)
+    else:
+        bid.data.update(test_bid_value(tender_data['value']['amount']))
+    if 'features' in tender_data:
+        bid.data.parameters = []
+        for feature in tender_data['features']:
+            parameter = {"value": fake.random_element(elements=(0.05, 0.01, 0)), "code": feature.get('code', '')}
+            bid.data.parameters.append(parameter)
+    return bid
 
 
 # GUI Frontends common
