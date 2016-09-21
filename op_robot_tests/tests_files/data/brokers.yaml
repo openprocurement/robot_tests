@@ -73,7 +73,7 @@ Etender:
         provider1:      Etender_Provider2
         tender_owner:   Etender_Owner
         viewer:         Etender_Viewer
-    timeout_on_wait: 600
+    timeout_on_wait: 60
 DZO:
     intervals:
         default:
