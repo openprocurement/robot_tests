@@ -97,7 +97,7 @@ Resource           resource.robot
   \  Можливість знайти тендер по ідентифікатору для користувача ${username}
 
 
-Звірити відображення вмісту документа ${doc_id} з ${left} для користувача ${username}
+Звірити відображення вмісту документа ${doc_id} із ${left} для користувача ${username}
   ${file_name}=  Run as  ${username}  Отримати документ  ${TENDER['TENDER_UAID']}  ${doc_id}
   ${right}=  Get File  ${OUTPUT_DIR}${/}${file_name}
   Порівняти об'єкти  ${left}  ${right}
