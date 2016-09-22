@@ -259,9 +259,10 @@ Get Broker Property By Username
 
 Підготувати дані про постачальника
   [Arguments]  ${username}  ${lotIndex}=${-1}
+  ${lotIndex}=  Convert To Number  ${lotIndex}
   ${supplier_data}=  test_supplier_data
-  Run Keyword If  ${lotIndex} > -1  Set To Dictionary  ${supplier_data.data}  lotID=${USERS.users['${username}'].tender_data.data['lots'][${lotIndex}]['id']}
-  Set To Dictionary  ${USERS.users['${username}']}  supplier_data=${supplier_data}
+  Run Keyword If  ${lotIndex} > -1  Set To Dictionary  ${supplier_data.data}  lotID=${USERS.users['${tender_owner}'].initial_data.data['lots'][${lotIndex}]['id']}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  supplier_data=${supplier_data}
   Log  ${supplier_data}
   [Return]  ${supplier_data}
 
