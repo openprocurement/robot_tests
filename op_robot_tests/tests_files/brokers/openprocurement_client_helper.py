@@ -24,8 +24,8 @@ class StableClient(Client):
         return super(StableClient, self).request(*args, **kwargs)
 
 
-def prepare_api_wrapper(key, host_url, api_version, resource="auctions"):
-    return StableClient(key, host_url, api_version, resource)
+def prepare_api_wrapper(key, host_url, api_version, resource='auctions'):
+    return StableClient(key, host_url, api_version, resource=resource)
 
 
 def get_complaint_internal_id(tender, complaintID):
