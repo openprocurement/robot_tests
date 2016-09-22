@@ -45,7 +45,7 @@ def create_fake_doc():
     tf = NamedTemporaryFile(delete=False, suffix=suffix, prefix=prefix)
     tf.write(content)
     tf.close()
-    return tf.name, os.path.basename(tf.name), content
+    return tf.name.replace('\\', '\\\\'), os.path.basename(tf.name), content
 
 
 def test_tender_data(params, periods=("enquiry", "tender")):
