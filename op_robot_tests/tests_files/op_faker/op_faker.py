@@ -5,7 +5,6 @@ from munch import Munch
 from json import load
 import os
 
-
 def load_data_from_file(file_name):
     if not os.path.exists(file_name):
         file_name = os.path.join(os.path.dirname(__file__), file_name)
@@ -22,7 +21,7 @@ class OP_Provider(BaseProvider):
     procuringEntities = __fake_data.procuringEntities
     addresses = __fake_data.addresses
     classifications = __fake_data.classifications
-    cpvs = __fake_data.cpvs
+    cavs = __fake_data.cavs
     items_base_data = __fake_data.items_base_data
 
     @classmethod
@@ -89,35 +88,35 @@ class OP_Provider(BaseProvider):
         return deepcopy(self.random_element(self.procuringEntities))
 
     @classmethod
-    def cpv(self):
-        return self.random_element(self.cpvs)
+    def cav(self):
+        return self.random_element(self.cavs)
 
     @classmethod
-    def fake_item(self, cpv_group=None):
+    def fake_item(self, cav_group=None):
         """
         Generate a random item for openprocurement tenders
 
-        :param cpv_group: gives possibility to generate items
-            from a specific cpv group. Cpv group is three digits
+        :param cav_group: gives possibility to generate items
+            from a specific cav group. cpv group is three digits
             in the beginning of each cpv id.
         """
-        if cpv_group is None:
+        if cav_group is None:
             item_base_data = self.random_element(self.items_base_data)
         else:
-            cpv_group = str(cpv_group)
-            similar_cpvs = []
-            for cpv_element in self.cpvs:
-                if cpv_element.startswith(cpv_group):
-                    similar_cpvs.append(cpv_element)
-            cpv = self.random_element(similar_cpvs)
+            cav_group = str(cav_group)
+            similar_cavs = []
+            for cav_element in self.cavs:
+                if cav_element.startswith(cav_group):
+                    similar_cavs.append(cav_element)
+            cav = self.random_element(similar_cavs)
             for entity in self.items_base_data:
-                if entity["cpv_id"] == cpv:
+                if entity["cav_id"] == cav:
                     item_base_data = entity
                     break
 
         # choose appropriate dkpp classification for item_base_data's cpv
         for entity in self.classifications:
-            if entity["classification"]["id"] == item_base_data["cpv_id"]:
+            if entity["classification"]["id"] == item_base_data["cav_id"]:
                 classification = entity
                 break
 
@@ -127,7 +126,6 @@ class OP_Provider(BaseProvider):
             "description_ru": item_base_data["description_ru"],
             "description_en": item_base_data["description_en"],
             "classification": classification["classification"],
-            "additionalClassifications": classification["additionalClassifications"],
             "deliveryAddress": address["deliveryAddress"],
             "deliveryLocation": address["deliveryLocation"],
             "unit": item_base_data["unit"],
