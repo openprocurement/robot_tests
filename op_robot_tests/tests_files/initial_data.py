@@ -138,7 +138,7 @@ def test_tender_data_limited(params):
     del data["enquiryPeriod"]
     del data["tenderPeriod"]
     for lot in data.get('lots', []):
-        del lot['minimalStep']
+        lot.pop('minimalStep', None)
     data["procuringEntity"]["kind"] = "general"
     data.update({"procurementMethodType": params['mode'], "procurementMethod": "limited"})
     if params['mode'] == "negotiation":
