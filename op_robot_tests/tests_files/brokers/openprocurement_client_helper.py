@@ -10,7 +10,7 @@ import urllib
 def retry_if_request_failed(exception):
     if isinstance(exception, RequestFailed):
         status_code = getattr(exception, 'status_int', None)
-        if 500 <= status_code < 600 or status_code == 429:
+        if 500 <= status_code < 600 or status_code in (409, 429):
             return True
         else:
             return False
