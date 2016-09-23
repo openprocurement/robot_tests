@@ -89,7 +89,7 @@ def test_tender_data(params, periods=("enquiry", "tender")):
             inc_dt += timedelta(minutes=params['intervals'][period_name][i])
             period_dict[period_name + "Period"][j + "Date"] = inc_dt.isoformat()
     data.update(period_dict)
-    cpv_group = fake.cpv()[:3]
+    cav_group = fake.cav()[:3]
     if params.get('number_of_lots'):
         data['lots'] = []
         for lot_number in range(params['number_of_lots']):
@@ -98,7 +98,7 @@ def test_tender_data(params, periods=("enquiry", "tender")):
             data['lots'].append(new_lot)
             data['lots'][lot_number]['id'] = lot_id
             for i in range(params['number_of_items']):
-                new_item = test_item_data(cpv_group)
+                new_item = test_item_data(cav_group)
                 new_item['relatedLot'] = lot_id
                 data['items'].append(new_item)
         value_amount = round(sum(lot['value']['amount'] for lot in data['lots']), 2)
@@ -113,7 +113,7 @@ def test_tender_data(params, periods=("enquiry", "tender")):
             data['features'].append(new_feature)
     else:
         for i in range(params['number_of_items']):
-            new_item = test_item_data(cpv_group)
+            new_item = test_item_data(cav_group)
             data['items'].append(new_item)
     if params.get('tender_meat'):
         new_feature = test_feature_data()
@@ -296,8 +296,8 @@ def test_supplier_data():
     })
 
 
-def test_item_data(cpv=None):
-    data = fake.fake_item(cpv)
+def test_item_data(cav=None):
+    data = fake.fake_item(cav)
     data["description"] = field_with_id("i", data["description"])
     data["description_en"] = field_with_id("i", data["description_en"])
     data["description_ru"] = field_with_id("i", data["description_ru"])
@@ -375,7 +375,7 @@ def test_tender_data_openeu(params):
     data['procurementMethodType'] = 'aboveThresholdEU'
     data['title_en'] = "[TESTING]"
     for item_number, item in enumerate(data['items']):
-        item['description_en'] = "Test item #{}".format(item_number)
+         item['description_en'] = "Test item #{}".format(item_number)
     data['procuringEntity']['name_en'] = fake_en.name()
     data['procuringEntity']['contactPoint']['name_en'] = fake_en.name()
     data['procuringEntity']['contactPoint']['availableLanguage'] = "en"
