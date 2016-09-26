@@ -20,6 +20,7 @@ Suite Teardown  Test Suite Teardown
 ##############################################################################################
 #             TENDER CANCELLATION
 ##############################################################################################
+
 Можливість скасувати тендер
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Скасування тендера
   ...  tender_owner
@@ -46,7 +47,7 @@ Suite Teardown  Test Suite Teardown
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_cancelation
   Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${tender_owner}']['cancellation_data']['cancellation_reason']}
+  ...      ${USERS.users['${tender_owner}']['tender_cancellation_data']['cancellation_reason']}
   ...      cancellations[0].reason
 
 
@@ -55,7 +56,7 @@ Suite Teardown  Test Suite Teardown
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_cancelation
-  Звірити відображення поля description документа до скасування ${USERS.users['${tender_owner}']['cancellation_data']['document']['doc_id']} із ${USERS.users['${tender_owner}']['cancellation_data']['description']} для користувача ${viewer}
+  Звірити відображення поля description документа ${USERS.users['${tender_owner}']['tender_cancellation_data']['document']['doc_id']} до скасування ${USERS.users['${tender_owner}']['tender_cancellation_data']['cancellation_id']} із ${USERS.users['${tender_owner}']['tender_cancellation_data']['description']} для користувача ${viewer}
 
 
 Відображення заголовку документа до скасування тендера
@@ -63,7 +64,7 @@ Suite Teardown  Test Suite Teardown
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_cancelation
-  Звірити відображення поля title документа до скасування ${USERS.users['${tender_owner}']['cancellation_data']['document']['doc_id']} із ${USERS.users['${tender_owner}']['cancellation_data']['document']['doc_name']} для користувача ${viewer}
+  Звірити відображення поля title документа ${USERS.users['${tender_owner}']['tender_cancellation_data']['document']['doc_id']} до скасування ${USERS.users['${tender_owner}']['tender_cancellation_data']['cancellation_id']} із ${USERS.users['${tender_owner}']['tender_cancellation_data']['document']['doc_name']} для користувача ${viewer}
 
 
 Відображення вмісту документа до скасування тендера
@@ -71,7 +72,7 @@ Suite Teardown  Test Suite Teardown
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_cancelation
-  Звірити відображення вмісту документа до скасування ${USERS.users['${tender_owner}']['cancellation_data']['document']['doc_id']} з ${USERS.users['${tender_owner}']['cancellation_data']['document']['doc_content']} для користувача ${viewer}
+  Звірити відображення вмісту документа ${USERS.users['${tender_owner}']['tender_cancellation_data']['document']['doc_id']} до скасування ${USERS.users['${tender_owner}']['tender_cancellation_data']['cancellation_id']} з ${USERS.users['${tender_owner}']['tender_cancellation_data']['document']['doc_content']} для користувача ${viewer}
 
 ##############################################################################################
 #             LOT CANCELLATION
@@ -103,7 +104,7 @@ Suite Teardown  Test Suite Teardown
   ...  ${USERS.users['${viewer}'].broker}
   ...  lot_cancelation
   Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${tender_owner}']['cancellation_data']['cancellation_reason']}
+  ...      ${USERS.users['${tender_owner}']['lot_cancellation_data']['cancellation_reason']}
   ...      cancellations[0].reason
 
 
@@ -112,7 +113,7 @@ Suite Teardown  Test Suite Teardown
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  lot_cancelation
-  Звірити відображення поля description документа до скасування ${USERS.users['${tender_owner}']['cancellation_data']['document']['doc_id']} із ${USERS.users['${tender_owner}']['cancellation_data']['description']} для користувача ${viewer}
+  Звірити відображення поля description документа ${USERS.users['${tender_owner}']['lot_cancellation_data']['document']['doc_id']} до скасування ${USERS.users['${tender_owner}']['lot_cancellation_data']['cancellation_id']} із ${USERS.users['${tender_owner}']['lot_cancellation_data']['description']} для користувача ${viewer}
 
 
 Відображення заголовку документа до скасування лота
@@ -120,7 +121,7 @@ Suite Teardown  Test Suite Teardown
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  lot_cancelation
-  Звірити відображення поля description документа до скасування ${USERS.users['${tender_owner}']['cancellation_data']['document']['doc_id']} із ${USERS.users['${tender_owner}']['cancellation_data']['document']['doc_name']} для користувача ${viewer}
+  Звірити відображення поля title документа ${USERS.users['${tender_owner}']['lot_cancellation_data']['document']['doc_id']} до скасування ${USERS.users['${tender_owner}']['lot_cancellation_data']['cancellation_id']} із ${USERS.users['${tender_owner}']['lot_cancellation_data']['document']['doc_name']} для користувача ${viewer}
 
 
 Відображення вмісту документа до скасування лота
@@ -128,7 +129,7 @@ Suite Teardown  Test Suite Teardown
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  lot_cancelation
-  Звірити відображення вмісту документа до скасування ${USERS.users['${tender_owner}']['cancellation_data']['document']['doc_id']} з ${USERS.users['${tender_owner}']['cancellation_data']['document']['doc_content']} для користувача ${viewer}
+  Звірити відображення вмісту документа ${USERS.users['${tender_owner}']['lot_cancellation_data']['document']['doc_id']} до скасування ${USERS.users['${tender_owner}']['lot_cancellation_data']['cancellation_id']} з ${USERS.users['${tender_owner}']['lot_cancellation_data']['document']['doc_content']} для користувача ${viewer}
 
 ##############################################################################################
 #             DELETING LOT
@@ -145,17 +146,18 @@ Suite Teardown  Test Suite Teardown
 
 *** Keywords ***
 Можливість скасувати тендер
-  ${cancellation_data}=  Підготувати дані про скасування  ${tender_owner}
+  ${cancellation_data}=  Підготувати дані про скасування
   Run As  ${tender_owner}
   ...      Скасувати закупівлю
   ...      ${TENDER['TENDER_UAID']}
   ...      ${cancellation_data['cancellation_reason']}
   ...      ${cancellation_data['document']['doc_path']}
   ...      ${cancellation_data['description']}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  tender_cancellation_data=${cancellation_data}
 
 
 Можливість скасувати лот
-  ${cancellation_data}=  Підготувати дані про скасування  ${tender_owner}
+  ${cancellation_data}=  Підготувати дані про скасування
   Run As  ${tender_owner}
   ...      Скасувати лот
   ...      ${TENDER['TENDER_UAID']}
@@ -163,14 +165,15 @@ Suite Teardown  Test Suite Teardown
   ...      ${cancellation_data['cancellation_reason']}
   ...      ${cancellation_data['document']['doc_path']}
   ...      ${cancellation_data['description']}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  lot_cancellation_data=${cancellation_data}
 
 
-Звірити відображення поля ${field} документа до скасування ${doc_id} із ${left} для користувача ${username}
-  ${right}=  Run As  ${username}  Отримати інформацію із документа  ${TENDER['TENDER_UAID']}  ${doc_id}  ${field}
+Звірити відображення поля ${field} документа ${doc_id} до скасування ${cancel_id} із ${left} для користувача ${username}
+  ${right}=  Run As  ${username}  Отримати інформацію із документа до скасування  ${TENDER['TENDER_UAID']}  ${cancel_id}  ${doc_id}  ${field}
   Порівняти об'єкти  ${left}  ${right}
 
 
-Звірити відображення вмісту документа до скасування ${doc_id} з ${left} для користувача ${username}
-  ${file_name}=  Run as  ${username}  Отримати документ до скасування  ${TENDER['TENDER_UAID']}  ${doc_id}
+Звірити відображення вмісту документа ${doc_id} до скасування ${cancel_id} з ${left} для користувача ${username}
+  ${file_name}=  Run as  ${username}  Отримати документ до скасування  ${TENDER['TENDER_UAID']}  ${cancel_id}  ${doc_id}
   ${right}=  Get File  ${OUTPUT_DIR}${/}${file_name}
   Порівняти об'єкти  ${left}  ${right}

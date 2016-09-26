@@ -35,7 +35,7 @@ Set Suite Variable With Default Value
 
 
 Порівняти системний і серверний час
-  ${server_time}=  request  ${api_host_url}  HEAD
+  ${server_time}=  request  ${API_HOST_URL}  HEAD
   ${local_time}=  Get current TZdate
   Log  ${server_time.headers['date']}
   Log  ${local_time}
@@ -60,8 +60,8 @@ Set Suite Variable With Default Value
 
 
 Завантажуємо дані про користувачів і майданчики
-  Log  ${broker}
-  Log  ${role}
+  Log  ${BROKER}
+  Log  ${ROLE}
   # Suite variable; should be present in every test suite
   # in `*** Variables ***` section
   Log Many  @{USED_ROLES}
@@ -83,13 +83,13 @@ Set Suite Variable With Default Value
   ${used_users}=  Create List
 
   # Handle `-v role:something`
-  Run Keyword Unless  '${role}' in @{USED_ROLES}
+  Run Keyword Unless  '${ROLE}' in @{USED_ROLES}
   ...      Log
-  ...      Role ${role} is not used in this test suite.
+  ...      Role ${ROLE} is not used in this test suite.
   ...      WARN
   Set Suite Variable With Default Value
-  ...      ${role}
-  ...      ${BROKERS['${broker}'].roles.${role}}
+  ...      ${ROLE}
+  ...      ${BROKERS['${BROKER}'].roles.${ROLE}}
 
   # Set default value for each role if it is not set yet;
   # fill `used_users`;
@@ -161,7 +161,7 @@ Get Broker Property By Username
 
 Створити артефакт
   ${artifact}=  Create Dictionary
-  ...      api_version=${api_version}
+  ...      api_version=${API_VERSION}
   ...      tender_uaid=${TENDER['TENDER_UAID']}
   ...      last_modification_date=${TENDER['LAST_MODIFICATION_DATE']}
   ...      mode=${MODE}
@@ -183,7 +183,10 @@ Get Broker Property By Username
   ${file_path}=  Get Variable Value  ${ARTIFACT_FILE}  artifact.yaml
   ${ARTIFACT}=  load_data_from  ${file_path}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token=${ARTIFACT.access_token}
-  ${TENDER}=  Create Dictionary   TENDER_UAID=${ARTIFACT.tender_uaid}   LAST_MODIFICATION_DATE=${ARTIFACT.last_modification_date}   LOT_ID=${Empty}
+  ${TENDER}=  Create Dictionary
+  ...      TENDER_UAID=${ARTIFACT.tender_uaid}
+  ...      LAST_MODIFICATION_DATE=${ARTIFACT.last_modification_date}
+  ...      LOT_ID=${Empty}
   ${lot_index}=  Get Variable Value  ${lot_index}  0
   Run Keyword And Ignore Error  Set To Dictionary  ${TENDER}  LOT_ID=${ARTIFACT.lots[${lot_index}]}
   ${MODE}=  Get Variable Value  ${MODE}  ${ARTIFACT.mode}
@@ -254,29 +257,49 @@ Get Broker Property By Username
   [Return]  ${bid}
 
 
+Підготувати дані для подання пропозиції для другого етапу
+  [Arguments]  ${username}  ${index}=0
+  ${bid}=  generate_test_bid_data_second_stage  ${USERS.users['${username}'].tender_data.data}  ${index}
+  [Return]  ${bid}
+
+
 Підготувати дані про постачальника
-  [Arguments]  ${username}
+  [Arguments]  ${username}  ${lotIndex}=${-1}
+  ${lotIndex}=  Convert To Number  ${lotIndex}
   ${supplier_data}=  test_supplier_data
-  Set To Dictionary  ${USERS.users['${username}']}  supplier_data=${supplier_data}
+  Run Keyword If  ${lotIndex} > -1  Set To Dictionary  ${supplier_data.data}  lotID=${USERS.users['${tender_owner}'].initial_data.data['lots'][${lotIndex}]['id']}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  supplier_data=${supplier_data}
   Log  ${supplier_data}
   [Return]  ${supplier_data}
 
 
 Підготувати дані про скасування
-  [Arguments]  ${username}
   ${cancellation_reason}=  create_fake_sentence
+  ${cancellation_reason}=  field_with_id  c  ${cancellation_reason}
+  ${cancellation_id}=  get_id_from_string  ${cancellation_reason}
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
-  ${doc_id}=  get_id_from_doc_name  ${file_name}
+  ${doc_id}=  get_id_from_string  ${file_name}
   ${document}=  Create Dictionary
   ...      doc_path=${file_path}
   ...      doc_name=${file_name}
   ...      doc_content=${file_content}
   ...      doc_id=${doc_id}
   ${new_description}=  create_fake_sentence
-  ${cancellation_data}=  Create Dictionary  cancellation_reason=${cancellation_reason}  document=${document}  description=${new_description}
+  ${cancellation_data}=  Create Dictionary
+  ...      cancellation_reason=${cancellation_reason}
+  ...      cancellation_id=${cancellation_id}
+  ...      document=${document}
+  ...      description=${new_description}
   ${cancellation_data}=  munchify  ${cancellation_data}
-  Set To Dictionary  ${USERS.users['${username}']}  cancellation_data=${cancellation_data}
   [Return]  ${cancellation_data}
+
+
+Підготувати дані про зміну до договору
+  [Arguments]  ${username}
+  ${change_data}=  test_change_data
+  Set To Dictionary  ${USERS.users['${username}']}  change_data=${change_data}
+  Log  ${change_data}
+  [Return]  ${change_data}
 
 
 Адаптувати дані для оголошення тендера
@@ -404,6 +427,31 @@ Log differences between dicts
   Порівняти об'єкти  ${left}  ${right}
 
 
+Звірити поле договору
+  [Arguments]  ${username}  ${contract_uaid}  ${cotract_data}  ${field}
+  ${left}=  get_from_object  ${contract_data.data}  ${field}
+  Звірити поле договору із значенням  ${username}  ${contract_uaid}  ${left}  ${field}
+
+
+Звірити поле договору із значенням
+  [Arguments]  ${username}  ${contract_uaid}  ${left}  ${field}
+  ${right}=  Отримати дані із договору  ${username}  ${contract_uaid}  ${field}
+  Порівняти об'єкти  ${left}  ${right}
+
+
+Звірити поле зміни до договору
+  [Arguments]  ${username}  ${contract_uaid}  ${change_data}  ${field}
+  ${left}=  get_from_object  ${change_data.data}  ${field}
+  Звірити поле зміни до договору із значенням  ${username}  ${contract_uaid}  ${left}  ${field}
+
+
+Звірити поле зміни до договору із значенням
+  [Arguments]  ${username}  ${contract_uaid}  ${left}  ${field}
+  ${field}=  Evaluate  "{}{}".format('changes[0].', '${field}')
+  ${right}=  Отримати дані із договору  ${username}  ${contract_uaid}  ${field}
+  Порівняти об'єкти  ${left}  ${right}
+
+
 Порівняти об'єкти
   [Arguments]  ${left}  ${right}
   Log  ${left}
@@ -509,6 +557,24 @@ Log differences between dicts
   ${data}=  munch_dict  arg=${USERS.users['${username}'].tender_data.data}
   Set To Dictionary  ${USERS.users['${username}'].tender_data}  data=${data}
   Log  ${USERS.users['${username}'].tender_data.data}
+  [return]  ${field_value}
+
+
+Отримати дані із договору
+  [Arguments]  ${username}  ${contract_uaid}  ${field}
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      get_from_object
+  ...      ${USERS.users['${username}'].contract_data.data}
+  ...      ${field}
+  # If field in cache, return its value
+  Run Keyword if  '${status}' == 'PASS'  Return from keyword  ${field_value}
+  # Else call broker to find field
+  ${field_value}=  Run As  ${username}  Отримати інформацію із договору  ${contract_uaid}  ${field}
+  # And caching its value before return
+  Set_To_Object  ${USERS.users['${username}'].contract_data.data}  ${field}  ${field_value}
+  ${data}=  munch_dict  arg=${USERS.users['${username}'].contract_data.data}
+  Set To Dictionary  ${USERS.users['${username}'].contract_data}  data=${data}
+  Log  ${USERS.users['${username}'].contract_data.data}
   [return]  ${field_value}
 
 

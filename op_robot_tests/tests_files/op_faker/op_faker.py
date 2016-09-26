@@ -24,6 +24,7 @@ class OP_Provider(BaseProvider):
     classifications = __fake_data.classifications
     cpvs = __fake_data.cpvs
     items_base_data = __fake_data.items_base_data
+    rationale_types = __fake_data.rationale_types
 
     @classmethod
     def randomize_nb_elements(self, number=10, le=60, ge=140):
@@ -134,3 +135,15 @@ class OP_Provider(BaseProvider):
             "quantity": self.randomize_nb_elements(number=item_base_data["quantity"], le=80, ge=120)
         }
         return deepcopy(item)
+
+    @classmethod
+    def rationaleTypes(self, amount=3):
+        if amount >= len(self.rationale_types):
+            return self.rationale_types
+        result = []
+        for _ in range(amount):
+            element = self.random_element(self.rationale_types)
+            while element in result:
+                element = self.random_element(self.rationale_types)
+            result.append(element)
+        return result

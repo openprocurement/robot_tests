@@ -45,7 +45,7 @@ def create_fake_doc():
     tf = NamedTemporaryFile(delete=False, suffix=suffix, prefix=prefix)
     tf.write(content)
     tf.close()
-    return tf.name, os.path.basename(tf.name), content
+    return tf.name.replace('\\', '\\\\'), os.path.basename(tf.name), content
 
 
 def test_tender_data(params, periods=("enquiry", "tender")):
@@ -127,6 +127,7 @@ def test_tender_data(params, periods=("enquiry", "tender")):
         data['features'].append(new_feature)
     if not data['features']:
         del data['features']
+    data['status'] = 'draft'
     return munchify(data)
 
 
@@ -136,6 +137,8 @@ def test_tender_data_limited(params):
     del data["minimalStep"]
     del data["enquiryPeriod"]
     del data["tenderPeriod"]
+    for lot in data.get('lots', []):
+        lot.pop('minimalStep', None)
     data["procuringEntity"]["kind"] = "general"
     data.update({"procurementMethodType": params['mode'], "procurementMethod": "limited"})
     if params['mode'] == "negotiation":
@@ -267,6 +270,7 @@ def test_bid_data():
     })
     bid.data.tenderers[0].address.countryName_en = translate_country_en(bid.data.tenderers[0].address.countryName)
     bid.data.tenderers[0].address.countryName_ru = translate_country_ru(bid.data.tenderers[0].address.countryName)
+    bid.data['status'] = 'draft'
     return bid
 
 
@@ -402,3 +406,17 @@ def test_tender_data_competitive_dialogue(params):
     data['procuringEntity']['identifier']['legalName_en'] = fake_en.sentence(nb_words=10, variable_nb_words=True)
     data['procuringEntity']['kind'] = 'general'
     return data
+
+
+def test_change_data():
+    return munchify(
+    {
+        "data":
+        {
+            "rationale": fake.description(),
+            "rationale_en": fake_en.sentence(nb_words=10, variable_nb_words=True),
+            "rationale_ru": fake_ru.sentence(nb_words=10, variable_nb_words=True),
+            "rationaleTypes": fake.rationaleTypes(amount=3), 
+            "status": "pending"
+        }
+    })

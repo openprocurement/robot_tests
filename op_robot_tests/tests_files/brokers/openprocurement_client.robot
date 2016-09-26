@@ -19,13 +19,19 @@ Library  openprocurement_client_helper.py
 Підготувати клієнт для користувача
   [Arguments]  ${username}
   [Documentation]  Відкрити браузер, створити об’єкт api wrapper, тощо
-  Log  ${api_host_url}
-  Log  ${api_version}
-  ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${api_host_url}  ${api_version}
+  Log  ${API_HOST_URL}
+  Log  ${API_VERSION}
+  ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${API_HOST_URL}  ${API_VERSION}
   Set To Dictionary  ${USERS.users['${username}']}  client=${api_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${EMPTY}
   ${id_map}=  Create Dictionary
   Set To Dictionary  ${USERS.users['${username}']}  id_map=${id_map}
+  #Variables for contracting_management module
+  ${contract_api_wrapper}=  prepare_contract_api_wrapper  ${USERS.users['${username}'].api_key}  ${api_host_url}  ${api_version}
+  Set To Dictionary  ${USERS.users['${username}']}  contracting_client=${contract_api_wrapper}
+  Set To Dictionary  ${USERS.users['${username}']}  contract_access_token=${EMPTY}
+  ${contracts_id_map}=  Create Dictionary
+  Set To Dictionary  ${USERS.users['${username}']}  contracts_id_map=${contracts_id_map}
   Log Variables
 
 
@@ -77,8 +83,15 @@ Library  openprocurement_client_helper.py
 Створити тендер
   [Arguments]  ${username}  ${tender_data}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  create_tender  ${tender_data}
-  Log object data  ${tender}  created_tender
+  Log  ${tender}
   ${access_token}=  Get Variable Value  ${tender.access.token}
+  ${status}=  Set Variable If  'open' in '${MODE}'  active.tendering  ${EMPTY}
+  ${status}=  Set Variable If  'below' in '${MODE}'  active.enquiries  ${status}
+  ${status}=  Set Variable If  '${status}'=='${EMPTY}'  active   ${status}
+  Set To Dictionary  ${tender['data']}  status=${status}
+  ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+  Log  ${tender}
+  Log  ${\n}${API_HOST_URL}/api/${API_VERSION}/tenders/${tender.data.id}${\n}  WARN
   Set To Dictionary  ${USERS.users['${username}']}   access_token=${access_token}
   Set To Dictionary  ${USERS.users['${username}']}   tender_data=${tender}
   Log   ${USERS.users['${username}'].tender_data}
@@ -86,14 +99,23 @@ Library  openprocurement_client_helper.py
 
 
 Пошук тендера по ідентифікатору
-  [Arguments]  ${username}  ${tender_uaid}
+  [Arguments]  ${username}  ${tender_uaid}  ${save_key}=tender_data
   ${internalid}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
-  Set To Dictionary  ${USERS.users['${username}']}  tender_data=${tender}
+  Set To Dictionary  ${USERS.users['${username}']}  ${save_key}=${tender}
   ${tender}=  munch_dict  arg=${tender}
   Log  ${tender}
   [return]   ${tender}
+
+
+Отримати тендер другого етапу та зберегти його
+  [Arguments]  ${username}  ${tender_id}
+  ${response}=  Call Method  ${USERS.users['${username}'].client}  patch_credentials  ${tender_id}  ${USERS.users['${username}'].access_token}
+  ${tender}=  set_access_key  ${response}  ${response.access.token}
+  Set To Dictionary  ${USERS.users['${username}']}   access_token=${response.access.token}
+  Set To Dictionary  ${USERS.users['${username}']}  tender_data=${response}
+  Log  ${tender.data.tenderID}
 
 
 Оновити сторінку з тендером
@@ -224,7 +246,10 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uaid}  ${lot_id}  ${cancellation_reason}  ${document}  ${new_description}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${lot_id}=  Get Variable Value  ${tender.data.lots[${lot_index}].id}
-  ${data}=  Create dictionary  reason=${cancellation_reason}  cancellationOf=lot  relatedLot=${lot_id}
+  ${data}=  Create dictionary
+  ...      reason=${cancellation_reason}
+  ...      cancellationOf=lot
+  ...      relatedLot=${lot_id}
   ${cancellation_data}=  Create dictionary  data=${data}
   ${cancellation_data}=  munch_dict  arg=${cancellation_data}
   ${cancel_reply}=  Call Method  ${USERS.users['${username}'].client}  create_cancellation  ${tender}  ${cancellation_data}
@@ -698,9 +723,13 @@ Library  openprocurement_client_helper.py
   \    ${code}=  Get Variable Value  ${tender.data.features[${feature_index}].code}
   \    Set To Dictionary  ${bid.data.parameters[${index}]}  code=${code}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_bid  ${tender}  ${bid}
+  Log  ${reply}
+  ${status}=  Set Variable If  '${MODE}'=='openeu'  pending  active
+  Set To Dictionary  ${reply['data']}  status=${status}
+  ${reply_active}=  Call Method  ${USERS.users['${username}'].client}  patch_bid  ${tender}  ${reply}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${reply['access']['token']}
   Set To Dictionary   ${USERS.users['${username}'].bidresponses['bid'].data}  id=${reply['data']['id']}
-  Log  ${reply}
+  Log  ${reply_active}
   [return]  ${reply}
 
 
@@ -730,7 +759,9 @@ Library  openprocurement_client_helper.py
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
   ${response}=  Call Method  ${USERS.users['${username}'].client}  upload_bid_document  ${path}  ${tender}  ${bid_id}  ${doc_type}
-  ${uploaded_file} =  Create Dictionary   filepath=${path}   upload_response=${response}
+  ${uploaded_file} =  Create Dictionary
+  ...      filepath=${path}
+  ...      upload_response=${response}
   Log object data   ${uploaded_file}
   [return]  ${uploaded_file}
 
@@ -741,7 +772,9 @@ Library  openprocurement_client_helper.py
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
   ${response}=  Call Method  ${USERS.users['${username}'].client}  update_bid_document  ${path}  ${tender}   ${bid_id}   ${docid}
-  ${uploaded_file} =  Create Dictionary   filepath=${path}   upload_response=${response}
+  ${uploaded_file} =  Create Dictionary
+  ...      filepath=${path}
+  ...      upload_response=${response}
   Log object data   ${uploaded_file}
   [return]  ${uploaded_file}
 
@@ -920,7 +953,7 @@ Library  openprocurement_client_helper.py
 
 
 Отримати інформацію із документа до скасування
-  [Arguments]  ${username}  ${tender_uaid}  ${doc_id}  ${field_name}
+  [Arguments]  ${username}  ${tender_uaid}  ${cancel_id}  ${doc_id}  ${field_name}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${document}=  get_document_by_id  ${tender.data}  ${doc_id}
   Log  ${document}
@@ -928,7 +961,7 @@ Library  openprocurement_client_helper.py
 
 
 Отримати документ до скасування
-  [Arguments]  ${username}  ${tender_uaid}  ${doc_id}
+  [Arguments]  ${username}  ${tender_uaid}  ${cancel_id}  ${doc_id}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${document}=  get_document_by_id  ${tender.data}  ${doc_id}
   ${filename}=  download_file_from_url  ${document.url}  ${OUTPUT_DIR}${/}${document.title}
@@ -1037,3 +1070,153 @@ Library  openprocurement_client_helper.py
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
   Log  ${reply}
   [Return]  ${reply}
+
+
+Активувати другий етап
+  [Documentation]
+  ...      [Arguments] Username and tender uaid
+  ...
+  ...      [Description] Find tender using uaid and call patch_tender
+  ...
+  ...      [Return] Reply of API
+  [Arguments]  ${username}  ${tender_uaid}
+  ${internal_id}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
+  ${tender}=  create_data_dict  data.id  ${internal_id}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
+  set_to_object  ${tender}  data.status  active.tendering
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+  Log  ${reply}
+  [Return]  ${reply}
+
+##############################################################################
+#             CONTRACT MANAGEMENT
+##############################################################################
+
+Отримати internal id по UAid для договору
+  [Arguments]  ${username}  ${contract_uaid}
+  Log  ${contract_uaid}
+  Log  ${USERS.users['${username}'].contracts_id_map}
+  ${status}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${USERS.users['${username}'].contracts_id_map}  ${contract_uaid}
+  Run Keyword and Return If  ${status}  Get From Dictionary  ${USERS.users['${username}'].contracts_id_map}  ${contract_uaid}
+  Call Method  ${USERS.users['${username}'].contracting_client}  get_contracts
+  ${contract_id}=  Wait Until Keyword Succeeds  15x  10 sec  get_contract_id_by_uaid  ${contract_uaid}  ${USERS.users['${username}'].contracting_client}
+  Set To Dictionary  ${USERS.users['${username}'].contracts_id_map}  ${contract_uaid}  ${contract_id}
+  [Return]  ${contract_id}
+
+
+Оновити сторінку з договором
+  [Arguments]  ${username}  ${contract_uaid}
+  openprocurement_client.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+
+
+Пошук договору по ідентифікатору
+  [Arguments]  ${username}  ${contract_uaid}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${contract}=  Call Method  ${USERS.users['${username}'].contracting_client}  get_contract  ${internalid}
+  ${contract}=  munch_dict  arg=${contract}
+  Set To Dictionary  ${USERS.users['${username}']}  contract_data=${contract}
+  Log  ${contract}
+  [return]  ${contract}
+
+
+Отримати доступ до договору
+  [Arguments]  ${username}  ${contract_uaid}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${contract}=  Call Method  ${USERS.users['${username}'].contracting_client}  get_contract_credentials  ${internalid}  ${USERS.users['${username}'].access_token}
+  ${contract}=  munch_dict  arg=${contract}
+  Set To Dictionary  ${USERS.users['${username}']}  contract_data=${contract}
+  Set To Dictionary  ${USERS.users['${username}']}  contract_access_token=${contract.access.token}
+  Log  ${contract}
+  [return]  ${contract}
+
+
+Внести зміну в договір
+  [Arguments]  ${username}  ${contract_uaid}  ${change_data}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  create_change  ${internalid}  ${USERS.users['${username}'].contract_access_token}  ${change_data}
+  # we need this to have change id in `Додати документацію до зміни в договорі` and `Застосувати зміну` keywords
+  ${empty_list}=  Create List
+  ${changes}=  Get variable value  ${USERS.users['${username}'].changes}  ${empty_list}
+  Append to list  ${changes}  ${reply}
+  Set to dictionary  ${USERS.users['${username}']}  changes=${changes}
+  Log  ${change_data}
+  Log  ${reply}
+
+
+Додати документацію до зміни в договорі
+  [Arguments]  ${username}  ${contract_uaid}  ${document}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${reply_doc_create}=  Call Method  ${USERS.users['${username}'].contracting_client}  upload_document  ${document}  ${internalid}  ${USERS.users['${username}'].contract_access_token}
+  ${data}=  Create Dictionary  documentOf=change  relatedItem=${USERS.users['${username}'].changes[0].data.id}
+  ${data}=  Create Dictionary  data=${data}
+  ${reply_doc_patch}=  Call Method  ${USERS.users['${username}'].contracting_client}  patch_document  ${internalid}  ${reply_doc_create.data.id}  ${USERS.users['${username}'].contract_access_token}  ${data}
+  Log  ${reply_doc_create}
+  Log  ${reply_doc_patch}
+
+
+Редагувати договір
+  [Arguments]  ${username}  ${contract_uaid}  ${fieldname}  ${fieldvalue}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${contract}=  openprocurement_client.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+  Set_To_Object  ${contract.data}   ${fieldname}   ${fieldvalue}
+  Log  ${contract}
+  ${contract}=  Call Method  ${USERS.users['${username}'].contracting_client}  patch_contract  ${internalid}  ${USERS.users['${username}'].contract_access_token}  ${contract}
+  Log  ${contract}
+
+
+Застосувати зміну
+  [Arguments]  ${username}  ${contract_uaid}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${data}=  Create Dictionary  status=active
+  ${data}=  Create Dictionary  data=${data}
+  ${changes}=  Get variable value  ${USERS.users['${username}'].changes}
+  ${change}=  munchify  ${changes[-1]}
+  Log  ${change}
+  ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  patch_change  ${internalid}  ${USERS.users['${username}'].changes[-1].data.id}  ${USERS.users['${username}'].contract_access_token}  ${data}
+  Log  ${data}
+  Log  ${reply}
+
+
+Завантажити документацію до договору
+  [Arguments]  ${username}  ${contract_uaid}  ${document}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  upload_document  ${document}  ${internalid}  ${USERS.users['${username}'].contract_access_token}
+  Log  ${reply}
+
+
+Завершити договір
+  [Arguments]  ${username}  ${contract_uaid}  ${data}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  patch_contract  ${internalid}  ${USERS.users['${username}'].contract_access_token}  ${data}
+  Log  ${reply}
+
+
+Отримати інформацію із договору
+  [Arguments]  ${username}  ${contract_uaid}  ${field_name}
+  openprocurement_client.Пошук договору по ідентифікатору
+  ...      ${username}
+  ...      ${contract_uaid}
+
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      Get from object
+  ...      ${USERS.users['${username}'].contract_data.data}
+  ...      ${field_name}
+  Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
+
+  Fail  Field not found: ${field_name}
+
+
+Отримати інформацію із документа до договору
+  [Arguments]  ${username}  ${contract_uaid}  ${doc_id}  ${field_name}
+  ${tender}=  openprocurement_client.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+  ${document}=  get_document_by_id  ${tender.data}  ${doc_id}
+  Log  ${document}
+  [Return]  ${document['${field_name}']}
+
+
+Отримати документ до договору
+  [Arguments]  ${username}  ${contract_uaid}  ${doc_id}
+  ${tender}=  openprocurement_client.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+  ${document}=  get_document_by_id  ${tender.data}  ${doc_id}
+  ${filename}=  download_file_from_url  ${document.url}  ${OUTPUT_DIR}${/}${document.title}
+  [return]  ${filename}
