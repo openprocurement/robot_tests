@@ -67,6 +67,8 @@ Library         Selenium2Library
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
   ...      viewer  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}
+  ...      ${USERS.users['${provider}'].broker}
+  ...      ${USERS.users['${provider1}'].broker}
   ...      auction
   Дочекатись завершення паузи перед першим раундом
 
@@ -98,6 +100,8 @@ Library         Selenium2Library
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
   ...      viewer  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}
+  ...      ${USERS.users['${provider}'].broker}
+  ...      ${USERS.users['${provider1}'].broker}
   ...      auction
   Дочекатись завершення паузи перед 2 раундом
 
@@ -131,6 +135,8 @@ Library         Selenium2Library
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
   ...      viewer  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}
+  ...      ${USERS.users['${provider}'].broker}
+  ...      ${USERS.users['${provider1}'].broker}
   ...      auction
   Дочекатись завершення паузи перед 3 раундом
 
@@ -163,6 +169,8 @@ Library         Selenium2Library
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
   ...      viewer  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}
+  ...      ${USERS.users['${provider}'].broker}
+  ...      ${USERS.users['${provider1}'].broker}
   ...      auction
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати закінчення аукціону
