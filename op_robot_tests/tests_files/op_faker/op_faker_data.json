@@ -2801,12 +2801,40 @@
     ],
     "classifications":[
         {
-            "classification": {
-                "scheme": "CAV",
-                "id": "34100000-8",
-                "description": "Мототранспортні засоби"
-            }
-        }
+           "classification": {
+               "scheme": "CAV",
+               "id": "04000000-8",
+               "description": "Нерухоме майно"
+           }
+       },
+       {
+           "classification": {
+               "scheme": "CAV",
+               "id": "04100000-9",
+               "description": "Житлова нерухомість"
+           }
+       },
+       {
+           "classification": {
+               "scheme": "CAV",
+               "id": "04111000-9",
+               "description": "Квартира в будинку малоповерхового житлового будівництва"
+           }
+       },
+       {
+           "classification": {
+               "scheme": "CAV",
+               "id": "04111100-0",
+               "description": "Квартира"
+           }
+       },
+       {
+           "classification": {
+               "scheme": "CAV",
+               "id": "04111200-1",
+               "description": "Таунхаус"
+           }
+       }
     ],
     "units": [
         {
@@ -2891,19 +2919,67 @@
         }
     ],
     "cavs": [
-        "34100000-8"
+        "04000000-8",
+        "04100000-9",
+        "04111000-9",
+        "04111100-0",
+        "04111200-1"
     ],
     "items_base_data": [
+          {
+           "cav_id": "04000000-8",
+           "description": "Нерухоме майно",
+           "description_ru": "Недвижимое имущество",
+           "description_en": "Real estate",
+           "quantity": 50,
+           "unit": {
+               "code": "MTK",
+               "name": "метри квадратні"
+           }
+       },
+       {
+           "cav_id": "04100000-9",
+           "description": "Житлова нерухомість",
+           "description_ru": "Жилое имущество",
+           "description_en": "Residential",
+           "quantity": 45,
+           "unit": {
+               "code": "MTK",
+               "name": "метри квадратні"
+           }
+       },
+       {
+           "cav_id": "04111000-9",
+           "description": "Квартира в будинку малоповерхового житлового будівництва",
+           "description_ru": "Квартира в доме малоэтажного строительства",
+           "description_en": "Flat in low-rise building",
+           "quantity": 15,
+           "unit": {
+               "code": "H87",
+               "name": "штуки"
+           }
+       },
+       {
+           "cav_id": "04111100-0",
+           "description": "Квартира",
+           "description_ru": "Квартира",
+           "description_en": "Flat",
+           "quantity": 12,
+           "unit": {
+               "code": "H87",
+               "name": "штуки"
+           }
+       },
         {
-            "cav_id": "34100000-8",
-            "description": "Мототранспортні засоби",
-            "description_ru": "Мототранспортные средства",
-            "description_en": "Motocycles",
-            "quantity": 15,
-            "unit": {
-                "code": "H87",
-                "name": "штуки"
-            }
-        }
+           "cav_id": "04111200-1",
+           "description": "Таунхаус",
+           "description_ru": "Таунхаус",
+           "description_en": "Townhouse",
+           "quantity": 10,
+           "unit": {
+               "code": "H87",
+               "name": "штуки"
+           }
+       }
     ]
 }
