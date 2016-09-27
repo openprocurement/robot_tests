@@ -32,9 +32,7 @@ Resource           base_keywords.robot
 Можливість підтвердити цінову пропозицію учасником ${username}
   ${status}=  Run Keyword IF  '${MODE}'=='openeu'  Set Variable  pending
   ...                     ELSE IF  '${MODE}'=='openua'  Set Variable  active
-  ${activestatusresp}=  Run As  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  status  ${status}
-  Set To Dictionary  ${USERS.users['${username}'].bidresponses}  activestatusresp=${activestatusresp}
-  log  ${activestatusresp}
+  Run As  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  status  ${status}
 
 ##############################################################################################
 #             OPENEU  Bid documentation
@@ -45,8 +43,7 @@ Resource           base_keywords.robot
   ${privat_doc}=  create_data_dict  data.confidentialityRationale  ${confidentialityRationale}
   Set To Dictionary  ${privat_doc.data}  confidentiality=buyerOnly
   ${docid}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['bid_doc_upload']['upload_response'].data.id}
-  ${bid_doc_modified}=  Run As  ${username}  Змінити документацію в ставці  ${TENDER['TENDER_UAID']}  ${privat_doc}  ${docid}
-  Set To Dictionary  ${USERS.users['${username}'].bidresponses}  bid_doc_modified=${bid_doc_modified}
+  Run As  ${username}  Змінити документацію в ставці  ${TENDER['TENDER_UAID']}  ${privat_doc}  ${docid}
 
 
 Можливість завантажити ${doc_type} документ до пропозиції учасником ${username}

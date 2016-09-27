@@ -38,6 +38,7 @@ Library  openprocurement_client_helper.py
   ${tender}=  set_access_key  ${tender}   ${USERS.users['${username}'].access_token}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  upload_document  ${filepath}  ${tender}
   Log object data   ${reply}  reply
+  #return here is needed to have uploaded doc data in `Завантажити документ в лот` keyword
   [return]   ${reply}
 
 
@@ -175,6 +176,7 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uaid}  ${lot}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}   create_lot   ${tender}    ${lot}
+  #return here is needed to have created lot id in `Створити лот з предметом закупівлі` keyword
   [return]  ${reply}
 
 
@@ -183,7 +185,6 @@ Library  openprocurement_client_helper.py
   ${reply}=  openprocurement_client.Створити лот  ${username}  ${tender_uaid}  ${lot}
   ${lot_id}=  get_id_from_object  ${lot.data}
   openprocurement_client.Додати предмет закупівлі в лот  ${username}  ${tender_uaid}  ${lot_id}  ${item}
-  [return]  ${reply}
 
 
 Отримати інформацію із лоту
@@ -199,7 +200,6 @@ Library  openprocurement_client_helper.py
   ${lot}=  Create Dictionary  data=${tender.data.lots[${lot_index}]}
   Set_To_Object   ${lot.data}   ${fieldname}   ${fieldvalue}
   ${reply}=  Call Method   ${USERS.users['${username}'].client}   patch_lot   ${tender}   ${lot}
-  [return]  ${reply}
 
 
 Додати предмет закупівлі в лот
@@ -220,7 +220,6 @@ Library  openprocurement_client_helper.py
   ${doc}=  openprocurement_client.Завантажити документ  ${username}  ${filepath}  ${tender_uaid}
   ${lot_doc}=  test_lot_document_data  ${doc}  ${lot_id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_document   ${tender}   ${lot_doc}
-  [return]   ${reply}
 
 
 Видалити лот
@@ -233,7 +232,6 @@ Library  openprocurement_client_helper.py
   \  Run Keyword If  '${item.relatedLot}'=='${lot.data.id}'
   \  ...     openprocurement_client.Видалити предмет закупівлі  ${username}  ${tender_uaid}  ${item_id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}   delete_lot   ${tender}    ${lot}
-  [return]  ${reply}
 
 
 Скасувати лот
@@ -321,7 +319,6 @@ Library  openprocurement_client_helper.py
   ${item_id}=  Get Variable Value  ${tender.data['items'][${item_index}].id}
   ${question}=  test_related_question  ${question}  item  ${item_id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_question  ${tender}  ${question}
-  [return]  ${reply}
 
 
 Задати запитання на лот
@@ -331,14 +328,12 @@ Library  openprocurement_client_helper.py
   ${lot_id}=  Get Variable Value  ${tender.data.lots[${lot_index}].id}
   ${question}=  test_related_question  ${question}  lot  ${lot_id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_question  ${tender}  ${question}
-  [return]  ${reply}
 
 
 Задати запитання на тендер
   [Arguments]  ${username}  ${tender_uaid}  ${question}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_question  ${tender}  ${question}
-  [return]  ${reply}
 
 
 Отримати інформацію із запитання
@@ -353,7 +348,6 @@ Library  openprocurement_client_helper.py
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   ${answer_data.data.id}=  openprocurement_client.Отримати інформацію із запитання  ${username}  ${tender_uaid}  ${question_id}  id
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_question  ${tender}  ${answer_data}
-  [return]  ${reply}
 
 ##############################################################################
 #             Claims
@@ -724,7 +718,6 @@ Library  openprocurement_client_helper.py
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${reply['access']['token']}
   Set To Dictionary   ${USERS.users['${username}'].bidresponses['bid'].data}  id=${reply['data']['id']}
   Log  ${reply_active}
-  [return]  ${reply}
 
 
 Змінити цінову пропозицію
@@ -735,7 +728,6 @@ Library  openprocurement_client_helper.py
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_bid  ${tender}  ${bid}
   Log  ${reply}
-  [return]   ${reply}
 
 
 Скасувати цінову пропозицію
@@ -744,7 +736,6 @@ Library  openprocurement_client_helper.py
   ${bid_id}=  openprocurement_client.Отримати інформацію із пропозиції  ${username}  ${tender_uaid}  id
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  delete_bid   ${tender}  ${bid_id}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
   Log  ${reply}
-  [return]   ${reply}
 
 
 Завантажити документ в ставку
@@ -779,7 +770,6 @@ Library  openprocurement_client_helper.py
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_bid_document   ${tender}   ${doc_data}   ${bid_id}   ${docid}
-  [return]  ${reply}
 
 
 Отримати пропозицію
@@ -818,7 +808,6 @@ Library  openprocurement_client_helper.py
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${doc}=  Call Method  ${USERS.users['${username}'].client}  upload_award_document  ${document}  ${tender}  ${tender.data.awards[${award_num}].id}
   Log  ${doc}
-  [Return]  ${doc}
 
 
 Підтвердити постачальника
@@ -863,7 +852,6 @@ Library  openprocurement_client_helper.py
   Set To Dictionary  ${award.data}  id=${tender.data.awards[${award_num}].id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_award  ${tender}  ${award}
   Log  ${reply}
-  [Return]  ${reply}
 
 ##############################################################################
 #             Limited procurement
@@ -989,7 +977,6 @@ Library  openprocurement_client_helper.py
   Set To Dictionary  ${qualification.data}  id=${tender.data.qualifications[${qualification_num}].id}  eligible=${True}  qualified=${True}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_qualification  ${tender}  ${qualification}
   Log  ${reply}
-  [Return]  ${reply}
 
 
 Відхилити кваліфікацію
@@ -1003,7 +990,6 @@ Library  openprocurement_client_helper.py
   Set To Dictionary  ${qualification.data}  id=${tender.data.qualifications[${qualification_num}].id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_qualification  ${tender}  ${qualification}
   Log  ${reply}
-  [Return]  ${reply}
 
 
 Завантажити документ у кваліфікацію
@@ -1015,7 +1001,6 @@ Library  openprocurement_client_helper.py
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${doc_reply}=  Call Method  ${USERS.users['${username}'].client}  upload_qualification_document  ${document}  ${tender}  ${tender.data.qualifications[${qualification_num}].id}
   Log  ${doc_reply}
-  [Return]  ${doc_reply}
 
 
 Скасувати кваліфікацію
@@ -1029,7 +1014,6 @@ Library  openprocurement_client_helper.py
   Set To Dictionary  ${qualification.data}  id=${tender.data.qualifications[${qualification_num}].id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_qualification  ${tender}  ${qualification}
   Log  ${reply}
-  [Return]  ${reply}
 
 
 Затвердити остаточне рішення кваліфікації
@@ -1046,7 +1030,6 @@ Library  openprocurement_client_helper.py
   set_to_object  ${tender}  data.status  active.pre-qualification.stand-still
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
   Log  ${reply}
-  [Return]  ${reply}
 
 
 Перевести тендер на статус очікування обробки мостом
@@ -1063,7 +1046,6 @@ Library  openprocurement_client_helper.py
   set_to_object  ${tender}  data.status  active.stage2.waiting
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
   Log  ${reply}
-  [Return]  ${reply}
 
 
 Активувати другий етап
@@ -1080,4 +1062,3 @@ Library  openprocurement_client_helper.py
   set_to_object  ${tender}  data.status  active.tendering
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
   Log  ${reply}
-  [Return]  ${reply}
