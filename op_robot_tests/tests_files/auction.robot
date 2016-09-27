@@ -6,7 +6,8 @@ Suite Teardown  Test Suite Teardown
 Library         Selenium2Library
 
 *** Variables ***
-@{used_roles}  viewer  provider  provider1
+@{USED_ROLES}  viewer  provider  provider1
+
 
 *** Test Cases ***
 Можливість знайти закупівлю по ідентифікатору
