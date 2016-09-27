@@ -356,7 +356,7 @@ Library         Selenium2Library
   Set To Dictionary  ${USERS['${CURRENT_USER}']}  last_amount=${amount}
   Click Element  id=clear-bid-button
   Wait Until Page Does Not Contain Element  xpath=//alert[contains(@class, 'bids-form')]  7s
-  Input Text     id=bid-amount-input  ${USERS['${CURRENT_USER}']['last_amount']}
+  Input Text     id=bid-amount-input  ${amount}
   Click Element  id=place-bid-button
   Wait Until Page Contains  ${msg}  30s
 
