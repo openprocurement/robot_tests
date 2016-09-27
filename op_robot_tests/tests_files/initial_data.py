@@ -50,7 +50,7 @@ def create_fake_doc():
 
 def test_tender_data(params, periods=("enquiry", "tender")):
     now = get_now()
-    value_amount = round(random.uniform(3000, 99999999999.99), 2)  # max value equals to budget of Ukraine in hryvnias
+    value_amount = round(random.uniform(3000, 999999999.99), 2)  # max value equals to budget of Ukraine in hryvnias
     data = {
         "mode": "test",
         "submissionMethodDetails": "quick",
@@ -278,7 +278,7 @@ def test_bid_value(max_value_amount):
     return munchify({
         "value": {
             "currency": "UAH",
-            "amount": round(random.uniform(1, max_value_amount), 2),
+            "amount": round(random.uniform((0.95 * max_value_amount), max_value_amount), 2),
             "valueAddedTaxIncluded": True
         }
     })

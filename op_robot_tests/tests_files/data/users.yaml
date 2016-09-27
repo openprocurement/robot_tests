@@ -2,21 +2,38 @@ users:
     Tender_Owner:
         api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
         broker:   Quinta
+        browser:  phantomjs
+        position: [0, 0]
+        size:     [1400, 900]
     Tender_User:
         api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
         broker:   Quinta
+        browser:  phantomjs
+        position: [0, 0]
+        size:     [1400, 900]
     Tender_User1:
         api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
         broker:   Quinta
+        browser:  phantomjs
+        position: [0, 0]
+        size:     [1400, 900]
     Tender_User2:
         api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
         broker:   Quinta
+        browser:  phantomjs
+        position: [0, 0]
+        size:     [1400, 900]
     Tender_Viewer:
         api_key:  ""
         broker:   Quinta
-        browser:  firefox
+        browser:  phantomjs
     Etender_Owner:
         broker:   Etender
+        browser:  phantomjs
+        position: [0, 0]
+        size:     [1400, 900]
+    E-tender_Owner:
+        broker:   E-tender
         homepage: "http://bid.uat.e-tender.biz/#/"
         login:    Misha2
         password: Password1
