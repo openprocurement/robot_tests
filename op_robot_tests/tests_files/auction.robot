@@ -213,8 +213,8 @@ Library         Selenium2Library
 Відкрити сторінку аукціону для глядача
   ${url}=  Run as  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}  ${TENDER['LOT_ID']}
   Open browser  ${url}  ${USERS.users['${viewer}'].browser}  ${viewer}
-  Set Window Position   @{USERS['${viewer}']['position']}
-  Set Window Size       @{USERS['${viewer}']['size']}
+  Set Window Position  @{USERS['${viewer}']['position']}
+  Set Window Size      @{USERS['${viewer}']['size']}
 
 
 Дочекатись завершення паузи перед першим раундом
@@ -226,10 +226,10 @@ Library         Selenium2Library
 Відкрити сторінку аукціону для учасника ${username}
   ${url}=  Run as  ${username}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}  ${TENDER['LOT_ID']}
   Open browser  ${url}  ${USERS.users['${username}'].browser}  ${username}
-  Set Window Position   @{USERS['${username}']['position']}
-  Set Window Size       @{USERS['${username}']['size']}
-  Wait Until Element Is Visible    xpath=//button[contains(@class, 'btn btn-success')]    2s
-  Click Element                    xpath=//button[contains(@class, 'btn btn-success')]
+  Set Window Position  @{USERS['${username}']['position']}
+  Set Window Size      @{USERS['${username}']['size']}
+  Wait Until Element Is Visible  xpath=//button[contains(@class, 'btn btn-success')]  2s
+  Click Element                  xpath=//button[contains(@class, 'btn btn-success')]
 
 
 Дочекатись дати закінчення аукціону
@@ -331,9 +331,9 @@ Library         Selenium2Library
 
 Переключитись на учасника
   [Arguments]  ${username}
-  Switch Browser    ${username}
-  ${CURRENT_USER}=  set variable    ${username}
-  Set Global Variable   ${CURRENT_USER}
+  Switch Browser  ${username}
+  ${CURRENT_USER}=  Set Variable  ${username}
+  Set Global Variable  ${CURRENT_USER}
 
 
 Поставити максимально можливу ставку
@@ -343,33 +343,32 @@ Library         Selenium2Library
 
 
 Поставити ставку більшу від максимальної на ${extra_amount} грн
-  Wait Until Page Contains Element    id=max_bid_amount_price
-  ${last_amount}=     Get Text        id=max_bid_amount_price
-  ${last_amount}=     convert_amount_string_to_float    ${last_amount}
-  ${last_amount}=     Evaluate        ${last_amount}+${extra_amount}
-  Поставити ставку   ${last_amount}   Надто висока заявка
+  Wait Until Page Contains Element  id=max_bid_amount_price
+  ${last_amount}=   Get Text        id=max_bid_amount_price
+  ${last_amount}=   convert_amount_string_to_float  ${last_amount}
+  ${last_amount}=   Evaluate        ${last_amount}+${extra_amount}
+  Поставити ставку  ${last_amount}  Надто висока заявка
 
 
 Поставити ставку
-  [Arguments]    ${amount}  ${msg}
-  ${amount}=   Convert To String       ${amount}
+  [Arguments]  ${amount}  ${msg}
+  ${amount}=  Convert To String  ${amount}
   Set To Dictionary  ${USERS['${CURRENT_USER}']}  last_amount=${amount}
-  Click Element                id=clear-bid-button
-  Wait Until Page Does Not Contain Element    xpath=//alert[contains(@class, 'bids-form')]    7s
-  Capture Page Screenshot
-  Input Text      id=bid-amount-input  ${USERS['${CURRENT_USER}']['last_amount']}
-  Click Element                id=place-bid-button
-  Wait Until Page Contains            ${msg}    30s
+  Click Element  id=clear-bid-button
+  Wait Until Page Does Not Contain Element  xpath=//alert[contains(@class, 'bids-form')]  7s
+  Input Text     id=bid-amount-input  ${USERS['${CURRENT_USER}']['last_amount']}
+  Click Element  id=place-bid-button
+  Wait Until Page Contains  ${msg}  30s
 
 
 Відмінитити ставку
-  Click Element                id=cancel-bid-button
-  Wait Until Page Contains     Заявку відмінено      10s
+  Click Element             id=cancel-bid-button
+  Wait Until Page Contains  Заявку відмінено  10s
 
 
 Змінити ставку на максимальну
-  Click Element                id=edit-bid-button
-  Click Element                id=clear-bid-button
+  Click Element  id=edit-bid-button
+  Click Element  id=clear-bid-button
   Поставити максимально можливу ставку
 
 
@@ -381,13 +380,13 @@ Library         Selenium2Library
 
 
 Поставити малу ставку в ${last_amount} грн
-  Wait Until Page Contains Element    id=max_bid_amount_price
-  Поставити ставку   ${last_amount}   Ви ввели дуже малу суму
+  Wait Until Page Contains Element  id=max_bid_amount_price
+  Поставити ставку  ${last_amount}  Ви ввели дуже малу суму
 
 
 Поставити нульову ставку
-  Wait Until Page Contains Element    id=max_bid_amount_price
-  Поставити ставку   0   Bid amount is required
+  Wait Until Page Contains Element  id=max_bid_amount_price
+  Поставити ставку  0  Bid amount is required
 
 
 Перевірити чи ставка була прийнята
