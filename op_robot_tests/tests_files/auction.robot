@@ -266,22 +266,22 @@ Library         Selenium2Library
   ...      Wait Until Keyword Succeeds  15 times  10 s  Page should contain  до початку раунду
 
 
-Дочекатись завершення паузи перед ${round_id} раундом
+Дочекатись завершення паузи перед ${round_number} раундом
   Переключитись на учасника  ${viewer}
-  ${status}  ${_}=  Run Keyword And Ignore Error  Page should contain  → ${round_id}
+  ${status}  ${_}=  Run Keyword And Ignore Error  Page should contain  → ${round_number}
   Run Keyword And Return If  '${status}' == 'FAIL'  Get Current Date
   ${date}=  Get Current Date
   Переключитись на учасника  ${provider}
-  Page should contain  → ${round_id}
+  Page should contain  → ${round_number}
   Переключитись на учасника  ${provider1}
-  Page should contain  → ${round_id}
+  Page should contain  → ${round_number}
   Переключитись на учасника  ${viewer}
-  Wait Until Keyword Succeeds  15 times  10 s  Page should not contain  → ${round_id}
+  Wait Until Keyword Succeeds  15 times  10 s  Page should not contain  → ${round_number}
   ${new_date}=  Get Current Date
   Переключитись на учасника  ${provider}
-  Page should not contain  → ${round_id}
+  Page should not contain  → ${round_number}
   Переключитись на учасника  ${provider1}
-  Page should not contain  → ${round_id}
+  Page should not contain  → ${round_number}
   ${time}=  Subtract Date From Date  ${new_date}  ${date}
   Should Be True  ${time} < 140 and ${time} > 100
 
