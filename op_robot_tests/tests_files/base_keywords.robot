@@ -970,15 +970,25 @@ Resource           resource.robot
 
 Можливість завантажити документ в пропозицію користувачем ${username}
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
-  ${bid_doc_upload}=  Run As  ${username}  Завантажити документ в ставку  ${file_path}  ${TENDER['TENDER_UAID']}
-  Set To Dictionary  ${USERS.users['${username}'].bidresponses}  bid_doc_upload=${bid_doc_upload}
+  ${doc_id}=  get_id_from_string  ${file_name}
+  ${bid_document_data}=  Create Dictionary
+  ...      doc_name=${file_name}
+  ...      doc_content=${file_content}
+  ...      doc_id=${doc_id}
+  Run As  ${username}  Завантажити документ в ставку  ${file_path}  ${TENDER['TENDER_UAID']}
+  Set To Dictionary  ${USERS.users['${username}']}  bid_document=${bid_document_data}
   Remove File  ${file_path}
 
 
 Можливість змінити документацію цінової пропозиції користувачем ${username}
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
-  ${docid}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['bid_doc_upload']['upload_response'].data.id}
-  Run As  ${username}  Змінити документ в ставці  ${TENDER['TENDER_UAID']}  ${file_path}  ${docid}
+  ${doc_id}=  get_id_from_string  ${file_name}
+  ${bid_document_modified_data}=  Create Dictionary
+  ...      doc_name=${file_name}
+  ...      doc_content=${file_content}
+  ...      doc_id=${doc_id}
+  Run As  ${username}  Змінити документ в ставці  ${TENDER['TENDER_UAID']}  ${file_path}  ${USERS.users['${username}']['bid_document']['doc_id']}
+  Set To Dictionary  ${USERS.users['${username}']}  bid_document_modified=${bid_document_modified_data}
   Remove File  ${file_path}
 
 ##############################################################################################
