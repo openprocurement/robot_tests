@@ -235,7 +235,7 @@ Resource           resource.robot
 Можливість створення лоту із прив’язаним предметом закупівлі
   ${lot}=  Підготувати дані для створення лоту  ${USERS.users['${tender_owner}'].tender_data.data.value.amount}
   ${item}=  Підготувати дані для створення предмету закупівлі  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['id']}
-  ${lot_resp}=  Run As  ${tender_owner}  Створити лот із предметом закупівлі  ${TENDER['TENDER_UAID']}  ${lot}  ${item}
+  Run As  ${tender_owner}  Створити лот із предметом закупівлі  ${TENDER['TENDER_UAID']}  ${lot}  ${item}
   ${item_id}=  get_id_from_object  ${item}
   ${item_data}=  Create Dictionary
   ...      item=${item}
@@ -244,7 +244,6 @@ Resource           resource.robot
   ${lot_id}=  get_id_from_object  ${lot.data}
   ${lot_data}=  Create Dictionary
   ...      lot=${lot}
-  ...      lot_resp=${lot_resp}
   ...      lot_id=${lot_id}
   ${lot_data}=  munch_dict  arg=${lot_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  item_data=${item_data}  lot_data=${lot_data}
@@ -408,13 +407,12 @@ Resource           resource.robot
 
 Можливість задати запитання на тендер користувачем ${username}
   ${question}=  Підготувати дані для запитання
-  ${question_resp}=  Run As  ${username}  Задати запитання на тендер  ${TENDER['TENDER_UAID']}  ${question}
+  Run As  ${username}  Задати запитання на тендер  ${TENDER['TENDER_UAID']}  ${question}
   ${now}=  Get Current TZdate
   ${question.data.date}=  Set variable  ${now}
   ${question_id}=  get_id_from_object  ${question.data}
   ${question_data}=  Create Dictionary
   ...      question=${question}
-  ...      question_resp=${question_resp}
   ...      question_id=${question_id}
   ${question_data}=  munch_dict  arg=${question_data}
   Set To Dictionary  ${USERS.users['${username}']}  tender_question_data=${question_data}
@@ -423,13 +421,12 @@ Resource           resource.robot
 Можливість задати запитання на ${lot_index} лот користувачем ${username}
   ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}]}
   ${question}=  Підготувати дані для запитання
-  ${question_resp}=  Run As  ${username}  Задати запитання на лот  ${TENDER['TENDER_UAID']}  ${lot_id}  ${question}
+  Run As  ${username}  Задати запитання на лот  ${TENDER['TENDER_UAID']}  ${lot_id}  ${question}
   ${now}=  Get Current TZdate
   ${question.data.date}=  Set variable  ${now}
   ${question_id}=  get_id_from_object  ${question.data}
   ${question_data}=  Create Dictionary
   ...      question=${question}
-  ...      question_resp=${question_resp}
   ...      question_id=${question_id}
   ${question_data}=  munch_dict  arg=${question_data}
   Set To Dictionary  ${USERS.users['${username}']}  lots_${lot_index}_question_data=${question_data}
@@ -438,13 +435,12 @@ Resource           resource.robot
 Можливість задати запитання на ${item_index} предмет користувачем ${username}
   ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data['items'][${item_index}]}
   ${question}=  Підготувати дані для запитання
-  ${question_resp}=  Run As  ${username}  Задати запитання на предмет  ${TENDER['TENDER_UAID']}  ${item_id}  ${question}
+  Run As  ${username}  Задати запитання на предмет  ${TENDER['TENDER_UAID']}  ${item_id}  ${question}
   ${now}=  Get Current TZdate
   ${question.data.date}=  Set variable  ${now}
   ${question_id}=  get_id_from_object  ${question.data}
   ${question_data}=  Create Dictionary
   ...      question=${question}
-  ...      question_resp=${question_resp}
   ...      question_id=${question_id}
   ${question_data}=  munch_dict  arg=${question_data}
   Set To Dictionary  ${USERS.users['${username}']}  items_${item_index}_question_data=${question_data}
@@ -932,8 +928,7 @@ Resource           resource.robot
   ${features_ids}=  Run Keyword IF  ${features}
   ...     Отримати ідентифікатори об’єктів  ${username}  features
   ...     ELSE  Set Variable  ${None}
-  ${resp}=  Run As  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}  ${lots_ids}  ${features_ids}
-  Set To Dictionary  ${USERS.users['${username}'].bidresponses}  resp=${resp}
+  Run As  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}  ${lots_ids}  ${features_ids}
 
 
 Можливість подати цінову пропозицію на другий етап ${index} користувачем ${username}
@@ -948,8 +943,7 @@ Resource           resource.robot
   ${features_ids}=  Run Keyword IF  ${features}
   ...     Отримати ідентифікатори об’єктів  ${username}  features
   ...     ELSE  Set Variable  ${None}
-  ${resp}=  Run As  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}  ${lots_ids}  ${features_ids}
-  Set To Dictionary  ${USERS.users['${username}'].bidresponses}  resp=${resp}
+  Run As  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}  ${lots_ids}  ${features_ids}
 
 Неможливість подати цінову пропозицію без прив’язки до лоту користувачем ${username}
   ${bid}=  Підготувати дані для подання пропозиції  ${username}
@@ -984,8 +978,7 @@ Resource           resource.robot
 Можливість змінити документацію цінової пропозиції користувачем ${username}
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   ${docid}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['bid_doc_upload']['upload_response'].data.id}
-  ${bid_doc_modified}=  Run As  ${username}  Змінити документ в ставці  ${TENDER['TENDER_UAID']}  ${file_path}  ${docid}
-  Set To Dictionary  ${USERS.users['${username}'].bidresponses}  bid_doc_modified=${bid_doc_modified}
+  Run As  ${username}  Змінити документ в ставці  ${TENDER['TENDER_UAID']}  ${file_path}  ${docid}
   Remove File  ${file_path}
 
 ##############################################################################################
