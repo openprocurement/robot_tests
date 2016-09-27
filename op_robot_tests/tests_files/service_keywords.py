@@ -40,6 +40,7 @@ from .initial_data import (
     test_tender_data_limited,
     test_tender_data_openeu,
     test_tender_data_openua,
+    test_tender_data_dgf,
 )
 from barbecue import chef
 from restkit import request
@@ -286,6 +287,8 @@ def prepare_test_tender_data(procedure_intervals, tender_parameters):
         return munchify({'data': test_tender_data_limited(tender_parameters)})
     elif mode == 'belowThreshold':
         return munchify({'data': test_tender_data(tender_parameters)})
+    elif mode == 'dgf':
+        return munchify({'data': test_tender_data_dgf(tender_parameters)})
     raise ValueError("Invalid mode for prepare_test_tender_data")
 
 
@@ -457,6 +460,9 @@ def generate_test_bid_data(tender_data):
         for feature in tender_data['features']:
             parameter = {"value": fake.random_element(elements=(0.05, 0.01, 0)), "code": feature.get('code', '')}
             bid.data.parameters.append(parameter)
+    if 'dgfOtherAssets' in tender_data.get('procurementMethodType', ''):
+        bid.data.status = "draft"
+        bid.data.qualified = True
     return bid
 
 

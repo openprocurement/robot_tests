@@ -352,3 +352,15 @@ def test_tender_data_competitive_dialogue(params):
     data['procuringEntity']['identifier']['legalName_en'] = fake_en.sentence(nb_words=10, variable_nb_words=True)
     data['procuringEntity']['kind'] = 'general'
     return data
+
+
+def test_tender_data_dgf(params):
+    data = test_tender_data(params, [])
+    period_dict = {}
+    inc_dt = get_now()
+    period_dict["auctionPeriod"] = {}
+    inc_dt += timedelta(minutes=params['intervals']['auction'][0])
+    period_dict["auctionPeriod"]["startDate"] = inc_dt.isoformat()
+    data.update(period_dict)
+    data['procurementMethodType'] = 'dgfOtherAssets'
+    return data
