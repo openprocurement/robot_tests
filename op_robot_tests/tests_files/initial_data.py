@@ -90,31 +90,9 @@ def test_tender_data(params, periods=("enquiry", "tender")):
             period_dict[period_name + "Period"][j + "Date"] = inc_dt.isoformat()
     data.update(period_dict)
     cav_group = fake.cav()[:3]
-    if params.get('number_of_lots'):
-        data['lots'] = []
-        for lot_number in range(params['number_of_lots']):
-            lot_id = uuid4().hex
-            new_lot = test_lot_data(data['value']['amount'])
-            data['lots'].append(new_lot)
-            data['lots'][lot_number]['id'] = lot_id
-            for i in range(params['number_of_items']):
-                new_item = test_item_data(cav_group)
-                new_item['relatedLot'] = lot_id
-                data['items'].append(new_item)
-        value_amount = round(sum(lot['value']['amount'] for lot in data['lots']), 2)
-        minimalStep = min(lot['minimalStep']['amount'] for lot in data['lots'])
-        data['value']['amount'] = value_amount
-        data['minimalStep']['amount'] = minimalStep
-        if params.get('lot_meat'):
-            new_feature = test_feature_data()
-            new_feature['featureOf'] = "lot"
-            data['lots'][0]['id'] =  data['lots'][0].get('id', uuid4().hex)
-            new_feature['relatedItem'] = data['lots'][0]['id']
-            data['features'].append(new_feature)
-    else:
-        for i in range(params['number_of_items']):
-            new_item = test_item_data(cav_group)
-            data['items'].append(new_item)
+    for i in range(params['number_of_items']):
+        new_item = test_item_data(cav_group)
+        data['items'].append(new_item)
     if params.get('tender_meat'):
         new_feature = test_feature_data()
         new_feature.featureOf = "tenderer"
@@ -274,7 +252,7 @@ def test_bid_value(max_value_amount):
     return munchify({
         "value": {
             "currency": "UAH",
-            "amount": round(random.uniform(1, max_value_amount), 2),
+            "amount": round(random.uniform(max_value_amount, max_value_amount * 1.5), 2),
             "valueAddedTaxIncluded": True
         }
     })
@@ -329,34 +307,6 @@ def test_invalid_features_data():
     ]
 
 
-def test_lot_data(max_value_amount):
-    value_amount = round(random.uniform(1, max_value_amount), 2)
-    return munchify(
-        {
-            "description": fake.description(),
-            "title": field_with_id('l', fake.title()),
-            "title_en": field_with_id('l', fake_en.sentence(nb_words=5, variable_nb_words=True)),
-            "title_ru": field_with_id('l', fake_ru.sentence(nb_words=5, variable_nb_words=True)),
-            "value": {
-                "currency": "UAH",
-                "amount": value_amount,
-                "valueAddedTaxIncluded": True
-            },
-            "minimalStep": {
-                "currency": "UAH",
-                "amount": round(random.uniform(0.005, 0.03) * value_amount, 2),
-                "valueAddedTaxIncluded": True
-            },
-            "status": "active"
-        })
-
-
-def test_lot_document_data(document, lot_id):
-    document.data.update({"documentOf": "lot", "relatedItem": lot_id})
-    return munchify(document)
-
-
-
 def test_tender_data_openua(params):
     # We should not provide any values for `enquiryPeriod` when creating
     # an openUA or openEU procedure. That field should not be present at all.
@@ -375,7 +325,7 @@ def test_tender_data_openeu(params):
     data['procurementMethodType'] = 'aboveThresholdEU'
     data['title_en'] = "[TESTING]"
     for item_number, item in enumerate(data['items']):
-         item['description_en'] = "Test item #{}".format(item_number)
+        item['description_en'] = "Test item #{}".format(item_number)
     data['procuringEntity']['name_en'] = fake_en.name()
     data['procuringEntity']['contactPoint']['name_en'] = fake_en.name()
     data['procuringEntity']['contactPoint']['availableLanguage'] = "en"

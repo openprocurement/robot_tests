@@ -31,8 +31,6 @@ from .initial_data import (
     test_feature_data,
     test_invalid_features_data,
     test_item_data,
-    test_lot_data,
-    test_lot_document_data,
     test_related_question,
     test_question_answer_data,
     test_question_data,
