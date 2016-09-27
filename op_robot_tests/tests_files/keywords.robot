@@ -252,14 +252,14 @@ Get Broker Property By Username
 
 
 Підготувати дані для подання пропозиції
-  [Arguments]  ${username}
+  [Arguments]
   ${bid}=  generate_test_bid_data  ${USERS.users['${tender_owner}'].initial_data.data}
   [Return]  ${bid}
 
 
 Підготувати дані для подання пропозиції для другого етапу
-  [Arguments]  ${username}  ${index}=0
-  ${bid}=  generate_test_bid_data_second_stage  ${USERS.users['${username}'].tender_data.data}  ${index}
+  [Arguments]  ${index}=0
+  ${bid}=  generate_test_bid_data_second_stage  ${USERS.users['${tender_owner}'].initialdata.data}  ${index}
   [Return]  ${bid}
 
 

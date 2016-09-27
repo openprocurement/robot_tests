@@ -917,14 +917,14 @@ Resource           resource.robot
 ##############################################################################################
 
 Можливість подати цінову пропозицію користувачем ${username}
-  ${bid}=  Підготувати дані для подання пропозиції  ${username}
+  ${bid}=  Підготувати дані для подання пропозиції
   ${bidresponses}=  Create Dictionary  bid=${bid}
   Set To Dictionary  ${USERS.users['${username}']}  bidresponses=${bidresponses}
-  ${lots}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.lots}  ${None}
+  ${lots}=  Get Variable Value  ${USERS.users['${tender_owner}'].initial_data.data.lots}  ${None}
   ${lots_ids}=  Run Keyword IF  ${lots}
   ...     Отримати ідентифікатори об’єктів  ${username}  lots
   ...     ELSE  Set Variable  ${None}
-  ${features}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.features}  ${None}
+  ${features}=  Get Variable Value  ${USERS.users['${tender_owner}'].initial_data.data.features}  ${None}
   ${features_ids}=  Run Keyword IF  ${features}
   ...     Отримати ідентифікатори об’єктів  ${username}  features
   ...     ELSE  Set Variable  ${None}
@@ -932,7 +932,7 @@ Resource           resource.robot
 
 
 Можливість подати цінову пропозицію на другий етап ${index} користувачем ${username}
-  ${bid}=  Підготувати дані для подання пропозиції для другого етапу  ${username}  ${index}
+  ${bid}=  Підготувати дані для подання пропозиції для другого етапу  ${index}
   ${bidresponses}=  Create Dictionary  bid=${bid}
   Set To Dictionary  ${USERS.users['${username}']}  bidresponses=${bidresponses}
   ${lots}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.lots}  ${None}
@@ -946,7 +946,7 @@ Resource           resource.robot
   Run As  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}  ${lots_ids}  ${features_ids}
 
 Неможливість подати цінову пропозицію без прив’язки до лоту користувачем ${username}
-  ${bid}=  Підготувати дані для подання пропозиції  ${username}
+  ${bid}=  Підготувати дані для подання пропозиції
   ${values}=  Get Variable Value  ${bid.data.lotValues[0]}
   Remove From Dictionary  ${bid.data}  lotValues
   Set_To_Object  ${bid}  data  ${values}
@@ -954,7 +954,7 @@ Resource           resource.robot
 
 
 Неможливість подати цінову пропозицію без нецінових показників користувачем ${username}
-  ${bid}=  Підготувати дані для подання пропозиції  ${username}
+  ${bid}=  Підготувати дані для подання пропозиції
   Remove From Dictionary  ${bid.data}  parameters
   Require Failure  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}
 
