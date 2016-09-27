@@ -100,29 +100,21 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
-  Run Keyword IF  'open' in '${MODE}'
-  ...      Отримати дані із поля enquiryPeriod.startDate тендера для усіх користувачів
-  ...      ELSE
-  ...      Звірити відображення дати enquiryPeriod.startDate тендера для усіх користувачів
-
+  Отримати дані із поля tenderPeriod.startDate тендера для усіх користувачів
 
 Відображення закінчення періоду уточнення тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
-  Run Keyword IF  'open' in '${MODE}'
-  ...      Отримати дані із поля enquiryPeriod.endDate тендера для усіх користувачів
-  ...      ELSE
-  ...      Звірити відображення дати enquiryPeriod.endDate тендера для усіх користувачів
-
+  Отримати дані із поля enquiryPeriod.endDate тендера для усіх користувачів
 
 Відображення початку періоду прийому пропозицій тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
-  Звірити відображення дати tenderPeriod.startDate тендера для усіх користувачів
+  Отримати дані із поля tenderPeriod.startDate тендера для усіх користувачів
 
 
 Відображення закінчення періоду прийому пропозицій тендера
@@ -130,7 +122,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
-  Звірити відображення дати tenderPeriod.endDate тендера для усіх користувачів
+  Отримати дані із поля enquiryPeriod.endDate тендера для усіх користувачів
 
 
 Відображення мінімального кроку тендера
@@ -167,62 +159,6 @@ ${ITEM_MEAT}        ${True}
   ...      tender_view  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля description усіх предметів для усіх користувачів
-
-
-Відображення дати доставки номенклатур тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level2
-  Звірити відображення дати deliveryDate.endDate усіх предметів для користувача ${viewer}
-
-
-Відображення координати доставки номенклатур тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
-  Звірити відображення координат усіх предметів для користувача ${viewer}
-
-
-Відображення назви нас. пункту доставки номенклатур тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level2
-  Звірити відображення поля deliveryAddress.countryName усіх предметів для користувача ${viewer}
-
-
-Відображення пошт. коду доставки номенклатур тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
-  Звірити відображення поля deliveryAddress.postalCode усіх предметів для користувача ${viewer}
-
-
-Відображення регіону доставки номенклатур тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level2
-  Звірити відображення поля deliveryAddress.region усіх предметів для користувача ${viewer}
-
-
-Відображення locality адреси доставки номенклатур тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
-  Звірити відображення поля deliveryAddress.locality усіх предметів для користувача ${viewer}
-
-
-Відображення вулиці доставки номенклатур тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
-  Звірити відображення поля deliveryAddress.streetAddress усіх предметів для користувача ${viewer}
 
 
 Відображення схеми класифікації номенклатур тендера
