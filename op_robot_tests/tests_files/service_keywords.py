@@ -494,29 +494,3 @@ def generate_test_bid_data_second_stage(tender_data, index='0'):
             parameter = {"value": fake.random_element(elements=(0.05, 0.01, 0)), "code": feature.get('code', '')}
             bid.data.parameters.append(parameter)
     return bid
-
-
-# GUI Frontends common
-def add_data_for_gui_frontends(tender_data):
-    now = get_now()
-    # tender_data.data.enquiryPeriod['startDate'] = (now + timedelta(minutes=2)).isoformat()
-    tender_data.data.enquiryPeriod['endDate'] = (now + timedelta(minutes=6)).isoformat()
-    tender_data.data.tenderPeriod['startDate'] = (now + timedelta(minutes=7)).isoformat()
-    tender_data.data.tenderPeriod['endDate'] = (now + timedelta(minutes=11)).isoformat()
-    return tender_data
-
-
-def convert_date_to_slash_format(isodate):
-    iso_dt = parse_date(isodate)
-    date_string = iso_dt.strftime("%d/%m/%Y")
-    return date_string
-
-
-def convert_datetime_to_dot_format(isodate):
-    iso_dt = parse_date(isodate)
-    day_string = iso_dt.strftime("%d.%m.%Y %H:%M")
-    return day_string
-
-
-def local_path_to_file(file_name):
-    return os.path.join(os.path.dirname(__file__), 'documents', file_name)
