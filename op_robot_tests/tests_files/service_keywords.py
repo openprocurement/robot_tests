@@ -40,7 +40,7 @@ from .initial_data import (
     test_tender_data_limited,
     test_tender_data_openeu,
     test_tender_data_openua,
-    test_tender_data_dgf,
+    test_tender_data_dgf_other,
 )
 from barbecue import chef
 from restkit import request
@@ -287,8 +287,8 @@ def prepare_test_tender_data(procedure_intervals, tender_parameters):
         return munchify({'data': test_tender_data_limited(tender_parameters)})
     elif mode == 'belowThreshold':
         return munchify({'data': test_tender_data(tender_parameters)})
-    elif mode == 'dgf':
-        return munchify({'data': test_tender_data_dgf(tender_parameters)})
+    elif mode == 'dgf_other':
+        return munchify({'data': test_tender_data_dgf_other(tender_parameters)})
     raise ValueError("Invalid mode for prepare_test_tender_data")
 
 
