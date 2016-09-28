@@ -39,6 +39,7 @@ from .initial_data import (
     test_supplier_data,
     test_tender_data,
     test_tender_data_competitive_dialogue,
+    test_tender_data_dgf,
     test_tender_data_limited,
     test_tender_data_openeu,
     test_tender_data_openua,
@@ -278,6 +279,8 @@ def prepare_test_tender_data(procedure_intervals, tender_parameters):
         return munchify({'data': test_tender_data_limited(tender_parameters)})
     elif mode == 'negotiation.quick':
         return munchify({'data': test_tender_data_limited(tender_parameters)})
+    elif mode == 'dgf':
+        return munchify({'data': test_tender_data_dgf(tender_parameters)})
     elif mode == 'openeu':
         return munchify({'data': test_tender_data_openeu(tender_parameters)})
     elif mode == 'openua':
