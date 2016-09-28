@@ -82,7 +82,8 @@ Library  openprocurement_client_helper.py
   Set To Dictionary  ${USERS.users['${username}']}   access_token=${access_token}
   Set To Dictionary  ${USERS.users['${username}']}   tender_data=${tender}
   Log   ${USERS.users['${username}'].tender_data}
-  [return]  ${tender.data.tenderID}
+  ${tender_id}=  Get Variable Value  ${tender.data.tenderID}  ${tender.data.id}
+  [return]  ${tender_id}
 
 
 Пошук тендера по ідентифікатору
