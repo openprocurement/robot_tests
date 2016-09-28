@@ -497,7 +497,6 @@ Library  openprocurement_client_helper.py
   \    ${feature_index}=  get_object_index_by_id  ${tender.data.features}  ${feature_id}
   \    ${code}=  Get Variable Value  ${tender.data.features[${feature_index}].code}
   \    Set To Dictionary  ${bid.data.parameters[${index}]}  code=${code}
-  ${bid}=  Set Variable  ${bid}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_bid  ${tender}  ${bid}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${reply['access']['token']}
   Set To Dictionary   ${USERS.users['${username}'].bidresponses['bid'].data}  id=${reply['data']['id']}

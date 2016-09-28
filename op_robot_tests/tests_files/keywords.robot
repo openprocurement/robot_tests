@@ -399,11 +399,13 @@ Log differences between dicts
   Should Not Be Equal  ${right}  ${None}
   Should Be Equal  ${left}  ${right}  msg=Objects are not equal
 
+
 Перевірити неможливість зміни поля ${field} тендера на значення ${new_value} для користувача ${username}
   ${prev_value} =  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}
   Run As  ${username}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  ${field}  ${new_value}
   ${next_value} =  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}
   Require Failure  ${username}  Порівняти об'єкти  ${prev_value}  ${next_value}
+
 
 Звірити дату тендера
   [Arguments]  ${username}  ${tender_uaid}  ${tender_data}  ${field}  ${accuracy}=60  ${absolute_delta}=${False}
@@ -641,29 +643,6 @@ Require Failure
   ...      ${username}
   ...      ${tender_uaid}
   ...      active.tendering
-
-
-# Дочекатись дати закінчення прийому пропозицій
-#   [Arguments]  ${username}  ${tender_uaid}
-#   # XXX: HACK: Same as above
-#   ${status}  ${date}=  Run Keyword And Ignore Error
-#   ...      Set Variable
-#   ...      ${USERS.users['${username}'].tender_data.data.tenderPeriod.endDate}
-#   ${date}=  Set Variable If
-#   ...      '${status}' == 'FAIL'
-#   ...      ${USERS.users['${tender_owner}'].initial_data.data.tenderPeriod.endDate}
-#   ...      ${date}
-#   Дочекатись дати  ${date}
-#   Оновити LAST_MODIFICATION_DATE
-#   Дочекатись синхронізації з майданчиком  ${username}
-#   Wait until keyword succeeds
-#   ...      5 min 15 sec
-#   ...      15 sec
-#   ...      Звірити статус тендера
-#   ...      ${username}
-#   ...      ${tender_uaid}
-#   ...      active.auction
-
 
 
 Дочекатись дати закінчення прийому пропозицій

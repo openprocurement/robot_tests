@@ -37,10 +37,10 @@ from .initial_data import (
     test_supplier_data,
     test_tender_data,
     test_tender_data_competitive_dialogue,
+    test_tender_data_dgf_other,
     test_tender_data_limited,
     test_tender_data_openeu,
     test_tender_data_openua,
-    test_tender_data_dgf_other,
 )
 from barbecue import chef
 from restkit import request
@@ -273,7 +273,11 @@ def prepare_test_tender_data(procedure_intervals, tender_parameters):
         "not '{}'".format(type(intervals['accelerator']).__name__)
     assert intervals['accelerator'] >= 0, \
         "Accelerator should not be less than 0"
-    if mode == 'negotiation':
+    if mode == 'belowThreshold':
+        return munchify({'data': test_tender_data(tender_parameters)})
+    elif mode == 'dgf_other':
+        return munchify({'data': test_tender_data_dgf_other(tender_parameters)})
+    elif mode == 'negotiation':
         return munchify({'data': test_tender_data_limited(tender_parameters)})
     elif mode == 'negotiation.quick':
         return munchify({'data': test_tender_data_limited(tender_parameters)})
@@ -285,10 +289,6 @@ def prepare_test_tender_data(procedure_intervals, tender_parameters):
         return munchify({'data': test_tender_data_competitive_dialogue(tender_parameters)})
     elif mode == 'reporting':
         return munchify({'data': test_tender_data_limited(tender_parameters)})
-    elif mode == 'belowThreshold':
-        return munchify({'data': test_tender_data(tender_parameters)})
-    elif mode == 'dgf_other':
-        return munchify({'data': test_tender_data_dgf_other(tender_parameters)})
     raise ValueError("Invalid mode for prepare_test_tender_data")
 
 

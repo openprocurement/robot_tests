@@ -318,7 +318,6 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_to_tender
-  #[Setup]  Дочекатись дати початку очікування  ${provider}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість задати запитання на тендер користувачем ${provider}
 
@@ -648,7 +647,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${provider1}'].broker}
   ...      modify_bid_after_tendering_period_by_provider1
   [Setup]  Дочекатись дати закінчення прийому пропозицій  ${provider1}  ${TENDER['TENDER_UAID']}
-  Run Keyword And Expect Error  *  Можливість збільшити пропозицію до 105 відсотків користувачем ${provider1}
+  Require Failure  ${provider1}  Можливість збільшити пропозицію до 105 відсотків користувачем ${provider1}
 
 
 Неможливість скасувати пропозицію другим учасником після закінчення прийому пропозицій
