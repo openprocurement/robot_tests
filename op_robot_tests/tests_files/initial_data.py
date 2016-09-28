@@ -71,7 +71,7 @@ def test_tender_data(params, periods=("enquiry", "tender")):
             "currency": u"UAH"
         },
         "items": [],
-        "features": []
+        #"features": []
     }
     accelerator = params['intervals']['accelerator']
     data['procurementMethodDetails'] = 'quick, ' \
@@ -93,18 +93,18 @@ def test_tender_data(params, periods=("enquiry", "tender")):
     for i in range(params['number_of_items']):
         new_item = test_item_data(cav_group)
         data['items'].append(new_item)
-    if params.get('tender_meat'):
-        new_feature = test_feature_data()
-        new_feature.featureOf = "tenderer"
-        data['features'].append(new_feature)
-    if params.get('item_meat'):
-        new_feature = test_feature_data()
-        new_feature['featureOf'] = "item"
-        data['items'][0]['id'] =  data['items'][0].get('id', uuid4().hex)
-        new_feature['relatedItem'] = data['items'][0]['id']
-        data['features'].append(new_feature)
-    if not data['features']:
-        del data['features']
+    # if params.get('tender_meat'):
+    #     new_feature = test_feature_data()
+    #     new_feature.featureOf = "tenderer"
+    #     data['features'].append(new_feature)
+    # if params.get('item_meat'):
+    #     new_feature = test_feature_data()
+    #     new_feature['featureOf'] = "item"
+    #     data['items'][0]['id'] =  data['items'][0].get('id', uuid4().hex)
+    #     new_feature['relatedItem'] = data['items'][0]['id']
+    #     data['features'].append(new_feature)
+    # if not data['features']:
+    #     del data['features']
     return munchify(data)
 
 
@@ -354,7 +354,7 @@ def test_tender_data_competitive_dialogue(params):
     return data
 
 
-def test_tender_data_dgf(params):
+def test_tender_data_dgf_other(params):
     data = test_tender_data(params, [])
     period_dict = {}
     inc_dt = get_now()
