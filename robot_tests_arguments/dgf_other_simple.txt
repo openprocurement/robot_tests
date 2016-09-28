@@ -1,4 +1,4 @@
--v MODE:dgf
+-v MODE:dgf_other
 
 -v NUMBER_OF_ITEMS:1
 -v NUMBER_OF_LOTS:0
@@ -11,7 +11,6 @@
 -i create_tender
 -i find_tender
 -i tender_view
--i lot_view
 
 -i make_bid_by_provider
 -i make_bid_by_provider1
