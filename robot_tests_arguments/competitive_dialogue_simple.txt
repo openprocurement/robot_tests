@@ -1,6 +1,7 @@
  -s openProcedure
 
 -v MODE:open_competitive_dialogue
+-v MODE:dgf
 
 -v api_version:2.3
 -v api_host_url:http://localhost:6543/
