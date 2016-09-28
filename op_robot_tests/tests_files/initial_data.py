@@ -49,6 +49,7 @@ def create_fake_doc():
 
 
 def test_tender_data(params, periods=("enquiry", "tender")):
+    mode = params.get('mode', None)
     now = get_now()
     value_amount = round(random.uniform(3000, 99999999999.99), 2)  # max value equals to budget of Ukraine in hryvnias
     data = {
@@ -74,8 +75,7 @@ def test_tender_data(params, periods=("enquiry", "tender")):
         "features": []
     }
     accelerator = params['intervals']['accelerator']
-    data['procurementMethodDetails'] = 'quick, ' \
-        'accelerator={}'.format(accelerator)
+    data['procurementMethodDetails'] = 'quick, accelerator={}'.format(accelerator)
     data["procuringEntity"]["kind"] = "other"
     if data.get("mode") == "test":
         data["title"] = u"[ТЕСТУВАННЯ] {}".format(data["title"])
@@ -89,8 +89,8 @@ def test_tender_data(params, periods=("enquiry", "tender")):
             inc_dt += timedelta(minutes=params['intervals'][period_name][i])
             period_dict[period_name + "Period"][j + "Date"] = inc_dt.isoformat()
     data.update(period_dict)
-    cpv_group = fake.cpv()[:3]
-    if params.get('number_of_lots'):
+    group = fake.cav()[:3] if mode == 'dgf' else fake.cpv()[:3]
+    if params.get('number_of_lots') and params.get('mode') != 'dgf':
         data['lots'] = []
         for lot_number in range(params['number_of_lots']):
             lot_id = uuid4().hex
@@ -98,7 +98,7 @@ def test_tender_data(params, periods=("enquiry", "tender")):
             data['lots'].append(new_lot)
             data['lots'][lot_number]['id'] = lot_id
             for i in range(params['number_of_items']):
-                new_item = test_item_data(cpv_group)
+                new_item = test_item_data(group)
                 new_item['relatedLot'] = lot_id
                 data['items'].append(new_item)
         value_amount = round(sum(lot['value']['amount'] for lot in data['lots']), 2)
@@ -108,12 +108,12 @@ def test_tender_data(params, periods=("enquiry", "tender")):
         if params.get('lot_meat'):
             new_feature = test_feature_data()
             new_feature['featureOf'] = "lot"
-            data['lots'][0]['id'] =  data['lots'][0].get('id', uuid4().hex)
+            data['lots'][0]['id'] = data['lots'][0].get('id', uuid4().hex)
             new_feature['relatedItem'] = data['lots'][0]['id']
             data['features'].append(new_feature)
     else:
         for i in range(params['number_of_items']):
-            new_item = test_item_data(cpv_group)
+            new_item = test_item_data(mode, group)
             data['items'].append(new_item)
     if params.get('tender_meat'):
         new_feature = test_feature_data()
@@ -122,10 +122,10 @@ def test_tender_data(params, periods=("enquiry", "tender")):
     if params.get('item_meat'):
         new_feature = test_feature_data()
         new_feature['featureOf'] = "item"
-        data['items'][0]['id'] =  data['items'][0].get('id', uuid4().hex)
+        data['items'][0]['id'] = data['items'][0].get('id', uuid4().hex)
         new_feature['relatedItem'] = data['items'][0]['id']
         data['features'].append(new_feature)
-    if not data['features']:
+    if not data['features'] or mode == 'dgf':
         del data['features']
     return munchify(data)
 
@@ -147,7 +147,7 @@ def test_tender_data_limited(params):
             "additionalConstruction",
             "stateLegalServices"
         )
-        cause = fake.random_element(cause_variants)
+        # cause = fake.random_element(cause_variants)
     elif params['mode'] == "negotiation.quick":
         cause_variants = ('quick',)
     if params['mode'] in ("negotiation", "negotiation.quick"):
@@ -296,8 +296,9 @@ def test_supplier_data():
     })
 
 
-def test_item_data(cpv=None):
-    data = fake.fake_item(cpv)
+def test_item_data(mode=None, classifier=None):
+    classifier_type = 'cav' if mode == 'dgf' else 'cpv'
+    data = fake.fake_item(classifier_type, classifier)
     data["description"] = field_with_id("i", data["description"])
     data["description_en"] = field_with_id("i", data["description_en"])
     data["description_ru"] = field_with_id("i", data["description_ru"])
@@ -379,7 +380,31 @@ def test_tender_data_openeu(params):
     data['procuringEntity']['name_en'] = fake_en.name()
     data['procuringEntity']['contactPoint']['name_en'] = fake_en.name()
     data['procuringEntity']['contactPoint']['availableLanguage'] = "en"
-    data['procuringEntity']['identifier']['legalName_en'] = "Institution \"Vinnytsia City Council primary and secondary general school № 10\""
+    data['procuringEntity']['identifier']['legalName_en'] \
+        = "Institution \"Vinnytsia City Council primary and secondary general school № 10\""
+    data['procuringEntity']['kind'] = 'general'
+    return data
+
+
+def test_tender_data_dgf(params):
+    # We should not provide any values for `enquiryPeriod` when creating
+    # an openUA or openEU procedure. That field should not be present at all.
+    # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
+
+    # periods = tuple(key for key in list(params['intervals'].keys()) if key != 'accelerator')
+    data = test_tender_data(params, periods=('auction',))
+
+    # data.pop('lots', None)
+    data['procurementMethodType'] = 'dgfFinancialAssets'
+
+    data['title_en'] = "[TESTING]"
+    for item_number, item in enumerate(data['items']):
+        item['description_en'] = "Test item #{}".format(item_number)
+    data['procuringEntity']['name_en'] = fake_en.name()
+    data['procuringEntity']['contactPoint']['name_en'] = fake_en.name()
+
+    data['procuringEntity']['identifier']['legalName_en'] \
+        = "Institution \"Vinnytsia City Council primary and secondary general school № 10\""
     data['procuringEntity']['kind'] = 'general'
     return data
 
