@@ -41,6 +41,7 @@ from .initial_data import (
     test_tender_data_competitive_dialogue,
     test_tender_data_limited,
     test_tender_data_openeu,
+    test_tender_data_dgf,
     test_tender_data_openua,
 )
 from barbecue import chef
@@ -280,6 +281,8 @@ def prepare_test_tender_data(procedure_intervals, tender_parameters):
         return munchify({'data': test_tender_data_limited(tender_parameters)})
     elif mode == 'openeu':
         return munchify({'data': test_tender_data_openeu(tender_parameters)})
+    elif mode == 'dgf':
+        return munchify({'data': test_tender_data_dgf(tender_parameters)})
     elif mode == 'openua':
         return munchify({'data': test_tender_data_openua(tender_parameters)})
     elif mode == 'open_competitive_dialogue':
@@ -490,3 +493,9 @@ def convert_datetime_to_dot_format(isodate):
 
 def local_path_to_file(file_name):
     return os.path.join(os.path.dirname(__file__), 'documents', file_name)
+
+
+def print_data(*args, **kwargs):
+    # print('args = {args}'.format(args=str(args)))
+    # print('kwargs = {kwargs}'.format(kwargs=str(kwargs)))
+    pass

@@ -41,6 +41,9 @@ Default:
         open_competitive_dialogue:
             accelerator: 1440
             tender:  [0, 30]
+        dgf:
+            accelerator: 1440
+            auction:  [3000, 30]
     # Synchronization delay, in seconds
     timeout_on_wait: 300
 Quinta:
@@ -55,6 +58,9 @@ Quinta:
         open_competitive_dialogue:
             accelerator: 1440
             tender:  [0, 30]
+        dgf:
+            accelerator: 1440
+            auction:  [3000, 30]
     keywords_file: openprocurement_client
     roles:
         provider:       Tender_User

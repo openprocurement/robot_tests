@@ -203,7 +203,7 @@ Get Broker Property By Username
   ${TENDER}=  Create Dictionary
   Set Global Variable  ${TENDER}
   Log  ${tender_data}
-  [return]  ${tender_data}
+  [Return]  ${tender_data}
 
 
 Підготувати дані для створення предмету закупівлі
@@ -562,6 +562,7 @@ Run As
   Log  ${command}
   Log Many  @{arguments}
   ${keywords_file}=  Get Broker Property By Username  ${username}  keywords_file
+  Log  ${keywords_file}
   Run Keyword And Return  ${keywords_file}.${command}  ${username}  @{arguments}
 
 
