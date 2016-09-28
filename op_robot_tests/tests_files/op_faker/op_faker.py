@@ -22,7 +22,8 @@ class OP_Provider(BaseProvider):
     procuringEntities = __fake_data.procuringEntities
     addresses = __fake_data.addresses
     classifications = __fake_data.classifications
-    cpvs = __fake_data.cpvs
+    cpvs = __fake_data.get('cpvs', None)
+    cavs = __fake_data.get('cavs', None)
     items_base_data = __fake_data.items_base_data
 
     @classmethod
@@ -93,31 +94,40 @@ class OP_Provider(BaseProvider):
         return self.random_element(self.cpvs)
 
     @classmethod
-    def fake_item(self, cpv_group=None):
+    def cav(self):
+        return self.random_element(self.cavs)
+
+    @classmethod
+    def fake_item(self, classifier_type="cpv", classifier=None):
         """
         Generate a random item for openprocurement tenders
+        :param classifier_type: one of "cpv" or "cav"
+        :param classifier: gives possibility to generate items
+            from a specific classifier. Cpv/cav classifiers are three digits
+            in the beginning of each cpv/cav id.
 
-        :param cpv_group: gives possibility to generate items
-            from a specific cpv group. Cpv group is three digits
-            in the beginning of each cpv id.
+        :return: faked item
         """
-        if cpv_group is None:
+        entity_id_types = {"cpv": "cpv_id", "cav": "cav_id"}
+        all_classifiers_attrs = {"cpv": "cpvs", "cav": "cavs"}
+
+        if classifier is None:
             item_base_data = self.random_element(self.items_base_data)
         else:
-            cpv_group = str(cpv_group)
-            similar_cpvs = []
-            for cpv_element in self.cpvs:
-                if cpv_element.startswith(cpv_group):
-                    similar_cpvs.append(cpv_element)
-            cpv = self.random_element(similar_cpvs)
+            classifier = str(classifier)
+            similar_elems = []
+            for element in getattr(self, all_classifiers_attrs[classifier_type]):
+                if element.startswith(classifier):
+                    similar_elems.append(element)
+            vocabulary = self.random_element(similar_elems)
             for entity in self.items_base_data:
-                if entity["cpv_id"] == cpv:
+                if entity[entity_id_types[classifier_type]] == vocabulary:
                     item_base_data = entity
                     break
 
-        # choose appropriate dkpp classification for item_base_data's cpv
+        # choose appropriate dkpp classification for item_base_data's vocabulary
         for entity in self.classifications:
-            if entity["classification"]["id"] == item_base_data["cpv_id"]:
+            if entity["classification"]["id"] == item_base_data[entity_id_types[classifier_type]]:
                 classification = entity
                 break
 
@@ -127,10 +137,11 @@ class OP_Provider(BaseProvider):
             "description_ru": item_base_data["description_ru"],
             "description_en": item_base_data["description_en"],
             "classification": classification["classification"],
-            "additionalClassifications": classification["additionalClassifications"],
             "deliveryAddress": address["deliveryAddress"],
             "deliveryLocation": address["deliveryLocation"],
             "unit": item_base_data["unit"],
             "quantity": self.randomize_nb_elements(number=item_base_data["quantity"], le=80, ge=120)
         }
-        return deepcopy(item)
+        if classification.get("additionalClassifications"):
+            item["additionalClassifications"] = classification.get("additionalClassifications")
+        return item
