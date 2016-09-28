@@ -141,13 +141,6 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля procurementMethodType тендера для усіх користувачів
 
 
-Відображення закінчення періоду подання скарг на оголошений тендер
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      open_tender_view
-  Отримати дані із поля complaintPeriod.endDate тендера для усіх користувачів
-
 ##############################################################################################
 #             Відображення основних даних предмету
 ##############################################################################################
@@ -209,55 +202,58 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля quantity усіх предметів для користувача ${viewer}
 
 ##############################################################################################
-#             Відображення основних даних предмету
-##############################################################################################
-
-Відображення заголовку нецінових показників
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
-  ...      viewer  tender_owner  provider  provider1
-  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
-  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
-  ...      meat_view  level2
-  Звірити відображення поля title усіх нецінових показників для усіх користувачів
-
-
-Відображення опису нецінових показників
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      meat_view  level2
-  Звірити відображення поля description усіх нецінових показників для користувача ${viewer}
-
-
-Відображення відношення нецінових показників
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      meat_view  level2
-  Звірити відображення поля featureOf усіх нецінових показників для користувача ${viewer}
-
-##############################################################################################
 #             Редагування тендера
 ##############################################################################################
 
-Можливість змінити дату закінчення періоду подання пропозиції на 1 день
+# Неможливість змінити бюджет тендера
+#   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+#   ...      tender_owner
+#   ...      ${USERS.users['${tender_owner}'].broker}
+#   ...      modify_auction_value  level3
+#   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+#   ${value}=  Set Variable  ${10000}
+#   Перевірити неможливість зміни поля value тендера на значення ${value} для користувача ${tender_owner}
+
+# Неможливість змінити мінімальний крок тендера
+#   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+#   ...      tender_owner
+#   ...      ${USERS.users['${tender_owner}'].broker}
+#   ...      modify_auction_step  level3
+#   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+#   ${minimalstep}=  Set Variable  ${10000}
+#   Перевірити неможливість зміни поля ${minimalstep} тендера на значення 10000 для користувача ${tender_owner}
+
+
+Неможливість змінити назву тендера всіма мовами
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      extend_tendering_period  level3
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${endDate}=  add_minutes_to_date  ${USERS.users['${tender_owner}'].tender_data.data.tenderPeriod.endDate}  1
-  Можливість змінити поле tenderPeriod.endDate тендера на ${endDate}
-  Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data.tenderPeriod}  endDate
+  ...      modify_auction_title  level3
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  ${new_title}=  create_fake_sentence
+  Перевірити неможливість зміни поля title тендера на значення ${new_title} для користувача ${tender_owner}
+  Перевірити неможливість зміни поля title_ru тендера на значення ${new_title} для користувача ${tender_owner}
+  Перевірити неможливість зміни поля title_en тендера на значення ${new_title} для користувача ${tender_owner}
 
 
-Відображення зміни закінчення періоду прийому пропозицій тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      extend_tendering_period  level2
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення дати tenderPeriod.endDate тендера для усіх користувачів
+# Неможливість змінити початок періоду подання пропозицій тендера
+#   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+#   ...      tender_owner
+#   ...      ${USERS.users['${tender_owner}'].broker}
+#   ...      modify_auction_periods  level3
+#   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+#   ${new_value}=  Set Variable  auctionPeriod.startDate
+#   Перевірити неможливість зміни поля tenderPeriod.startDate тендера на значення ${new_value} для користувача ${tender_owner}
+
+
+# Неможливість змінити кінець періоду очікування тендера
+#   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+#   ...      tender_owner
+#   ...      ${USERS.users['${tender_owner}'].broker}
+#   ...      modify_auction_periods  level3
+#   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+#   ${new_value}=  Set Variable  auctionPeriod.startDate
+#   Перевірити неможливість зміни поля enquiryPeriod.endDate тендера на значення ${new_value} для користувача ${tender_owner}
 
 
 Можливість додати документацію до тендера
@@ -313,89 +309,6 @@ ${ITEM_MEAT}        ${True}
   Можливість видалити предмет закупівлі з тендера
 
 
-Можливість додати неціновий показник на тендер
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      add_tender_meat  level3
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість додати неціновий показник на тендер
-
-
-Відображення заголовку нецінового показника на тендер
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
-  ...      viewer  tender_owner  provider  provider1
-  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
-  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
-  ...      add_tender_meat  level2
-  Звірити відображення поля title у новоствореному неціновому показнику для усіх користувачів
-
-
-Відображення опису нецінового показника на тендер
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      add_tender_meat
-  Звірити відображення поля description у новоствореному неціновому показнику для користувача ${viewer}
-
-
-Відображення відношення нецінового показника на тендер
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      add_tender_meat
-  Звірити відображення поля featureOf у новоствореному неціновому показнику для користувача ${viewer}
-
-
-Можливість видалити неціновий показник на тендер
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      delete_tender_meat  level3
-  Можливість видалити -1 неціновий показник
-
-
-Можливість додати неціновий показник на перший предмет
-  [Tags]    ${USERS.users['${tender_owner}'].broker}:  Редагування тендера
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      add_item_meat  level3
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість додати неціновий показник на 0 предмет
-
-
-Відображення заголовку нецінового показника на предмет
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
-  ...      viewer  tender_owner  provider  provider1
-  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
-  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
-  ...      add_item_meat  level2
-  Звірити відображення поля title у новоствореному неціновому показнику для усіх користувачів
-
-
-Відображення опису нецінового показника на предмет
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      add_item_meat
-  Звірити відображення поля description у новоствореному неціновому показнику для користувача ${viewer}
-
-
-Відображення відношення нецінового показника на предмет
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      add_item_meat
-  Звірити відображення поля featureOf у новоствореному неціновому показнику для користувача ${viewer}
-
-
-Можливість видалити неціновий показник на предмет
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      delete_item_meat  level3
-  Можливість видалити -1 неціновий показник
-
 ##############################################################################################
 #             QUESTIONS
 ##############################################################################################
@@ -405,7 +318,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_to_tender
-  [Setup]  Дочекатись дати початку періоду уточнень  ${provider}  ${TENDER['TENDER_UAID']}
+  #[Setup]  Дочекатись дати початку очікування  ${provider}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість задати запитання на тендер користувачем ${provider}
 
@@ -451,7 +364,6 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_to_item
-  [Setup]  Дочекатись дати початку періоду уточнень  ${provider}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  Можливість задати запитання на ${item_index} предмет користувачем ${provider}
@@ -510,213 +422,8 @@ ${ITEM_MEAT}        ${True}
 
 
 ##############################################################################################
-#             TENDER COMPLAINTS
-##############################################################################################
-
-Можливість створити вимогу про виправлення умов закупівлі, додати до неї документацію і подати її користувачем
-  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
-  ...  provider
-  ...  ${USERS.users['${provider}'].broker}
-  ...  create_tender_claim
-  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість створити вимогу про виправлення умов закупівлі із документацією
-
-
-Відображення опису вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  create_tender_claim
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля description вимоги із ${USERS.users['${provider}'].claim_data.claim.data.description} для користувача ${viewer}
-
-
-Відображення ідентифікатора вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  create_tender_claim
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля complaintID вимоги із ${USERS.users['${provider}'].claim_data.complaintID} для користувача ${viewer}
-
-
-Відображення заголовку вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  create_tender_claim
-  Звірити відображення поля title вимоги із ${USERS.users['${provider}'].claim_data.claim.data.title} для користувача ${viewer}
-
-
-Відображення заголовку документа до вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  create_tender_claim
-  Звірити відображення поля title документа ${USERS.users['${provider}'].claim_data.doc_id} до скарги ${USERS.users['${provider}'].claim_data.complaintID} з ${USERS.users['${provider}'].claim_data.doc_name} для користувача ${viewer}
-
-
-Відображення вмісту документа до вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  create_tender_claim
-  Звірити відображення вмісту документа ${USERS['${provider}'].claim_data.doc_id} до скарги ${USERS.users['${provider}'].claim_data.complaintID} з ${USERS['${provider}'].claim_data.doc_content} для користувача ${viewer}
-
-
-Відображення поданого статусу вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  create_tender_claim
-  Звірити відображення поля status вимоги із claim для користувача ${viewer}
-
-
-Можливість відповісти на вимогу про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес оскарження
-  ...  tender_owner
-  ...  ${USERS.users['${tender_owner}'].broker}
-  ...  answer_tender_claim
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість відповісти на вимогу про виправлення умов закупівлі
-
-
-Відображення статусу 'answered' вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  answer_tender_claim
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля status вимоги із answered для користувача ${viewer}
-
-
-Відображення типу вирішення вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  answer_tender_claim
-  Звірити відображення поля resolutionType вимоги із ${USERS.users['${tender_owner}'].claim_data.claim_answer.data.resolutionType} для користувача ${viewer}
-
-
-Відображення вирішення вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  answer_tender_claim
-  Звірити відображення поля resolution вимоги із ${USERS.users['${tender_owner}'].claim_data.claim_answer.data.resolution} для користувача ${viewer}
-
-
-Можливість підтвердити задоволення вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
-  ...  provider
-  ...  ${USERS.users['${provider}'].broker}
-  ...  resolve_tender_claim
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість підтвердити задоволення вимоги про виправлення умов закупівлі
-
-
-Відображення статусу 'resolved' вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  resolve_tender_claim
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля status вимоги із resolved для користувача ${viewer}
-
-
-Відображення задоволення вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  resolve_tender_claim
-  Звірити відображення поля satisfied вимоги із ${USERS.users['${provider}'].claim_data.claim_answer_confirm.data.satisfied} для користувача ${viewer}
-
-
-Можливість перетворити вимогу про виправлення умов закупівлі в скаргу
-  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
-  ...  provider
-  ...  ${USERS.users['${provider}'].broker}
-  ...  escalate_tender_claim
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість перетворити вимогу про виправлення умов закупівлі в скаргу
-
-
-Відображення статусу 'pending' після 'claim -> answered' вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  escalate_tender_claim
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля status вимоги із pending для користувача ${viewer}
-
-
-Відображення незадоволення вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  escalate_tender_claim
-  Звірити відображення поля satisfied вимоги із ${USERS.users['${provider}'].claim_data.escalation.data.satisfied} для користувача ${viewer}
-
-
-Можливість скасувати вимогу/скаргу про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
-  ...  provider
-  ...  ${USERS.users['${provider}'].broker}
-  ...  cancel_tender_claim
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість скасувати вимогу про виправлення умов закупівлі
-
-
-Відображення статусу 'cancelled' вимоги/скарги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  cancel_tender_claim
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля status вимоги із cancelled для користувача ${viewer}
-
-
-Відображення причини скасування вимоги/скарги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  cancel_tender_claim
-  Звірити відображення поля cancellationReason вимоги із ${USERS.users['${provider}'].claim_data.cancellation.data.cancellationReason} для користувача ${viewer}
-
-
-Можливість внести зміни у тендер після оскарження умов закупівлі
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_tender_after_claim
-  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${new_description}=  create_fake_sentence
-  Можливість змінити поле description тендера на ${new_description}
-  Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data}  description
-
-##############################################################################################
 #             BIDDING
 ##############################################################################################
-
-Неможливість подати пропозицію до початку періоду подачі пропозицій першим учасником
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
-  ...      provider
-  ...      ${USERS.users['${provider}'].broker}
-  ...      make_bid_before_tendering_period
-  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
-  Run Keyword And Expect Error  *  Можливість подати цінову пропозицію користувачем ${provider}
-
-
-Неможливість подати цінову пропозицію без нецінових показників
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
-  ...      provider
-  ...      ${USERS.users['${provider}'].broker}
-  ...      make_bid_without_parameters
-  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
-  Неможливість подати цінову пропозицію без нецінових показників користувачем ${provider}
-
 
 Можливість подати пропозицію першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
@@ -899,6 +606,14 @@ ${ITEM_MEAT}        ${True}
   ...      add_bid_doc_after_tendering_period_by_provider
   [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}  ${TENDER['TENDER_UAID']}
   Run Keyword And Expect Error  *  Можливість завантажити документ в пропозицію користувачем ${provider}
+
+
+Неможливість подати пропозицію після закінчення подачі пропозицій першим учасником
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      make_bid_after_tendering_period
+  Run Keyword And Expect Error  *  Можливість подати цінову пропозицію користувачем ${provider}
 
 
 Неможливість змінити існуючу документацію пропозиції першим учасником після закінчення прийому пропозицій
