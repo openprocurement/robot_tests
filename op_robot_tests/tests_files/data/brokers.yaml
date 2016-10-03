@@ -41,6 +41,9 @@ Default:
         open_competitive_dialogue:
             accelerator: 1440
             tender:  [0, 30]
+        dgf_financial:
+           accelerator: 1440
+           auction:  [25, 30]
         dgf_other:
             accelerator: 1440
             auction:  [25, 30]
@@ -58,6 +61,9 @@ Quinta:
         open_competitive_dialogue:
             accelerator: 1440
             tender:  [0, 30]
+        dgf_financial:
+           accelerator: 1440
+           auction:  [25, 30]
         dgf_other:
             accelerator: 1440
             auction:  [25, 30]
