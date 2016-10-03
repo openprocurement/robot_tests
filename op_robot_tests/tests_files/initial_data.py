@@ -60,11 +60,14 @@ def test_tender_data(params, periods=("enquiry", "tender")):
         "title": fake.title(),
         "title_en": fake_en.catch_phrase(),
         "title_ru": fake_ru.catch_phrase(),
-        "procuringEntity": fake.procuringEntity(),
         "value": {
             "amount": value_amount,
             "currency": u"UAH",
             "valueAddedTaxIncluded": True
+        },
+        "guarantee": {
+             "amount": round(random.uniform(0.1, 0.2) * value_amount, 2),
+            "currency": u"UAH"
         },
         "minimalStep": {
             "amount": round(random.uniform(0.005, 0.03) * value_amount, 2),
@@ -75,7 +78,6 @@ def test_tender_data(params, periods=("enquiry", "tender")):
     accelerator = params['intervals']['accelerator']
     data['procurementMethodDetails'] = 'quick, ' \
         'accelerator={}'.format(accelerator)
-    data["procuringEntity"]["kind"] = "other"
     if data.get("mode") == "test":
         data["title"] = u"[ТЕСТУВАННЯ] {}".format(data["title"])
         data["title_en"] = u"[TESTING] {}".format(data["title_en"])
@@ -88,10 +90,6 @@ def test_tender_data(params, periods=("enquiry", "tender")):
             inc_dt += timedelta(minutes=params['intervals'][period_name][i])
             period_dict[period_name + "Period"][j + "Date"] = inc_dt.isoformat()
     data.update(period_dict)
-    cav_group = fake.cav()[:3]
-    for i in range(params['number_of_items']):
-        new_item = test_item_data(cav_group)
-        data['items'].append(new_item)
     return munchify(data)
 
 
@@ -261,8 +259,8 @@ def test_supplier_data():
     })
 
 
-def test_item_data(cav=None):
-    data = fake.fake_item(cav)
+def test_item_data(cav, mode):
+    data = fake.fake_item(cav, mode)
     data["description"] = field_with_id("i", data["description"])
     data["description_en"] = field_with_id("i", data["description_en"])
     data["description_ru"] = field_with_id("i", data["description_ru"])
@@ -343,11 +341,40 @@ def test_tender_data_competitive_dialogue(params):
 
 def test_tender_data_dgf_other(params):
     data = test_tender_data(params, [])
+
     period_dict = {}
     inc_dt = get_now()
     period_dict["auctionPeriod"] = {}
     inc_dt += timedelta(minutes=params['intervals']['auction'][0])
     period_dict["auctionPeriod"]["startDate"] = inc_dt.isoformat()
     data.update(period_dict)
+
     data['procurementMethodType'] = 'dgfOtherAssets'
+    data["procuringEntity"] = fake.procuringEntity_other()
+    data["procuringEntity"]["kind"] = "other"
+
+    cav_group_other = fake.cav_other()[:3]
+    for i in range(params['number_of_items']):
+        new_item = test_item_data(cav_group_other, data['procurementMethodType'])
+        data['items'].append(new_item)
+    return data
+
+def test_tender_data_dgf_financial(params):
+    data = test_tender_data(params, [])
+
+    period_dict = {}
+    inc_dt = get_now()
+    period_dict["auctionPeriod"] = {}
+    inc_dt += timedelta(minutes=params['intervals']['auction'][0])
+    period_dict["auctionPeriod"]["startDate"] = inc_dt.isoformat()
+    data.update(period_dict)
+
+    data['procurementMethodType'] = 'dgfFinancialAssets'
+    data["procuringEntity"] = fake.procuringEntity()
+    data["procuringEntity"]["kind"] = "other"
+
+    cav_group_financial = fake.cav_financial()[:3]
+    for i in range(params['number_of_items']):
+        new_item = test_item_data(cav_group_financial, data['procurementMethodType'])
+        data['items'].append(new_item)
     return data

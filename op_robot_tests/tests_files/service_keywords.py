@@ -37,6 +37,7 @@ from .initial_data import (
     test_supplier_data,
     test_tender_data,
     test_tender_data_competitive_dialogue,
+    test_tender_data_dgf_financial,
     test_tender_data_dgf_other,
     test_tender_data_limited,
     test_tender_data_openeu,
@@ -275,6 +276,8 @@ def prepare_test_tender_data(procedure_intervals, tender_parameters):
         "Accelerator should not be less than 0"
     if mode == 'belowThreshold':
         return munchify({'data': test_tender_data(tender_parameters)})
+    elif mode == 'dgf_financial':
+        return munchify({'data': test_tender_data_dgf_financial(tender_parameters)})
     elif mode == 'dgf_other':
         return munchify({'data': test_tender_data_dgf_other(tender_parameters)})
     elif mode == 'negotiation':
@@ -463,6 +466,12 @@ def generate_test_bid_data(tender_data):
     if 'dgfOtherAssets' in tender_data.get('procurementMethodType', ''):
         bid.data.status = "draft"
         bid.data.qualified = True
+        # bid.data.tenderers[0]["Identifiers"] = [fake.ipnIdentifier()]
+    if 'dgfFinancialAssets' in tender_data.get('procurementMethodType', ''):
+        bid.data.eligible = True
+        bid.data.qualified = True
+        bid.data.tenderers[0]["additionalIdentifiers"] = [fake.additionalIdentifier()]
+
     return bid
 
 

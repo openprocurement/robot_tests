@@ -200,8 +200,8 @@ Get Broker Property By Username
 
 
 Підготувати дані для створення предмету закупівлі
-  [Arguments]  ${cav}
-  ${item}=  test_item_data  ${cav[0:3]}
+  [Arguments]  ${cav}  ${mode}
+  ${item}=  test_item_data  ${cav[0:3]}  ${mode}
   [Return]  ${item}
 
 

@@ -46,7 +46,7 @@ Resource           resource.robot
 
 
 Можливість додати предмет закупівлі в тендер
-  ${item}=  Підготувати дані для створення предмету закупівлі  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['id']}
+  ${item}=  Підготувати дані для створення предмету закупівлі  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['id']}  ${USERS.users['${tender_owner}'].tender_data.data.procurementMethodType}
   Run As  ${tender_owner}  Додати предмет закупівлі  ${TENDER['TENDER_UAID']}  ${item}
   ${item_id}=  get_id_from_object  ${item}
   ${item_data}=  Create Dictionary  item=${item}  item_id=${item_id}
