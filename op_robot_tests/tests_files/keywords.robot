@@ -546,6 +546,16 @@ Log differences between dicts
   Порівняти об'єкти  ${given_value}  ${received_value}
 
 
+Можливість скасувати тендер
+  ${cancellation_data}=  Підготувати дані про скасування  ${tender_owner}
+  Run As  ${tender_owner}
+  ...      Скасувати закупівлю
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${cancellation_data['cancellation_reason']}
+  ...      ${cancellation_data['document']['doc_path']}
+  ...      ${cancellation_data['description']}
+
+
 Run As
   [Arguments]  ${username}  ${command}  @{arguments}
   [Documentation]
