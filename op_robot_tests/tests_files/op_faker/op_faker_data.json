@@ -507,6 +507,113 @@
         "спускати",
         "весілчанин"
     ],
+     "procuringEntities_other": [
+        {
+            "contactPoint": {
+                "url": "http://krrpbl.org.ua",
+                "telephone": "044-511-99-42---------097-111-99-01",
+                "email": "k22pbl@bigmir.net",
+                "name": "Хильченко Марія Іванівна",
+                "faxNumber": "044-563-33-05"
+            },
+            "identifier": {
+                "scheme": "UA-IPN",
+                "id": "464218110027"
+            },
+            "name": "Хильченко Марія Іванівна",
+            "address": {
+                "postalCode": "07355",
+                "countryName": "Україна",
+                "streetAddress": "вулиця Львівська, 20, 81",
+                "region": "місто Ужгород",
+                "locality": "Ужгород"
+            }
+        },
+        {
+            "contactPoint": {
+                "url": "http://skinmedicline.com.ua",
+                "telephone": "426-19-46",
+                "email": "kmk12ll@ukr.net",
+                "name": "Бондарчук Микола Тарасович",
+                "faxNumber": "413-19-40"
+            },
+            "identifier": {
+                "scheme": "UA-IPN",
+                "id": "3646001204"
+            },
+            "name": "Бондарчук Микола Тарасович",
+            "address": {
+                "postalCode": "04684",
+                "countryName": "Україна",
+                "streetAddress": "вулиця Гвардійська, 57",
+                "region": "місто Київ",
+                "locality": "Київ"
+            }
+        },
+        {
+            "contactPoint": {
+                "url": "http://www.shevman.gov.ua/",
+                "telephone": "2344470",
+                "email": "man510@ukr.net",
+                "name": "Швець Остап Ігорович",
+                "faxNumber": "2344591"
+            },
+            "identifier": {
+                "scheme": "UA-IPN",
+                "id": "3740511108"
+            },
+            "name": "Швець Остап Ігорович",
+            "address": {
+                "postalCode": "08730",
+                "countryName": "Україна",
+                "streetAddress": "вулиця Виговського, 12",
+                "region": "місто Чернівці",
+                "locality": "Чернівці"
+            }
+        },
+        {
+            "contactPoint": {
+                "url": "http://e-tde.biz",
+                "telephone": "222-98-17",
+                "email": "poli89@yandex.ua",
+                "name": "Юрченко Ярина Олександрівна",
+                "faxNumber": "408-23-33"
+            },
+            "identifier": {
+                "scheme": "UA-IPN",
+                "id": "2478560811"
+            },
+            "name": "Юрченко Ярина Олександрівна",
+            "address": {
+                "postalCode": "07767",
+                "countryName": "Україна",
+                "streetAddress": "проспект Шевченка, 4А",
+                "region": "місто Київ",
+                "locality": "Київ"
+            }
+        },
+        {
+            "contactPoint": {
+                "url": "http://myosvita.info",
+                "telephone": "0983112433",
+                "email": "kanvomau@ukr.net",
+                "name": "Мельник Ярема-Маркіян Михайлович",
+                "faxNumber": "0477832384"
+            },
+            "identifier": {
+                "scheme": "UA-IPN",
+                "id": "4960872411"
+            },
+            "name": "Мельник Ярема-Маркіян Михайлович",
+            "address": {
+                "postalCode": "79003",
+                "countryName": "Україна",
+                "streetAddress": "вулиця Юліанова, 99",
+                "region": "місто Чернігів",
+                "locality": "Чернігів"
+            }
+        }
+    ],
     "procuringEntities": [
         {
             "contactPoint": {
@@ -1079,6 +1186,36 @@
                 "region": "Київська область",
                 "locality": "Яготин"
             }
+        }
+    ],
+    "additionalIdentifiers": [
+        {
+            "scheme": "UA-FIN",
+            "id": "А01 457213"
+        },
+        {
+            "scheme": "UA-FIN",
+            "id": "А00 007087"
+        },
+        {
+            "scheme": "UA-FIN",
+            "id": "А01 249508"
+        },
+        {
+            "scheme": "UA-FIN",
+            "id": "А0 799353"
+        },
+        {
+            "scheme": "UA-FIN",
+            "id": "А01 259397"
+        },
+        {
+            "scheme": "UA-FIN",
+            "id": "А01 303695"
+        },
+        {
+            "scheme": "UA-FIN",
+            "id": "А01 128712"
         }
     ],
     "addresses": [
@@ -2799,42 +2936,79 @@
             }
         }
     ],
-    "classifications":[
+    "classifications_other":[
         {
            "classification": {
                "scheme": "CAV",
                "id": "04000000-8",
                "description": "Нерухоме майно"
-           }
+            }
        },
        {
            "classification": {
                "scheme": "CAV",
                "id": "04100000-9",
                "description": "Житлова нерухомість"
-           }
+            }
        },
        {
            "classification": {
                "scheme": "CAV",
                "id": "04111000-9",
                "description": "Квартира в будинку малоповерхового житлового будівництва"
-           }
+            }
        },
        {
            "classification": {
                "scheme": "CAV",
                "id": "04111100-0",
                "description": "Квартира"
-           }
+            }
        },
        {
            "classification": {
                "scheme": "CAV",
                "id": "04111200-1",
                "description": "Таунхаус"
-           }
+            }
        }
+    ],
+    "classifications_financial":[
+        {
+           "classification": {
+               "scheme": "CAV",
+               "id": "07100000-0",
+               "description": "Кредити юридичних осіб"
+            }
+        },
+        {
+           "classification": {
+               "scheme": "CAV",
+               "id": "07110000-3",
+               "description": "Кредити юридичних осіб беззаставні"
+            }
+        },
+        {
+           "classification": {
+               "scheme": "CAV",
+               "id": "07120000-6",
+               "description": "Кредити юридичних осіб заставні"
+            }
+        },
+        {
+           "classification": {
+               "scheme": "CAV",
+               "id": "07000000-9",
+               "description": "Права вимоги за кредитними договорами"
+            }
+        },
+        {
+           "classification": {
+               "scheme": "CAV",
+               "id": "07223000-8",
+               "description": "ЗаставаЖ земельні ділянки"
+            }
+        }
     ],
     "units": [
         {
@@ -2918,68 +3092,129 @@
             "name": "блок"
         }
     ],
-    "cavs": [
+    "cavs_other": [
         "04000000-8",
-        "04100000-9",
-        "04111000-9",
-        "04111100-0",
-        "04111200-1"
+        "04100000-9"
     ],
-    "items_base_data": [
-          {
-           "cav_id": "04000000-8",
-           "description": "Нерухоме майно",
-           "description_ru": "Недвижимое имущество",
-           "description_en": "Real estate",
-           "quantity": 50,
-           "unit": {
-               "code": "MTK",
-               "name": "метри квадратні"
-           }
-       },
-       {
-           "cav_id": "04100000-9",
-           "description": "Житлова нерухомість",
-           "description_ru": "Жилое имущество",
-           "description_en": "Residential",
-           "quantity": 45,
-           "unit": {
-               "code": "MTK",
-               "name": "метри квадратні"
-           }
-       },
-       {
-           "cav_id": "04111000-9",
-           "description": "Квартира в будинку малоповерхового житлового будівництва",
-           "description_ru": "Квартира в доме малоэтажного строительства",
-           "description_en": "Flat in low-rise building",
-           "quantity": 15,
-           "unit": {
-               "code": "H87",
-               "name": "штуки"
-           }
-       },
-       {
-           "cav_id": "04111100-0",
-           "description": "Квартира",
-           "description_ru": "Квартира",
-           "description_en": "Flat",
-           "quantity": 12,
-           "unit": {
-               "code": "H87",
-               "name": "штуки"
-           }
-       },
+    "cavs_financial": [
+        "07100000-0",
+        "07110000-3",
+        "07120000-6",
+        "07000000-9",
+        "07223000-8"
+    ],
+    "items_base_data_other": [
+           {
+            "cav_id": "04000000-8",
+            "description": "Нерухоме майно",
+            "description_ru": "Недвижимое имущество",
+            "description_en": "Real estate",
+            "quantity": 50,
+            "unit": {
+                "code": "MTK",
+                "name": "метри квадратні"
+            }
+        },
         {
-           "cav_id": "04111200-1",
-           "description": "Таунхаус",
-           "description_ru": "Таунхаус",
-           "description_en": "Townhouse",
-           "quantity": 10,
-           "unit": {
-               "code": "H87",
-               "name": "штуки"
-           }
-       }
+            "cav_id": "04100000-9",
+            "description": "Житлова нерухомість",
+            "description_ru": "Жилое имущество",
+            "description_en": "Residential",
+            "quantity": 45,
+            "unit": {
+                "code": "MTK",
+                "name": "метри квадратні"
+            }
+        },
+        {
+            "cav_id": "04111000-9",
+            "description": "Квартира в будинку малоповерхового житлового будівництва",
+            "description_ru": "Квартира в доме малоэтажного строительства",
+            "description_en": "Flat in low-rise building",
+            "quantity": 15,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+        {
+            "cav_id": "04111100-0",
+            "description": "Квартира",
+            "description_ru": "Квартира",
+            "description_en": "Flat",
+            "quantity": 12,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+        {
+            "cav_id": "04111200-1",
+            "description": "Таунхаус",
+            "description_ru": "Таунхаус",
+            "description_en": "Townhouse",
+            "quantity": 10,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        }
+    ],
+    "items_base_data_financial": [
+           {
+            "cav_id": "07100000-0",
+            "description": "Кредити юридичних осіб",
+            "description_ru": "Кредиты юридических лиц",
+            "description_en": "Corporate loans",
+            "quantity": 50,
+            "unit": {
+                "code": "E48",
+                "name": "послуга"
+            }
+        },
+        {
+            "cav_id": "07110000-3",
+            "description": "Кредити юридичних осіб беззаставні",
+            "description_ru": "Кредиты юридических лиц беззалоговые",
+            "description_en": "Unsecured corporate loans",
+            "quantity": 50,
+            "unit": {
+                "code": "E48",
+                "name": "послуга"
+            }
+        },
+        {
+            "cav_id": "07120000-6",
+            "description": "Кредити юридичних осіб заставні",
+            "description_ru": "Кредиты юридических лиц залоговые",
+            "description_en": "Secured corporate loans",
+            "quantity": 50,
+            "unit": {
+                "code": "E48",
+                "name": "послуга"
+            }
+        },
+        {
+            "cav_id": "07000000-9",
+            "description": "Права вимоги за кредитними договорами",
+            "description_ru": "Права и требования по кредитным договорам",
+            "description_en": "Rights and claims under credit agreements",
+            "quantity": 50,
+            "unit": {
+                "code": "E48",
+                "name": "послуга"
+            }
+        },
+        {
+            "cav_id": "07223000-8",
+            "description": "Застава: земельні ділянки",
+            "description_ru": "Залог: земельные участки",
+            "description_en": "Motrgage land",
+            "quantity": 50,
+            "unit": {
+                "code": "E48",
+                "name": "послуга"
+            }
+        }
     ]
 }
