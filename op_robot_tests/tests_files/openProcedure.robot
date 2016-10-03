@@ -248,7 +248,7 @@ ${ITEM_MEAT}        ${True}
   Перевірити неможливість зміни поля minimalStep тендера на значення ${new_minimalstep} для користувача ${tender_owner}
 
 
-Неможливість змінити назву тендера всіма мовами
+Неможливість змінити назву тендера українською мовою
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
@@ -256,7 +256,25 @@ ${ITEM_MEAT}        ${True}
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   ${new_title}=  create_fake_sentence
   Перевірити неможливість зміни поля title тендера на значення ${new_title} для користувача ${tender_owner}
+
+
+Неможливість змінити назву тендера російською мовою
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_title  level3
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_title}=  create_fake_sentence
   Перевірити неможливість зміни поля title_ru тендера на значення ${new_title} для користувача ${tender_owner}
+
+
+Неможливість змінити назву тендера англійською мовою
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_title  level3
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_title}=  create_fake_sentence
   Перевірити неможливість зміни поля title_en тендера на значення ${new_title} для користувача ${tender_owner}
 
 
@@ -288,7 +306,7 @@ ${ITEM_MEAT}        ${True}
   Отримати дані із поля eligibilityCriteria тендера для усіх користувачів
 
 
-Неможливість змінити критерій прийнятності тендера всіма мовами
+Неможливість змінити критерій прийнятності тендера українською мовою
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
@@ -296,7 +314,25 @@ ${ITEM_MEAT}        ${True}
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   ${new_title}=  create_fake_sentence
   Перевірити неможливість зміни поля eligibilityCriteria тендера на значення ${new_title} для користувача ${tender_owner}
+
+
+Неможливість змінити критерій прийнятності тендера російською мовою
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_criteria  level3
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  ${new_title}=  create_fake_sentence
   Перевірити неможливість зміни поля eligibilityCriteria_ru тендера на значення ${new_title} для користувача ${tender_owner}
+
+
+Неможливість змінити критерій прийнятності тендера англійською мовою
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_criteria  level3
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  ${new_title}=  create_fake_sentence
   Перевірити неможливість зміни поля eligibilityCriteria_en тендера на значення ${new_title} для користувача ${tender_owner}
 
 
