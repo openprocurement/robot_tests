@@ -13,6 +13,8 @@
 -i modify_auction_title
 -i modify_auction_guarantee
 -i modify_auction_periods
+-i modify_tender
+-i modify_auction_item
 -i add_tender_doc
 -i add_lot_doc
 -i modify_lot_value_amount
