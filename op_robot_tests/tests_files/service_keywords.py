@@ -31,6 +31,7 @@ from .initial_data import (
     test_feature_data,
     test_invalid_features_data,
     test_item_data,
+    test_item_data_financial,
     test_related_question,
     test_question_answer_data,
     test_question_data,
@@ -276,9 +277,9 @@ def prepare_test_tender_data(procedure_intervals, tender_parameters):
         "Accelerator should not be less than 0"
     if mode == 'belowThreshold':
         return munchify({'data': test_tender_data(tender_parameters)})
-    elif mode == 'dgf_financial':
+    elif mode == 'dgfFinancialAssets':
         return munchify({'data': test_tender_data_dgf_financial(tender_parameters)})
-    elif mode == 'dgf_other':
+    elif mode == 'dgfOtherAssets':
         return munchify({'data': test_tender_data_dgf_other(tender_parameters)})
     elif mode == 'negotiation':
         return munchify({'data': test_tender_data_limited(tender_parameters)})

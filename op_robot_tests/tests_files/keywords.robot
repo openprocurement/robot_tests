@@ -200,8 +200,9 @@ Get Broker Property By Username
 
 
 Підготувати дані для створення предмету закупівлі
-  [Arguments]  ${cav}  ${mode}
-  ${item}=  test_item_data  ${cav[0:3]}  ${mode}
+  [Arguments]  ${cav}
+  ${item} =  Run Keyword If  '${MODE}'=='dgfFinancialAssets'  test_item_data_financial  ${cav[0:3]}
+  ...        ELSE  test_item_data  ${cav[0:3]}
   [Return]  ${item}
 
 
