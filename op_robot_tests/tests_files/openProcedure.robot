@@ -34,20 +34,6 @@ ${ITEM_MEAT}        ${True}
   ...      find_tender  level1
   Можливість знайти тендер по ідентифікатору для усіх користувачів
 
-
-Можливість скасувати тендер
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Скасування тендера
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      tender_cancelation  level1
-  ${cancellation_data}=  Підготувати дані про скасування  ${tender_owner}
-  Run As  ${tender_owner}
-  ...      Скасувати закупівлю
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${cancellation_data['cancellation_reason']}
-  ...      ${cancellation_data['document']['doc_path']}
-  ...      ${cancellation_data['description']}
-
 ##############################################################################################
 #             Відображення основних даних тендера
 ##############################################################################################
@@ -342,33 +328,12 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_auction_guarantee  level3
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  ${new_amount}=  create_fake_guarantee  ${USERS.users['${tender_owner}'].tender_data.data.value.amount}
   ${new_value}=  Create Dictionary
   Set To Dictionary  ${new_value}
+  ...                amount=${new_amount}
+  ...                currency=UAH
   Перевірити неможливість зміни поля guarantee тендера на значення ${new_value} для користувача ${tender_owner}
-
-
-# Можливість змінити опис тендеру
-#   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
-#   ...      tender_owner
-#   ...      ${USERS.users['${tender_owner}'].broker}
-#   ...      modify_tender
-#   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-#   [Teardown]  Оновити LAST_MODIFICATION_DATE
-#   ${new_description}=  create_fake_sentence
-#   ${item}=  Set Variable  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['id']}
-#   Перевірити можливість зміни поля description предмета ${item} тендера на значення ${new_description} для користувача ${tender_owner}
-#   Run Keyword And Expect Error  *  Перевірити неможливість зміни поля description тендера на значення ${new_description} для користувача ${tender_owner}
-
-
-# Можливість змінити опис першого предмета закупівлі тендера
-#   [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
-#   ...      tender_owner
-#   ...      ${USERS.users['${tender_owner}'].broker}
-#   ...      modify_auction_item  level3
-#   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-#   ${new_description}=  Set Variable  description
-#   ${item_index}=  Set Variable  ${0}
-#   Перевірити можливість зміни поля description предмета ${item_index} тендера на значення ${new_description} для користувача ${tender_owner}
 
 
 Можливість додати документацію до тендера

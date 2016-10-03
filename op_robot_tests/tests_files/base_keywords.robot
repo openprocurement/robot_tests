@@ -58,7 +58,7 @@ Resource           resource.robot
   Run As  ${tender_owner}  Видалити предмет закупівлі  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].item_data.item_id}
 
 
-Перевірити можливість зміни поля ${field_name} предмета ${item_index} тендера на значення ${new_value} для користувача ${username}
+Можливість зміни поля ${field_name} предмета ${item_index} тендера на значення ${new_value} для користувача ${username}
   ${item_id} =  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data['items'][${item_index}].id}
   ${prev_value}=  Set Variable  ${USERS.users['${tender_owner}'].tender_data.data['items'][${item_index}].${field_name}}
   Run As  ${username}  Внести зміни в предмет тендера  ${TENDER['TENDER_UAID']}  ${item_index}  ${field_name}  ${new_value}
