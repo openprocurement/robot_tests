@@ -100,7 +100,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
-  Отримати дані із поля tenderPeriod.startDate тендера для усіх користувачів
+  Отримати дані із поля enquiryPeriod.startDate тендера для усіх користувачів
 
 Відображення закінчення періоду уточнення тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
@@ -122,7 +122,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
-  Отримати дані із поля enquiryPeriod.endDate тендера для усіх користувачів
+  Отримати дані із поля tenderPeriod.endDate тендера для усіх користувачів
 
 
 Відображення мінімального кроку тендера
@@ -205,23 +205,26 @@ ${ITEM_MEAT}        ${True}
 #             Редагування тендера
 ##############################################################################################
 
-# Неможливість змінити бюджет тендера
-#   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
-#   ...      tender_owner
-#   ...      ${USERS.users['${tender_owner}'].broker}
-#   ...      modify_auction_value  level3
-#   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
-#   ${value}=  Set Variable  ${10000}
-#   Перевірити неможливість зміни поля value тендера на значення ${value} для користувача ${tender_owner}
+Неможливість змінити бюджет тендера
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_value  level3
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_value}=  Create Dictionary
+  Set To Dictionary  ${new_value}  amount=${99999999999.99}  currency=UAH  valueAddedTaxIncluded=True
+  Перевірити неможливість зміни поля value тендера на значення ${new_value} для користувача ${tender_owner}
 
-# Неможливість змінити мінімальний крок тендера
-#   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
-#   ...      tender_owner
-#   ...      ${USERS.users['${tender_owner}'].broker}
-#   ...      modify_auction_step  level3
-#   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
-#   ${minimalstep}=  Set Variable  ${10000}
-#   Перевірити неможливість зміни поля ${minimalstep} тендера на значення 10000 для користувача ${tender_owner}
+
+Неможливість змінити мінімальний крок тендера
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_step  level3
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_minimalstep}=  Create Dictionary
+  Set To Dictionary  ${new_minimalstep}  amount=${1}  currency=UAH
+  Перевірити неможливість зміни поля minimalStep тендера на значення ${new_minimalstep} для користувача ${tender_owner}
 
 
 Неможливість змінити назву тендера всіма мовами
@@ -229,31 +232,86 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_auction_title  level3
-  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   ${new_title}=  create_fake_sentence
   Перевірити неможливість зміни поля title тендера на значення ${new_title} для користувача ${tender_owner}
   Перевірити неможливість зміни поля title_ru тендера на значення ${new_title} для користувача ${tender_owner}
   Перевірити неможливість зміни поля title_en тендера на значення ${new_title} для користувача ${tender_owner}
 
 
-# Неможливість змінити початок періоду подання пропозицій тендера
+Неможливість змінити початок періоду подання пропозицій тендера
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_periods  level3
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_value}=  Set Variable  ${USERS.users['${tender_owner}'].tender_data.data.auctionPeriod.shouldStartAfter}
+  Перевірити неможливість зміни поля tenderPeriod.startDate тендера на значення ${new_value} для користувача ${tender_owner}
+
+
+Неможливість змінити кінець періоду очікування тендера
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_periods  level3
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_value}=  Set Variable  ${USERS.users['${tender_owner}'].tender_data.data.auctionPeriod.shouldStartAfter}
+  Перевірити неможливість зміни поля enquiryPeriod.endDate тендера на значення ${new_value} для користувача ${tender_owner}
+
+
+Відображення критерію прийнятності тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_criteria level3
+  Отримати дані із поля eligibilityCriteria тендера для усіх користувачів
+
+
+Неможливість змінити критерій прийнятності тендера всіма мовами
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_criteria  level3
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  ${new_title}=  create_fake_sentence
+  Перевірити неможливість зміни поля eligibilityCriteria тендера на значення ${new_title} для користувача ${tender_owner}
+  Перевірити неможливість зміни поля eligibilityCriteria_ru тендера на значення ${new_title} для користувача ${tender_owner}
+  Перевірити неможливість зміни поля eligibilityCriteria_en тендера на значення ${new_title} для користувача ${tender_owner}
+
+
+Неможливість змінити гарантування тендера
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_guarantee  level3
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  ${new_value}=  Create Dictionary
+  Set To Dictionary  ${new_value}
+  Перевірити неможливість зміни поля guarantee тендера на значення ${new_value} для користувача ${tender_owner}
+
+
+# Можливість змінити опис тендеру
 #   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
 #   ...      tender_owner
 #   ...      ${USERS.users['${tender_owner}'].broker}
-#   ...      modify_auction_periods  level3
-#   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
-#   ${new_value}=  Set Variable  auctionPeriod.startDate
-#   Перевірити неможливість зміни поля tenderPeriod.startDate тендера на значення ${new_value} для користувача ${tender_owner}
+#   ...      modify_tender
+#   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+#   [Teardown]  Оновити LAST_MODIFICATION_DATE
+#   ${new_description}=  create_fake_sentence
+#   ${item}=  Set Variable  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['id']}
+#   Перевірити можливість зміни поля description предмета ${item} тендера на значення ${new_description} для користувача ${tender_owner}
+#   Run Keyword And Expect Error  *  Перевірити неможливість зміни поля description тендера на значення ${new_description} для користувача ${tender_owner}
 
 
-# Неможливість змінити кінець періоду очікування тендера
-#   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+# Можливість змінити опис першого предмета закупівлі тендера
+#   [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
 #   ...      tender_owner
 #   ...      ${USERS.users['${tender_owner}'].broker}
-#   ...      modify_auction_periods  level3
-#   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
-#   ${new_value}=  Set Variable  auctionPeriod.startDate
-#   Перевірити неможливість зміни поля enquiryPeriod.endDate тендера на значення ${new_value} для користувача ${tender_owner}
+#   ...      modify_auction_item  level3
+#   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+#   ${new_description}=  Set Variable  description
+#   ${item_index}=  Set Variable  ${0}
+#   Перевірити можливість зміни поля description предмета ${item_index} тендера на значення ${new_description} для користувача ${tender_owner}
 
 
 Можливість додати документацію до тендера
