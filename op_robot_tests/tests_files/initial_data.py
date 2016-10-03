@@ -20,6 +20,18 @@ def create_fake_sentence():
     return fake.sentence(nb_words=10, variable_nb_words=True)
 
 
+def create_fake_amount():
+    return round(random.uniform(3000, 99999999999.99), 2)
+
+
+def create_fake_minimal_step(value_amount):
+    return round(random.uniform(0.005, 0.03) * value_amount, 2)
+
+
+def create_fake_guarantee(value_amount):
+    return round(random.uniform(0.1, 0.2) * value_amount, 2)
+
+
 def field_with_id(prefix, sentence):
     return u"{}-{}: {}".format(prefix, fake.uuid4()[:8], sentence)
 
@@ -50,7 +62,8 @@ def create_fake_doc():
 
 def test_tender_data(params, periods=("enquiry", "tender")):
     now = get_now()
-    value_amount = round(random.uniform(3000, 99999999999.99), 2)  # max value equals to budget of Ukraine in hryvnias
+    value_amount = create_fake_amount()  # max value equals to budget of Ukraine in hryvnias
+
     data = {
         "mode": "test",
         "submissionMethodDetails": "quick",
@@ -67,11 +80,11 @@ def test_tender_data(params, periods=("enquiry", "tender")):
             "valueAddedTaxIncluded": True
         },
         "guarantee": {
-             "amount": round(random.uniform(0.1, 0.2) * value_amount, 2),
+            "amount": create_fake_guarantee(value_amount),
             "currency": u"UAH"
         },
         "minimalStep": {
-            "amount": round(random.uniform(0.005, 0.03) * value_amount, 2),
+            "amount": create_fake_minimal_step(value_amount),
             "currency": u"UAH"
         },
         "items": [],

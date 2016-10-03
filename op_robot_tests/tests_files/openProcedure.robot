@@ -225,8 +225,12 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_auction_value  level3
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_amount}=  create_fake_amount
   ${new_value}=  Create Dictionary
-  Set To Dictionary  ${new_value}  amount=${99999999999.99}  currency=UAH  valueAddedTaxIncluded=True
+  Set To Dictionary  ${new_value}
+  ...                amount=${new_amount}
+  ...                currency=UAH
+  ...                valueAddedTaxIncluded=True
   Перевірити неможливість зміни поля value тендера на значення ${new_value} для користувача ${tender_owner}
 
 
@@ -236,8 +240,11 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_auction_step  level3
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_amount}=  create_fake_minimal_step  ${USERS.users['${tender_owner}'].tender_data.data.value.amount}
   ${new_minimalstep}=  Create Dictionary
-  Set To Dictionary  ${new_minimalstep}  amount=${1}  currency=UAH
+  Set To Dictionary  ${new_minimalstep}
+  ...                amount=${new_amount}
+  ...                currency=UAH
   Перевірити неможливість зміни поля minimalStep тендера на значення ${new_minimalstep} для користувача ${tender_owner}
 
 
