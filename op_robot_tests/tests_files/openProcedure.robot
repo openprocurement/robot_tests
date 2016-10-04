@@ -504,12 +504,21 @@ ${ITEM_MEAT}        ${True}
 #             BIDDING
 ##############################################################################################
 
-Можливість подати пропозицію першим учасником
+Неможливість подати пропозицію першим учасником без кваліфікації
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      make_bid_by_provider  level1
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Неможливість подати цінову попрозицію без кваліфікації користувачем ${provider}
+
+
+Можливість подати пропозицію першим учасником
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      make_bid_by_provider  level1
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider}
 

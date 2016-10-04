@@ -564,6 +564,10 @@ Resource           resource.robot
   Require Failure  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}
 
 
+Неможливість подати цінову попрозицію без кваліфікації користувачем ${username}
+  ${bid}=  Підготувати дані для подання пропозиції  ${username}
+  ${bid['data'].qualified} =  Set Variable  False
+  Require Failure  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}
 
 Можливість збільшити пропозицію до ${percent} відсотків користувачем ${username}
   ${percent}=  Convert To Number  ${percent}
