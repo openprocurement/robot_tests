@@ -201,7 +201,8 @@ Get Broker Property By Username
 
 Підготувати дані для створення предмету закупівлі
   [Arguments]  ${cav}
-  ${item}=  test_item_data  ${cav[0:3]}
+  ${item} =  Run Keyword If  '${MODE}'=='dgfFinancialAssets'  test_item_data_financial  ${cav[0:3]}
+  ...        ELSE  test_item_data  ${cav[0:3]}
   [Return]  ${item}
 
 
@@ -403,8 +404,9 @@ Log differences between dicts
 Перевірити неможливість зміни поля ${field} тендера на значення ${new_value} для користувача ${username}
   ${prev_value} =  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}
   Run As  ${username}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  ${field}  ${new_value}
+  Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data}  ${field}
   ${next_value} =  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}
-  Require Failure  ${username}  Порівняти об'єкти  ${prev_value}  ${next_value}
+  Порівняти об'єкти  ${prev_value}  ${next_value}
 
 
 Звірити дату тендера
@@ -543,6 +545,16 @@ Log differences between dicts
   [Arguments]  ${username}  ${tender_uaid}  ${given_value}  ${field_name}  ${complaintID}  ${award_index}=${None}
   ${received_value}=  Run as  ${username}  Отримати інформацію із скарги  ${tender_uaid}  ${complaintID}  ${field_name}  ${award_index}
   Порівняти об'єкти  ${given_value}  ${received_value}
+
+
+Можливість скасувати тендер
+  ${cancellation_data}=  Підготувати дані про скасування  ${tender_owner}
+  Run As  ${tender_owner}
+  ...      Скасувати закупівлю
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${cancellation_data['cancellation_reason']}
+  ...      ${cancellation_data['document']['doc_path']}
+  ...      ${cancellation_data['description']}
 
 
 Run As

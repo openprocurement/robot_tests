@@ -123,8 +123,8 @@ Library  openprocurement_client_helper.py
   ...      Remove From Dictionary  ${tender.data}  enquiryPeriod
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
-  Log  ${tender}
   Set_To_Object   ${USERS.users['${username}'].tender_data}   ${fieldname}   ${fieldvalue}
+
 
 ##############################################################################
 #             Item operations
@@ -149,6 +149,14 @@ Library  openprocurement_client_helper.py
   ${item_index}=  get_object_index_by_id  ${tender.data['items']}  ${item_id}
   Remove From List  ${tender.data['items']}  ${item_index}
   Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+
+
+Внести зміни в предмет тендера
+  [Arguments]  ${username}  ${tender_uaid}  ${item_index}  ${field_name}  ${fieldvalue}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${item_index}=  get_object_index_by_id  ${tender.data['items']}  ${item_id}
+  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data['items'][${item_index}]}
+  Set_To_Object  ${tender.data['items'][${item_index}]}  ${fieldname}  ${fieldvalue}
 
 
 ##############################################################################

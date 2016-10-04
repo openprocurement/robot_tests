@@ -41,7 +41,10 @@ Default:
         open_competitive_dialogue:
             accelerator: 1440
             tender:  [0, 30]
-        dgf_other:
+        dgfFinancialAssets:
+           accelerator: 1440
+           auction:  [25, 30]
+        dgfOtherAssets:
             accelerator: 1440
             auction:  [25, 30]
     # Synchronization delay, in seconds
@@ -58,9 +61,6 @@ Quinta:
         open_competitive_dialogue:
             accelerator: 1440
             tender:  [0, 30]
-        dgf_other:
-            accelerator: 1440
-            auction:  [25, 30]
     keywords_file: openprocurement_client
     roles:
         provider:       Tender_User
