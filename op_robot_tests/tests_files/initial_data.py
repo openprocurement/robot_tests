@@ -390,6 +390,10 @@ def test_tender_data_dgf_other(params):
     for i in range(params['number_of_items']):
         del data['items'][i]
 
+    url = params['api_host_url']
+    if url == 'https://lb.api.ea.openprocurement.org':
+        del data['procurementMethodDetails']
+        
     period_dict = {}
     inc_dt = get_now()
     period_dict["auctionPeriod"] = {}
@@ -413,6 +417,10 @@ def test_tender_data_dgf_financial(params):
 
     for i in range(params['number_of_items']):
         del data['items'][i]
+    
+    url = params['api_host_url']
+    if url == 'https://lb.api.ea.openprocurement.org':
+        del data['procurementMethodDetails']
 
     period_dict = {}
     inc_dt = get_now()
