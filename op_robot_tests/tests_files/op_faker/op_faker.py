@@ -155,7 +155,6 @@ class OP_Provider(BaseProvider):
         #for dgf financial assets mode
         #generates items from financial CAV group
         cav_group = str(cav_group)
-        print(cav_group)
         similar_cavs = []
         for cav_element in self.cavs_financial:
             if cav_element.startswith(cav_group):
