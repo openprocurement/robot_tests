@@ -562,6 +562,20 @@ Log differences between dicts
   ...      ${cancellation_data['description']}
 
 
+Можливість вичитати посилання на аукціон для глядача
+  ${url}=  Run As  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
+  Should Be True  '${url}'
+  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.ea\.openprocurement\.org\/auctions\/([0-9A-Fa-f]{32})
+  Log  URL аукціону для глядача: ${url}
+
+
+Можливість вичитати посилання на аукціон для учасника ${username}
+  ${url}=  Run As  ${username}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
+  Should Be True  '${url}'
+  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.ea\.openprocurement\.org\/auctions\/([0-9A-Fa-f]{32})
+  Log  URL аукціону для учасника: ${url}
+
+
 Run As
   [Arguments]  ${username}  ${command}  @{arguments}
   [Documentation]

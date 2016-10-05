@@ -60,8 +60,8 @@
 -i ask_question_to_item_after_tendering_period
 -i ask_question_to_lot_after_tendering_period
 
--i auction_url
 -i auction
+-i auction_url
 
 -i create_award_claim
 -i answer_award_claim

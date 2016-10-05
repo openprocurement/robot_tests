@@ -580,8 +580,7 @@ Library  openprocurement_client_helper.py
 Отримати посилання на аукціон для учасника
   [Arguments]  ${username}  ${tender_uaid}
   ${bid}=  openprocurement_client.Отримати пропозицію  ${username}  ${tender_uaid}
-  ${participationUrl}=  Run Keyword IF  '${lot_id}'  Set Variable  ${bid.data.lotValues[${lot_index}].participationUrl}
-  ...                         ELSE  Set Variable  ${bid.data.participationUrl}
+  ${participationUrl}=  Set Variable  ${bid.data.participationUrl}
   [return]  ${participationUrl}
 
 ##############################################################################
