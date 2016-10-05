@@ -1,4 +1,4 @@
--v MODE:dgfOtherAssets
+-v MODE:dgfFinancialAssets
 
 -v NUMBER_OF_ITEMS:1
 

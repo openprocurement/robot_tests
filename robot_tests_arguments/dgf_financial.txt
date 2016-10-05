@@ -1,4 +1,4 @@
--v MODE:dgfOtherAssets
+-v MODE:dgfFinancialAssets
 
 -v API_HOST_URL:https://api-sandbox.ea.openprocurement.org
 
@@ -14,6 +14,8 @@
 -i modify_auction_title
 -i modify_auction_guarantee
 -i modify_auction_periods
+-i tender_view_criteria
+-i modify_auction_criteria
 -i modify_tender
 -i add_tender_doc
 -i add_item
@@ -22,6 +24,8 @@
   -i answer_question_to_tender
 -i ask_question_to_item
   -i answer_question_to_item
+-i ask_question_to_lot
+  -i answer_question_to_lot
 -i modify_tender_after_questions
 
 
@@ -32,7 +36,6 @@
   -i add_doc_to_bid_by_provider
 -i make_bid_by_provider1
 -i bid_view_in_tendering_period
-
 
 -i add_bid_doc_after_tendering_period_by_provider
 -i make_bid_after_tendering_period
@@ -58,3 +61,4 @@
 -i qualification_approve_second_award
 
 -i contract_sign
+

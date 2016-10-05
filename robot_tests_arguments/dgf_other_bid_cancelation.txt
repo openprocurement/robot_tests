@@ -4,13 +4,7 @@
 
 -i create_tender
 -i find_tender
--i tender_view
-
 -i make_bid_by_provider
 -i make_bid_by_provider1
-
--i auction
-
--i qualification_approve_first_award
-
--i contract_sign
+-i cancel_bid_by_provider
+-i absence_bid

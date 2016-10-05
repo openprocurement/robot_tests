@@ -172,8 +172,11 @@ Get Broker Property By Username
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  tender_owner_access_token=${USERS.users['${tender_owner}'].access_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider_access_token=${USERS.users['${provider}'].access_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider1_access_token=${USERS.users['${provider1}'].access_token}
+  Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider_bid_id=${USERS.users['${provider}'].bid_id}
+  Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider1_bid_id=${USERS.users['${provider1}'].bid_id}
   Log   ${artifact}
   log_object_data  ${artifact}  file_name=artifact  update=${True}  artifact=${True}
+
 
 Завантажити дані про тендер
   ${file_path}=  Get Variable Value  ${ARTIFACT_FILE}  artifact.yaml
@@ -185,6 +188,8 @@ Get Broker Property By Username
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider}']}  access_token=${ARTIFACT.provider_access_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider1}']}  access_token=${ARTIFACT.provider1_access_token}
   Set Suite Variable  ${MODE}
+  Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider}']}  bid_id=${ARTIFACT.provider_bid_id}
+  Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider1}']}  bid_id=${ARTIFACT.provider1_bid_id}
   Set Suite Variable  ${TENDER}
   log_object_data  ${ARTIFACT}  file_name=artifact  update=${True}  artifact=${True}
 
@@ -201,7 +206,8 @@ Get Broker Property By Username
 
 Підготувати дані для створення предмету закупівлі
   [Arguments]  ${cav}
-  ${item}=  test_item_data  ${cav[0:3]}
+  ${item} =  Run Keyword If  '${MODE}'=='dgfFinancialAssets'  test_item_data_financial  ${cav[0:3]}
+  ...        ELSE  test_item_data  ${cav[0:3]}
   [Return]  ${item}
 
 
@@ -403,8 +409,9 @@ Log differences between dicts
 Перевірити неможливість зміни поля ${field} тендера на значення ${new_value} для користувача ${username}
   ${prev_value} =  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}
   Run As  ${username}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  ${field}  ${new_value}
+  Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data}  ${field}
   ${next_value} =  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}
-  Require Failure  ${username}  Порівняти об'єкти  ${prev_value}  ${next_value}
+  Порівняти об'єкти  ${prev_value}  ${next_value}
 
 
 Звірити дату тендера
@@ -543,6 +550,30 @@ Log differences between dicts
   [Arguments]  ${username}  ${tender_uaid}  ${given_value}  ${field_name}  ${complaintID}  ${award_index}=${None}
   ${received_value}=  Run as  ${username}  Отримати інформацію із скарги  ${tender_uaid}  ${complaintID}  ${field_name}  ${award_index}
   Порівняти об'єкти  ${given_value}  ${received_value}
+
+
+Можливість скасувати тендер
+  ${cancellation_data}=  Підготувати дані про скасування  ${tender_owner}
+  Run As  ${tender_owner}
+  ...      Скасувати закупівлю
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${cancellation_data['cancellation_reason']}
+  ...      ${cancellation_data['document']['doc_path']}
+  ...      ${cancellation_data['description']}
+
+
+Можливість вичитати посилання на аукціон для глядача
+  ${url}=  Run As  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
+  Should Be True  '${url}'
+  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.ea\.openprocurement\.org\/auctions\/([0-9A-Fa-f]{32})
+  Log  URL аукціону для глядача: ${url}
+
+
+Можливість вичитати посилання на аукціон для учасника ${username}
+  ${url}=  Run As  ${username}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
+  Should Be True  '${url}'
+  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.ea\.openprocurement\.org\/auctions\/([0-9A-Fa-f]{32})
+  Log  URL аукціону для учасника: ${url}
 
 
 Run As

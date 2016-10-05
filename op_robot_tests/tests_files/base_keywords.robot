@@ -13,6 +13,7 @@ Resource           resource.robot
   ...      number_of_items=${NUMBER_OF_ITEMS}
   ...      tender_meat=${${TENDER_MEAT}}
   ...      item_meat=${${ITEM_MEAT}}
+  ...      api_host_url=${API_HOST_URL}
   ${DIALOGUE_TYPE}=  Get Variable Value  ${DIALOGUE_TYPE}
   Run keyword if  '${DIALOGUE_TYPE}' != '${None}'  Set to dictionary  ${tender_parameters}  dialogue_type=${DIALOGUE_TYPE}
   ${tender_data}=  Підготувати дані для створення тендера  ${tender_parameters}
@@ -56,6 +57,15 @@ Resource           resource.robot
 
 Можливість видалити предмет закупівлі з тендера
   Run As  ${tender_owner}  Видалити предмет закупівлі  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].item_data.item_id}
+
+
+Можливість зміни поля ${field_name} предмета ${item_index} тендера на значення ${new_value} для користувача ${username}
+  ${item_id} =  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data['items'][${item_index}].id}
+  ${prev_value}=  Set Variable  ${USERS.users['${tender_owner}'].tender_data.data['items'][${item_index}].${field_name}}
+  Run As  ${username}  Внести зміни в предмет тендера  ${TENDER['TENDER_UAID']}  ${item_index}  ${field_name}  ${new_value}
+  Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data['items'][${item_index}]}  ${field_name}
+  ${next_value}=  Отримати інформацію із предмету  ${username}  ${TENDER['TENDER_UAID']}  ${item_id}  ${field_name}
+  Require Failure  ${username}  Порівняти об'єкти  ${prev_value}  ${next_value}
 
 
 Звірити відображення поля ${field} документа ${doc_id} із ${left} для користувача ${username}
@@ -555,6 +565,10 @@ Resource           resource.robot
   Require Failure  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}
 
 
+Неможливість подати цінову попрозицію без кваліфікації користувачем ${username}
+  ${bid}=  Підготувати дані для подання пропозиції  ${username}
+  ${bid['data'].qualified} =  Set Variable  False
+  Require Failure  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}
 
 Можливість збільшити пропозицію до ${percent} відсотків користувачем ${username}
   ${percent}=  Convert To Number  ${percent}
