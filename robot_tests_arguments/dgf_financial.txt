@@ -17,7 +17,6 @@
 -i tender_view_criteria
 -i modify_auction_criteria
 -i modify_tender
--i modify_auction_item
 -i add_tender_doc
 -i add_item
   -i delete_item
@@ -29,7 +28,8 @@
   -i answer_question_to_lot
 -i modify_tender_after_questions
 
--i make_bid_without_related_lot
+
+-i make_bid_by_provider_without_qualification
 -i make_bid_without_parameters
 -i make_bid_by_provider
   -i modify_bid_by_provider

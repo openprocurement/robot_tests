@@ -102,12 +102,14 @@ ${ITEM_MEAT}        ${True}
   ...      tender_view
   Отримати дані із поля enquiryPeriod.startDate тендера для усіх користувачів
 
+
 Відображення закінчення періоду уточнення тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
   Отримати дані із поля enquiryPeriod.endDate тендера для усіх користувачів
+
 
 Відображення початку періоду прийому пропозицій тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
@@ -507,7 +509,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      make_bid_by_provider  level1
+  ...      make_bid_by_provider_without_qualification  level1
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Неможливість подати цінову попрозицію без кваліфікації користувачем ${provider}

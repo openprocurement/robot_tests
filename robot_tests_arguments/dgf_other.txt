@@ -7,8 +7,7 @@
 -i create_tender
 -i find_tender
 -i tender_view
--i meat_view
--i lot_view
+
 
 -i modify_auction_value
 -i modify_auction_step
@@ -16,38 +15,22 @@
 -i modify_auction_guarantee
 -i modify_auction_periods
 -i modify_tender
--i modify_auction_item
 -i add_tender_doc
--i add_lot_doc
--i modify_lot_value_amount
--i add_lot
-  -i delete_lot
 -i add_item
   -i delete_item
--i add_tender_meat
-  -i delete_tender_meat
--i add_lot_meat
-  -i delete_lot_meat
--i add_item_meat
-  -i delete_item_meat
-
 -i ask_question_to_tender
   -i answer_question_to_tender
 -i ask_question_to_item
   -i answer_question_to_item
--i ask_question_to_lot
-  -i answer_question_to_lot
 -i modify_tender_after_questions
--i modify_lot_after_questions
 
 
--i make_bid_without_related_lot
+-i make_bid_by_provider_without_qualification
 -i make_bid_without_parameters
 -i make_bid_by_provider
   -i modify_bid_by_provider
   -i add_doc_to_bid_by_provider
 -i make_bid_by_provider1
--i cancel_bid_by_provider
 -i bid_view_in_tendering_period
 
 
@@ -56,7 +39,6 @@
 -i modify_bid_doc_after_tendering_period_by_provider
 -i modify_bid_after_tendering_period_by_provider1
 -i cancel_bid_after_tendering_period_by_provider1
-
 -i ask_question_to_tender_after_tendering_period
 -i ask_question_to_item_after_tendering_period
 -i ask_question_to_lot_after_tendering_period

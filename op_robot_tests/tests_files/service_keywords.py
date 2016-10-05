@@ -468,9 +468,7 @@ def generate_test_bid_data(tender_data):
             parameter = {"value": fake.random_element(elements=(0.05, 0.01, 0)), "code": feature.get('code', '')}
             bid.data.parameters.append(parameter)
     if 'dgfOtherAssets' in tender_data.get('procurementMethodType', ''):
-        bid.data.status = "draft"
         bid.data.qualified = True
-        # bid.data.tenderers[0]["Identifiers"] = [fake.ipnIdentifier()]
     if 'dgfFinancialAssets' in tender_data.get('procurementMethodType', ''):
         bid.data.eligible = True
         bid.data.qualified = True
