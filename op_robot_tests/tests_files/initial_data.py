@@ -21,7 +21,7 @@ def create_fake_sentence():
 
 
 def create_fake_amount():
-    return round(random.uniform(3000, 99999999999.99), 2)
+    return round(random.uniform(3000, 999999999.99), 2)
 
 
 def create_fake_minimal_step(value_amount):
