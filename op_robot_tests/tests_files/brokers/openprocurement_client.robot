@@ -57,9 +57,10 @@ Library  openprocurement_client_helper.py
   [return]  ${filename}
 
 Отримати посилання на аукціон для глядача
-  [Arguments]  ${username}  ${tender_uaid}
+  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${auctionUrl}=  Set Variable  ${tender.data.auctionUrl}
+  ${auctionUrl}=  Run Keyword IF  '${lot_id}'  Set Variable  ${tender.data.lots[${lot_index}].auctionUrl}
+  ...                         ELSE  Set Variable  ${tender.data.auctionUrl}
   [return]  ${auctionUrl}
 
 ##############################################################################
@@ -497,7 +498,7 @@ Library  openprocurement_client_helper.py
 ##############################################################################
 
 Подати цінову пропозицію
-  [Arguments]  ${username}  ${tender_uaid}  ${bid}  ${features_ids}=${None}
+  [Arguments]  ${username}  ${tender_uaid}  ${bid}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_bid  ${tender}  ${bid}
   Log  ${reply}
@@ -578,9 +579,10 @@ Library  openprocurement_client_helper.py
 
 
 Отримати посилання на аукціон для учасника
-  [Arguments]  ${username}  ${tender_uaid}
+  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
   ${bid}=  openprocurement_client.Отримати пропозицію  ${username}  ${tender_uaid}
-  ${participationUrl}=  Set Variable  ${bid.data.participationUrl}
+  ${participationUrl}=  Run Keyword IF  '${lot_id}'  Set Variable  ${bid.data.lotValues[${lot_index}].participationUrl}
+  ...                         ELSE  Set Variable  ${bid.data.participationUrl}
   [return]  ${participationUrl}
 
 ##############################################################################
