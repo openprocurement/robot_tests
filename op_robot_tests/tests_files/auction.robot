@@ -60,7 +60,6 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
   ...      auction_end_date
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Отримати дані із тендера  ${viewer}  ${TENDER['TENDER_UAID']}  auctionPeriod.endDate  ${TENDER['LOT_ID']}
