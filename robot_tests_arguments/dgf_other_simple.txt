@@ -10,6 +10,7 @@
 -i make_bid_by_provider1
 
 -i auction
+-i auction_end_date
 
 -i qualification_approve_first_award
 
