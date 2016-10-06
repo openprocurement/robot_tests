@@ -44,6 +44,7 @@
 -i ask_question_to_lot_after_tendering_period
 
 -i auction
+-i auction_end_date
 -i auction_url
 
 -i create_award_claim
