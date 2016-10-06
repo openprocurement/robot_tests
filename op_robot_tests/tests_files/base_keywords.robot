@@ -46,6 +46,11 @@ Resource           resource.robot
   Remove File  ${file_path}
 
 
+Можливість додати ілюстрацію до тендера
+  ${image_path}=  create_fake_image
+  Run As  ${tender_owner}  Завантажити ілюстрацію  ${TENDER['TENDER_UAID']}  ${image_path}
+
+
 Можливість додати предмет закупівлі в тендер
   ${item}=  Підготувати дані для створення предмету закупівлі  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['id']}
   Run As  ${tender_owner}  Додати предмет закупівлі  ${TENDER['TENDER_UAID']}  ${item}

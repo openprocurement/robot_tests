@@ -35,10 +35,36 @@ Library  openprocurement_client_helper.py
   Log  ${tender_uaid}
   Log  ${filepath}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${tender}=  set_access_key  ${tender}   ${USERS.users['${username}'].access_token}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  upload_document  ${filepath}  ${tender}
-  Log object data   ${reply}  reply
-  [return]   ${reply}
+  Log object data  ${reply}  reply
+  [return]  ${reply}
+
+
+Внести зміни в документ
+  [Arguments]  ${username}  ${tender_uaid}  ${patch_data}
+  Log  ${patch_data}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_document  ${tender}  ${patch_data}
+  [return]  ${reply}
+
+
+Завантажити ілюстрацію
+  [Arguments]  ${username}  ${tender_uaid}  ${filepath}
+  Завантажити документ в тендер з типом  ${username}  ${tender_uaid}  ${filepath}  documentType=illustration
+
+
+Завантажити документ в тендер з типом
+  [Arguments]  ${username}  ${tender_uaid}  ${filepath}  ${documentType}
+  ${document}=  Завантажити документ  ${username}  ${filepath}  ${tender_uaid}
+  Keep In Dictionary  ${document['data']}  id
+  Log  ${document}
+  Set To Dictionary  ${document['data']}  documentType=${documentType}
+  Log  ${document}
+  ${reply}=  Внести зміни в документ  ${username}  ${tender_uaid}  ${document}
+  Log  ${reply}
+  [return]  ${reply}
 
 
 Отримати інформацію із документа

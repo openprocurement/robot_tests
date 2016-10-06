@@ -60,6 +60,17 @@ def create_fake_doc():
     return tf.name, os.path.basename(tf.name), content
 
 
+def create_fake_image():
+    # TODO: Move this code (as well as other "fake" stuff in this file)
+    # into op_faker
+    # Also, this doesn't create any images for now; instead,
+    # pre-generated ones are used.
+    image_format = fake.random_element(('jpg', 'png'))
+    return os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                        'op_faker',
+                                        'illustration.' + image_format))
+
+
 def test_tender_data(params, periods=("enquiry", "tender")):
     now = get_now()
     value_amount = create_fake_amount()  # max value equals to budget of Ukraine in hryvnias
