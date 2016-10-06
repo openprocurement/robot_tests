@@ -90,7 +90,7 @@ Suite Teardown  Test Suite Teardown
 
 Дочекатись дати закінчення аукціону користувачем ${username}
   Відкрити сторінку аукціону для ${username}
-  ${status}  ${_}=  Run Keyword And Ignore Error  Wait Until Keyword Succeeds  61 times  30 s  Page should contain  Аукціон завершився
+  ${status}  ${_}=  Run Keyword And Ignore Error  Wait Until Keyword Succeeds  75 times  30 s  Page should contain  Аукціон завершився
   Run Keyword If  '${status}' == 'FAIL'
   ...      Run Keywords
   ...      Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  auctionPeriod.startDate  ${TENDER['LOT_ID']}
