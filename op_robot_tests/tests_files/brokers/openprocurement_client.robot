@@ -11,7 +11,7 @@ Library  openprocurement_client_helper.py
   ${status}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${USERS.users['${username}'].id_map}  ${tender_uaid}
   Run Keyword And Return If  ${status}  Get From Dictionary  ${USERS.users['${username}'].id_map}  ${tender_uaid}
   Call Method  ${USERS.users['${username}'].client}  get_tenders
-  ${tender_id}=  Wait Until Keyword Succeeds  5x  30 sec  get_tender_id_by_uaid  ${tender_uaid}  ${USERS.users['${username}'].client}
+  ${tender_id}=  Wait Until Keyword Succeeds  5x  30 sec  get_tender_id_by_uaid  ${tender_uaid}  ${USERS.users['${username}'].client}  id_field=auctionID
   Set To Dictionary  ${USERS.users['${username}'].id_map}  ${tender_uaid}  ${tender_id}
   [return]  ${tender_id}
 
@@ -56,7 +56,6 @@ Library  openprocurement_client_helper.py
   ${filename}=  download_file_from_url  ${document.url}  ${OUTPUT_DIR}${/}${document.title}
   [return]  ${filename}
 
-
 Отримати посилання на аукціон для глядача
   [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
@@ -82,7 +81,7 @@ Library  openprocurement_client_helper.py
   Set To Dictionary  ${USERS.users['${username}']}   access_token=${access_token}
   Set To Dictionary  ${USERS.users['${username}']}   tender_data=${tender}
   Log   ${USERS.users['${username}'].tender_data}
-  [return]  ${tender.data.tenderID}
+  [return]  ${tender.data.auctionID}
 
 
 Пошук тендера по ідентифікатору
@@ -127,6 +126,7 @@ Library  openprocurement_client_helper.py
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
   Set_To_Object   ${USERS.users['${username}'].tender_data}   ${fieldname}   ${fieldvalue}
 
+
 ##############################################################################
 #             Item operations
 ##############################################################################
@@ -151,100 +151,14 @@ Library  openprocurement_client_helper.py
   Remove From List  ${tender.data['items']}  ${item_index}
   Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
 
-##############################################################################
-#             Lot operations
-##############################################################################
 
-Створити лот
-  [Arguments]  ${username}  ${tender_uaid}  ${lot}
+Внести зміни в предмет тендера
+  [Arguments]  ${username}  ${tender_uaid}  ${item_index}  ${field_name}  ${fieldvalue}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}   create_lot   ${tender}    ${lot}
-  [return]  ${reply}
+  ${item_index}=  get_object_index_by_id  ${tender.data['items']}  ${item_id}
+  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data['items'][${item_index}]}
+  Set_To_Object  ${tender.data['items'][${item_index}]}  ${fieldname}  ${fieldvalue}
 
-
-Створити лот із предметом закупівлі
-  [Arguments]  ${username}  ${tender_uaid}  ${lot}  ${item}
-  ${reply}=  openprocurement_client.Створити лот  ${username}  ${tender_uaid}  ${lot}
-  ${lot_id}=  get_id_from_object  ${lot.data}
-  openprocurement_client.Додати предмет закупівлі в лот  ${username}  ${tender_uaid}  ${lot_id}  ${item}
-  [return]  ${reply}
-
-
-Отримати інформацію із лоту
-  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}  ${field_name}
-  ${field_name}=  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${lot_id}
-  Run Keyword And Return  openprocurement_client.Отримати інформацію із тендера  ${username}  ${tender_uaid}  ${field_name}
-
-
-Змінити лот
-  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}   ${fieldname}  ${fieldvalue}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${lot_index}=  get_object_index_by_id  ${tender.data.lots}  ${lot_id}
-  ${lot}=  Create Dictionary  data=${tender.data.lots[${lot_index}]}
-  Set_To_Object   ${lot.data}   ${fieldname}   ${fieldvalue}
-  ${reply}=  Call Method   ${USERS.users['${username}'].client}   patch_lot   ${tender}   ${lot}
-  [return]  ${reply}
-
-
-Додати предмет закупівлі в лот
-  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}  ${item}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${lot_index}=  get_object_index_by_id  ${tender.data.lots}  ${lot_id}
-  ${lot_id}=  Get Variable Value  ${tender.data.lots[${lot_index}].id}
-  Set_To_Object   ${item}   relatedLot   ${lot_id}
-  Append To List   ${tender.data['items']}   ${item}
-  Call Method   ${USERS.users['${username}'].client}   patch_tender   ${tender}
-
-
-Завантажити документ в лот
-  [Arguments]  ${username}  ${filepath}  ${tender_uaid}  ${lot_id}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${lot_index}=  get_object_index_by_id  ${tender.data.lots}  ${lot_id}
-  ${lot_id}=  Get Variable Value  ${tender.data.lots[${lot_index}].id}
-  ${doc}=  openprocurement_client.Завантажити документ  ${username}  ${filepath}  ${tender_uaid}
-  ${lot_doc}=  test_lot_document_data  ${doc}  ${lot_id}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_document   ${tender}   ${lot_doc}
-  [return]   ${reply}
-
-
-Видалити лот
-  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${lot_index}=  get_object_index_by_id  ${tender.data.lots}  ${lot_id}
-  ${lot}=  Create Dictionary  data=${tender.data.lots[${lot_index}]}
-  :FOR  ${item}  IN  @{tender.data['items']}
-  \  ${item_id}=  get_id_from_object  ${item}
-  \  Run Keyword If  '${item.relatedLot}'=='${lot.data.id}'
-  \  ...     openprocurement_client.Видалити предмет закупівлі  ${username}  ${tender_uaid}  ${item_id}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}   delete_lot   ${tender}    ${lot}
-  [return]  ${reply}
-
-
-Скасувати лот
-  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}  ${cancellation_reason}  ${document}  ${new_description}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${lot_id}=  Get Variable Value  ${tender.data.lots[${lot_index}].id}
-  ${data}=  Create dictionary  reason=${cancellation_reason}  cancellationOf=lot  relatedLot=${lot_id}
-  ${cancellation_data}=  Create dictionary  data=${data}
-  ${cancellation_data}=  munch_dict  arg=${cancellation_data}
-  ${cancel_reply}=  Call Method  ${USERS.users['${username}'].client}  create_cancellation  ${tender}  ${cancellation_data}
-  ${cancellation_id}=  Set variable  ${cancel_reply.data.id}
-
-  ${document_id}=  openprocurement_client.Завантажити документацію до запиту на скасування  ${username}  ${tender_uaid}  ${cancellation_id}  ${document}
-
-  openprocurement_client.Змінити опис документа в скасуванні  ${username}  ${tender_uaid}  ${cancellation_id}  ${document_id}  ${new_description}
-
-  openprocurement_client.Підтвердити скасування закупівлі  ${username}  ${tender_uaid}  ${cancellation_id}
-
-
-Отримати інформацію з документа до лоту
-  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}  ${doc_id}  ${field}
-  openprocurement_client.Отримати інформацію з документа  ${username}  ${tender_uaid}  ${doc_id}  ${field}
-
-
-Отримати документ до лоту
-  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}  ${doc_id}
-  Run Keyword And Return  openprocurement_client.Отримати документ  ${username}  ${tender_uaid}  ${doc_id}
 
 ##############################################################################
 #             Feature operations
@@ -263,16 +177,6 @@ Library  openprocurement_client_helper.py
   ${item_index}=  get_object_index_by_id  ${tender.data['items']}  ${item_id}
   ${item_id}=  Get Variable Value  ${tender.data['items'][${item_index}].id}
   Set To Dictionary  ${feature}  relatedItem=${item_id}
-  Append To List  ${tender.data['features']}  ${feature}
-  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
-
-
-Додати неціновий показник на лот
-  [Arguments]  ${username}  ${tender_uaid}  ${feature}  ${lot_id}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${lot_index}=  get_object_index_by_id  ${tender.data['lots']}  ${lot_id}
-  ${lot_id}=  Get Variable Value  ${tender.data['lots'][${lot_index}].id}
-  Set To Dictionary  ${feature}  relatedItem=${lot_id}
   Append To List  ${tender.data['features']}  ${feature}
   Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
 
@@ -303,17 +207,6 @@ Library  openprocurement_client_helper.py
   ${question}=  test_related_question  ${question}  item  ${item_id}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_question  ${tender}  ${question}
   [return]  ${reply}
-
-
-Задати запитання на лот
-  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}  ${question}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${lot_index}=  get_object_index_by_id  ${tender.data.lots}  ${lot_id}
-  ${lot_id}=  Get Variable Value  ${tender.data.lots[${lot_index}].id}
-  ${question}=  test_related_question  ${question}  lot  ${lot_id}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_question  ${tender}  ${question}
-  [return]  ${reply}
-
 
 Задати запитання на тендер
   [Arguments]  ${username}  ${tender_uaid}  ${question}
@@ -364,21 +257,6 @@ Library  openprocurement_client_helper.py
   [return]  ${reply.data.complaintID}
 
 
-Створити чернетку вимоги про виправлення умов лоту
-  [Documentation]  Створює вимогу у статусі "draft"
-  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${lot_id}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору
-  ...      ${username}
-  ...      ${tender_uaid}
-  ${lot_index}=  get_object_index_by_id  ${tender.data.lots}  ${lot_id}
-  Set to dictionary  ${claim.data}  relatedLot=${tender.data.lots[${lot_index}].id}
-  ${complaintID}=  openprocurement_client.Створити чернетку вимоги про виправлення умов закупівлі
-  ...      ${username}
-  ...      ${tender_uaid}
-  ...      ${claim}
-  [return]  ${complaintID}
-
-
 Створити чернетку вимоги про виправлення визначення переможця
   [Documentation]  Створює вимогу у статусі "draft"
   [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${award_index}
@@ -424,36 +302,6 @@ Library  openprocurement_client_helper.py
   ...      ${tender_uaid}
   ...      ${complaintID}
   ...      ${confirmation_data}
-  [return]  ${complaintID}
-
-
-Створити вимогу про виправлення умов лоту
-  [Documentation]  Створює вимогу у статусі "claim"
-  ...      Можна створити вимогу як з документацією, так і без неї
-  ...      Якщо lot_index == None, то створюється вимога про виправлення умов тендера.
-  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${lot_id}  ${document}=${None}
-  ${complaintID}=  Створити чернетку вимоги про виправлення умов лоту
-  ...      ${username}
-  ...      ${tender_uaid}
-  ...      ${claim}
-  ...      ${lot_id}
-
-  ${status}=  Run keyword and return status  Should not be equal  ${document}  ${None}
-  Log  ${status}
-  Run keyword if  ${status} == ${True}  Завантажити документацію до вимоги
-  ...      ${username}
-  ...      ${tender_uaid}
-  ...      ${complaintID}
-  ...      ${document}
-
-  ${data}=  Create Dictionary  status=claim
-  ${confirmation_data}=  Create Dictionary  data=${data}
-  Подати вимогу
-  ...      ${username}
-  ...      ${tender_uaid}
-  ...      ${complaintID}
-  ...      ${confirmation_data}
-
   [return]  ${complaintID}
 
 
@@ -541,16 +389,6 @@ Library  openprocurement_client_helper.py
 Відповісти на вимогу про виправлення умов закупівлі
   [Documentation]  Переводить вимогу зі статусу "claim" у статус "answered"
   [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${answer_data}
-  openprocurement_client.Відповісти на вимогу про виправлення умов лоту
-  ...      ${username}
-  ...      ${tender_uaid}
-  ...      ${complaintID}
-  ...      ${answer_data}
-
-
-Відповісти на вимогу про виправлення умов лоту
-  [Documentation]  Переводить вимогу зі статусу "claim" у статус "answered"
-  [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${answer_data}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${complaint_internal_id}=  Отримати internal id по UAid для скарги  ${tender}  ${complaintID}
   Set To Dictionary  ${answer_data.data}  id=${complaint_internal_id}
@@ -576,17 +414,6 @@ Library  openprocurement_client_helper.py
   openprocurement_client.Підтвердити вирішення вимоги про виправлення умов лоту  ${username}  ${tender_uaid}  ${complaintID}  ${confirmation_data}
 
 
-Підтвердити вирішення вимоги про виправлення умов лоту
-  [Documentation]  Переводить вимогу зі статусу "answered" у статус "resolved"
-  [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${confirmation_data}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].complaint_access_token}
-  ${complaint_internal_id}=  Отримати internal id по UAid для скарги  ${tender}  ${complaintID}
-  Set To Dictionary  ${confirmation_data.data}  id=${complaint_internal_id}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_complaint  ${tender}  ${confirmation_data}
-  Log  ${reply}
-
-
 Підтвердити вирішення вимоги про виправлення визначення переможця
   [Documentation]  Переводить вимогу зі статусу "answered" у статус "resolved"
   [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${confirmation_data}  ${award_index}
@@ -599,12 +426,6 @@ Library  openprocurement_client_helper.py
 
 
 Скасувати вимогу про виправлення умов закупівлі
-  [Documentation]  Переводить вимогу в статус "canceled"
-  [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${cancellation_data}
-  openprocurement_client.Скасувати вимогу про виправлення умов лоту  ${username}  ${tender_uaid}  ${complaintID}  ${cancellation_data}
-
-
-Скасувати вимогу про виправлення умов лоту
   [Documentation]  Переводить вимогу в статус "canceled"
   [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${cancellation_data}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
@@ -627,12 +448,6 @@ Library  openprocurement_client_helper.py
 
 
 Перетворити вимогу про виправлення умов закупівлі в скаргу
-  [Documentation]  Переводить вимогу у статус "pending"
-  [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${escalating_data}
-  openprocurement_client.Перетворити вимогу про виправлення умов лоту в скаргу  ${username}  ${tender_uaid}  ${complaintID}  ${escalating_data}
-
-
-Перетворити вимогу про виправлення умов лоту в скаргу
   [Documentation]  Переводить вимогу у статус "pending"
   [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${escalating_data}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
@@ -683,23 +498,15 @@ Library  openprocurement_client_helper.py
 ##############################################################################
 
 Подати цінову пропозицію
-  [Arguments]  ${username}  ${tender_uaid}  ${bid}  ${lots_ids}=${None}  ${features_ids}=${None}
+  [Arguments]  ${username}  ${tender_uaid}  ${bid}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${lots_ids}=  Run Keyword IF  ${lots_ids}  Set Variable  ${lots_ids}
-  ...     ELSE  Create List
-  : FOR    ${index}    ${lot_id}    IN ENUMERATE    @{lots_ids}
-  \    ${lot_index}=  get_object_index_by_id  ${tender.data.lots}  ${lot_id}
-  \    ${lot_id}=  Get Variable Value  ${tender.data.lots[${lot_index}].id}
-  \    Set To Dictionary  ${bid.data.lotValues[${index}]}  relatedLot=${lot_id}
-  ${features_ids}=  Run Keyword IF  ${features_ids}  Set Variable  ${features_ids}
-  ...     ELSE  Create List
-  : FOR    ${index}    ${feature_id}    IN ENUMERATE    @{features_ids}
-  \    ${feature_index}=  get_object_index_by_id  ${tender.data.features}  ${feature_id}
-  \    ${code}=  Get Variable Value  ${tender.data.features[${feature_index}].code}
-  \    Set To Dictionary  ${bid.data.parameters[${index}]}  code=${code}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_bid  ${tender}  ${bid}
+  Log  ${reply}
+  ${reply_active}=  Call Method  ${USERS.users['${username}'].client}  patch_bid  ${tender}  ${reply}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${reply['access']['token']}
   Set To Dictionary   ${USERS.users['${username}'].bidresponses['bid'].data}  id=${reply['data']['id']}
+  Log  ${reply_active}
+  Set To Dictionary  ${USERS.users['${username}']}  bid_id=${reply['data']['id']}
   Log  ${reply}
   [return]  ${reply}
 
@@ -758,8 +565,8 @@ Library  openprocurement_client_helper.py
 Отримати пропозицію
   [Arguments]  ${username}  ${tender_uaid}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${bid_id}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['resp'].data.id}
-  ${token}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['resp'].access.token}
+  ${bid_id}=  Get Variable Value  ${USERS.users['${username}'].bid_id}
+  ${token}=  Get Variable Value  ${USERS.users['${username}'].access_token}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  get_bid  ${tender}  ${bid_id}  ${token}
   ${reply}=  munch_dict  arg=${reply}
   [return]  ${reply}

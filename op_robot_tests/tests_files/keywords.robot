@@ -172,9 +172,8 @@ Get Broker Property By Username
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  tender_owner_access_token=${USERS.users['${tender_owner}'].access_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider_access_token=${USERS.users['${provider}'].access_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider1_access_token=${USERS.users['${provider1}'].access_token}
-  ${status}  ${lots_ids}=  Run Keyword And Ignore Error  Отримати ідентифікатори об’єктів  ${viewer}  lots
-  Run Keyword If  '${status}'=='PASS'
-  ...      Set To Dictionary   ${artifact}   lots=${lots_ids}
+  Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider_bid_id=${USERS.users['${provider}'].bid_id}
+  Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider1_bid_id=${USERS.users['${provider1}'].bid_id}
   Log   ${artifact}
   log_object_data  ${artifact}  file_name=artifact  update=${True}  artifact=${True}
 
@@ -183,15 +182,14 @@ Get Broker Property By Username
   ${file_path}=  Get Variable Value  ${ARTIFACT_FILE}  artifact.yaml
   ${ARTIFACT}=  load_data_from  ${file_path}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token=${ARTIFACT.access_token}
-  ${TENDER}=  Create Dictionary   TENDER_UAID=${ARTIFACT.tender_uaid}   LAST_MODIFICATION_DATE=${ARTIFACT.last_modification_date}   LOT_ID=${Empty}
-  ${lot_index}=  Get Variable Value  ${lot_index}  0
-  Run Keyword And Ignore Error  Set To Dictionary  ${TENDER}  LOT_ID=${ARTIFACT.lots[${lot_index}]}
+  ${TENDER}=  Create Dictionary  TENDER_UAID=${ARTIFACT.tender_uaid}  LAST_MODIFICATION_DATE=${ARTIFACT.last_modification_date}  LOT_ID=${Empty}
   ${MODE}=  Get Variable Value  ${MODE}  ${ARTIFACT.mode}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token=${ARTIFACT.tender_owner_access_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider}']}  access_token=${ARTIFACT.provider_access_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider1}']}  access_token=${ARTIFACT.provider1_access_token}
   Set Suite Variable  ${MODE}
-  Set Suite Variable  ${lot_index}
+  Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider}']}  bid_id=${ARTIFACT.provider_bid_id}
+  Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider1}']}  bid_id=${ARTIFACT.provider1_bid_id}
   Set Suite Variable  ${TENDER}
   log_object_data  ${ARTIFACT}  file_name=artifact  update=${True}  artifact=${True}
 
@@ -207,16 +205,11 @@ Get Broker Property By Username
 
 
 Підготувати дані для створення предмету закупівлі
-  [Arguments]  ${cpv}
-  ${item}=  test_item_data  ${cpv[0:3]}
+  [Arguments]  ${cav}
+  ${item} =  Run Keyword If  '${MODE}'=='dgfFinancialAssets'  test_item_data_financial  ${cav[0:3]}
+  ...        ELSE  test_item_data  ${cav[0:3]}
   [Return]  ${item}
 
-
-Підготувати дані для створення лоту
-  [Arguments]  ${max_lot_value_amount}
-  ${lot}=  test_lot_data  ${max_lot_value_amount}
-  ${reply}=  Create Dictionary  data=${lot}
-  [Return]  ${reply}
 
 Підготувати дані для створення нецінового показника
   ${reply}=  test_feature_data
@@ -413,6 +406,14 @@ Log differences between dicts
   Should Be Equal  ${left}  ${right}  msg=Objects are not equal
 
 
+Перевірити неможливість зміни поля ${field} тендера на значення ${new_value} для користувача ${username}
+  ${prev_value} =  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}
+  Run As  ${username}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  ${field}  ${new_value}
+  Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data}  ${field}
+  ${next_value} =  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}
+  Порівняти об'єкти  ${prev_value}  ${next_value}
+
+
 Звірити дату тендера
   [Arguments]  ${username}  ${tender_uaid}  ${tender_data}  ${field}  ${accuracy}=60  ${absolute_delta}=${False}
   ${left}=  get_from_object  ${tender_data.data}  ${field}
@@ -525,8 +526,6 @@ Log differences between dicts
   ${object_type}=  get_object_type_by_id  ${object_id}
   ${status}  ${value}=  Run Keyword If  '${object_type}'=='questions'
   ...      Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із запитання  ${tender_uaid}  ${object_id}  ${field_name}
-  ...      ELSE IF  '${object_type}'=='lots'
-  ...      Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із лоту  ${tender_uaid}  ${object_id}  ${field_name}
   ...      ELSE IF  '${object_type}'=='items'
   ...      Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із предмету  ${tender_uaid}  ${object_id}  ${field_name}
   ...      ELSE IF  '${object_type}'=='features'
@@ -551,6 +550,30 @@ Log differences between dicts
   [Arguments]  ${username}  ${tender_uaid}  ${given_value}  ${field_name}  ${complaintID}  ${award_index}=${None}
   ${received_value}=  Run as  ${username}  Отримати інформацію із скарги  ${tender_uaid}  ${complaintID}  ${field_name}  ${award_index}
   Порівняти об'єкти  ${given_value}  ${received_value}
+
+
+Можливість скасувати тендер
+  ${cancellation_data}=  Підготувати дані про скасування  ${tender_owner}
+  Run As  ${tender_owner}
+  ...      Скасувати закупівлю
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${cancellation_data['cancellation_reason']}
+  ...      ${cancellation_data['document']['doc_path']}
+  ...      ${cancellation_data['description']}
+
+
+Можливість вичитати посилання на аукціон для глядача
+  ${url}=  Run As  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
+  Should Be True  '${url}'
+  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.ea\.openprocurement\.org\/auctions\/([0-9A-Fa-f]{32})
+  Log  URL аукціону для глядача: ${url}
+
+
+Можливість вичитати посилання на аукціон для учасника ${username}
+  ${url}=  Run As  ${username}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
+  Should Be True  '${url}'
+  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.ea\.openprocurement\.org\/auctions\/([0-9A-Fa-f]{32})
+  Log  URL аукціону для учасника: ${url}
 
 
 Run As
@@ -645,7 +668,7 @@ Require Failure
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
-  ...      5 min 15 sec
+  ...      240 sec
   ...      15 sec
   ...      Звірити статус тендера
   ...      ${username}
