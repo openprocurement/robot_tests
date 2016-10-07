@@ -24,8 +24,6 @@
   -i answer_question_to_tender
 -i ask_question_to_item
   -i answer_question_to_item
--i ask_question_to_lot
-  -i answer_question_to_lot
 -i modify_tender_after_questions
 
 
@@ -44,16 +42,9 @@
 -i cancel_bid_after_tendering_period_by_provider1
 -i ask_question_to_tender_after_tendering_period
 -i ask_question_to_item_after_tendering_period
--i ask_question_to_lot_after_tendering_period
 
 -i auction
--i auction_end_date
 -i auction_url
-
--i create_award_claim
--i answer_award_claim
--i escalate_award_claim
--i cancel_award_claim
 
 -i qualification_add_doc_to_first_award
 -i qualification_approve_first_award
