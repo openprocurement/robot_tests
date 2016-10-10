@@ -55,6 +55,27 @@ Quinta:
         tender_owner:   Tender_Owner
         viewer:         Tender_Viewer
     timeout_on_wait: 15
+tendermaster:
+    intervals:
+        default:
+            enquiry: [0, 13]
+            tender:  [0, 13]
+        openua:
+            accelerator: 1440
+            tender:  [0, 13]
+        openeu:
+            accelerator: 1440
+            tender:  [0, 30]
+        open_competitive_dialogue:
+            accelerator: 1440
+            tender:  [0, 30]
+    keywords_file: tendermaster
+    roles:
+        provider: Tendermaster_Provider1
+        provider1: Tendermaster_Provider2
+        tender_owner: Tendermaster_Owner
+        viewer: Tendermaster_Viewer
+    timeout_on_wait: 170
 E-tender:
     intervals:
         default:

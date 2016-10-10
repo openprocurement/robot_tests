@@ -12,6 +12,28 @@ users:
         api_key:  ""
         broker:   Quinta
         browser:  firefox
+    Tendermaster_Owner:
+        broker: tendermaster
+        login: testing.codeit+zak@gmail.com
+        password: test1234
+        homepage: "http://testing.tendermaster.com.ua/"
+        browser: chrome
+    Tendermaster_Provider1:
+        broker: tendermaster
+        login: testing.codeit+pos1@gmail.com
+        password: test1234
+        homepage: "http://testing.tendermaster.com.ua/"
+        browser: chrome
+    Tendermaster_Provider2:
+        broker: tendermaster
+        login: testing.codeit+pos2@gmail.com
+        password: test1234
+        homepage: "http://testing.tendermaster.com.ua/"
+        browser: chrome
+    Tendermaster_Viewer:
+        broker: tendermaster
+        homepage: "http://testing.tendermaster.com.ua/"
+        browser: chrome
     E-tender_Owner:
         broker:   E-tender
         homepage: "http://bid.uat.e-tender.biz/#/"
