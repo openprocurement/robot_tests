@@ -306,7 +306,10 @@ def test_item_data(cpv=None):
     data["description_en"] = field_with_id("i", data["description_en"])
     data["description_ru"] = field_with_id("i", data["description_ru"])
     days = fake.random_int(min=1, max=30)
-    data["deliveryDate"] = {"endDate": (get_now() + timedelta(days=days)).isoformat()}
+    data["deliveryDate"] = {
+                            "startDate":(get_now() + timedelta(days=days)).isoformat(),
+                            "endDate":(get_now() + timedelta(days=days)).isoformat()
+                           }
     data["deliveryAddress"]["countryName_en"] = translate_country_en(data["deliveryAddress"]["countryName"])
     data["deliveryAddress"]["countryName_ru"] = translate_country_ru(data["deliveryAddress"]["countryName"])
     return munchify(data)
