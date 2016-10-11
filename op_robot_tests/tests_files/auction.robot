@@ -205,27 +205,19 @@ Library         Selenium2Library
   [return]  ${url}
 
 
-
-Відкрити сторінку аукціону для глядача
-  ${url}=  Run as  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}  ${TENDER['LOT_ID']}
-  Open browser  ${url}  ${USERS.users['${viewer}'].browser}  ${viewer}
-  Set Window Position  @{USERS['${viewer}']['position']}
-  Set Window Size      @{USERS['${viewer}']['size']}
-
-
-Дочекатись завершення паузи перед першим раундом
-  Відкрити сторінку аукціону для глядача
-  Дочекатись паузи перед першим раундом глядачем
-  Дочекатись завершення паузи перед першим раундом для користувачів
-
-
-Відкрити сторінку аукціону для учасника ${username}
-  ${url}=  Run as  ${username}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}  ${TENDER['LOT_ID']}
+Відкрити сторінку аукціону для ${username}
+  ${url}=  Можливість вичитати посилання на аукціон для ${username}
   Open browser  ${url}  ${USERS.users['${username}'].browser}  ${username}
   Set Window Position  @{USERS['${username}']['position']}
   Set Window Size      @{USERS['${username}']['size']}
-  Wait Until Element Is Visible  xpath=//button[contains(@class, 'btn btn-success')]  2s
-  Click Element                  xpath=//button[contains(@class, 'btn btn-success')]
+  Run Keyword Unless  '${username}' == '${viewer}'
+  ...      Click Element                  xpath=//button[contains(@class, 'btn btn-success')]
+
+
+Дочекатись завершення паузи перед першим раундом
+  Відкрити сторінку аукціону для ${viewer}
+  Дочекатись паузи перед першим раундом глядачем
+  Дочекатись завершення паузи перед першим раундом для користувачів
 
 
 Дочекатись дати закінчення аукціону
