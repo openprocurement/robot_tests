@@ -27,6 +27,8 @@ users:
         api_key:  ""
         broker:   Quinta
         browser:  phantomjs
+        position: [0, 0]
+        size:     [1400, 900]
     Etender_Owner:
         broker:   Etender
         browser:  phantomjs
