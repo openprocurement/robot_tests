@@ -44,7 +44,7 @@ Library         Selenium2Library
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      auction
-  Можливість вичитати посилання на аукціон для учасника ${provider}
+  Можливість вичитати посилання на аукціон для ${provider}
 
 
 Можливість вичитати посилання на аукціон для другого учасника
@@ -52,7 +52,7 @@ Library         Selenium2Library
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      auction
-  Можливість вичитати посилання на аукціон для учасника ${provider1}
+  Можливість вичитати посилання на аукціон для ${provider1}
 
 
 Можливість вичитати посилання на аукціон для глядача
@@ -60,7 +60,7 @@ Library         Selenium2Library
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      auction
-  Можливість вичитати посилання на аукціон для глядача
+  Можливість вичитати посилання на аукціон для ${viewer}
 
 
 Можливість дочекатись першого раунду
@@ -196,18 +196,14 @@ Library         Selenium2Library
   Дочекатись синхронізації з майданчиком  ${username}
 
 
-Можливість вичитати посилання на аукціон для глядача
-  ${url}=  Run As  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}  ${TENDER['LOT_ID']}
+Можливість вичитати посилання на аукціон для ${username}
+  ${url}=  Run Keyword If  '${username}' == '${viewer}'  Run As  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}  ${TENDER['LOT_ID']}
+  ...      ELSE  Run As  ${username}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}  ${TENDER['LOT_ID']}
   Should Be True  '${url}'
   Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.openprocurement\.org\/tenders\/([0-9A-Fa-f]{32})
-  Log  URL аукціону для глядача: ${url}
+  Log  URL: ${url}
+  [return]  ${url}
 
-
-Можливість вичитати посилання на аукціон для учасника ${username}
-  ${url}=  Run As  ${username}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}  ${TENDER['LOT_ID']}
-  Should Be True  '${url}'
-  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.openprocurement\.org\/tenders\/([0-9A-Fa-f]{32})
-  Log  URL аукціону для учасника: ${url}
 
 
 Відкрити сторінку аукціону для глядача
