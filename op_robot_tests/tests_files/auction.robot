@@ -256,15 +256,14 @@ Library         Selenium2Library
 
 Дочекатись завершення паузи перед ${round_number} раундом
   Переключитись на учасника  ${viewer}
-  ${status}  ${_}=  Run Keyword And Ignore Error  Page should contain  → ${round_number}
-  Run Keyword And Return If  '${status}' == 'FAIL'  Get Current Date
+  Wait Until Keyword Succeeds  30 times  5s  Page should contain  → ${round_number}
   ${date}=  Get Current Date
   Переключитись на учасника  ${provider}
   Page should contain  → ${round_number}
   Переключитись на учасника  ${provider1}
   Page should contain  → ${round_number}
   Переключитись на учасника  ${viewer}
-  Wait Until Keyword Succeeds  15 times  10 s  Page should not contain  → ${round_number}
+  Wait Until Keyword Succeeds  30 times  5 s  Page should not contain  → ${round_number}
   ${new_date}=  Get Current Date
   Переключитись на учасника  ${provider}
   Page should not contain  → ${round_number}
@@ -275,16 +274,15 @@ Library         Selenium2Library
 
 
 Дочекатись завершення паузи перед першим раундом для користувачів
-  ${status}  ${_}=  Run Keyword And Ignore Error  Page should contain  → 1
-  Run Keyword And Return If  '${status}' == 'FAIL'  Get Current Date
+  Wait Until Keyword Succeeds  30 times  5s  Page should contain  → 1
   ${date}=  Get Current Date
-  Відкрити сторінку аукціону для учасника ${provider}
-  Відкрити сторінку аукціону для учасника ${provider1}
+  Відкрити сторінку аукціону для ${provider}
+  Відкрити сторінку аукціону для ${provider1}
   Переключитись на учасника  ${viewer}
-  Wait Until Keyword Succeeds  31 times  10 s  Page should not contain  → 1
+  Wait Until Keyword Succeeds  62 times  5 s  Page should not contain  → 1
   ${new_date}=  Get Current Date
   ${time}=  Subtract Date From Date  ${new_date}  ${date}
-  Should Be True  ${time} < 310 and ${time} > 270
+  Should Be True  ${time} < 310 and ${time} > 260
   Переключитись на учасника  ${provider}
   Page should not contain  → 1
   Переключитись на учасника  ${provider1}
@@ -292,26 +290,22 @@ Library         Selenium2Library
 
 
 Дочекатись закінчення стадії ставок глядачем
-  ${status}  ${_}=  Run Keyword And Ignore Error  Page should contain  до закінчення раунду
-  Run Keyword And Return If  '${status}' == 'FAIL'  Get Current Date
+  Wait Until Keyword Succeeds  30 times  5s  Page should contain  до закінчення раунду
   ${date}=  Get Current Date
-  Wait Until Keyword Succeeds  25 times  10 s  Page should not contain  до закінчення раунду
+  Wait Until Keyword Succeeds  50 times  5 s  Page should not contain  до закінчення раунду
   ${new_date}=  Get Current Date
   ${time}=  Subtract Date From Date  ${new_date}  ${date}
   Should Be True  ${time} < 250 and ${time} > 210
 
 
 Дочекатись учасником закінчення стадії ставок
-  ${status}  ${_}=  Run Keyword And Ignore Error  Page should contain  до закінчення вашої черги
-  Run Keyword If  '${status}' == 'PASS'
-  ...      Wait Until Keyword Succeeds  12 times  10 s  Page should not contain  до закінчення вашої черги
+  Wait Until Keyword Succeeds  12 times  10 s  Page should not contain  до закінчення вашої черги
 
 
 Дочекатись оголошення результатів глядачем
-  ${status}  ${_}=  Run Keyword And Ignore Error  Page should contain  до оголошення результатів
-  Run Keyword And Return If  '${status}' == 'FAIL'  Get Current Date
+  Wait Until Keyword Succeeds  30 times  5s  Page should contain  до оголошення результатів
   ${date}=  Get Current Date
-  Wait Until Keyword Succeeds  25 times  10 s  Page should not contain  до оголошення результатів
+  Wait Until Keyword Succeeds  50 times  5 s  Page should not contain  до оголошення результатів
   ${new_date}=  Get Current Date
   ${time}=  Subtract Date From Date  ${new_date}  ${date}
   Should Be True  ${time} < 250 and ${time} > 210
