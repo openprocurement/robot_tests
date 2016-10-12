@@ -21,6 +21,7 @@ from .initial_data import (
     create_fake_doc,
     create_fake_sentence,
     fake,
+    field_with_id,
     test_bid_data,
     test_bid_value,
     test_claim_answer_data,
@@ -328,7 +329,7 @@ def get_from_object(obj, attribute):
 def set_to_object(obj, attribute, value):
     # Search the list index in path to value
     list_index = re.search('\d+', attribute)
-    if list_index:
+    if list_index and attribute != 'stage2TenderID':
         list_index = list_index.group(0)
         parent, child = attribute.split('[' + list_index + '].')[:2]
         # Split attribute to path to lits (parent) and path to value in list element (child)
@@ -409,8 +410,8 @@ def get_id_from_object(obj):
     return obj_id.group(1)
 
 
-def get_id_from_doc_name(name):
-    return re.match(r'd\-[0-9a-fA-F]{8}', name).group(0)
+def get_id_from_string(string):
+    return re.match(r'[dc]\-[0-9a-fA-F]{8}', string).group(0)
 
 
 def get_object_type_by_id(object_id):
@@ -443,7 +444,7 @@ def get_complaint_index_by_complaintID(data, complaintID):
 
 def generate_test_bid_data(tender_data):
     bid = test_bid_data()
-    if 'aboveThreshold' in tender_data.get('procurementMethodType', '') or 'competitiveDialogue' in tender_data.get('procurementMethodType', ''):
+    if tender_data.get('procurementMethodType', '')[:-2] in ('aboveThreshold', 'competitiveDialogue'):
         bid.data.selfEligible = True
         bid.data.selfQualified = True
     if 'lots' in tender_data:
@@ -466,27 +467,30 @@ def mult_and_round(*args, **kwargs):
     return round(reduce(operator.mul, args), kwargs.get('precision', 2))
 
 
-# GUI Frontends common
-def add_data_for_gui_frontends(tender_data):
-    now = get_now()
-    # tender_data.data.enquiryPeriod['startDate'] = (now + timedelta(minutes=2)).isoformat()
-    tender_data.data.enquiryPeriod['endDate'] = (now + timedelta(minutes=6)).isoformat()
-    tender_data.data.tenderPeriod['startDate'] = (now + timedelta(minutes=7)).isoformat()
-    tender_data.data.tenderPeriod['endDate'] = (now + timedelta(minutes=11)).isoformat()
-    return tender_data
+def generate_test_bid_data_second_stage(tender_data, index='0'):
+    bid = test_bid_data()
+    if index.isdigit():
+        index = int(index)
+    else:
+        index = 0
+    bid['data']['tenderers'][0]['identifier']['id'] = tender_data['shortlistedFirms'][index]['identifier']['id']
+    bid['data']['tenderers'][0]['identifier']['scheme'] = tender_data['shortlistedFirms'][index]['identifier']['scheme']
+    bid['data']['tenderers'][0]['identifier']['legalName'] = tender_data['shortlistedFirms'][index]['identifier']['legalName']
 
-
-def convert_date_to_slash_format(isodate):
-    iso_dt = parse_date(isodate)
-    date_string = iso_dt.strftime("%d/%m/%Y")
-    return date_string
-
-
-def convert_datetime_to_dot_format(isodate):
-    iso_dt = parse_date(isodate)
-    day_string = iso_dt.strftime("%d.%m.%Y %H:%M")
-    return day_string
-
-
-def local_path_to_file(file_name):
-    return os.path.join(os.path.dirname(__file__), 'documents', file_name)
+    if tender_data.get('procurementMethodType', '')[:-2] in ('aboveThreshold', 'competitiveDialogue'):
+        bid.data.selfEligible = True
+        bid.data.selfQualified = True
+    if 'lots' in tender_data:
+        bid.data.lotValues = []
+        for lot in tender_data['lots']:
+            value = test_bid_value(lot['value']['amount'])
+            value['relatedLot'] = lot.get('id', '')
+            bid.data.lotValues.append(value)
+    else:
+        bid.data.update(test_bid_value(tender_data['value']['amount']))
+    if 'features' in tender_data:
+        bid.data.parameters = []
+        for feature in tender_data['features']:
+            parameter = {"value": fake.random_element(elements=(0.05, 0.01, 0)), "code": feature.get('code', '')}
+            bid.data.parameters.append(parameter)
+    return bid
