@@ -347,6 +347,26 @@ ${ITEM_MEAT}        ${True}
   Можливість додати документацію до тендера
 
 
+Можливість додати ілюстрацію до тендера
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      dgf_financial
+  ...      add_tender_doc  level3
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість додати ілюстрацію до тендера
+
+
+Можливість додати Virtual Data Room до тендера
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      dgf_financial
+  ...      add_tender_doc  level3
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість додати Virtual Data Room до тендера
+
+
 Відображення заголовку документації до тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
   ...      viewer

@@ -21,6 +21,7 @@ from .initial_data import (
     create_fake_amount,
     create_fake_doc,
     create_fake_guarantee,
+    create_fake_image,
     create_fake_minimal_step,
     create_fake_sentence,
     fake,
