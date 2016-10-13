@@ -240,7 +240,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_auction_title  level3
+  ...      modify_auction_title_ua  level3
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   ${new_title}=  create_fake_sentence
   Перевірити неможливість зміни поля title тендера на значення ${new_title} для користувача ${tender_owner}
@@ -298,7 +298,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_auction_criteria  level3
+  ...      modify_auction_criteria_ua  level3
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   ${new_title}=  create_fake_sentence
   Перевірити неможливість зміни поля eligibilityCriteria тендера на значення ${new_title} для користувача ${tender_owner}

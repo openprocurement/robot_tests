@@ -52,7 +52,7 @@ Library  openprocurement_client_helper.py
 
 Завантажити ілюстрацію
   [Arguments]  ${username}  ${tender_uaid}  ${filepath}
-  Завантажити документ в тендер з типом  ${username}  ${tender_uaid}  ${filepath}  documentType=illustration
+  openprocurement_client.Завантажити документ в тендер з типом  ${username}  ${tender_uaid}  ${filepath}  documentType=illustration
 
 
 Завантажити документ в тендер з типом
@@ -69,7 +69,7 @@ Library  openprocurement_client_helper.py
 
 Завантажити фінансову ліцензію
   [Arguments]  ${username}  ${tender_uaid}  ${filepath}
-  Завантажити документ в ставку з типом  ${username}  ${tender_uaid}  ${filepath}  documentType=financialLicense
+  openprocurement_client.Завантажити документ в ставку з типом  ${username}  ${tender_uaid}  ${filepath}  documentType=financialLicense
 
 
 Завантажити документ в ставку з типом
@@ -203,14 +203,6 @@ Library  openprocurement_client_helper.py
   ${item_index}=  get_object_index_by_id  ${tender.data['items']}  ${item_id}
   Remove From List  ${tender.data['items']}  ${item_index}
   Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
-
-
-Внести зміни в предмет тендера
-  [Arguments]  ${username}  ${tender_uaid}  ${item_index}  ${field_name}  ${fieldvalue}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${item_index}=  get_object_index_by_id  ${tender.data['items']}  ${item_id}
-  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data['items'][${item_index}]}
-  Set_To_Object  ${tender.data['items'][${item_index}]}  ${fieldname}  ${fieldvalue}
 
 
 ##############################################################################
