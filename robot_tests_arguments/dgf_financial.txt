@@ -11,11 +11,11 @@
 
 -i modify_auction_value
 -i modify_auction_step
--i modify_auction_title
+-i modify_auction_title_ua
 -i modify_auction_guarantee
 -i modify_auction_periods
 -i tender_view_criteria
--i modify_auction_criteria
+-i modify_auction_criteria_ua
 -i modify_tender
 -i add_tender_doc
 -i add_tender_illustration
