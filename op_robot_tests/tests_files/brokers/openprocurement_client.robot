@@ -67,6 +67,23 @@ Library  openprocurement_client_helper.py
   [return]  ${reply}
 
 
+Завантажити фінансову ліцензію
+  [Arguments]  ${username}  ${tender_uaid}  ${filepath}
+  Завантажити документ в ставку з типом  ${username}  ${tender_uaid}  ${filepath}  documentType=financialLicense
+
+
+Завантажити документ в ставку з типом
+  [Arguments]  ${username}  ${tender_uaid}  ${filepath}  ${documentType}
+  ${document}=  Завантажити документ в ставку  ${username}  ${filepath}  ${tender_uaid}
+  Keep In Dictionary  ${document['upload_response']['data']}  id
+  Log  ${document}
+  Set To Dictionary  ${document['upload_response']['data']}  documentType=${documentType}
+  Log  ${document}
+  ${reply}=  Змінити документацію в ставці  ${username}  ${tender_uaid}  ${document['upload_response']}  ${document['upload_response']['data'].id}
+  Log  ${reply}
+  [return]  ${reply}
+
+
 Додати Virtual Data Room
   [Arguments]  ${username}  ${tender_uaid}  ${vdr_url}  ${title}=Sample Virtual Data Room
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
@@ -90,6 +107,7 @@ Library  openprocurement_client_helper.py
   ${document}=  get_document_by_id  ${tender.data}  ${doc_id}
   ${filename}=  download_file_from_url  ${document.url}  ${OUTPUT_DIR}${/}${document.title}
   [return]  ${filename}
+
 
 Отримати посилання на аукціон для глядача
   [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}

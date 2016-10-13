@@ -580,6 +580,7 @@ Resource           resource.robot
   ${bid['data'].qualified} =  Set Variable  False
   Require Failure  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}
 
+
 Можливість збільшити пропозицію до ${percent} відсотків користувачем ${username}
   ${percent}=  Convert To Number  ${percent}
   ${divider}=  Convert To Number  0.01
@@ -602,6 +603,11 @@ Resource           resource.robot
   ${bid_doc_modified}=  Run As  ${username}  Змінити документ в ставці  ${TENDER['TENDER_UAID']}  ${file_path}  ${docid}
   Set To Dictionary  ${USERS.users['${username}'].bidresponses}  bid_doc_modified=${bid_doc_modified}
   Remove File  ${file_path}
+
+
+Можливість завантажити фінансову лізенцію в пропозицію користувачем ${username}
+  ${financial_license_path}  ${file_title}  ${file_content}=  create_fake_doc
+  Завантажити фінансову ліцензію  ${username}  ${TENDER['TENDER_UAID']}  ${financial_license_path}
 
 ##############################################################################################
 #             Cancellations

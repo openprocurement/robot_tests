@@ -351,8 +351,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      dgf_financial
-  ...      add_tender_doc  level3
+  ...      add_tender_illustration  level3
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість додати ілюстрацію до тендера
 
@@ -361,8 +360,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      dgf_financial
-  ...      add_tender_doc  level3
+  ...      add_tender_vdr  level3
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість додати Virtual Data Room до тендера
 
@@ -544,13 +542,22 @@ ${ITEM_MEAT}        ${True}
   Можливість подати цінову пропозицію користувачем ${provider}
 
 
-Можливість збільшити пропозицію на 5% першим учасником
+Можливість завантажити фінансову ліцензію в пропозицію першим учасником
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      add_financial_license_to_bid_by_provider
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити фінансову лізенцію в пропозицію користувачем ${provider}
+
+
+Можливість збільшити пропозицію на 10% першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      modify_bid_by_provider
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість збільшити пропозицію до 105 відсотків користувачем ${provider}
+  Можливість збільшити пропозицію до 110 відсотків користувачем ${provider}
 
 
 Можливість завантажити документ в пропозицію першим учасником
