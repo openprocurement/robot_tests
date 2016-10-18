@@ -72,6 +72,20 @@ Library  openprocurement_client_helper.py
   openprocurement_client.Завантажити документ в ставку з типом  ${username}  ${tender_uaid}  ${filepath}  documentType=financialLicense
 
 
+Завантажити протокол аукціону
+  [Arguments]  ${username}  ${tender_uaid}  ${filepath}  ${award_index}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${bid_id}=  Get Variable Value  ${tender.data.awards[${award_index}].bid_id}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
+  ${response}=  Call Method  ${USERS.users['${username}'].client}  upload_bid_document  ${filepath}  ${tender}  ${bid_id}  documents
+  ${document} =  Create Dictionary  filepath=${filepath}  upload_response=${response}
+  Keep In Dictionary  ${document['upload_response']['data']}  id
+  Set To Dictionary  ${document['upload_response']['data']}  documentType=auctionProtocol
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_bid_document  ${tender}  ${document['upload_response']}  ${bid_id}  ${document['upload_response']['data'].id}
+  Log  ${reply}
+  [return]  ${reply}
+
+
 Завантажити документ в ставку з типом
   [Arguments]  ${username}  ${tender_uaid}  ${filepath}  ${documentType}
   ${document}=  Завантажити документ в ставку  ${username}  ${filepath}  ${tender_uaid}
@@ -629,6 +643,13 @@ Library  openprocurement_client_helper.py
   ${participationUrl}=  Run Keyword IF  '${lot_id}'  Set Variable  ${bid.data.lotValues[${lot_index}].participationUrl}
   ...                         ELSE  Set Variable  ${bid.data.participationUrl}
   [return]  ${participationUrl}
+
+
+Отримати кількість документів в ставці
+  [Arguments]  ${username}  ${tender_uaid}  ${bid_index}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${number_of_documents}=  Get Length  ${tender.data.bids[${bid_index}].documents}
+  [return]  ${number_of_documents}
 
 ##############################################################################
 #             Qualification operations

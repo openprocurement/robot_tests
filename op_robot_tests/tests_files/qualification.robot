@@ -229,6 +229,23 @@ ${award_index}      ${0}
   Remove File  ${file_path}
 
 
+Можливість завантажити протокол аукціону в пропозицію кандидата
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  add_auction_protocol_to_bid_by_provider_for_qualification
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити протокол аукціону в пропозицію користувачем ${provider}
+
+
+Можливість перевірити протокол аукціону
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  qualification_approve_doc_to_first_award  level3
+  Звірити значення поля серед усіх документів ставки  ${tender_owner}  ${TENDER['TENDER_UAID']}  documentType  auctionProtocol  0
+
+
 Можливість підтвердити постачальника
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
