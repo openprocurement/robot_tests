@@ -670,7 +670,7 @@ Library  openprocurement_client_helper.py
 Завантажити документ з причинами дискваліфікації постачальника
   [Arguments]  ${username}  ${document}  ${tender_uaid}  ${award_num}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${doc}=  Call Method  ${USERS.users['${username}'].client}  upload_reasons_for_cancellation_of_qualification_document  ${document}  ${tender}  ${tender.data.awards[${award_num}].id}
+  ${doc}=  Call Method  ${USERS.users['${username}'].client}  upload_award_document  ${document}  ${tender}  ${tender.data.awards[${award_num}].id}
   Log  ${doc}
   [Return]  ${doc}
 
