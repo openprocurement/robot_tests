@@ -46,10 +46,14 @@
 -i auction
 -i auction_url
 
+-i qualification
 -i qualification_add_doc_to_first_award
+-i add_auction_protocol_to_bid_by_provider_for_qualification
+-i qualification_approve_doc_to_first_award
 -i qualification_approve_first_award
 -i qualification_cancel_first_award_qualification
 -i qualification_add_doc_to_second_award
 -i qualification_approve_second_award
 
 -i contract_sign
+

@@ -8,9 +8,11 @@
 
 -i make_bid_by_provider
 -i make_bid_by_provider1
+-i modify_bid_by_provider
 
 -i auction
 
+-i qualification
 -i qualification_approve_first_award
 
 -i contract_sign
