@@ -9,7 +9,7 @@ Suite Teardown  Test Suite Teardown
 
 
 *** Test Cases ***
-Можливість знайти закупівлю по ідентифікатору
+Можливість знайти тендер по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера
   ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
@@ -26,7 +26,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      tender_view
+  ...      tender_view_exclude
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  awards[-1].complaintPeriod.endDate
 
@@ -35,12 +35,23 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Процес укладання угоди
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      contract_sign
+  ...      contract_sign_exclude
   ${standstillEnd}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data.awards[-1].complaintPeriod.endDate}
   Дочекатись дати  ${standstillEnd}
 
 
-Можливість укласти угоду для закупівлі
+Можливість завантажити угоду до тендера
+  [Tags]  ${USERS.users['${viewer}'].broker}: Завантаження документів щодо угоди
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  contract_sign
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${file_path}  ${file_title}  ${file_content}=  create_fake_doc
+  Run As  ${tender_owner}  Завантажити угоду до тендера  ${TENDER['TENDER_UAID']}  -1  ${file_path}
+  Remove File  ${file_path}
+
+
+Можливість укласти угоду для тендера
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес укладання угоди
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
@@ -49,11 +60,11 @@ Suite Teardown  Test Suite Teardown
   Run As  ${tender_owner}  Підтвердити підписання контракту  ${TENDER['TENDER_UAID']}  -1
 
 
-Відображення статусу підписаної угоди з постачальником закупівлі
+Відображення статусу підписаної угоди з постачальником тендера
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних угоди
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  contract_sign
-  [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Run As  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
   Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}  active  contracts[-1].status
