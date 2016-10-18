@@ -14,7 +14,7 @@ ${award_index}      ${0}
 #             FIND TENDER
 ##############################################################################################
 
-Можливість знайти закупівлю по ідентифікатору
+Можливість знайти тендер по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера
   ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}

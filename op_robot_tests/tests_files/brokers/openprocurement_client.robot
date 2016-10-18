@@ -824,6 +824,21 @@ Library  openprocurement_client_helper.py
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract  ${tender}  ${data}
   Log  ${reply}
 
+
+Завантажити угоду до тендера
+  [Arguments]  ${username}  ${tender_uaid}  ${contract_num}  ${filepath}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${contract_id}=  Get Variable Value  ${tender['data']['contracts'][${contract_num}]['id']}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
+  ${response}=  Call Method  ${USERS.users['${username}'].client}  upload_contract_document  ${filepath}  ${tender}  ${contract_id}  documents
+  ${document} =  Create Dictionary  filepath=${filepath}  upload_response=${response}
+  Keep In Dictionary  ${document['upload_response']['data']}  id
+  Set To Dictionary  ${document['upload_response']['data']}  documentType=contractSigned
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract_document  ${tender}  ${document['upload_response']}  ${contract_id}  ${document['upload_response']['data'].id}
+  Log  ${reply}
+  [return]  ${reply}
+
+
 ##############################################################################
 #             OpenUA procedure
 ##############################################################################
