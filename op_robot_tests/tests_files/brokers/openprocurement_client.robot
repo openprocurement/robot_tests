@@ -667,6 +667,14 @@ Library  openprocurement_client_helper.py
   [Return]  ${doc}
 
 
+Завантажити документ з причинами дискваліфікації постачальника
+  [Arguments]  ${username}  ${document}  ${tender_uaid}  ${award_num}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${doc}=  Call Method  ${USERS.users['${username}'].client}  upload_reasons_for_cancellation_of_qualification_document  ${document}  ${tender}  ${tender.data.awards[${award_num}].id}
+  Log  ${doc}
+  [Return]  ${doc}
+
+
 Підтвердити постачальника
   [Documentation]
   ...      [Arguments] Username, tender uaid and number of the award to confirm
@@ -689,10 +697,14 @@ Library  openprocurement_client_helper.py
   ...      [Arguments] Username, tender uaid and award number
   ...      [Description] Find tender using uaid, create data dict with unsuccessful status and call patch_award
   ...      [Return] Reply of API
-  [Arguments]  ${username}  ${tender_uaid}  ${award_num}
+  [Arguments]  ${username}  ${tender_uaid}  ${award_num}  ${description}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${award}=  create_data_dict   data.status  unsuccessful
+  ${title}=  Set Variable  Disqualified
+  ${award}=  Run Keyword If  '${tender.data.awards[${award_num}].suppliers[0].identifier.id}' == '${tender.data.awards[0].suppliers[0].identifier.id}'
+  ...        create_data_dict   data.status  unsuccessful
   Set To Dictionary  ${award.data}  id=${tender.data.awards[${award_num}].id}
+  Set To Dictionary  ${award.data}  description=${description}
+  Set To Dictionary  ${award.data}  title=${title}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_award  ${tender}  ${award}
   Log  ${reply}
   [Return]  ${reply}
