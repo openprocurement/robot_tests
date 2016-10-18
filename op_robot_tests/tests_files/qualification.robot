@@ -24,6 +24,14 @@ ${award_index}      ${0}
   \   ${resp}=  Run As  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
 
 
+Можливість дочекатись дати початку кваліфікацій
+  [Tags]   ${USERS.users['${viewer}'].broker}: Процес кваліфікації
+  ...      viewer  tender_owner
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      qualification  level1
+  Дочекатись дати початку періоду кваліфікацій  ${viewer}  ${TENDER['TENDER_UAID']}
+
+
 Можливість створити вимогу про виправлення визначення переможця, додати до неї документацію і подати її користувачем
   [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...  provider
