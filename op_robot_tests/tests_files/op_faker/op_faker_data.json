@@ -2948,7 +2948,7 @@
            "classification": {
                "scheme": "CAV",
                "id": "04100000-9",
-               "description": "Житлова нерухомість"
+               "description": "Житлова  нерухомість"
             }
        },
        {
@@ -2978,21 +2978,21 @@
            "classification": {
                "scheme": "CAV",
                "id": "07100000-0",
-               "description": "Кредити юридичних осіб"
+               "description": "Кредити Юридичних осіб"
             }
         },
         {
            "classification": {
                "scheme": "CAV",
                "id": "07110000-3",
-               "description": "Кредити юридичних осіб беззаставні"
+               "description": "Кредити Юридичних осіб беззаставні"
             }
         },
         {
            "classification": {
                "scheme": "CAV",
                "id": "07120000-6",
-               "description": "Кредити юридичних осіб заставні"
+               "description": "Кредити Юридичних осіб заставні"
             }
         },
         {
@@ -3006,7 +3006,7 @@
            "classification": {
                "scheme": "CAV",
                "id": "07223000-8",
-               "description": "ЗаставаЖ земельні ділянки"
+               "description": "Застава - Земельні ділянки"
             }
         }
     ],
@@ -3117,7 +3117,7 @@
         },
         {
             "cav_id": "04100000-9",
-            "description": "Житлова нерухомість",
+            "description": "Житлова  нерухомість",
             "description_ru": "Жилое имущество",
             "description_en": "Residential",
             "quantity": 45,
@@ -3163,7 +3163,7 @@
     "items_base_data_financial": [
            {
             "cav_id": "07100000-0",
-            "description": "Кредити юридичних осіб",
+            "description": "Кредити Юридичних осіб",
             "description_ru": "Кредиты юридических лиц",
             "description_en": "Corporate loans",
             "quantity": 50,
@@ -3174,7 +3174,7 @@
         },
         {
             "cav_id": "07110000-3",
-            "description": "Кредити юридичних осіб беззаставні",
+            "description": "Кредити Юридичних осіб беззаставні",
             "description_ru": "Кредиты юридических лиц беззалоговые",
             "description_en": "Unsecured corporate loans",
             "quantity": 50,
@@ -3185,7 +3185,7 @@
         },
         {
             "cav_id": "07120000-6",
-            "description": "Кредити юридичних осіб заставні",
+            "description": "Кредити Юридичних осіб заставні",
             "description_ru": "Кредиты юридических лиц залоговые",
             "description_en": "Secured corporate loans",
             "quantity": 50,
@@ -3207,7 +3207,7 @@
         },
         {
             "cav_id": "07223000-8",
-            "description": "Застава: земельні ділянки",
+            "description": "Застава - Земельні ділянки",
             "description_ru": "Залог: земельные участки",
             "description_en": "Motrgage land",
             "quantity": 50,

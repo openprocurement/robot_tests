@@ -397,6 +397,16 @@ Log differences between dicts
   Порівняти об'єкти  ${left}  ${right}
 
 
+Звірити значення поля серед усіх документів ставки
+  [Arguments]  ${username}  ${tender_uaid}  ${field}  ${value}  ${bid_index}
+  ${number_of_documents}=  Отримати кількість документів в ставці  ${username}  ${tender_uaid}  ${bid_index}
+  ${match_in_document}=  Set Variable  False
+  :FOR  ${document_index}  IN RANGE  ${number_of_documents}
+  \  ${field_value}=  Отримати дані із документу пропозиції  ${username}  ${tender_uaid}  ${bid_index}  ${document_index}  ${field}
+  \  ${match_in_document}=  Set Variable If  '${field_value}'=='${value}'  True
+  Порівняти об'єкти  ${match_in_document}  True
+
+
 Порівняти об'єкти
   [Arguments]  ${left}  ${right}
   Log  ${left}
@@ -407,11 +417,7 @@ Log differences between dicts
 
 
 Перевірити неможливість зміни поля ${field} тендера на значення ${new_value} для користувача ${username}
-  ${prev_value} =  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}
-  Run As  ${username}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  ${field}  ${new_value}
-  Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data}  ${field}
-  ${next_value} =  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}
-  Порівняти об'єкти  ${prev_value}  ${next_value}
+  Require Failure  ${username}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  ${field}  ${new_value}
 
 
 Звірити дату тендера
@@ -783,6 +789,16 @@ Require Failure
   ...      ${tender_uaid}
   ...      active.auction
   Sleep  120  # Auction sync
+
+
+Дочекатись дати початку періоду кваліфікації
+  [Arguments]  ${username}  ${tender_uaid}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      active.qualification
 
 
 Дочекатись дати закінчення періоду подання скарг

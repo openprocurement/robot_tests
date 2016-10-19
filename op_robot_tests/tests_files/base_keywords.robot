@@ -600,6 +600,11 @@ Resource           resource.robot
   ${financial_license_path}  ${file_title}  ${file_content}=  create_fake_doc
   Завантажити фінансову ліцензію  ${username}  ${TENDER['TENDER_UAID']}  ${financial_license_path}
 
+
+Можливість завантажити протокол аукціону в пропозицію користувачем ${username}
+  ${auction_protocol_path}  ${file_title}  ${file_content}=  create_fake_doc
+  Завантажити протокол аукціону  ${username}  ${TENDER['TENDER_UAID']}  ${auction_protocol_path}  0
+
 ##############################################################################################
 #             Cancellations
 ##############################################################################################
