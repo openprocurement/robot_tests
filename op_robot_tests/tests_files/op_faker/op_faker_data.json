@@ -2948,7 +2948,7 @@
            "classification": {
                "scheme": "CAV",
                "id": "04100000-9",
-               "description": "Житлова нерухомість"
+               "description": "Житлова  нерухомість"
             }
        },
        {
@@ -3117,7 +3117,7 @@
         },
         {
             "cav_id": "04100000-9",
-            "description": "Житлова нерухомість",
+            "description": "Житлова  нерухомість",
             "description_ru": "Жилое имущество",
             "description_en": "Residential",
             "quantity": 45,

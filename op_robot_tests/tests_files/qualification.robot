@@ -230,10 +230,10 @@ ${award_index}      ${0}
 
 
 Можливість завантажити протокол аукціону в пропозицію кандидата
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання кваліфікації
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
-  ...  add_auction_protocol_to_bid_by_provider_for_qualification
+  ...  qualification_add_auction_protocol_to_bid
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість завантажити протокол аукціону в пропозицію користувачем ${provider}
 

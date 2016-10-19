@@ -78,10 +78,9 @@ Library  openprocurement_client_helper.py
   ${bid_id}=  Get Variable Value  ${tender.data.awards[${award_index}].bid_id}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   ${response}=  Call Method  ${USERS.users['${username}'].client}  upload_bid_document  ${filepath}  ${tender}  ${bid_id}  documents
-  ${document} =  Create Dictionary  filepath=${filepath}  upload_response=${response}
-  Keep In Dictionary  ${document['upload_response']['data']}  id
-  Set To Dictionary  ${document['upload_response']['data']}  documentType=auctionProtocol
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_bid_document  ${tender}  ${document['upload_response']}  ${bid_id}  ${document['upload_response']['data'].id}
+  Keep In Dictionary  ${response['data']}  id
+  Set To Dictionary  ${response['data']}  documentType=auctionProtocol
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_bid_document  ${tender}  ${response}  ${bid_id}  ${response['data'].id}
   Log  ${reply}
   [return]  ${reply}
 
@@ -694,6 +693,7 @@ Library  openprocurement_client_helper.py
   ${title}=  Set Variable  Disqualified
   ${award}=  Run Keyword If  '${tender.data.awards[${award_num}].suppliers[0].identifier.id}' == '${tender.data.awards[0].suppliers[0].identifier.id}'
   ...        create_data_dict   data.status  unsuccessful
+  ...        ELSE  Fail  Ідентифікатори учасників у пропозиції 0 і ${award_num} не співпадають
   Set To Dictionary  ${award.data}  id=${tender.data.awards[${award_num}].id}
   Set To Dictionary  ${award.data}  description=${description}
   Set To Dictionary  ${award.data}  title=${title}
@@ -831,10 +831,9 @@ Library  openprocurement_client_helper.py
   ${contract_id}=  Get Variable Value  ${tender['data']['contracts'][${contract_num}]['id']}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   ${response}=  Call Method  ${USERS.users['${username}'].client}  upload_contract_document  ${filepath}  ${tender}  ${contract_id}  documents
-  ${document} =  Create Dictionary  filepath=${filepath}  upload_response=${response}
-  Keep In Dictionary  ${document['upload_response']['data']}  id
-  Set To Dictionary  ${document['upload_response']['data']}  documentType=contractSigned
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract_document  ${tender}  ${document['upload_response']}  ${contract_id}  ${document['upload_response']['data'].id}
+  Keep In Dictionary  ${response['data']}  id
+  Set To Dictionary  ${response['data']}  documentType=contractSigned
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract_document  ${tender}  ${response}  ${contract_id}  ${response['data'].id}
   Log  ${reply}
   [return]  ${reply}
 

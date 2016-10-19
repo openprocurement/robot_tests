@@ -402,9 +402,15 @@ Log differences between dicts
   ${number_of_documents}=  Отримати кількість документів в ставці  ${username}  ${tender_uaid}  ${bid_index}
   ${match_in_document}=  Set Variable  False
   :FOR  ${document_index}  IN RANGE  ${number_of_documents}
-  \  ${field_value}=  Отримати дані із тендера  ${username}  ${tender_uaid}  bids[${bid_index}].documents[${document_index}].${field}
+  \  ${field_value}=  Отримати дані із документу пропозиції  ${username}  ${tender_uaid}  ${bid_index}  ${document_index}  ${field}
   \  ${match_in_document}=  Set Variable If  '${field_value}'=='${value}'  True
   Порівняти об'єкти  ${match_in_document}  True
+
+
+Отримати дані із документу пропозиції
+  [Arguments]  ${username}  ${tender_uaid}  ${bid_index}  ${document_index}  ${field}
+  ${field_value}=  Отримати дані із тендера  ${username}  ${tender_uaid}  bids[${bid_index}].documents[${document_index}].${field}
+  [Return]  ${field_value}
 
 
 Порівняти об'єкти
