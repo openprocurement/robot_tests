@@ -423,11 +423,7 @@ Log differences between dicts
 
 
 Перевірити неможливість зміни поля ${field} тендера на значення ${new_value} для користувача ${username}
-  ${prev_value} =  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}
-  Run As  ${username}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  ${field}  ${new_value}
-  Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data}  ${field}
-  ${next_value} =  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}
-  Порівняти об'єкти  ${prev_value}  ${next_value}
+  Require Failure  ${username}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  ${field}  ${new_value}
 
 
 Звірити дату тендера
