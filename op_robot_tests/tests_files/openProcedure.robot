@@ -7,7 +7,7 @@ Suite Teardown  Test Suite Teardown
 
 *** Variables ***
 ${MODE}             openeu
-@{USED_ROLES}       tender_owner  provider  provider1  provider2  viewer
+@{USED_ROLES}       tender_owner  provider  provider1  provider2  viewer  amku_role
 ${DIALOGUE_TYPE}    EU
 
 ${NUMBER_OF_ITEMS}  ${1}
@@ -976,7 +976,7 @@ ${ITEM_MEAT}        ${True}
   ...  ${USERS.users['${viewer}'].broker}
   ...  resolve_tender_claim
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля status вимоги із resolved для користувача ${viewer}
+  Звірити відображення поля вимоги із resolved для користувача ${viewer}
 
 
 Відображення задоволення вимоги про виправлення умов закупівлі
@@ -1049,6 +1049,134 @@ ${ITEM_MEAT}        ${True}
   ${new_description}=  create_fake_sentence
   Можливість змінити поле description тендера на ${new_description}
   Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data}  description
+
+##############################################################################################
+#             TENDER COMPLAINTS - AMKU
+##############################################################################################
+
+
+Можливість перевести скаргу в статус 'pending --> accepted'
+  [Tags]  ${USERS.users['${amku_role}'].broker}: Процес оскарження
+  ...  amku_Viewer
+  ...  ${USERS.users['${amku_role}'].broker}
+  ...  accept_tender_complaint
+  [Setup]  Дочекатись синхронізації з майданчиком  ${amku_role}
+  Перевести скаргу в статус 'pending --> accepted'  ${TENDER['TENDER_UAID']}  ${amku_role}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+
+
+Відображення статусу скарги accepted на порталі Prozorro
+  [Tags]  ${USERS.users['${amku_role}'].broker}: Відображення оскарження
+  ...  amku_Viewer
+  ...  ${USERS.users['${amku_role}'].broker}
+  ...  accept_tender_complaint
+  [Setup]  Дочекатись синхронізації з майданчиком   ${provider}
+  Log           ${USERS.users['${provider}'].tender_data.data.complaints[0]}         WARN
+  Отримати статус із поля   ${provider}   ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}'].tender_data.data.complaints}      status
+  Звірити відображення поля accepted скарги із ${USERS.users['${provider}'].tender_data.data.complaints[0].status} для користувача ${amku_role}
+
+
+Можливість перевести скаргу в статус 'accepted --> satisfied'
+  [Tags]  ${USERS.users['${amku_role}'].broker}: Процес оскарження
+  ...  amku_Viewer
+  ...  ${USERS.users['${amku_role}'].broker}
+  ...  satisfy_tender_complaint
+  [Setup]  Дочекатись синхронізації з майданчиком  ${amku_role}
+  Перевести скаргу в статус 'accepted --> satisfied'  ${amku_role}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+
+
+Відображення статусу скарги 'satisfied' на порталі Prozorro
+  [Tags]  ${USERS.users['${amku_role}'].broker}: Відображення оскарження
+  ...  amku_Viewer
+  ...  ${USERS.users['${amku_role}'].broker}
+  ...  satisfy_tender_complaint
+  [Setup]  Дочекатись синхронізації з майданчиком   ${provider}
+  Отримати статус із поля   ${provider}   ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}'].tender_data.data.complaints}      status
+  Звірити відображення поля satisfied скарги із ${USERS.users['${provider}'].tender_data.data.complaints[${complaint_index}].status} для користувача ${amku_role}
+
+
+Можливість перевести скаргу в статус 'accepted --> declined'
+  [Tags]  ${USERS.users['${amku_role}'].broker}: Процес оскарження
+  ...  amku_Viewer
+  ...  ${USERS.users['${amku_role}'].broker}
+  ...  decline_tender_complaint
+  [Setup]  Дочекатись синхронізації з майданчиком  ${amku_role}
+  Перевести скаргу в статус 'accepted --> declined'  ${amku_role}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+
+
+Відображення статусу скарги 'declined' на порталі Prozorro
+  [Tags]  ${USERS.users['${amku_role}'].broker}: Відображення оскарження
+  ...  amku_Viewer
+  ...  ${USERS.users['${amku_role}'].broker}
+  ...  decline_tender_complaint
+  [Setup]  Дочекатись синхронізації з майданчиком    ${provider}
+  Отримати статус із поля   ${provider}   ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}'].tender_data.data.complaints}      status
+  Log       ${USERS.users['${provider}'].tender_data.data.complaints[0].status}         WARN
+  Звірити відображення поля declined скарги із ${USERS.users['${provider}'].tender_data.data.complaints[0].status} для користувача ${amku_role}
+
+
+Можливість перевести скаргу в статус 'accepted --> stopped'
+  [Tags]  ${USERS.users['${amku_role}'].broker}: Процес оскарження
+  ...  amku_Viewer
+  ...  ${USERS.users['${amku_role}'].broker}
+  ...  stop_tender_complaint
+  [Setup]  Дочекатись синхронізації з майданчиком  ${amku_role}
+  Перевести скаргу в статус 'accepted --> stopped'  ${amku_role}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+
+
+Відображення статусу скарги 'stopped' на порталі Prozorro
+  [Tags]  ${USERS.users['${amku_role}'].broker}: Відображення оскарження
+  ...  amku_Viewer
+  ...  ${USERS.users['${amku_role}'].broker}
+  ...  stop_tender_complaint
+  [Setup]  Дочекатись синхронізації з майданчиком   ${amku_role}
+  Отримати статус із поля   ${provider}   ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}'].tender_data.data.complaints}      status
+  Звірити відображення поля stopped скарги із ${USERS.users['${provider}'].tender_data.data.complaints[${complaint_index}].status} для користувача ${amku_role}
+
+
+Перевести скаргу в статус 'pending --> mistaken'
+  [Tags]  ${USERS.users['${amku_role}'].broker}: Процес оскарження
+  ...  amku_Viewer
+  ...  ${USERS.users['${amku_role}'].broker}
+  ...  return_mistaken_tender_complaint
+  [Setup]  Дочекатись синхронізації з майданчиком   ${amku_role}
+  Перевести скаргу в статус 'pending --> mistaken'   ${TENDER['TENDER_UAID']}  ${amku_role}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+
+
+Відображення статусу 'mistaken' на порталі Prozorro
+  [Tags]  ${USERS.users['${amku_role}'].broker}:  Відображення оскарження
+  ...  amku_Viewer
+  ...  ${USERS.users['${amku_role}'].broker}
+  ...  return_mistaken_tender_complaint
+  [Setup]  Дочекатись синхронізації з майданчиком   ${amku_role}
+  Отримати статус із поля   ${provider}   ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}'].tender_data.data.complaints}      status
+  Звірити відображення поля mistaken скарги із ${USERS.users['${provider}'].tender_data.data.complaints[${complaint_index}].status} для користувача ${amku_role}
+
+
+Перевести скаргу в статус 'pending --> invalid'
+  [Tags]  ${USERS.users['${amku_role}'].broker}: Процес оскарження
+  ...  amku_Viewer
+  ...  ${USERS.users['${amku_role}'].broker}
+  ...  return_mistaken_tender_complaint
+  [Setup]  Дочекатись синхронізації з майданчиком   ${amku_role}
+  Перевести скаргу в статус 'accepted --> mistaken'   ${TENDER['TENDER_UAID']}  ${amku_role}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+
+
+Відображення статусу 'invalid' на порталі Prozorro
+  [Tags]  ${USERS.users['${amku_role}'].broker}: Відображення оскарження
+  ...  amku_Viewer
+  ...  ${USERS.users['${amku_role}'].broker}
+  ...  invalidate_tender_complaint
+  [Setup]  Дочекатись синхронізації з майданчиком   ${amku_role}
+#  Log           ${USERS.users['${provider}'].tender_data.data.complaints[0]}         WARN
+  Отримати статус із поля   ${provider}   ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}'].tender_data.data.complaints}      status
+  Звірити відображення поля invalid скарги із ${USERS.users['${provider}'].tender_data.data.complaints[${complaint_index}].status} для користувача ${amku_role}
+
 
 ##############################################################################################
 #             LOT COMPLAINTS
@@ -1323,6 +1451,7 @@ ${ITEM_MEAT}        ${True}
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider2}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider2}
+
 
 ##############################################################################################
 #             ABOVETRHESHOLD  BIDDING
@@ -1663,190 +1792,4 @@ ${ITEM_MEAT}        ${True}
   ...      wait_bridge_for_work
   Дочекатися створення нового етапу мостом  ${tender_owner}  ${TENDER['TENDER_UAID']}
   Звірити статус тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  complete
-
-
-Можливість отримати тендер другого етапу
-  [Tags]   ${USERS.user['${tender_owner}'].broker}: Отримати id нового тендеру
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      get_second_stage
-  Отримати дані із поля stage2TenderID тендера для усіх користувачів
-  ${tender_UAID_second_stage}=  Catenate  SEPARATOR=  ${TENDER['TENDER_UAID']}  .2
-  Можливість знайти тендер по ідентифікатору ${tender_UAID_second_stage} та зберегти його в second_stage_data для користувача ${tender_owner}
-
-
-Відображення заголовку тендера другого етапу
-  [Tags]   ${USERS.user['${tender_owner}'].broker}: Відображення основних даних тендера другого етапу
-  ...      viewer
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      compare_stages
-  Звірити відображення поля title тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.title} для користувача ${viewer}
-
-
-Відображення мінімального кроку закупівлі другого етапу
-  [Tags]   ${USERS.user['${tender_owner}'].broker}: Відображення основних даних тендера другого етапу
-  ...      viewer
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      compare_stages
-  Звірити відображення поля minimalStep тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.minimalStep} для користувача ${viewer}
-
-
-Відображення доступного бюджету закупівлі другого етапу
-  [Tags]   ${USERS.user['${tender_owner}'].broker}: Відображення основних даних тендера другого етапу
-  ...      viewer
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      compare_stages
-  Звірити відображення поля value тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.value} для користувача ${viewer}
-
-
-Відображення опису закупівлі другого етапу
-  [Tags]   ${USERS.user['${tender_owner}'].broker}: Відображення основних даних тендера другого етапу
-  ...      viewer
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      compare_stages
-  Звірити відображення поля description тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.description} для користувача ${viewer}
-
-
-Відображення імені замовника тендера для другого етапу
-  [Tags]   ${USERS.user['${tender_owner}'].broker}: Відображення основних даних тендера другого етапу
-  ...      viewer
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      compare_stages
-  Звірити відображення поля procuringEntity.name тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.procuringEntity.name} для користувача ${viewer}
-
-##############################################################################################
-#             Відображення основних даних лоту для другого етапу
-##############################################################################################
-
-Відображення лоту тендера другого етапу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера другого етапу
-  ...      viewer  tender_owner  provider  provider1
-  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
-  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
-  ...      compare_stages
-  Звірити відображення поля title усіх лотів другого етапу для усіх користувачів
-
-
-Відображення опису лотів для тендера другого етапу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера другого етапу
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      compare_stages
-  Звірити відображення поля description усіх лотів другого етапу для користувача ${viewer}
-
-
-Відображення бюджету лотів для тендера другого етапу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера другого етапу
-  ...      viewer tender_owner  provider  provider1
-  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
-  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
-  ...      compare_stages
-  Звірити відображення поля value.amount усіх лотів другого етапу для усіх користувачів
-
-
-Відображення валюти лотів для тендера другого етапу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера другого етапу
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      compare_stages
-  Звірити відображення поля value.currency усіх лотів другого етапу для користувача ${viewer}
-
-
-Відображення ПДВ в бюджеті лотів для тендера другого етапу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера другого етапу
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      compare_stages
-  Звірити відображення поля value.valueAddedTaxIncluded усіх лотів другого етапу для користувача ${viewer}
-
-
-Відображення мінімального кроку лотів для тендера другого етапу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера другого етапу
-  ...      viewer tender_owner  provider  provider1
-  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
-  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
-  ...      compare_stages
-  Звірити відображення поля minimalStep.amount усіх лотів другого етапу для усіх користувачів
-
-
-Відображення валюти мінімального кроку лотів для тендера другого етапу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера другого етапу
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      compare_stages
-  Звірити відображення поля minimalStep.currency усіх лотів другого етапу для користувача ${viewer}
-
-
-Відображення ПДВ в мінімальному кроці лотів для тендера другого етапу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера другого етапу
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      compare_stages
-  Звірити відображення поля minimalStep.valueAddedTaxIncluded усіх лотів другого етапу для користувача ${viewer}
-
-##############################################################################################
-#             END
-##############################################################################################
-
-Можливість отримати доступ до тендера другого етапу
-  [Tags]   ${USERS.user['${tender_owner}'].broker}: Отримати токен для другог етапу
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      save_tender_second_stage
-  Отримати доступ до тендера другого етапу та зберегти його
-
-
-Можливість активувати тендер другого етапу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Активувати тендер другого етапу
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      activate_second_stage
-  Активувати тендер другого етапу
-
-
-Можливість подати пропозицію першим учасником на другому етапі
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
-  ...      provider
-  ...      ${USERS.users['${provider}'].broker}
-  ...      make_bid_by_provider_second_stage
-  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість подати цінову пропозицію на другий етап 1 користувачем ${provider}
-
-
-Можливість подати пропозицію другим учасником на другому етапі
-  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції на другий етап
-  ...      provider1
-  ...      ${USERS.users['${provider1}'].broker}
-  ...      make_bid_by_provider1_second_stage
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість подати цінову пропозицію на другий етап 2 користувачем ${provider1}
-
-
-Можливість підтвердити першу пропозицію кваліфікації на другому етапі
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація на другому етапі
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      pre-qualification_approve_first_bid_second_stage
-  [Setup]  Дочекатись дати початку періоду прекваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість підтвердити 0 пропозицію кваліфікації
-
-
-Можливість підтвердити другу пропозицію кваліфікації на другогму етапі
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація на другому етапі
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      pre-qualification_approve_second_bid_second_stage
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість підтвердити -1 пропозицію кваліфікації
-
-
-Можливість затвердити остаточне рішення кваліфікації на другому етапі
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація на другому етапі
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      pre-qualification_approve_qualifications_second_stage
-  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість затвердити остаточне рішення кваліфікації
+  

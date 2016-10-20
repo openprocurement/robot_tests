@@ -1,0 +1,44 @@
+-v MODE:openeu
+
+-v NUMBER_OF_ITEMS:1
+-v NUMBER_OF_LOTS:2
+
+-i create_tender
+-i find_tender
+-i tender_view
+-i lot_view
+
+-i extend_tendering_period
+-i add_tender_doc
+-i add_lot_doc
+-i modify_lot_value_amount
+-i add_lot
+  -i delete_lot
+
+-i create_tender_claim
+  -i escalate_tender_claim
+   -i accept_tender_complaint
+    -i decline_tender_complaint
+   #  -i satisfy_tender_complaint
+   #   -i stop_tender_complaint
+   # -і return_mistaken_tender_complaint
+   # -i invalidate_tender_complaint
+
+#These parameters may be modified due to status to be tested. Others have to be commented.
+#The main parameter is `create_tender_complaint`.
+#Parameters `decline_tender_complaint`, `satisfy_tender_complaint` and `stop_tender_complaint` depend on `accept_tender_complaint` and are distinguished by offsets.
+
+-i add_bid_doc_after_tendering_period_by_provider
+-i modify_bid_doc_after_tendering_period_by_provider
+-i modify_bid_after_tendering_period_by_provider1
+-i cancel_bid_after_tendering_period_by_provider1
+
+-i ask_question_to_tender_after_tendering_period
+-i ask_question_to_item_after_tendering_period
+-i ask_question_to_lot_after_tendering_period
+
+-i open_tender_view
+-i openeu_make_bid_doc_private_by_provider
+-i openeu_add_financial_bid_doc_by_provider
+-i openeu_add_qualification_bid_doc_by_provider
+-i openeu_add_eligibility_bid_doc_by_provider
