@@ -94,7 +94,28 @@ DZO:
         provider:       DZO_Provider
         provider1:      DZO_Provider1
         viewer:         DZO_Viewer
-    timeout_on_wait: 300
+    timeout_on_wait: 360
+DZOauctions:
+    intervals:
+        default:
+            enquiry: [0, 20]
+            tender:  [0, 20]
+        openua:
+            accelerator: 720
+            tender:  [0, 20]
+        dgfFinancialAssets:
+           accelerator: 1440
+           auction:  [0, 20]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction:  [0, 20]
+    keywords_file: dzo
+    roles:
+        tender_owner:   DZO_Owner_auction
+        provider:       DZO_Provider_auction
+        provider1:      DZO_Provider1_auction
+        viewer:         DZO_Viewer_auction
+    timeout_on_wait: 360
 ztv:
     intervals:
         default:

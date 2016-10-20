@@ -75,6 +75,36 @@ users:
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
+    DZO_Owner_auction:
+        broker:   DZO
+        homepage: "http://dto.com.ua"
+        login:    dzotenderowner@gmail.com
+        password: wtG3mLD6M
+        browser:  PhantomJS
+        position: [0, 0]
+        size:     [1366, 800]
+    DZO_Provider_auction:
+        broker:   DZO
+        homepage: "http://dto.com.ua"
+        login:    dzoprovider1@gmail.com
+        password: mux85BMrH
+        browser:  PhantomJS
+        position: [0, 0]
+        size:     [1366, 800]
+    DZO_Provider1_auction:
+        broker:   DZO
+        homepage: "http://dto.com.ua"
+        login:    dzoprovider2@gmail.com
+        password: Z5FeM44kK
+        browser:  PhantomJS
+        position: [0, 0]
+        size:     [1366, 800]
+    DZO_Viewer_auction:
+        broker:   DZO
+        homepage: "http://dto.com.ua/?test_mode=guest"
+        browser:  PhantomJS
+        position: [0, 0]
+        size:     [1366, 800]
     ztv_Owner:
         broker:   ztv
         homepage: "http://ztv.byustudio.in.ua/web/"
