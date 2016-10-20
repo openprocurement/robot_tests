@@ -17,32 +17,32 @@ users:
         browser:  firefox
     Etender_Owner:
         broker:   Etender
-        homepage: "http://bid.uat.e-tender.biz/#/"
-        login:    Misha2
-        password: Password1
         browser:  chrome
+        homepage: "http://e-auction.pro/#/"
+        login:    case31
+        password: Qq123456
         position: [0, 0]
         size:     [1366, 800]
     Etender_Provider1:
         broker:   Etender
-        homepage: "http://bid.uat.e-tender.biz/#/"
-        login:    st_org
-        password: 12345678
         browser:  chrome
+        homepage: "http://e-auction.pro/#/"
+        login:    auto4
+        password: Qq123456
         position: [0, 0]
         size:     [1366, 800]
     Etender_Provider2:
         broker:   Etender
-        homepage: "http://bid.uat.e-tender.biz/#/"
-        login:    provider2
+        homepage: "http://e-auction.pro/#/"
+        login:    auto18
         password: Qa123456
         browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     Etender_Viewer:
         broker:   Etender
-        homepage: "http://bid.uat.e-tender.biz/#/"
         browser:  chrome
+        homepage: "http://e-auction.pro/#/"
         position: [0, 0]
         size:     [1366, 800]
     DZO_Owner:
