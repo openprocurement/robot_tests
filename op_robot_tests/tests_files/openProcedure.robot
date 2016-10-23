@@ -1496,6 +1496,15 @@ ${ITEM_MEAT}        ${True}
   Run Keyword And Expect Error  *  Можливість скасувати цінову пропозицію користувачем ${provider1}
 
 
+Можливість встановити меншу ціна першим учасником
+  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
+  ...      provider1
+  ...      ${USERS.users['${provider1}'].broker}
+  ...      set_the_smallest_price_by_provider1
+  :FOR  ${lot_index}  IN RANGE  ${NUMBER_OF_LOTS}
+  \  Встановити найменшу ціну для ${lot_index} пропозиції учасником ${provider1}
+
+
 ##############################################################################################
 #             OPENEU  Pre-Qualification
 ##############################################################################################

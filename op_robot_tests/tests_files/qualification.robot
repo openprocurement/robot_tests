@@ -221,7 +221,7 @@ ${award_index}      ${0}
   Remove File  ${file_path}
 
 
-Можливість підтвердити постачальника
+Можливість підтвердити першого постачальника
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}

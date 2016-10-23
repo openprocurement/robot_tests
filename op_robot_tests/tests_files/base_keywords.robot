@@ -859,6 +859,14 @@ Resource           resource.robot
   ${value}=  mult_and_round  ${value}  ${percent}  ${divider}  precision=${2}
   Run as  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  ${field}  ${value}
 
+Можливість зменшити пропозицію по ${lot_index} лоту до ${percent} відсотків користувачем ${username}
+  ${percent}=  Convert To Number  ${percent}
+  ${divider}=  Convert To Number  0.01
+  ${field}=  Set Variable  lotValues[${lot_index}].value.amount
+  ${value}=  Run As  ${username}  Отримати інформацію із пропозиції  ${TENDER['TENDER_UAID']}  ${field}
+  ${value}=  mult_and_round  ${value}  ${percent}  ${divider}  precision=${2}
+  Run as  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  ${field}  ${value}
+
 
 Можливість завантажити документ в пропозицію користувачем ${username}
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
@@ -873,6 +881,10 @@ Resource           resource.robot
   ${bid_doc_modified}=  Run As  ${username}  Змінити документ в ставці  ${TENDER['TENDER_UAID']}  ${file_path}  ${docid}
   Set To Dictionary  ${USERS.users['${username}'].bidresponses}  bid_doc_modified=${bid_doc_modified}
   Remove File  ${file_path}
+
+
+Встановити найменшу ціну для ${lot_index} пропозиції учасником ${username}
+  Можливість зменшити пропозицію по ${lot_index} лоту до 2 відсотків користувачем ${username}
 
 ##############################################################################################
 #             Cancellations

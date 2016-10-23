@@ -240,6 +240,14 @@ def test_confirm_data(id):
     })
 
 
+def test_additional_awards(contract_id, additional_awards):
+    return munchify({
+        "data": {
+            "id": contract_id,
+            "additionalAwardIDs": additional_awards
+        }
+    })
+
 def test_submit_claim_data(claim_id):
     return munchify({
         "data": {

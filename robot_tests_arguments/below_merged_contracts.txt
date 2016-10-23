@@ -1,0 +1,34 @@
+-v MODE:belowThreshold
+
+-v NUMBER_OF_ITEMS:2
+-v NUMBER_OF_LOTS:2
+
+-v TENDER_MEAT:True
+-v ITEM_MEAT:True
+-v LOT_MEAT:True
+
+
+-i create_tender
+-i find_tender
+-i tender_view
+-i meat_view
+-i lot_view
+
+-i extend_tendering_period
+-i modify_lot_value_amount
+
+-i make_bid_by_provider
+  -i modify_bid_by_provider
+  -i add_doc_to_bid_by_provider
+-i make_bid_by_provider1
+
+-i set_the_smallest_price_by_provider1
+
+-i auction
+
+-i qualification_approve_first_award
+-i qualification_approve_second_award
+
+-i merge_contracts
+
+-i contract_sign
