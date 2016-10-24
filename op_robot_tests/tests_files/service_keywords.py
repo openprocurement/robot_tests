@@ -434,8 +434,8 @@ def get_object_index_by_id(data, object_id):
         element_id = get_id_from_object(element)
         if element_id == object_id:
             break
-    else:
-        index += 1
+        else:
+            index += 1
     return index
 
 
@@ -445,8 +445,8 @@ def get_complaint_index_by_complaintID(data, complaintID):
     for index, element in enumerate(data):
         if element['complaintID'] == complaintID:
             break
-    else:
-        index += 1
+        else:
+            index += 1
     return index
 
 
