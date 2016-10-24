@@ -400,6 +400,7 @@ Log differences between dicts
 Звірити значення поля серед усіх документів ставки
   [Arguments]  ${username}  ${tender_uaid}  ${field}  ${value}  ${bid_index}
   ${number_of_documents}=  Отримати кількість документів в ставці  ${username}  ${tender_uaid}  ${bid_index}
+  Run Keyword If  '${number_of_documents}' == '0'  FAIL  До ставки bid_index = ${bid_index} не завантажено документів
   ${match_in_document}=  Set Variable  False
   :FOR  ${document_index}  IN RANGE  ${number_of_documents}
   \  ${field_value}=  Отримати дані із документу пропозиції  ${username}  ${tender_uaid}  ${bid_index}  ${document_index}  ${field}

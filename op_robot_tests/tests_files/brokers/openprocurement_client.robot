@@ -639,8 +639,17 @@ Library  openprocurement_client_helper.py
 
 Отримати дані із документу пропозиції
   [Arguments]  ${username}  ${tender_uaid}  ${bid_index}  ${document_index}  ${field}
-  ${field_value}=  Отримати дані із тендера  ${username}  ${tender_uaid}  bids[${bid_index}].documents[${document_index}].${field}
-  [Return]  ${field_value}
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      Отримати дані із тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      bids[${bid_index}].documents[${document_index}].${field}
+  ${field_value}=  Set Variable If
+  ...      '${status}' == 'FAIL'
+  ...      ${None}
+  ...      ${field_value}
+  Log  ${field_value}
+  [return]  ${field_value}
 
 
 Отримати посилання на аукціон для учасника
@@ -654,7 +663,14 @@ Library  openprocurement_client_helper.py
 Отримати кількість документів в ставці
   [Arguments]  ${username}  ${tender_uaid}  ${bid_index}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${number_of_documents}=  Get Length  ${tender.data.bids[${bid_index}].documents}
+  ${status}  ${number_of_documents}=  Run keyword and ignore error
+  ...      Get Length
+  ...      ${tender.data.bids[${bid_index}].documents}
+  ${number_of_documents}=  Set Variable If
+  ...      '${status}' == 'FAIL'
+  ...      ${0}
+  ...      ${number_of_documents}
+  Log  ${number_of_documents}
   [return]  ${number_of_documents}
 
 ##############################################################################

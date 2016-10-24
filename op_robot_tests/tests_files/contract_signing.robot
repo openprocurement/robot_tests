@@ -41,10 +41,10 @@ Suite Teardown  Test Suite Teardown
 
 
 Можливість завантажити угоду до тендера
-  [Tags]  ${USERS.users['${viewer}'].broker}: Завантаження документів щодо угоди
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  contract_sign
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Завантаження документів щодо угоди
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  contract_sign_upload
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${file_path}  ${file_title}  ${file_content}=  create_fake_doc
   Run As  ${tender_owner}  Завантажити угоду до тендера  ${TENDER['TENDER_UAID']}  -1  ${file_path}
@@ -64,7 +64,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних угоди
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  contract_sign
+  ...  contract_sign_view
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Run As  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
   Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}  active  contracts[-1].status
