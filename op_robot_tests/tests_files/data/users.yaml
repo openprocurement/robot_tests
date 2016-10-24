@@ -77,7 +77,7 @@ users:
         size:     [1366, 800]
     DZO_Owner_auction:
         broker:   DZOauctions
-        homepage: "http://dto.com.ua"
+        homepage: "http://dz3.byustudio.in.ua"
         login:    dzotenderowner@gmail.com
         password: wtG3mLD6M
         browser:  PhantomJS
@@ -85,7 +85,7 @@ users:
         size:     [1366, 800]
     DZO_Provider_auction:
         broker:   DZOauctions
-        homepage: "http://dto.com.ua"
+        homepage: "http://dz3.byustudio.in.ua"
         login:    dzoprovider1@gmail.com
         password: mux85BMrH
         browser:  PhantomJS
@@ -93,7 +93,7 @@ users:
         size:     [1366, 800]
     DZO_Provider1_auction:
         broker:   DZOauctions
-        homepage: "http://dto.com.ua"
+        homepage: "http://dz3.byustudio.in.ua"
         login:    dzoprovider2@gmail.com
         password: Z5FeM44kK
         browser:  PhantomJS
@@ -101,7 +101,7 @@ users:
         size:     [1366, 800]
     DZO_Viewer_auction:
         broker:   DZOauctions
-        homepage: "http://dto.com.ua/?test_mode=guest"
+        homepage: "http://dz3.byustudio.in.ua/?test_mode=guest"
         browser:  PhantomJS
         position: [0, 0]
         size:     [1366, 800]
