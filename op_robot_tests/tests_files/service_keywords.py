@@ -10,10 +10,9 @@ from iso8601 import parse_date
 from json import load
 from jsonpath_rw import parse as parse_path
 from munch import fromYAML, Munch, munchify
+from robot.api import logger
 from robot.errors import ExecutionFailed
 from robot.libraries.BuiltIn import BuiltIn
-from robot.output import LOGGER
-from robot.output.loggerhelper import Message
 # These imports are not pointless. Robot's resource and testsuite files
 # can access them by simply importing library "service_keywords".
 # Please ignore the warning given by Flake8 or other linter.
@@ -108,7 +107,8 @@ def compare_date(left, right, accuracy="minute", absolute_delta=True):
         try:
             accuracy = float(accuracy)
         except ValueError:
-            LOGGER.log_message(Message("Could not convert from {} to float. Accuracy is set to 60 seconds.".format(accuracy), "WARN"))
+            logger.warn("Could not convert from {} to float. "
+                        "Accuracy is set to 60 seconds.".format(accuracy))
             accuracy = 60
     if absolute_delta:
         delta = abs(delta)
@@ -180,14 +180,13 @@ def log_object_data(data, file_name=None, format="yaml", update=False, artifact=
                     file_obj.seek(0)
                     file_obj.truncate()
             except IOError as e:
-                LOGGER.log_message(Message(e, "INFO"))
-                LOGGER.log_message(Message("Nothing to update, "
-                                           "creating new file.", "INFO"))
+                logger.info(e)
+                logger.info("Nothing to update, creating new file.")
         data_obj = munch_to_object(data, format)
         with open(file_path, "w") as file_obj:
             file_obj.write(data_obj)
     data_obj = munch_to_object(data, format)
-    LOGGER.log_message(Message(data_obj.decode('utf-8'), "INFO"))
+    logger.info(data_obj.decode('utf-8'))
 
 
 def munch_from_object(data, format="yaml"):
@@ -270,7 +269,7 @@ def prepare_test_tender_data(procedure_intervals, tender_parameters):
         intervals = procedure_intervals[mode]
     else:
         intervals = procedure_intervals['default']
-    LOGGER.log_message(Message(intervals))
+    logger.info(intervals)
     tender_parameters['intervals'] = intervals
 
     # Set acceleration value for certain modes
@@ -361,9 +360,9 @@ def set_to_object(obj, attribute, value):
 
 def wait_to_date(date_stamp):
     date = parse(date_stamp)
-    LOGGER.log_message(Message("date: {}".format(date.isoformat()), "INFO"))
+    logger.info("date: {}".format(date.isoformat()))
     now = get_now()
-    LOGGER.log_message(Message("now: {}".format(now.isoformat()), "INFO"))
+    logger.info("now: {}".format(now.isoformat()))
     wait_seconds = (date - now).total_seconds()
     wait_seconds += 2
     if wait_seconds < 0:
