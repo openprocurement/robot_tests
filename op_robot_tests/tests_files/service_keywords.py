@@ -410,11 +410,43 @@ def munch_dict(arg=None, data=False):
     return munchify(arg)
 
 
+def _get_id_from_object(obj, key):
+    logger.debug('obj["%s"]: "%s"' % (key, unicode(obj[key])))
+    if obj[key] is None:
+        return None
+    else:
+        return re.match(r'(^[filq]-[0-9a-fA-F]{8}): ', obj[key])
+
+
 def get_id_from_object(obj):
-    obj_id = re.match(r'(^[filq]-[0-9a-fA-F]{8}): ', obj.get('title', ''))
-    if not obj_id:
-        obj_id = re.match(r'(^[filq]-[0-9a-fA-F]{8}): ', obj.get('description', ''))
-    return obj_id.group(1)
+    if not isinstance(obj, dict):
+        raise TypeError('Object is not an instance of class "dict"')
+
+    if not ('title' in obj.keys() or 'description' in obj.keys()):
+        raise KeyError('Unable to get object ID. '
+                       'Object does not contain any keys called '
+                       '"title" or "description"')
+
+    title_id = None
+    description_id = None
+
+    if 'title' in obj.keys():
+        title_id = _get_id_from_object(obj, 'title')
+
+    if 'description' in obj.keys():
+        description_id = _get_id_from_object(obj, 'description')
+
+    if not (title_id or description_id):
+        raise ValueError('Object ID can not be found'
+                         'in title or description')
+
+    if title_id and description_id and title_id != description_id:
+        # This is a rare case, yet it may happen
+        raise ValueError('IDs in title and description are not equal')
+
+    # Returning group 1 instead of group 0 because the only part we need
+    # is that one in the parentheses
+    return (title_id or description_id).group(1)
 
 
 def get_id_from_doc_name(name):
