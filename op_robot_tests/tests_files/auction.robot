@@ -1,6 +1,7 @@
 *** Settings ***
 Resource        keywords.robot
 Resource        resource.robot
+Resource        base_keywords.robot
 Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
@@ -20,6 +21,14 @@ Suite Teardown  Test Suite Teardown
 ##############################################################################################
 #             AUCTION
 ##############################################################################################
+
+Відображення закінчення періоду прийому пропозицій тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних аукціону
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view  level2
+  Отримати дані із поля tenderPeriod.endDate тендера для користувача ${viewer}
+
 
 Відображення дати початку аукціону
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних аукціону
