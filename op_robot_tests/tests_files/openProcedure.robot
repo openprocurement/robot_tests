@@ -55,7 +55,7 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля description тендера для користувача ${viewer}
 
 
-Відображення бюджету тендера
+Відображення початкової вартості тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -99,7 +99,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      tender_view_enquiryPeriod
   Отримати дані із поля enquiryPeriod.startDate тендера для усіх користувачів
 
 
@@ -107,7 +107,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level2
+  ...      tender_view_enquiryPeriod  level2
   Отримати дані із поля enquiryPeriod.endDate тендера для усіх користувачів
 
 
@@ -207,7 +207,7 @@ ${ITEM_MEAT}        ${True}
 #             Редагування тендера
 ##############################################################################################
 
-Неможливість змінити бюджет тендера
+Неможливість змінити початкову вартість тендера
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
@@ -276,11 +276,11 @@ ${ITEM_MEAT}        ${True}
   Перевірити неможливість зміни поля tenderPeriod.startDate тендера на значення ${new_value} для користувача ${tender_owner}
 
 
-Неможливість змінити кінець періоду очікування тендера
+Неможливість змінити кінець періоду уточнення тендера
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_auction_periods  level3
+  ...      modify_auction_enquiryPeriod  level3
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   ${new_value}=  Set Variable  ${USERS.users['${tender_owner}'].tender_data.data.auctionPeriod.shouldStartAfter}
   Перевірити неможливість зміни поля enquiryPeriod.endDate тендера на значення ${new_value} для користувача ${tender_owner}

@@ -11,7 +11,7 @@ Suite Teardown  Test Suite Teardown
 
 
 *** Test Cases ***
-Можливість знайти закупівлю по ідентифікатору
+Можливість знайти тендер по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера
   ...      ${USERS.users['${viewer}'].broker}
   ...      find_tender  level1
