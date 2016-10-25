@@ -64,6 +64,45 @@ def add_minutes_to_date(date, minutes):
     return (parse(date) + timedelta(minutes=float(minutes))).isoformat()
 
 
+def compare_objects(first, second, msg=None, values=True,
+                    inequal=False, allow_nonetype=False):
+    """Test two objects for (in)equality.
+
+    :param first:          First object to be compared
+    :param second:         Second object to be compared
+    :param msg:            Custom error message to be printed
+    :type msg:             str or unicode
+    :param values:         If set to True, the values will be printed as well
+                           as the error message
+    :type values:          bool
+    :param inequal:        If set to True, the values should not be equal
+    :type inequal:         bool
+    :param allow_nonetype: If set to False, the comparison will fail
+                           if at least one of the two objects is None
+    :type allow_nonetype:  bool
+    """
+    logger.info('first: ' + unicode(first))
+    logger.info('second: ' + unicode(second))
+    if not allow_nonetype:
+        BuiltIn().should_not_be_equal(first,
+                                      None,
+                                      msg="First object is None",
+                                      values=False)
+        BuiltIn().should_not_be_equal(second,
+                                      None,
+                                      msg="Second object is None",
+                                      values=False)
+    if msg is None:
+        if inequal:
+            msg="Objects are equal"
+        else:
+            msg="Objects are not equal"
+    if inequal:
+        BuiltIn().should_not_be_equal(first, second, msg=msg, values=values)
+    else:
+        BuiltIn().should_be_equal(first, second, msg=msg, values=values)
+
+
 def compare_date(left, right, accuracy="minute", absolute_delta=True):
     '''Compares dates with specified accuracy
 
