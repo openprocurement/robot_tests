@@ -184,7 +184,7 @@ def compare_coordinates(left_lat, left_lon, right_lat, right_lon, accuracy=0.1):
     return True
 
 
-def log_object_data(data, file_name=None, format="yaml", update=False, artifact=False):
+def log_object_data(data, file_name=None, format="yaml", update=False):
     """Log object data in pretty format (JSON or YAML)
 
     Two output formats are supported: "yaml" and "json".
@@ -205,11 +205,8 @@ def log_object_data(data, file_name=None, format="yaml", update=False, artifact=
     if not isinstance(data, Munch):
         data = munchify(data)
     if file_name:
-        if artifact:
-            file_path = os.path.join(os.path.dirname(__file__), 'data', file_name + '.' + format)
-        else:
-            output_dir = BuiltIn().get_variable_value("${OUTPUT_DIR}")
-            file_path = os.path.join(output_dir, file_name + '.' + format)
+        output_dir = BuiltIn().get_variable_value("${OUTPUT_DIR}")
+        file_path = os.path.join(output_dir, file_name + '.' + format)
         if update:
             try:
                 with open(file_path, "r+") as file_obj:
@@ -258,6 +255,12 @@ def load_data_from(file_name, mode=None):
         return brokers
     else:
         return file_data
+
+
+def load_artifact(file_name, format="yaml"):
+    output_dir = BuiltIn().get_variable_value("${OUTPUT_DIR}")
+    file_path = os.path.join(output_dir, file_name + '.' + format)
+    return load_data_from(file_path)
 
 
 def compute_intrs(brokers_data, used_brokers):

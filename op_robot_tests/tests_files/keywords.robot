@@ -175,12 +175,12 @@ Get Broker Property By Username
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider_bid_id=${USERS.users['${provider}'].bid_id}
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider1_bid_id=${USERS.users['${provider1}'].bid_id}
   Log   ${artifact}
-  log_object_data  ${artifact}  file_name=artifact  update=${True}  artifact=${True}
+  log_object_data  ${artifact}  file_name=artifact  update=${True}
 
 
 Завантажити дані про тендер
-  ${file_path}=  Get Variable Value  ${ARTIFACT_FILE}  artifact.yaml
-  ${ARTIFACT}=  load_data_from  ${file_path}
+  ${file_path}=  Get Variable Value  ${ARTIFACT_FILE}  artifact
+  ${ARTIFACT}=  load_artifact  ${file_path}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token=${ARTIFACT.access_token}
   ${TENDER}=  Create Dictionary  TENDER_UAID=${ARTIFACT.tender_uaid}  LAST_MODIFICATION_DATE=${ARTIFACT.last_modification_date}  LOT_ID=${Empty}
   ${MODE}=  Get Variable Value  ${MODE}  ${ARTIFACT.mode}
@@ -191,7 +191,7 @@ Get Broker Property By Username
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider}']}  bid_id=${ARTIFACT.provider_bid_id}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider1}']}  bid_id=${ARTIFACT.provider1_bid_id}
   Set Suite Variable  ${TENDER}
-  log_object_data  ${ARTIFACT}  file_name=artifact  update=${True}  artifact=${True}
+  log_object_data  ${ARTIFACT}  file_name=artifact  update=${True}
 
 
 Підготувати дані для створення тендера
