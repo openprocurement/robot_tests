@@ -191,7 +191,15 @@ Library  openprocurement_client_helper.py
   ...      Remove From Dictionary  ${tender.data}  enquiryPeriod
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
-  Compare Objects  ${prev_value}  ${USERS.users['${username}'].tender_data['${fieldname}']}
+  # The two values should differ. If they are equal, then probably the server refused to,
+  # or failed to modify the value of a field, so this keyword should instantly fail.
+  ${new_value}=  Get From Object  ${USERS.users['${username}'].tender_data.data}  ${fieldname}
+  Compare Objects
+  ...      ${prev_value}
+  ...      ${new_value}
+  ...      msg=Failed to modify "${fieldname}"
+  ...      values=${False}
+  ...      inequal=${True}
   Set_To_Object   ${USERS.users['${username}'].tender_data}   ${fieldname}   ${fieldvalue}
 
 ##############################################################################
