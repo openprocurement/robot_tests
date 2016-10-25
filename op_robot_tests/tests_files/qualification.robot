@@ -80,7 +80,7 @@ ${award_index}      ${0}
   ...      ${USERS.users['${provider}'].claim_data.doc_id}
   ...      title
   ...      ${award_index}
-  Порівняти об'єкти  ${USERS.users['${provider}'].claim_data.doc_name}  ${right}
+  Compare Objects  ${USERS.users['${provider}'].claim_data.doc_name}  ${right}
 
 
 Відображення вмісту документа до вимоги про виправлення визначення переможця

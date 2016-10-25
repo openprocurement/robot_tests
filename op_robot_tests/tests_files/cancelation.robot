@@ -167,10 +167,10 @@ Suite Teardown  Test Suite Teardown
 
 Звірити відображення поля ${field} документа до скасування ${doc_id} із ${left} для користувача ${username}
   ${right}=  Run As  ${username}  Отримати інформацію із документа  ${TENDER['TENDER_UAID']}  ${doc_id}  ${field}
-  Порівняти об'єкти  ${left}  ${right}
+  Compare Objects  ${left}  ${right}
 
 
 Звірити відображення вмісту документа до скасування ${doc_id} з ${left} для користувача ${username}
   ${file_name}=  Run as  ${username}  Отримати документ до скасування  ${TENDER['TENDER_UAID']}  ${doc_id}
   ${right}=  Get File  ${OUTPUT_DIR}${/}${file_name}
-  Порівняти об'єкти  ${left}  ${right}
+  Compare Objects  ${left}  ${right}

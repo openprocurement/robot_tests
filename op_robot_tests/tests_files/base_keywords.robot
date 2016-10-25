@@ -71,7 +71,7 @@ Resource           resource.robot
 
 Звірити відображення поля ${field} документа ${doc_id} із ${left} для користувача ${username}
   ${right}=  Run As  ${username}  Отримати інформацію із документа  ${TENDER['TENDER_UAID']}  ${doc_id}  ${field}
-  Порівняти об'єкти  ${left}  ${right}
+  Compare Objects  ${left}  ${right}
 
 
 Звірити відображення поля ${field} тендера для усіх користувачів
@@ -90,7 +90,7 @@ Resource           resource.robot
 Звірити відображення вмісту документа ${doc_id} із ${left} для користувача ${username}
   ${file_name}=  Run as  ${username}  Отримати документ  ${TENDER['TENDER_UAID']}  ${doc_id}
   ${right}=  Get File  ${OUTPUT_DIR}${/}${file_name}
-  Порівняти об'єкти  ${left}  ${right}
+  Compare Objects  ${left}  ${right}
 
 
 Звірити відображення дати ${date} тендера для усіх користувачів
@@ -536,13 +536,13 @@ Resource           resource.robot
 
 Звірити відображення поля ${field} документа ${doc_id} до скарги ${complaintID} з ${left} для користувача ${username}
   ${right}=  Run As  ${username}  Отримати інформацію із документа до скарги  ${TENDER['TENDER_UAID']}  ${complaintID}  ${doc_id}  ${field}
-  Порівняти об'єкти  ${left}  ${right}
+  Compare Objects  ${left}  ${right}
 
 
 Звірити відображення вмісту документа ${doc_id} до скарги ${complaintID} з ${left} для користувача ${username}
   ${file_name}=  Run as  ${username}  Отримати документ до скарги  ${TENDER['TENDER_UAID']}  ${complaintID}  ${doc_id}
   ${right}=  Get File  ${OUTPUT_DIR}${/}${file_name}
-  Порівняти об'єкти  ${left}  ${right}
+  Compare Objects  ${left}  ${right}
 
 ##############################################################################################
 #             BIDDING

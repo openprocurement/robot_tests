@@ -394,7 +394,7 @@ Log differences between dicts
 Звірити поле тендера із значенням
   [Arguments]  ${username}  ${tender_uaid}  ${left}  ${field}  ${object_id}=${Empty}
   ${right}=  Отримати дані із тендера  ${username}  ${tender_uaid}  ${field}  ${object_id}
-  Порівняти об'єкти  ${left}  ${right}
+  Compare Objects  ${left}  ${right}
 
 
 Звірити значення поля серед усіх документів ставки
@@ -405,16 +405,7 @@ Log differences between dicts
   :FOR  ${document_index}  IN RANGE  ${number_of_documents}
   \  ${field_value}=  Отримати дані із документу пропозиції  ${username}  ${tender_uaid}  ${bid_index}  ${document_index}  ${field}
   \  ${match_in_document}=  Set Variable If  '${field_value}'=='${value}'  True
-  Порівняти об'єкти  ${match_in_document}  True
-
-
-Порівняти об'єкти
-  [Arguments]  ${left}  ${right}
-  Log  ${left}
-  Log  ${right}
-  Should Not Be Equal  ${left}  ${None}
-  Should Not Be Equal  ${right}  ${None}
-  Should Be Equal  ${left}  ${right}  msg=Objects are not equal
+  Compare Objects  ${match_in_document}  True
 
 
 Перевірити неможливість зміни поля ${field} тендера на значення ${new_value} для користувача ${username}
@@ -556,7 +547,7 @@ Log differences between dicts
 Звірити поле скарги із значенням
   [Arguments]  ${username}  ${tender_uaid}  ${given_value}  ${field_name}  ${complaintID}  ${award_index}=${None}
   ${received_value}=  Run as  ${username}  Отримати інформацію із скарги  ${tender_uaid}  ${complaintID}  ${field_name}  ${award_index}
-  Порівняти об'єкти  ${given_value}  ${received_value}
+  Compare Objects  ${given_value}  ${received_value}
 
 
 Можливість скасувати тендер
@@ -643,13 +634,13 @@ Require Failure
 Звірити статус тендера
   [Arguments]  ${username}  ${tender_uaid}  ${left}
   ${right}=  Run as  ${username}  Отримати інформацію із тендера  ${tender_uaid}  status
-  Порівняти об'єкти  ${left}  ${right}
+  Compare Objects  ${left}  ${right}
 
 
 Звірити статус вимоги/скарги
   [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${left}  ${award_index}=${None}
   ${right}=  Run as  ${username}  Отримати інформацію із скарги  ${tender_uaid}  ${complaintID}  status  ${award_index}
-  Порівняти об'єкти  ${left}  ${right}
+  Compare Objects  ${left}  ${right}
 
 
 Дочекатись дати початку прийому пропозицій
