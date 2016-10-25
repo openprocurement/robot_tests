@@ -419,6 +419,16 @@ def _get_id_from_object(obj, key):
 
 
 def get_id_from_object(obj):
+    """Extract the identifier string from an object.
+
+    :param obj: The dictionary-like object (mapping) with at least one
+                mandatory key, either "title" or "description".
+                The value mapped to that key should begin with a prefix which
+                holds an automatically generated identifier of the object
+    :type obj:  dict
+    :returns:   object ID
+    :rtype:     str
+    """
     if not isinstance(obj, dict):
         raise TypeError('Object is not an instance of class "dict"')
 
