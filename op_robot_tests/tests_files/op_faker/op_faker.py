@@ -20,10 +20,15 @@ class OP_Provider(BaseProvider):
     __fake_data = load_data_from_file("op_faker_data.json")
     word_list = __fake_data.words
     procuringEntities = __fake_data.procuringEntities
+    procuringEntities_other = __fake_data.procuringEntities_other
     addresses = __fake_data.addresses
-    classifications = __fake_data.classifications
-    cpvs = __fake_data.cpvs
-    items_base_data = __fake_data.items_base_data
+    classifications_other = __fake_data.classifications_other
+    cavs_other = __fake_data.cavs_other
+    items_base_data_other = __fake_data.items_base_data_other
+    classifications_financial = __fake_data.classifications_financial
+    cavs_financial = __fake_data.cavs_financial
+    items_base_data_financial = __fake_data.items_base_data_financial
+    additionalIdentifiers = __fake_data.additionalIdentifiers
 
     @classmethod
     def randomize_nb_elements(self, number=10, le=60, ge=140):
@@ -89,35 +94,46 @@ class OP_Provider(BaseProvider):
         return deepcopy(self.random_element(self.procuringEntities))
 
     @classmethod
-    def cpv(self):
-        return self.random_element(self.cpvs)
+    def procuringEntity_other(self):
+        procuringEntities = deepcopy(self.procuringEntities)
+        procuringEntities.extend(self.procuringEntities_other)
+        return deepcopy(self.random_element(procuringEntities))
 
     @classmethod
-    def fake_item(self, cpv_group=None):
-        """
-        Generate a random item for openprocurement tenders
+    def cav_other(self):
+        return self.random_element(self.cavs_other)
 
-        :param cpv_group: gives possibility to generate items
-            from a specific cpv group. Cpv group is three digits
-            in the beginning of each cpv id.
-        """
-        if cpv_group is None:
-            item_base_data = self.random_element(self.items_base_data)
-        else:
-            cpv_group = str(cpv_group)
-            similar_cpvs = []
-            for cpv_element in self.cpvs:
-                if cpv_element.startswith(cpv_group):
-                    similar_cpvs.append(cpv_element)
-            cpv = self.random_element(similar_cpvs)
-            for entity in self.items_base_data:
-                if entity["cpv_id"] == cpv:
-                    item_base_data = entity
-                    break
+    @classmethod
+    def cav_financial(self):
+        return self.random_element(self.cavs_financial)
 
-        # choose appropriate dkpp classification for item_base_data's cpv
-        for entity in self.classifications:
-            if entity["classification"]["id"] == item_base_data["cpv_id"]:
+    @classmethod
+    def additionalIdentifier(self):
+       return self.random_element(self.additionalIdentifiers)
+
+    @classmethod
+    def fake_item(self, cav_group):
+        # """
+        # Generate a random item for openprocurement tenders
+
+        # :param cav_group: gives possibility to generate items
+        #     from a specific cav group. cav group is three digits
+        #     in the beginning of each cav id.
+        # """
+        #for dgf other mode, and all other modes besides dgf financial
+        #generates items from dgf_other CAV group
+        cav_group = str(cav_group)
+        similar_cavs = []
+        for cav_element in self.cavs_other:
+            if cav_element.startswith(cav_group):
+                similar_cavs.append(cav_element)
+        cav = self.random_element(similar_cavs)
+        for entity in self.items_base_data_other:
+            if entity["cav_id"] == cav:
+                item_base_data = entity
+                break
+        for entity in self.classifications_other:
+            if entity["classification"]["id"] == item_base_data["cav_id"]:
                 classification = entity
                 break
 
@@ -127,7 +143,38 @@ class OP_Provider(BaseProvider):
             "description_ru": item_base_data["description_ru"],
             "description_en": item_base_data["description_en"],
             "classification": classification["classification"],
-            "additionalClassifications": classification["additionalClassifications"],
+            "deliveryAddress": address["deliveryAddress"],
+            "deliveryLocation": address["deliveryLocation"],
+            "unit": item_base_data["unit"],
+            "quantity": self.randomize_nb_elements(number=item_base_data["quantity"], le=80, ge=120)
+        }
+        return deepcopy(item)
+
+    @classmethod
+    def fake_item_financial(self, cav_group):
+        #for dgf financial assets mode
+        #generates items from financial CAV group
+        cav_group = str(cav_group)
+        similar_cavs = []
+        for cav_element in self.cavs_financial:
+            if cav_element.startswith(cav_group):
+                similar_cavs.append(cav_element)
+        cav = self.random_element(similar_cavs)
+        for entity in self.items_base_data_financial:
+            if entity["cav_id"] == cav:
+                item_base_data = entity
+                break
+        for entity in self.classifications_financial:
+            if entity["classification"]["id"] == item_base_data["cav_id"]:
+                classification = entity
+                break
+
+        address = self.random_element(self.addresses)
+        item = {
+            "description": item_base_data["description"],
+            "description_ru": item_base_data["description_ru"],
+            "description_en": item_base_data["description_en"],
+            "classification": classification["classification"],
             "deliveryAddress": address["deliveryAddress"],
             "deliveryLocation": address["deliveryLocation"],
             "unit": item_base_data["unit"],

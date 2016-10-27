@@ -41,6 +41,12 @@ Default:
         open_competitive_dialogue:
             accelerator: 1440
             tender:  [0, 30]
+        dgfFinancialAssets:
+           accelerator: 1440
+           auction:  [25, 30]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction:  [25, 30]
     # Synchronization delay, in seconds
     timeout_on_wait: 300
 Quinta:
@@ -88,7 +94,28 @@ DZO:
         provider:       DZO_Provider
         provider1:      DZO_Provider1
         viewer:         DZO_Viewer
-    timeout_on_wait: 300
+    timeout_on_wait: 360
+DZOauctions:
+    intervals:
+        default:
+            enquiry: [0, 20]
+            tender:  [0, 20]
+        openua:
+            accelerator: 720
+            tender:  [0, 20]
+        dgfFinancialAssets:
+           accelerator: 1440
+           auction:  [0, 20]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction:  [0, 20]
+    keywords_file: dzo
+    roles:
+        tender_owner:   DZO_Owner_auction
+        provider:       DZO_Provider_auction
+        provider1:      DZO_Provider1_auction
+        viewer:         DZO_Viewer_auction
+    timeout_on_wait: 360
 ztv:
     intervals:
         default:
@@ -115,8 +142,8 @@ PrivatMarket:
             tender:  [0, 15]
     keywords_file: privatmarket
     roles:
+        tender_owner:   PrivatMarket_Provider
         provider:       PrivatMarket_Provider
-        provider1:      PrivatMarket_Provider1
         viewer:         PrivatMarket_Viewer
     timeout_on_wait: 30
 Prom:

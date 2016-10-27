@@ -18,7 +18,11 @@ from robot.output.loggerhelper import Message
 # can access them by simply importing library "service_keywords".
 # Please ignore the warning given by Flake8 or other linter.
 from .initial_data import (
+    create_fake_amount,
     create_fake_doc,
+    create_fake_guarantee,
+    create_fake_image,
+    create_fake_minimal_step,
     create_fake_sentence,
     fake,
     test_bid_data,
@@ -31,14 +35,15 @@ from .initial_data import (
     test_feature_data,
     test_invalid_features_data,
     test_item_data,
-    test_lot_data,
-    test_lot_document_data,
+    test_item_data_financial,
     test_related_question,
     test_question_answer_data,
     test_question_data,
     test_supplier_data,
     test_tender_data,
     test_tender_data_competitive_dialogue,
+    test_tender_data_dgf_financial,
+    test_tender_data_dgf_other,
     test_tender_data_limited,
     test_tender_data_openeu,
     test_tender_data_openua,
@@ -274,7 +279,13 @@ def prepare_test_tender_data(procedure_intervals, tender_parameters):
         "not '{}'".format(type(intervals['accelerator']).__name__)
     assert intervals['accelerator'] >= 0, \
         "Accelerator should not be less than 0"
-    if mode == 'negotiation':
+    if mode == 'belowThreshold':
+        return munchify({'data': test_tender_data(tender_parameters)})
+    elif mode == 'dgfFinancialAssets':
+        return munchify({'data': test_tender_data_dgf_financial(tender_parameters)})
+    elif mode == 'dgfOtherAssets':
+        return munchify({'data': test_tender_data_dgf_other(tender_parameters)})
+    elif mode == 'negotiation':
         return munchify({'data': test_tender_data_limited(tender_parameters)})
     elif mode == 'negotiation.quick':
         return munchify({'data': test_tender_data_limited(tender_parameters)})
@@ -286,8 +297,6 @@ def prepare_test_tender_data(procedure_intervals, tender_parameters):
         return munchify({'data': test_tender_data_competitive_dialogue(tender_parameters)})
     elif mode == 'reporting':
         return munchify({'data': test_tender_data_limited(tender_parameters)})
-    elif mode == 'belowThreshold':
-        return munchify({'data': test_tender_data(tender_parameters)})
     raise ValueError("Invalid mode for prepare_test_tender_data")
 
 
@@ -459,6 +468,13 @@ def generate_test_bid_data(tender_data):
         for feature in tender_data['features']:
             parameter = {"value": fake.random_element(elements=(0.05, 0.01, 0)), "code": feature.get('code', '')}
             bid.data.parameters.append(parameter)
+    if 'dgfOtherAssets' in tender_data.get('procurementMethodType', ''):
+        bid.data.qualified = True
+    if 'dgfFinancialAssets' in tender_data.get('procurementMethodType', ''):
+        bid.data.eligible = True
+        bid.data.qualified = True
+        bid.data.tenderers[0]["additionalIdentifiers"] = [fake.additionalIdentifier()]
+
     return bid
 
 

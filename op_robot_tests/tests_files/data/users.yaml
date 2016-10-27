@@ -17,31 +17,31 @@ users:
         browser:  firefox
     Etender_Owner:
         broker:   Etender
-        homepage: "http://bid.uat.e-tender.biz/#/"
-        login:    Misha2
-        password: Password1
+        homepage: "http://e-auction.pro/#/"
+        login:    case31
+        password: Qq123456
         browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     Etender_Provider1:
         broker:   Etender
-        homepage: "http://bid.uat.e-tender.biz/#/"
-        login:    st_org
-        password: 12345678
+        homepage: "http://e-auction.pro/#/"
+        login:    auto4
+        password: Qq123456
         browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     Etender_Provider2:
         broker:   Etender
-        homepage: "http://bid.uat.e-tender.biz/#/"
-        login:    provider2
+        homepage: "http://e-auction.pro/#/"
+        login:    auto18
         password: Qa123456
         browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     Etender_Viewer:
         broker:   Etender
-        homepage: "http://bid.uat.e-tender.biz/#/"
+        homepage: "http://e-auction.pro/#/"
         browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
@@ -73,6 +73,36 @@ users:
         broker:   DZO
         homepage: "http://dz2.byustudio.in.ua/?test_mode=guest"
         browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    DZO_Owner_auction:
+        broker:   DZOauctions
+        homepage: "http://dz3.byustudio.in.ua"
+        login:    dzotenderowner@gmail.com
+        password: wtG3mLD6M
+        browser:  PhantomJS
+        position: [0, 0]
+        size:     [1366, 800]
+    DZO_Provider_auction:
+        broker:   DZOauctions
+        homepage: "http://dz3.byustudio.in.ua"
+        login:    dzoprovider1@gmail.com
+        password: mux85BMrH
+        browser:  PhantomJS
+        position: [0, 0]
+        size:     [1366, 800]
+    DZO_Provider1_auction:
+        broker:   DZOauctions
+        homepage: "http://dz3.byustudio.in.ua"
+        login:    dzoprovider2@gmail.com
+        password: Z5FeM44kK
+        browser:  PhantomJS
+        position: [0, 0]
+        size:     [1366, 800]
+    DZO_Viewer_auction:
+        broker:   DZOauctions
+        homepage: "http://dz3.byustudio.in.ua/?test_mode=guest"
+        browser:  PhantomJS
         position: [0, 0]
         size:     [1366, 800]
     ztv_Owner:
@@ -129,28 +159,19 @@ users:
         size:     [800, 700]
     PrivatMarket_Viewer:
         broker:   PrivatMarket
-        homepage: "https://pmarket-rc-2.privatbank.ua/business/tenders"
+        homepage: "https://sell.pb.ua"
         browser:  chrome
-        position: [-1500, 0]
-        size:     [1000, 1000]
+        position: [0, 0]
+        size:     [1920, 1080]
     PrivatMarket_Provider:
         broker:   PrivatMarket
-        homepage: "https://pmarket-rc-2.privatbank.ua/business/tenders"
+        homepage: "https://sell.pb.ua"
         email:    pbecommercetest2@ukr.net
-        login:    +380639405094
-        password: password5094
+        login:    +380102030405
+        password: value
         browser:  chrome
-        position: [-1500, 0]
-        size:     [1000, 1000]
-    PrivatMarket_Provider1:
-        broker:   PrivatMarket
-        homepage: "https://pmarket-rc-2.privatbank.ua/business/tenders"
-        email:    pbecommercetest1@ukr.net
-        login:    +380980704168
-        password: password4168
-        browser:  chrome
-        position: [-1500, 0]
-        size:     [1000, 1000]
+        position: [0, 0]
+        size:     [1920, 1080]
     Prom_Owner:
         broker:   Prom
         homepage: "http://zakupki.dz-test.net/"
@@ -180,26 +201,26 @@ users:
         size:     [1280, 1024]
     Publicbid_Owner:
         broker:   Publicbid
-        homepage: "http://217.76.194.185:56034/"
-        login:    owner_pb@yopmail.com
+        homepage: "https://217.76.194.185:56005/"
+        login:    test_eauction@yopmail.com
         password: P@ssw0rd
         browser:  chrome
         position: [0, 0]
-        size:     [1000, 720]
+        size:     [1600, 720]
     Publicbid_Viewer:
         broker:   Publicbid
-        homepage: "http://217.76.194.185:56034/"
+        homepage: "https://217.76.194.185:56005/"
         browser:  chrome
         position: [0, 450]
-        size:     [1000, 720]
+        size:     [1600, 720]
     Publicbid_Provider1:
         broker:   Publicbid
-        homepage: "http://217.76.194.185:56034/"
-        login:    provider_pb@yopmail.com
+        homepage: "https://217.76.194.185:56005/"
+        login:    test_eauction@yopmail.com
         password: P@ssw0rd
         browser:  chrome
         position: [450, 0]
-        size:     [1000, 720]
+        size:     [1600, 1200]
     PublicPortal_Viewer:
         broker:   PublicPortal
         homepage: "http://dev.prozorro.org/"
