@@ -2947,13 +2947,6 @@
        {
            "classification": {
                "scheme": "CAV",
-               "id": "04100000-9",
-               "description": "Житлова  нерухомість"
-            }
-       },
-       {
-           "classification": {
-               "scheme": "CAV",
                "id": "04111000-9",
                "description": "Квартира в будинку малоповерхового житлового будівництва"
             }
@@ -3094,7 +3087,7 @@
     ],
     "cavs_other": [
         "04000000-8",
-        "04100000-9"
+        "04111000-9"
     ],
     "cavs_financial": [
         "07100000-0",
@@ -3108,17 +3101,6 @@
             "description_ru": "Недвижимое имущество",
             "description_en": "Real estate",
             "quantity": 50,
-            "unit": {
-                "code": "MTK",
-                "name": "метри квадратні"
-            }
-        },
-        {
-            "cav_id": "04100000-9",
-            "description": "Житлова  нерухомість",
-            "description_ru": "Жилое имущество",
-            "description_en": "Residential",
-            "quantity": 45,
             "unit": {
                 "code": "MTK",
                 "name": "метри квадратні"
