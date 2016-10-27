@@ -9,8 +9,8 @@ Suite Teardown  Test Suite Teardown
 
 
 *** Test Cases ***
-Можливість знайти тендер по ідентифікатору
-  [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера
+Можливість знайти лот по ідентифікатору
+  [Tags]   ${USERS.users['${viewer}'].broker}: Пошук лоту
   ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      find_tender  level1
@@ -23,7 +23,7 @@ Suite Teardown  Test Suite Teardown
 ##############################################################################################
 
 Відображення закінчення періоду подачі скарг на пропозицію
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних тендера
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних лоту
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      complaint_period
@@ -40,7 +40,7 @@ Suite Teardown  Test Suite Teardown
   Дочекатись дати  ${standstillEnd}
 
 
-Можливість завантажити угоду до тендера
+Можливість завантажити угоду до лоту
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Завантаження документів щодо угоди
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
@@ -51,7 +51,7 @@ Suite Teardown  Test Suite Teardown
   Remove File  ${file_path}
 
 
-Можливість укласти угоду для тендера
+Можливість укласти угоду для лоту
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес укладання угоди
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
@@ -60,7 +60,7 @@ Suite Teardown  Test Suite Teardown
   Run As  ${tender_owner}  Підтвердити підписання контракту  ${TENDER['TENDER_UAID']}  -1
 
 
-Відображення статусу підписаної угоди з постачальником тендера
+Відображення статусу підписаної угоди
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних угоди
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}

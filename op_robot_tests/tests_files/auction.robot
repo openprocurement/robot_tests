@@ -11,8 +11,8 @@ Suite Teardown  Test Suite Teardown
 
 
 *** Test Cases ***
-Можливість знайти тендер по ідентифікатору
-  [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера
+Можливість знайти лот по ідентифікатору
+  [Tags]   ${USERS.users['${viewer}'].broker}: Пошук лоту
   ...      ${USERS.users['${viewer}'].broker}
   ...      find_tender  level1
   Завантажити дані про тендер
@@ -22,7 +22,7 @@ Suite Teardown  Test Suite Teardown
 #             AUCTION
 ##############################################################################################
 
-Відображення закінчення періоду прийому пропозицій тендера
+Відображення закінчення періоду прийому пропозицій лоту
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
