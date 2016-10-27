@@ -180,26 +180,26 @@ users:
         size:     [1280, 1024]
     Publicbid_Owner:
         broker:   Publicbid
-        homepage: "http://217.76.194.185:56034/"
-        login:    owner_pb@yopmail.com
+        homepage: "https://217.76.194.185:56005/"
+        login:    test_eauction@yopmail.com
         password: P@ssw0rd
         browser:  chrome
         position: [0, 0]
-        size:     [1000, 720]
+        size:     [1600, 720]
     Publicbid_Viewer:
         broker:   Publicbid
-        homepage: "http://217.76.194.185:56034/"
+        homepage: "https://217.76.194.185:56005/"
         browser:  chrome
         position: [0, 450]
-        size:     [1000, 720]
+        size:     [1600, 720]
     Publicbid_Provider1:
         broker:   Publicbid
-        homepage: "http://217.76.194.185:56034/"
-        login:    provider_pb@yopmail.com
+        homepage: "https://217.76.194.185:56005/"
+        login:    test_eauction@yopmail.com
         password: P@ssw0rd
         browser:  chrome
         position: [450, 0]
-        size:     [1000, 720]
+        size:     [1600, 1200]
     PublicPortal_Viewer:
         broker:   PublicPortal
         homepage: "http://dev.prozorro.org/"
