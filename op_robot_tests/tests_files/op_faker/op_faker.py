@@ -109,7 +109,7 @@ class OP_Provider(BaseProvider):
 
     @classmethod
     def additionalIdentifier(self):
-       return self.random_element(self.additionalIdentifiers)
+        return self.random_element(self.additionalIdentifiers)
 
     @classmethod
     def fake_item(self, cav_group):
@@ -120,8 +120,8 @@ class OP_Provider(BaseProvider):
         #     from a specific cav group. cav group is three digits
         #     in the beginning of each cav id.
         # """
-        #for dgf other mode, and all other modes besides dgf financial
-        #generates items from dgf_other CAV group
+        # for dgf other mode, and all other modes besides dgf financial
+        # generates items from dgf_other CAV group
         cav_group = str(cav_group)
         similar_cavs = []
         for cav_element in self.cavs_other:
@@ -152,8 +152,8 @@ class OP_Provider(BaseProvider):
 
     @classmethod
     def fake_item_financial(self, cav_group):
-        #for dgf financial assets mode
-        #generates items from financial CAV group
+        # for dgf financial assets mode
+        # generates items from financial CAV group
         cav_group = str(cav_group)
         similar_cavs = []
         for cav_element in self.cavs_financial:
