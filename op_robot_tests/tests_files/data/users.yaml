@@ -105,6 +105,66 @@ users:
         browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
+    uace_Owner_auction:
+        broker:   uaceauction
+        homepage: "http://test-eauction.uace.com.ua"
+        login:    prozorroytenderowner@gmail.com
+        password: 123456
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    uace_Provider_auction:
+        broker:   uaceauction
+        homepage: "http://test-eauction.uace.com.ua"
+        login:    prozorroyprovider1@gmail.com
+        password: 123456
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    uace_Provider1_auction:
+        broker:   uaceauction
+        homepage: "http://test-eauction.uace.com.ua"
+        login:    prozorroyprovider2@gmail.com
+        password: 123456
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    uace_Viewer_auction:
+        broker:   uaceauction
+        homepage: "http://test-eauction.uace.com.ua"
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    opentender_Owner_auction:
+        broker:   opentenderauction
+        homepage: "http://test-eauction.open-tender.com.ua"
+        login:    prozorroytenderowner@gmail.com
+        password: 123456
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    opentender_Provider_auction:
+        broker:   opentenderauction
+        homepage: "http://test-eauction.open-tender.com.ua"
+        login:    prozorroyprovider1@gmail.com
+        password: 123456
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    opentender_Provider1_auction:
+        broker:   opentenderauction
+        homepage: "http://test-eauction.open-tender.com.ua"
+        login:    prozorroyprovider2@gmail.com
+        password: 123456
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    opentender_Viewer_auction:
+        broker:   opentenderauction
+        homepage: "http://test-eauction.open-tender.com.ua"
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
     ztv_Owner:
         broker:   ztv
         homepage: "http://ztv.byustudio.in.ua/web/"
