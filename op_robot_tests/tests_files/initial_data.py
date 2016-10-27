@@ -25,7 +25,7 @@ def create_fake_amount():
 
 
 def create_fake_minimal_step(value_amount):
-    return round(random.uniform(0.005, 0.03) * value_amount, 2)
+    return round(random.uniform(0.01, 0.03) * value_amount, 2)
 
 
 def create_fake_guarantee(value_amount):
