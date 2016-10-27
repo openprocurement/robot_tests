@@ -396,6 +396,8 @@ def test_tender_data_competitive_dialogue(params):
 def test_tender_data_dgf_other(params):
     data = test_tender_data(params, [])
 
+    data['dgfID'] = fake.dgfID()
+
     del data["procuringEntity"]
 
     for i in range(params['number_of_items']):
@@ -423,6 +425,8 @@ def test_tender_data_dgf_other(params):
 
 def test_tender_data_dgf_financial(params):
     data = test_tender_data(params, [])
+
+    data['dgfID'] = fake.dgfID()
 
     del data["procuringEntity"]
 
