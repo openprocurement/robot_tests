@@ -20,7 +20,7 @@ users:
         homepage: "http://e-auction.pro/#/"
         login:    case31
         password: Qq123456
-        browser:  chrome
+        browser:  PhantomJS
         position: [0, 0]
         size:     [1366, 800]
     Etender_Provider1:
@@ -28,7 +28,7 @@ users:
         homepage: "http://e-auction.pro/#/"
         login:    auto4
         password: Qq123456
-        browser:  chrome
+        browser:  PhantomJS
         position: [0, 0]
         size:     [1366, 800]
     Etender_Provider2:
@@ -36,13 +36,13 @@ users:
         homepage: "http://e-auction.pro/#/"
         login:    auto18
         password: Qa123456
-        browser:  chrome
+        browser:  PhantomJS
         position: [0, 0]
         size:     [1366, 800]
     Etender_Viewer:
         broker:   Etender
         homepage: "http://e-auction.pro/#/"
-        browser:  chrome
+        browser:  PhantomJS
         position: [0, 0]
         size:     [1366, 800]
     DZO_Owner:
