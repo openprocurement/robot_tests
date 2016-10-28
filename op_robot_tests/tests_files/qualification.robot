@@ -14,8 +14,8 @@ ${award_index}      ${0}
 #             FIND TENDER
 ##############################################################################################
 
-Можливість знайти тендер по ідентифікатору
-  [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера
+Можливість знайти лот по ідентифікатору
+  [Tags]   ${USERS.users['${viewer}'].broker}: Пошук лоту
   ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      find_tender  level1
@@ -219,7 +219,7 @@ ${award_index}      ${0}
 #             QUALIFICATION
 ##############################################################################################
 
-Можливість завантажити документ рішення кваліфікаційної комісії для підтвердження постачальника
+Можливість завантажити документ рішення кваліфікаційної комісії для підтвердження учасника
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
@@ -233,7 +233,7 @@ ${award_index}      ${0}
   [Tags]   ${USERS.users['${provider}'].broker}: Процес кваліфікації
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
-  ...  qualification_add_auction_protocol_to_bid
+  ...  qualification_add_auction_protocol_to_bid  level1
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість завантажити протокол аукціону в пропозицію користувачем ${provider}
 
@@ -242,11 +242,11 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ...  qualification_approve_doc_to_first_award  level3
+  ...  qualification_approve_doc_to_first_award  level2
   Звірити значення поля серед усіх документів ставки  ${tender_owner}  ${TENDER['TENDER_UAID']}  documentType  auctionProtocol  0
 
 
-Можливість підтвердити постачальника
+Можливість підтвердити учасника
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
@@ -262,17 +262,17 @@ ${award_index}      ${0}
   Run As  ${tender_owner}  Скасування рішення кваліфікаційної комісії  ${TENDER['TENDER_UAID']}  0
 
 
-Можливість завантажити документ з причинами дискваліфікації постачальника
+Можливість завантажити документ з причинами дискваліфікації учасника
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ...  qualification_add_doc_to_first_award  level3
+  ...  qualification_add_doc_with_cancellation_reason  level2
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   Run As  ${tender_owner}  Завантажити документ рішення кваліфікаційної комісії  ${file_path}  ${TENDER['TENDER_UAID']}  0
   Remove File  ${file_path}
 
 
-Можливість дискваліфікувати постачальника
+Можливість дискваліфікувати учасника
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
@@ -281,7 +281,7 @@ ${award_index}      ${0}
   Run As  ${tender_owner}  Дискваліфікувати постачальника  ${TENDER['TENDER_UAID']}  1  ${description}
 
 
-Можливість завантажити документ рішення кваліфікаційної комісії для підтвердження нового постачальника
+Можливість завантажити документ рішення кваліфікаційної комісії для підтвердження нового учасника
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
@@ -291,9 +291,9 @@ ${award_index}      ${0}
   Remove File  ${file_path}
 
 
-Можливість підтвердити нового постачальника
+Можливість підтвердити нового учасника
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ...  qualification_approve_second_award  level1
+  ...  qualification_approve_second_award  level2
   Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  -1

@@ -86,6 +86,11 @@ class OP_Provider(BaseProvider):
         return self.sentence(nb_words=3)
 
     @classmethod
+    def dgfID(self):
+        return "{}{}-{:05d}".format("F", self.random_int(10000000, 99999999),
+                                    self.random_int(1000, 99999))
+
+    @classmethod
     def description(self):
         return self.sentence(nb_words=10)
 
@@ -109,7 +114,7 @@ class OP_Provider(BaseProvider):
 
     @classmethod
     def additionalIdentifier(self):
-       return self.random_element(self.additionalIdentifiers)
+        return self.random_element(self.additionalIdentifiers)
 
     @classmethod
     def fake_item(self, cav_group):
@@ -120,14 +125,14 @@ class OP_Provider(BaseProvider):
         #     from a specific cav group. cav group is three digits
         #     in the beginning of each cav id.
         # """
-        #for dgf other mode, and all other modes besides dgf financial
-        #generates items from dgf_other CAV group
+        # for dgf other mode, and all other modes besides dgf financial
+        # generates items from dgf_other CAV group
         cav_group = str(cav_group)
         similar_cavs = []
-        for cav_element in self.cavs_other:
-            if cav_element.startswith(cav_group):
+        for cav_element in self.classifications_other:
+            if cav_element["classification"]["id"].startswith(cav_group):
                 similar_cavs.append(cav_element)
-        cav = self.random_element(similar_cavs)
+        cav = self.random_element(similar_cavs)["classification"]["id"]
         for entity in self.items_base_data_other:
             if entity["cav_id"] == cav:
                 item_base_data = entity
@@ -152,14 +157,14 @@ class OP_Provider(BaseProvider):
 
     @classmethod
     def fake_item_financial(self, cav_group):
-        #for dgf financial assets mode
-        #generates items from financial CAV group
+        # for dgf financial assets mode
+        # generates items from financial CAV group
         cav_group = str(cav_group)
         similar_cavs = []
-        for cav_element in self.cavs_financial:
-            if cav_element.startswith(cav_group):
+        for cav_element in self.classifications_financial:
+            if cav_element["classification"]["id"].startswith(cav_group):
                 similar_cavs.append(cav_element)
-        cav = self.random_element(similar_cavs)
+        cav = self.random_element(similar_cavs)["classification"]["id"]
         for entity in self.items_base_data_financial:
             if entity["cav_id"] == cav:
                 item_base_data = entity
