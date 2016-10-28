@@ -86,6 +86,11 @@ class OP_Provider(BaseProvider):
         return self.sentence(nb_words=3)
 
     @classmethod
+    def dgfID(self):
+        return "{}{}-{:05d}".format("F", self.random_int(10000000, 99999999),
+                                    self.random_int(1000, 99999))
+
+    @classmethod
     def description(self):
         return self.sentence(nb_words=10)
 
