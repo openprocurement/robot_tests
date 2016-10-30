@@ -17,13 +17,10 @@
 -i modify_tender
 -i add_tender_doc
 -i add_tender_illustration
--i add_item
-  -i delete_item
 -i ask_question_to_tender
   -i answer_question_to_tender
 -i ask_question_to_item
   -i answer_question_to_item
--i modify_tender_after_questions
 
 
 -i make_bid_by_provider_without_qualification
@@ -47,12 +44,11 @@
 -i auction_url
 
 -i qualification
--i qualification_add_doc_to_first_award
 -i qualification_add_auction_protocol_to_bid
 -i qualification_approve_doc_to_first_award
 -i qualification_approve_first_award
+-i qualification_add_doc_with_cancellation_reason
 -i qualification_cancel_first_award_qualification
--i qualification_add_doc_to_second_award
 -i qualification_approve_second_award
 
 -i contract_sign
