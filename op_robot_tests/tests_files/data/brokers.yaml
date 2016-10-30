@@ -246,3 +246,16 @@ APStender:
             enquiry: [0, 15]
             tender:  [0, 15]
     timeout_on_wait: 10
+polonex:
+    keywords_file: polonex
+    roles:
+        viewer:         polonex_viewer
+        provider:       polonex_provider
+        provider1:      polonex_provider1
+        tender_owner:   polonex_owner
+    homepage: 'http://polonex.in.ua/proauctions/public'
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 15]
+    timeout_on_wait: 180

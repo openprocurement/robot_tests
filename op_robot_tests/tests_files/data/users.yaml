@@ -414,3 +414,37 @@ users:
         browser:  ff
         position: [0, 0]
         size:     [1400, 900]
+    polonex_viewer:
+        broker:   polonex
+        homepage: "http://test.polonex.in.ua/proauctions/public"
+        syncpage: "http://test.polonex.in.ua/proauctions/sync-all"
+        browser:  phantomjs
+        position: [0, 0]
+        size:     [1366, 800]
+    polonex_provider:
+        broker:   polonex
+        homepage: "http://test.polonex.in.ua/proauctions/public"
+        syncpage: "http://test.polonex.in.ua/proauctions/sync-all"
+        login:    testmemb1@test.t
+        password: testpass
+        browser:  phantomjs
+        position: [0, 0]
+        size:     [1366, 800]
+    polonex_provider1:
+        broker:   polonex
+        homepage: "http://test.polonex.in.ua/proauctions/public"
+        syncpage: "http://test.polonex.in.ua/proauctions/sync-all"
+        login:    testmemb2@test.t
+        password: testpass
+        browser:  phantomjs
+        position: [0, 0]
+        size:     [1366, 800]
+    polonex_owner:
+        broker:   polonex
+        homepage: "http://test.polonex.in.ua/proauctions/public"
+        syncpage: "http://test.polonex.in.ua/proauctions/sync-all"
+        login:    testadmin@test.t
+        password: testpass
+        browser:  phantomjs
+        position: [0, 0]
+        size:     [1366, 800]
