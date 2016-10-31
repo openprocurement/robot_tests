@@ -561,3 +561,7 @@ def compare_CAV_groups(length, *items):
             if(i_cav_group == j_cav_group and i != j):
                 return False
     return True
+
+
+def get_length_of_item(data, key):
+    return len(data.get(key, []))

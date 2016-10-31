@@ -351,6 +351,14 @@ Library  openprocurement_client_helper.py
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_question  ${tender}  ${answer_data}
   [return]  ${reply}
 
+
+Отримати кількість запитань до тендера
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${number_of_questions}=  get_length_of_item  ${tender.data}  questions
+  Log  ${number_of_questions}
+  [Return]  ${number_of_questions}
+
 ##############################################################################
 #             Claims
 ##############################################################################
@@ -615,6 +623,14 @@ Library  openprocurement_client_helper.py
   ${filename}=  download_file_from_url  ${document.url}  ${OUTPUT_DIR}${/}${document.title}
   [return]  ${filename}
 
+
+Отримати кількість скарг до тендера
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${number_of_complaints}=  get_length_of_item  ${tender.data}  complaints
+  Log  ${number_of_complaints}
+  [Return]  ${number_of_complaints}
+
 ##############################################################################
 #             Bid operations
 ##############################################################################
@@ -737,6 +753,14 @@ Library  openprocurement_client_helper.py
   ...      ${number_of_documents}
   Log  ${number_of_documents}
   [return]  ${number_of_documents}
+
+
+Отримати кількість пропозицій до тендера
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${number_of_bids}=  get_length_of_item  ${tender.data}  bids
+  Log  ${number_of_bids}
+  [Return]  ${number_of_bids}
 
 ##############################################################################
 #             Qualification operations
