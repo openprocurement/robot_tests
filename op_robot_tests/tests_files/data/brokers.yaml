@@ -115,7 +115,7 @@ DZOauctions:
         provider:       DZO_Provider_auction
         provider1:      DZO_Provider1_auction
         viewer:         DZO_Viewer_auction
-    timeout_on_wait: 360
+    timeout_on_wait: 660
 uaceauction:
     intervals:
         default:
