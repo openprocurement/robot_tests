@@ -543,6 +543,48 @@ Log differences between dicts
   [return]  ${field_value}
 
 
+Отримати кількість скарг до тендера
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${status}  ${number_of_complaints}=  Run keyword and ignore error
+  ...      Get Length
+  ...      ${tender.data.complaints}
+  ${number_of_complaints}=  Set Variable If
+  ...      '${status}' == 'FAIL'
+  ...      ${0}
+  ...      ${number_of_complaints}
+  Log  ${number_of_complaints}
+  [return]  ${number_of_complaints}
+
+
+Отримати кількість запитань до тендера
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${status}  ${number_of_questions}=  Run keyword and ignore error
+  ...      Get Length
+  ...      ${tender.data.questions}
+  ${number_of_questions}=  Set Variable If
+  ...      '${status}' == 'FAIL'
+  ...      ${0}
+  ...      ${number_of_questions}
+  Log  ${number_of_questions}
+  [return]  ${number_of_questions}
+
+
+Отримати кількість пропозицій до тендера
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${status}  ${number_of_bids}=  Run keyword and ignore error
+  ...      Get Length
+  ...      ${tender.data.bids}
+  ${number_of_bids}=  Set Variable If
+  ...      '${status}' == 'FAIL'
+  ...      ${0}
+  ...      ${number_of_bids}
+  Log  ${number_of_bids}
+  [return]  ${number_of_bids}
+
+
 Отримати ідентифікатори об’єктів
   [Arguments]  ${username}  ${objects_type}
   @{objects_ids}=  Create List
