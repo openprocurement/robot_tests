@@ -267,6 +267,7 @@ Resource           resource.robot
 
 Звірити відображення поля ${field} запитання на тендер для усіх користувачів
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  \  Дочекатись синхронізації з майданчиком  ${username}
   \  Звірити відображення поля ${field} запитання на тендер для користувача ${username}
 
 
@@ -276,6 +277,7 @@ Resource           resource.robot
 
 Звірити відображення поля ${field} запитання на ${item_index} предмет для усіх користувачів
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  \  Дочекатись синхронізації з майданчиком  ${username}
   \  Звірити відображення поля ${field} запитання на ${item_index} предмет для користувача ${username}
 
 

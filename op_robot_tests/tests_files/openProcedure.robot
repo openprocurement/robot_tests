@@ -436,7 +436,6 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      ask_question_to_tender
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля title запитання на тендер для усіх користувачів
 
 
@@ -445,8 +444,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      ask_question_to_tender
-  Звірити відображення поля description запитання на тендер для користувача ${viewer}
-
+  Звірити відображення поля description запитання на тендер для усіх користувачів
 
 Можливість відповісти на запитання на лот
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відповідь на запитання
@@ -482,7 +480,6 @@ ${ITEM_MEAT}        ${True}
   ...      viewer tender_owner provider provider1
   ...      ${USERS.users['${viewer}'].broker}
   ...      ask_question_to_item
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  Звірити відображення поля title запитання на ${item_index} предмет для усіх користувачів
 
@@ -493,7 +490,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${viewer}'].broker}
   ...      ask_question_to_item
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
-  \  Звірити відображення поля description запитання на ${item_index} предмет для користувача ${viewer}
+  \  Звірити відображення поля description запитання на ${item_index} предмет для усіх користувачів
 
 
 Можливість відповісти на запитання на всі предмети
