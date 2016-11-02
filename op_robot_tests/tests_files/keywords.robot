@@ -276,19 +276,20 @@ Get Broker Property By Username
   [Arguments]  ${tender_data}
   # munchify is used to make deep copy of ${tender_data}
   ${adapted_data}=  munchify  ${tender_data}
-#  :FOR  ${username}  IN  @{USED_ROLES}
-#  # munchify is used to make deep copy of ${adapted_data}
-#  \  ${adapted_data_copy}=  munchify  ${adapted_data}
-#  \  ${status}  ${adapted_data_from_broker}=  Run keyword and ignore error  Run As  ${${username}}  Підготувати дані для оголошення тендера   ${adapted_data_copy}  ${username}
-#  \  Log  ${adapted_data_from_broker}
-#  # Need this in case ``${${username}}`` doesn't have `Підготувати дані для оголошення
-#  # тендера користувачем` keyword, so after `Run keyword and ignore error` call
-#  # ``${adapted_data_from_broker}`` will be ``${None}``. Else - nothing changes.
-#  \  ${adapted_data_from_broker}=  Set variable if  '${status}' == 'FAIL'  ${adapted_data}  ${adapted_data_from_broker}
-#  \  Log differences between dicts  ${adapted_data.data}  ${adapted_data_from_broker.data}  ${username} has changed initial data!
-#  # Update (or not, if nothing changed) ``${adapted_data}``.
-#  \  ${adapted_data}=  munchify  ${adapted_data_from_broker}
-#  \  Log  ${adapted_data}
+  Log  ${USED_ROLES}
+  :FOR  ${username}  IN  @{USED_ROLES}
+  # munchify is used to make deep copy of ${adapted_data}
+  \  ${adapted_data_copy}=  munchify  ${adapted_data}
+  \  ${status}  ${adapted_data_from_broker}=  Run keyword and ignore error  Run As  ${${username}}  Підготувати дані для оголошення тендера   ${adapted_data_copy}  ${username}
+  \  Log  ${adapted_data_from_broker}
+  # Need this in case ``${${username}}`` doesn't have `Підготувати дані для оголошення
+  # тендера користувачем` keyword, so after `Run keyword and ignore error` call
+  # ``${adapted_data_from_broker}`` will be ``${None}``. Else - nothing changes.
+  \  ${adapted_data_from_broker}=  Set variable if  '${status}' == 'FAIL'  ${adapted_data}  ${adapted_data_from_broker}
+  \  Log differences between dicts  ${adapted_data.data}  ${adapted_data_from_broker.data}  ${username} has changed initial data!
+  # Update (or not, if nothing changed) ``${adapted_data}``.
+  \  ${adapted_data}=  munchify  ${adapted_data_from_broker}
+  \  Log  ${adapted_data}
   Log  ${adapted_data}
   Log  ${tender_data}
   [Return]  ${adapted_data}
