@@ -783,19 +783,21 @@ Require Failure
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
-  ...      10 min 15 sec
+  ...      12 min 15 sec
   ...      15 sec
   ...      Звірити статус тендера
   ...      ${username}
   ...      ${tender_uaid}
   ...      active.auction
-  Sleep  120  # Auction sync
 
 
 Дочекатись дати початку періоду кваліфікації
   [Arguments]  ${username}  ${tender_uaid}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
   Звірити статус тендера
   ...      ${username}
   ...      ${tender_uaid}
