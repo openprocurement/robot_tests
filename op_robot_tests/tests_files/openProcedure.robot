@@ -217,7 +217,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level2
+  ...      tender_view_unit_code  level2
   Звірити відображення поля quantity усіх предметів для користувача ${viewer}
 
 ##############################################################################################

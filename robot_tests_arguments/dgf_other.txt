@@ -7,8 +7,9 @@
 -i create_tender
 -i find_tender
 -i tender_view
-
-
+-i tender_view_unit_code
+ 
+ 
 -i modify_auction_value
 -i modify_auction_step
 -i modify_auction_title_ua
@@ -52,3 +53,5 @@
 -i qualification_approve_second_award
 
 -i contract_sign
+-i contract_sign_upload
+-i contract_sign_view
