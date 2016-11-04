@@ -4,4 +4,4 @@
 
 -i create_tender
 -i find_tender
--i tender_cancelation
+-i tender_cancellation
