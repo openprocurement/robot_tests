@@ -4,6 +4,7 @@
 
 -i create_tender
 -i find_tender
+-i tender_view_tenderPeriod
 -i make_bid_by_provider
 -i make_bid_by_provider1
 -i cancel_bid_by_provider

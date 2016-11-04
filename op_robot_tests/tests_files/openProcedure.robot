@@ -124,7 +124,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level2
+  ...      tender_view_tenderPeriod  level2
   Отримати дані із поля tenderPeriod.startDate тендера для усіх користувачів
 
 
@@ -132,7 +132,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level2
+  ...      tender_view_tenderPeriod  level2
   Отримати дані із поля tenderPeriod.endDate тендера для усіх користувачів
 
 
