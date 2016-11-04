@@ -652,6 +652,31 @@ Require Failure
   Порівняти об'єкти  ${left}  ${right}
 
 
+Звірити статус скасування тендера
+  [Arguments]  ${username}  ${tender_uaid}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити поле тендера із значенням  ${username}  ${tender_uaid}
+  ...      active
+  ...      cancellations[0].status
+
+
+Звірити cтатус тендера у випадку наявності лише однієї пропозиції
+  [Arguments]  ${username}  ${tender_uaid}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      unsuccessful
+
+
 Дочекатись дати початку прийому пропозицій
   [Arguments]  ${username}  ${tender_uaid}
   # This tries to get the date from current user's procurement data cache.
