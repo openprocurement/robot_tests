@@ -242,7 +242,9 @@ ubiz:
         default:
             enquiry: [0, 5]
     keywords_file: ubiz
-    homepage: 'http://fgvfo.com.ua/'
+    homepage: 'http://test.ubiz.com.ua'
+    syncpage: 'http://test.ubiz.com.ua/site/sync'
+    syncdocs: 'http://test.ubiz.com.ua/site/syncdocs'
     roles:
         provider:       ubiz_Provider1
         provider1:      ubiz_Provider2
