@@ -798,7 +798,7 @@ Require Failure
   Wait until keyword succeeds
   ...      5 min 15 sec
   ...      15 sec
-  Звірити статус тендера
+  ...      Звірити статус тендера
   ...      ${username}
   ...      ${tender_uaid}
   ...      active.qualification
