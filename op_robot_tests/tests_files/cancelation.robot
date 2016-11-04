@@ -9,68 +9,68 @@ Suite Teardown  Test Suite Teardown
 
 
 *** Test Cases ***
-Можливість знайти закупівлю по ідентифікатору
+Можливість знайти лот по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_cancelation  lot_cancelation  delete_lot
+  ...      tender_cancellation
   Завантажити дані про тендер
   Run As  ${viewer}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
 
 ##############################################################################################
 #             TENDER CANCELLATION
 ##############################################################################################
-Можливість скасувати тендер
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Скасування тендера
+Можливість скасувати лот
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Скасування лоту
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ...  tender_cancelation
+  ...  tender_cancellation
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість скасувати тендер
 
 
-Відображення активного статусу скасування тендера
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування тендера
+Відображення активного статусу скасування лоту
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування доту
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  tender_cancelation
+  ...  tender_cancellation
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}
   ...      active
   ...      cancellations[0].status
 
 
-Відображення причини скасування тендера
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування тендера
+Відображення причини скасування лоту
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування лоту
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  tender_cancelation
+  ...  tender_cancellation
   Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}']['cancellation_data']['cancellation_reason']}
   ...      cancellations[0].reason
 
 
-Відображення опису документа до скасування тендера
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування тендера
+Відображення опису документа до скасування лоту
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування лоту
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  tender_cancelation
+  ...  tender_cancellation
   Звірити відображення поля description документа до скасування ${USERS.users['${tender_owner}']['cancellation_data']['document']['doc_id']} із ${USERS.users['${tender_owner}']['cancellation_data']['description']} для користувача ${viewer}
 
 
-Відображення заголовку документа до скасування тендера
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування тендера
+Відображення заголовку документа до скасування лоту
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування лоту
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  tender_cancelation
+  ...  tender_cancellation
   Звірити відображення поля title документа до скасування ${USERS.users['${tender_owner}']['cancellation_data']['document']['doc_id']} із ${USERS.users['${tender_owner}']['cancellation_data']['document']['doc_name']} для користувача ${viewer}
 
 
-Відображення вмісту документа до скасування тендера
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування тендера
+Відображення вмісту документа до скасування лоту
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування лоту
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  tender_cancelation
+  ...  tender_cancellation_description
   Звірити відображення вмісту документа до скасування ${USERS.users['${tender_owner}']['cancellation_data']['document']['doc_id']} з ${USERS.users['${tender_owner}']['cancellation_data']['document']['doc_content']} для користувача ${viewer}
 
 
