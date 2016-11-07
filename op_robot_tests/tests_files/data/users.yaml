@@ -233,49 +233,49 @@ users:
         position: [0, 0]
         size:     [1920, 1080]
     Prom_Owner:
-        broker:   Prom
-        homepage: "http://zakupki.dz-test.net/"
-        default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_purchase/list"
+        broker:   Promauctions
+        homepage: "http://zakupki.dz-test.net/auctions"
+        default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_auction/list?mode=all"
         login:    test@test12.com
-        password: 12345678
+        password: autotest
         browser:  chrome
         position: [0, 0]
         size:     [1280, 1024]
     Prom_Viewer:
-        broker:   Prom
-        homepage: "http://zakupki.dz-test.net/"
-        default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_purchase/list"
+        broker:   Promauctions
+        homepage: "http://zakupki.dz-test.net/auctions"
+        default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_auction/list?mode=all"
         login:    test@test13.com
-        password: 12345678
+        password: autotest
         browser:  chrome
         position: [640, 0]
         size:     [1280, 1024]
     Prom_Provider:
-        broker:   Prom
-        homepage: "http://zakupki.dz-test.net/"
-        default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_purchase/list"
+        broker:   Promauctions
+        homepage: "http://zakupki.dz-test.net/auctions"
+        default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_auction/list?mode=all"
         login:    test@test14.com
-        password: 12345678
+        password: autotest
         browser:  chrome
         position: [640, 0]
         size:     [1280, 1024]
     Publicbid_Owner:
         broker:   Publicbid
-        homepage: "https://217.76.194.185:56005/"
+        homepage: "https://10.255.200.224:8100/"
         login:    test_eauction@yopmail.com
         password: P@ssw0rd
         browser:  chrome
         position: [0, 0]
-        size:     [1600, 720]
+        size:     [1600, 1200]
     Publicbid_Viewer:
         broker:   Publicbid
-        homepage: "https://217.76.194.185:56005/"
+        homepage: "https://10.255.200.224:8100/"
         browser:  chrome
         position: [0, 450]
         size:     [1600, 720]
     Publicbid_Provider1:
         broker:   Publicbid
-        homepage: "https://217.76.194.185:56005/"
+        homepage: "https://10.255.200.224:8100/"
         login:    test_eauction@yopmail.com
         password: P@ssw0rd
         browser:  chrome
@@ -343,34 +343,34 @@ users:
         size:     [1280, 800]
     ubiz_Owner:
         broker:   ubiz
-        homepage: "http://fgvfo.com.ua/user/purchase"
-        login:    test1@test.com
-        password: qwe123qwe
+        homepage: "http://test.ubiz.com.ua"
+        login:    liquidator@mfsa.ru
+        password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1000, 500]
+        size:     [1280, 800]
     ubiz_Provider1:
         broker:   ubiz
-        homepage: "http://fgvfo.com.ua/user/purchase"
-        login:    test2@test.com
-        password: qwe123qwe
+        homepage: "http://test.ubiz.com.ua"
+        login:    part1@mfsa.ru
+        password: 123456
         browser:  chrome
         position: [0, 800]
-        size:     [800, 800]
+        size:     [1280, 800]
     ubiz_Provider2:
         broker:   ubiz
-        homepage: "http://fgvfo.com.ua/user/purchase"
-        login:    test3@test.com
-        password: qwe123qwe
+        homepage: "http://test.ubiz.com.ua"
+        login:    part2@mfsa.ru
+        password: 123456
         browser:  chrome
         position: [800, 0]
-        size:     [800, 800]
+        size:     [1280, 800]
     ubiz_Viewer:
         broker:   ubiz
-        homepage: "http://fgvfo.com.ua/"
+        homepage: "http://test.ubiz.com.ua"
         browser:  chrome
         position: [0, 500]
-        size:     [1000, 500]
+        size:     [1280, 800]
     zakpro_Owner:
         broker:   zakpro
         homepage: "https://market.zakupkipro.com/"
@@ -495,3 +495,37 @@ users:
         browser:  ff
         position: [0, 0]
         size:     [1400, 900]
+    polonex_viewer:
+        broker:   polonex
+        homepage: "http://test.polonex.in.ua/proauctions/public"
+        syncpage: "http://test.polonex.in.ua/proauctions/sync-all"
+        browser:  phantomjs
+        position: [0, 0]
+        size:     [1366, 800]
+    polonex_provider:
+        broker:   polonex
+        homepage: "http://test.polonex.in.ua/proauctions/public"
+        syncpage: "http://test.polonex.in.ua/proauctions/sync-all"
+        login:    testmemb1@test.t
+        password: testpass
+        browser:  phantomjs
+        position: [0, 0]
+        size:     [1366, 800]
+    polonex_provider1:
+        broker:   polonex
+        homepage: "http://test.polonex.in.ua/proauctions/public"
+        syncpage: "http://test.polonex.in.ua/proauctions/sync-all"
+        login:    testmemb2@test.t
+        password: testpass
+        browser:  phantomjs
+        position: [0, 0]
+        size:     [1366, 800]
+    polonex_owner:
+        broker:   polonex
+        homepage: "http://test.polonex.in.ua/proauctions/public"
+        syncpage: "http://test.polonex.in.ua/proauctions/sync-all"
+        login:    testadmin@test.t
+        password: testpass
+        browser:  phantomjs
+        position: [0, 0]
+        size:     [1366, 800]

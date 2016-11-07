@@ -7,7 +7,8 @@
 -i create_tender
 -i find_tender
 -i tender_view
-
+-i tender_view_tenderPeriod
+-i tender_view_unit_code
 
 -i modify_auction_value
 -i modify_auction_step
@@ -45,6 +46,7 @@
 
 -i auction
 -i auction_url
+-i auction_end_date
 
 -i qualification
 -i qualification_add_auction_protocol_to_bid
@@ -54,5 +56,7 @@
 -i qualification_cancel_first_award_qualification
 -i qualification_approve_second_award
 
--i contract_sign
 
+-i contract_sign
+-i contract_sign_upload
+-i contract_sign_view

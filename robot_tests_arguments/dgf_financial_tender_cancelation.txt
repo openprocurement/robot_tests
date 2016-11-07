@@ -1,7 +1,0 @@
--v MODE:dgfFinancialAssets
-
--v NUMBER_OF_ITEMS:1
-
--i create_tender
--i find_tender
--i tender_cancelation
