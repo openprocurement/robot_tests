@@ -30,7 +30,7 @@ Suite Teardown  Test Suite Teardown
 
 
 Відображення активного статусу скасування лоту
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування доту
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування лоту
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_cancellation
@@ -68,7 +68,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування лоту
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  tender_cancellation_description
+  ...  tender_cancellation_doc_content
   Звірити відображення вмісту документа до скасування ${USERS.users['${tender_owner}']['cancellation_data']['document']['doc_id']} з ${USERS.users['${tender_owner}']['cancellation_data']['document']['doc_content']} для користувача ${viewer}
 
 
