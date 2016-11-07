@@ -399,11 +399,11 @@ Log differences between dicts
 
 Звірити значення поля серед усіх документів ставки
   [Arguments]  ${username}  ${tender_uaid}  ${field}  ${value}  ${bid_index}
-  ${number_of_documents}=  Отримати кількість документів в ставці  ${username}  ${tender_uaid}  ${bid_index}
+  ${number_of_documents}=  Run As  ${username}  Отримати кількість документів в ставці  ${tender_uaid}  ${bid_index}
   Run Keyword If  '${number_of_documents}' == '0'  FAIL  До ставки bid_index = ${bid_index} не завантажено документів
   ${match_in_document}=  Set Variable  False
   :FOR  ${document_index}  IN RANGE  ${number_of_documents}
-  \  ${field_value}=  Отримати дані із документу пропозиції  ${username}  ${tender_uaid}  ${bid_index}  ${document_index}  ${field}
+  \  ${field_value}=  Run As  ${username}  Отримати дані із документу пропозиції  ${tender_uaid}  ${bid_index}  ${document_index}  ${field}
   \  ${match_in_document}=  Set Variable If  '${field_value}'=='${value}'  True
   Порівняти об'єкти  ${match_in_document}  True
 
@@ -652,6 +652,31 @@ Require Failure
   Порівняти об'єкти  ${left}  ${right}
 
 
+Звірити статус скасування тендера
+  [Arguments]  ${username}  ${tender_uaid}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити поле тендера із значенням  ${username}  ${tender_uaid}
+  ...      active
+  ...      cancellations[0].status
+
+
+Звірити cтатус тендера у випадку наявності лише однієї пропозиції
+  [Arguments]  ${username}  ${tender_uaid}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      unsuccessful
+
+
 Дочекатись дати початку прийому пропозицій
   [Arguments]  ${username}  ${tender_uaid}
   # This tries to get the date from current user's procurement data cache.
@@ -783,20 +808,22 @@ Require Failure
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
-  ...      10 min 15 sec
+  ...      12 min 15 sec
   ...      15 sec
   ...      Звірити статус тендера
   ...      ${username}
   ...      ${tender_uaid}
   ...      active.auction
-  Sleep  120  # Auction sync
 
 
 Дочекатись дати початку періоду кваліфікації
   [Arguments]  ${username}  ${tender_uaid}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
-  Звірити статус тендера
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
   ...      ${username}
   ...      ${tender_uaid}
   ...      active.qualification

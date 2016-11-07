@@ -124,7 +124,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level2
+  ...      tender_view_tenderPeriod  level2
   Отримати дані із поля tenderPeriod.startDate тендера для усіх користувачів
 
 
@@ -132,7 +132,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level2
+  ...      tender_view_tenderPeriod  level2
   Отримати дані із поля tenderPeriod.endDate тендера для усіх користувачів
 
 
@@ -209,7 +209,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level3
+  ...      tender_view_unit_code  level3
   Звірити відображення поля unit.code усіх предметів для користувача ${viewer}
 
 
@@ -289,7 +289,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_auction_periods  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  ${new_value}=  Set Variable  ${USERS.users['${tender_owner}'].tender_data.data.auctionPeriod.shouldStartAfter}
+  ${new_value}=  Get Current Date
   Перевірити неможливість зміни поля tenderPeriod.startDate тендера на значення ${new_value} для користувача ${tender_owner}
 
 
@@ -436,7 +436,6 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      ask_question_to_tender
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля title запитання на тендер для усіх користувачів
 
 
@@ -445,7 +444,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      ask_question_to_tender
-  Звірити відображення поля description запитання на тендер для користувача ${viewer}
+  Звірити відображення поля description запитання на тендер для усіх користувачів
 
 
 Можливість відповісти на запитання на лот
@@ -482,7 +481,6 @@ ${ITEM_MEAT}        ${True}
   ...      viewer tender_owner provider provider1
   ...      ${USERS.users['${viewer}'].broker}
   ...      ask_question_to_item
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  Звірити відображення поля title запитання на ${item_index} предмет для усіх користувачів
 
@@ -493,7 +491,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${viewer}'].broker}
   ...      ask_question_to_item
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
-  \  Звірити відображення поля description запитання на ${item_index} предмет для користувача ${viewer}
+  \  Звірити відображення поля description запитання на ${item_index} предмет для усіх користувачів
 
 
 Можливість відповісти на запитання на всі предмети
@@ -724,13 +722,13 @@ ${ITEM_MEAT}        ${True}
 #             AFTER BIDDING
 ##############################################################################################
 
-Відображення статусу лоту у випадку відсутності пропозицій
+Відображення статусу лоту у випадку наявності лише однієї пропозиції
   [Tags]   ${USERS.users['${viewer}'].broker}: Подання пропозиції
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      absence_bid
   [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}  ${TENDER['TENDER_UAID']}
-  Звірити відображення поля status тендера із unsuccessful для користувача ${viewer}
+  Звірити cтатус тендера у випадку наявності лише однієї пропозиції  ${viewer}  ${TENDER['TENDER_UAID']}
 
 
 Неможливість завантажити документ першим учасником після закінчення прийому пропозицій

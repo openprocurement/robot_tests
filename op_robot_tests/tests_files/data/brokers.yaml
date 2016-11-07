@@ -115,7 +115,7 @@ DZOauctions:
         provider:       DZO_Provider_auction
         provider1:      DZO_Provider1_auction
         viewer:         DZO_Viewer_auction
-    timeout_on_wait: 360
+    timeout_on_wait: 660
 uaceauction:
     intervals:
         default:
@@ -182,17 +182,17 @@ PrivatMarket:
         provider:       PrivatMarket_Provider
         viewer:         PrivatMarket_Viewer
     timeout_on_wait: 30
-Prom:
+Promauctions:
     intervals:
         default:
-            enquiry: [4, 4]
-            tender:  [0,  30]
+            enquiry: [0, 15]
+            tender:  [0, 25]
     keywords_file: prom
     roles:
         tender_owner:   Prom_Owner
         viewer:         Prom_Viewer
-        provider:       Prom_Provider1
-    timeout_on_wait: 10
+        provider:       Prom_Provider
+    timeout_on_wait: 260
 Publicbid:
     intervals:
         default:
@@ -242,7 +242,9 @@ ubiz:
         default:
             enquiry: [0, 5]
     keywords_file: ubiz
-    homepage: 'http://fgvfo.com.ua/'
+    homepage: 'http://test.ubiz.com.ua'
+    syncpage: 'http://test.ubiz.com.ua/site/sync'
+    syncdocs: 'http://test.ubiz.com.ua/site/syncdocs'
     roles:
         provider:       ubiz_Provider1
         provider1:      ubiz_Provider2

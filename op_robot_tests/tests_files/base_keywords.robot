@@ -267,6 +267,7 @@ Resource           resource.robot
 
 Звірити відображення поля ${field} запитання на тендер для усіх користувачів
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  \  Дочекатись синхронізації з майданчиком  ${username}
   \  Звірити відображення поля ${field} запитання на тендер для користувача ${username}
 
 
@@ -276,6 +277,7 @@ Resource           resource.robot
 
 Звірити відображення поля ${field} запитання на ${item_index} предмет для усіх користувачів
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  \  Дочекатись синхронізації з майданчиком  ${username}
   \  Звірити відображення поля ${field} запитання на ${item_index} предмет для користувача ${username}
 
 
@@ -598,12 +600,12 @@ Resource           resource.robot
 
 Можливість завантажити фінансову лізенцію в пропозицію користувачем ${username}
   ${financial_license_path}  ${file_title}  ${file_content}=  create_fake_doc
-  Завантажити фінансову ліцензію  ${username}  ${TENDER['TENDER_UAID']}  ${financial_license_path}
+  Run As  ${username}  Завантажити фінансову ліцензію  ${TENDER['TENDER_UAID']}  ${financial_license_path}
 
 
 Можливість завантажити протокол аукціону в пропозицію користувачем ${username}
   ${auction_protocol_path}  ${file_title}  ${file_content}=  create_fake_doc
-  Завантажити протокол аукціону  ${username}  ${TENDER['TENDER_UAID']}  ${auction_protocol_path}  0
+  Run As  ${username}  Завантажити протокол аукціону  ${TENDER['TENDER_UAID']}  ${auction_protocol_path}  0
 
 ##############################################################################################
 #             Cancellations
