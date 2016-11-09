@@ -262,23 +262,16 @@ ${award_index}      ${0}
   Run As  ${tender_owner}  Скасування рішення кваліфікаційної комісії  ${TENDER['TENDER_UAID']}  0
 
 
-Можливість завантажити документ з причинами дискваліфікації учасника
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
-  ...  tender_owner
-  ...  ${USERS.users['${tender_owner}'].broker}
-  ...  qualification_add_doc_with_cancellation_reason  level2
-  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
-  Run As  ${tender_owner}  Завантажити документ рішення кваліфікаційної комісії  ${file_path}  ${TENDER['TENDER_UAID']}  0
-  Remove File  ${file_path}
-
-
 Можливість дискваліфікувати учасника
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_cancel_first_award_qualification  level1
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   ${description}=  create_fake_sentence
+  Run As  ${tender_owner}  Завантажити документ рішення кваліфікаційної комісії  ${file_path}  ${TENDER['TENDER_UAID']}  0
   Run As  ${tender_owner}  Дискваліфікувати постачальника  ${TENDER['TENDER_UAID']}  1  ${description}
+  Remove File  ${file_path}
 
 
 Можливість завантажити документ рішення кваліфікаційної комісії для підтвердження нового учасника
