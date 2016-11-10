@@ -52,7 +52,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування лоту
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  tender_cancellation
+  ...  tender_cancellation_description
   Звірити відображення поля description документа до скасування ${USERS.users['${tender_owner}']['cancellation_data']['document']['doc_id']} із ${USERS.users['${tender_owner}']['cancellation_data']['description']} для користувача ${viewer}
 
 
@@ -60,7 +60,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування лоту
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  tender_cancellation
+  ...  tender_cancellation_title
   Звірити відображення поля title документа до скасування ${USERS.users['${tender_owner}']['cancellation_data']['document']['doc_id']} із ${USERS.users['${tender_owner}']['cancellation_data']['document']['doc_name']} для користувача ${viewer}
 
 
