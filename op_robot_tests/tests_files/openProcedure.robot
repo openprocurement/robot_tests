@@ -535,7 +535,6 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      make_bid_by_provider_without_qualification  level1
-  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Неможливість подати цінову попрозицію без кваліфікації користувачем ${provider}
 
@@ -590,7 +589,6 @@ ${ITEM_MEAT}        ${True}
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      make_bid_by_provider1  level1
-  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider1}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider1}
 
@@ -600,7 +598,6 @@ ${ITEM_MEAT}        ${True}
   ...      provider2
   ...      ${USERS.users['${provider1}'].broker}
   ...      make_bid_by_provider2  level1
-  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider2}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider2}
 
