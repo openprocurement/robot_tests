@@ -71,6 +71,18 @@ def create_fake_image():
                                         'illustration.' + image_format))
 
 
+def create_fake_vdr_url():
+    # Generate fake valid URL for VDR,
+    # randomize size, font and background color for image.
+    # Example: https://dummyimage.com/700x400/964f96/363636
+    base = 'https://dummyimage.com'
+    background_color = ''.join([random.choice('0123456789ABCDEF') for x in range(6)])
+    font_color = ''.join([random.choice('0123456789ABCDEF') for x in range(6)])
+    size_x =  random.randint(10, 1000)
+    size_y =  random.randint(10, 1000)
+    return '{0}/{1}x{2}/{3}/{4}.png'.format(base, size_x, size_y, background_color, font_color)
+
+
 def test_tender_data(params, periods=("enquiry", "tender")):
     now = get_now()
     value_amount = create_fake_amount()  # max value equals to budget of Ukraine in hryvnias
