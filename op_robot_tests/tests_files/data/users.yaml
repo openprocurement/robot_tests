@@ -198,7 +198,7 @@ users:
     Newtend_Owner:
         broker:   Newtend
         homepage: "http://ea-trunk.newtend.com/provider/#/profile/login"
-        login:    auc_fin001@mailinator.com
+        login:    auc_fin001@newtend.com
         password: 123123
         browser:  chrome
         position: [0, 0]
@@ -206,7 +206,7 @@ users:
     Newtend_Provider1:
         broker:   Newtend
         homepage: "http://ea-trunk.newtend.com/provider/#/profile/login"
-        login:    fin_bid001@mailinator.com
+        login:    fin_bid001@newtend.com
         password: 123123
         browser:  chrome
         position: [700, 0]
