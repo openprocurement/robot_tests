@@ -24,6 +24,7 @@ from .initial_data import (
     create_fake_image,
     create_fake_minimal_step,
     create_fake_sentence,
+    create_fake_vdr_url,
     fake,
     test_bid_data,
     test_bid_value,
