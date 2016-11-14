@@ -34,8 +34,15 @@ Suite Teardown  Test Suite Teardown
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_cancellation
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити статус скасування тендера  ${viewer}  ${TENDER['TENDER_UAID']}
+
+
+Відображення статусу скасованого лоту
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу скасування тендера
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  tender_cancellation
+  Звірити статус скасованого лоту  ${viewer}  ${TENDER['TENDER_UAID']}
 
 
 Відображення причини скасування лоту
