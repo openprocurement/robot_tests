@@ -52,8 +52,8 @@ Resource           resource.robot
 
 
 Можливість додати Virtual Data Room до тендера
-  # TODO: Generate new URL on each run
-  Run As  ${tender_owner}  Додати Virtual Data Room  ${TENDER['TENDER_UAID']}  http://example.invalid/VDR/4815162342
+  ${vdr_url}=  create_fake_vdr_url
+  Run As  ${tender_owner}  Додати Virtual Data Room  ${TENDER['TENDER_UAID']}  ${vdr_url}
 
 
 Можливість додати предмет закупівлі в тендер
