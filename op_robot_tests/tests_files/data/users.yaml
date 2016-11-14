@@ -319,24 +319,24 @@ users:
         size:     [1400, 900]
     uatenders_Owner:
         broker:   uatenders
-        homepage: "http://dev.zakupki.com.ua/tender/list"
-        login:    Azarov.andreas@Gmail.com
+        homepage: "http://devs.zakupki.com.ua"
+        login:    dex.maks@mail.ru
         password: 111111
         browser:  chrome
         position: [750, 0]
         size:     [1280, 800]
     uatenders_Provider:
         broker:   uatenders
-        homepage: "http://dev.zakupki.com.ua/tender/list"
-        login:    andreynichik@gmail.com
+        homepage: "http://devs.zakupki.com.ua"
+        login:    test3@example.com
         password: 111111
         browser:  chrome
         position: [750, 0]
         size:     [1280, 800]
     uatenders_Viewer:
         broker:   uatenders
-        homepage: "http://dev.zakupki.com.ua/tender/list"
-        login:    Azarov.andreas@Gmail.com
+        homepage: "http://devs.zakupki.com.ua"
+        login:    dex.maks@mail.ru
         password: 111111
         browser:  chrome
         position: [750, 0]
