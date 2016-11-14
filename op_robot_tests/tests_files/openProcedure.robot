@@ -124,7 +124,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view_tenderPeriod  level2
+  ...      tender_view_tenderPeriod_startDate  level2
   Отримати дані із поля tenderPeriod.startDate тендера для усіх користувачів
 
 
@@ -133,7 +133,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view_tenderPeriod  level2
-  Отримати дані із поля tenderPeriod.endDate тендера для усіх користувачів
+  Звірити дату тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data.data.auctionPeriod.startDate}  tenderPeriod.endDate
 
 
 Відображення мінімального кроку лоту
