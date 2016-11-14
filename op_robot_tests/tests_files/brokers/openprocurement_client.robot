@@ -644,8 +644,9 @@ Library  openprocurement_client_helper.py
   ...      ${username}
   ...      ${tender_uaid}
   ...      bids[${bid_index}].documents[${document_index}].${field}
+  ${error_message}=  Convert To String  ${field_value}
   ${field_value}=  Set Variable If
-  ...      '${status}' == 'FAIL'
+  ...      "Field not found" in "${error_message}"
   ...      ${None}
   ...      ${field_value}
   Log  ${field_value}
@@ -666,8 +667,9 @@ Library  openprocurement_client_helper.py
   ${status}  ${number_of_documents}=  Run keyword and ignore error
   ...      Get Length
   ...      ${tender.data.bids[${bid_index}].documents}
+  ${error_message}=  Convert To String  ${number_of_documents}
   ${number_of_documents}=  Set Variable If
-  ...      '${status}' == 'FAIL'
+  ...      "AttributeError" in "${error_message}"
   ...      ${0}
   ...      ${number_of_documents}
   Log  ${number_of_documents}
