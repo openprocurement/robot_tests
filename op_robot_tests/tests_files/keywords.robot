@@ -664,6 +664,19 @@ Require Failure
   ...      cancellations[0].status
 
 
+Звірити статус скасованого лоту
+  [Arguments]  ${username}  ${tender_uaid}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      cancelled
+
+
 Звірити статус завершення тендера
   [Arguments]  ${username}  ${tender_uaid}
   Оновити LAST_MODIFICATION_DATE
