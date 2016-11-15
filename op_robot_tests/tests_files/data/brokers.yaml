@@ -170,6 +170,7 @@ uatenders:
             tender:  [0, 30]
     keywords_file: uatenders
     roles:
+        provider1:      uatenders_Provider1
         provider:       uatenders_Provider
         tender_owner:   uatenders_Owner
         viewer:         uatenders_Viewer
