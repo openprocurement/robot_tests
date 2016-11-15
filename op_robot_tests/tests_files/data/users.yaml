@@ -341,6 +341,14 @@ users:
         browser:  chrome
         position: [750, 0]
         size:     [1280, 800]
+    uatenders_Provider1:
+        broker:   uatenders
+        homepage: "http://devs.zakupki.com.ua"
+        login:    test4@example.com
+        password: 111111
+        browser:  chrome
+        position: [750, 0]
+        size:     [1280, 800]
     ubiz_Owner:
         broker:   ubiz
         homepage: "http://test.ubiz.com.ua"
