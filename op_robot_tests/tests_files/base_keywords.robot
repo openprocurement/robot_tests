@@ -560,6 +560,8 @@ Resource           resource.robot
   ...     ELSE  Set Variable  ${None}
   ${resp}=  Run As  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}
   Set To Dictionary  ${USERS.users['${username}'].bidresponses}  resp=${resp}
+  Run Keyword If  '${MODE}'=='dgfFinancialAssets'
+  ...             Можливість завантажити фінансову лізенцію в пропозицію користувачем ${username}
 
 
 Неможливість подати цінову пропозицію без нецінових показників користувачем ${username}
@@ -601,6 +603,7 @@ Resource           resource.robot
 Можливість завантажити фінансову лізенцію в пропозицію користувачем ${username}
   ${financial_license_path}  ${file_title}  ${file_content}=  create_fake_doc
   Run As  ${username}  Завантажити фінансову ліцензію  ${TENDER['TENDER_UAID']}  ${financial_license_path}
+  Remove File  ${financial_license_path}
 
 
 Можливість завантажити протокол аукціону в пропозицію користувачем ${username}
