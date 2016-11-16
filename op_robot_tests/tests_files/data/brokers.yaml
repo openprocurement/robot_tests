@@ -130,9 +130,9 @@ uaceauction:
     keywords_file: uace
     roles:
         tender_owner:   uace_Owner_auction
-        provider:   uace_Provider_auction
-        provider1:   uace_Provider1_auction
-        viewer:   uace_Viewer_auction
+        provider:       uace_Provider_auction
+        provider1:      uace_Provider1_auction
+        viewer:         uace_Viewer_auction
     timeout_on_wait: 180
 opentenderauction:
     intervals:
@@ -148,9 +148,9 @@ opentenderauction:
     keywords_file: opentender
     roles:
         tender_owner:   opentender_Owner_auction
-        provider:   opentender_Provider_auction
-        provider1:   opentender_Provider1_auction
-        viewer:   opentender_Viewer_auction
+        provider:       opentender_Provider_auction
+        provider1:      opentender_Provider1_auction
+        viewer:         opentender_Viewer_auction
     timeout_on_wait: 180
 ztv:
     intervals:

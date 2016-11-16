@@ -423,6 +423,7 @@ def test_tender_data_dgf_other(params):
         data['items'].append(new_item)
     return data
 
+
 def test_tender_data_dgf_financial(params):
     data = test_tender_data(params, [])
 
@@ -434,6 +435,8 @@ def test_tender_data_dgf_financial(params):
         del data['items'][i]
 
     url = params['api_host_url']
+
+    # TODO: handle this magic string
     if url == 'https://lb.api.ea.openprocurement.org':
         del data['procurementMethodDetails']
 
