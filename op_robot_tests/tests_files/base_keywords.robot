@@ -606,9 +606,10 @@ Resource           resource.robot
   Remove File  ${financial_license_path}
 
 
-Можливість завантажити протокол аукціону в пропозицію користувачем ${username}
+Можливість завантажити протокол аукціону в пропозицію користувачем ${username} в ставку ${bid_index}
   ${auction_protocol_path}  ${file_title}  ${file_content}=  create_fake_doc
-  Run As  ${username}  Завантажити протокол аукціону  ${TENDER['TENDER_UAID']}  ${auction_protocol_path}  0
+  Run As  ${username}  Завантажити протокол аукціону  ${TENDER['TENDER_UAID']}  ${auction_protocol_path}  ${bid_index}
+  Remove File  ${auction_protocol_path}
 
 ##############################################################################################
 #             Cancellations
