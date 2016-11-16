@@ -569,14 +569,32 @@ Log differences between dicts
 
 
 Можливість вичитати посилання на аукціон для глядача
-  ${url}=  Run As  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
+  ${timeout_on_wait}=  Get Broker Property By Username  ${viewer}  timeout_on_wait
+  ${timeout_on_wait}=  Set Variable If
+  ...                  ${timeout_on_wait} < ${120}
+  ...                  ${120}
+  ...                  ${timeout_on_wait}
+  ${status}  ${url}=  Run Keyword And Ignore Error
+  ...                 Wait Until Keyword Succeeds
+  ...                 ${timeout_on_wait}
+  ...                 15 s
+  ...                 Run As  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
   Should Be True  '${url}'
   Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.ea\.openprocurement\.org\/auctions\/([0-9A-Fa-f]{32})
   Log  URL аукціону для глядача: ${url}
 
 
 Можливість вичитати посилання на аукціон для учасника ${username}
-  ${url}=  Run As  ${username}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
+  ${timeout_on_wait}=  Get Broker Property By Username  ${username}  timeout_on_wait
+  ${timeout_on_wait}=  Set Variable If
+  ...                  ${timeout_on_wait} < ${120}
+  ...                  ${120}
+  ...                  ${timeout_on_wait}
+  ${status}  ${url}=  Run Keyword And Ignore Error
+  ...                 Wait Until Keyword Succeeds
+  ...                 ${timeout_on_wait}
+  ...                 15 s
+  ...                 Run As  ${username}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
   Should Be True  '${url}'
   Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.ea\.openprocurement\.org\/auctions\/([0-9A-Fa-f]{32})
   Log  URL аукціону для учасника: ${url}
