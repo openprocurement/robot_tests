@@ -572,7 +572,7 @@ Resource           resource.robot
 
 Неможливість подати цінову попрозицію без кваліфікації користувачем ${username}
   ${bid}=  Підготувати дані для подання пропозиції  ${username}
-  ${bid['data'].qualified} =  Set Variable  False
+  ${bid['data'].qualified} =  Set Variable  ${False}
   Require Failure  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}
 
 
