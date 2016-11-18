@@ -404,7 +404,7 @@ Log differences between dicts
   :FOR  ${document_index}  IN RANGE  ${number_of_documents}
   \  ${field_value}=  Run As  ${username}  Отримати дані із документу пропозиції  ${tender_uaid}  ${bid_index}  ${document_index}  ${field}
   \  ${match_in_document}=  Set Variable If  '${field_value}'=='${value}'  ${True}  ${False}
-  Порівняти об'єкти  ${match_in_document}  True
+  Порівняти об'єкти  ${match_in_document}  ${True}
 
 
 Порівняти об'єкти
