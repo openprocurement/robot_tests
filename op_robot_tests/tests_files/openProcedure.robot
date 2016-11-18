@@ -56,6 +56,30 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля dgfID тендера для користувача ${viewer}
 
 
+Відображення дати рішення про затвердження умов продажу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_decisionDate
+  Звірити відображення поля dgfDecisionDate тендера для користувача ${viewer}
+
+
+Відображення номера рішення про затвердження умов продажу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_decisionID
+  Звірити відображення поля dgfDecisionID тендера для користувача ${viewer}
+
+
+Відображення поля "Лоти виставляються"
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_tenderAttempts
+  Звірити відображення поля tenderAttempts тендера для користувача ${viewer}
+
+
 Відображення опису лоту
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
