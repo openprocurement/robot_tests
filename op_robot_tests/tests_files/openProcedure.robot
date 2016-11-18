@@ -124,7 +124,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view_tenderPeriod  level2
+  ...      tender_view_tenderPeriod_startDate  level2
   Отримати дані із поля tenderPeriod.startDate тендера для усіх користувачів
 
 
@@ -133,7 +133,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view_tenderPeriod  level2
-  Отримати дані із поля tenderPeriod.endDate тендера для усіх користувачів
+  Звірити дату тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data.data.auctionPeriod.startDate}  tenderPeriod.endDate  ${Empty}  80
 
 
 Відображення мінімального кроку лоту
@@ -548,15 +548,6 @@ ${ITEM_MEAT}        ${True}
   Можливість подати цінову пропозицію користувачем ${provider}
 
 
-Можливість завантажити фінансову ліцензію в пропозицію першим учасником
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
-  ...      provider
-  ...      ${USERS.users['${provider}'].broker}
-  ...      add_financial_license_to_bid_by_provider
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість завантажити фінансову лізенцію в пропозицію користувачем ${provider}
-
-
 Можливість збільшити пропозицію на 10% першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
@@ -570,7 +561,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      modify_bid_by_provider
+  ...      add_doc_to_bid_by_provider
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість завантажити документ в пропозицію користувачем ${provider}
 
@@ -753,7 +744,7 @@ ${ITEM_MEAT}        ${True}
   Run Keyword And Expect Error  *  Можливість змінити документацію цінової пропозиції користувачем ${provider}
 
 
-Неможливість задати запитання на лот після закінчення періоду уточнень
+Неможливість задати запитання на лот після закінчення періоду подання пропозицій
   [Tags]   ${USERS.users['${provider}'].broker}: Задання запитання
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
@@ -762,7 +753,7 @@ ${ITEM_MEAT}        ${True}
   Run Keyword And Expect Error  *  Можливість задати запитання на тендер користувачем ${provider}
 
 
-Неможливість задати запитання на перший предмет після закінчення періоду уточнень
+Неможливість задати запитання на перший предмет після закінчення періоду подання пропозицій
   [Tags]   ${USERS.users['${provider}'].broker}: Задання запитання
   ...      provider
   ...      ${USERS.users['${provider}'].broker}

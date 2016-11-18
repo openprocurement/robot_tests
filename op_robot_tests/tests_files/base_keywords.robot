@@ -52,8 +52,8 @@ Resource           resource.robot
 
 
 Можливість додати Virtual Data Room до тендера
-  # TODO: Generate new URL on each run
-  Run As  ${tender_owner}  Додати Virtual Data Room  ${TENDER['TENDER_UAID']}  http://example.invalid/VDR/4815162342
+  ${vdr_url}=  create_fake_vdr_url
+  Run As  ${tender_owner}  Додати Virtual Data Room  ${TENDER['TENDER_UAID']}  ${vdr_url}
 
 
 Можливість додати предмет закупівлі в тендер
@@ -560,6 +560,8 @@ Resource           resource.robot
   ...     ELSE  Set Variable  ${None}
   ${resp}=  Run As  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}
   Set To Dictionary  ${USERS.users['${username}'].bidresponses}  resp=${resp}
+  Run Keyword If  '${MODE}'=='dgfFinancialAssets'
+  ...             Можливість завантажити фінансову лізенцію в пропозицію користувачем ${username}
 
 
 Неможливість подати цінову пропозицію без нецінових показників користувачем ${username}
@@ -601,11 +603,13 @@ Resource           resource.robot
 Можливість завантажити фінансову лізенцію в пропозицію користувачем ${username}
   ${financial_license_path}  ${file_title}  ${file_content}=  create_fake_doc
   Run As  ${username}  Завантажити фінансову ліцензію  ${TENDER['TENDER_UAID']}  ${financial_license_path}
+  Remove File  ${financial_license_path}
 
 
-Можливість завантажити протокол аукціону в пропозицію користувачем ${username}
+Можливість завантажити протокол аукціону в пропозицію ${bid_index} користувачем ${username}
   ${auction_protocol_path}  ${file_title}  ${file_content}=  create_fake_doc
-  Run As  ${username}  Завантажити протокол аукціону  ${TENDER['TENDER_UAID']}  ${auction_protocol_path}  0
+  Run As  ${username}  Завантажити протокол аукціону  ${TENDER['TENDER_UAID']}  ${auction_protocol_path}  ${bid_index}
+  Remove File  ${auction_protocol_path}
 
 ##############################################################################################
 #             Cancellations
