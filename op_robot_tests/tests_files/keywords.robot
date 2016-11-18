@@ -257,7 +257,7 @@ Get Broker Property By Username
 
 Підготувати дані про скасування
   [Arguments]  ${username}
-  ${cancellation_reason}=  create_fake_sentence
+  ${cancellation_reason}=  create_fake_cancellation_reason
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   ${doc_id}=  get_id_from_doc_name  ${file_name}
   ${document}=  Create Dictionary

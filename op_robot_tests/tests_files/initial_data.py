@@ -32,6 +32,12 @@ def create_fake_guarantee(value_amount):
     return round(random.uniform(0.1, 0.2) * value_amount, 2)
 
 
+def create_fake_cancellation_reason():
+    reasons = [u"Згідно рішення виконавчої дирекції Фонду гарантування вкладів фізичних осіб",
+               u"Порушення порядку публікації оголошення"]
+    return random.choice(reasons)
+
+
 def field_with_id(prefix, sentence):
     return u"{}-{}: {}".format(prefix, fake.uuid4()[:8], sentence)
 
