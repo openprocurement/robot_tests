@@ -859,7 +859,7 @@ Resource           resource.robot
   ${value}=  mult_and_round  ${value}  ${percent}  ${divider}  precision=${2}
   Run as  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  ${field}  ${value}
 
-Можливість зменшити пропозицію по ${lot_index} лоту до ${percent} відсотків користувачем ${username}
+Можливість зменшити пропозицію для ${lot_index} лоту до ${percent} відсотків користувачем ${username} у тест кейсі
   ${percent}=  Convert To Number  ${percent}
   ${divider}=  Convert To Number  0.01
   ${field}=  Set Variable  lotValues[${lot_index}].value.amount
@@ -882,9 +882,6 @@ Resource           resource.robot
   Set To Dictionary  ${USERS.users['${username}'].bidresponses}  bid_doc_modified=${bid_doc_modified}
   Remove File  ${file_path}
 
-
-Встановити найменшу ціну для ${lot_index} пропозиції учасником ${username}
-  Можливість зменшити пропозицію по ${lot_index} лоту до 2 відсотків користувачем ${username}
 
 ##############################################################################################
 #             Cancellations
