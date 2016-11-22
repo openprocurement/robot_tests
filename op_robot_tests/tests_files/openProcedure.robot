@@ -231,12 +231,7 @@ ${ITEM_MEAT}        ${True}
   ...      modify_auction_value  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   ${new_amount}=  create_fake_amount
-  ${new_value}=  Create Dictionary
-  Set To Dictionary  ${new_value}
-  ...                amount=${new_amount}
-  ...                currency=UAH
-  ...                valueAddedTaxIncluded=True
-  Перевірити неможливість зміни поля value.amount тендера на значення ${new_value} для користувача ${tender_owner}
+  Перевірити неможливість зміни поля value.amount тендера на значення ${new_amount} для користувача ${tender_owner}
 
 
 Неможливість змінити мінімальний крок лоту
@@ -246,11 +241,7 @@ ${ITEM_MEAT}        ${True}
   ...      modify_auction_step  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   ${new_amount}=  create_fake_minimal_step  ${USERS.users['${tender_owner}'].tender_data.data.value.amount}
-  ${new_minimalstep}=  Create Dictionary
-  Set To Dictionary  ${new_minimalstep}
-  ...                amount=${new_amount}
-  ...                currency=UAH
-  Перевірити неможливість зміни поля minimalStep.amount тендера на значення ${new_minimalstep} для користувача ${tender_owner}
+  Перевірити неможливість зміни поля minimalStep.amount тендера на значення ${new_amount} для користувача ${tender_owner}
 
 
 Неможливість змінити назву лоту українською мовою
