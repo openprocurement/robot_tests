@@ -123,10 +123,10 @@ uaceauction:
             tender:  [0, 19]
         dgfFinancialAssets:
            accelerator: 1440
-           auction:  [0, 17]
+           auction:  [45, 50]
         dgfOtherAssets:
             accelerator: 1440
-            auction:  [0, 17]
+            auction:  [45, 50]
     keywords_file: uace
     roles:
         tender_owner:   uace_Owner_auction
@@ -141,10 +141,10 @@ opentenderauction:
             tender:  [0, 19]
         dgfFinancialAssets:
            accelerator: 1440
-           auction:  [0, 17]
+           auction:  [45, 50]
         dgfOtherAssets:
             accelerator: 1440
-            auction:  [0, 17]
+            auction:  [45, 50]
     keywords_file: opentender
     roles:
         tender_owner:   opentender_Owner_auction
