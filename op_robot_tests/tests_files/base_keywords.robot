@@ -149,6 +149,14 @@ Resource           resource.robot
   Звірити координати доставки тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${item_id}
 
 
+Звірити належність усіх предметів до різних груп для користувача ${username}
+  :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
+  \  @{items}=  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  items
+  ${len_of_items}=  Get Length  ${items}
+  ${comparision}=  compare_CAV_groups  ${len_of_items}  @{items}
+  Should Be True  ${comparision}
+
+
 Отримати дані із поля ${field} тендера для усіх користувачів
   :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}  ${tender_owner}
   \  Отримати дані із поля ${field} тендера для користувача ${username}
