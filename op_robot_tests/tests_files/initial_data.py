@@ -29,7 +29,9 @@ def create_fake_minimal_step(value_amount):
 
 
 def create_fake_guarantee(value_amount):
-    return round(random.uniform(0.1, 0.2) * value_amount, 2)
+    guarantee = round(random.uniform(0.1, 0.2) * value_amount, 2)
+    # Required guarantee deposit must not be greater than 500 000 UAH
+    return guarantee if guarantee <= 500000 else 500000
 
 
 def create_fake_cancellation_reason():
