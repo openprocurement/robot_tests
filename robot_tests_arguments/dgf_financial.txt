@@ -2,7 +2,7 @@
 
 -v API_HOST_URL:https://api-sandbox.ea.openprocurement.org
 
--v NUMBER_OF_ITEMS:1
+-v NUMBER_OF_ITEMS:3
 
 -i create_tender
 -i find_tender
@@ -17,6 +17,8 @@
 -i modify_auction_periods
 -i tender_view_criteria
 -i modify_auction_criteria_ua
+-i modify_auction_procuringEntity
+-i modify_auction_description
 -i modify_tender
 -i add_tender_doc
 -i add_tender_doc_content

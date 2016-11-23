@@ -1,10 +1,11 @@
 -v MODE:dgfOtherAssets
 
--v NUMBER_OF_ITEMS:1
+-v NUMBER_OF_ITEMS:3
 
 -i create_tender
 -i find_tender
 -i tender_view
+-i tender_view_cav_groups
 -i tender_view_tenderPeriod
 -i tender_view_unit_code
 

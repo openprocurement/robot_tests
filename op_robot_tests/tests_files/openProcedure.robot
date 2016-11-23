@@ -156,7 +156,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      open_tender_view  level2
+  ...      tender_view  level2
   Звірити відображення поля procurementMethodType тендера для усіх користувачів
 
 
