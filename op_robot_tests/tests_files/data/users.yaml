@@ -198,7 +198,7 @@ users:
     Newtend_Owner:
         broker:   Newtend
         homepage: "http://ea-trunk.newtend.com/provider/#/profile/login"
-        login:    auc_fin001@mailinator.com
+        login:    auc_fin001@newtend.com
         password: 123123
         browser:  chrome
         position: [0, 0]
@@ -206,7 +206,7 @@ users:
     Newtend_Provider1:
         broker:   Newtend
         homepage: "http://ea-trunk.newtend.com/provider/#/profile/login"
-        login:    fin_bid001@mailinator.com
+        login:    fin_bid001@newtend.com
         password: 123123
         browser:  chrome
         position: [700, 0]
@@ -319,24 +319,32 @@ users:
         size:     [1400, 900]
     uatenders_Owner:
         broker:   uatenders
-        homepage: "http://dev.zakupki.com.ua/tender/list"
-        login:    Azarov.andreas@Gmail.com
+        homepage: "http://devs.zakupki.com.ua"
+        login:    dex.maks@mail.ru
         password: 111111
         browser:  chrome
         position: [750, 0]
         size:     [1280, 800]
     uatenders_Provider:
         broker:   uatenders
-        homepage: "http://dev.zakupki.com.ua/tender/list"
-        login:    andreynichik@gmail.com
+        homepage: "http://devs.zakupki.com.ua"
+        login:    test3@example.com
         password: 111111
         browser:  chrome
         position: [750, 0]
         size:     [1280, 800]
     uatenders_Viewer:
         broker:   uatenders
-        homepage: "http://dev.zakupki.com.ua/tender/list"
-        login:    Azarov.andreas@Gmail.com
+        homepage: "http://devs.zakupki.com.ua"
+        login:    dex.maks@mail.ru
+        password: 111111
+        browser:  chrome
+        position: [750, 0]
+        size:     [1280, 800]
+    uatenders_Provider1:
+        broker:   uatenders
+        homepage: "http://devs.zakupki.com.ua"
+        login:    test4@example.com
         password: 111111
         browser:  chrome
         position: [750, 0]

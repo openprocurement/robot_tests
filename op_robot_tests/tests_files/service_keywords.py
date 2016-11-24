@@ -19,11 +19,13 @@ from robot.output.loggerhelper import Message
 # Please ignore the warning given by Flake8 or other linter.
 from .initial_data import (
     create_fake_amount,
+    create_fake_cancellation_reason,
     create_fake_doc,
     create_fake_guarantee,
     create_fake_image,
     create_fake_minimal_step,
     create_fake_sentence,
+    create_fake_vdr_url,
     fake,
     test_bid_data,
     test_bid_value,

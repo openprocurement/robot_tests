@@ -105,17 +105,17 @@ DZOauctions:
             tender:  [0, 20]
         dgfFinancialAssets:
            accelerator: 1440
-           auction:  [0, 20]
+           auction:  [50, 55]
         dgfOtherAssets:
             accelerator: 1440
-            auction:  [0, 20]
+            auction:  [50, 55]
     keywords_file: dzo
     roles:
         tender_owner:   DZO_Owner_auction
         provider:       DZO_Provider_auction
         provider1:      DZO_Provider1_auction
         viewer:         DZO_Viewer_auction
-    timeout_on_wait: 660
+    timeout_on_wait: 360
 uaceauction:
     intervals:
         default:
@@ -123,10 +123,10 @@ uaceauction:
             tender:  [0, 19]
         dgfFinancialAssets:
            accelerator: 1440
-           auction:  [0, 17]
+           auction:  [45, 50]
         dgfOtherAssets:
             accelerator: 1440
-            auction:  [0, 17]
+            auction:  [45, 50]
     keywords_file: uace
     roles:
         tender_owner:   uace_Owner_auction
@@ -141,10 +141,10 @@ opentenderauction:
             tender:  [0, 19]
         dgfFinancialAssets:
            accelerator: 1440
-           auction:  [0, 17]
+           auction:  [45, 50]
         dgfOtherAssets:
             accelerator: 1440
-            auction:  [0, 17]
+            auction:  [45, 50]
     keywords_file: opentender
     roles:
         tender_owner:   opentender_Owner_auction
@@ -187,6 +187,12 @@ Promauctions:
         default:
             enquiry: [0, 15]
             tender:  [0, 25]
+        dgfFinancialAssets:
+           accelerator: 1440
+           auction:  [45, 50]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction:  [45, 50]
     keywords_file: prom
     roles:
         tender_owner:   Prom_Owner

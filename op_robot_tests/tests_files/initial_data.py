@@ -29,7 +29,15 @@ def create_fake_minimal_step(value_amount):
 
 
 def create_fake_guarantee(value_amount):
-    return round(random.uniform(0.1, 0.2) * value_amount, 2)
+    guarantee = round(0.1 * value_amount, 2)
+    # Required guarantee deposit must not be greater than 500 000 UAH
+    return guarantee if guarantee <= 500000 else 500000
+
+
+def create_fake_cancellation_reason():
+    reasons = [u"Згідно рішення виконавчої дирекції Фонду гарантування вкладів фізичних осіб",
+               u"Порушення порядку публікації оголошення"]
+    return random.choice(reasons)
 
 
 def field_with_id(prefix, sentence):
@@ -69,6 +77,18 @@ def create_fake_image():
     return os.path.abspath(os.path.join(os.path.dirname(__file__),
                                         'op_faker',
                                         'illustration.' + image_format))
+
+
+def create_fake_vdr_url():
+    # Generate fake valid URL for VDR,
+    # randomize size, font and background color for image.
+    # Example: https://dummyimage.com/700x400/964f96/363636
+    base = 'https://dummyimage.com'
+    background_color = ''.join([random.choice('0123456789ABCDEF') for x in range(6)])
+    font_color = ''.join([random.choice('0123456789ABCDEF') for x in range(6)])
+    size_x =  random.randint(10, 1000)
+    size_y =  random.randint(10, 1000)
+    return '{0}/{1}x{2}/{3}/{4}.png'.format(base, size_x, size_y, background_color, font_color)
 
 
 def test_tender_data(params, periods=("enquiry", "tender")):

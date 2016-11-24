@@ -124,7 +124,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view_tenderPeriod  level2
+  ...      tender_view_tenderPeriod_startDate  level2
   Отримати дані із поля tenderPeriod.startDate тендера для усіх користувачів
 
 
@@ -231,12 +231,7 @@ ${ITEM_MEAT}        ${True}
   ...      modify_auction_value  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   ${new_amount}=  create_fake_amount
-  ${new_value}=  Create Dictionary
-  Set To Dictionary  ${new_value}
-  ...                amount=${new_amount}
-  ...                currency=UAH
-  ...                valueAddedTaxIncluded=True
-  Перевірити неможливість зміни поля value.amount тендера на значення ${new_value} для користувача ${tender_owner}
+  Перевірити неможливість зміни поля value.amount тендера на значення ${new_amount} для користувача ${tender_owner}
 
 
 Неможливість змінити мінімальний крок лоту
@@ -246,11 +241,7 @@ ${ITEM_MEAT}        ${True}
   ...      modify_auction_step  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   ${new_amount}=  create_fake_minimal_step  ${USERS.users['${tender_owner}'].tender_data.data.value.amount}
-  ${new_minimalstep}=  Create Dictionary
-  Set To Dictionary  ${new_minimalstep}
-  ...                amount=${new_amount}
-  ...                currency=UAH
-  Перевірити неможливість зміни поля minimalStep.amount тендера на значення ${new_minimalstep} для користувача ${tender_owner}
+  Перевірити неможливість зміни поля minimalStep.amount тендера на значення ${new_amount} для користувача ${tender_owner}
 
 
 Неможливість змінити назву лоту українською мовою
@@ -535,7 +526,6 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      make_bid_by_provider_without_qualification  level1
-  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Неможливість подати цінову попрозицію без кваліфікації користувачем ${provider}
 
@@ -547,15 +537,6 @@ ${ITEM_MEAT}        ${True}
   ...      make_bid_by_provider  level1
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider}
-
-
-Можливість завантажити фінансову ліцензію в пропозицію першим учасником
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
-  ...      provider
-  ...      ${USERS.users['${provider}'].broker}
-  ...      add_financial_license_to_bid_by_provider
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість завантажити фінансову лізенцію в пропозицію користувачем ${provider}
 
 
 Можливість збільшити пропозицію на 10% першим учасником
@@ -571,7 +552,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      modify_bid_by_provider
+  ...      add_doc_to_bid_by_provider
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість завантажити документ в пропозицію користувачем ${provider}
 
@@ -590,7 +571,6 @@ ${ITEM_MEAT}        ${True}
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      make_bid_by_provider1  level1
-  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider1}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider1}
 
@@ -600,7 +580,6 @@ ${ITEM_MEAT}        ${True}
   ...      provider2
   ...      ${USERS.users['${provider1}'].broker}
   ...      make_bid_by_provider2  level1
-  [Setup]  Дочекатись дати початку прийому пропозицій  ${provider2}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider2}
 
@@ -756,7 +735,7 @@ ${ITEM_MEAT}        ${True}
   Run Keyword And Expect Error  *  Можливість змінити документацію цінової пропозиції користувачем ${provider}
 
 
-Неможливість задати запитання на лот після закінчення періоду уточнень
+Неможливість задати запитання на лот після закінчення періоду подання пропозицій
   [Tags]   ${USERS.users['${provider}'].broker}: Задання запитання
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
@@ -765,7 +744,7 @@ ${ITEM_MEAT}        ${True}
   Run Keyword And Expect Error  *  Можливість задати запитання на тендер користувачем ${provider}
 
 
-Неможливість задати запитання на перший предмет після закінчення періоду уточнень
+Неможливість задати запитання на перший предмет після закінчення періоду подання пропозицій
   [Tags]   ${USERS.users['${provider}'].broker}: Задання запитання
   ...      provider
   ...      ${USERS.users['${provider}'].broker}

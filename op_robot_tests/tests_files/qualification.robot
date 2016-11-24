@@ -4,7 +4,7 @@ Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
 *** Variables ***
-@{USED_ROLES}   tender_owner  viewer  provider
+@{USED_ROLES}   tender_owner  viewer  provider  provider1
 
 ${award_index}      ${0}
 
@@ -235,10 +235,10 @@ ${award_index}      ${0}
   ...  ${USERS.users['${provider}'].broker}
   ...  qualification_add_auction_protocol_to_bid  level1
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість завантажити протокол аукціону в пропозицію користувачем ${provider}
+  Можливість завантажити протокол аукціону в пропозицію 0 користувачем ${provider}
 
 
-Можливість перевірити протокол аукціону
+Можливість перевірити протокол аукціону кандидата
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
@@ -262,23 +262,16 @@ ${award_index}      ${0}
   Run As  ${tender_owner}  Скасування рішення кваліфікаційної комісії  ${TENDER['TENDER_UAID']}  0
 
 
-Можливість завантажити документ з причинами дискваліфікації учасника
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
-  ...  tender_owner
-  ...  ${USERS.users['${tender_owner}'].broker}
-  ...  qualification_add_doc_with_cancellation_reason  level2
-  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
-  Run As  ${tender_owner}  Завантажити документ рішення кваліфікаційної комісії  ${file_path}  ${TENDER['TENDER_UAID']}  0
-  Remove File  ${file_path}
-
-
 Можливість дискваліфікувати учасника
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_cancel_first_award_qualification  level1
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   ${description}=  create_fake_sentence
+  Run As  ${tender_owner}  Завантажити документ рішення кваліфікаційної комісії  ${file_path}  ${TENDER['TENDER_UAID']}  0
   Run As  ${tender_owner}  Дискваліфікувати постачальника  ${TENDER['TENDER_UAID']}  1  ${description}
+  Remove File  ${file_path}
 
 
 Можливість завантажити документ рішення кваліфікаційної комісії для підтвердження нового учасника
@@ -289,6 +282,23 @@ ${award_index}      ${0}
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   Run As  ${tender_owner}  Завантажити документ рішення кваліфікаційної комісії  ${file_path}  ${TENDER['TENDER_UAID']}  1
   Remove File  ${file_path}
+
+
+Можливість завантажити протокол аукціону в пропозицію нового кандидата
+  [Tags]   ${USERS.users['${provider}'].broker}: Процес кваліфікації
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  qualification_add_auction_protocol_to_bid  level1
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити протокол аукціону в пропозицію -1 користувачем ${provider1}
+
+
+Можливість перевірити протокол аукціону нового кандидата
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  qualification_approve_doc_to_second_award  level2
+  Звірити значення поля серед усіх документів ставки  ${tender_owner}  ${TENDER['TENDER_UAID']}  documentType  auctionProtocol  -1
 
 
 Можливість підтвердити нового учасника

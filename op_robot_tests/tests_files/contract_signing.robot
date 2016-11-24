@@ -68,3 +68,11 @@ Suite Teardown  Test Suite Teardown
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Run As  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
   Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}  active  contracts[-1].status
+
+
+Відображення статусу завершення лоту
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  tender_view
+  Звірити статус завершення тендера  ${viewer}  ${TENDER['TENDER_UAID']}
