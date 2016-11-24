@@ -845,7 +845,7 @@ Library  openprocurement_client_helper.py
 Отримати всі id виграшів з однаковими identifier
   [Documentation]
   ...      [Arguments]  Username, tender uaid, contract.susplier.identifier.id, contract.susplier.identifier.schema
-  ...      [Description]  Find all contract which has same identifire id and scheme
+  ...      [Description]  Find all contracts which have same identifier id and scheme
   ...      [Return] Find contracts
   [Arguments]  ${username}  ${tender_uaid}  ${identifier_id}  ${identifier_schema}  ${contract_id}
   ${tender}  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
@@ -860,7 +860,7 @@ Library  openprocurement_client_helper.py
 Об'єднати контракти
   [Documentation]
   ...      [Arguments]  Username, tender uaid, contract id, additional_awards_ids
-  ...      [Description]  Add additionals awards to contract by contract_id
+  ...      [Description]  Add additional awards to contract by contract_id
   ...      [Return]  Return replay from api
   [Arguments]  ${username}  ${tender_uaid}  ${contract_id}  ${additional_awards}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}

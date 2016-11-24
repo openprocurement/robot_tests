@@ -1496,7 +1496,7 @@ ${ITEM_MEAT}        ${True}
   Run Keyword And Expect Error  *  Можливість скасувати цінову пропозицію користувачем ${provider1}
 
 
-Можливість зменшити пропозицію на 98% другим учасником
+Можливість зменшити пропозицію до 2 відсотків другим учасником
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}

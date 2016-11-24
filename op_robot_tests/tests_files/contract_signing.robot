@@ -36,10 +36,10 @@ Suite Teardown  Test Suite Teardown
   ...     tender_owner
   ...     ${USERS.users['${tender_owner}'].broker}
   ...     merge_contracts
-  ${base_identifire_id}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data.contracts[-1].suppliers[0].identifier.id}
+  ${base_identifier_id}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data.contracts[-1].suppliers[0].identifier.id}
   ${base_identifire_scheme}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data.contracts[-1].suppliers[0].identifier.scheme}
   ${contract_id}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data.contracts[-1].id}
-  ${additional_awards}=  Run as  ${tender_owner}  Отримати всі id виграшів з однаковими identifier  ${TENDER['TENDER_UAID']}  ${base_identifire_id}  ${base_identifire_scheme}  ${contract_id}
+  ${additional_awards}=  Run as  ${tender_owner}  Отримати всі id виграшів з однаковими identifier  ${TENDER['TENDER_UAID']}  ${base_identifier_id}  ${base_identifire_scheme}  ${contract_id}
   Log  ${additional_awards}
   Run As  ${tender_owner}  Об'єднати контракти  ${TENDER['TENDER_UAID']}  ${contract_id}  ${additional_awards}
 
