@@ -234,7 +234,7 @@ ${award_index}      ${0}
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  qualification_add_auction_protocol_to_bid  level1
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider}
   Можливість завантажити протокол аукціону в пропозицію 0 користувачем ${provider}
 
 
@@ -252,6 +252,7 @@ ${award_index}      ${0}
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_approve_first_award  level1
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
   Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  0
 
 
@@ -260,6 +261,7 @@ ${award_index}      ${0}
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_cancel_first_award_qualification  level1
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Run As  ${tender_owner}  Скасування рішення кваліфікаційної комісії  ${TENDER['TENDER_UAID']}  0
 
 
@@ -268,6 +270,7 @@ ${award_index}      ${0}
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_cancel_first_award_qualification  level1
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   ${description}=  create_fake_sentence
   Run As  ${tender_owner}  Завантажити документ рішення кваліфікаційної комісії  ${file_path}  ${TENDER['TENDER_UAID']}  0
@@ -290,7 +293,8 @@ ${award_index}      ${0}
   ...  provider
   ...  ${USERS.users['${provider1}'].broker}
   ...  qualification_add_auction_protocol_to_second_bid  level1
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider1}
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider1}
   Можливість завантажити протокол аукціону в пропозицію -1 користувачем ${provider1}
 
 
@@ -308,4 +312,5 @@ ${award_index}      ${0}
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_approve_second_award  level2
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
   Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  -1
