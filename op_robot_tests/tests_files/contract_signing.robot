@@ -45,7 +45,7 @@ Suite Teardown  Test Suite Teardown
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  contract_sign_upload
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
   ${file_path}  ${file_title}  ${file_content}=  create_fake_doc
   Run As  ${tender_owner}  Завантажити угоду до тендера  ${TENDER['TENDER_UAID']}  -1  ${file_path}
   Remove File  ${file_path}
@@ -56,7 +56,7 @@ Suite Teardown  Test Suite Teardown
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  contract_sign  level1
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
   Run As  ${tender_owner}  Підтвердити підписання контракту  ${TENDER['TENDER_UAID']}  -1
 
 

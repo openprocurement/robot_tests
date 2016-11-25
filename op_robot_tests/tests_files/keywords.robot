@@ -385,6 +385,12 @@ Log differences between dicts
   ...      Set To Dictionary  ${USERS.users['${username}']}  LAST_REFRESH_DATE=${LAST_REFRESH_DATE}
 
 
+Оновити LMD і дочекатись синхронізації
+  [Arguments]  ${username}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+
+
 Звірити поле тендера
   [Arguments]  ${username}  ${tender_uaid}  ${tender_data}  ${field}
   ${left}=  get_from_object  ${tender_data.data}  ${field}
