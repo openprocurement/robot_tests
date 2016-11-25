@@ -243,6 +243,7 @@ ${award_index}      ${0}
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_approve_doc_to_first_award  level2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   Звірити значення поля серед усіх документів ставки  ${tender_owner}  ${TENDER['TENDER_UAID']}  documentType  auctionProtocol  0
 
 
@@ -285,10 +286,10 @@ ${award_index}      ${0}
 
 
 Можливість завантажити протокол аукціону в пропозицію нового кандидата
-  [Tags]   ${USERS.users['${provider}'].broker}: Процес кваліфікації
+  [Tags]   ${USERS.users['${provider1}'].broker}: Процес кваліфікації
   ...  provider
-  ...  ${USERS.users['${provider}'].broker}
-  ...  qualification_add_auction_protocol_to_bid  level1
+  ...  ${USERS.users['${provider1}'].broker}
+  ...  qualification_add_auction_protocol_to_second_bid  level1
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість завантажити протокол аукціону в пропозицію -1 користувачем ${provider1}
 
@@ -298,6 +299,7 @@ ${award_index}      ${0}
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_approve_doc_to_second_award  level2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   Звірити значення поля серед усіх документів ставки  ${tender_owner}  ${TENDER['TENDER_UAID']}  documentType  auctionProtocol  -1
 
 
