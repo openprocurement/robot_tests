@@ -418,7 +418,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_to_tender  level1
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider}
   Можливість задати запитання на тендер користувачем ${provider}
 
 
@@ -444,7 +444,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      answer_question_to_tender
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
   Можливість відповісти на запитання на тендер
 
 
@@ -462,7 +462,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_to_item
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider}
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  Можливість задати запитання на ${item_index} предмет користувачем ${provider}
 
@@ -491,7 +491,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      answer_question_to_item
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  Можливість відповісти на запитання на ${item_index} предмет
 

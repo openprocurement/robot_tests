@@ -105,10 +105,10 @@ DZOauctions:
             tender:  [0, 20]
         dgfFinancialAssets:
            accelerator: 1440
-           auction:  [50, 55]
+           auction:  [70, 75]
         dgfOtherAssets:
             accelerator: 1440
-            auction:  [50, 55]
+            auction:  [70, 75]
     keywords_file: dzo
     roles:
         tender_owner:   DZO_Owner_auction
