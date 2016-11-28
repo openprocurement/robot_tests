@@ -288,6 +288,20 @@ Library  openprocurement_client_helper.py
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_question  ${tender}  ${answer_data}
   [return]  ${reply}
 
+Отримати кількість запитань до тендера
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${status}  ${number_of_questions}=  Run keyword and ignore error
+  ...      Get Length
+  ...      ${tender.data.questions}
+  ${error_message}=  Convert To String  ${number_of_questions}
+  ${number_of_questions}=  Set Variable If
+  ...      "AttributeError" in "${error_message}" or "KeyError" in "${error_message}"
+  ...      ${0}
+  ...      ${number_of_questions}
+  Log  ${number_of_questions}
+  [return]  ${number_of_questions}
+
 ##############################################################################
 #             Claims
 ##############################################################################
@@ -552,6 +566,21 @@ Library  openprocurement_client_helper.py
   ${filename}=  download_file_from_url  ${document.url}  ${OUTPUT_DIR}${/}${document.title}
   [return]  ${filename}
 
+
+Отримати кількість скарг до тендера
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${status}  ${number_of_complaints}=  Run keyword and ignore error
+  ...      Get Length
+  ...      ${tender.data.complaints}
+  ${error_message}=  Convert To String  ${number_of_complaints}
+  ${number_of_complaints}=  Set Variable If
+  ...      "AttributeError" in "${error_message}" or "KeyError" in "${error_message}"
+  ...      ${0}
+  ...      ${number_of_complaints}
+  Log  ${number_of_complaints}
+  [return]  ${number_of_complaints}
+
 ##############################################################################
 #             Bid operations
 ##############################################################################
@@ -674,6 +703,21 @@ Library  openprocurement_client_helper.py
   ...      ${number_of_documents}
   Log  ${number_of_documents}
   [return]  ${number_of_documents}
+
+
+Отримати кількість пропозицій до тендера
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${status}  ${number_of_bids}=  Run keyword and ignore error
+  ...      Get Length
+  ...      ${tender.data.bids}
+  ${error_message}=  Convert To String  ${number_of_bids}
+  ${number_of_bids}=  Set Variable If
+  ...      "AttributeError" in "${error_message}" or "KeyError" in "${error_message}"
+  ...      ${0}
+  ...      ${number_of_bids}
+  Log  ${number_of_bids}
+  [return]  ${number_of_bids}
 
 ##############################################################################
 #             Qualification operations
