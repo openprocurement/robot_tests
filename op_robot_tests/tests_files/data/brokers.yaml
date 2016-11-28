@@ -231,7 +231,7 @@ SmartTender:
         provider1:      SmartTender_Provider2
         tender_owner:   SmartTender_Owner
         viewer:         SmartTender_Viewer
-    timeout_on_wait: 300
+    timeout_on_wait: 50
 uatenders:
     intervals:
         default:
