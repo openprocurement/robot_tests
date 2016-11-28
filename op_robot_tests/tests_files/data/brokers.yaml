@@ -72,7 +72,17 @@ Quinta:
 Etender:
     intervals:
         default:
-            enquiry: [0, 5]
+            enquiry: [0, 20]
+            tender:  [0, 20]
+        openua:
+            accelerator: 720
+            tender:  [0, 20]
+        dgfFinancialAssets:
+           accelerator: 1440
+           auction:  [100, 25]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction:  [100, 25]
     keywords_file: etender
     roles:
         provider:       Etender_Provider1
