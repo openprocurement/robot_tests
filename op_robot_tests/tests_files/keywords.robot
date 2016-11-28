@@ -725,7 +725,7 @@ Require Failure
   ...      complete
 
 
-Звірити cтатус тендера у випадку наявності лише однієї пропозиції
+Звірити cтатус неуспішного тендера
   [Arguments]  ${username}  ${tender_uaid}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
