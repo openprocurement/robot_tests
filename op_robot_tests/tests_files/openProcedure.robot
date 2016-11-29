@@ -365,6 +365,15 @@ ${ITEM_MEAT}        ${True}
   Можливість додати Virtual Data Room до тендера
 
 
+Відображення документа з реквізитами
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      add_tender_doc  level2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити значення поля серед усіх документів тендера  ${viewer}  ${TENDER['TENDER_UAID']}  documentType  x_dgfPlatformLegalDetails
+
+
 Відображення заголовку документації до лоту
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
   ...      viewer

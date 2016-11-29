@@ -114,6 +114,22 @@ Library  openprocurement_client_helper.py
   [Return]  ${document['${field}']}
 
 
+Отримати інформацію із документа по індексу
+  [Arguments]  ${username}  ${tender_uaid}  ${document_index}  ${field}
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      Отримати дані із тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      documents[${document_index}].${field}
+  ${error_message}=  Convert To String  ${field_value}
+  ${field_value}=  Set Variable If
+  ...      "Field not found" in "${error_message}"
+  ...      ${None}
+  ...      ${field_value}
+  Log  ${field_value}
+  [return]  ${field_value}
+
+
 Отримати документ
   [Arguments]  ${username}  ${tender_uaid}  ${doc_id}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
@@ -193,6 +209,21 @@ Library  openprocurement_client_helper.py
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
   Порівняти об'єкти  ${prev_value}  ${USERS.users['${username}'].tender_data['${fieldname}']}
   Set_To_Object   ${USERS.users['${username}'].tender_data}   ${fieldname}   ${fieldvalue}
+
+
+Отримати кількість документів в тендері
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${status}  ${number_of_documents}=  Run keyword and ignore error
+  ...      Get Length
+  ...      ${tender.data.documents}
+  ${error_message}=  Convert To String  ${number_of_documents}
+  ${number_of_documents}=  Set Variable If
+  ...      "AttributeError" in "${error_message}" or "KeyError" in "${error_message}"
+  ...      ${0}
+  ...      ${number_of_documents}
+  Log  ${number_of_documents}
+  [return]  ${number_of_documents}
 
 ##############################################################################
 #             Item operations
@@ -669,7 +700,7 @@ Library  openprocurement_client_helper.py
   ...      ${tender.data.bids[${bid_index}].documents}
   ${error_message}=  Convert To String  ${number_of_documents}
   ${number_of_documents}=  Set Variable If
-  ...      "AttributeError" in "${error_message}"
+  ...      "AttributeError" in "${error_message}" or "KeyError" in "${error_message}"
   ...      ${0}
   ...      ${number_of_documents}
   Log  ${number_of_documents}
