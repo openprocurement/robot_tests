@@ -19,6 +19,7 @@
 -i modify_auction_criteria_ua
 -i modify_tender
 -i add_tender_doc
+-i add_tender_doc_content
 -i add_tender_illustration
 -i add_tender_vdr
 -i ask_question_to_tender

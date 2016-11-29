@@ -18,6 +18,7 @@
 -i modify_auction_periods
 -i modify_tender
 -i add_tender_doc
+-i add_tender_doc_content
 -i add_tender_illustration
 -i ask_question_to_tender
   -i answer_question_to_tender
