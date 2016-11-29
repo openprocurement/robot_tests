@@ -21,7 +21,12 @@
 -i add_tender_doc
 -i add_tender_doc_content
 -i add_tender_illustration
+-i add_tender_public_asset_certificate
+-i add_tender_tech_specifications
 -i add_tender_vdr
+-i add_tender_nda
+-i add_tender_notice
+-i add_tender_presentation
 -i ask_question_to_tender
   -i answer_question_to_tender
 -i ask_question_to_item
