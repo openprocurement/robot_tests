@@ -365,6 +365,15 @@ ${ITEM_MEAT}        ${True}
   Можливість додати Virtual Data Room до тендера
 
 
+Можливість додати посилання на публічний паспорт активу до лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_public_asset_certificate  level2
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість додати публічний паспорт активу до тендера
+
+
 Відображення документа з реквізитами
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
   ...      viewer
