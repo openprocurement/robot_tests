@@ -61,6 +61,11 @@ Resource           resource.robot
   Run As  ${tender_owner}  Додати публічний паспорт активу  ${TENDER['TENDER_UAID']}  ${certificate_url}
 
 
+Можливість завантажити документ до тендера з типом ${doc_type}
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
+  Run As  ${tender_owner}  Завантажити документ в тендер з типом  ${TENDER['TENDER_UAID']}  ${file_path}  ${doc_type}
+
+
 Можливість додати предмет закупівлі в тендер
   ${item}=  Підготувати дані для створення предмету закупівлі  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['id']}
   Run As  ${tender_owner}  Додати предмет закупівлі  ${TENDER['TENDER_UAID']}  ${item}

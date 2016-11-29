@@ -374,6 +374,42 @@ ${ITEM_MEAT}        ${True}
   Можливість додати публічний паспорт активу до тендера
 
 
+Можливість завантажити договір про нерозголошення до лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_nda  level2
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ до тендера з типом x_nda
+
+
+Можливість завантажити паспорт торгів до лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_notice  level2
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ до тендера з типом tenderNotice
+
+
+Можливість завантажити презентацію до лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_presentation  level2
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ до тендера з типом x_presentation
+
+
+Можливість завантажити публічний паспорт активу до лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_tech_specifications  level2
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ до тендера з типом technicalSpecifications
+
+
 Відображення документа з реквізитами
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
   ...      viewer
