@@ -508,3 +508,8 @@ def convert_datetime_to_dot_format(isodate):
 
 def local_path_to_file(file_name):
     return os.path.join(os.path.dirname(__file__), 'documents', file_name)
+
+
+def set_custom_page_load_timeout(timeout):
+    driver = BuiltIn().get_library_instance('Selenium2Library')._current_browser()
+    driver.set_page_load_timeout(timeout)
