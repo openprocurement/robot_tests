@@ -14,7 +14,7 @@ users:
     Tender_Viewer:
         api_key:  ""
         broker:   Quinta
-        browser:  firefox
+        browser:  Firefox
     Etender_Owner:
         broker:   Etender
         homepage: "http://e-auction.pro/#/"
