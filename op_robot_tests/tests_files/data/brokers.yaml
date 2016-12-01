@@ -213,7 +213,7 @@ Publicbid:
     intervals:
         default:
             enquiry: [1, 10]
-            tender:  [1, 12]
+            tender:  [1, 20]
     keywords_file: publicbid
     roles:
         provider:       Publicbid_Provider1
