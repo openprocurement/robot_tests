@@ -250,7 +250,7 @@ ubiz:
         provider1:      ubiz_Provider2
         tender_owner:   ubiz_Owner
         viewer:         ubiz_Viewer
-    timeout_on_wait: 50
+    timeout_on_wait: 140
 zakpro:
     intervals:
         default:
