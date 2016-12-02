@@ -507,7 +507,7 @@ users:
         broker:   polonex
         homepage: "http://test.polonex.in.ua/proauctions/public"
         syncpage: "http://test.polonex.in.ua/proauctions/sync-all"
-        browser:  phantomjs
+        browser:  ff
         position: [0, 0]
         size:     [1366, 800]
     polonex_provider:
@@ -516,7 +516,7 @@ users:
         syncpage: "http://test.polonex.in.ua/proauctions/sync-all"
         login:    testmemb1@test.t
         password: testpass
-        browser:  phantomjs
+        browser:  ff
         position: [0, 0]
         size:     [1366, 800]
     polonex_provider1:
@@ -525,7 +525,7 @@ users:
         syncpage: "http://test.polonex.in.ua/proauctions/sync-all"
         login:    testmemb2@test.t
         password: testpass
-        browser:  phantomjs
+        browser:  ff
         position: [0, 0]
         size:     [1366, 800]
     polonex_owner:
@@ -534,6 +534,6 @@ users:
         syncpage: "http://test.polonex.in.ua/proauctions/sync-all"
         login:    testadmin@test.t
         password: testpass
-        browser:  phantomjs
+        browser:  ff
         position: [0, 0]
         size:     [1366, 800]
