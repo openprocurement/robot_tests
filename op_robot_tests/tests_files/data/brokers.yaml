@@ -208,7 +208,7 @@ Promauctions:
         tender_owner:   Prom_Owner
         viewer:         Prom_Viewer
         provider:       Prom_Provider
-    timeout_on_wait: 260
+    timeout_on_wait: 300
 Publicbid:
     intervals:
         default:
