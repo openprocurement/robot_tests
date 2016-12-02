@@ -322,5 +322,6 @@ polonex:
     intervals:
         default:
             enquiry: [0, 10]
-            tender:  [0, 15]
-    timeout_on_wait: 180
+            tender:  [0, 20]
+            auction:  [20, 25]
+    timeout_on_wait: 120
