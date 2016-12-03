@@ -238,7 +238,7 @@ users:
         default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_auction/list?mode=all"
         login:    test@test12.com
         password: autotest
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1280, 1024]
     Prom_Viewer:
@@ -247,7 +247,7 @@ users:
         default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_auction/list?mode=all"
         login:    test@test13.com
         password: autotest
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1280, 1024]
     Prom_Provider:
@@ -256,7 +256,7 @@ users:
         default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_auction/list?mode=all"
         login:    test@test14.com
         password: autotest
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1280, 1024]
     Publicbid_Owner:
