@@ -20,6 +20,18 @@ def create_fake_sentence():
     return fake.sentence(nb_words=10, variable_nb_words=True)
 
 
+def create_fake_dgfDecisionDate():
+    return get_now().strftime('%Y-%m-%d')
+
+
+def create_fake_dgfDecisionID():
+    return fake.dgfDecisionID()
+
+
+def create_fake_tenderAttempts():
+   return fake.random_int(min=1, max=4)
+
+
 def create_fake_amount():
     return round(random.uniform(3000, 999999999.99), 2)
 

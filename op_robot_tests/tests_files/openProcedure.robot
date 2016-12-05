@@ -390,6 +390,36 @@ ${ITEM_MEAT}        ${True}
   Перевірити неможливість зміни поля guarantee тендера на значення ${new_value} для користувача ${tender_owner}
 
 
+Неможливість змінити дату рішення про затвердження умов продажу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_decisionDate
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_title}=  create_fake_dgfDecisionDate
+  Перевірити неможливість зміни поля dgfDecisionDate тендера на значення ${new_title} для користувача ${tender_owner}
+
+
+Неможливість змінити номер рішення про затвердження умов продажу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_decisionID
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_title}=  create_fake_dgfDecisionID
+  Перевірити неможливість зміни поля dgfDecisionID тендера на значення ${new_title} для користувача ${tender_owner}
+
+
+Неможливість змінити поле "Лоти виставляються"
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_tenderAttempts
+  ${new_title}=  create_fake_tenderAttempts
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  Перевірити неможливість зміни поля tenderAttempts тендера на значення ${new_title} для користувача ${tender_owner}
+
+
 Можливість додати документацію до лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
   ...      tender_owner
