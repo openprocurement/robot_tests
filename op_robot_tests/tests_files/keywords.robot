@@ -276,10 +276,11 @@ Get Broker Property By Username
   [Arguments]  ${tender_data}
   # munchify is used to make deep copy of ${tender_data}
   ${adapted_data}=  munchify  ${tender_data}
+  Log  ${USED_ROLES}
   :FOR  ${username}  IN  @{USED_ROLES}
   # munchify is used to make deep copy of ${adapted_data}
   \  ${adapted_data_copy}=  munchify  ${adapted_data}
-  \  ${status}  ${adapted_data_from_broker}=  Run keyword and ignore error  Run As  ${${username}}  Підготувати дані для оголошення тендера  ${adapted_data_copy}  ${username}
+  \  ${status}  ${adapted_data_from_broker}=  Run keyword and ignore error  Run As  ${${username}}  Підготувати дані для оголошення тендера   ${adapted_data_copy}  ${username}
   \  Log  ${adapted_data_from_broker}
   # Need this in case ``${${username}}`` doesn't have `Підготувати дані для оголошення
   # тендера користувачем` keyword, so after `Run keyword and ignore error` call

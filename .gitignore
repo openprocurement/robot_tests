@@ -12,10 +12,29 @@ __pycache__/
 /[bs]dist/
 /dist/
 /eggs/
-/src/
+# /src/
 
 # Output of robot_tests
 /test_output/
 
 # Robot framework artifact
 op_robot_tests/tests_files/data/artifact.yaml
+.idea/
+parts/
+Would skip repository src/robot_tests.broker.newtend
+Would skip repository src/robot_tests.broker.ztv
+Would skip repository src/robot_tests.broker.publicbid
+Would skip repository src/robot_tests.broker.privatmarket
+Would skip repository src/robot_tests.broker.ubiz
+Would skip repository src/robot_tests.broker.aps
+Would skip repository src/robot_tests.broker.uatenders
+Would skip repository src/robot_tests.broker.publicportal
+Would skip repository src/robot_tests.broker.dzo
+Would skip repository src/robot_tests.broker.uub
+Would skip repository src/robot_tests.broker.smarttender
+Would skip repository src/openprocurement_client
+Would skip repository src/robot_tests.broker.etender
+Would skip repository src/robot_tests.broker.proztorg
+Would skip repository src/robot_tests.broker.zakpro
+Would skip repository src/barbecue
+Would skip repository src/robot_tests.broker.prom
