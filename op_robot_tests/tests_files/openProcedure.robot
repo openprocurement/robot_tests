@@ -156,7 +156,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      open_tender_view  level2
+  ...      tender_view  level2
   Звірити відображення поля procurementMethodType тендера для усіх користувачів
 
 
@@ -187,6 +187,14 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
   Звірити відображення поля classification.id усіх предметів для користувача ${viewer}
+
+
+Відображення активів лоту з різних CAV груп
+   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
+   ...      viewer
+   ...      ${USERS.users['${viewer}'].broker}
+   ...      tender_view_cav_groups  level1
+  Звірити належність усіх предметів до різних груп для користувача ${viewer}
 
 
 Відображення опису класифікації активів лоту
@@ -272,6 +280,26 @@ ${ITEM_MEAT}        ${True}
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   ${new_title}=  create_fake_sentence
   Перевірити неможливість зміни поля title_en тендера на значення ${new_title} для користувача ${tender_owner}
+
+
+Неможливість змінити опис лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_description  level2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_description}=  create_fake_sentence
+  Перевірити неможливість зміни поля description тендера на значення ${new_description} для користувача ${tender_owner}
+
+
+Неможливість змінити дані про організатора лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_procuringEntity  level2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_procuringEntity_name}=  create_fake_sentence
+  Перевірити неможливість зміни поля procuringEntity.name тендера на значення ${new_procuringEntity_name} для користувача ${tender_owner}
 
 
 Неможливість змінити початок періоду подання пропозицій лоту
