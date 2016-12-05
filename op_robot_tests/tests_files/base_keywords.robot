@@ -52,8 +52,18 @@ Resource           resource.robot
 
 
 Можливість додати Virtual Data Room до тендера
-  ${vdr_url}=  create_fake_vdr_url
+  ${vdr_url}=  create_fake_url
   Run As  ${tender_owner}  Додати Virtual Data Room  ${TENDER['TENDER_UAID']}  ${vdr_url}
+
+
+Можливість додати публічний паспорт активу до тендера
+  ${certificate_url}=  create_fake_url
+  Run As  ${tender_owner}  Додати публічний паспорт активу  ${TENDER['TENDER_UAID']}  ${certificate_url}
+
+
+Можливість завантажити документ до тендера з типом ${doc_type}
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
+  Run As  ${tender_owner}  Завантажити документ в тендер з типом  ${TENDER['TENDER_UAID']}  ${file_path}  ${doc_type}
 
 
 Можливість додати предмет закупівлі в тендер
