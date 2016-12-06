@@ -492,6 +492,14 @@ ${ITEM_MEAT}        ${True}
   Можливість завантажити документ до тендера з типом technicalSpecifications
 
 
+Можливість завантажити документ з умовами ознайомлення з майном/активом у кімнаті даних
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_asset_familiarization  level2
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість додати офлайн документ
+
 Відображення документа з реквізитами
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
   ...      viewer

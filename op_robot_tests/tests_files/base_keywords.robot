@@ -61,6 +61,10 @@ Resource           resource.robot
   Run As  ${tender_owner}  Додати публічний паспорт активу  ${TENDER['TENDER_UAID']}  ${certificate_url}
 
 
+Можливість додати офлайн документ
+  ${accessDetails}=  create_fake_sentence
+  Run As  ${tender_owner}  Додати офлайн документ  ${TENDER['TENDER_UAID']}  ${accessDetails}
+
 Можливість завантажити документ до тендера з типом ${doc_type}
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   Run As  ${tender_owner}  Завантажити документ в тендер з типом  ${TENDER['TENDER_UAID']}  ${file_path}  ${doc_type}
