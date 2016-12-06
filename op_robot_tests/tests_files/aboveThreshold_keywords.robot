@@ -42,8 +42,7 @@ Resource           base_keywords.robot
   ${confidentialityRationale}=  create_fake_sentence
   ${privat_doc}=  create_data_dict  data.confidentialityRationale  ${confidentialityRationale}
   Set To Dictionary  ${privat_doc.data}  confidentiality=buyerOnly
-  ${docid}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['bid_doc_upload']['upload_response'].data.id}
-  Run As  ${username}  Змінити документацію в ставці  ${TENDER['TENDER_UAID']}  ${privat_doc}  ${docid}
+  Run As  ${username}  Змінити документацію в ставці  ${TENDER['TENDER_UAID']}  ${privat_doc}  ${USERS.users['${username}'['bid_document']['doc_id']}
 
 
 Можливість завантажити ${doc_type} документ до пропозиції учасником ${username}
