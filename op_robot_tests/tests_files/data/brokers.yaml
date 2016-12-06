@@ -62,7 +62,17 @@ Quinta:
         provider2:      Tender_User2
         tender_owner:   Tender_Owner
         viewer:         Tender_Viewer
+        amku_role:      amku_Viewer
     timeout_on_wait: 15
+amku:
+    keywords_file: amku
+    roles:
+        amku_role:   amku_Viewer
+    intervals:
+        default:
+            enquiry: [1, 10]
+            tender:  [1, 12]
+    timeout_on_wait: 300
 E-tender:
     intervals:
         default:
