@@ -268,6 +268,20 @@ Library  openprocurement_client_helper.py
   Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
 
 
+Отримати кількість предметів в тендері
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${status}  ${number_of_items}=  Run keyword and ignore error
+  ...      Get Length
+  ...      ${tender.data['items']}
+  ${error_message}=  Convert To String  ${number_of_items}
+  ${number_of_items}=  Set Variable If
+  ...      "AttributeError" in "${error_message}" or "KeyError" in "${error_message}"
+  ...      ${0}
+  ...      ${number_of_items}
+  Log  ${number_of_items}
+  [return]  ${number_of_items}
+
 ##############################################################################
 #             Feature operations
 ##############################################################################
