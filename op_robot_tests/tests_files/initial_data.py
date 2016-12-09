@@ -20,6 +20,18 @@ def create_fake_sentence():
     return fake.sentence(nb_words=10, variable_nb_words=True)
 
 
+def create_fake_dgfDecisionDate():
+    return get_now().strftime('%Y-%m-%d')
+
+
+def create_fake_dgfDecisionID():
+    return fake.dgfDecisionID()
+
+
+def create_fake_tenderAttempts():
+   return fake.random_int(min=1, max=4)
+
+
 def create_fake_amount():
     return round(random.uniform(3000, 999999999.99), 2)
 
@@ -79,13 +91,15 @@ def create_fake_image():
                                         'illustration.' + image_format))
 
 
-def create_fake_vdr_url():
-    # Generate fake valid URL for VDR,
-    # randomize size, font and background color for image.
-    # Example: https://dummyimage.com/700x400/964f96/363636
+def create_fake_url():
+    """
+    Generate fake valid URL for VDR and technicalSpecifications
+    randomize size, font and background color for image.
+    Example: https://dummyimage.com/700x400/964f96/363636
+    """
     base = 'https://dummyimage.com'
-    background_color = ''.join([random.choice('0123456789ABCDEF') for x in range(6)])
-    font_color = ''.join([random.choice('0123456789ABCDEF') for x in range(6)])
+    background_color = ''.join([random.choice('0123456789ABCDEF') for _ in range(6)])
+    font_color = ''.join([random.choice('0123456789ABCDEF') for _ in range(6)])
     size_x =  random.randint(10, 1000)
     size_y =  random.randint(10, 1000)
     return '{0}/{1}x{2}/{3}/{4}.png'.format(base, size_x, size_y, background_color, font_color)
@@ -417,11 +431,13 @@ def test_tender_data_dgf_other(params):
     data = test_tender_data(params, [])
 
     data['dgfID'] = fake.dgfID()
-
+    data['dgfDecisionID'] = fake.dgfDecisionID()
+    data['dgfDecisionDate'] =  (get_now() + timedelta(days=-2)).strftime('%Y-%m-%d')
+    data['tenderAttempts'] =  fake.random_int(min=1, max=4)
     del data["procuringEntity"]
 
     for i in range(params['number_of_items']):
-        del data['items'][i]
+        data['items'].pop()
 
     url = params['api_host_url']
     if url == 'https://lb.api.ea.openprocurement.org':
@@ -438,20 +454,28 @@ def test_tender_data_dgf_other(params):
     data["procuringEntity"] = fake.procuringEntity_other()
 
     cav_group_other = fake.cav_other()[:3]
+    used_cavs = []
+    used_cavs.append(cav_group_other)
     for i in range(params['number_of_items']):
         new_item = test_item_data(cav_group_other)
         data['items'].append(new_item)
+        while cav_group_other in used_cavs and i != params['number_of_items'] -1:
+            cav_group_other = fake.cav_other()[:3]
+        used_cavs.append(cav_group_other)
     return data
+
 
 def test_tender_data_dgf_financial(params):
     data = test_tender_data(params, [])
 
     data['dgfID'] = fake.dgfID()
-
+    data['dgfDecisionID'] = fake.dgfDecisionID()
+    data['dgfDecisionDate'] = (get_now() + timedelta(days=-2)).strftime('%Y-%m-%d')
+    data['tenderAttempts'] = fake.random_int(min=1, max=4)
     del data["procuringEntity"]
 
     for i in range(params['number_of_items']):
-        del data['items'][i]
+        data['items'].pop()
 
     url = params['api_host_url']
     if url == 'https://lb.api.ea.openprocurement.org':
@@ -467,8 +491,9 @@ def test_tender_data_dgf_financial(params):
     data['procurementMethodType'] = 'dgfFinancialAssets'
     data["procuringEntity"] = fake.procuringEntity()
 
-    cav_group_financial = fake.cav_financial()[:3]
     for i in range(params['number_of_items']):
+        cav_group_financial = fake.cav_financial()[:3]
         new_item = test_item_data_financial(cav_group_financial)
         data['items'].append(new_item)
+
     return data

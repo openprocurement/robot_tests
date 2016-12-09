@@ -56,6 +56,30 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля dgfID тендера для користувача ${viewer}
 
 
+Відображення дати рішення про затвердження умов продажу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_decisionDate
+  Звірити відображення поля dgfDecisionDate тендера для користувача ${viewer}
+
+
+Відображення номера рішення про затвердження умов продажу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_decisionID
+  Звірити відображення поля dgfDecisionID тендера для користувача ${viewer}
+
+
+Відображення поля "Лоти виставляються"
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_tenderAttempts
+  Звірити відображення поля tenderAttempts тендера для користувача ${viewer}
+
+
 Відображення опису лоту
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
@@ -156,7 +180,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      open_tender_view  level2
+  ...      tender_view  level2
   Звірити відображення поля procurementMethodType тендера для усіх користувачів
 
 
@@ -187,6 +211,14 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
   Звірити відображення поля classification.id усіх предметів для користувача ${viewer}
+
+
+Відображення активів лоту з різних CAV груп
+   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
+   ...      viewer
+   ...      ${USERS.users['${viewer}'].broker}
+   ...      tender_view_cav_groups  level1
+  Звірити належність усіх предметів до різних груп для користувача ${viewer}
 
 
 Відображення опису класифікації активів лоту
@@ -274,6 +306,26 @@ ${ITEM_MEAT}        ${True}
   Перевірити неможливість зміни поля title_en тендера на значення ${new_title} для користувача ${tender_owner}
 
 
+Неможливість змінити опис лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_description  level2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_description}=  create_fake_sentence
+  Перевірити неможливість зміни поля description тендера на значення ${new_description} для користувача ${tender_owner}
+
+
+Неможливість змінити дані про організатора лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_procuringEntity  level2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_procuringEntity_name}=  create_fake_sentence
+  Перевірити неможливість зміни поля procuringEntity.name тендера на значення ${new_procuringEntity_name} для користувача ${tender_owner}
+
+
 Неможливість змінити початок періоду подання пропозицій лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
   ...      tender_owner
@@ -338,6 +390,36 @@ ${ITEM_MEAT}        ${True}
   Перевірити неможливість зміни поля guarantee тендера на значення ${new_value} для користувача ${tender_owner}
 
 
+Неможливість змінити дату рішення про затвердження умов продажу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_decisionDate
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_title}=  create_fake_dgfDecisionDate
+  Перевірити неможливість зміни поля dgfDecisionDate тендера на значення ${new_title} для користувача ${tender_owner}
+
+
+Неможливість змінити номер рішення про затвердження умов продажу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_decisionID
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_title}=  create_fake_dgfDecisionID
+  Перевірити неможливість зміни поля dgfDecisionID тендера на значення ${new_title} для користувача ${tender_owner}
+
+
+Неможливість змінити поле "Лоти виставляються"
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_tenderAttempts
+  ${new_title}=  create_fake_tenderAttempts
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  Перевірити неможливість зміни поля tenderAttempts тендера на значення ${new_title} для користувача ${tender_owner}
+
+
 Можливість додати документацію до лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
   ...      tender_owner
@@ -365,6 +447,69 @@ ${ITEM_MEAT}        ${True}
   Можливість додати Virtual Data Room до тендера
 
 
+Можливість додати посилання на публічний паспорт активу до лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_public_asset_certificate  level2
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість додати публічний паспорт активу до тендера
+
+
+Можливість завантажити договір про нерозголошення до лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_nda  level2
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ до тендера з типом x_nda
+
+
+Можливість завантажити паспорт торгів до лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_notice  level2
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ до тендера з типом tenderNotice
+
+
+Можливість завантажити презентацію до лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_presentation  level2
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ до тендера з типом x_presentation
+
+
+Можливість завантажити публічний паспорт активу до лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_tech_specifications  level2
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ до тендера з типом technicalSpecifications
+
+
+Можливість завантажити документ з умовами ознайомлення з майном/активом у кімнаті даних
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_asset_familiarization  level2
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість додати офлайн документ
+
+
+Відображення документа з реквізитами
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      add_tender_doc  level2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити значення поля серед усіх документів тендера  ${viewer}  ${TENDER['TENDER_UAID']}  documentType  x_dgfPlatformLegalDetails
+
+
 Відображення заголовку документації до лоту
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
   ...      viewer
@@ -382,31 +527,31 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення вмісту документа ${USERS.users['${tender_owner}'].tender_document.doc_id} із ${USERS.users['${tender_owner}'].tender_document.doc_content} для користувача ${viewer}
 
 
-Можливість додати предмет закупівлі
+Неможливість додати актив лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування лота
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      add_item  level3
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість додати предмет закупівлі в тендер
+  Неможливість додати предмет закупівлі в тендер
 
 
 Відображення опису нової номенклатури
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури лота
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      add_item  level2
+  ...      add_item_view  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля description у новоствореному предметі для усіх користувачів
 
 
-Можливість видалити предмет закупівлі
+Неможливість видалити актив лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування лота
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_item  level3
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість видалити предмет закупівлі з тендера
+  Неможливість видалити предмет закупівлі з тендера
 
 
 ##############################################################################################

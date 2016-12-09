@@ -25,7 +25,7 @@ from .initial_data import (
     create_fake_image,
     create_fake_minimal_step,
     create_fake_sentence,
-    create_fake_vdr_url,
+    create_fake_url,
     fake,
     test_bid_data,
     test_bid_value,
@@ -49,6 +49,10 @@ from .initial_data import (
     test_tender_data_limited,
     test_tender_data_openeu,
     test_tender_data_openua,
+    create_fake_dgfDecisionID,
+    create_fake_dgfDecisionDate,
+    create_fake_tenderAttempts,
+
 )
 from barbecue import chef
 from restkit import request
@@ -508,3 +512,20 @@ def convert_datetime_to_dot_format(isodate):
 
 def local_path_to_file(file_name):
     return os.path.join(os.path.dirname(__file__), 'documents', file_name)
+
+
+def compare_CAV_groups(length, *items):
+    # Checks CAV groups of *items
+    # Arguments: length - number of items
+    #            *items - list of items
+    # Return True, if all items have different CAV groups, and
+    # return False, if at least two items have same CAV group.
+    for i in range(length):
+        i_classification = items[i].get('classification', '')
+        i_cav_group = i_classification.get('id', '')
+        for j in range(length):
+            j_classification = items[j].get('classification', '')
+            j_cav_group = j_classification.get('id', '')
+            if(i_cav_group == j_cav_group and i != j):
+                return False
+    return True

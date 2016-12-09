@@ -106,12 +106,46 @@ Library  openprocurement_client_helper.py
   Call Method  ${USERS.users['${username}'].client}  create_thin_document  ${tender}  ${doc_data}
 
 
+Додати публічний паспорт активу
+  [Arguments]  ${username}  ${tender_uaid}  ${certificate_url}  ${title}=Public Asset Certificate
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
+  ${doc_data}=  Create Dictionary  documentType=x_dgfPublicAssetCertificate  url=${certificate_url}  title=${title}
+  ${doc_data}=  Create Dictionary  data=${doc_data}
+  Call Method  ${USERS.users['${username}'].client}  create_thin_document  ${tender}  ${doc_data}
+
+
+Додати офлайн документ
+  [Arguments]  ${username}  ${tender_uaid}  ${accessDetails}  ${title}=Familiarization with bank asset
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
+  ${doc_data}=  Create Dictionary  documentType=x_dgfAssetFamiliarization  accessDetails=${accessDetails}  title=${title}
+  ${doc_data}=  Create Dictionary  data=${doc_data}
+  Call Method  ${USERS.users['${username}'].client}  create_thin_document  ${tender}  ${doc_data}
+
+
 Отримати інформацію із документа
   [Arguments]  ${username}  ${tender_uaid}  ${doc_id}  ${field}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${document}=  get_document_by_id  ${tender.data}  ${doc_id}
   Log  ${document}
   [Return]  ${document['${field}']}
+
+
+Отримати інформацію із документа по індексу
+  [Arguments]  ${username}  ${tender_uaid}  ${document_index}  ${field}
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      Отримати дані із тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      documents[${document_index}].${field}
+  ${error_message}=  Convert To String  ${field_value}
+  ${field_value}=  Set Variable If
+  ...      "Field not found" in "${error_message}"
+  ...      ${None}
+  ...      ${field_value}
+  Log  ${field_value}
+  [return]  ${field_value}
 
 
 Отримати документ
@@ -194,6 +228,21 @@ Library  openprocurement_client_helper.py
   Порівняти об'єкти  ${prev_value}  ${USERS.users['${username}'].tender_data['${fieldname}']}
   Set_To_Object   ${USERS.users['${username}'].tender_data}   ${fieldname}   ${fieldvalue}
 
+
+Отримати кількість документів в тендері
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${status}  ${number_of_documents}=  Run keyword and ignore error
+  ...      Get Length
+  ...      ${tender.data.documents}
+  ${error_message}=  Convert To String  ${number_of_documents}
+  ${number_of_documents}=  Set Variable If
+  ...      "AttributeError" in "${error_message}" or "KeyError" in "${error_message}"
+  ...      ${0}
+  ...      ${number_of_documents}
+  Log  ${number_of_documents}
+  [return]  ${number_of_documents}
+
 ##############################################################################
 #             Item operations
 ##############################################################################
@@ -218,6 +267,20 @@ Library  openprocurement_client_helper.py
   Remove From List  ${tender.data['items']}  ${item_index}
   Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
 
+
+Отримати кількість предметів в тендері
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${status}  ${number_of_items}=  Run keyword and ignore error
+  ...      Get Length
+  ...      ${tender.data['items']}
+  ${error_message}=  Convert To String  ${number_of_items}
+  ${number_of_items}=  Set Variable If
+  ...      "AttributeError" in "${error_message}" or "KeyError" in "${error_message}"
+  ...      ${0}
+  ...      ${number_of_items}
+  Log  ${number_of_items}
+  [return]  ${number_of_items}
 
 ##############################################################################
 #             Feature operations
@@ -669,7 +732,7 @@ Library  openprocurement_client_helper.py
   ...      ${tender.data.bids[${bid_index}].documents}
   ${error_message}=  Convert To String  ${number_of_documents}
   ${number_of_documents}=  Set Variable If
-  ...      "AttributeError" in "${error_message}"
+  ...      "AttributeError" in "${error_message}" or "KeyError" in "${error_message}"
   ...      ${0}
   ...      ${number_of_documents}
   Log  ${number_of_documents}

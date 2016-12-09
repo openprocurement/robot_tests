@@ -52,8 +52,23 @@ Resource           resource.robot
 
 
 Можливість додати Virtual Data Room до тендера
-  ${vdr_url}=  create_fake_vdr_url
+  ${vdr_url}=  create_fake_url
   Run As  ${tender_owner}  Додати Virtual Data Room  ${TENDER['TENDER_UAID']}  ${vdr_url}
+
+
+Можливість додати публічний паспорт активу до тендера
+  ${certificate_url}=  create_fake_url
+  Run As  ${tender_owner}  Додати публічний паспорт активу  ${TENDER['TENDER_UAID']}  ${certificate_url}
+
+
+Можливість додати офлайн документ
+  ${accessDetails}=  create_fake_sentence
+  Run As  ${tender_owner}  Додати офлайн документ  ${TENDER['TENDER_UAID']}  ${accessDetails}
+
+
+Можливість завантажити документ до тендера з типом ${doc_type}
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
+  Run As  ${tender_owner}  Завантажити документ в тендер з типом  ${TENDER['TENDER_UAID']}  ${file_path}  ${doc_type}
 
 
 Можливість додати предмет закупівлі в тендер
@@ -67,6 +82,22 @@ Resource           resource.robot
 
 Можливість видалити предмет закупівлі з тендера
   Run As  ${tender_owner}  Видалити предмет закупівлі  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].item_data.item_id}
+
+
+Неможливість додати предмет закупівлі в тендер
+  ${len_of_items_before_patch}=  Run As  ${tender_owner}  Отримати кількість предметів в тендері  ${TENDER['TENDER_UAID']}
+  ${item}=  Підготувати дані для створення предмету закупівлі  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['id']}
+  Run As  ${tender_owner}  Додати предмет закупівлі  ${TENDER['TENDER_UAID']}  ${item}
+  ${len_of_items_after_patch}=  Run As  ${tender_owner}  Отримати кількість предметів в тендері  ${TENDER['TENDER_UAID']}
+  Порівняти об'єкти  ${len_of_items_before_patch}  ${len_of_items_after_patch}
+
+
+Неможливість видалити предмет закупівлі з тендера
+  ${len_of_items_before_patch}=  Run As  ${tender_owner}  Отримати кількість предметів в тендері  ${TENDER['TENDER_UAID']}
+  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]}
+  Run As  ${tender_owner}  Видалити предмет закупівлі  ${TENDER['TENDER_UAID']}  ${item_id}
+  ${len_of_items_after_patch}=  Run As  ${tender_owner}  Отримати кількість предметів в тендері  ${TENDER['TENDER_UAID']}
+  Порівняти об'єкти  ${len_of_items_before_patch}  ${len_of_items_after_patch}
 
 
 Звірити відображення поля ${field} документа ${doc_id} із ${left} для користувача ${username}
@@ -147,6 +178,14 @@ Resource           resource.robot
 Звірити відображення координат ${item_index} предмету для користувача ${username}
   ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}]}
   Звірити координати доставки тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${item_id}
+
+
+Звірити належність усіх предметів до різних груп для користувача ${username}
+  :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
+  \  @{items}=  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  items
+  ${len_of_items}=  Get Length  ${items}
+  ${comparision}=  compare_CAV_groups  ${len_of_items}  @{items}
+  Should Be True  ${comparision}
 
 
 Отримати дані із поля ${field} тендера для усіх користувачів
