@@ -514,18 +514,9 @@ def local_path_to_file(file_name):
     return os.path.join(os.path.dirname(__file__), 'documents', file_name)
 
 
-def compare_CAV_groups(length, *items):
-    # Checks CAV groups of *items
-    # Arguments: length - number of items
-    #            *items - list of items
-    # Return True, if all items have different CAV groups, and
-    # return False, if at least two items have same CAV group.
-    for i in range(length):
-        i_classification = items[i].get('classification', '')
-        i_cav_group = i_classification.get('id', '')
-        for j in range(length):
-            j_classification = items[j].get('classification', '')
-            j_cav_group = j_classification.get('id', '')
-            if(i_cav_group == j_cav_group and i != j):
-                return False
-    return True
+def compare_CAV_groups(items):
+    """
+    Return True if all CAV groups in @items are unique, otherwise False.
+    """
+    cav_groups = [item.get('classification', {}).get('id') for item in items]
+    return len(cav_groups) == len(set(cav_groups))
