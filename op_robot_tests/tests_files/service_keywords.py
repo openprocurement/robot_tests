@@ -151,6 +151,27 @@ def compare_coordinates(left_lat, left_lon, right_lat, right_lon, accuracy=0.1):
     return True
 
 
+def compare_tender_attempts(left, right):
+    if isinstance(right, int):
+        if left == right:
+            return True
+        raise ValueError(u"Objects are not equal")
+    elif isinstance(right, str):
+        convert_tender_attempts(left)
+        if left == right:
+            return True
+        raise ValueError(u"Objects are not equal")
+    raise ValueError(u"Incorrect object types")
+
+
+def convert_tender_attempts(attempts):
+    if attempts == 1:
+        return u"Лот виставляється вперше"
+    elif attempts in [2,3,4,]:
+        return u"Лот виставляється повторно"
+    raise ValueError(u"Cannot convert attempts")
+
+
 def log_object_data(data, file_name=None, format="yaml", update=False, artifact=False):
     """Log object data in pretty format (JSON or YAML)
 

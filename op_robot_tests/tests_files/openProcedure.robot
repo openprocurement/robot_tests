@@ -77,7 +77,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view_tenderAttempts
-  Звірити відображення поля tenderAttempts тендера для користувача ${viewer}
+  Звірити поле tenderAttempts тендера для користувача ${viewer}
 
 
 Відображення опису лоту
