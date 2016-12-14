@@ -425,6 +425,12 @@ Log differences between dicts
   Порівняти об'єкти  ${match_in_document}  ${True}
 
 
+Звірити поле ${field} тендера для користувача ${username}
+  ${left}=  Set Variable  ${USERS.users['${tender_owner}'].initial_data.data.${field}}
+  ${right}=  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}  ${Empty}
+  compare_tender_attempts  ${left}  ${right}
+
+
 Порівняти об'єкти
   [Arguments]  ${left}  ${right}
   Log  ${left}
