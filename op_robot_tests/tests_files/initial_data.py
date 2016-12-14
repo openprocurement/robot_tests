@@ -454,12 +454,11 @@ def test_tender_data_dgf_other(params):
     data["procuringEntity"] = fake.procuringEntity_other()
 
     cav_group_other = fake.cav_other()[:3]
-    used_cavs = []
-    used_cavs.append(cav_group_other)
+    used_cavs = [cav_group_other]
     for i in range(params['number_of_items']):
         new_item = test_item_data(cav_group_other)
         data['items'].append(new_item)
-        while cav_group_other in used_cavs and i != params['number_of_items'] -1:
+        while (cav_group_other in used_cavs) and (i != (params['number_of_items'] - 1)):
             cav_group_other = fake.cav_other()[:3]
         used_cavs.append(cav_group_other)
     return data

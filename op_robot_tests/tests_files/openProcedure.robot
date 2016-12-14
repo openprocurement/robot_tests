@@ -391,33 +391,33 @@ ${ITEM_MEAT}        ${True}
 
 
 Неможливість змінити дату рішення про затвердження умов продажу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних лоту
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_decisionDate
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  ${new_title}=  create_fake_dgfDecisionDate
-  Перевірити неможливість зміни поля dgfDecisionDate тендера на значення ${new_title} для користувача ${tender_owner}
+  ${new_date}=  create_fake_dgfDecisionDate
+  Перевірити неможливість зміни поля dgfDecisionDate тендера на значення ${new_date} для користувача ${tender_owner}
 
 
 Неможливість змінити номер рішення про затвердження умов продажу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних лоту
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_decisionID
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  ${new_title}=  create_fake_dgfDecisionID
-  Перевірити неможливість зміни поля dgfDecisionID тендера на значення ${new_title} для користувача ${tender_owner}
+  ${new_id}=  create_fake_dgfDecisionID
+  Перевірити неможливість зміни поля dgfDecisionID тендера на значення ${new_id} для користувача ${tender_owner}
 
 
 Неможливість змінити поле "Лоти виставляються"
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних лоту
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_tenderAttempts
-  ${new_title}=  create_fake_tenderAttempts
+  ${new_attempt}=  create_fake_tenderAttempts
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  Перевірити неможливість зміни поля tenderAttempts тендера на значення ${new_title} для користувача ${tender_owner}
+  Перевірити неможливість зміни поля tenderAttempts тендера на значення ${new_attempt} для користувача ${tender_owner}
 
 
 Можливість додати документацію до лоту
