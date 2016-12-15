@@ -156,7 +156,7 @@ def compare_tender_attempts(left, right):
         if left == right:
             return True
         raise ValueError(u"Objects are not equal")
-    elif isinstance(right, str):
+    elif isinstance(right, basestring):
         left = convert_tender_attempts(left)
         if left == right:
             return True
