@@ -157,7 +157,7 @@ def compare_tender_attempts(left, right):
             return True
         raise ValueError(u"Objects are not equal")
     elif isinstance(right, str):
-        convert_tender_attempts(left)
+        left = convert_tender_attempts(left)
         if left == right:
             return True
         raise ValueError(u"Objects are not equal")
@@ -167,7 +167,7 @@ def compare_tender_attempts(left, right):
 def convert_tender_attempts(attempts):
     if attempts == 1:
         return u"Лот виставляється вперше"
-    elif attempts in [2,3,4,]:
+    elif attempts in [2, 3, 4, ]:
         return u"Лот виставляється повторно"
     raise ValueError(u"Cannot convert attempts")
 
