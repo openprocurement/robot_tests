@@ -759,6 +759,15 @@ Resource           resource.robot
   ...      ${USERS.users['${provider}'].claim_data['complaintID']}
 
 
+Звірити відображення поля ${field} скарги із ${data} для користувача ${username}
+  Звірити поле скарги із значенням
+  ...      ${username}
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${data}
+  ...      ${field}
+  ...      ${USERS.users['${provider}'].claim_data['complaintID']}
+
+
 Звірити відображення поля ${field} вимоги про виправлення визначення ${award_index} переможця із ${data} для користувача ${username}
   Звірити поле скарги із значенням
   ...      ${username}

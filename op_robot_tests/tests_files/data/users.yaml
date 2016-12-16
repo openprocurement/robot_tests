@@ -15,6 +15,14 @@ users:
         api_key:  ""
         broker:   Quinta
         browser:  firefox
+    amku_Viewer:
+        broker:     amku
+        homepage:   "https://qa-claims-test.prozorro.gov.ua/backend/prozorro/claims/claimspending"
+        browser:    Chrome
+        position:   [0, 0]
+        size:       [1000, 700]
+        AMKU_login:  LesiaVelychko
+        AMKU_password: Lesia
     E-tender_Owner:
         broker:   E-tender
         homepage: "http://bid.uat.e-tender.biz/#/"

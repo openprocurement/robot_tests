@@ -7,7 +7,7 @@ Suite Teardown  Test Suite Teardown
 
 *** Variables ***
 ${MODE}             openeu
-@{USED_ROLES}       tender_owner  provider  provider1  provider2  viewer
+@{USED_ROLES}       tender_owner  provider  provider1  provider2  viewer  amku_role
 ${DIALOGUE_TYPE}    EU
 
 ${NUMBER_OF_ITEMS}  ${1}
@@ -976,7 +976,7 @@ ${ITEM_MEAT}        ${True}
   ...  ${USERS.users['${viewer}'].broker}
   ...  resolve_tender_claim
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля status вимоги із resolved для користувача ${viewer}
+  Звірити відображення поля вимоги із resolved для користувача ${viewer}
 
 
 Відображення задоволення вимоги про виправлення умов закупівлі
@@ -1049,6 +1049,131 @@ ${ITEM_MEAT}        ${True}
   ${new_description}=  create_fake_sentence
   Можливість змінити поле description тендера на ${new_description}
   Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data}  description
+
+##############################################################################################
+#             TENDER COMPLAINTS - AMKU
+##############################################################################################
+
+
+Можливість перевести скаргу в статус 'pending --> accepted'
+  [Tags]  ${USERS.users['${amku_role}'].broker}: Процес оскарження
+  ...  amku_Viewer
+  ...  ${USERS.users['${amku_role}'].broker}
+  ...  accept_tender_complaint
+  [Setup]  Дочекатись синхронізації з майданчиком  ${amku_role}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Перевести скаргу в статус 'pending --> accepted'  ${TENDER['TENDER_UAID']}  ${amku_role}
+
+
+Відображення статусу скарги accepted на порталі Prozorro
+  [Tags]  ${USERS.users['${amku_role}'].broker}: Відображення оскарження
+  ...  amku_Viewer
+  ...  ${USERS.users['${amku_role}'].broker}
+  ...  accept_tender_complaint
+  [Setup]  Дочекатись синхронізації з майданчиком   ${provider}
+  Отримати статус із поля   ${provider}   ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}'].tender_data.data.complaints}      status
+  Звірити відображення поля accepted скарги із ${USERS.users['${provider}'].tender_data.data.complaints[0].status} для користувача ${amku_role}
+
+
+Можливість перевести скаргу в статус 'accepted --> satisfied'
+  [Tags]  ${USERS.users['${amku_role}'].broker}: Процес оскарження
+  ...  amku_Viewer
+  ...  ${USERS.users['${amku_role}'].broker}
+  ...  satisfy_tender_complaint
+  [Setup]  Дочекатись синхронізації з майданчиком  ${amku_role}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Перевести скаргу в статус 'accepted --> satisfied'  ${amku_role}
+
+
+Відображення статусу скарги 'satisfied' на порталі Prozorro
+  [Tags]  ${USERS.users['${amku_role}'].broker}: Відображення оскарження
+  ...  amku_Viewer
+  ...  ${USERS.users['${amku_role}'].broker}
+  ...  satisfy_tender_complaint
+  [Setup]  Дочекатись синхронізації з майданчиком   ${provider}
+  Отримати статус із поля   ${provider}   ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}'].tender_data.data.complaints}      status
+  Звірити відображення поля satisfied скарги із ${USERS.users['${provider}'].tender_data.data.complaints[0].status} для користувача ${amku_role}
+
+
+Можливість перевести скаргу в статус 'accepted --> declined'
+  [Tags]  ${USERS.users['${amku_role}'].broker}: Процес оскарження
+  ...  amku_Viewer
+  ...  ${USERS.users['${amku_role}'].broker}
+  ...  decline_tender_complaint
+  [Setup]  Дочекатись синхронізації з майданчиком  ${amku_role}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Перевести скаргу в статус 'accepted --> declined'  ${amku_role}
+
+
+Відображення статусу скарги 'declined' на порталі Prozorro
+  [Tags]  ${USERS.users['${amku_role}'].broker}: Відображення оскарження
+  ...  amku_Viewer
+  ...  ${USERS.users['${amku_role}'].broker}
+  ...  decline_tender_complaint
+  [Setup]  Дочекатись синхронізації з майданчиком    ${provider}
+  Отримати статус із поля   ${provider}   ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}'].tender_data.data.complaints}      status
+  Звірити відображення поля declined скарги із ${USERS.users['${provider}'].tender_data.data.complaints[0].status} для користувача ${amku_role}
+
+
+Можливість перевести скаргу в статус 'accepted --> stopped'
+  [Tags]  ${USERS.users['${amku_role}'].broker}: Процес оскарження
+  ...  amku_Viewer
+  ...  ${USERS.users['${amku_role}'].broker}
+  ...  stop_tender_complaint
+  [Setup]  Дочекатись синхронізації з майданчиком  ${amku_role}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Перевести скаргу в статус 'accepted --> stopped'  ${amku_role}
+
+
+Відображення статусу скарги 'stopped' на порталі Prozorro
+  [Tags]  ${USERS.users['${amku_role}'].broker}: Відображення оскарження
+  ...  amku_Viewer
+  ...  ${USERS.users['${amku_role}'].broker}
+  ...  stop_tender_complaint
+  [Setup]  Дочекатись синхронізації з майданчиком   ${amku_role}
+  Отримати статус із поля   ${provider}   ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}'].tender_data.data.complaints}      status
+  Звірити відображення поля stopped скарги із ${USERS.users['${provider}'].tender_data.data.complaints[0].status} для користувача ${amku_role}
+
+
+Перевести скаргу в статус 'pending --> mistaken'
+  [Tags]  ${USERS.users['${amku_role}'].broker}: Процес оскарження
+  ...  amku_Viewer
+  ...  ${USERS.users['${amku_role}'].broker}
+  ...  return_mistaken_tender_complaint
+  [Setup]  Дочекатись синхронізації з майданчиком   ${amku_role}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Перевести скаргу в статус 'pending --> mistaken'   ${TENDER['TENDER_UAID']}  ${amku_role}
+
+
+Відображення статусу 'mistaken' на порталі Prozorro
+  [Tags]  ${USERS.users['${amku_role}'].broker}:  Відображення оскарження
+  ...  amku_Viewer
+  ...  ${USERS.users['${amku_role}'].broker}
+  ...  return_mistaken_tender_complaint
+  [Setup]  Дочекатись синхронізації з майданчиком   ${amku_role}
+  Отримати статус із поля   ${provider}   ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}'].tender_data.data.complaints}      status
+  Звірити відображення поля mistaken скарги із ${USERS.users['${provider}'].tender_data.data.complaints[0].status} для користувача ${amku_role}
+
+
+Перевести скаргу в статус 'pending --> invalid'
+  [Tags]  ${USERS.users['${amku_role}'].broker}: Процес оскарження
+  ...  amku_Viewer
+  ...  ${USERS.users['${amku_role}'].broker}
+  ...  return_mistaken_tender_complaint
+  [Setup]  Дочекатись синхронізації з майданчиком   ${amku_role}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Перевести скаргу в статус 'accepted --> mistaken'   ${TENDER['TENDER_UAID']}  ${amku_role}
+
+
+Відображення статусу 'invalid' на порталі Prozorro
+  [Tags]  ${USERS.users['${amku_role}'].broker}: Відображення оскарження
+  ...  amku_Viewer
+  ...  ${USERS.users['${amku_role}'].broker}
+  ...  invalidate_tender_complaint
+  [Setup]  Дочекатись синхронізації з майданчиком   ${amku_role}
+  Отримати статус із поля   ${provider}   ${TENDER['TENDER_UAID']}  ${USERS.users['${provider}'].tender_data.data.complaints}      status
+  Звірити відображення поля invalid скарги із ${USERS.users['${provider}'].tender_data.data.complaints[0].status} для користувача ${amku_role}
+
 
 ##############################################################################################
 #             LOT COMPLAINTS
@@ -1323,6 +1448,7 @@ ${ITEM_MEAT}        ${True}
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider2}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider2}
+
 
 ##############################################################################################
 #             ABOVETRHESHOLD  BIDDING
