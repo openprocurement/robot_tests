@@ -524,8 +524,8 @@ def mult_and_round(*args, **kwargs):
     return round(reduce(operator.mul, args), kwargs.get('precision', 2))
 
 
-def add_and_round(args, kwargs):
-    return float( args + kwargs )
+def add_and_round(arg1, arg2):
+    return float(arg1 + arg2)
 
 
 def generate_test_bid_data_second_stage(tender_data, index='0'):
