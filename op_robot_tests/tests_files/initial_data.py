@@ -70,7 +70,7 @@ def test_tender_data(params,
     submissionMethodDetails = submissionMethodDetails \
         if submissionMethodDetails else "quick"
     now = get_now()
-    value_amount = round(random.uniform(3000, 99999999999.99), 2)  # max value equals to budget of Ukraine in hryvnias
+    value_amount = round(random.uniform(3000, 99999999.99), 2)  # max value equals to budget of Ukraine in hryvnias
     data = {
         "mode": "test",
         "submissionMethodDetails": submissionMethodDetails,
