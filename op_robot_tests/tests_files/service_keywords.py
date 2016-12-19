@@ -498,3 +498,6 @@ def generate_test_bid_data_second_stage(tender_data, index='0'):
             parameter = {"value": fake.random_element(elements=(0.05, 0.01, 0)), "code": feature.get('code', '')}
             bid.data.parameters.append(parameter)
     return bid
+
+def convert_amount_string_to_float(amount_string):
+    return float(amount_string.replace(' ', '').replace(',', '.'))
