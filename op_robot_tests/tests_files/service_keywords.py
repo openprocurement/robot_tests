@@ -467,6 +467,10 @@ def mult_and_round(*args, **kwargs):
     return round(reduce(operator.mul, args), kwargs.get('precision', 2))
 
 
+def add_and_round(args, kwargs):
+    return float( args + kwargs )
+
+
 def generate_test_bid_data_second_stage(tender_data, index='0'):
     bid = test_bid_data()
     if index.isdigit():
