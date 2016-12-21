@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -
 from datetime import timedelta
 from faker import Factory
+from faker.providers.company.en_US import Provider as CompanyProviderEnUs
+from faker.providers.company.ru_RU import Provider as CompanyProviderRuRu
 from munch import munchify
 from uuid import uuid4
 from tempfile import NamedTemporaryFile
@@ -10,10 +12,16 @@ import os
 import random
 
 
-fake = Factory.create('uk_UA')
-fake_ru = Factory.create('ru')
-fake_en = Factory.create()
-fake.add_provider(OP_Provider)
+fake_en = Factory.create(locale='en_US')
+fake_ru = Factory.create(locale='ru_RU')
+fake_uk = Factory.create(locale='uk_UA')
+fake_uk.add_provider(OP_Provider)
+fake = fake_uk
+
+# This workaround fixes an error caused by missing "catch_phrase" class method
+# for the "ru_RU" locale in Faker >= 0.7.4
+fake_ru.add_provider(CompanyProviderEnUs)
+fake_ru.add_provider(CompanyProviderRuRu)
 
 
 def create_fake_sentence():

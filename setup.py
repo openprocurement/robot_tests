@@ -18,30 +18,26 @@ setup(name='op_robot_tests',
       zip_safe=False,
       install_requires=[
           # -*- Extra requirements: -*-
+          'Faker',
+          'Pillow',
+          'PyYAML',
+          'barbecue',
+          'chromedriver',
+          'dateutils',
+          'dpath',
+          'haversine',
+          'iso8601',
+          'jsonpath-rw',
+          'munch',
+          'parse',
+          'pytz',
           'robotframework',
           'robotframework-selenium2library',
-          'robotframework-debuglibrary',
-          'robotframework-selenium2screenshots',
           'selenium < 3.0.dev0',
-          'Pillow',
-          'iso8601',
-          'PyYAML',
-          'munch',
-          'fake-factory',
-          'dpath',
-          'jsonpath-rw',
-          'dateutils',
-          'pytz',
-          'parse',
-          'chromedriver',
-          'barbecue',
-          'haversine'
       ],
       entry_points={
           'console_scripts': [
-              'openprocurement_tests = op_robot_tests.runner:runner',
               'op_tests = op_robot_tests.runner:runner',
-              'rebot = op_robot_tests.rebot:rebot'
           ],
       }
       )
