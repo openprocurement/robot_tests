@@ -1,7 +1,5 @@
 -v MODE:dgfFinancialAssets
 
--v API_HOST_URL:https://api-sandbox.ea.openprocurement.org
-
 -v NUMBER_OF_ITEMS:3
 
 -i create_tender
