@@ -240,7 +240,14 @@ uatenders:
 ubiz:
     intervals:
         default:
-            enquiry: [0, 5]
+            enquiry: [0, 20]
+            tender:  [0, 30]
+        dgfFinancialAssets:
+            accelerator: 1440
+            auction: [35,40]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction: [35,40]
     keywords_file: ubiz
     homepage: 'http://test.ubiz.com.ua'
     syncpage: 'http://test.ubiz.com.ua/site/sync'
