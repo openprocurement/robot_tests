@@ -199,10 +199,10 @@ Promauctions:
             tender:  [0, 25]
         dgfFinancialAssets:
            accelerator: 1440
-           auction:  [45, 50]
+           auction:  [55, 60]
         dgfOtherAssets:
             accelerator: 1440
-            auction:  [45, 50]
+            auction:  [55, 60]
     keywords_file: prom
     roles:
         tender_owner:   Prom_Owner
