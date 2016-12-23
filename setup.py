@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-version = '2.3.5'
+version = '2.3.6'
 
 setup(name='op_robot_tests',
       version=version,
