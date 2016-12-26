@@ -340,7 +340,7 @@ polonex:
         default:
             enquiry: [0, 10]
             tender:  [0, 15]
-            auction: [15, 20]
+            auction:  [15, 20]
     timeout_on_wait: 20
 ueex:
     keywords_file: ueex
