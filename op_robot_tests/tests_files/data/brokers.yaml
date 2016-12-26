@@ -199,10 +199,10 @@ Promauctions:
             tender:  [0, 25]
         dgfFinancialAssets:
            accelerator: 1440
-           auction:  [55, 60]
+           auction:  [45, 50]
         dgfOtherAssets:
             accelerator: 1440
-            auction:  [55, 60]
+            auction:  [45, 50]
     keywords_file: prom
     roles:
         tender_owner:   Prom_Owner
@@ -256,14 +256,7 @@ uatenders:
 ubiz:
     intervals:
         default:
-            enquiry: [0, 20]
-            tender:  [0, 30]
-        dgfFinancialAssets:
-            accelerator: 1440
-            auction: [35,40]
-        dgfOtherAssets:
-            accelerator: 1440
-            auction: [35,40]
+            enquiry: [0, 5]
     keywords_file: ubiz
     homepage: 'http://test.ubiz.com.ua'
     syncpage: 'http://test.ubiz.com.ua/site/sync'
@@ -342,3 +335,16 @@ polonex:
             tender:  [0, 15]
             auction:  [15, 20]
     timeout_on_wait: 20
+ueex:
+    keywords_file: ueex
+    roles:
+        tender_owner:   ueex_Owner
+        provider:       ueex_Provider
+        provider1:      ueex_Provider1
+        viewer:         ueex_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 15]
+            auction:  [15, 20]
+    timeout_on_wait: 10
