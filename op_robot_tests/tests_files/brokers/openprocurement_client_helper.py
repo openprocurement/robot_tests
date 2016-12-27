@@ -10,7 +10,7 @@ import urllib
 def retry_if_request_failed(exception):
     if isinstance(exception, RequestFailed):
         status_code = getattr(exception, 'status_int', None)
-        if 500 <= status_code < 600 or status_code == 429:
+        if 500 <= status_code < 600 or status_code in (409, 429):
             return True
         else:
             return False
@@ -63,6 +63,10 @@ def get_document_by_id(data, doc_id):
                     return document
     for cancellation in data.get('cancellations', []):
         for document in cancellation.get('documents', []):
+            if doc_id in document.get('title', ''):
+                return document
+    for bid in data.get('bids', []):
+        for document in bid.get('documents', []):
             if doc_id in document.get('title', ''):
                 return document
     raise Exception('Document with id {} not found'.format(doc_id))
