@@ -539,32 +539,32 @@ users:
         size:     [1366, 800]
     ueex_Owner:
         broker:   ueex
-        homepage: "https://sale.ueex.com.ua:444/Registration.aspx"
-        default_page: "https://sale.ueex.com.ua:444/PositionList.aspx"
+        homepage: "https://sale.ueex.com.ua/test/Registration.aspx"
+        default_page: "https://sale.ueex.com.ua/test/PositionList.aspx"
         login:    ueex_Owner@1.ua
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
     ueex_Provider:
         broker:   ueex
-        homepage: "https://sale.ueex.com.ua:444/Registration.aspx"
-        default_page: "https://sale.ueex.com.ua:444/PositionList.aspx"
+        homepage: "https://sale.ueex.com.ua/test/Registration.aspx"
+        default_page: "https://sale.ueex.com.ua/test/PositionList.aspx"
         login:    ueex_Provider@1.ua
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
     ueex_Provider1:
         broker:   ueex
-        homepage: "https://sale.ueex.com.ua:444/Registration.aspx"
-        default_page: "https://sale.ueex.com.ua:444/PositionList.aspx"
+        homepage: "https://sale.ueex.com.ua/test/Registration.aspx"
+        default_page: "https://sale.ueex.com.ua/test/PositionList.aspx"
         login:    ueex_Provider1@1.ua
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
     ueex_Viewer:
         broker:   ueex
-        homepage: "https://sale.ueex.com.ua:444/Registration.aspx"
-        default_page: "https://sale.ueex.com.ua:444/PositionList.aspx"
+        homepage: "https://sale.ueex.com.ua/test/Registration.aspx"
+        default_page: "https://sale.ueex.com.ua/test/PositionList.aspx"
         login:    ueex_Viewer@1.ua
         browser:  firefox
         position: [0, 0]
