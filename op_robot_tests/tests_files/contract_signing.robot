@@ -37,7 +37,7 @@ Suite Teardown  Test Suite Teardown
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      stand_still
   ${standstillEnd}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data.awards[-1].complaintPeriod.endDate}
-  Дочекатись дати  ${standstillEnd}
+  wait_and_write_to_console  ${standstillEnd}
 
 
 Можливість завантажити угоду до лоту

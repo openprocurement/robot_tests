@@ -14,6 +14,7 @@ from robot.errors import ExecutionFailed
 from robot.libraries.BuiltIn import BuiltIn
 from robot.output import LOGGER
 from robot.output.loggerhelper import Message
+from time import sleep
 # These imports are not pointless. Robot's resource and testsuite files
 # can access them by simply importing library "service_keywords".
 # Please ignore the warning given by Flake8 or other linter.
@@ -396,6 +397,16 @@ def wait_to_date(date_stamp):
     if wait_seconds < 0:
         return 0
     return wait_seconds
+
+
+def wait_and_write_to_console(date):
+    time = wait_to_date(date)
+    if time > 0:
+        minutes, seconds = divmod(time, 60)
+        for number in xrange(int(minutes)):
+            sleep(60)
+            print('.')
+        sleep(seconds)
 
 
 def merge_dicts(a, b):
