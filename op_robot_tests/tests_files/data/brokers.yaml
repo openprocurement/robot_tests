@@ -342,3 +342,16 @@ polonex:
             tender:  [0, 25]
             auction: [25, 30]
     timeout_on_wait: 10
+ueex:
+    keywords_file: ueex
+    roles:
+        tender_owner:   ueex_Owner
+        provider:       ueex_Provider
+        provider1:      ueex_Provider1
+        viewer:         ueex_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
