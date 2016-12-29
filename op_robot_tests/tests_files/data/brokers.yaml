@@ -229,12 +229,12 @@ SmartTender:
         default:
             enquiry: [0, 10]
             tender:  [0, 20]
-        openua:
+        dgfFinancialAssets:
+           accelerator: 1440
+           auction:  [45, 50]
+        dgfOtherAssets:
             accelerator: 1440
-            tender:  [0, 15]
-        openeu:
-            tender:  [0, 30]
-            accelerator: 1440
+            auction:  [45, 50]
     keywords_file: smarttender
     roles:
         provider:       SmartTender_Provider1
