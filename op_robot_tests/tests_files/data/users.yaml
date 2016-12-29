@@ -32,8 +32,10 @@ users:
         broker:   Quinta
         browser:  firefox
         auth_edr: [test.quintagroup.com, f5111c99a97a45348d8165ba8fcf0d62]
-    E-tender_Owner:
-        broker:   E-tender
+        position: [0, 0]
+        size:     [1400, 900]
+    Etender_Owner:
+        broker:   Etender
         homepage: "http://bid.uat.e-tender.biz/#/"
         login:    Misha2
         password: Password1
