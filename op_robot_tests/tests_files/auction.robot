@@ -282,7 +282,7 @@ Library         Selenium2Library
   Wait Until Keyword Succeeds  62 times  5 s  Page should not contain  → 1
   ${new_date}=  Get Current Date
   ${time}=  Subtract Date From Date  ${new_date}  ${date}
-  Should Be True  ${time} < 310 and ${time} > 260
+  Should Be True  ${time} < 310 and ${time} > 250
   Переключитись на учасника  ${provider}
   Page should not contain  → 1
   Переключитись на учасника  ${provider1}
