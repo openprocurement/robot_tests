@@ -80,7 +80,7 @@ Suite Teardown  Test Suite Teardown
   # Can't use that dirty hack here since we don't know
   # the date of auction when creating the procurement :)
   ${auctionStart}=  Отримати дані із тендера   ${username}  ${TENDER['TENDER_UAID']}   auctionPeriod.startDate  ${TENDER['LOT_ID']}
-  Дочекатись дати  ${auctionStart}
+  wait_and_write_to_console  ${auctionStart}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
 

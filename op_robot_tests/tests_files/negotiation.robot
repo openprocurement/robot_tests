@@ -643,7 +643,7 @@ ${ITEM_MEAT}      ${False}
   ...  level1
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Дочекатись дати  ${USERS.users['${tender_owner}'].tender_data.data.awards[0].complaintPeriod.endDate}
+  wait_and_write_to_console  ${USERS.users['${tender_owner}'].tender_data.data.awards[0].complaintPeriod.endDate}
   Можливість укласти угоду для закупівлі
 
 
