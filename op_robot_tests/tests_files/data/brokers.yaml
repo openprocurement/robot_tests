@@ -79,17 +79,17 @@ Etender:
             tender:  [0, 20]
         dgfFinancialAssets:
            accelerator: 1440
-           auction:  [120, 25]
+           auction:  [110, 25]
         dgfOtherAssets:
             accelerator: 1440
-            auction:  [120, 25]
+            auction:  [110, 25]
     keywords_file: etender
     roles:
         provider:       Etender_Provider1
         provider1:      Etender_Provider2
         tender_owner:   Etender_Owner
         viewer:         Etender_Viewer
-    timeout_on_wait: 600
+    timeout_on_wait: 360
 DZO:
     intervals:
         default:
