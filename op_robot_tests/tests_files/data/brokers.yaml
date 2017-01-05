@@ -241,3 +241,15 @@ APStender:
             enquiry: [0, 15]
             tender:  [0, 15]
     timeout_on_wait: 10
+alfa:
+    keywords_file: alfa
+    intervals:
+        default:
+            enquiry: [0, 15]
+            tender:  [0, 15]
+    roles:
+        provider:       alfa_Provider
+        provider1:      alfa_Provider1
+        tender_owner:   alfa_Owner
+        viewer:         alfa_Viewer
+    timeout_on_wait: 10
