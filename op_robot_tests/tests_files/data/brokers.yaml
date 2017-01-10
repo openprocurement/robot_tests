@@ -249,10 +249,10 @@ uatenders:
             tender:  [0, 30]
         dgfFinancialAssets:
            accelerator: 1440
-           auction:  [70, 75]
+           auction:  [45, 50]
         dgfOtherAssets:
             accelerator: 1440
-            auction:  [70, 75]
+            auction:  [45, 50]
     keywords_file: uatenders
     roles:
         provider:       uatenders_Provider
