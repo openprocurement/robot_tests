@@ -245,7 +245,7 @@ SmartTender:
 uatenders:
     intervals:
         default:
-            enquiry: [0, 20]
+            enquiry: [0, 30]
             tender:  [0, 30]
     keywords_file: uatenders
     roles:
