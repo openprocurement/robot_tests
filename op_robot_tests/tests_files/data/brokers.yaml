@@ -247,6 +247,12 @@ uatenders:
         default:
             enquiry: [0, 30]
             tender:  [0, 30]
+        dgfFinancialAssets:
+           accelerator: 1440
+           auction:  [70, 75]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction:  [70, 75]
     keywords_file: uatenders
     roles:
         provider:       uatenders_Provider
