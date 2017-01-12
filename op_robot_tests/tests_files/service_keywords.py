@@ -442,6 +442,18 @@ def get_complaint_index_by_complaintID(data, complaintID):
     return index
 
 
+
+def get_complaint_index_by_complaintTitle(data, complaintTitle):
+    if not data:
+        return 0
+    for index, element in enumerate(data):
+        if element['title'] == complaintTitle:
+            break
+    else:
+        index += 1
+    return index
+
+
 def generate_test_bid_data(tender_data):
     bid = test_bid_data()
     if tender_data.get('procurementMethodType', '')[:-2] in ('aboveThreshold', 'competitiveDialogue'):
