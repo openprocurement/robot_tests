@@ -628,7 +628,7 @@ Resource           resource.robot
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['claim_data']['claim']['data']['title']}
   ...      cancelled
 
 
@@ -651,7 +651,7 @@ Resource           resource.robot
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['claim_data']['claim']['data']['title']}
   ...      cancelled
 
 
@@ -677,7 +677,7 @@ Resource           resource.robot
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['claim_data']['claim']['data']['title']}
   ...      ${status}
   ...      ${award_index}
 
@@ -700,7 +700,7 @@ Resource           resource.robot
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['claim_data']['claim']['data']['title']}
   ...      pending
 
 
@@ -722,7 +722,7 @@ Resource           resource.robot
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['claim_data']['claim']['data']['title']}
   ...      pending
 
 
@@ -745,7 +745,7 @@ Resource           resource.robot
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['claim_data'][['claim']['data']['title']}
   ...      pending
   ...      ${award_index}
 
@@ -756,7 +756,7 @@ Resource           resource.robot
   ...      ${TENDER['TENDER_UAID']}
   ...      ${data}
   ...      ${field}
-  ...      ${USERS.users['${provider}'].claim_data['complaintID']}
+  ...      ${USERS.users['${provider}'].claim_data['claim']['data']['title']}
 
 
 Звірити відображення поля ${field} вимоги про виправлення визначення ${award_index} переможця із ${data} для користувача ${username}
@@ -765,7 +765,7 @@ Resource           resource.robot
   ...      ${TENDER['TENDER_UAID']}
   ...      ${data}
   ...      ${field}
-  ...      ${USERS.users['${provider}'].claim_data['complaintID']}
+  ...      ${USERS.users['${provider}'].claim_data['claim']['data']['title']}
   ...      ${award_index}
 
 
@@ -786,7 +786,7 @@ Resource           resource.robot
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['claim_data']['claim']['data']['title']}
   ...      answered
 
 
@@ -807,7 +807,7 @@ Resource           resource.robot
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['claim_data']['claim']['data']['title']}
   ...      answered
 
 
@@ -829,7 +829,7 @@ Resource           resource.robot
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['claim_data']['claim']['data']['title']}
   ...      answered
   ...      ${award_index}
 
@@ -852,7 +852,7 @@ Resource           resource.robot
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['claim_data']['claim']['data']['title']}
   ...      resolved
 
 
@@ -874,7 +874,7 @@ Resource           resource.robot
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['claim_data']['claim']['data']['title']}
   ...      resolved
 
 
@@ -897,7 +897,7 @@ Resource           resource.robot
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['claim_data']['claim']['data']['title']}
   ...      resolved
   ...      ${award_index}
 
