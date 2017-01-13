@@ -371,6 +371,94 @@ users:
         browser:  chrome
         position: [0, 500]
         size:     [1280, 800]
+    comminnex_Owner:
+        broker:   comminnex
+        homepage: "http://test.market.comminnex.com"
+        login:    comnxliquidator@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1280, 800]
+    comminnex_Provider1:
+        broker:   comminnex
+        homepage: "http://test.market.comminnex.com"
+        login:    part1@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [0, 800]
+        size:     [1280, 800]
+    comminnex_Viewer:
+        broker:   comminnex
+        homepage: "http://test.market.comminnex.com"
+        browser:  chrome
+        position: [0, 500]
+        size:     [1280, 800]
+    torgibirgaukraine_Owner:
+        broker:   torgibirgaukraine
+        homepage: "http://test.torgi.birga-ukraine.com.ua"
+        login:    tbuliquidator@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1280, 800]
+    torgibirgaukraine_Provider1:
+        broker:   torgibirgaukraine
+        homepage: "http://test.torgi.birga-ukraine.com.ua"
+        login:    part1@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [0, 800]
+        size:     [1280, 800]
+    torgibirgaukraine_Viewer:
+        broker:   torgibirgaukraine
+        homepage: "http://test.torgi.birga-ukraine.com.ua"
+        browser:  chrome
+        position: [0, 500]
+        size:     [1280, 800]
+    statusexpert_Owner:
+        broker:   statusexpert
+        homepage: "http://test.torgi.status-expert.com.ua"
+        login:    expliquidator@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1280, 800]
+    statusexpert_Provider1:
+        broker:   statusexpert
+        homepage: "http://test.torgi.status-expert.com.ua"
+        login:    part1@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [0, 800]
+        size:     [1280, 800]
+    statusexpert_Viewer:
+        broker:   statusexpert
+        homepage: "http://test.torgi.status-expert.com.ua"
+        browser:  chrome
+        position: [0, 500]
+        size:     [1280, 800]
+    vidol_Owner:
+        broker:   vidol
+        homepage: "http://test.torgi.vidol.com.ua"
+        login:    vidolliquidator@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1280, 800]
+    vidol_Provider1:
+        broker:   vidol
+        homepage: "http://test.torgi.vidol.com.ua"
+        login:    part1@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [0, 800]
+        size:     [1280, 800]
+    vidol_Viewer:
+        broker:   vidol
+        homepage: "http://test.torgi.vidol.com.ua"
+        browser:  chrome
+        position: [0, 500]
+        size:     [1280, 800]
     zakpro_Owner:
         broker:   zakpro
         homepage: "https://market.zakupkipro.com/"

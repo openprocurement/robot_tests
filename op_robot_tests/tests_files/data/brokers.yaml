@@ -258,6 +258,90 @@ ubiz:
         tender_owner:   ubiz_Owner
         viewer:         ubiz_Viewer
     timeout_on_wait: 140
+сomminnex:
+    intervals:
+        default:
+            enquiry: [0, 20]
+            tender:  [0, 30]
+        dgfFinancialAssets:
+            accelerator: 1440
+            auction: [35,40]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction: [35,40]
+    keywords_file: сomminnex
+    homepage: 'http://test.market.comminnex.com'
+    syncpage: 'http://test.market.comminnex.com/site/sync'
+    syncdocs: 'http://test.market.comminnex.com/site/syncdocs'
+    roles:
+        provider:       сomminnex_Provider1
+        provider1:      сomminnex_Provider2
+        tender_owner:   сomminnex_Owner
+        viewer:         сomminnex_Viewer
+    timeout_on_wait: 140
+torgibirgaukraine:
+    intervals:
+        default:
+            enquiry: [0, 20]
+            tender:  [0, 30]
+        dgfFinancialAssets:
+            accelerator: 1440
+            auction: [35,40]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction: [35,40]
+    keywords_file: torgibirgaukraine
+    homepage: 'http://test.torgi.birga-ukraine.com.ua'
+    syncpage: 'http://test.torgi.birga-ukraine.com.ua/site/sync'
+    syncdocs: 'http://test.torgi.birga-ukraine.com.ua/site/syncdocs'
+    roles:
+        provider:       torgibirgaukraine_Provider1
+        provider1:      torgibirgaukraine_Provider2
+        tender_owner:   torgibirgaukraine_Owner
+        viewer:         torgibirgaukraine_Viewer
+    timeout_on_wait: 140
+statusexpert:
+    intervals:
+        default:
+            enquiry: [0, 20]
+            tender:  [0, 30]
+        dgfFinancialAssets:
+            accelerator: 1440
+            auction: [35,40]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction: [35,40]
+    keywords_file: statusexpert
+    homepage: 'http://test.torgi.status-expert.com.ua'
+    syncpage: 'http://test.torgi.status-expert.com.ua/site/sync'
+    syncdocs: 'http://test.torgi.status-expert.com.ua/site/syncdocs'
+    roles:
+        provider:       statusexpert_Provider1
+        provider1:      statusexpert_Provider2
+        tender_owner:   statusexpert_Owner
+        viewer:         statusexpert_Viewer
+    timeout_on_wait: 140
+vidol:
+    intervals:
+        default:
+            enquiry: [0, 20]
+            tender:  [0, 30]
+        dgfFinancialAssets:
+            accelerator: 1440
+            auction: [35,40]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction: [35,40]
+    keywords_file: vidol
+    homepage: 'http://test.torgi.vidol.com.ua'
+    syncpage: 'http://test.torgi.vidol.com.ua/site/sync'
+    syncdocs: 'http://test.torgi.vidol.com.ua/site/syncdocs'
+    roles:
+        provider:       vidol_Provider1
+        provider1:      vidol_Provider2
+        tender_owner:   vidol_Owner
+        viewer:         vidol_Viewer
+    timeout_on_wait: 140
 zakpro:
     intervals:
         default:
