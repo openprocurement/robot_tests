@@ -387,6 +387,14 @@ users:
         browser:  chrome
         position: [0, 800]
         size:     [1280, 800]
+    comminnex_Provider2:
+        broker:   comminnex
+        homepage: "http://test.market.comminnex.com"
+        login:    part2@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [800, 0]
+        size:     [1280, 800]
     comminnex_Viewer:
         broker:   comminnex
         homepage: "http://test.market.comminnex.com"
@@ -408,6 +416,14 @@ users:
         password: 123456
         browser:  chrome
         position: [0, 800]
+        size:     [1280, 800]
+    torgibirgaukraine_Provider2:
+        broker:   torgibirgaukraine
+        homepage: "http://test.torgi.birga-ukraine.com.ua"
+        login:    part2@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [800, 0]
         size:     [1280, 800]
     torgibirgaukraine_Viewer:
         broker:   torgibirgaukraine
@@ -431,6 +447,14 @@ users:
         browser:  chrome
         position: [0, 800]
         size:     [1280, 800]
+    statusexpert_Provider2:
+        broker:   statusexpert
+        homepage: "http://test.torgi.status-expert.com.ua"
+        login:    part2@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [800, 0]
+        size:     [1280, 800]
     statusexpert_Viewer:
         broker:   statusexpert
         homepage: "http://test.torgi.status-expert.com.ua"
@@ -452,6 +476,14 @@ users:
         password: 123456
         browser:  chrome
         position: [0, 800]
+        size:     [1280, 800]
+    vidol_Provider2:
+        broker:   vidol
+        homepage: "http://test.torgi.vidol.com.ua"
+        login:    part2@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [800, 0]
         size:     [1280, 800]
     vidol_Viewer:
         broker:   vidol
