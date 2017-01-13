@@ -165,6 +165,36 @@ users:
         browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
+    brizol_Owner:
+        broker:   brizol
+        homepage: "https://eauction.brizol.net"
+        login:    prozorroytenderowner@gmail.com
+        password: 123456
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    brizol_Provider:
+        broker:   brizol
+        homepage: "https://eauction.brizol.net"
+        login:    prozorroyprovider1@gmail.com
+        password: 123456
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    brizol_Provider1:
+        broker:   brizol
+        homepage: "https://eauction.brizol.net"
+        login:    prozorroyprovider2@gmail.com
+        password: 123456
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    brizol_Viewer:
+        broker:   brizol
+        homepage: "https://eauction.brizol.net"
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
     ztv_Owner:
         broker:   ztv
         homepage: "http://ztv.byustudio.in.ua/web/"
