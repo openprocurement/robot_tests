@@ -369,8 +369,8 @@ ecommodity:
         provider1:      ecommodity_provider1
         tender_owner:   ecommodity_owner
     homepage: 'https://zakupki.e-commodity.fbp.com.ua'
-    intervals: 
-         default: 
+    intervals:
+         default:
              enquiry: [0, 10]
              tender:  [0, 15]
          dgfFinancialAssets:
@@ -380,3 +380,31 @@ ecommodity:
              accelerator: 1440
              auction: [15, 20]
     timeout_on_wait: 60
+etc:
+    keywords_file: etc
+    roles:
+        viewer:         etc_viewer
+        provider:       etc_provider
+        provider1:      etc_provider1
+        tender_owner:   etc_owner
+    homepage: 'https://etc-torgi.com'
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
+etrading:
+    keywords_file: etrading
+    roles:
+        viewer:         etrading_viewer
+        provider:       etrading_provider
+        provider1:      etrading_provider1
+        tender_owner:   etrading_owner
+    homepage: 'https://e-trading.kiev.ua'
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
