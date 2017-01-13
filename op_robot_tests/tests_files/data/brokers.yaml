@@ -380,3 +380,16 @@ ecommodity:
              accelerator: 1440
              auction: [15, 20]
     timeout_on_wait: 60
+katerynoslav:
+    keywords_file: ueex
+    roles:
+        tender_owner:   katerynoslav_Owner
+        provider:       katerynoslav_Provider
+        provider1:      katerynoslav_Provider1
+        viewer:         katerynoslav_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
