@@ -437,5 +437,5 @@ katerynoslav:
         default:
             enquiry: [0, 10]
             tender:  [0, 15]
-            auction: [10, 20]
+            auction: [25, 30]
     timeout_on_wait: 10
