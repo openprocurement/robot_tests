@@ -180,6 +180,24 @@ brizol:
         provider1:   brizol_Provider1
         viewer:   brizol_Viewer
     timeout_on_wait: 180
+govfound:
+    intervals:
+        default:
+            enquiry: [0, 17]
+            tender:  [0, 19]
+        dgfFinancialAssets:
+           accelerator: 1440
+           auction:  [45, 50]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction:  [45, 50]
+    keywords_file: govfound
+    roles:
+        tender_owner:   govfound_Owner
+        provider:   govfound_Provider
+        provider1:   govfound_Provider1
+        viewer:   govfound_Viewer
+    timeout_on_wait: 180
 ztv:
     intervals:
         default:
