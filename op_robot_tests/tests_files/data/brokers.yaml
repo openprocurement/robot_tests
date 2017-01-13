@@ -258,7 +258,7 @@ ubiz:
         tender_owner:   ubiz_Owner
         viewer:         ubiz_Viewer
     timeout_on_wait: 140
-сomminnex:
+comminnex:
     intervals:
         default:
             enquiry: [0, 20]
@@ -269,15 +269,15 @@ ubiz:
         dgfOtherAssets:
             accelerator: 1440
             auction: [35,40]
-    keywords_file: сomminnex
+    keywords_file: comminnex
     homepage: 'http://test.market.comminnex.com'
     syncpage: 'http://test.market.comminnex.com/site/sync'
     syncdocs: 'http://test.market.comminnex.com/site/syncdocs'
     roles:
-        provider:       сomminnex_Provider1
-        provider1:      сomminnex_Provider2
-        tender_owner:   сomminnex_Owner
-        viewer:         сomminnex_Viewer
+        provider:       comminnex_Provider1
+        provider1:      comminnex_Provider2
+        tender_owner:   comminnex_Owner
+        viewer:         comminnex_Viewer
     timeout_on_wait: 140
 torgibirgaukraine:
     intervals:
@@ -341,6 +341,27 @@ vidol:
         provider1:      vidol_Provider2
         tender_owner:   vidol_Owner
         viewer:         vidol_Viewer
+    timeout_on_wait: 140
+uutb:
+    intervals:
+        default:
+            enquiry: [0, 20]
+            tender:  [0, 30]
+        dgfFinancialAssets:
+            accelerator: 1440
+            auction: [35,40]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction: [35,40]
+    keywords_file: uutb
+    homepage: 'http://test.tp.uutb.com.ua'
+    syncpage: 'http://test.tp.uutb.com.ua/site/sync'
+    syncdocs: 'http://test.tp.uutb.com.ua/site/syncdocs'
+    roles:
+        provider:       tpuutb_Provider1
+        provider1:      tpuutb_Provider2
+        tender_owner:   tpuutb_Owner
+        viewer:         tpuutb_Viewer
     timeout_on_wait: 140
 zakpro:
     intervals:

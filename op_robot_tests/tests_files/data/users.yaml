@@ -491,6 +491,36 @@ users:
         browser:  chrome
         position: [0, 500]
         size:     [1280, 800]
+    uutb_Owner:
+        broker:   uutb
+        homepage: "http://test.tp.uutb.com.ua"
+        login:    tpuutbliquidator@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1280, 800]
+    uutb_Provider1:
+        broker:   uutb
+        homepage: "http://test.tp.uutb.com.ua"
+        login:    part1@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [0, 800]
+        size:     [1280, 800]
+    uutb_Provider2:
+        broker:   uutb
+        homepage: "http://test.tp.uutb.com.ua"
+        login:    part2@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [800, 0]
+        size:     [1280, 800]
+    uutb_Viewer:
+        broker:   uutb
+        homepage: "http://test.tp.uutb.com.ua"
+        browser:  chrome
+        position: [0, 500]
+        size:     [1280, 800]
     zakpro_Owner:
         broker:   zakpro
         homepage: "https://market.zakupkipro.com/"
