@@ -358,10 +358,10 @@ uutb:
     syncpage: 'http://test.tp.uutb.com.ua/site/sync'
     syncdocs: 'http://test.tp.uutb.com.ua/site/syncdocs'
     roles:
-        provider:       tpuutb_Provider1
-        provider1:      tpuutb_Provider2
-        tender_owner:   tpuutb_Owner
-        viewer:         tpuutb_Viewer
+        provider:       uutb_Provider1
+        provider1:      uutb_Provider2
+        tender_owner:   uutb_Owner
+        viewer:         uutb_Viewer
     timeout_on_wait: 140
 zakpro:
     intervals:
