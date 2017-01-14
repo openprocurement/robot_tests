@@ -427,7 +427,7 @@ etrading:
             auction: [25, 30]
     timeout_on_wait: 10
 katerynoslav:
-    keywords_file: ueex
+    keywords_file: nkc
     roles:
         tender_owner:   katerynoslav_Owner
         provider:       katerynoslav_Provider
