@@ -728,4 +728,36 @@ users:
         browser:  ff
         position: [0, 0]
         size:     [1366, 800]
+    katerynoslav_Owner:
+        broker:   katerynoslav
+        homepage: "https://sale-tbe.com.ua/test/Registration.aspx"
+        default_page: "https://sale-tbe.com.ua/test/PositionList.aspx"
+        login:    tbe_Owner@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    katerynoslav_Provider:
+        broker:   katerynoslav
+        homepage: "https://sale-tbe.com.ua/test/Registration.aspx"
+        default_page: "https://sale-tbe.com.ua/test/PositionList.aspx"
+        login:    tbe_Provider@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    katerynoslav_Provider1:
+        broker:   katerynoslav
+        homepage: "https://sale-tbe.com.ua/test/Registration.aspx"
+        default_page: "https://sale-tbe.com.ua/test/PositionList.aspx"
+        login:    tbe_Provider1@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    katerynoslav_Viewer:
+        broker:   katerynoslav
+        homepage: "https://sale-tbe.com.ua/test/Registration.aspx"
+        default_page: "https://sale-tbe.com.ua/test/PositionList.aspx"
+        login:    tbe_Viewer@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
 
