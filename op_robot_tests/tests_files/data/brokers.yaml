@@ -377,7 +377,7 @@ cuex:
     keywords_file: cuex
     homepage: 'http://testing.torgy.com.ua'
     syncpage: 'http://testing.torgy.com.ua/site/sync'
-    syncdocs: 'testing.torgy.com.ua/site/syncdocs'
+    syncdocs: 'http://testing.torgy.com.ua/site/syncdocs'
     roles:
         provider:       cuex_Provider1
         provider1:      cuex_Provider2
