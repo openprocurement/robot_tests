@@ -521,6 +521,36 @@ users:
         browser:  chrome
         position: [0, 500]
         size:     [1280, 800]
+    cuex_Owner:
+        broker:   cuex
+        homepage: "http://testing.torgy.com.ua"
+        login:    cuexliquidator@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1280, 800]
+    cuex_Provider1:
+        broker:   cuex
+        homepage: "http://testing.torgy.com.ua"
+        login:    part1@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [0, 800]
+        size:     [1280, 800]
+    cuex_Provider2:
+        broker:   cuex
+        homepage: "http://testing.torgy.com.ua"
+        login:    part2@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [800, 0]
+        size:     [1280, 800]
+    cuex_Viewer:
+        broker:   cuex
+        homepage: "http://testing.torgy.com.ua"
+        browser:  chrome
+        position: [0, 500]
+        size:     [1280, 800]
     zakpro_Owner:
         broker:   zakpro
         homepage: "https://market.zakupkipro.com/"
