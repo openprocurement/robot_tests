@@ -180,6 +180,78 @@ brizol:
         provider1:   brizol_Provider1
         viewer:   brizol_Viewer
     timeout_on_wait: 180
+aukzionua:
+    intervals:
+        default:
+            enquiry: [0, 17]
+            tender:  [0, 19]
+        dgfFinancialAssets:
+           accelerator: 1440
+           auction:  [45, 50]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction:  [45, 50]
+    keywords_file: aukzionua
+    roles:
+        tender_owner:   aukzionua_Owner
+        provider:   aukzionua_Provider
+        provider1:   aukzionua_Provider1
+        viewer:   aukzionua_Viewer
+    timeout_on_wait: 180
+capitalua:
+    intervals:
+        default:
+            enquiry: [0, 17]
+            tender:  [0, 19]
+        dgfFinancialAssets:
+           accelerator: 1440
+           auction:  [45, 50]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction:  [45, 50]
+    keywords_file: capitalua
+    roles:
+        tender_owner:   capitalua_Owner
+        provider:   capitalua_Provider
+        provider1:   capitalua_Provider1
+        viewer:   capitalua_Viewer
+    timeout_on_wait: 180
+centrex:
+    intervals:
+        default:
+            enquiry: [0, 17]
+            tender:  [0, 19]
+        dgfFinancialAssets:
+           accelerator: 1440
+           auction:  [45, 50]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction:  [45, 50]
+    keywords_file: centrex
+    roles:
+        tender_owner:   centrex_Owner
+        provider:   centrex_Provider
+        provider1:   centrex_Provider1
+        viewer:   centrex_Viewer
+    timeout_on_wait: 180
+expagency:
+    intervals:
+        default:
+            enquiry: [0, 17]
+            tender:  [0, 19]
+        dgfFinancialAssets:
+           accelerator: 1440
+           auction:  [45, 50]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction:  [45, 50]
+    keywords_file: expagency
+    roles:
+        tender_owner:   expagency_Owner
+        provider:   expagency_Provider
+        provider1:   expagency_Provider1
+        viewer:   expagency_Viewer
+    timeout_on_wait: 180
 govfound:
     intervals:
         default:
