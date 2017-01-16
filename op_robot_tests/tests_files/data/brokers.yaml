@@ -374,10 +374,10 @@ ubiz:
             tender:  [0, 30]
         dgfFinancialAssets:
             accelerator: 1440
-            auction: [35,40]
+            auction: [45,50]
         dgfOtherAssets:
             accelerator: 1440
-            auction: [35,40]
+            auction: [50,55]
     keywords_file: ubiz
     homepage: 'http://test.ubiz.com.ua'
     syncpage: 'http://test.ubiz.com.ua/site/sync'
@@ -387,7 +387,7 @@ ubiz:
         provider1:      ubiz_Provider2
         tender_owner:   ubiz_Owner
         viewer:         ubiz_Viewer
-    timeout_on_wait: 140
+    timeout_on_wait: 300
 zakpro:
     intervals:
         default:
@@ -529,3 +529,129 @@ katerynoslav:
             tender:  [0, 25]
             auction: [25, 30]
     timeout_on_wait: 10
+comminnex:
+    intervals:
+        default:
+            enquiry: [0, 20]
+            tender:  [0, 30]
+        dgfFinancialAssets:
+            accelerator: 1440
+            auction: [45,50]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction: [50,55]
+    keywords_file: comminnex
+    homepage: 'http://test.market.comminnex.com'
+    syncpage: 'http://test.market.comminnex.com/site/sync'
+    syncdocs: 'http://test.market.comminnex.com/site/syncdocs'
+    roles:
+        provider:       comminnex_Provider1
+        provider1:      comminnex_Provider2
+        tender_owner:   comminnex_Owner
+        viewer:         comminnex_Viewer
+    timeout_on_wait: 300
+torgibirgaukraine:
+    intervals:
+        default:
+            enquiry: [0, 20]
+            tender:  [0, 30]
+        dgfFinancialAssets:
+            accelerator: 1440
+            auction: [45,50]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction: [45,50]
+    keywords_file: torgibirgaukraine
+    homepage: 'http://test.torgi.birga-ukraine.com.ua'
+    syncpage: 'http://test.torgi.birga-ukraine.com.ua/site/sync'
+    syncdocs: 'http://test.torgi.birga-ukraine.com.ua/site/syncdocs'
+    roles:
+        provider:       torgibirgaukraine_Provider1
+        provider1:      torgibirgaukraine_Provider2
+        tender_owner:   torgibirgaukraine_Owner
+        viewer:         torgibirgaukraine_Viewer
+    timeout_on_wait: 300
+statusexpert:
+    intervals:
+        default:
+            enquiry: [0, 20]
+            tender:  [0, 30]
+        dgfFinancialAssets:
+            accelerator: 1440
+            auction: [45,50]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction: [50,55]
+    keywords_file: statusexpert
+    homepage: 'http://test.torgi.status-expert.com.ua'
+    syncpage: 'http://test.torgi.status-expert.com.ua/site/sync'
+    syncdocs: 'http://test.torgi.status-expert.com.ua/site/syncdocs'
+    roles:
+        provider:       statusexpert_Provider1
+        provider1:      statusexpert_Provider2
+        tender_owner:   statusexpert_Owner
+        viewer:         statusexpert_Viewer
+    timeout_on_wait: 300
+vidol:
+    intervals:
+        default:
+            enquiry: [0, 20]
+            tender:  [0, 30]
+        dgfFinancialAssets:
+            accelerator: 1440
+            auction: [45,50]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction: [50,55]
+    keywords_file: vidol
+    homepage: 'http://test.torgi.vidol.com.ua'
+    syncpage: 'http://test.torgi.vidol.com.ua/site/sync'
+    syncdocs: 'http://test.torgi.vidol.com.ua/site/syncdocs'
+    roles:
+        provider:       vidol_Provider1
+        provider1:      vidol_Provider2
+        tender_owner:   vidol_Owner
+        viewer:         vidol_Viewer
+    timeout_on_wait: 300
+uutb:
+    intervals:
+        default:
+            enquiry: [0, 20]
+            tender:  [0, 30]
+        dgfFinancialAssets:
+            accelerator: 1440
+            auction: [45,50]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction: [50,55]
+    keywords_file: uutb
+    homepage: 'http://test.tp.uutb.com.ua'
+    syncpage: 'http://test.tp.uutb.com.ua/site/sync'
+    syncdocs: 'http://test.tp.uutb.com.ua/site/syncdocs'
+    roles:
+        provider:       uutb_Provider1
+        provider1:      uutb_Provider2
+        tender_owner:   uutb_Owner
+        viewer:         uutb_Viewer
+    timeout_on_wait: 300
+cuex:
+    intervals:
+        default:
+            enquiry: [0, 20]
+            tender:  [0, 30]
+        dgfFinancialAssets:
+            accelerator: 1440
+            auction: [45,50]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction: [50,55]
+    keywords_file: cuex
+    homepage: 'http://testing.torgy.com.ua'
+    syncpage: 'http://testing.torgy.com.ua/site/sync'
+    syncdocs: 'http://testing.torgy.com.ua/site/syncdocs'
+    roles:
+        provider:       cuex_Provider1
+        provider1:      cuex_Provider2
+        tender_owner:   cuex_Owner
+        viewer:         cuex_Viewer
+    timeout_on_wait: 300
