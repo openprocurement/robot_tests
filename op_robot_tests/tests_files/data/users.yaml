@@ -257,7 +257,7 @@ users:
         size:     [1366, 800]
     centrex_Owner:
         broker:   centrex
-        homepage: "https://eauction.centrex.com.ua"
+        homepage: "http://eauction.centrex.com.ua"
         login:    prozorroytenderowner@gmail.com
         password: 123456
         browser:  Firefox
@@ -265,7 +265,7 @@ users:
         size:     [1366, 800]
     centrex_Provider:
         broker:   centrex
-        homepage: "https://eauction.centrex.com.ua"
+        homepage: "http://eauction.centrex.com.ua"
         login:    prozorroyprovider1@gmail.com
         password: 123456
         browser:  Firefox
@@ -273,7 +273,7 @@ users:
         size:     [1366, 800]
     centrex_Provider1:
         broker:   centrex
-        homepage: "https://eauction.centrex.com.ua"
+        homepage: "http://eauction.centrex.com.ua"
         login:    prozorroyprovider2@gmail.com
         password: 123456
         browser:  Firefox
@@ -281,7 +281,7 @@ users:
         size:     [1366, 800]
     centrex_Viewer:
         broker:   centrex
-        homepage: "https://eauction.centrex.com.ua"
+        homepage: "http://eauction.centrex.com.ua"
         browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
