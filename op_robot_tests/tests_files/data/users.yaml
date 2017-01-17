@@ -407,8 +407,8 @@ users:
         broker:   PrivatMarket
         homepage: "https://sell.pb.ua"
         email:    pbecommercetest2@ukr.net
-        login:    +380102030405
-        password: value
+        login:    uchasnuk.nomer1@yopmail.com
+        password: uchasnuk.nomer1@yopmail.com
         browser:  chrome
         position: [0, 0]
         size:     [1920, 1080]
