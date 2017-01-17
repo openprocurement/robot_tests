@@ -435,7 +435,7 @@ users:
         size:     [1366, 800]
     aps_Owner:
         broker:   APStender
-        homepage: "https://e-test.aps-market.com/tender"
+        homepage: "https://e-test.aps-market.com/Tenders"
         login:    qa845@meta.ua
         password: selenide
         browser:  ff
@@ -443,7 +443,7 @@ users:
         size:     [1400, 900]
     aps_Provider:
         broker:   APStender
-        homepage: "https://e-test.aps-market.com/tender"
+        homepage: "https://e-test.aps-market.com/Tenders"
         login:    lexins@bigmir.net
         password: fondriest
         browser:  ff
@@ -451,7 +451,7 @@ users:
         size:     [1400, 900]
     aps_Provider1:
         broker:   APStender
-        homepage: "https://e-test.aps-market.com/tender"
+        homepage: "https://e-test.aps-market.com/Tenders"
         login:    qatest55@meta.ua
         password: selenide
         browser:  ff
@@ -459,7 +459,7 @@ users:
         size:     [1400, 900]
     aps_Viewer:
         broker:   APStender
-        homepage: "https://e-test.aps-market.com/tender"
+        homepage: "https://e-test.aps-market.com/Tenders"
         browser:  ff
         position: [0, 0]
         size:     [1400, 900]

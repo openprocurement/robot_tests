@@ -264,7 +264,7 @@ APStender:
         default:
             enquiry: [0, 5]
             tender:  [0, 12]
-    timeout_on_wait: 10
+    timeout_on_wait: 3
 upetem:
     intervals:
         default:
