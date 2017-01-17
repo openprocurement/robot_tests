@@ -1060,3 +1060,35 @@ users:
         browser:  chrome
         position: [0, 500]
         size:     [1280, 800]
+    nkcentr_Owner:
+        broker:   nkcentr
+        homepage: "https://sale.nkc.biz.ua/test/Registration.aspx"
+        default_page: "https://sale.nkc.biz.ua/test/PositionList.aspx"
+        login:    nkc_Owner@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    nkcentr_Provider:
+        broker:   nkcentr
+        homepage: "https://sale.nkc.biz.ua/test/Registration.aspx"
+        default_page: "https://sale.nkc.biz.ua/test/PositionList.aspx"
+        login:    nkc_Provider@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    nkcentr_Provider1:
+        broker:   nkcentr
+        homepage: "https://sale.nkc.biz.ua/test/Registration.aspx"
+        default_page: "https://sale.nkc.biz.ua/test/PositionList.aspx"
+        login:    nkc_Provider1@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    nkcentr_Viewer:
+        broker:   nkcentr
+        homepage: "https://sale.nkc.biz.ua/test/Registration.aspx"
+        default_page: "https://sale.nkc.biz.ua/test/PositionList.aspx"
+        login:    nkc_Viewer@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
