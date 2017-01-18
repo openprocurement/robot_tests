@@ -400,7 +400,7 @@ users:
     PrivatMarket_Viewer:
         broker:   PrivatMarket
         homepage: "https://sell.pb.ua"
-        browser:  chrome
+        browser:  firefox
         position: [0, 0]
         size:     [1920, 1080]
     PrivatMarket_Provider:
@@ -409,7 +409,16 @@ users:
         email:    pbecommercetest2@ukr.net
         login:    uchasnuk.nomer1@yopmail.com
         password: uchasnuk.nomer1@yopmail.com
-        browser:  chrome
+        browser:  firefox
+        position: [0, 0]
+        size:     [1920, 1080]
+    PrivatMarket_Owner:
+        broker:   PrivatMarket
+        homepage: "https://sell.pb.ua"
+        email:    pbecommercetest2@ukr.net
+        login:    +380102030405
+        password: value
+        browser:  firefox
         position: [0, 0]
         size:     [1920, 1080]
     Prom_Owner:
