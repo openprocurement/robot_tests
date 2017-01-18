@@ -655,3 +655,16 @@ cuex:
         tender_owner:   cuex_Owner
         viewer:         cuex_Viewer
     timeout_on_wait: 300
+nkcentr:
+    keywords_file: nkcentr
+    roles:
+        tender_owner:   nkcentr_Owner
+        provider:       nkcentr_Provider
+        provider1:      nkcentr_Provider1
+        viewer:         nkcentr_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
