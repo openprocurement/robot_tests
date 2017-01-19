@@ -681,3 +681,18 @@ kif:
             tender:  [0, 25]
             auction: [25, 30]
     timeout_on_wait: 10
+tbkmfb:
+    keywords_file: tbkmfb
+    roles:
+        tender_owner:   tbkmfb_Owner
+        provider:       tbkmfb_Provider
+        provider1:      tbkmfb_Provider1
+        viewer:         tbkmfb_Viewer
+    intervals:
+        default:
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10

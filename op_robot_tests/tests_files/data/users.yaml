@@ -1133,3 +1133,35 @@ users:
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
+    tbkmfb_Owner:
+        broker:   tbkmfb
+        homepage: "https://ti.tbkmfb.com.ua/test/Registration.aspx"
+        default_page: "https://ti.tbkmfb.com.ua/test/PositionList.aspx"
+        login:    kmfb_Owner@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    tbkmfb_Provider:
+        broker:   tbkmfb
+        homepage: "https://ti.tbkmfb.com.ua/test/Registration.aspx"
+        default_page: "https://ti.tbkmfb.com.ua/test/PositionList.aspx"
+        login:    kmfb_Provider@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    tbkmfb_Provider1:
+        broker:   tbkmfb
+        homepage: "https://ti.tbkmfb.com.ua/test/Registration.aspx"
+        default_page: "https://ti.tbkmfb.com.ua/test/PositionList.aspx"
+        login:    kmfb_Provider1@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    tbkmfb_Viewer:
+        broker:   tbkmfb
+        homepage: "https://ti.tbkmfb.com.ua/test/Registration.aspx"
+        default_page: "https://ti.tbkmfb.com.ua/test/PositionList.aspx"
+        login:    kmfb_Viewer@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
