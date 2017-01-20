@@ -681,3 +681,68 @@ kif:
             tender:  [0, 25]
             auction: [25, 30]
     timeout_on_wait: 10
+agrex:
+    keywords_file: kif
+    roles:
+        tender_owner:   agrex_Owner
+        provider:       agrex_Provider
+        provider1:      agrex_Provider1
+        viewer:         agrex_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
+vidrodzhennia:
+    keywords_file: vidrodzhennia
+    roles:
+        tender_owner:   vidrodzhennia_Owner
+        provider:       vidrodzhennia_Provider
+        provider1:      vidrodzhennia_Provider1
+        viewer:         vidrodzhennia_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
+bestbid:
+    keywords_file: bestbid
+    roles:
+        tender_owner:   bestbid_Owner
+        provider:       bestbid_Provider
+        provider1:      bestbid_Provider1
+        viewer:         bestbid_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
+tbkmfb:
+    keywords_file: tbkmfb
+    roles:
+        tender_owner:   tbkmfb_Owner
+        provider:       tbkmfb_Provider
+        provider1:      tbkmfb_Provider1
+        viewer:         tbkmfb_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
+utsb:
+    keywords_file: utsb
+    roles:
+        tender_owner:   utsb_Owner
+        provider:       utsb_Provider
+        provider1:      utsb_Provider1
+        viewer:         utsb_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
