@@ -131,6 +131,7 @@ Set Suite Variable With Default Value
   \  ${LAST_REFRESH_DATE}=  Get Current TZdate
   \  Set To Dictionary  ${USERS}  ${username}=${USERS.users.${username}}
   \  Set To Dictionary  ${USERS.${username}}  tender_data=${munch_dict}
+  \  Set To Dictionary  ${USERS.${username}}  bid_data=${munch_dict}
   \  Set To Dictionary  ${USERS.${username}}  LAST_REFRESH_DATE  ${LAST_REFRESH_DATE}
 
   # Drop all unused users

@@ -716,7 +716,7 @@ Library  openprocurement_client_helper.py
   Set To Dictionary  ${reply['data']}  status=${status}
   ${reply_active}=  Call Method  ${USERS.users['${username}'].client}  patch_bid  ${tender}  ${reply}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${reply['access']['token']}
-  Set To Dictionary   ${USERS.users['${username}'].bidresponses['bid'].data}  id=${reply['data']['id']}
+  Set To Dictionary   ${USERS.users['${username}'].bid_data['bid'].data}  id=${reply['data']['id']}
   Log  ${reply_active}
 
 
@@ -740,7 +740,7 @@ Library  openprocurement_client_helper.py
 
 Завантажити документ в ставку
   [Arguments]  ${username}  ${path}  ${tender_uaid}  ${doc_type}=documents
-  ${bid_id}=  Get Variable Value   ${USERS.users['${username}'].bidresponses['bid'].data.id}
+  ${bid_id}=  Get Variable Value   ${USERS.users['${username}'].bid_data['bid'].data.id}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}']['access_token']}
   ${response}=  Call Method  ${USERS.users['${username}'].client}  upload_bid_document  ${path}  ${tender}  ${bid_id}  ${doc_type}
@@ -753,7 +753,7 @@ Library  openprocurement_client_helper.py
 
 Змінити документ в ставці
   [Arguments]  ${username}  ${tender_uaid}  ${path}  ${doc_id}
-  ${bid_id}=  Get Variable Value   ${USERS.users['${username}'].bidresponses['bid'].data.id}
+  ${bid_id}=  Get Variable Value   ${USERS.users['${username}'].bid_data['bid'].data.id}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}']['access_token']}
   ${bid}=  openprocurement_client.Отримати пропозицію  ${username}  ${tender_uaid}
@@ -768,7 +768,7 @@ Library  openprocurement_client_helper.py
 
 Змінити документацію в ставці
   [Arguments]  ${username}  ${tender_uaid}  ${doc_data}  ${doc_id}
-  ${bid_id}=  Get Variable Value   ${USERS.users['${username}'].bidresponses['bid'].data.id}
+  ${bid_id}=  Get Variable Value   ${USERS.users['${username}'].bid_data['bid'].data.id}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}']['access_token']}
   ${bid}=  openprocurement_client.Отримати пропозицію  ${username}  ${tender_uaid}
@@ -779,7 +779,7 @@ Library  openprocurement_client_helper.py
 Отримати пропозицію
   [Arguments]  ${username}  ${tender_uaid}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${bid_id}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['bid'].data.id}
+  ${bid_id}=  Get Variable Value  ${USERS.users['${username}'].bid_data['bid'].data.id}
   ${token}=  Get Variable Value  ${USERS.users['${username}']['access_token']}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  get_bid  ${tender}  ${bid_id}  ${token}
   ${reply}=  munch_dict  arg=${reply}

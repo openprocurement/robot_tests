@@ -48,7 +48,7 @@ Resource           base_keywords.robot
 Можливість завантажити ${doc_type} документ до пропозиції учасником ${username}
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   ${bid_doc_upload}=  Run As  ${username}  Завантажити документ в ставку  ${file_path}  ${TENDER['TENDER_UAID']}  ${doc_type}
-  Set To Dictionary  ${USERS.users['${username}'].bidresponses}  bid_doc_upload=${bid_doc_upload}
+  Set To Dictionary  ${USERS.users['${username}'].bid_data}  bid_doc_upload=${bid_doc_upload}
   Remove File  ${file_path}
 
 ##############################################################################################
