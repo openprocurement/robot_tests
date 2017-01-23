@@ -759,3 +759,16 @@ uisce:
             tender:  [0, 25]
             auction: [25, 30]
     timeout_on_wait: 10
+zupb:
+    keywords_file: zupb
+    roles:
+        tender_owner:   zupb_Owner
+        provider:       zupb_Provider
+        provider1:      zupb_Provider1
+        viewer:         zupb_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
