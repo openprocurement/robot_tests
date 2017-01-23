@@ -1292,4 +1292,39 @@ users:
         login:    utsb_Viewer@1.ua
         browser:  firefox
         position: [0, 0]
+    epsilon_Owner:
+        broker:   epsilon
+        homepage: "https://tbepsilon.com/user/login"
+        default_page: "https://tbepsilon.com/public"
+        login:    organizator
+        password: 123456
+        browser:  firefox
+        position: [0, 0]
+        size:     [1024, 768]
+    epsilon_Provider:
+        broker:   epsilon
+        homepage: "https://tbepsilon.com/user/login"
+        default_page: "https://tbepsilon.com/public"
+        login:    member
+        password: 123456
+        browser:  firefox
+        position: [0, 0]
+        size:     [1024, 768]
+    epsilon_Provider1:
+        broker:   epsilon
+        homepage: "https://tbepsilon.com/user/login"
+        default_page: "https://tbepsilon.com/public"
+        login:    member1
+        password: 123456
+        browser:  firefox
+        position: [0, 0]
+        size:     [1024, 768]
+    epsilon_Viewer:
+        broker:   epsilon
+        homepage: "https://tbepsilon.com/user/login"
+        default_page: "https://tbepsilon.com/public"
+        browser:  firefox
+        position: [0, 0]
+        size:     [1024, 768]
         size:     [1366, 800]
+
