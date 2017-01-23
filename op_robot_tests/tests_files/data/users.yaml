@@ -1133,7 +1133,7 @@ users:
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
-    agrex_owner:
+    agrex_Owner:
         broker:   agrex
         homepage: "https://etp.agrex.gov.ua/test/Registration.aspx"
         default_page: "https://etp.agrex.gov.ua/test/TenderList.aspx"
@@ -1141,7 +1141,7 @@ users:
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
-    agrex_provider:
+    agrex_Provider:
         broker:   agrex
         homepage: "https://etp.agrex.gov.ua/test/Registration.aspx"
         default_page: "https://etp.agrex.gov.ua/test/TenderList.aspx"
@@ -1149,7 +1149,7 @@ users:
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
-    agrex_provider1:
+    agrex_Provider1:
         broker:   agrex
         homepage: "https://etp.agrex.gov.ua/test/Registration.aspx"
         default_page: "https://etp.agrex.gov.ua/test/TenderList.aspx"
@@ -1157,7 +1157,7 @@ users:
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
-    agrex_viewer:
+    agrex_Viewer:
         broker:   agrex
         homepage: "https://etp.agrex.gov.ua/test/Registration.aspx"
         default_page: "https://etp.agrex.gov.ua/test/TenderList.aspx"
@@ -1165,7 +1165,7 @@ users:
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
-    vidrodzhennia_owner:
+    vidrodzhennia_Owner:
         broker:   vidrodzhennia
         homepage: "https://e.tbv.com.ua/login/"
         default_page: "https://e.tbv.com.ua/"
@@ -1173,7 +1173,7 @@ users:
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
-    vidrodzhennia_provider:
+    vidrodzhennia_Provider:
         broker:   vidrodzhennia
         homepage: "https://e.tbv.com.ua/login/"
         default_page: "https://e.tbv.com.ua/"
@@ -1181,7 +1181,7 @@ users:
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
-    vidrodzhennia_provider1:
+    vidrodzhennia_Provider1:
         broker:   vidrodzhennia
         homepage: "https://e.tbv.com.ua/login/"
         default_page: "https://e.tbv.com.ua/"
@@ -1189,7 +1189,7 @@ users:
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
-    vidrodzhennia_viewer:
+    vidrodzhennia_Viewer:
         broker:   vidrodzhennia
         homepage: "https://e.tbv.com.ua/login/"
         default_page: "https://e.tbv.com.ua/"
@@ -1197,7 +1197,7 @@ users:
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
-    bestbid_owner:
+    bestbid_Owner:
         broker:   bestbid
         homepage: "https://sale.bestbid.com.ua/login/"
         default_page: "https://sale.bestbid.com.ua/"
@@ -1205,7 +1205,7 @@ users:
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
-    bestbid_provider:
+    bestbid_Provider:
         broker:   bestbid
         homepage: "https://sale.bestbid.com.ua/login/"
         default_page: "https://sale.bestbid.com.ua/"
@@ -1213,7 +1213,7 @@ users:
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
-    bestbid_provider1:
+    bestbid_Provider1:
         broker:   bestbid
         homepage: "https://sale.bestbid.com.ua/login/"
         default_page: "https://sale.bestbid.com.ua/"
@@ -1221,7 +1221,7 @@ users:
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
-    bestbid_viewer:
+    bestbid_Viewer:
         broker:   bestbid
         homepage: "https://sale.bestbid.com.ua/login/"
         default_page: "https://sale.bestbid.com.ua/"
