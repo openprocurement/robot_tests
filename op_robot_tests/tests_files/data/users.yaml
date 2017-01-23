@@ -1293,3 +1293,37 @@ users:
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
+    uisce_Owner:
+        broker:   uisce
+        homepage: "https://proumstrade.com.ua/user/login"
+        default_page: "https://proumstrade.com.ua/public"
+        login:    organizator
+	password: 123456
+        browser:  firefox
+        position: [0, 0]
+        size:     [1024, 768]
+    uisce_Provider:
+        broker:   uisce
+        homepage: "https://proumstrade.com.ua/user/login"
+        default_page: "https://proumstrade.com.ua/public"
+        login:    member
+	password: 123456
+        browser:  firefox
+        position: [0, 0]
+        size:     [1024, 768]
+    uisce_Provider1:
+        broker:   uisce
+        homepage: "https://proumstrade.com.ua/user/login"
+        default_page: "https://proumstrade.com.ua/public"
+        login:    member1
+	password: 123456
+        browser:  firefox
+        position: [0, 0]
+        size:     [1024, 768]
+    uisce_Viewer:
+        broker:   uisce
+        homepage: "https://proumstrade.com.ua/"
+        default_page: "https://proumstrade.com.ua/public"
+        browser:  firefox
+        position: [0, 0]
+        size:     [1024, 768]
