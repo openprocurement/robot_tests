@@ -698,7 +698,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_to_tender
   [Setup]  Дочекатись дати початку періоду уточнень  ${provider}  ${TENDER['TENDER_UAID']}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider}
   Можливість задати запитання на тендер користувачем ${provider}
 
 
@@ -725,7 +725,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      answer_question_to_tender
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
   Можливість відповісти на запитання на тендер
 
 
@@ -744,7 +744,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_to_item
   [Setup]  Дочекатись дати початку періоду уточнень  ${provider}  ${TENDER['TENDER_UAID']}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider}
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  Можливість задати запитання на ${item_index} предмет користувачем ${provider}
 
@@ -774,7 +774,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      answer_question_to_item
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  Можливість відповісти на запитання на ${item_index} предмет
 
@@ -795,7 +795,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_to_lot
   [Setup]  Дочекатись дати початку періоду уточнень  ${provider}  ${TENDER['TENDER_UAID']}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider}
   :FOR  ${lot_index}  IN RANGE  ${NUMBER_OF_LOTS}
   \  Можливість задати запитання на ${lot_index} лот користувачем ${provider}
 
@@ -825,7 +825,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      answer_question_to_lot
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
   :FOR  ${lot_index}  IN RANGE  ${NUMBER_OF_LOTS}
   \  Можливість відповісти на запитання на ${lot_index} лот
 
@@ -873,7 +873,7 @@ ${ITEM_MEAT}        ${True}
   ...  ${USERS.users['${provider}'].broker}
   ...  create_tender_claim
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider}
   Можливість створити вимогу про виправлення умов закупівлі із документацією
 
 
@@ -891,7 +891,6 @@ ${ITEM_MEAT}        ${True}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  create_tender_claim
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля complaintID вимоги із ${USERS.users['${provider}'].claim_data.complaintID} для користувача ${viewer}
 
 
@@ -932,7 +931,7 @@ ${ITEM_MEAT}        ${True}
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  answer_tender_claim
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
   Можливість відповісти на вимогу про виправлення умов закупівлі
 
 
@@ -966,7 +965,7 @@ ${ITEM_MEAT}        ${True}
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  resolve_tender_claim
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider}
   Можливість підтвердити задоволення вимоги про виправлення умов закупівлі
 
 
@@ -992,7 +991,7 @@ ${ITEM_MEAT}        ${True}
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  escalate_tender_claim
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider}
   Можливість перетворити вимогу про виправлення умов закупівлі в скаргу
 
 
@@ -1018,7 +1017,7 @@ ${ITEM_MEAT}        ${True}
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  cancel_tender_claim
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider}
   Можливість скасувати вимогу про виправлення умов закупівлі
 
 
@@ -1060,7 +1059,7 @@ ${ITEM_MEAT}        ${True}
   ...  ${USERS.users['${provider}'].broker}
   ...  create_lot_claim
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider}
   Можливість створити вимогу про виправлення умов 0 лоту із документацією
 
 
@@ -1119,7 +1118,7 @@ ${ITEM_MEAT}        ${True}
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  answer_lot_claim
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
   Можливість відповісти на вимогу про виправлення умов лоту
 
 
@@ -1153,7 +1152,7 @@ ${ITEM_MEAT}        ${True}
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  resolve_lot_claim
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider}
   Можливість підтвердити задоволення вимоги про виправлення умов лоту
 
 
@@ -1179,7 +1178,7 @@ ${ITEM_MEAT}        ${True}
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  escalate_lot_claim
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider}
   Можливість перетворити вимогу про виправлення умов лоту в скаргу
 
 
@@ -1205,7 +1204,7 @@ ${ITEM_MEAT}        ${True}
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  cancel_lot_claim
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider}
   Можливість скасувати вимогу про виправлення умов лоту
 
 
@@ -1274,7 +1273,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${provider}'].broker}
   ...      make_bid_by_provider  level1
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider}
   Можливість подати цінову пропозицію користувачем ${provider}
 
 
@@ -1283,7 +1282,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      modify_bid_by_provider
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider}
   Можливість зменшити пропозицію до 95 відсотків користувачем ${provider}
 
 
@@ -1292,7 +1291,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      modify_bid_by_provider
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider}
   Можливість завантажити документ в пропозицію користувачем ${provider}
 
 
@@ -1301,7 +1300,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      add_doc_to_bid_by_provider
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider}
   Можливість змінити документацію цінової пропозиції користувачем ${provider}
 
 
@@ -1311,7 +1310,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${provider1}'].broker}
   ...      make_bid_by_provider1  level1
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider1}  ${TENDER['TENDER_UAID']}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider1}
   Можливість подати цінову пропозицію користувачем ${provider1}
 
 
@@ -1321,7 +1320,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${provider1}'].broker}
   ...      make_bid_by_provider2  level1
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider2}  ${TENDER['TENDER_UAID']}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider2}
   Можливість подати цінову пропозицію користувачем ${provider2}
 
 ##############################################################################################
