@@ -312,5 +312,5 @@ ${award_index}      ${0}
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_approve_second_award  level2
-  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  -1

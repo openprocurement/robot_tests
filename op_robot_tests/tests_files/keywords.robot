@@ -736,6 +736,18 @@ Require Failure
   ...      unsuccessful
 
 
+Звірити статус лоту після визначення переможця
+  [Arguments]  ${username}  ${tender_uaid}
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      active.awarded
+
+
 Дочекатись дати початку прийому пропозицій
   [Arguments]  ${username}  ${tender_uaid}
   # This tries to get the date from current user's procurement data cache.
