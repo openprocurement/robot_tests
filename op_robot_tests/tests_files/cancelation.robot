@@ -41,6 +41,15 @@ Suite Teardown  Test Suite Teardown
   ...      cancellations[0].status
 
 
+Відображення статусу скасованого тендера
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування тендера
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  tender_cancelation
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити статус тендера  ${viewer}  ${TENDER['TENDER_UAID']}  cancelled
+
+
 Відображення причини скасування тендера
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування тендера
   ...  viewer

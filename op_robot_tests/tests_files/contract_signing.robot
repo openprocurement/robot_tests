@@ -22,6 +22,14 @@ Suite Teardown  Test Suite Teardown
 #             CONTRACT
 ##############################################################################################
 
+Відображання статусу тендера в період визначення переможця
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення статусу
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view
+  Звірити статус тендера  ${viewer}  ${TENDER['TENDER_UAID']}  active.awarded
+
+
 Відображення закінчення періоду подачі скарг на пропозицію
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних тендера
   ...      tender_owner
@@ -57,3 +65,12 @@ Suite Teardown  Test Suite Teardown
   [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
   Run As  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
   Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}  active  contracts[-1].status
+
+
+Можливість звірити статус тендера після завершення закупівлі
+  [Tags]   ${USERS.users['${viewer}'].broker}: Статус завершеної процедури
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view
+  [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
+  Звірити статус тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  complete

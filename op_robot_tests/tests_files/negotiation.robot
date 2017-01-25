@@ -655,3 +655,11 @@ ${ITEM_MEAT}      ${False}
   ...  level1
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля contracts[0].status тендера із active для користувача ${viewer}
+
+
+Можливість звірити статус процедури після її завершення
+  [Tags]   ${USERS.users['${viewer}'].broker}: Статус завершеної процедури
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      сomplete_status_view
+  Звірити статус тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  complete
