@@ -616,3 +616,12 @@ ${ITEM_MEAT}      ${False}
   ...  award_view
   ...  level2
   Звірити відображення поля awards[0].value.amount тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['value']['amount']} для користувача ${viewer}
+
+
+Можливість звірити статус процедури після її завершення
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних процедури
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити статус тендера  ${viewer}  ${TENDER['TENDER_UAID']}  complete
