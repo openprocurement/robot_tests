@@ -22,6 +22,14 @@ Suite Teardown  Test Suite Teardown
 #             CONTRACT
 ##############################################################################################
 
+Відображення статусу лоту після визначення переможця
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення статусу
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view
+  Звірити статус лоту після визначення переможця  ${viewer}  ${TENDER['TENDER_UAID']}
+
+
 Відображення закінчення періоду подачі скарг на пропозицію
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних лоту
   ...      tender_owner
