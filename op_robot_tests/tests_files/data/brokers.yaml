@@ -42,8 +42,8 @@ Default:
 Quinta:
     intervals:
         default:
-            enquiry: [0, 3]
-            tender:  [0, 5]
+            enquiry: [0, 8]
+            tender:  [0, 10]
         openua:
             tender:  [1, 15]
         openeu:
@@ -55,16 +55,37 @@ Quinta:
         tender_owner:   Tender_Owner
         viewer:         Tender_Viewer
     timeout_on_wait: 15
-E-tender:
+tendermaster:
+    intervals:
+        default:
+            enquiry: [0, 13]
+            tender:  [0, 13]
+        openua:
+            accelerator: 1440
+            tender:  [0, 13]
+        openeu:
+            accelerator: 1440
+            tender:  [0, 30]
+        open_competitive_dialogue:
+            accelerator: 1440
+            tender:  [0, 30]
+    keywords_file: tendermaster
+    roles:
+        provider: Tendermaster_Provider1
+        provider1: Tendermaster_Provider2
+        tender_owner: Tendermaster_Owner
+        viewer: Tendermaster_Viewer
+    timeout_on_wait: 170
+Etender:
     intervals:
         default:
             enquiry: [0, 5]
     keywords_file: etender
     roles:
-        provider:       E-tender_Provider1
-        provider1:      E-tender_Provider2
-        tender_owner:   E-tender_Owner
-        viewer:         E-tender_Viewer
+        provider:       Etender_Provider1
+        provider1:      Etender_Provider2
+        tender_owner:   Etender_Owner
+        viewer:         Etender_Viewer
     timeout_on_wait: 600
 DZO:
     intervals:
@@ -80,6 +101,30 @@ DZO:
         provider:       DZO_Provider
         provider1:      DZO_Provider1
         viewer:         DZO_Viewer
+    timeout_on_wait: 300
+ztv:
+    intervals:
+        default:
+            enquiry: [0, 17]
+            tender:  [0, 16]
+    keywords_file: ztv
+    roles:
+        tender_owner:   ztv_Owner
+        provider:   ztv_Provider
+        provider1:   ztv_Provider1
+        viewer:   ztv_Viewer
+    timeout_on_wait: 300
+brizol:
+    intervals:
+        default:
+            enquiry: [0, 17]
+            tender:  [0, 19]
+    keywords_file: brizol
+    roles:
+        tender_owner:   brizol_Owner
+        provider:   brizol_Provider
+        provider1:   brizol_Provider1
+        viewer:   brizol_Viewer
     timeout_on_wait: 300
 Newtend:
     keywords_file: newtend
@@ -194,3 +239,58 @@ proztorg:
         tender_owner:   proztorg_Owner
         viewer:         proztorg_Viewer
     timeout_on_wait: 50
+uub:
+    intervals:
+        default:
+            enquiry: [0, 8]
+            tender:  [0, 10]
+        openua:
+            accelerator: 1440
+            tender:  [0, 15]
+        openeu:
+            tender:  [0, 30]
+            accelerator: 1440
+    keywords_file: uub
+    roles:
+        tender_owner:   uub_Owner
+        provider:       uub_Provider
+        provider1:      uub_Provider1
+        viewer:         uub_Viewer
+    timeout_on_wait: 15
+APStender:
+    keywords_file: aps
+    roles:
+        viewer:         aps_Viewer
+        provider:       aps_Provider
+        provider1:      aps_Provider1
+        tender_owner:   aps_Owner
+    intervals:
+        default:
+            enquiry: [0, 5]
+            tender:  [0, 12]
+    timeout_on_wait: 10
+upetem:
+    intervals:
+        default:
+            enquiry: [0, 5]
+    keywords_file: upetem
+    homepage: 'http://dz.upetem.com.ua/'
+    syncpage: 'http://dz.upetem.com.ua/develop/sync?psw=369369'
+    roles:
+        provider:       upetem_Provider1
+        provider1:      upetem_Provider2
+        tender_owner:   upetem_Owner
+        viewer:         upetem_Viewer
+    timeout_on_wait: 50
+etrade:
+   intervals:
+       default:
+           enquiry: [0, 8]
+           tender:  [0,  18]
+   keywords_file: etrade
+   roles:
+       tender_owner:   etrade_Owner
+       viewer:         etrade_Viewer
+       provider:       etrade_Provider1
+       provider1:      etrade_Provider2
+   timeout_on_wait: 120

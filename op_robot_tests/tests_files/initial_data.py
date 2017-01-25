@@ -570,8 +570,8 @@ def test_item_data():
             }
         ],
         "unit": {
-            "name": u"кілограм",
-            "name_ru": u"килограмм",
+            "name": u"кілограми",
+            "name_ru": u"килограммы",
             "name_en": "kilogram",
             "code": u"KGM"
         },

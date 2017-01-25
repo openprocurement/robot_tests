@@ -543,7 +543,20 @@ Require Failure
   ...      ${date}
 
   Дочекатись дати  ${date}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      active.enquiries
 
+
+Звірити статус тендера
+  [Arguments]  ${username}  ${left}
+  ${right}=  Run as  ${username}  Отримати інформацію із тендера  status
+  Порівняти об'єкти  ${left}  ${right}
 
 Дочекатись дати початку прийому пропозицій
   [Arguments]  ${username}
@@ -571,6 +584,12 @@ Require Failure
 
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      active.tendering
 
 
 Дочекатись дати закінчення прийому пропозицій
@@ -584,13 +603,17 @@ Require Failure
   ...      '${status}' == 'FAIL'
   ...      ${USERS.users['${tender_owner}'].initial_data.data.tenderPeriod.endDate}
   ...      ${date}
-  ${date}=  add_minutes_to_date  ${date}  2  # Auction sync
-
-  ${new_date}=	add_minutes_to_date	${date}	5
-  Дочекатись дати	${new_date}
-
+  Дочекатись дати  ${date}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
+  ${next_status}=  Set variable if  'open' in '${mode}'  active.pre-qualification  active.auction
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${next_status}
+  Run keyword if  '${next_status}' == 'active.auction'  Sleep  120  # Auction sync
 
 
 Дочекатись дати початку аукціону

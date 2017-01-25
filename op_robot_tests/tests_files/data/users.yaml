@@ -12,32 +12,54 @@ users:
         api_key:  ""
         broker:   Quinta
         browser:  firefox
-    E-tender_Owner:
-        broker:   E-tender
+    Tendermaster_Owner:
+        broker: tendermaster
+        login: testing.codeit+zak@gmail.com
+        password: test1234
+        homepage: "http://testing.tendermaster.com.ua/"
+        browser: chrome
+    Tendermaster_Provider1:
+        broker: tendermaster
+        login: testing.codeit+pos1@gmail.com
+        password: test1234
+        homepage: "http://testing.tendermaster.com.ua/"
+        browser: chrome
+    Tendermaster_Provider2:
+        broker: tendermaster
+        login: testing.codeit+pos2@gmail.com
+        password: test1234
+        homepage: "http://testing.tendermaster.com.ua/"
+        browser: chrome
+    Tendermaster_Viewer:
+        broker: tendermaster
+        homepage: "http://testing.tendermaster.com.ua/"
+        browser: chrome
+    Etender_Owner:
+        broker:   Etender
         homepage: "http://bid.uat.e-tender.biz/#/"
         login:    Misha2
         password: Password1
         browser:  chrome
         position: [0, 0]
         size:     [800, 800]
-    E-tender_Provider1:
-        broker:   E-tender
+    Etender_Provider1:
+        broker:   Etender
         homepage: "http://bid.uat.e-tender.biz/#/"
         login:    st_org
         password: 12345678
         browser:  chrome
         position: [700, 0]
         size:     [700, 800]
-    E-tender_Provider2:
-        broker:   E-tender
+    Etender_Provider2:
+        broker:   Etender
         homepage: "http://bid.uat.e-tender.biz/#/"
         login:    provider2
         password: Qa123456
         browser:  chrome
         position: [700, 0]
         size:     [640, 450]
-    E-tender_Viewer:
-        broker:   E-tender
+    Etender_Viewer:
+        broker:   Etender
         homepage: "http://bid.uat.e-tender.biz/#/"
         browser:  chrome
         position: [0, 0]
@@ -69,6 +91,66 @@ users:
     DZO_Viewer:
         broker:   DZO
         homepage: "http://dz2.byustudio.in.ua/?test_mode=guest"
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    ztv_Owner:
+        broker:   ztv
+        homepage: "http://ztv.byustudio.in.ua/web/"
+        login:    ztvtenderowner@gmail.com
+        password: 123456
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    ztv_Provider:
+        broker:   ztv
+        homepage: "http://ztv.byustudio.in.ua/web/"
+        login:    ztvprovider1@gmail.com
+        password: 123456
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    ztv_Provider1:
+        broker:   ztv
+        homepage: "http://ztv.byustudio.in.ua/web/"
+        login:    ztvprovider2@gmail.com
+        password: 123456
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    ztv_Viewer:
+        broker:   ztv
+        homepage: "http://ztv.byustudio.in.ua/web/"
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    brizol_Owner:
+        broker:   brizol
+        homepage: "http://prozorroy.byustudio.in.ua/"
+        login:    prozorroytenderowner@gmail.com
+        password: 123456
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    brizol_Provider:
+        broker:   brizol
+        homepage: "http://prozorroy.byustudio.in.ua/"
+        login:    prozorroyprovider1@gmail.com
+        password: 123456
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    brizol_Provider1:
+        broker:   brizol
+        homepage: "http://prozorroy.byustudio.in.ua/"
+        login:    prozorroyprovider2@gmail.com
+        password: 123456
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    brizol_Viewer:
+        broker:   brizol
+        homepage: "http://prozorroy.byustudio.in.ua/"
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
@@ -319,3 +401,124 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1000, 500]
+    uub_Owner:
+        broker:   uub
+        homepage: "https://prozorro.uub.com.ua/Registration.aspx?CN=-1"
+        default_page: "https://prozorro.uub.com.ua/PositionList.aspx?CN=-1"
+        login:    UUB_Owner@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    uub_Provider:
+        broker:   uub
+        homepage: "https://prozorro.uub.com.ua/Registration.aspx?CN=-2"
+        default_page: "https://prozorro.uub.com.ua/PositionList.aspx?CN=-2"
+        login:    UUB_Provider@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    uub_Provider1:
+        broker:   uub
+        homepage: "https://prozorro.uub.com.ua/Registration.aspx?CN=-3"
+        default_page: "https://prozorro.uub.com.ua/PositionList.aspx?CN=-3"
+        login:    UUB_Provider1@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    uub_Viewer:
+        broker:   uub
+        homepage: "https://prozorro.uub.com.ua/Registration.aspx?CN=-4"
+        default_page: "https://prozorro.uub.com.ua/PositionList.aspx?CN=-4"
+        login:    UUB_Viewer@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    aps_Owner:
+        broker:   APStender
+        homepage: "https://e-test.aps-market.com/tender"
+        login:    qa845@meta.ua
+        password: selenide
+        browser:  ff
+        position: [0, 0]
+        size:     [1400, 900]
+    aps_Provider:
+        broker:   APStender
+        homepage: "https://e-test.aps-market.com/tender"
+        login:    lexins@bigmir.net
+        password: fondriest
+        browser:  ff
+        position: [0, 0]
+        size:     [1400, 900]
+    aps_Provider1:
+        broker:   APStender
+        homepage: "https://e-test.aps-market.com/tender"
+        login:    qatest55@meta.ua
+        password: selenide
+        browser:  ff
+        position: [0, 0]
+        size:     [1400, 900]
+    aps_Viewer:
+        broker:   APStender
+        homepage: "https://e-test.aps-market.com/tender"
+        browser:  ff
+        position: [0, 0]
+        size:     [1400, 900]
+    upetem_Owner:
+        broker:   upetem
+        homepage: "http://dz.upetem.com.ua/user/purchase"
+        login:    aaa@mail.ru
+        password: '11111111'
+        browser:  chrome
+        position: [0, 0]
+        size:     [1000, 500]
+    upetem_Provider:
+        broker:   upetem
+        homepage: "http://dz.upetem.com.ua/user/purchase"
+        login:    sss@mail.ru
+        password: '11111111'
+        browser:  chrome
+        position: [0, 0]
+        size:     [1000, 500]
+    upetem_Provider1:
+        broker:   upetem
+        homepage: "http://dz.upetem.com.ua/user/purchase"
+        login:    ttr@mail.ru
+        password: '11111111'
+        browser:  chrome
+        position: [0, 0]
+        size:     [1000, 500]
+    upetem_Viewer:
+        broker:   upetem
+        homepage: "http://dz.upetem.com.ua/user/purchase"
+        login:    fefew@mail.ei
+        password: '11111111'
+        browser:  chrome
+        position: [0, 0]
+        size:     [1000, 500]
+    etrade_Viewer:
+        broker:   etrade
+        homepage: "http://test.etrade.com.ua/"
+        default_page: "http://test.etrade.com.ua/Bid/List"
+        login:    test1@wandio.com
+        password: 123456
+        browser:  firefox
+        position: [640, 0]
+        size:     [1280, 1024]
+    etrade_Provider1:
+        broker:   etrade
+        homepage: "http://test.etrade.com.ua/"
+        default_page: "http://test.etrade.com.ua/Bid/List"
+        login:    test1@wandio.com
+        password: 123456
+        browser:  firefox
+        position: [640, 0]
+        size:     [1280, 1024]
+    etrade_Provider2:
+        broker:   etrade
+        homepage: "http://test.etrade.com.ua/"
+        default_page: "http://test.etrade.com.ua/Bid/List"
+        login:    test2@wandio.com
+        password: 123456
+        browser:  firefox
+        position: [640, 0]
+        size:     [1280, 1024]

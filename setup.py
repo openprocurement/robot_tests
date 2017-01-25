@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-version = '2.3'
+version = '2.3.6'
 
 setup(name='op_robot_tests',
       version=version,
@@ -22,6 +22,7 @@ setup(name='op_robot_tests',
           'robotframework-selenium2library',
           'robotframework-debuglibrary',
           'robotframework-selenium2screenshots',
+          'selenium < 3.0.dev0',
           'Pillow',
           'iso8601',
           'PyYAML',
