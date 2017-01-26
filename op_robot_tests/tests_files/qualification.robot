@@ -32,6 +32,22 @@ ${award_index}      ${0}
   Дочекатись дати початку періоду кваліфікації  ${viewer}  ${TENDER['TENDER_UAID']}
 
 
+Відображення ставки першого учасника на етапі кваліфікації
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view  level1
+  Звірити відображення ставки учасника  ${provider}  ${TENDER['TENDER_UAID']}  0
+
+
+Відображення ставки другого учасника на етапі кваліфікації
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view  level1
+  Звірити відображення ставки учасника  ${provider1}  ${TENDER['TENDER_UAID']}  1
+
+
 Можливість створити вимогу про виправлення визначення переможця, додати до неї документацію і подати її користувачем
   [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...  provider
