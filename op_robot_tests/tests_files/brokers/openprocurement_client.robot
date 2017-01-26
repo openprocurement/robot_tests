@@ -629,6 +629,7 @@ Library  openprocurement_client_helper.py
   Set To Dictionary   ${USERS.users['${username}'].bidresponses['bid'].data}  id=${reply['data']['id']}
   Log  ${reply_active}
   Set To Dictionary  ${USERS.users['${username}']}  bid_id=${reply['data']['id']}
+  Set To Dictionary  ${USERS.users['${username}']}  bid_start_value=${reply['data']['value']['amount']}
   Log  ${reply}
   [return]  ${reply}
 
@@ -640,6 +641,7 @@ Library  openprocurement_client_helper.py
   Set_To_Object  ${bid.data}   ${fieldname}   ${fieldvalue}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_bid  ${tender}  ${bid}
+  Set To Dictionary  ${USERS.users['${username}']}  bid_changed_value=${reply['data']['value']['amount']}
   Log  ${reply}
   [return]   ${reply}
 
