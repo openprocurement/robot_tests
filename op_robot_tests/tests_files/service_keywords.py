@@ -546,6 +546,67 @@ def local_path_to_file(file_name):
     return os.path.join(os.path.dirname(__file__), 'documents', file_name)
 
 
+def create_artifact(api, tender_data, mode, users, tender_owner, provider, provider1):
+    artifact = {}
+    artifact['api_version'] = api
+    artifact['mode'] = mode
+    artifact['tender_uaid'] = tender_data.get('TENDER_UAID', '')
+    artifact['last_modification_date'] = tender_data.get('LAST_MODIFICATION_DATE', '')
+    artifact['tender_owner'] = users[tender_owner].get('broker', '')
+    artifact['access_token'] = users[tender_owner].get('access_token', '')
+    artifact['tender_id'] = users[tender_owner]['tender_data']['data'].get('id', '')
+    artifact['provider_access_token'] = users[provider].get('access_token', '')
+    artifact['provider1_access_token'] = users[provider1].get('access_token', '')
+    artifact['provider_bid_id'] = users[provider].get('bid_id', '')
+    artifact['provider1_bid_id'] = users[provider1].get('bid_id', '')
+    artifact['provider_bid_start_value'] = users[provider].get('bid_start_value','')
+    artifact['provider1_bid_start_value'] = users[provider1].get('bid_start_value','')
+    if (users[provider].get('bid_changed_value','') != '' and artifact['provider_bid_start_value'] != ''):
+        if(float(users[provider].get('bid_changed_value','')) != 0):
+            artifact['provider_bid_difference'] = float(users[provider].get('bid_changed_value','')) - float(artifact['provider_bid_start_value'])
+    else:
+        artifact['provider_bid_difference'] = 0
+    if (users[provider1].get('bid_changed_value','') != '' and artifact['provider1_bid_start_value'] != ''):
+        if(float(users[provider1].get('bid_changed_value','')) != 0):
+            artifact['provider1_bid_difference'] = float(users[provider1].get('bid_changed_value','')) - float(artifact['provider1_bid_start_value'])
+    else:
+        artifact['provider1_bid_difference'] = 0
+    log_object_data(data=artifact, file_name='artifact', update=True, artifact=True)
+
+
+def load_tender_data(filepath, users, tender_owner, provider, provider1):
+    artifact = load_data_from(filepath)
+    users[tender_owner].access_token = artifact.get('access_token', '')
+    users[provider].access_token = artifact.get('provider_access_token', '')
+    users[provider1].access_token = artifact.get('provider_access_token', '')
+    users[provider].bid_id = artifact.get('provider_bid_id', '')
+    users[provider1].bid_id = artifact.get('provider1_bid_id', '')
+    users[provider].bid_start_value = artifact.get('provider_bid_start_value', '')
+    users[provider1].bid_start_value = artifact.get('provider1_bid_start_value', '')
+    users[provider].bid_start_value = artifact.get('provider_bid_start_value', '')
+    users[provider1].bid_start_value = artifact.get('provider1_bid_start_value', '')
+    if (artifact['provider_bid_difference'] == 0):
+        users[provider].bid_changed_value = 0
+    else:
+        users[provider].bid_changed_value = artifact['provider_bid_start_value'] + artifact['provider_bid_difference']
+    if (artifact['provider1_bid_difference'] == 0):
+        users[provider1].bid_changed_value = 0
+    else:
+        users[provider1].bid_changed_value = artifact['provider1_bid_start_value'] + artifact['provider1_bid_difference']
+
+    mode = artifact.get('mode', '')
+    tender_data = {}
+    tender_data['TENDER_UAID'] = artifact.get('tender_uaid', '')
+    tender_data['LAST_MODIFICATION_DATE'] = artifact.get('last_modification_date', '')
+    tender_data['LOT_ID'] = ''
+
+    BuiltIn().set_suite_variable("${MODE}", mode)
+    BuiltIn().set_suite_variable("${TENDER}", tender_data)
+    # Suite variable artifact - for reading bid_ids from artifact (not bidresponses)
+    BuiltIn().set_suite_variable("${ARTIFACT}", artifact)
+    log_object_data(data=artifact, file_name='artifact', update=True, artifact=True)
+
+
 def compare_CAV_groups(length, *items):
     # Checks CAV groups of *items
     # Arguments: length - number of items
