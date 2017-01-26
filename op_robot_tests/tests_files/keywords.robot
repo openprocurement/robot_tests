@@ -25,7 +25,7 @@ Test Suite Setup
 
 Test Suite Teardown
   Close all browsers
-  Run Keyword And Ignore Error  Створити артефакт
+  create_artifact
 
 
 Set Suite Variable With Default Value

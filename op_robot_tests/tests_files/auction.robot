@@ -7,7 +7,7 @@ Suite Teardown  Test Suite Teardown
 
 
 *** Variables ***
-@{USED_ROLES}   viewer
+@{USED_ROLES}   viewer  tender_owner  provider  provider1
 
 
 *** Test Cases ***
@@ -15,8 +15,9 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук лоту
   ...      ${USERS.users['${viewer}'].broker}
   ...      find_tender  level1
-  Завантажити дані про тендер
-  Run As  ${viewer}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
+  load_tender_data  artifact.yaml
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  \   ${resp}=  Run As  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
 
 ##############################################################################################
 #             AUCTION

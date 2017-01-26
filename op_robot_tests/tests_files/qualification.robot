@@ -19,8 +19,8 @@ ${award_index}      ${0}
   ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      find_tender  level1
-  Завантажити дані про тендер
-  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
+  load_tender_data  artifact.yaml
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
   \   ${resp}=  Run As  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
 
 
