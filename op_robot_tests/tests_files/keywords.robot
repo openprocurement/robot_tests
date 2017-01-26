@@ -371,6 +371,12 @@ Log differences between dicts
   Порівняти об'єкти  ${left}  ${right}
 
 
+Звірити відображення ставки учасника
+  [Arguments]  ${username}  ${tender_uaid}  ${bid_index}
+  ${left}=  get_current_bid_value  artifact.yaml  ${bid_index}
+  Звірити поле тендера із значенням  ${username}  ${tender_uaid}  ${left}  bids[${bid_index}]['value']['amount']
+
+
 Звірити значення поля серед усіх документів тендера
   [Arguments]  ${username}  ${tender_uaid}  ${field}  ${value}
   ${number_of_documents}=  Run As  ${username}  Отримати кількість документів в тендері  ${tender_uaid}

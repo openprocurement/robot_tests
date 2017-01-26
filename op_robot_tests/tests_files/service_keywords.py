@@ -504,6 +504,16 @@ def get_complaint_index_by_complaintID(data, complaintID):
     return index
 
 
+def get_current_bid_value(filepath, index):
+    artifact = load_data_from(filepath)
+    if (index == '0'):
+        return float(artifact['provider_bid_start_value']) + float(artifact['provider_bid_difference'])
+    if (index == '1'):
+        return float(artifact['provider1_bid_start_value']) + float(artifact['provider1_bid_difference'])
+    else:
+        raise ValueError("Invalid provider index")
+
+
 def generate_test_bid_data(tender_data):
     bid = test_bid_data()
     if 'aboveThreshold' in tender_data.get('procurementMethodType', '') or 'competitiveDialogue' in tender_data.get('procurementMethodType', ''):
