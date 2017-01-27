@@ -497,7 +497,7 @@ users:
         size:     [1000, 500]
     etrade_Viewer:
         broker:   etrade
-        homepage: "http://test.etrade.com.ua/"
+        homepage: "http://test.etrade.com.ua/Tender/List"
         default_page: "http://test.etrade.com.ua/Bid/List"
         login:    test1@wandio.com
         password: 123456
@@ -506,7 +506,7 @@ users:
         size:     [1280, 1024]
     etrade_Provider1:
         broker:   etrade
-        homepage: "http://test.etrade.com.ua/"
+        homepage: "http://test.etrade.com.ua/Tender/List"
         default_page: "http://test.etrade.com.ua/Bid/List"
         login:    test1@wandio.com
         password: 123456
@@ -515,7 +515,7 @@ users:
         size:     [1280, 1024]
     etrade_Provider2:
         broker:   etrade
-        homepage: "http://test.etrade.com.ua/"
+        homepage: "http://test.etrade.com.ua/Tender/List"
         default_page: "http://test.etrade.com.ua/Bid/List"
         login:    test2@wandio.com
         password: 123456
