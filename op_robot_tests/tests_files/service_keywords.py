@@ -7,9 +7,9 @@ from dateutil.parser import parse
 from dpath.util import new as xpathnew
 from haversine import haversine
 from iso8601 import parse_date
-from json import load
+from json import load, loads
 from jsonpath_rw import parse as parse_path
-from munch import fromYAML, Munch, munchify
+from munch import Munch, munchify
 from robot.errors import ExecutionFailed
 from robot.libraries.BuiltIn import BuiltIn
 from robot.output import LOGGER
@@ -232,22 +232,38 @@ def munch_to_object(data, format="yaml"):
         return data.toYAML(allow_unicode=True, default_flow_style=False)
 
 
-def load_data_from(file_name, mode=None):
+def load_data_from(file_name, mode=None, external_params_name=None):
+    """We assume that 'external_params' is a a valid json if passed
+    """
+
+    external_params = BuiltIn().\
+        get_variable_value('${{{name}}}'.format(name=external_params_name))
+
     if not os.path.exists(file_name):
         file_name = os.path.join(os.path.dirname(__file__), 'data', file_name)
     with open(file_name) as file_obj:
-        if file_name.endswith(".json"):
+        if file_name.endswith('.json'):
             file_data = Munch.fromDict(load(file_obj))
-        elif file_name.endswith(".yaml"):
-            file_data = fromYAML(file_obj)
-    if mode == "brokers":
+        elif file_name.endswith('.yaml'):
+            file_data = Munch.fromYAML(file_obj)
+    if mode == 'brokers':
         default = file_data.pop('Default')
         brokers = {}
         for k, v in file_data.iteritems():
             brokers[k] = merge_dicts(default, v)
-        return brokers
-    else:
-        return file_data
+        file_data = brokers
+
+    try:
+        ext_params_munch \
+            = Munch.fromDict(loads(external_params)) \
+            if external_params else Munch()
+    except ValueError:
+        raise ValueError(
+            'Value {param} of command line parameter {name} is invalid'.
+            format(name=external_params_name, param=str(external_params))
+        )
+
+    return merge_dicts(file_data, ext_params_munch)
 
 
 def compute_intrs(brokers_data, used_brokers):
