@@ -183,9 +183,8 @@ Resource           resource.robot
 Звірити належність усіх предметів до різних груп для користувача ${username}
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  @{items}=  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  items
-  ${len_of_items}=  Get Length  ${items}
-  ${comparision}=  compare_CAV_groups  ${len_of_items}  @{items}
-  Should Be True  ${comparision}
+  ${unique_cav_groups}=  compare_CAV_groups  @{items}
+  Should Be True  ${unique_cav_groups}
 
 
 Отримати дані із поля ${field} тендера для усіх користувачів
