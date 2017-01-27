@@ -68,7 +68,8 @@ Set Suite Variable With Default Value
 
   # Load brokers data
   ${file_path}=  Get Variable Value  ${BROKERS_FILE}  brokers.yaml
-  ${BROKERS}=  load_data_from  ${file_path}  mode=brokers
+  ${BROKERS_PARAMS}=  Get Variable Value  ${BROKERS_PARAMS}
+  ${BROKERS}=  load_data_from  ${file_path}  mode=brokers  external_params_name=BROKERS_PARAMS
   Log  ${BROKERS}
   Set Suite Variable  ${BROKERS}
   # List of currently used brokers
@@ -76,7 +77,8 @@ Set Suite Variable With Default Value
 
   # Load users data
   ${file_path}=  Get Variable Value  ${USERS_FILE}  users.yaml
-  ${USERS}=  load_data_from  ${file_path}
+  ${USERS_PARAMS}=  Get Variable Value  ${USERS_PARAMS}
+  ${USERS}=  load_data_from  ${file_path}  users.yaml  external_params_name=USERS_PARAMS
   Log  ${USERS.users}
   Set Suite Variable  ${USERS}
   # List of currently used users
