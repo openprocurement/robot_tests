@@ -625,6 +625,13 @@ Require Failure
   ...      ${next_status}
 
 
+Дочекатись дати закінчення періоду уточнень
+  [Arguments]  ${username}
+  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.enquiryPeriod.endDate}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+
+
 Звірити статус тендера
   [Arguments]  ${username}  ${tender_uaid}  ${left}
   ${right}=  Run as  ${username}  Отримати інформацію із тендера  ${tender_uaid}  status
