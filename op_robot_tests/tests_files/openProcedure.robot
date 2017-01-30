@@ -1382,6 +1382,27 @@ ${ITEM_MEAT}        ${True}
   Run Keyword And Expect Error  *  Можливість перетворити вимогу про виправлення умов закупівлі в скаргу
 
 
+Неможливість редагувати однопредметний тендер менше ніж за 2 дні до завершення періоду подання пропозицій
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_tender_in_tendering_period
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Require Failure  ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  description  description
+
+
+Можливість редагувати тендер після продовження періоду прийому пропозицій
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_tender_in_tendering_period
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${new_description}=  create_fake_sentence
+  Можливість змінити поле description тендера на ${new_description}
+  Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data}  description
+
+
 Можливість редагувати однопредметний тендер більше ніж за 7 днів до завершення періоду подання пропозицій
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
   ...      tender_owner
