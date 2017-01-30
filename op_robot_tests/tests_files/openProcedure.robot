@@ -1473,6 +1473,16 @@ ${ITEM_MEAT}        ${True}
   Run Keyword And Expect Error  *  Можливість створити вимогу про виправлення умов закупівлі із документацією користувачем ${provider}
 
 
+Неможливість відповісти на запитання до тендера після завершення періоду відповідей
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Відповідь на запитання
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      answer_question_after_clarifications_period
+  [Setup]  Дочекатись дати закінчення періоду відповідей на запитання  ${tender_owner}
+  [Teardown]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  Run Keyword And Expect Error  *  Можливість відповісти на запитання на тендер
+
+
 Неможливість редагувати однопредметний тендер менше ніж за 2 дні до завершення періоду подання пропозицій
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
   ...      tender_owner
@@ -1480,6 +1490,18 @@ ${ITEM_MEAT}        ${True}
   ...      modify_tender_in_tendering_period
   ${new_description}=  create_fake_sentence
   Run Keyword And Expect Error  *  Можливість змінити поле description тендера на ${new_description}
+
+
+Можливість відповісти на запитання до тендера після продовження періоду прийому пропозицій
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Відповідь на запитання
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      answer_question_after_clarifications_period
+  ...      extend_enquiry_period
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість продовжити період подання пропозиції на 3 днів
+  Можливість відповісти на запитання на тендер
 
 
 Можливість редагувати тендер після продовження періоду прийому пропозицій
