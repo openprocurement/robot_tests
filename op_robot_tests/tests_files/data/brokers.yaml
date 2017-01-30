@@ -7,7 +7,7 @@ Default:
         #
         # Each field is a mode name
         # Current modes are:
-        # single, multi, limited, openua, openeu
+        # single, multi, limited, openua, openeu, openua_defense
         #
         # See `prepare_test_tender_data()`
         # in `service_keywords.py` for more details
@@ -32,12 +32,15 @@ Default:
         openua:
             accelerator: 1440
             tender:  [0, 15]
-            # Please remember that openUA and openEU procedures
+            # Please remember that openUA, openEU and openUA_defense procedures
             # forbid anyone to set or modify enquiryPeriod
             # (it is set automatically)
         openeu:
             accelerator: 1440
             tender:  [0, 30]
+        openua_defense:
+            accelerator: 1440
+            tender:  [0, 6]
         open_competitive_dialogue:
             accelerator: 1440
             tender:  [0, 30]
@@ -52,6 +55,8 @@ Quinta:
             tender:  [1, 30]
         openeu:
             tender:  [1, 35]
+        openua_defense:
+            tender:  [0, 30]
         open_competitive_dialogue:
             accelerator: 1440
             tender:  [0, 30]
