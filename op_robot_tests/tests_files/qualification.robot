@@ -219,6 +219,15 @@ ${award_index}      ${0}
   Дочекатися перевірки кваліфікацій  ${tender_owner}  ${TENDER['TENDER_UAID']}
 
 
+Відображення статусу тендера в період кваліфікації
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view
+  Звірити статус тендера  ${viewer}  ${TENDER['TENDER_UAID']}  active.qualification
+
+
+
 Можливість завантажити документ рішення кваліфікаційної комісії для підтвердження постачальника
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
