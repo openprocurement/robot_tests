@@ -1454,6 +1454,16 @@ ${ITEM_MEAT}        ${True}
   Можливість завантажити eligibility_documents документ до пропозиції учасником ${provider}
 
 
+Неможливість задати запитання на тендер після завершення періоду уточнень
+  [Tags]  ${USERS.users['${provider}'].broker}: Задання запитання
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      ask_question_after_enquiry_period
+  [Setup]  Дочекатись дати закінчення періоду уточнень  ${provider}
+  [Teardown]  Дочекатись синхронізації з майданчиком  ${provider}
+  Run Keyword And Expect Error  *  Можливість задати запитання на тендер користувачем ${provider}
+
+
 Можливість редагувати однопредметний тендер більше ніж за 7 днів до завершення періоду подання пропозицій
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
   ...      tender_owner
