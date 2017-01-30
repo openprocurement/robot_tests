@@ -14,9 +14,10 @@ Resource           base_keywords.robot
   Require Failure  ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  description  description
 
 
-Можливість продовжити період подання пропозиції на 7 днів
-  ${endDate}=  add_minutes_to_date  ${USERS.users['${tender_owner}'].tender_data.data.tenderPeriod.endDate}  7
+Можливість продовжити період подання пропозиції на ${number_of_days} дні
+  ${endDate}=  add_minutes_to_date  ${USERS.users['${tender_owner}'].tender_data.data.tenderPeriod.endDate}  ${number_of_days}
   Можливість змінити поле tenderPeriod.endDate тендера на ${endDate}
+  Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data.tenderPeriod}  endDate
 
 ##############################################################################################
 #             BIDDING
