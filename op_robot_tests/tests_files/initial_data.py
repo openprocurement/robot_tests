@@ -371,7 +371,6 @@ def test_lot_document_data(document, lot_id):
     return munchify(document)
 
 
-
 def test_tender_data_openua(params):
     # We should not provide any values for `enquiryPeriod` when creating
     # an openUA or openEU procedure. That field should not be present at all.
@@ -379,6 +378,16 @@ def test_tender_data_openua(params):
     data = test_tender_data(params, ('tender',))
     data['procurementMethodType'] = 'aboveThresholdUA'
     data['procuringEntity']['kind'] = 'general'
+    return data
+
+
+def test_tender_data_openua_defense(params):
+    # We should not provide any values for `enquiryPeriod` when creating
+    # an openUA, openEU or openUA_defense procedure. That field should not be present at all.
+    # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
+    data = test_tender_data(params, ('tender',))
+    data['procurementMethodType'] = 'aboveThresholdUA.defense'
+    data['procuringEntity']['kind'] = 'defense'
     return data
 
 

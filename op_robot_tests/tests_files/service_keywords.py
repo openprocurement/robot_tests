@@ -43,6 +43,7 @@ from .initial_data import (
     test_tender_data_limited,
     test_tender_data_openeu,
     test_tender_data_openua,
+    test_tender_data_openua_defense,
 )
 from barbecue import chef
 from restkit import request
@@ -283,6 +284,8 @@ def prepare_test_tender_data(procedure_intervals, tender_parameters):
         return munchify({'data': test_tender_data_openeu(tender_parameters)})
     elif mode == 'openua':
         return munchify({'data': test_tender_data_openua(tender_parameters)})
+    elif mode == 'openua_defense':
+        return munchify({'data': test_tender_data_openua_defense(tender_parameters)})
     elif mode == 'open_competitive_dialogue':
         return munchify({'data': test_tender_data_competitive_dialogue(tender_parameters)})
     elif mode == 'reporting':
@@ -444,7 +447,13 @@ def get_complaint_index_by_complaintID(data, complaintID):
 
 def generate_test_bid_data(tender_data):
     bid = test_bid_data()
-    if tender_data.get('procurementMethodType', '')[:-2] in ('aboveThreshold', 'competitiveDialogue'):
+    if tender_data.get('procurementMethodType', '') in (
+            'aboveThresholdUA',
+            'aboveThresholdUA.defense',
+            'aboveThresholdEU',
+            'competitiveDialogueUA'
+            'competitiveDialogueEU'
+        ):
         bid.data.selfEligible = True
         bid.data.selfQualified = True
     if 'lots' in tender_data:
