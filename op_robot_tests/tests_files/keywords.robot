@@ -632,6 +632,13 @@ Require Failure
   Дочекатись синхронізації з майданчиком  ${username}
 
 
+Дочекатись дати закінчення періоду відповідей на запитання
+  [Arguments]  ${username}
+  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.enquiryPeriod.clarificationsUntil}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+
+
 Звірити статус тендера
   [Arguments]  ${username}  ${tender_uaid}  ${left}
   ${right}=  Run as  ${username}  Отримати інформацію із тендера  ${tender_uaid}  status
