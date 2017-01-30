@@ -1,0 +1,68 @@
+-v MODE:openua_defense
+
+-v NUMBER_OF_ITEMS:1
+-v NUMBER_OF_LOTS:1
+
+-v TENDER_MEAT:True
+-v ITEM_MEAT:True
+-v LOT_MEAT:True
+
+
+-i create_tender
+-i find_tender
+-i tender_view
+-i meat_view
+-i lot_view
+-i open_tender_view
+
+-i extend_tendering_period
+-i add_tender_doc
+-i add_lot_doc
+-i modify_lot_value_amount
+-i add_lot
+  -i delete_lot
+-i add_item
+  -i delete_item
+-i add_tender_meat
+  -i delete_tender_meat
+-i add_lot_meat
+  -i delete_lot_meat
+-i add_item_meat
+  -i delete_item_meat
+
+-i ask_question_to_tender
+-i ask_question_to_item
+  -i answer_question_to_item
+-i ask_question_to_lot
+  -i answer_question_to_lot
+-i modify_tender_after_questions
+-i modify_lot_after_questions
+
+-i create_tender_claim
+  -i answer_tender_claim
+  -i resolve_tender_claim
+-i modify_tender_after_claim
+
+-i create_lot_claim
+  -i answer_lot_claim
+  -i resolve_lot_claim
+-i modify_lot_after_claim
+
+-i make_bid_without_related_lot
+-i make_bid_without_parameters
+-i make_bid_by_provider
+  -i modify_bid_by_provider
+  -i add_doc_to_bid_by_provider
+-i ask_question_after_enquiry_period
+-i create_tender_complaint_after_complaint_period
+-i answer_question_after_clarifications_period
+-i modify_tender_in_tendering_period
+  -i open_confirm_first_bid
+-i bid_view_in_tendering_period
+
+-i ask_question_to_tender_after_tendering_period
+
+-i qualification_add_doc_to_first_award
+-i qualification_approve_first_award
+
+-i contract_sign
