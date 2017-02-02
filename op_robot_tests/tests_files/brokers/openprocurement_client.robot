@@ -1081,3 +1081,14 @@ Library  openprocurement_client_helper.py
   Log  ${reply}
 
 
+Встановити дату підписання угоди
+  [Arguments]  ${username}  ${tender_uaid}  ${contract_index}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${dateSigned}=  create_fake_date
+  ${contract}=  Create Dictionary  data=${tender.data.contracts[${contract_index}]}
+  Set To Dictionary  ${contract.data}  dateSigned=${dateSigned}
+  Set to Dictionary  ${USERS.users['${tender_owner}']}  dateSigned=${dateSigned}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract  ${tender}  ${contract}
+  Log  ${reply}
+
+
