@@ -953,19 +953,6 @@ Library  openprocurement_client_helper.py
   ${filename}=  download_file_from_url  ${document.url}  ${OUTPUT_DIR}${/}${document.title}
   [return]  ${filename}
 
-
-Підтвердити підписання контракту
-  [Documentation]
-  ...      [Arguments] Username, tender uaid, contract number
-  ...      Find tender using uaid, get contract test_confirmation data and call patch_contract
-  ...      [Return] Nothing
-  [Arguments]  ${username}  ${tender_uaid}  ${contract_num}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${data}=  test_confirm_data  ${tender['data']['contracts'][${contract_num}]['id']}
-  Log  ${data}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract  ${tender}  ${data}
-  Log  ${reply}
-
 ##############################################################################
 #             OpenUA procedure
 ##############################################################################
@@ -1130,3 +1117,14 @@ Library  openprocurement_client_helper.py
   Log object data  ${uploaded_file}
 
 
+Підтвердити підписання контракту
+  [Documentation]
+  ...      [Arguments] Username, tender uaid, contract number
+  ...      Find tender using uaid, get contract test_confirmation data and call patch_contract
+  ...      [Return] Nothing
+  [Arguments]  ${username}  ${tender_uaid}  ${contract_num}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${data}=  test_confirm_data  ${tender['data']['contracts'][${contract_num}]['id']}
+  Log  ${data}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract  ${tender}  ${data}
+  Log  ${reply}

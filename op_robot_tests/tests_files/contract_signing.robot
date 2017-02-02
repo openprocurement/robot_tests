@@ -1,6 +1,5 @@
 *** Settings ***
-Resource        keywords.robot
-Resource        resource.robot
+Resource        base_keywords.robot
 Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
@@ -10,20 +9,20 @@ Suite Teardown  Test Suite Teardown
 
 *** Test Cases ***
 Можливість знайти закупівлю по ідентифікатору
-  [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера
+  [Tags]  ${USERS.users['${viewer}'].broker}: Пошук тендера
   ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      find_tender  level1
   Завантажити дані про тендер
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
-  \   Run As  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
+  \   Run As  ${username}  Пошук тендера по ідентифікатору  ${TENDER['TENDER_UAID']}
 
 ##############################################################################################
 #             CONTRACT
 ##############################################################################################
 
 Відображення закінчення періоду подачі скарг на пропозицію
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних тендера
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Відображення основних даних тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      tender_view
@@ -32,7 +31,7 @@ Suite Teardown  Test Suite Teardown
 
 
 Дочекатися закічення stand still періоду
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Процес укладання угоди
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес укладання угоди
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      contract_sign
@@ -155,18 +154,19 @@ Suite Teardown  Test Suite Teardown
 
 Можливість укласти угоду для закупівлі
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес укладання угоди
-  ...  tender_owner
-  ...  ${USERS.users['${tender_owner}'].broker}
-  ...  contract_sign  level1
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      contract_sign  level1
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Run As  ${tender_owner}  Підтвердити підписання контракту  ${TENDER['TENDER_UAID']}  -1
 
 
 Відображення статусу підписаної угоди з постачальником закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних угоди
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  contract_sign
-  [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      contract_sign
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Run As  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
-  Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}  active  contracts[-1].status
+  Звірити відображення поля contracts[-1].status тендера із active для користувача ${viewer}
