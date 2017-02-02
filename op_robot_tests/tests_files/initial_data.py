@@ -28,6 +28,10 @@ def create_fake_sentence():
     return fake.sentence(nb_words=10, variable_nb_words=True)
 
 
+def create_fake_amount():
+    return fake.random_int(min=1)
+
+
 def field_with_id(prefix, sentence):
     return u"{}-{}: {}".format(prefix, fake.uuid4()[:8], sentence)
 
