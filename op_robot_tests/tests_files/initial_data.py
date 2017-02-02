@@ -32,6 +32,10 @@ def create_fake_amount(award_amount):
     return round(random.uniform(1, award_amount), 2)
 
 
+def create_fake_date():
+    return get_now().isoformat()
+
+
 def field_with_id(prefix, sentence):
     return u"{}-{}: {}".format(prefix, fake.uuid4()[:8], sentence)
 
