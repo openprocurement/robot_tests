@@ -1092,3 +1092,25 @@ Library  openprocurement_client_helper.py
   Log  ${reply}
 
 
+Вказати дату початку дії угоди
+  [Arguments]  ${username}  ${tender_uaid}  ${contract_index}  ${fieldvalue}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${period}=  Create Dictionary  startDate=${fieldvalue}
+  ${contract}=  Create Dictionary  data=${tender.data.contracts[${contract_index}]}
+  Set To Dictionary  ${contract.data}  period=${period}
+  Log  ${contract}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract  ${tender}  ${contract}
+  Log  ${reply}
+
+
+Вказати дату завершення дії угоди
+  [Arguments]  ${username}  ${tender_uaid}  ${contract_index}  ${fieldvalue}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${period}=  Create Dictionary  endDate=${fieldvalue}
+  ${contract}=  Create Dictionary  data=${tender.data.contracts[${contract_index}]}
+  Set To Dictionary  ${contract.data}  period=${period}
+  Log  ${contract}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract  ${tender}  ${contract}
+  Log  ${reply}
+
+
