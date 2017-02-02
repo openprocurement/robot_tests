@@ -1162,3 +1162,15 @@ Library  openprocurement_client_helper.py
   Log  ${reply}
 
 
+Завантажити документ в угоду
+  [Arguments]  ${username}  ${path}  ${tender_uaid}  ${contract_index}  ${doc_type}=documents
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${contract_id}=  Get Variable Value  ${tender.data.contracts[${contract_index}].id}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}']['access_token']}
+  ${response}=  Call Method  ${USERS.users['${username}'].client}  upload_contract_document  ${path}  ${tender}  ${contract_id}  ${doc_type}
+  ${uploaded_file} =  Create Dictionary
+  ...      filepath=${path}
+  ...      upload_response=${response}
+  Log object data  ${uploaded_file}
+
+
