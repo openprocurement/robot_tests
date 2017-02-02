@@ -1016,6 +1016,18 @@ Resource           resource.robot
   Remove File  ${file_path}
 
 
+Можливість завантажити документ в ${contract_index} угоду користувачем ${username}
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
+  ${doc_id}=  get_id_from_doc_name  ${file_name}
+  ${doc}=  Create Dictionary
+  ...      id=${doc_id}
+  ...      name=${file_name}
+  ...      content=${file_content}
+  Set to dictionary  ${USERS.users['${tender_owner}']}  contract_doc=${doc}
+  Run As  ${username}  Завантажити документ в угоду  ${file_path}  ${TENDER['TENDER_UAID']}  ${contract_index}
+  Remove File  ${file_path}
+
+
 Можливість укласти угоду для закупівлі
   Run as  ${tender_owner}
   ...      Підтвердити підписання контракту
