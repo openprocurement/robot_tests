@@ -93,6 +93,37 @@ Suite Teardown  Test Suite Teardown
   Звірити відображення поля contracts[-1].dateSigned тендера із ${USERS.users['${tender_owner}'].dateSigned} для користувача ${viewer}
 
 
+Можливість вказати період дії угоди
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування угоди
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      contract_sign
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${startDate}=  create_fake_date
+  ${endDate}=  add_minutes_to_date  ${startDate}  10
+  Set to dictionary  ${USERS.users['${tender_owner}']}  contract_startDate=${startDate}  contract_endDate=${endDate}
+  Run As  ${tender_owner}  Вказати період дії угоди  ${TENDER['TENDER_UAID']}  -1  ${startDate}  ${endDate}
+
+
+Відображення дати початку дії угоди
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних угоди
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      contract_sign
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля contracts[-1].period.startDate тендера із ${USERS.users['${tender_owner}'].contract_startDate} для користувача ${viewer}
+
+
+Відображення дати завершення дії угоди
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних угоди
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      contract_sign
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля contracts[-1].period.endDate тендера із ${USERS.users['${tender_owner}'].contract_endDate} для користувача ${viewer}
+
+
 Можливість укласти угоду для закупівлі
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес укладання угоди
   ...  tender_owner
