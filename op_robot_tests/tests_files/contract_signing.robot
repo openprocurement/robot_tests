@@ -135,6 +135,41 @@ Suite Teardown  Test Suite Teardown
   Звірити відображення поля contracts[-1].period.endDate тендера із ${USERS.users['${tender_owner}'].contract_endDate} для користувача ${viewer}
 
 
+Можливість завантажити документацію в угоду
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Завантаження документації в угоду
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      contract_sign
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ в -1 угоду користувачем ${tender_owner}
+
+
+Відображення заголовку документа
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      contract_sign
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля title документа ${USERS.users['${tender_owner}']['contract_doc']['id']} із ${USERS.users['${tender_owner}']['contract_doc']['name']} для користувача ${viewer}
+
+
+Відображення вмісту документа
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      contract_sign
+  Звірити відображення вмісту документа ${USERS.users['${tender_owner}']['contract_doc']['id']} із ${USERS.users['${tender_owner}']['contract_doc']['content']} для користувача ${viewer}
+
+
+Відображення прив'язки документа до тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      contract_sign
+  Звірити відображення поля documentOf документа ${USERS.users['${tender_owner}']['contract_doc']['id']} із tender для користувача ${viewer}
+
+
 Можливість укласти угоду для закупівлі
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес укладання угоди
   ...  tender_owner
