@@ -1069,3 +1069,17 @@ Library  openprocurement_client_helper.py
   set_to_object  ${tender}  data.status  active.tendering
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
   Log  ${reply}
+
+##############################################################################
+#             CONTRACT SIGNING
+##############################################################################
+
+Редагувати угоду
+  [Arguments]  ${username}  ${tender_uaid}  ${contract_index}  ${fieldname}  ${fieldvalue}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${contract}=  Create Dictionary  data=${tender.data.contracts[${contract_index}]}
+  Set_to_object  ${contract.data}  ${fieldname}  ${fieldvalue}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract  ${tender}  ${contract}
+  Log  ${reply}
+
+
