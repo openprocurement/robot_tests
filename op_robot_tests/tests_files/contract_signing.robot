@@ -40,6 +40,38 @@ Suite Teardown  Test Suite Teardown
   Дочекатись дати  ${standstillEnd}
 
 
+Відображення вартості угоди
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних угоди
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      contract_sign
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Отримати дані із поля awards[-1].value.amount тендера для користувача ${viewer}
+
+
+Можливість редагувати вартість угоди
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування угоди
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      contract_sign
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${award_amount}=  Get From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[-1].value}  amount
+  ${amount}=  create_fake_amount  ${award_amount}
+  Set to dictionary  ${USERS.users['${tender_owner}']}  new_amount=${amount}
+  Run As  ${tender_owner}  Редагувати угоду  ${TENDER['TENDER_UAID']}  -1  value.amount  ${amount}
+
+
+Відображення відредагованої вартості угоди
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних угоди
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      contract_sign
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.contracts[-1].value}  amount
+  Звірити відображення поля contracts[0].value.amount тендера із ${USERS.users['${tender_owner}'].new_amount} для користувача ${viewer}
+
+
 Можливість укласти угоду для закупівлі
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес укладання угоди
   ...  tender_owner
