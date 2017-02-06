@@ -512,11 +512,11 @@ def generate_test_bid_data(tender_data):
     if 'lots' in tender_data:
         bid.data.lotValues = []
         for lot in tender_data['lots']:
-            value = test_bid_value(lot['value']['amount'])
+            value = test_bid_value(lot['value']['amount'], lot['minimalStep']['amount'])
             value['relatedLot'] = lot.get('id', '')
             bid.data.lotValues.append(value)
     else:
-        bid.data.update(test_bid_value(tender_data['value']['amount']))
+        bid.data.update(test_bid_value(tender_data['value']['amount'], tender_data['minimalStep']['value']))
     if 'features' in tender_data:
         bid.data.parameters = []
         for feature in tender_data['features']:
