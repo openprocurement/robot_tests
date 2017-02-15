@@ -803,6 +803,80 @@ Library  openprocurement_client_helper.py
 #             Qualification operations
 ##############################################################################
 
+
+Отримати список документів по прекваліфікації
+  [Documentation]
+  ...       [Arguments] Username, tender uaid, qualification id
+  ...       [Description] Return all qualification documents by id
+  ...       [Return] Reaply from API
+  [Arguments]  ${username}  ${tender_uaid}  ${qualification_id}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${doc_list}=  Call Method  ${USERS.users['${username}'].client}  get_qualification_documents  ${tender}  ${qualification_id}
+  Log  ${doc_list}
+  [Return]  ${doc_list}
+
+
+Отримати список документів по кваліфікації
+  [Documentation]
+  ...       [Arguments] Username, tender uaid, award id
+  ...       [Description] Return all awards documents by id
+  ...       [Return] Reaply from API
+  [Arguments]  ${username}  ${tender_uaid}  ${award_id}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${doc_list}=  Call Method  ${USERS.users['${username}'].client}  get_awards_documents  ${tender}  ${award_id}
+  Log  ${doc_list}
+  [Return]  ${doc_list}
+
+
+Перевірити останій документ прекваліфікіції
+  [Documentation]
+  ...       [Arguments]  Username, tender uaid, qualification id
+  ...       [Description] Check documentType in last quailfication document
+  ...       [Return] Nothing
+  [Arguments]  ${username}  ${tender_uaid}  ${qualification_id}
+  ${docs}=  Run As  ${username}  Отримати список документів по прекваліфікації  ${tender_uaid}  ${qualification_id}
+  Log  ${docs}
+  Порівняти об'єкти  ${docs['data'][-1]['documentType']}  registerExtract
+
+
+Перевірити останій документ кваліфікації
+  [Documentation]
+  ...       [Arguments]  Username, tender uaid, award id
+  ...       [Description] Check documentType in last award document
+  ...       [Return] Nothing
+  [Arguments]  ${username}  ${tender_uaid}  ${award_id}
+  ${docs}=  Run As  ${username}  Отримати список документів по кваліфікації  ${tender_uaid}  ${award_id}
+  Log  ${docs}
+  Порівняти об'єкти  ${docs['data'][-1]['documentType']}  registerExtract
+
+
+Дочекатися перевірки прекваліфікацій
+  [Documentation]
+  ...       [Arguments] Username, tender uaid
+  ...       [Description]  Waint until edr bridge check qualifications
+  ...       [Return]  Nothing
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  :FOR  ${qualification}  IN  @{tender.data.qualifications}
+  \   Wait until keyword succeeds
+  \   ...      10 min 15 sec
+  \   ...      30 sec
+  \   ...      Перевірити останій документ прекваліфікіції  ${username}  ${tender_uaid}  ${qualification.id}
+
+Дочекатися перевірки кваліфікацій
+  [Documentation]
+  ...       [Arguments] Username, tender uaid
+  ...       [Description]  Waint until edr bridge create check award
+  ...       [Return]  Nothing
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  :FOR  ${award}  IN  @{tender.data.awards}
+  \   Wait until keyword succeeds
+  \   ...      10 min 15 sec
+  \   ...      30 sec
+  \   ...      Перевірити останій документ кваліфікації  ${username}  ${tender_uaid}  ${award.id}
+
+
 Завантажити документ рішення кваліфікаційної комісії
   [Documentation]
   ...      [Arguments] Username, tender uaid, qualification number and document to upload

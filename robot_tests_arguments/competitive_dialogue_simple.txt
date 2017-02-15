@@ -21,6 +21,8 @@
 
 -i open_tender_view
 
+-i pre-qualifications_check_by_edrpou
+
 -i pre-qualification_approve_first_bid
 -i pre-qualification_approve_second_bid
 -i pre-qualification_approve_third_bid
@@ -41,6 +43,8 @@
 
 -i make_bid_by_provider_second_stage
 -i make_bid_by_provider1_second_stage
+
+-i qualifications_check_by_edrpou
 
 -i pre-qualification_approve_first_bid_second_stage
 -i pre-qualification_approve_second_bid_second_stage

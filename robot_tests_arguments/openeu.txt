@@ -80,6 +80,8 @@
 
 -i pre-qualification_view
 
+-i pre-qaulification_check_by_edrpou
+
 -i pre-qualification_add_doc_to_first_bid
 -i pre-qualification_approve_first_bid
 
@@ -93,6 +95,9 @@
 -i auction
 
 -i qualification_add_doc_to_first_award
+
+-i qualifications_check_by_edrpou
+
 -i qualification_approve_first_award
 -i qualification_cancel_first_award_qualification
 -i qualification_add_doc_to_second_award

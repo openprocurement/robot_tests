@@ -17,6 +17,8 @@
 
 -i auction
 
+-i qualifications_check_by_edrpou
+
 -i qualification_approve_first_award
 
 -i contract_sign
