@@ -137,7 +137,7 @@ PrivatMarket:
     intervals:
         default:
             enquiry: [0, 15]
-            tender:  [0, 20]
+            tender:  [0, 30]
         openua:
             tender:  [1, 20]
         openeu:
