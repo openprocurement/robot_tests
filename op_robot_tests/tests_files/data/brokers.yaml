@@ -136,7 +136,7 @@ Newtend:
 PrivatMarket:
     intervals:
         default:
-            enquiry: [0, 15]
+            enquiry: [0, 10]
             tender:  [0, 30]
         openua:
             tender:  [1, 20]
