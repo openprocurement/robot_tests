@@ -449,7 +449,7 @@ polonex:
         provider:       polonex_provider
         provider1:      polonex_provider1
         tender_owner:   polonex_owner
-    homepage: 'http://polonex.in.ua/proauctions/public'
+    homepage: 'http://test.polonex.in.ua/prozorrosale/auctions/public'
     intervals:
         default:
             enquiry: [0, 10]
