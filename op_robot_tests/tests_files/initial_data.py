@@ -315,7 +315,7 @@ def test_bid_value(max_value_amount, minimalStep):
     return munchify({
         "value": {
             "currency": "UAH",
-            "amount": round(random.uniform(1, 10)*(max_value_amount + minimalStep), 2),
+            "amount": round(random.uniform(1, 1.01)*(max_value_amount + minimalStep), 2),
             "valueAddedTaxIncluded": True
         }
     })
