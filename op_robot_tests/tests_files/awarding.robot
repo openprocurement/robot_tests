@@ -43,7 +43,7 @@ Suite Teardown  Test Suite Teardown
   Звірити відображення поля awards[0].status тендера із pending.verification для користувача ${viewer}
 
 
-Відображення статусу 'pending.waiting' для другого кандидата
+Відображення статусу 'очікується кінець кваліфікації' для другого кандидата
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
