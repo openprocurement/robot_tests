@@ -791,10 +791,6 @@ Library  openprocurement_client_helper.py
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${award}=  create_data_dict  data.status  pending.payment
   Set To Dictionary  ${award.data}  id=${tender.data.awards[${award_index}].id}
-  Run Keyword IF  'open' in '${MODE}'
-  ...      Set To Dictionary  ${award.data}
-  ...      qualified=${True}
-  ...      eligible=${True}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_award  ${tender}  ${award}
   Log  ${reply}
 

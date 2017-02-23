@@ -43,7 +43,7 @@ Suite Teardown  Test Suite Teardown
   Звірити відображення поля awards[0].status тендера із pending.verification для користувача ${viewer}
 
 
-Відображення статусу 'pending.waiting' для другого кандидата
+Відображення статусу 'очікується кінець кваліфікації' для другого кандидата
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
@@ -129,7 +129,6 @@ Suite Teardown  Test Suite Teardown
   ...     ${USERS.users['${tender_owner}'].broker}
   ...     disqualified_first_award
   [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
-  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   ${description}=  create_fake_sentence
   Run As  ${tender_owner}  Дискваліфікувати постачальника  ${TENDER['TENDER_UAID']}  0  ${description}
 
@@ -149,7 +148,6 @@ Suite Teardown  Test Suite Teardown
   ...     ${USERS.users['${tender_owner}'].broker}
   ...     disqualified_second_award
   [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
-  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   ${description}=  create_fake_sentence
   Run As  ${tender_owner}  Дискваліфікувати постачальника  ${TENDER['TENDER_UAID']}  -1  ${description}
 
@@ -177,7 +175,7 @@ Suite Teardown  Test Suite Teardown
   ...     tender_owner
   ...     ${USERS.users['${tender_owner}'].broker}
   ...     change_second_award_payment_status
-  Require Failure  ${tender_owner}  Підтвердити наявність протоколу аукціону  ${TENDER['TENDER_UAID']}  1
+  Require Failure  ${tender_owner}  Підтвердити наявність протоколу аукціону  ${TENDER['TENDER_UAID']}  -1
 
 
 Можливість завантажити протокол аукціону в авард для другого кандидата

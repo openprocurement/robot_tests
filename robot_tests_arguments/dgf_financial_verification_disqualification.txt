@@ -21,5 +21,4 @@
 -i awarding
 -i disqualified_first_award
 -i disqualified_second_award
--i second_award_status_unsuccessful
 -i tender_status_unsuccessful
