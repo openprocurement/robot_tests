@@ -175,7 +175,7 @@ Suite Teardown  Test Suite Teardown
   ...     tender_owner
   ...     ${USERS.users['${tender_owner}'].broker}
   ...     change_second_award_payment_status
-  Require Failure  ${tender_owner}  Підтвердити наявність протоколу аукціону  ${TENDER['TENDER_UAID']}  1
+  Require Failure  ${tender_owner}  Підтвердити наявність протоколу аукціону  ${TENDER['TENDER_UAID']}  -1
 
 
 Можливість завантажити протокол аукціону в авард для другого кандидата
