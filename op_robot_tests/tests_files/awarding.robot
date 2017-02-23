@@ -111,7 +111,7 @@ Suite Teardown  Test Suite Teardown
   ...     ${USERS.users['${provider1}'].broker}
   ...     cancel_second_award
   [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider1}
-  Run As  ${provider1}  Скасування рішення кваліфікаційної комісії  ${TENDER['TENDER_UAID']}  -1
+  Run As  ${provider1}  Скасування рішення кваліфікаційної комісії  ${TENDER['TENDER_UAID']}  1
 
 
 Відображення статусу 'cancelled' для другого кандидата
@@ -120,7 +120,7 @@ Suite Teardown  Test Suite Teardown
   ...     ${USERS.users['${viewer}'].broker}
   ...     second_award_cancelled_status
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля awards[-1].status тендера із cancelled для користувача ${viewer}
+  Звірити відображення поля awards[1].status тендера із cancelled для користувача ${viewer}
 
 
 Можливість дискваліфікувати першого кандидата
