@@ -129,7 +129,6 @@ Suite Teardown  Test Suite Teardown
   ...     ${USERS.users['${tender_owner}'].broker}
   ...     disqualified_first_award
   [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
-  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   ${description}=  create_fake_sentence
   Run As  ${tender_owner}  Дискваліфікувати постачальника  ${TENDER['TENDER_UAID']}  0  ${description}
 
@@ -149,7 +148,6 @@ Suite Teardown  Test Suite Teardown
   ...     ${USERS.users['${tender_owner}'].broker}
   ...     disqualified_second_award
   [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
-  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   ${description}=  create_fake_sentence
   Run As  ${tender_owner}  Дискваліфікувати постачальника  ${TENDER['TENDER_UAID']}  -1  ${description}
 
