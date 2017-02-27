@@ -23,6 +23,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      create_tender  level1
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість оголосити тендер
 
@@ -33,6 +34,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      find_tender  level1
+  ...      critical
   Можливість знайти тендер по ідентифікатору для усіх користувачів
 
 ##############################################################################################
@@ -44,6 +46,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level1
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля title тендера для користувача ${viewer}
 
@@ -53,6 +56,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
+  ...      non-critical
   Звірити відображення поля description тендера для користувача ${viewer}
 
 
@@ -61,6 +65,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level1
+  ...      critical
   Звірити відображення поля value.amount тендера для усіх користувачів
 
 
@@ -69,6 +74,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
+  ...      non-critical
   Звірити відображення поля value.currency тендера для користувача ${viewer}
 
 
@@ -77,6 +83,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
+  ...      non-critical
   Звірити відображення поля value.valueAddedTaxIncluded тендера для користувача ${viewer}
 
 
@@ -85,6 +92,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
+  ...      critical
   Звірити відображення поля tenderID тендера із ${TENDER['TENDER_UAID']} для користувача ${viewer}
 
 
@@ -93,6 +101,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
+  ...      critical
   Звірити відображення поля procuringEntity.name тендера для користувача ${viewer}
 
 
@@ -101,6 +110,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
+  ...      non-critical
   Run Keyword IF  'open' in '${MODE}'
   ...      Отримати дані із поля enquiryPeriod.startDate тендера для усіх користувачів
   ...      ELSE
@@ -112,6 +122,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
+  ...      critical
   Run Keyword IF  'open' in '${MODE}'
   ...      Отримати дані із поля enquiryPeriod.endDate тендера для усіх користувачів
   ...      ELSE
@@ -123,6 +134,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
+  ...      non-critical
   Звірити відображення дати tenderPeriod.startDate тендера для усіх користувачів
 
 
@@ -131,6 +143,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
+  ...      critical
   Звірити відображення дати tenderPeriod.endDate тендера для усіх користувачів
 
 
@@ -139,6 +152,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
+  ...      critical
   Звірити відображення поля minimalStep.amount тендера для користувача ${viewer}
 
 
@@ -147,6 +161,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      open_tender_view  level2
+  ...      non-critical
   Звірити відображення поля procurementMethodType тендера для усіх користувачів
 
 
@@ -166,6 +181,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля description усіх предметів для усіх користувачів
 
@@ -174,6 +190,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
+  ...      non-critical
   Звірити відображення дати deliveryDate.startDate усіх предметів для користувача ${viewer}
 
 
@@ -182,6 +199,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
+  ...      non-critical
   Звірити відображення дати deliveryDate.endDate усіх предметів для користувача ${viewer}
 
 
@@ -190,6 +208,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
+  ...      non-critical
   Звірити відображення координат усіх предметів для користувача ${viewer}
 
 
@@ -198,6 +217,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
+  ...      non-critical
   Звірити відображення поля deliveryAddress.countryName усіх предметів для користувача ${viewer}
 
 
@@ -206,6 +226,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
+  ...      non-critical
   Звірити відображення поля deliveryAddress.postalCode усіх предметів для користувача ${viewer}
 
 
@@ -214,6 +235,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
+  ...      non-critical
   Звірити відображення поля deliveryAddress.region усіх предметів для користувача ${viewer}
 
 
@@ -222,6 +244,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
+  ...      non-critical
   Звірити відображення поля deliveryAddress.locality усіх предметів для користувача ${viewer}
 
 
@@ -230,6 +253,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
+  ...      non-critical
   Звірити відображення поля deliveryAddress.streetAddress усіх предметів для користувача ${viewer}
 
 
@@ -238,6 +262,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
+  ...      non-critical
   Звірити відображення поля classification.scheme усіх предметів для користувача ${viewer}
 
 
@@ -246,6 +271,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
+  ...      non-critical
   Звірити відображення поля classification.id усіх предметів для користувача ${viewer}
 
 
@@ -254,6 +280,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
+  ...      non-critical
   Звірити відображення поля classification.description усіх предметів для користувача ${viewer}
 
 
@@ -262,6 +289,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
+  ...      non-critical
   Звірити відображення поля additionalClassifications[0].scheme усіх предметів для користувача ${viewer}
 
 
@@ -270,6 +298,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
+  ...      non-critical
   Звірити відображення поля additionalClassifications[0].id усіх предметів для користувача ${viewer}
 
 
@@ -278,6 +307,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
+  ...      non-critical
   Звірити відображення поля additionalClassifications[0].description усіх предметів для користувача ${viewer}
 
 
@@ -286,6 +316,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
+  ...      non-critical
   Звірити відображення поля unit.name усіх предметів для користувача ${viewer}
 
 
@@ -294,6 +325,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
+  ...      non-critical
   Звірити відображення поля unit.code усіх предметів для користувача ${viewer}
 
 
@@ -302,6 +334,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
+  ...      non-critical
   Звірити відображення поля quantity усіх предметів для користувача ${viewer}
 
 ##############################################################################################
@@ -314,6 +347,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      lot_view  level1
+  ...      critical
   Звірити відображення поля title усіх лотів для усіх користувачів
 
 
@@ -322,6 +356,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      lot_view  level2
+  ...      critical
   Звірити відображення поля description усіх лотів для користувача ${viewer}
 
 
@@ -330,6 +365,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      lot_view  level2
+  ...      critical
   Звірити відображення поля value.amount усіх лотів для усіх користувачів
 
 
@@ -338,6 +374,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      lot_view  level2
+  ...      non-critical
   Звірити відображення поля value.currency усіх лотів для користувача ${viewer}
 
 
@@ -346,6 +383,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      lot_view  level2
+  ...      non-critical
   Звірити відображення поля value.valueAddedTaxIncluded усіх лотів для користувача ${viewer}
 
 
@@ -354,6 +392,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      lot_view  level2
+  ...      non-critical
   Звірити відображення поля minimalStep.amount усіх лотів для усіх користувачів
 
 
@@ -362,6 +401,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      lot_view  level2
+  ...      non-critical
   Звірити відображення поля minimalStep.currency усіх лотів для користувача ${viewer}
 
 
@@ -370,6 +410,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      lot_view  level2
+  ...      non-critical
   Звірити відображення поля minimalStep.valueAddedTaxIncluded усіх лотів для користувача ${viewer}
 
 ##############################################################################################
@@ -382,6 +423,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      meat_view  level2
+  ...      critical
   Звірити відображення поля title усіх нецінових показників для усіх користувачів
 
 
@@ -390,6 +432,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      meat_view  level2
+  ...      critical
   Звірити відображення поля description усіх нецінових показників для користувача ${viewer}
 
 
@@ -398,6 +441,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      meat_view  level2
+  ...      non-critical
   Звірити відображення поля featureOf усіх нецінових показників для користувача ${viewer}
 
 ##############################################################################################
@@ -409,6 +453,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      extend_tendering_period  level3
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${endDate}=  add_minutes_to_date  ${USERS.users['${tender_owner}'].tender_data.data.tenderPeriod.endDate}  1
   Можливість змінити поле tenderPeriod.endDate тендера на ${endDate}
@@ -420,6 +465,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      extend_tendering_period  level2
+  ...      non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення дати tenderPeriod.endDate тендера для усіх користувачів
 
@@ -429,6 +475,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      add_tender_doc  level3
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість додати документацію до тендера
 
@@ -438,6 +485,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      add_lot_doc  level3
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість додати документацію до всіх лотів
 
@@ -447,6 +495,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_tender_doc  level2
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля title документа ${USERS.users['${tender_owner}']['tender_document']['doc_id']} із ${USERS.users['${tender_owner}'].tender_document.doc_name} для користувача ${viewer}
 
@@ -456,6 +505,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_lot_doc  level2
+  ...      critical
   Звірити відображення заголовку документації до всіх лотів для користувача ${viewer}
 
 
@@ -464,6 +514,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_tender_doc  level2
+  ...      critical
   Звірити відображення вмісту документа ${USERS.users['${tender_owner}'].tender_document.doc_id} із ${USERS.users['${tender_owner}'].tender_document.doc_content} для користувача ${viewer}
 
 
@@ -472,6 +523,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_lot_doc  level2
+  ...      critical
   Звірити відображення вмісту документації до всіх лотів для користувача ${viewer}
 
 
@@ -480,6 +532,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_lot_value_amount  level2
+  ...      non-critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість змінити на 99 відсотки бюджет 0 лоту
 
@@ -489,6 +542,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_lot_value_amount  level3
+  ...      non-critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість змінити на 101 відсотки бюджет 0 лоту
 
@@ -498,6 +552,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      add_lot  level3
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість створення лоту із прив’язаним предметом закупівлі
@@ -508,6 +563,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_lot  level2
+  ...      non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля description у новоствореному предметі для усіх користувачів
 
@@ -518,6 +574,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      add_lot  level2
+  ...      non-critical
   Звірити відображення поля title у новоствореному лоті для усіх користувачів
 
 
@@ -526,6 +583,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      add_item  level3
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Run Keyword IF  ${NUMBER_OF_LOTS} == 0
   ...      Можливість додати предмет закупівлі в тендер
@@ -538,6 +596,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_item  level2
+  ...      non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля description у новоствореному предметі для усіх користувачів
 
@@ -547,6 +606,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_item  level3
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Run Keyword IF  ${NUMBER_OF_LOTS} == 0
   ...      Можливість видалити предмет закупівлі з тендера
@@ -559,6 +619,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_lot
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість видалення -1 лоту
 
@@ -568,6 +629,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      add_tender_meat  level3
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість додати неціновий показник на тендер
 
@@ -578,6 +640,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      add_tender_meat  level2
+  ...      non-critical
   Звірити відображення поля title у новоствореному неціновому показнику для усіх користувачів
 
 
@@ -586,6 +649,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_tender_meat
+  ...      non-critical
   Звірити відображення поля description у новоствореному неціновому показнику для користувача ${viewer}
 
 
@@ -594,6 +658,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_tender_meat
+  ...      non-critical
   Звірити відображення поля featureOf у новоствореному неціновому показнику для користувача ${viewer}
 
 
@@ -602,6 +667,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_tender_meat  level3
+  ...      critical
   Можливість видалити -1 неціновий показник
 
 
@@ -610,6 +676,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      add_lot_meat  level3
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість додати неціновий показник на 0 лот
 
@@ -620,6 +687,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      add_lot_meat  level2
+  ...      non-critical
   Звірити відображення поля title у новоствореному неціновому показнику для усіх користувачів
 
 
@@ -628,6 +696,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_lot_meat
+  ...      non-critical
   Звірити відображення поля description у новоствореному неціновому показнику для користувача ${viewer}
 
 
@@ -636,6 +705,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_lot_meat
+  ...      non-critical
   Звірити відображення поля featureOf у новоствореному неціновому показнику для користувача ${viewer}
 
 
@@ -644,6 +714,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_lot_meat  level3
+  ...      critical
   Можливість видалити -1 неціновий показник
 
 
@@ -652,6 +723,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      add_item_meat  level3
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість додати неціновий показник на 0 предмет
 
@@ -662,6 +734,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      add_item_meat  level2
+  ...      non-critical
   Звірити відображення поля title у новоствореному неціновому показнику для усіх користувачів
 
 
@@ -670,6 +743,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_item_meat
+  ...      non-critical
   Звірити відображення поля description у новоствореному неціновому показнику для користувача ${viewer}
 
 
@@ -678,6 +752,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_item_meat
+  ...      non-critical
   Звірити відображення поля featureOf у новоствореному неціновому показнику для користувача ${viewer}
 
 
@@ -686,6 +761,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_item_meat  level3
+  ...      critical
   Можливість видалити -1 неціновий показник
 
 ##############################################################################################
@@ -697,6 +773,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_to_tender
+  ...      critical
   [Setup]  Дочекатись дати початку періоду уточнень  ${provider}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість задати запитання на тендер користувачем ${provider}
@@ -707,6 +784,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      ask_question_to_tender
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля title запитання на тендер для усіх користувачів
 
@@ -716,6 +794,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      ask_question_to_tender
+  ...      non-critical
   Звірити відображення поля description запитання на тендер для користувача ${viewer}
 
 
@@ -724,6 +803,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      answer_question_to_tender
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість відповісти на запитання на тендер
@@ -734,6 +814,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      answer_question_to_tender
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля answer запитання на тендер для користувача ${viewer}
 
@@ -743,6 +824,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_to_item
+  ...      critical
   [Setup]  Дочекатись дати початку періоду уточнень  ${provider}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
@@ -754,6 +836,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer tender_owner provider provider1
   ...      ${USERS.users['${viewer}'].broker}
   ...      ask_question_to_item
+  ...      non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  Звірити відображення поля title запитання на ${item_index} предмет для усіх користувачів
@@ -764,6 +847,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      ask_question_to_item
+  ...      critical
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  Звірити відображення поля description запитання на ${item_index} предмет для користувача ${viewer}
 
@@ -773,6 +857,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      answer_question_to_item
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
@@ -784,6 +869,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      answer_question_to_item
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  Звірити відображення поля answer запитання на ${item_index} предмет для користувача ${viewer}
@@ -794,6 +880,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_to_lot
+  ...      critical
   [Setup]  Дочекатись дати початку періоду уточнень  ${provider}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   :FOR  ${lot_index}  IN RANGE  ${NUMBER_OF_LOTS}
@@ -805,6 +892,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer tender_owner provider provider1
   ...      ${USERS.users['${viewer}'].broker}
   ...      ask_question_to_lot
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   :FOR  ${lot_index}  IN RANGE  ${NUMBER_OF_LOTS}
   \  Звірити відображення поля title запитання на ${lot_index} лот для усіх користувачів
@@ -815,6 +903,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      ask_question_to_lot
+  ...      non-critical
   :FOR  ${lot_index}  IN RANGE  ${NUMBER_OF_LOTS}
   \  Звірити відображення поля description запитання на ${lot_index} лот для користувача ${viewer}
 
@@ -824,6 +913,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      answer_question_to_lot
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   :FOR  ${lot_index}  IN RANGE  ${NUMBER_OF_LOTS}
@@ -835,6 +925,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      answer_question_to_lot
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   :FOR  ${lot_index}  IN RANGE  ${NUMBER_OF_LOTS}
   \  Звірити відображення поля answer запитання на ${lot_index} лот для користувача ${viewer}
@@ -845,6 +936,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_tender_after_questions
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_description}=  create_fake_sentence
@@ -857,6 +949,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_lot_after_questions
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_description}=  create_fake_sentence
@@ -1255,6 +1348,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      make_bid_without_related_lot
+  ...      non-critical
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
   Неможливість подати цінову пропозицію без прив’язки до лоту користувачем ${provider}
 
@@ -1264,6 +1358,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      make_bid_without_parameters
+  ...      non-critical
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
   Неможливість подати цінову пропозицію без нецінових показників користувачем ${provider}
 
@@ -1273,6 +1368,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      make_bid_by_provider  level1
+  ...      critical
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider}
@@ -1283,6 +1379,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      modify_bid_by_provider
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість зменшити пропозицію до 95 відсотків користувачем ${provider}
 
@@ -1292,6 +1389,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      modify_bid_by_provider
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість завантажити документ в пропозицію користувачем ${provider}
 
@@ -1301,6 +1399,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      add_doc_to_bid_by_provider
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість змінити документацію цінової пропозиції користувачем ${provider}
 
@@ -1310,6 +1409,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      make_bid_by_provider1  level1
+  ...      critical
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider1}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider1}
@@ -1320,6 +1420,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider2
   ...      ${USERS.users['${provider1}'].broker}
   ...      make_bid_by_provider2  level1
+  ...      non-critical
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider2}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider2}
@@ -1333,6 +1434,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      openeu_make_bid_doc_private_by_provider
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість змінити документацію цінової пропозиції з публічної на приватну учасником ${provider}
 
@@ -1342,6 +1444,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      openeu_add_financial_bid_doc_by_provider
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість завантажити financial_documents документ до пропозиції учасником ${provider}
 
@@ -1351,6 +1454,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      openeu_add_qualification_bid_doc_by_provider
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість завантажити qualification_documents документ до пропозиції учасником ${provider}
 
@@ -1360,6 +1464,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      openeu_add_eligibility_bid_doc_by_provider
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість завантажити eligibility_documents документ до пропозиції учасником ${provider}
 
@@ -1369,6 +1474,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      open_modify_tender_in_tendering_period
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_description}=  create_fake_sentence
   Можливість змінити поле description тендера на ${new_description}
@@ -1380,6 +1486,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      open_confirm_first_bid
+  ...      non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   Відображення зміни статусу пропозицій на invalid для учасника ${provider}
 
@@ -1389,6 +1496,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      open_confirm_second_bid
+  ...      non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider1}
   Відображення зміни статусу пропозицій на invalid для учасника ${provider1}
 
@@ -1398,6 +1506,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      open_confirm_first_bid
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість підтвердити цінову пропозицію учасником ${provider}
 
@@ -1407,6 +1516,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      open_confirm_second_bid
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість підтвердити цінову пропозицію учасником ${provider1}
 
@@ -1416,6 +1526,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider2
   ...      ${USERS.users['${provider1}'].broker}
   ...      open_confirm_third_bid
+  ...      non-critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість підтвердити цінову пропозицію учасником ${provider2}
 
@@ -1435,6 +1546,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      bid_view_in_tendering_period
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Require Failure  ${viewer}  Отримати інформацію із тендера  ${TENDER['TENDER_UAID']}  bids
 
@@ -1447,6 +1559,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider1}'].broker}
   ...      add_bid_doc_after_tendering_period_by_provider
+  ...      non-critical
   [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}  ${TENDER['TENDER_UAID']}
   Run Keyword And Expect Error  *  Можливість завантажити документ в пропозицію користувачем ${provider}
 
@@ -1456,6 +1569,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider1}'].broker}
   ...      modify_bid_doc_after_tendering_period_by_provider
+  ...      non-critical
   Run Keyword And Expect Error  *  Можливість змінити документацію цінової пропозиції користувачем ${provider}
 
 
@@ -1464,6 +1578,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_to_tender_after_tendering_period
+  ...      non-critical
   [Setup]  Дочекатись дати закінчення прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
   Run Keyword And Expect Error  *  Можливість задати запитання на тендер користувачем ${provider}
 
@@ -1473,6 +1588,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_to_item_after_tendering_period
+  ...      non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   Run Keyword And Expect Error  *  Можливість задати запитання на 0 предмет користувачем ${provider}
 
@@ -1482,6 +1598,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_to_lot_after_tendering_period
+  ...      non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   Run Keyword And Expect Error  *  Можливість задати запитання на 0 лот користувачем ${provider}
 
@@ -1491,6 +1608,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      modify_bid_after_tendering_period_by_provider1
+  ...      non-critical
   [Setup]  Дочекатись дати закінчення прийому пропозицій  ${provider1}  ${TENDER['TENDER_UAID']}
   Run Keyword And Expect Error  *  Можливість зменшити пропозицію до 95 відсотків користувачем ${provider1}
 
@@ -1500,6 +1618,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      cancel_bid_after_tendering_period_by_provider1
+  ...      non-critical
   Run Keyword And Expect Error  *  Можливість скасувати цінову пропозицію користувачем ${provider1}
 
 
@@ -1512,6 +1631,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_add_doc_to_tender
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Run Keyword And Expect Error  *  Можливість додати документацію до тендера
 
@@ -1521,6 +1641,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_add_doc_to_lot
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Run Keyword And Expect Error  *  Можливість додати документацію до 0 лоту
 
@@ -1530,6 +1651,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_view
+  ...      non-critical
   [Setup]  Дочекатись дати початку періоду прекваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
   Звірити відображення поля qualifications[0].status тендера із pending для користувача ${tender_owner}
 
@@ -1539,6 +1661,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_view
+  ...      non-critical
   [Setup]  Дочекатись дати початку періоду прекваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
   Звірити відображення поля qualifications[1].status тендера із pending для користувача ${tender_owner}
 
@@ -1548,6 +1671,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_add_doc_to_first_bid
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість завантажити документ у кваліфікацію 0 пропозиції
 
@@ -1557,6 +1681,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_approve_first_bid  level1
+  ...      critical
   [Setup]  Дочекатись дати початку періоду прекваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість підтвердити 0 пропозицію кваліфікації
@@ -1567,6 +1692,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_add_doc_to_second_bid
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість завантажити документ у кваліфікацію 1 пропозиції
 
@@ -1576,6 +1702,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_reject_second_bid
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість відхилити 1 пропозиції кваліфікації
 
@@ -1585,6 +1712,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_cancel_second_bid_qualification
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість скасувати рішення кваліфікації для 1 пропопозиції
 
@@ -1594,6 +1722,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_approve_second_bid  level1
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість підтвердити -1 пропозицію кваліфікації
 
@@ -1603,6 +1732,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_approve_third_bid  level1
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість підтвердити -2 пропозицію кваліфікації
 
@@ -1612,6 +1742,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_approve_qualifications  level1
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість затвердити остаточне рішення кваліфікації
@@ -1622,6 +1753,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_view
+  ...      non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   Звірити статус тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  active.pre-qualification.stand-still
 
@@ -1631,6 +1763,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_view
+  ...      non-critical
   [Teardown]  Дочекатись дати закінчення періоду прекваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
   Отримати дані із поля qualificationPeriod.endDate тендера для усіх користувачів
 
