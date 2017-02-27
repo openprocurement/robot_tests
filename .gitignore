@@ -13,9 +13,14 @@ __pycache__/
 /dist/
 /eggs/
 /src/
+.idea/
 
 # Output of robot_tests
 /test_output/
+test_results/
 
 # Robot framework artifact
 op_robot_tests/tests_files/data/artifact.yaml
+
+# Script for runner tests
+script_runner.sh
