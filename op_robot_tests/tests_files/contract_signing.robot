@@ -27,6 +27,7 @@ Suite Teardown  Test Suite Teardown
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      tender_view
+  ...      non-critical
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  awards[-1].complaintPeriod.endDate
 
@@ -36,6 +37,7 @@ Suite Teardown  Test Suite Teardown
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      contract_sign
+  ...      critical
   ${standstillEnd}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data.awards[-1].complaintPeriod.endDate}
   Дочекатись дати  ${standstillEnd}
 
@@ -45,6 +47,7 @@ Suite Teardown  Test Suite Teardown
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  contract_sign  level1
+  ...  critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Run As  ${tender_owner}  Підтвердити підписання контракту  ${TENDER['TENDER_UAID']}  -1
 
@@ -54,6 +57,7 @@ Suite Teardown  Test Suite Teardown
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  contract_sign
+  ...  non-critical
   [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
   Run As  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
   Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}  active  contracts[-1].status
