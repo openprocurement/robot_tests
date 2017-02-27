@@ -216,6 +216,7 @@ ${award_index}      ${0}
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_add_doc_to_first_award  level3
+  ...   critical
   ${file_path}  ${file_name}  ${file_content}=   create_fake_doc
   Run As   ${tender_owner}   Завантажити документ рішення кваліфікаційної комісії   ${file_path}   ${TENDER['TENDER_UAID']}   0
   Remove File  ${file_path}
@@ -226,6 +227,7 @@ ${award_index}      ${0}
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_approve_first_award  level1
+  ...   critical
   Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  0
 
 
@@ -234,6 +236,7 @@ ${award_index}      ${0}
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_cancel_first_award_qualification  level1
+  ...   critical
   Run As  ${tender_owner}  Скасування рішення кваліфікаційної комісії  ${TENDER['TENDER_UAID']}  0
 
 
@@ -242,6 +245,7 @@ ${award_index}      ${0}
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_add_doc_to_second_award  level3
+  ...   critical
   ${file_path}  ${file_name}  ${file_content}=   create_fake_doc
   Run As   ${tender_owner}   Завантажити документ рішення кваліфікаційної комісії   ${file_path}   ${TENDER['TENDER_UAID']}   1
   Remove File  ${file_path}
@@ -252,4 +256,5 @@ ${award_index}      ${0}
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_approve_second_award  level1
+  ...  critical
   Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  -1
