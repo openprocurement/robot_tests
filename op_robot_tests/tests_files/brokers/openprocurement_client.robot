@@ -84,6 +84,7 @@ Library  openprocurement_client_helper.py
   Log  ${reply}
   [return]  ${reply}
 
+
 Завантажити протокол аукціону в авард
   [Arguments]  ${username}  ${tender_uaid}  ${filepath}  ${award_index}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
@@ -95,6 +96,7 @@ Library  openprocurement_client_helper.py
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_award_document  ${tender}  ${response}  ${award_id}  ${response['data'].id}
   Log  ${reply}
   [return]  ${reply}
+
 
 Завантажити документ в ставку з типом
   [Arguments]  ${username}  ${tender_uaid}  ${filepath}  ${documentType}
