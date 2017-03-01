@@ -391,6 +391,14 @@ users:
         browser:  chrome
         position: [700, 0]
         size:     [800, 700]
+    Newtend_Provider:
+        broker:   Newtend
+        homepage: "http://ea-trunk.newtend.com/provider/#/profile/login"
+        login:    fin_bid002@newtend.com
+        password: 123123
+        browser:  chrome
+        position: [700, 0]
+        size:     [800, 700]
     Newtend_Viewer:
         broker:   Newtend
         homepage: "http://ea-trunk.newtend.com/provider"
