@@ -482,10 +482,10 @@ ecommodity:
              enquiry: [0, 10]
              tender:  [0, 15]
          dgfFinancialAssets:
-             accelerator: 1440
+             accelerator: 360
              auction: [15, 20]
          dgfOtherAssets:
-             accelerator: 1440
+             accelerator: 360
              auction: [15, 20]
     timeout_on_wait: 60
 etc:
