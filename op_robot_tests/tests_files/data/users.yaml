@@ -14,7 +14,7 @@ users:
     Tender_Viewer:
         api_key:  ""
         broker:   Quinta
-        browser:  chrome
+        browser:  firefox
     Etender_Owner:
         broker:   Etender
         homepage: "http://e-auction.pro/#/"
@@ -450,22 +450,30 @@ users:
         size:     [1280, 1024]
     Publicbid_Owner:
         broker:   Publicbid
-        homepage: "https://10.255.200.224:8100/"
-        login:    test_eauction@yopmail.com
+        homepage: "https://217.76.194.185:56006/"
+        login:    leksoz84@gmail.com
         password: P@ssw0rd
         browser:  chrome
         position: [0, 0]
         size:     [1600, 1200]
     Publicbid_Viewer:
         broker:   Publicbid
-        homepage: "https://10.255.200.224:8100/"
+        homepage: "https://217.76.194.185:56006/"
         browser:  chrome
         position: [0, 450]
         size:     [1600, 720]
     Publicbid_Provider1:
         broker:   Publicbid
-        homepage: "https://10.255.200.224:8100/"
-        login:    test_eauction@yopmail.com
+        homepage: "https://217.76.194.185:56006/"
+        login:    prozorro2@bigmir.net
+        password: P@ssw0rd
+        browser:  chrome
+        position: [450, 0]
+        size:     [1600, 1200]
+    Publicbid_Provider2:
+        broker:   Publicbid
+        homepage: "https://217.76.194.185:56006/"
+        login:    prozorro5@bigmir.net
         password: P@ssw0rd
         browser:  chrome
         position: [450, 0]
