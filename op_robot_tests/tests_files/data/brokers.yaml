@@ -285,7 +285,8 @@ ztv:
 Newtend:
     keywords_file: newtend
     roles:
-        provider:       Newtend_Provider1
+        provider1:       Newtend_Provider1
+        provider:       Newtend_Provider
         tender_owner:   Newtend_Owner
         viewer:         Newtend_Viewer
     timeout_on_wait: 60
