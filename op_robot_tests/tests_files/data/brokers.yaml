@@ -495,7 +495,7 @@ etc:
         provider:       etc_provider
         provider1:      etc_provider1
         tender_owner:   etc_owner
-    homepage: 'https://etc-torgi.com'
+    homepage: 'https://etc-torgi.com/prozorrosale/auctions/public'
     intervals:
         default:
             enquiry: [0, 10]
@@ -509,7 +509,7 @@ etrading:
         provider:       etrading_provider
         provider1:      etrading_provider1
         tender_owner:   etrading_owner
-    homepage: 'https://e-trading.kiev.ua'
+    homepage: 'https://e-trading.kiev.ua/prozorrosale/auctions/public'
     intervals:
         default:
             enquiry: [0, 10]
