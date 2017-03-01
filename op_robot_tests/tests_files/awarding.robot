@@ -84,6 +84,7 @@ Suite Teardown  Test Suite Teardown
   ...     ${USERS.users['${viewer}'].broker}
   ...     first_award_payment_status
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[0]}  status
   Звірити відображення поля awards[0].status тендера із pending.payment для користувача ${viewer}
 
 
@@ -102,6 +103,7 @@ Suite Teardown  Test Suite Teardown
   ...     ${USERS.users['${viewer}'].broker}
   ...     first_award_active_status
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[0]}  status
   Звірити відображення поля awards[0].status тендера із active для користувача ${viewer}
 
 
@@ -120,6 +122,7 @@ Suite Teardown  Test Suite Teardown
   ...     ${USERS.users['${viewer}'].broker}
   ...     second_award_cancelled_status
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[1]}  status
   Звірити відображення поля awards[1].status тендера із cancelled для користувача ${viewer}
 
 
@@ -139,6 +142,7 @@ Suite Teardown  Test Suite Teardown
   ...     ${USERS.users['${viewer}'].broker}
   ...     first_award_status_unsuccessful
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[0]}  status
   Звірити відображення поля awards[0].status тендера із unsuccessful для користувача ${viewer}
 
 
@@ -149,7 +153,7 @@ Suite Teardown  Test Suite Teardown
   ...     disqualified_second_award
   [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
   ${description}=  create_fake_sentence
-  Run As  ${tender_owner}  Дискваліфікувати постачальника  ${TENDER['TENDER_UAID']}  -1  ${description}
+  Run As  ${tender_owner}  Дискваліфікувати постачальника  ${TENDER['TENDER_UAID']}  1  ${description}
 
 
 Відображення статусу 'unsuccessful' для другого кандидата
@@ -158,6 +162,7 @@ Suite Teardown  Test Suite Teardown
   ...     ${USERS.users['${viewer}'].broker}
   ...     second_award_status_unsuccessful
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[1]}  status
   Звірити відображення поля awards[1].status тендера із unsuccessful для користувача ${viewer}
 
 
@@ -167,6 +172,7 @@ Suite Teardown  Test Suite Teardown
   ...     ${USERS.users['${viewer}'].broker}
   ...     second_award_verification_status
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[1]}  status
   Звірити відображення поля awards[1].status тендера із pending.verification для користувача ${viewer}
 
 
@@ -175,7 +181,7 @@ Suite Teardown  Test Suite Teardown
   ...     tender_owner
   ...     ${USERS.users['${tender_owner}'].broker}
   ...     change_second_award_payment_status
-  Require Failure  ${tender_owner}  Підтвердити наявність протоколу аукціону  ${TENDER['TENDER_UAID']}  -1
+  Require Failure  ${tender_owner}  Підтвердити наявність протоколу аукціону  ${TENDER['TENDER_UAID']}  1
 
 
 Можливість завантажити протокол аукціону в авард для другого кандидата
@@ -184,7 +190,7 @@ Suite Teardown  Test Suite Teardown
   ...     ${USERS.users['${tender_owner}'].broker}
   ...     add_protocol_to_second_award
   [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
-  Можливість завантажити протокол аукціону в авард -1 користувачем ${tender_owner}
+  Можливість завантажити протокол аукціону в авард 1 користувачем ${tender_owner}
 
 
 Можливість підтвердити наявність протоколу аукціону для другого кандидата
@@ -193,7 +199,7 @@ Suite Teardown  Test Suite Teardown
   ...     ${USERS.users['${tender_owner}'].broker}
   ...     approve_second_award_protocol
   [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
-  Run As  ${tender_owner}  Підтвердити наявність протоколу аукціону  ${TENDER['TENDER_UAID']}  -1
+  Run As  ${tender_owner}  Підтвердити наявність протоколу аукціону  ${TENDER['TENDER_UAID']}  1
 
 
 Відображення статусу 'очікується підписання договору' для другого кандидата
@@ -202,7 +208,8 @@ Suite Teardown  Test Suite Teardown
   ...     ${USERS.users['${viewer}'].broker}
   ...     change_second_award_payment_status
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля awards[-1].status тендера із pending.payment для користувача ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[1]}  status
+  Звірити відображення поля awards[1].status тендера із pending.payment для користувача ${viewer}
 
 
 Можливість підтвердити оплату другого кандидата
@@ -211,7 +218,7 @@ Suite Teardown  Test Suite Teardown
   ...     ${USERS.users['${tender_owner}'].broker}
   ...     confirm_second_award
   [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
-  Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  -1
+  Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  1
 
 
 Відображення статусу 'оплачено, очікується підписання договору' для другого кандидата
@@ -220,7 +227,8 @@ Suite Teardown  Test Suite Teardown
   ...     ${USERS.users['${viewer}'].broker}
   ...     second_award_active_status
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля awards[-1].status тендера із active для користувача ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[1]}  status
+  Звірити відображення поля awards[1].status тендера із active для користувача ${viewer}
 
 
 Відображення статусу неуспішного лоту
