@@ -327,7 +327,7 @@ Publicbid:
            auction:  [15, 20]
         dgfOtherAssets:
             accelerator: 1440
-            auction:  [15, 20]     
+            auction:  [15, 20]
     keywords_file: publicbid
     roles:
         provider:       Publicbid_Provider1
@@ -380,10 +380,10 @@ ubiz:
             enquiry: [0, 20]
             tender:  [0, 30]
         dgfFinancialAssets:
-            accelerator: 1440
+            accelerator: 180
             auction: [45,50]
         dgfOtherAssets:
-            accelerator: 1440
+            accelerator: 180
             auction: [50,55]
     keywords_file: ubiz
     homepage: 'http://test.ubiz.com.ua'
@@ -394,7 +394,7 @@ ubiz:
         provider1:      ubiz_Provider2
         tender_owner:   ubiz_Owner
         viewer:         ubiz_Viewer
-    timeout_on_wait: 300
+    timeout_on_wait: 200
 zakpro:
     intervals:
         default:
@@ -542,10 +542,10 @@ comminnex:
             enquiry: [0, 20]
             tender:  [0, 30]
         dgfFinancialAssets:
-            accelerator: 1440
+            accelerator: 180
             auction: [45,50]
         dgfOtherAssets:
-            accelerator: 1440
+            accelerator: 180
             auction: [50,55]
     keywords_file: comminnex
     homepage: 'http://test.market.comminnex.com'
@@ -556,17 +556,17 @@ comminnex:
         provider1:      comminnex_Provider2
         tender_owner:   comminnex_Owner
         viewer:         comminnex_Viewer
-    timeout_on_wait: 300
+    timeout_on_wait: 200
 torgibirgaukraine:
     intervals:
         default:
             enquiry: [0, 20]
             tender:  [0, 30]
         dgfFinancialAssets:
-            accelerator: 1440
+            accelerator: 180
             auction: [45,50]
         dgfOtherAssets:
-            accelerator: 1440
+            accelerator: 180
             auction: [45,50]
     keywords_file: torgibirgaukraine
     homepage: 'http://test.torgi.birga-ukraine.com.ua'
@@ -577,17 +577,17 @@ torgibirgaukraine:
         provider1:      torgibirgaukraine_Provider2
         tender_owner:   torgibirgaukraine_Owner
         viewer:         torgibirgaukraine_Viewer
-    timeout_on_wait: 300
+    timeout_on_wait: 200
 statusexpert:
     intervals:
         default:
             enquiry: [0, 20]
             tender:  [0, 30]
         dgfFinancialAssets:
-            accelerator: 1440
+            accelerator: 180
             auction: [45,50]
         dgfOtherAssets:
-            accelerator: 1440
+            accelerator: 180
             auction: [50,55]
     keywords_file: statusexpert
     homepage: 'http://test.torgi.status-expert.com.ua'
@@ -598,17 +598,17 @@ statusexpert:
         provider1:      statusexpert_Provider2
         tender_owner:   statusexpert_Owner
         viewer:         statusexpert_Viewer
-    timeout_on_wait: 300
+    timeout_on_wait: 200
 vidol:
     intervals:
         default:
             enquiry: [0, 20]
             tender:  [0, 30]
         dgfFinancialAssets:
-            accelerator: 1440
+            accelerator: 180
             auction: [45,50]
         dgfOtherAssets:
-            accelerator: 1440
+            accelerator: 180
             auction: [50,55]
     keywords_file: vidol
     homepage: 'http://test.torgi.vidol.com.ua'
@@ -619,7 +619,7 @@ vidol:
         provider1:      vidol_Provider2
         tender_owner:   vidol_Owner
         viewer:         vidol_Viewer
-    timeout_on_wait: 300
+    timeout_on_wait: 200
 uutb:
     intervals:
         default:
@@ -647,10 +647,10 @@ cuex:
             enquiry: [0, 20]
             tender:  [0, 30]
         dgfFinancialAssets:
-            accelerator: 1440
+            accelerator: 180
             auction: [45,50]
         dgfOtherAssets:
-            accelerator: 1440
+            accelerator: 180
             auction: [50,55]
     keywords_file: cuex
     homepage: 'http://testing.torgy.com.ua'
@@ -661,7 +661,7 @@ cuex:
         provider1:      cuex_Provider2
         tender_owner:   cuex_Owner
         viewer:         cuex_Viewer
-    timeout_on_wait: 300
+    timeout_on_wait: 200
 nkcentr:
     keywords_file: nkcentr
     roles:
