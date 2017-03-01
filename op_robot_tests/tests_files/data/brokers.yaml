@@ -202,9 +202,10 @@ uatenders:
 ubiz:
     intervals:
         default:
-            enquiry: [0, 5]
+            enquiry: [0, 6]
+            tender:  [0, 8]
     keywords_file: ubiz
-    homepage: 'http://fgvfo.com.ua/'
+    homepage: 'http://dz.ubiz.ua/'
     roles:
         provider:       ubiz_Provider1
         provider1:      ubiz_Provider2
