@@ -791,14 +791,14 @@ users:
         size:     [1366, 1024]
     etc_viewer:
         broker:   etc
-        homepage: "http://test.etc-torgi.com"
+        homepage: "http://test.etc-torgi.com/prozorrosale/auctions/public"
         syncpage: "http://test.etc-torgi.com/prozorrosale/auctions/sync-all"
         browser:  ff
         position: [0, 0]
         size:     [1366, 800]
     etc_provider:
         broker:   etc
-        homepage: "http://test.etc-torgi.com"
+        homepage: "http://test.etc-torgi.com/prozorrosale/auctions/public"
         syncpage: "http://test.etc-torgi.com/prozorrosale/auctions/sync-all"
         login:    testmemb1@test.t
         password: testpass
@@ -807,7 +807,7 @@ users:
         size:     [1366, 800]
     etc_provider1:
         broker:   etc
-        homepage: "http://test.etc-torgi.com"
+        homepage: "http://test.etc-torgi.com/prozorrosale/auctions/public"
         syncpage: "http://test.etc-torgi.com/prozorrosale/auctions/sync-all"
         login:    testmemb2@test.t
         password: testpass
@@ -816,7 +816,7 @@ users:
         size:     [1366, 800]
     etc_owner:
         broker:   etc
-        homepage: "http://test.etc-torgi.com"
+        homepage: "http://test.etc-torgi.com/prozorrosale/auctions/public"
         syncpage: "http://test.etc-torgi.com/prozorrosale/auctions/sync-all"
         login:    testadmin@test.t
         password: testpass
@@ -825,14 +825,14 @@ users:
         size:     [1366, 800]
     etrading_viewer:
         broker:   etrading
-        homepage: "http://test.e-trading.kiev.ua"
+        homepage: "http://test.e-trading.kiev.ua/prozorrosale/auctions/public"
         syncpage: "http://test.e-trading.kiev.ua/prozorrosale/auctions/sync-all"
         browser:  ff
         position: [0, 0]
         size:     [1366, 800]
     etrading_provider:
         broker:   etrading
-        homepage: "http://test.e-trading.kiev.ua"
+        homepage: "http://test.e-trading.kiev.ua/prozorrosale/auctions/public"
         syncpage: "http://test.e-trading.kiev.ua/prozorrosale/auctions/sync-all"
         login:    testmemb1@test.t
         password: testpass
@@ -841,7 +841,7 @@ users:
         size:     [1366, 800]
     etrading_provider1:
         broker:   etrading
-        homepage: "http://test.e-trading.kiev.ua"
+        homepage: "http://test.e-trading.kiev.ua/prozorrosale/auctions/public"
         syncpage: "http://test.e-trading.kiev.ua/prozorrosale/auctions/sync-all"
         login:    testmemb2@test.t
         password: testpass
@@ -850,7 +850,7 @@ users:
         size:     [1366, 800]
     etrading_owner:
         broker:   etrading
-        homepage: "http://test.e-trading.kiev.ua"
+        homepage: "http://test.e-trading.kiev.ua/prozorrosale/auctions/public"
         syncpage: "http://test.e-trading.kiev.ua/prozorrosale/auctions/sync-all"
         login:    testadmin@test.t
         password: testpass
