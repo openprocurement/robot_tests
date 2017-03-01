@@ -338,7 +338,7 @@ SmartTender:
             enquiry: [0, 10]
             tender:  [0, 20]
         dgfFinancialAssets:
-           accelerator: 1440
+           accelerator: 144
            auction:  [45, 50]
         dgfOtherAssets:
             accelerator: 1440
