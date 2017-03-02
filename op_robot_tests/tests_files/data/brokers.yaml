@@ -466,6 +466,7 @@ polonex:
     timeout_on_wait: 10
 ueex:
     keywords_file: ueex
+    accelerator: 360
     roles:
         tender_owner:   ueex_Owner
         provider:       ueex_Provider
@@ -526,6 +527,7 @@ etrading:
     timeout_on_wait: 10
 katerynoslav:
     keywords_file: katerynoslav
+    accelerator: 360
     roles:
         tender_owner:   katerynoslav_Owner
         provider:       katerynoslav_Provider
@@ -678,6 +680,7 @@ nkcentr:
     timeout_on_wait: 10
 kif:
     keywords_file: kif
+    accelerator: 360
     roles:
         tender_owner:   kif_Owner
         provider:       kif_Provider
@@ -730,6 +733,7 @@ bestbid:
     timeout_on_wait: 10
 tbkmfb:
     keywords_file: tbkmfb
+    accelerator: 360
     roles:
         tender_owner:   tbkmfb_Owner
         provider:       tbkmfb_Provider
