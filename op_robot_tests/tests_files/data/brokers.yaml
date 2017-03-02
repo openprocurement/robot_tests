@@ -291,3 +291,23 @@ etrade:
        provider:       etrade_Provider1
        provider1:      etrade_Provider2
    timeout_on_wait: 120
+alltenders:
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 30]
+        openeu:
+            accelerator: 1440
+            tender:  [0, 30]
+        single:
+            enquiry: [0, 7]
+            tender:  [0, 9]
+    keywords_file: alltenders
+    homepage: 'https://prozorro.alltenders.com.ua/'
+    roles:
+        provider:       alltenders_Provider1
+        provider1:      alltenders_Provider2
+        tender_owner:   alltenders_Owner
+        viewer:         alltenders_Viewer
+    timeout_on_wait: 70
+   
