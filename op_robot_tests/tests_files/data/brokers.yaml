@@ -323,7 +323,7 @@ Publicbid:
             enquiry: [1, 10]
             tender:  [1, 20]
         dgfFinancialAssets:
-           accelerator: 1440
+           accelerator: 144
            auction:  [15, 20]
         dgfOtherAssets:
             accelerator: 1440
