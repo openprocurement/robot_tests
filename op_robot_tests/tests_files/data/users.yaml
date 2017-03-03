@@ -525,3 +525,33 @@ users:
         browser:  firefox
         position: [640, 0]
         size:     [1280, 1024]
+    alltenders_Owner:
+        broker:   alltenders
+        homepage: "https://prozorro.alltenders.com.ua/"
+        login:    owner@alltenders.com.ua
+        password: owner
+        browser:  chrome
+        position: [0, 0]
+        size:     [1210, 800]
+    alltenders_Provider1:
+        broker:   alltenders
+        homepage: "https://prozorro.alltenders.com.ua/"
+        login:    provider1@alltenders.com.ua
+        password: provider1
+        browser:  chrome
+        position: [0, 0]
+        size:     [1210, 800]
+    alltenders_Provider2:
+        broker:   alltenders
+        homepage: "https://prozorro.alltenders.com.ua/"
+        login:    provider2@alltenders.com.ua
+        password: provider2
+        browser:  chrome
+        position: [0, 0]
+        size:     [1210, 800]
+    alltenders_Viewer:
+        broker:   alltenders
+        homepage: "https://prozorro.alltenders.com.ua?mode=test"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1210, 800]
