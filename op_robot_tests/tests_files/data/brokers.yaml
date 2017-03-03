@@ -114,11 +114,11 @@ DZOauctions:
             accelerator: 720
             tender:  [0, 20]
         dgfFinancialAssets:
-           accelerator: 1440
-           auction:  [70, 75]
+           accelerator: 144
+           auction:  [15, 20]
         dgfOtherAssets:
-            accelerator: 1440
-            auction:  [70, 75]
+            accelerator: 144
+            auction:  [15, 20]
     keywords_file: dzo
     roles:
         tender_owner:   DZO_Owner_auction
@@ -168,18 +168,18 @@ brizol:
             enquiry: [0, 17]
             tender:  [0, 19]
         dgfFinancialAssets:
-           accelerator: 1440
-           auction:  [45, 50]
+           accelerator: 144
+           auction:  [8, 12]
         dgfOtherAssets:
-            accelerator: 1440
-            auction:  [45, 50]
+            accelerator: 144
+            auction:  [8, 12]
     keywords_file: brizol
     roles:
         tender_owner:   brizol_Owner
         provider:   brizol_Provider
         provider1:   brizol_Provider1
         viewer:   brizol_Viewer
-    timeout_on_wait: 180
+    timeout_on_wait: 240
 aukzionua:
     intervals:
         default:
