@@ -86,16 +86,16 @@ users:
     DZO_Provider_auction:
         broker:   DZOauctions
         homepage: "http://dz3.byustudio.in.ua"
-        login:    dzoprovider1@gmail.com
-        password: mux85BMrH
+        login:    dzoprovider2@gmail.com
+        password: Z5FeM44kK
         browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     DZO_Provider1_auction:
         broker:   DZOauctions
         homepage: "http://dz3.byustudio.in.ua"
-        login:    dzoprovider2@gmail.com
-        password: Z5FeM44kK
+        login:    dzoprovider1@gmail.com
+        password: mux85BMrH
         browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
@@ -167,7 +167,7 @@ users:
         size:     [1366, 800]
     brizol_Owner:
         broker:   brizol
-        homepage: "https://eauction.brizol.net"
+        homepage: "http://test-eauction.brizol.net/login"
         login:    prozorroytenderowner@gmail.com
         password: 123456
         browser:  Firefox
@@ -175,23 +175,23 @@ users:
         size:     [1366, 800]
     brizol_Provider:
         broker:   brizol
-        homepage: "https://eauction.brizol.net"
-        login:    prozorroyprovider1@gmail.com
+        homepage: "http://test-eauction.brizol.net/login"
+        login:    prozorroyprovider2@gmail.com
         password: 123456
         browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     brizol_Provider1:
         broker:   brizol
-        homepage: "https://eauction.brizol.net"
-        login:    prozorroyprovider2@gmail.com
+        homepage: "http://test-eauction.brizol.net/login"
+        login:    prozorroyprovider1@gmail.com
         password: 123456
         browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     brizol_Viewer:
         broker:   brizol
-        homepage: "https://eauction.brizol.net"
+        homepage: "http://test-eauction.brizol.net"
         browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
