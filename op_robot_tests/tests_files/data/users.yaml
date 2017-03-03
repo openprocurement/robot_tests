@@ -448,6 +448,15 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1280, 1024]
+    Prom_Provider1:
+       broker:   Promauctions
+       homepage: "http://zakupki.dz-test.net/auctions"
+       default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_auction/list?mode=all"
+       login:    test@test15.com
+       password: autotest
+       browser:  chrome
+       position: [0, 0]
+       size:     [1280, 1024]
     Publicbid_Owner:
         broker:   Publicbid
         homepage: "https://217.76.194.185:56006/"
