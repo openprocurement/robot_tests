@@ -316,6 +316,7 @@ Promauctions:
         tender_owner:   Prom_Owner
         viewer:         Prom_Viewer
         provider:       Prom_Provider
+        provider1:      Prom_Provider1
     timeout_on_wait: 300
 Publicbid:
     intervals:
