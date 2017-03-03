@@ -450,7 +450,7 @@ users:
         size:     [1280, 1024]
     Publicbid_Owner:
         broker:   Publicbid
-        homepage: "https://217.76.194.185:56006/"
+        homepage: "https://10.255.200.224:8099/"
         login:    leksoz84@gmail.com
         password: P@ssw0rd
         browser:  chrome
@@ -458,13 +458,13 @@ users:
         size:     [1600, 1200]
     Publicbid_Viewer:
         broker:   Publicbid
-        homepage: "https://217.76.194.185:56006/"
+        homepage: "https://10.255.200.224:8099/"
         browser:  chrome
         position: [0, 450]
         size:     [1600, 720]
     Publicbid_Provider1:
         broker:   Publicbid
-        homepage: "https://217.76.194.185:56006/"
+        homepage: "https://10.255.200.224:8099/"
         login:    prozorro2@bigmir.net
         password: P@ssw0rd
         browser:  chrome
@@ -472,7 +472,7 @@ users:
         size:     [1600, 1200]
     Publicbid_Provider2:
         broker:   Publicbid
-        homepage: "https://217.76.194.185:56006/"
+        homepage: "https://10.255.200.224:8099/"
         login:    prozorro5@bigmir.net
         password: P@ssw0rd
         browser:  chrome
