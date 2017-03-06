@@ -409,10 +409,10 @@ Log differences between dicts
   [Arguments]  ${username}  ${tender_uaid}  ${field}  ${value}
   ${number_of_documents}=  Run As  ${username}  Отримати кількість документів в тендері  ${tender_uaid}
   Run Keyword If  '${number_of_documents}' == '0'  FAIL  До лоту ${tender_uaid} не завантажено документів
-  ${match_in_document}=  Set Variable  ${False}
+  ${match_in_document}=  Set Variable  ${True}
   :FOR  ${document_index}  IN RANGE  ${number_of_documents}
   \  ${field_value}=  Run As  ${username}  Отримати інформацію із документа по індексу  ${tender_uaid}  ${document_index}  ${field}
-  \  ${match_in_document}=  Set Variable If  '${field_value}'=='${value}'  ${True}  ${match_in_document}
+  \  ${match_in_document}=  Set Variable If  '${field_value}'=='${value}'  ${match_in_document}  ${False}
   Порівняти об'єкти  ${match_in_document}  ${True}
 
 
