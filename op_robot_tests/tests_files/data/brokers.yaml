@@ -310,10 +310,10 @@ Promauctions:
             enquiry: [0, 15]
             tender:  [0, 25]
         dgfFinancialAssets:
-           accelerator: 1440
+           accelerator: 96
            auction:  [55, 60]
         dgfOtherAssets:
-            accelerator: 1440
+            accelerator: 96
             auction:  [55, 60]
     keywords_file: prom
     roles:
