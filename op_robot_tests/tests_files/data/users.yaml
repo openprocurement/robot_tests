@@ -178,13 +178,13 @@ users:
         size:     [800, 700]
     PrivatMarket_Viewer:
         broker:   PrivatMarket
-        homepage: "https://pmarket-rc.privatbank.ua/business/tenders"
+        homepage: "https://rc.privatmarket.ua/business/tenders"
         browser:  firefox
         position: [0, 0]
         size:     [1920, 1080]
     PrivatMarket_Provider:
         broker:   PrivatMarket
-        homepage: "https://pmarket-rc.privatbank.ua/business/tenders"
+        homepage: "https://rc.privatmarket.ua/business/tenders"
         email:    pbecommercetest2@ukr.net
         login:    380270010001
         password: password0001
@@ -193,7 +193,7 @@ users:
         size:     [1920, 1080]
     PrivatMarket_Owner:
         broker:   PrivatMarket
-        homepage: "https://pmarket-rc.privatbank.ua/business/tenders"
+        homepage: "https://rc.privatmarket.ua/business/tenders"
         email:    pbecommercetest1@ukr.net
         login:    380270010002
         password: password0002
