@@ -242,7 +242,7 @@ Library  openprocurement_client_helper.py
   [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${lot_auctionUrl}=  Run Keyword If  "${mode}" == "single"  Get Variable Value  ${tender.data.lots[0].auctionUrl}
-  ${auctionUrl}=  Run Keyword If  ${lot_auctionUrl}  Set Variable  ${lot_auctionUrl}
+  ${auctionUrl}=  Run Keyword If  ${lot_auctionUrl.__class__ is not type(None)}  Set Variable  ${lot_auctionUrl}
   ...                         ELSE IF  '${lot_id}'  Set Variable  ${tender.data.lots[${lot_index}].auctionUrl}
   ...                         ELSE  Set Variable  ${tender.data.auctionUrl}
   [return]  ${auctionUrl}
@@ -251,8 +251,8 @@ Library  openprocurement_client_helper.py
 Отримати посилання на аукціон для учасника
   [Arguments]  ${username}  ${tender_uaid}
   ${bid}=  openprocurement_client.Отримати пропозицію  ${username}  ${tender_uaid}
-  ${lot_participationUrl}=  Run Keyword If  "${mode}" == "single"  Get Variable Value  ${bid.data.lots[0].participationUrl}
-  ${participationUrl}=  Run Keyword If  ${lot_participationUrl}  Set Variable  ${participationUrl}
+  ${lot_participationUrl}=  Run Keyword If  "${mode}" == "single"  Get Variable Value  ${bid.data.lotValues[0].participationUrl}
+  ${participationUrl}=  Run Keyword If  ${lot_participationUrl.__class__ is not type(None)}  Set Variable  ${lot_participationUrl}
   ...                               ELSE  Set Variable  ${bid.data.participationUrl}
   [return]  ${participationUrl}
 
