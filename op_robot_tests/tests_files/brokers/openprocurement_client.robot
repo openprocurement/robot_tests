@@ -29,6 +29,16 @@ Library  openprocurement_client_helper.py
   Log Variables
 
 
+Підготувати ЄДР клієнт для користувача
+  [Arguments]  ${username}
+  [Documentation]  Налаштувати з'єднання до ЄДР проксі
+  Log  ${EDR_HOST_URL}
+  Log  ${EDR_USERNAME}
+  Log  ${EDR_PASSWORD}
+  ${edr_wrapper}=  prepare edr wrapper  ${EDR_HOST_URL}  ${EDR_USERNAME}  ${EDR_PASSWORD}
+  Set To Dictionary  ${USERS.users['${username}']}  edr_client=${edr_wrapper}
+
+
 Завантажити документ
   [Arguments]  ${username}  ${filepath}  ${tender_uaid}
   Log  ${username}
@@ -694,6 +704,12 @@ Library  openprocurement_client_helper.py
 ##############################################################################
 #             Bid operations
 ##############################################################################
+
+Перевірити учасника за ЕДРПОУ
+  [Arguments]  ${username}  ${edrpou}
+  ${reply}=  Call Method  ${USERS.users['${username}'].edr_client}  verify_member  ${edrpou}
+  Log  ${reply}
+
 
 Подати цінову пропозицію
   [Arguments]  ${username}  ${tender_uaid}  ${bid}  ${lots_ids}=${None}  ${features_ids}=${None}

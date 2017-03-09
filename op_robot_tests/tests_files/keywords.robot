@@ -130,6 +130,7 @@ Set Suite Variable With Default Value
   \  ${keywords_file}=  Get Broker Property  ${USERS.users.${username}.broker}  keywords_file
   \  Завантажуємо бібліотеку з реалізацією для майданчика ${keywords_file}
   \  Run As  ${username}  Підготувати клієнт для користувача
+  \  Run As  ${username}  Підготувати ЄДР клієнт для користувача
   \  ${LAST_REFRESH_DATE}=  Get Current TZdate
   \  Set To Dictionary  ${USERS}  ${username}=${USERS.users.${username}}
   \  Set To Dictionary  ${USERS.${username}}  tender_data=${munch_dict}
