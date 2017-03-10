@@ -169,7 +169,7 @@ Get Broker Property By Username
   ...          access_token=${USERS.users['${tender_owner}'].access_token}
   ...          tender_id=${USERS.users['${tender_owner}'].tender_data.data.id}
   ${status}  ${lots_ids}=  Run Keyword And Ignore Error  Отримати ідентифікатори об’єктів  ${viewer}  lots
-  Run Keyword If  ${status}'=='PASS'
+  Run Keyword If  '${status}'=='PASS'
   ...      Set To Dictionary   ${artifact}   lots=${lots_ids}
   Log   ${artifact}
   log_object_data  ${artifact}  artifact  update=${True}
