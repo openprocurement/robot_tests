@@ -35,7 +35,7 @@ users:
         broker:   Etender
         homepage: "http://e-auction.pro/#/"
         login:    auto18
-        password: Qa123456
+        password: Qq123456
         browser:  PhantomJS
         position: [0, 0]
         size:     [1366, 800]
