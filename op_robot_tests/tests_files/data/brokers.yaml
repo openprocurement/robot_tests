@@ -303,7 +303,7 @@ alltenders:
             enquiry: [0, 7]
             tender:  [0, 9]
     keywords_file: alltenders
-    homepage: 'https://prozorro.alltenders.com.ua/'
+    homepage: 'https://prozorro.shadowy.eu/?mode=test'
     roles:
         provider:       alltenders_Provider1
         provider1:      alltenders_Provider2
