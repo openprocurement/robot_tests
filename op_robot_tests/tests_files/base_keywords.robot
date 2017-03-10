@@ -557,7 +557,7 @@ Resource           resource.robot
   Set To Dictionary  ${USERS.users['${provider}']}  claim_data  ${claim_data}
 
 
-Можливість створити вимогу про виправлення умов закупівлі із документацією
+Можливість створити вимогу про виправлення умов закупівлі із документацією користувачем ${username}
   ${claim}=  Підготувати дані для подання вимоги
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   ${complaintID}=  Run As  ${provider}
