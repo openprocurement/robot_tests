@@ -443,6 +443,17 @@ def get_object_type_by_id(object_id):
     return prefixes.get(object_id[0])
 
 
+def get_complaint_index_by_complaintID(data, complaintID):
+    if not data:
+        return 0
+    for index, element in enumerate(data):
+        if element['complaintID'] == complaintID:
+            break
+    else:
+        index += 1
+    return index
+
+
 def get_object_index_by_id(data, object_id):
     if not data:
         return 0
@@ -455,15 +466,30 @@ def get_object_index_by_id(data, object_id):
     return index
 
 
-def get_complaint_index_by_complaintID(data, complaintID):
-    if not data:
-        return 0
-    for index, element in enumerate(data):
-        if element['complaintID'] == complaintID:
-            break
-    else:
-        index += 1
-    return index
+def get_object_by_id(data, given_object_id, slice_element, object_id):
+    """
+        data: object to slice
+        given_object_id: with what id we should compare
+        slice_element: what path should be extracted (e.g. from { key: val } extract key )
+        object_id: what property is id (e.g. from { id: 1, name: 2 } extract id)
+    """
+    sliced_object = data[slice_element]
+    # Slice the given object, e.g. slice bid object to lotValues object
+
+    if not sliced_object:
+        return data
+
+    if len(sliced_object) == 1:
+        return sliced_object[0]
+    # If there is one sliced object, get the 1st element
+
+    for index, element in enumerate(sliced_object):
+        element_id = element[object_id]
+        if element_id == given_object_id:
+            return element
+    # Compare given object id and id from sliced object
+
+    return sliced_object[0]
 
 
 def generate_test_bid_data(tender_data):
