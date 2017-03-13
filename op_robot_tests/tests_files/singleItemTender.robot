@@ -4,6 +4,7 @@ Library         String
 Library         Collections
 Library         Selenium2Library
 Library         DebugLibrary
+Library         BuiltIn
 Resource        keywords.robot
 Resource        resource.robot
 Suite Setup     Test Suite Setup
@@ -54,6 +55,7 @@ ${mode}         single
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
   \  Дочекатись синхронізації з майданчиком  ${username}
   \  Викликати для учасника  ${username}  Пошук тендера по ідентифікатору  ${TENDER['TENDER_UAID']}
+
 
 ##############################################################################################
 #             ВІДОБРАЖЕННЯ
