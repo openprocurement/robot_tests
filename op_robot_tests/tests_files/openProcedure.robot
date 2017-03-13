@@ -2014,3 +2014,18 @@ ${ITEM_MEAT}        ${True}
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість затвердити остаточне рішення кваліфікації
+
+################################################################################
+
+Перевірка завантаження документів до тендера через Document Service
+   [Tags]  ${USERS.users['${viewer}'].broker}: Document Service
+   ...      viewer
+   ...      ${USERS.users['${tender_owner}'].broker}
+   ...      document_service
+   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+   ${documents}=  Get From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data}  documents
+   ${doc_number}=  Get Length  ${documents}
+   Log  ${documents}
+   :FOR  ${doc_index}  IN RANGE  ${doc_number}
+   \  ${document_url}=  Get From Dictionary  ${documents[${doc_index}]}  url
+   \  Should Match Regexp   ${document_url}   ^https?:\/\/public.docs(?:-sandbox)?\.openprocurement\.org\/get\/([0-9A-Fa-f]{32})   msg=Not a Document Service Upload
