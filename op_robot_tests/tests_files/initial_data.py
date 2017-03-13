@@ -97,7 +97,7 @@ def test_tender_data(params, periods=("enquiry", "tender")):
             inc_dt += timedelta(minutes=params['intervals'][period_name][i])
             period_dict[period_name + "Period"][j + "Date"] = inc_dt.isoformat()
     data.update(period_dict)
-    cpv_group = fake.cpv()[:3]
+    cpv_group = fake.cpv()[:4]
     if params.get('number_of_lots'):
         data['lots'] = []
         for lot_number in range(params['number_of_lots']):
