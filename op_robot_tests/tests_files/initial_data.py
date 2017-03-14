@@ -61,7 +61,7 @@ def test_tender_data(params, periods=("enquiry", "tender")):
     value_amount = round(random.uniform(3000, 99999999999.99), 2)  # max value equals to budget of Ukraine in hryvnias
     data = {
         "mode": "test",
-        "submissionMethodDetails": "quick",
+        "submissionMethodDetails": "quick(mode:fast-forward)",
         "description": fake.description(),
         "description_en": fake_en.sentence(nb_words=10, variable_nb_words=True),
         "description_ru": fake_ru.sentence(nb_words=10, variable_nb_words=True),
