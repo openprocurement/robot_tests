@@ -6,7 +6,6 @@ from datetime import timedelta
 from dateutil.parser import parse
 from dpath.util import new as xpathnew
 from haversine import haversine
-from iso8601 import parse_date
 from json import load, loads
 from jsonpath_rw import parse as parse_path
 from munch import Munch, munchify
