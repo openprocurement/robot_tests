@@ -274,7 +274,9 @@ def compute_intrs(brokers_data, used_brokers):
     return result
 
 
-def prepare_test_tender_data(procedure_intervals, tender_parameters):
+def prepare_test_tender_data(procedure_intervals,
+                             tender_parameters,
+                             submissionMethodDetails):
     # Get actual intervals by mode name
     mode = tender_parameters['mode']
     if mode in procedure_intervals:
@@ -295,15 +297,22 @@ def prepare_test_tender_data(procedure_intervals, tender_parameters):
     elif mode == 'negotiation.quick':
         return munchify({'data': test_tender_data_limited(tender_parameters)})
     elif mode == 'openeu':
-        return munchify({'data': test_tender_data_openeu(tender_parameters)})
+        return munchify({'data': test_tender_data_openeu(
+            tender_parameters, submissionMethodDetails)})
     elif mode == 'openua':
-        return munchify({'data': test_tender_data_openua(tender_parameters)})
+        return munchify({'data': test_tender_data_openua(
+            tender_parameters, submissionMethodDetails)})
     elif mode == 'open_competitive_dialogue':
-        return munchify({'data': test_tender_data_competitive_dialogue(tender_parameters)})
+        return munchify({'data': test_tender_data_competitive_dialogue(
+            tender_parameters, submissionMethodDetails)})
     elif mode == 'reporting':
         return munchify({'data': test_tender_data_limited(tender_parameters)})
     elif mode == 'belowThreshold':
-        return munchify({'data': test_tender_data(tender_parameters)})
+        return munchify({'data': test_tender_data(
+            tender_parameters,
+            submissionMethodDetails=submissionMethodDetails)})
+        # The previous line needs an explicit keyword argument because,
+        # unlike previous functions, this one has three arguments.
     raise ValueError("Invalid mode for prepare_test_tender_data")
 
 

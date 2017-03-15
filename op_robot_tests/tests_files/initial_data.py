@@ -56,12 +56,16 @@ def create_fake_doc():
     return tf.name.replace('\\', '\\\\'), os.path.basename(tf.name), content
 
 
-def test_tender_data(params, periods=("enquiry", "tender")):
+def test_tender_data(params,
+                     periods=("enquiry", "tender"),
+                     submissionMethodDetails=None):
+    submissionMethodDetails = submissionMethodDetails \
+        if submissionMethodDetails else "quick"
     now = get_now()
     value_amount = round(random.uniform(3000, 99999999999.99), 2)  # max value equals to budget of Ukraine in hryvnias
     data = {
         "mode": "test",
-        "submissionMethodDetails": "quick",
+        "submissionMethodDetails": submissionMethodDetails,
         "description": fake.description(),
         "description_en": fake_en.sentence(nb_words=10, variable_nb_words=True),
         "description_ru": fake_ru.sentence(nb_words=10, variable_nb_words=True),
@@ -371,21 +375,21 @@ def test_lot_document_data(document, lot_id):
     return munchify(document)
 
 
-def test_tender_data_openua(params):
+def test_tender_data_openua(params, submissionMethodDetails):
     # We should not provide any values for `enquiryPeriod` when creating
     # an openUA or openEU procedure. That field should not be present at all.
     # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
-    data = test_tender_data(params, ('tender',))
+    data = test_tender_data(params, ('tender',), submissionMethodDetails)
     data['procurementMethodType'] = 'aboveThresholdUA'
     data['procuringEntity']['kind'] = 'general'
     return data
 
 
-def test_tender_data_openeu(params):
+def test_tender_data_openeu(params, submissionMethodDetails):
     # We should not provide any values for `enquiryPeriod` when creating
     # an openUA or openEU procedure. That field should not be present at all.
     # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
-    data = test_tender_data(params, ('tender',))
+    data = test_tender_data(params, ('tender',), submissionMethodDetails)
     data['procurementMethodType'] = 'aboveThresholdEU'
     data['title_en'] = "[TESTING]"
     for item_number, item in enumerate(data['items']):
@@ -398,11 +402,11 @@ def test_tender_data_openeu(params):
     return data
 
 
-def test_tender_data_competitive_dialogue(params):
+def test_tender_data_competitive_dialogue(params, submissionMethodDetails):
     # We should not provide any values for `enquiryPeriod` when creating
     # an openUA or openEU procedure. That field should not be present at all.
     # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
-    data = test_tender_data(params, ('tender',))
+    data = test_tender_data(params, ('tender',), submissionMethodDetails)
     if params.get('dialogue_type') == 'UA':
         data['procurementMethodType'] = 'competitiveDialogueUA'
     else:
