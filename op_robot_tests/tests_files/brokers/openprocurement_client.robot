@@ -668,10 +668,10 @@ Library  openprocurement_client_helper.py
 
 
 Отримати інформацію із скарги
-  [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${field_name}  ${award_index}=${None}
+  [Arguments]  ${username}  ${tender_uaid}  ${complaintTitle}  ${field_name}  ${award_index}=${None}
   openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${complaints}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.awards[${award_index}].complaints}  ${USERS.users['${username}'].tender_data.data.complaints}
-  ${complaint_index}=  get_complaint_index_by_complaintID  ${complaints}  ${complaintID}
+  ${complaint_index}=  get_complaint_index_by_complaintTitle  ${complaints}  ${complaintTitle}
   ${field_value}=  Get Variable Value  ${complaints[${complaint_index}]['${field_name}']}
   [Return]  ${field_value}
 
