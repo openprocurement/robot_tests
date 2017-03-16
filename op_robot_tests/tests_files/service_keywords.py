@@ -473,21 +473,22 @@ def get_object_by_id(data, given_object_id, slice_element, object_id):
         slice_element: what path should be extracted (e.g. from { key: val } extract key )
         object_id: what property is id (e.g. from { id: 1, name: 2 } extract id)
     """
-    sliced_object = data[slice_element]
-    # Slice the given object, e.g. slice bid object to lotValues object
 
-    if not sliced_object:
+    # Slice the given object, e.g. slice bid object to lotValues object
+    try:
+        sliced_object = data[slice_element]
+    except KeyError:
         return data
 
+    # If there is one sliced object, get the 1st element
     if len(sliced_object) == 1:
         return sliced_object[0]
-    # If there is one sliced object, get the 1st element
 
+    # Compare given object id and id from sliced object
     for index, element in enumerate(sliced_object):
         element_id = element[object_id]
         if element_id == given_object_id:
             return element
-    # Compare given object id and id from sliced object
 
     return sliced_object[0]
 

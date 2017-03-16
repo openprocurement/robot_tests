@@ -61,19 +61,19 @@ Library  openprocurement_client_helper.py
 Отримати посилання на аукціон для глядача
   [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${lots}=  get_object_by_id  ${tender.data}  ${lot_id}  lots  id
-  ${auctionUrl}=  Get Variable Value  ${lots['auctionUrl']}
-  [return]  ${auctionUrl}
+  ${object_with_url}=  get_object_by_id  ${tender.data}  ${lot_id}  lots  id
+  Log  ${object_with_url}
+  ${auctionUrl}=  Get Variable Value  ${object_with_url['auctionUrl']}
+  [Return]  ${auctionUrl}
 
 
 Отримати посилання на аукціон для учасника
   [Arguments]  ${username}  ${tender_uaid}  ${relatedLot}=${Empty}
   ${bid}=  openprocurement_client.Отримати пропозицію  ${username}  ${tender_uaid}
-  Log  ${bid}
-  ${lot_Values}=  get_object_by_id  ${bid.data}  ${relatedLot}  lotValues  relatedLot
-  ${participationUrl}=  Get Variable Value  ${lot_Values['participationUrl']}
-  Log  ${participationUrl}
-  [return]  ${participationUrl}
+  ${object_with_url}=  get_object_by_id  ${bid.data}  ${relatedLot}  lotValues  relatedLot
+  Log  ${object_with_url}
+  ${participationUrl}=  Get Variable Value  ${object_with_url['participationUrl']}
+  [Return]  ${participationUrl}
 
 ##############################################################################
 #             Tender operations
