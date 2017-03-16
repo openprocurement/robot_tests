@@ -416,7 +416,7 @@ users:
         size:     [1400, 900]
     alltenders_Owner:
         broker:   alltenders
-        homepage: "https://prozorro.shadowy.eu/"
+        homepage: "https://prozorro.shadowy.eu/?mode=test"
         login:    butov@mail.ru
         password: 111
         browser:  chrome
@@ -424,7 +424,7 @@ users:
         size:     [1210, 800]
     alltenders_Provider1:
         broker:   alltenders
-        homepage: "https://prozorro.shadowy.eu/"
+        homepage: "https://prozorro.shadowy.eu/?mode=test"
         login:    s.titarchuk@a-express.com.ua
         password: gfhjkm
         browser:  chrome
@@ -432,7 +432,7 @@ users:
         size:     [1210, 800]
     alltenders_Provider2:
         broker:   alltenders
-        homepage: "https://prozorro.shadowy.eu/"
+        homepage: "https://prozorro.shadowy.eu/?mode=test"
         login:    murashkot@bigmir.net
         password: 24091980
         browser:  chrome
