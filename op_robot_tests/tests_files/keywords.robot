@@ -780,6 +780,19 @@ Require Failure
   Sleep  120  # Auction sync
 
 
+Дочекатись дати початку періоду кваліфікації
+  [Arguments]  ${username}  ${tender_uaid}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      active.qualification
+
+
 Дочекатись дати закінчення періоду подання скарг
   [Arguments]  ${username}
   Дочекатись дати  ${USERS.users['${username}'].tender_data.data.complaintPeriod.endDate}

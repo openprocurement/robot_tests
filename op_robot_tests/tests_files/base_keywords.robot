@@ -514,7 +514,7 @@ Resource           resource.robot
   ...      claim=${claim}
   ...      complaintID=${complaintID}
   ${claim_data}=  munch_dict  arg=${claim_data}
-  Set To Dictionary  ${USERS.users['${provider}']}  claim_data  ${claim_data}
+  Set To Dictionary  ${USERS.users['${provider}']}  tender_claim_data  ${claim_data}
 
 
 Можливість створити чернетку вимоги про виправлення умов ${lot_index} лоту
@@ -529,7 +529,7 @@ Resource           resource.robot
   ...      claim=${claim}
   ...      complaintID=${complaintID}
   ${claim_data}=  munch_dict  arg=${claim_data}
-  Set To Dictionary  ${USERS.users['${provider}']}  claim_data  ${claim_data}
+  Set To Dictionary  ${USERS.users['${provider}']}  lot_claim_data  ${claim_data}
 
 
 Можливість створити чернетку вимоги про виправлення визначення ${award_index} переможця
@@ -562,7 +562,7 @@ Resource           resource.robot
   ...      doc_id=${doc_id}
   ...      doc_content=${file_content}
   ${claim_data}=  munch_dict  arg=${claim_data}
-  Set To Dictionary  ${USERS.users['${provider}']}  claim_data  ${claim_data}
+  Set To Dictionary  ${USERS.users['${provider}']}  tender_claim_data  ${claim_data}
   Remove File  ${file_path}
 
 
@@ -584,7 +584,7 @@ Resource           resource.robot
   ...      doc_id=${doc_id}
   ...      doc_content=${file_content}
   ${claim_data}=  munch_dict  arg=${claim_data}
-  Set To Dictionary  ${USERS.users['${provider}']}  claim_data  ${claim_data}
+  Set To Dictionary  ${USERS.users['${provider}']}  lot_claim_data  ${claim_data}
   Remove File  ${file_path}
 
 
@@ -619,16 +619,16 @@ Resource           resource.robot
   Run As  ${provider}
   ...      Скасувати вимогу про виправлення умов закупівлі
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['tender_claim_data']['complaintID']}
   ...      ${cancellation_data}
-  Set To Dictionary  ${USERS.users['${provider}'].claim_data}  cancellation  ${cancellation_data}
+  Set To Dictionary  ${USERS.users['${provider}'].tender_claim_data}  cancellation  ${cancellation_data}
   Wait until keyword succeeds
   ...      5 min 15 sec
   ...      15 sec
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['tender_claim_data']['complaintID']}
   ...      cancelled
 
 
@@ -642,16 +642,16 @@ Resource           resource.robot
   Run As  ${provider}
   ...      Скасувати вимогу про виправлення умов лоту
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['lot_claim_data']['complaintID']}
   ...      ${cancellation_data}
-  Set To Dictionary  ${USERS.users['${provider}'].claim_data}  cancellation  ${cancellation_data}
+  Set To Dictionary  ${USERS.users['${provider}'].lot_claim_data}  cancellation  ${cancellation_data}
   Wait until keyword succeeds
   ...      5 min 15 sec
   ...      15 sec
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['lot_claim_data']['complaintID']}
   ...      cancelled
 
 
@@ -691,16 +691,16 @@ Resource           resource.robot
   Run As  ${provider}
   ...      Перетворити вимогу про виправлення умов закупівлі в скаргу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['tender_claim_data']['complaintID']}
   ...      ${escalation_data}
-  Set To Dictionary  ${USERS.users['${provider}'].claim_data}  escalation  ${escalation_data}
+  Set To Dictionary  ${USERS.users['${provider}'].tender_claim_data}  escalation  ${escalation_data}
   Wait until keyword succeeds
   ...      5 min 15 sec
   ...      15 sec
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['tender_claim_data']['complaintID']}
   ...      pending
 
 
@@ -713,16 +713,16 @@ Resource           resource.robot
   Run As  ${provider}
   ...      Перетворити вимогу про виправлення умов лоту в скаргу
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['lot_claim_data']['complaintID']}
   ...      ${escalation_data}
-  Set To Dictionary  ${USERS.users['${provider}'].claim_data}  escalation  ${escalation_data}
+  Set To Dictionary  ${USERS.users['${provider}'].lot_claim_data}  escalation  ${escalation_data}
   Wait until keyword succeeds
   ...      5 min 15 sec
   ...      15 sec
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['lot_claim_data']['complaintID']}
   ...      pending
 
 
@@ -756,7 +756,17 @@ Resource           resource.robot
   ...      ${TENDER['TENDER_UAID']}
   ...      ${data}
   ...      ${field}
-  ...      ${USERS.users['${provider}'].claim_data['complaintID']}
+  ...      ${USERS.users['${provider}'].tender_claim_data['complaintID']}
+
+
+Звірити відображення поля ${field} вимоги про виправлення умов ${lot_index} лоту із ${data} для користувача ${username}
+  Звірити поле скарги із значенням
+  ...      ${username}
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${data}
+  ...      ${field}
+  ...      ${USERS.users['${provider}'].lot_claim_data['complaintID']}
+  ...      ${lot_index}
 
 
 Звірити відображення поля ${field} вимоги про виправлення визначення ${award_index} переможця із ${data} для користувача ${username}
@@ -775,18 +785,18 @@ Resource           resource.robot
   Run As  ${tender_owner}
   ...      Відповісти на вимогу про виправлення умов закупівлі
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['tender_claim_data']['complaintID']}
   ...      ${answer_data}
   ${claim_data}=  Create Dictionary  claim_answer=${answer_data}
   ${claim_data}=  munch_dict  arg=${claim_data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  claim_data  ${claim_data}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  tender_claim_data  ${claim_data}
   Wait until keyword succeeds
   ...      5 min 15 sec
   ...      15 sec
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['tender_claim_data']['complaintID']}
   ...      answered
 
 
@@ -796,18 +806,18 @@ Resource           resource.robot
   Run As  ${tender_owner}
   ...      Відповісти на вимогу про виправлення умов лоту
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['lot_claim_data']['complaintID']}
   ...      ${answer_data}
   ${claim_data}=  Create Dictionary  claim_answer=${answer_data}
   ${claim_data}=  munch_dict  arg=${claim_data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  claim_data  ${claim_data}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  lot_claim_data  ${claim_data}
   Wait until keyword succeeds
   ...      5 min 15 sec
   ...      15 sec
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['lot_claim_data']['complaintID']}
   ...      answered
 
 
@@ -843,16 +853,16 @@ Resource           resource.robot
   Run As  ${provider}
   ...      Підтвердити вирішення вимоги про виправлення умов закупівлі
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['tender_claim_data']['complaintID']}
   ...      ${confirmation_data}
-  Set To Dictionary  ${USERS.users['${provider}']['claim_data']}  claim_answer_confirm  ${confirmation_data}
+  Set To Dictionary  ${USERS.users['${provider}']['tender_claim_data']}  claim_answer_confirm  ${confirmation_data}
   Wait until keyword succeeds
   ...      5 min 15 sec
   ...      15 sec
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['tender_claim_data']['complaintID']}
   ...      resolved
 
 
@@ -865,16 +875,16 @@ Resource           resource.robot
   Run As  ${provider}
   ...      Підтвердити вирішення вимоги про виправлення умов лоту
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['lot_claim_data']['complaintID']}
   ...      ${confirmation_data}
-  Set To Dictionary  ${USERS.users['${provider}']['claim_data']}  claim_answer_confirm  ${confirmation_data}
+  Set To Dictionary  ${USERS.users['${provider}']['lot_claim_data']}  claim_answer_confirm  ${confirmation_data}
   Wait until keyword succeeds
   ...      5 min 15 sec
   ...      15 sec
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${USERS.users['${provider}']['lot_claim_data']['complaintID']}
   ...      resolved
 
 
