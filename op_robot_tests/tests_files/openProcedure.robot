@@ -2029,3 +2029,4 @@ ${ITEM_MEAT}        ${True}
    :FOR  ${doc_index}  IN RANGE  ${doc_number}
    \  ${document_url}=  Get From Dictionary  ${documents[${doc_index}]}  url
    \  Should Match Regexp   ${document_url}   ^https?:\/\/public.docs(?:-sandbox)?\.openprocurement\.org\/get\/([0-9A-Fa-f]{32})   msg=Not a Document Service Upload
+   #  Url pattern may differ, because document service is being developed
