@@ -214,7 +214,7 @@ Get Broker Property By Username
 
 Підготувати дані для створення предмету закупівлі
   [Arguments]  ${cpv}
-  ${item}=  test_item_data  ${cpv[0:3]}
+  ${item}=  test_item_data  ${cpv[0:4]}
   [Return]  ${item}
 
 
