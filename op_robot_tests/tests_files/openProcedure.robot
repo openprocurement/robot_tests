@@ -1847,6 +1847,37 @@ ${ITEM_MEAT}        ${True}
   ...      compare_stages
   Звірити відображення поля procuringEntity.name тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.procuringEntity.name} для користувача ${viewer}
 
+###################################################################
+#           Відображення посилання на аукціон
+###################################################################
+
+Можливість вичитати посилання на аукціон для глядача
+  [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      auction_url
+  [Setup]  Дочекатись дати початку періоду аукціону  ${viewer}  ${TENDER['TENDER_UAID']}
+  Можливість отримати посилання на аукціон для глядача
+
+
+Можливість вичитати посилання на аукціон для першого учасника
+  [Tags]   ${USERS.users['${provider}'].broker}: Процес аукціону
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      auction_url
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  Можливість отримати посилання на аукціон для учасника ${provider}
+
+
+Можливість вичитати посилання на аукціон для другого учасника
+  [Tags]   ${USERS.users['${provider1}'].broker}: Процес аукціону
+  ...      provider1
+  ...      ${USERS.users['${provider1}'].broker}
+  ...      auction_url
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider1}
+  Можливість отримати посилання на аукціон для учасника ${provider1}
+
+
 ##############################################################################################
 #             Відображення основних даних лоту для другого етапу
 ##############################################################################################
@@ -1983,3 +2014,19 @@ ${ITEM_MEAT}        ${True}
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість затвердити остаточне рішення кваліфікації
+
+################################################################################
+
+Перевірка завантаження документів до тендера через Document Service
+   [Tags]  ${USERS.users['${viewer}'].broker}: Document Service
+   ...      viewer
+   ...      ${USERS.users['${tender_owner}'].broker}
+   ...      document_service
+   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+   ${documents}=  Get From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data}  documents
+   ${doc_number}=  Get Length  ${documents}
+   Log  ${documents}
+   :FOR  ${doc_index}  IN RANGE  ${doc_number}
+   \  ${document_url}=  Get From Dictionary  ${documents[${doc_index}]}  url
+   \  Should Match Regexp   ${document_url}   ^https?:\/\/public.docs(?:-sandbox)?\.openprocurement\.org\/get\/([0-9A-Fa-f]{32})   msg=Not a Document Service Upload
+   #  Url pattern may differ, because document service is being developed
