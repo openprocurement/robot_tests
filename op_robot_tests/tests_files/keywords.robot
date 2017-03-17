@@ -204,7 +204,8 @@ Get Broker Property By Username
 Підготувати дані для створення тендера
   [Arguments]  ${tender_parameters}
   ${period_intervals}=  compute_intrs  ${BROKERS}  ${used_brokers}
-  ${tender_data}=  prepare_test_tender_data  ${period_intervals}  ${tender_parameters}
+  ${submissionMethodDetails}=  Get Variable Value  ${submissionMethodDetails}
+  ${tender_data}=  prepare_test_tender_data  ${period_intervals}  ${tender_parameters}  ${submissionMethodDetails}
   ${TENDER}=  Create Dictionary
   Set Global Variable  ${TENDER}
   Log  ${tender_data}
@@ -777,6 +778,19 @@ Require Failure
   ...      ${tender_uaid}
   ...      active.auction
   Sleep  120  # Auction sync
+
+
+Дочекатись дати початку періоду кваліфікації
+  [Arguments]  ${username}  ${tender_uaid}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      active.qualification
 
 
 Дочекатись дати закінчення періоду подання скарг
