@@ -165,7 +165,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
-  Звірити відображення поля minimalStep.amount тендера для користувача ${viewer}
+  Звірити відображення поля minimalStep.amount тендера для усіх користувачів
 
 
 Відображення фінансового критерію лоту
