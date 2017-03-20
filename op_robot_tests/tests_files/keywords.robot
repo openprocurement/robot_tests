@@ -214,7 +214,7 @@ Get Broker Property By Username
 
 Підготувати дані для створення предмету закупівлі
   [Arguments]  ${cpv}
-  ${item}=  test_item_data  ${cpv[0:3]}
+  ${item}=  test_item_data  ${cpv[0:4]}
   [Return]  ${item}
 
 
@@ -597,6 +597,37 @@ Require Failure
   ${status}  ${value}=  Run keyword and ignore keyword definitions  ${keywords_file}.${command}  ${username}  @{arguments}
   Run keyword if  '${status}' == 'PASS'  Fail  Користувач ${username} зміг виконати "${command}"
   [return]  ${value}
+
+
+
+Можливість отримати посилання на аукціон для глядача
+  ${timeout_on_wait}=  Get Broker Property By Username  ${viewer}  timeout_on_wait
+  ${timeout_on_wait}=  Set Variable If
+  ...                  ${timeout_on_wait} < ${120}
+  ...                  ${120}
+  ...                  ${timeout_on_wait}
+  ${url}=  Wait Until Keyword Succeeds
+  ...      ${timeout_on_wait}
+  ...      15 s
+  ...      Run As  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
+  Should Be True  '${url}'
+  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.openprocurement\.org\/tenders\/([0-9A-Fa-f]{32})
+  Log  URL аукціону для глядача: ${url}
+
+
+Можливість отримати посилання на аукціон для учасника ${username}
+  ${timeout_on_wait}=  Get Broker Property By Username  ${username}  timeout_on_wait
+  ${timeout_on_wait}=  Set Variable If
+  ...                  ${timeout_on_wait} < ${120}
+  ...                  ${120}
+  ...                  ${timeout_on_wait}
+  ${url}=  Wait Until Keyword Succeeds
+  ...      ${timeout_on_wait}
+  ...      15 s
+  ...      Run As  ${username}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
+  Should Be True  '${url}'
+  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.openprocurement\.org\/tenders\/([0-9A-Fa-f]{32})
+  Log  URL аукціону для учасника: ${url}
 
 
 Дочекатись дати
