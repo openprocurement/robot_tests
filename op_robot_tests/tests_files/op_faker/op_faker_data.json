@@ -2803,15 +2803,127 @@
         {
             "additionalClassifications": [
                 {
-                    "scheme": "ДКПП",
-                    "id": "58.19.14-00.00",
-                    "description": "Марки поштові, гербові чи подібні нові; гербовий папір; чекові книжки; банкноти, акції, облігації та подібні цінні папери, друковані"
+                    "scheme": "ДК003",
+                    "id": "3475",
+                    "description": "Спортивні тренери,  інструктори-методисти  та професійні спортсмени"
                 }
             ],
             "classification": {
                 "scheme": "CPV",
-                "id": "22414000-5",
-                "description": "Котушки для маркових стрічок"
+                "id": "99999999-9",
+                "description": "Не визначено"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "ДК003",
+                    "id": "7242.1",
+                    "description": "Монтажники електронного устаткування (на роботах високої кваліфікації)"
+                }
+            ],
+            "classification": {
+                "scheme": "CPV",
+                "id": "99999999-9",
+                "description": "Не визначено"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "ДК003",
+                    "id": "7212.1",
+                    "description": "Зварники та газорізальники (на роботах високої кваліфікації)"
+                }
+            ],
+            "classification": {
+                "scheme": "CPV",
+                "id": "99999999-9",
+                "description": "Не визначено"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "ДК018",
+                    "id": "1241.1",
+                    "description": "Автовокзали та інші будівлі автомобільного транспорту"
+                }
+            ],
+            "classification": {
+                "scheme": "CPV",
+                "id": "99999999-9",
+                "description": "Не визначено"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "ДК018",
+                    "id": "1230.5",
+                    "description": "Бази та склади підприємств торгівлі й громадського харчування"
+                }
+            ],
+            "classification": {
+                "scheme": "CPV",
+                "id": "99999999-9",
+                "description": "Не визначено"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "ДК015",
+                    "id": "II.2 24.00.02",
+                    "description": "Прикордонні війська"
+                }
+            ],
+            "classification": {
+                "scheme": "CPV",
+                "id": "99999999-9",
+                "description": "Не визначено"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "ДК018",
+                    "id": "1262.1",
+                    "description": "Музеї та художні галереї"
+                }
+            ],
+            "classification": {
+                "scheme": "CPV",
+                "id": "99999999-9",
+                "description": "Не визначено"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "ДК018",
+                    "id": "17.12.77-80.00",
+                    "description": "Будівлі професійно-технічних навчальних закладів"
+                }
+            ],
+            "classification": {
+                "scheme": "CPV",
+                "id": "99999999-9",
+                "description": "Не визначено"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "ДК003",
+                    "id": "7112.1",
+                    "description": "Вибуховики (на роботах високої кваліфікації)"
+                }
+            ],
+            "classification": {
+                "scheme": "CPV",
+                "id": "99999999-9",
+                "description": "Не визначено"
             }
         },
         {
@@ -7895,9 +8007,21 @@
         "30192130-1",
         "30197600-2",
         "22200000-2",
-        "22212000-9"
+        "22212000-9",
+        "99999999-9"
     ],
     "items_base_data": [
+        {
+            "cpv_id": "99999999-9",
+            "description": "Послуги",
+            "description_ru": "Услуги",
+            "description_en": "Services",
+            "quantity": 15,
+            "unit": {
+                "code": "PK",
+                "name": "упаковка"
+            }
+        },
         {
             "cpv_id": "30199000-0",
             "description": "Папір для офісної техніки А4",
