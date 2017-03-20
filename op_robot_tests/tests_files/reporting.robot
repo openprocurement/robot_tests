@@ -296,56 +296,34 @@ ${ITEM_MEAT}      ${False}
   Звірити відображення поля description усіх предметів для користувача ${viewer}
 
 
-Відображення опису додаткової класифікації номенклатури звіту про укладений договір
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  tender_view
-  ...  level3
-  Звірити відображення поля additionalClassifications[0].description усіх предметів для користувача ${viewer}
-
-
-Відображення ідентифікатора додаткової класифікації номенклатури звіту про укладений договір
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  tender_view
-  ...  level3
-  Звірити відображення поля additionalClassifications[0].id усіх предметів для користувача ${viewer}
-
-
-Відображення схеми додаткової класифікації номенклатури звіту про укладений договір
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  tender_view
-  Звірити відображення поля additionalClassifications[0].scheme усіх предметів для користувача ${viewer}
-
-
-Відображення схеми класифікації номенклатури звіту про укладений договір
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  tender_view
+Відображення схеми основної/додаткової класифікації номенклатур звіту про укладений договір
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view
   Звірити відображення поля classification.scheme усіх предметів для користувача ${viewer}
+  Run Keyword If  "${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['description']}" == "Не визначено"
+  ...      Звірити відображення поля additionalClassifications[0].scheme усіх предметів для користувача ${viewer}
 
 
-Відображення ідентифікатора класифікації номенклатури звіту про укладений договір
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  tender_view
-  ...  level3
+Відображення ідентифікатора основної/додаткової класифікації номенклатур звіту про укладений договір
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view
   Звірити відображення поля classification.id усіх предметів для користувача ${viewer}
+  Run Keyword If  "${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['description']}" == "Не визначено"
+  ...      Звірити відображення поля additionalClassifications[0].id усіх предметів для користувача ${viewer}
 
 
-Відображення опису класифікації номенклатури звіту про укладений договір
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  tender_view
-  ...  level3
+Відображення опису основної/додаткової класифікації номенклатур звіту про укладений договір
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view
   Звірити відображення поля classification.description усіх предметів для користувача ${viewer}
+  Run Keyword If  "${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['description']}" == "Не визначено"
+  ...      Звірити відображення поля additionalClassifications[0].description усіх предметів для користувача ${viewer}
 
 
 Відображення кількості номенклатури звіту про укладений договір
