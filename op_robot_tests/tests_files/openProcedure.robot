@@ -481,7 +481,7 @@ ${ITEM_MEAT}        ${True}
 
 
 Можливість додати документацію до всіх лотів
-  [Tags]    ${USERS.users['${tender_owner}'].broker}: Додання документації
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      add_lot_doc  level3
@@ -672,7 +672,7 @@ ${ITEM_MEAT}        ${True}
 
 
 Можливість додати неціновий показник на перший лот
-  [Tags]    ${USERS.users['${tender_owner}'].broker}:  Редагування тендера
+  [Tags]   ${USERS.users['${tender_owner}'].broker}:  Редагування тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      add_lot_meat  level3
@@ -719,7 +719,7 @@ ${ITEM_MEAT}        ${True}
 
 
 Можливість додати неціновий показник на перший предмет
-  [Tags]    ${USERS.users['${tender_owner}'].broker}:  Редагування тендера
+  [Tags]   ${USERS.users['${tender_owner}'].broker}:  Редагування тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      add_item_meat  level3
@@ -1637,7 +1637,7 @@ ${ITEM_MEAT}        ${True}
 
 
 Неможливість додати документацію до лоту під час кваліфікації
-  [Tags]    ${USERS.users['${tender_owner}'].broker}: Додання документації
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_add_doc_to_lot
@@ -2018,15 +2018,15 @@ ${ITEM_MEAT}        ${True}
 ################################################################################
 
 Перевірка завантаження документів до тендера через Document Service
-   [Tags]  ${USERS.users['${viewer}'].broker}: Document Service
-   ...      viewer
-   ...      ${USERS.users['${tender_owner}'].broker}
-   ...      document_service
-   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-   ${documents}=  Get From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data}  documents
-   ${doc_number}=  Get Length  ${documents}
-   Log  ${documents}
-   :FOR  ${doc_index}  IN RANGE  ${doc_number}
-   \  ${document_url}=  Get From Dictionary  ${documents[${doc_index}]}  url
-   \  Should Match Regexp   ${document_url}   ^https?:\/\/public.docs(?:-sandbox)?\.openprocurement\.org\/get\/([0-9A-Fa-f]{32})   msg=Not a Document Service Upload
-   #  Url pattern may differ, because document service is being developed
+  [Tags]   ${USERS.users['${viewer}'].broker}: Document Service
+  ...      viewer
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      document_service
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  ${documents}=  Get From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data}  documents
+  ${doc_number}=  Get Length  ${documents}
+  Log  ${documents}
+  :FOR  ${doc_index}  IN RANGE  ${doc_number}
+  \  ${document_url}=  Get From Dictionary  ${documents[${doc_index}]}  url
+  \  Should Match Regexp   ${document_url}   ^https?:\/\/public.docs(?:-sandbox)?\.openprocurement\.org\/get\/([0-9A-Fa-f]{32})   msg=Not a Document Service Upload
+  #  Url pattern may differ, because document service is being developed
