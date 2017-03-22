@@ -115,22 +115,38 @@ class OP_Provider(BaseProvider):
                     item_base_data = entity
                     break
 
-        # choose appropriate dkpp classification for item_base_data's cpv
+        # choose appropriate additional classification for item_base_data's cpv
+        additional_class = []
         for entity in self.classifications:
             if entity["classification"]["id"] == item_base_data["cpv_id"]:
-                classification = entity
-                break
+                additional_class.append(entity)
+        classification = self.random_element(additional_class)
 
+        dk_descriptions = {
+            u'ДК003': (u'Послуги фахівців', u'Услуги специалистов', u'Specialists services'),
+            u'ДК015': (u'Дослідження та розробки', u'Исследования и разработки', u'Research and development'),
+            u'ДК018': (u'Будівлі та споруди', u'Здания и сооружения', u'Buildings and structures')
+        }
         address = self.random_element(self.addresses)
         item = {
-            "description": item_base_data["description"],
-            "description_ru": item_base_data["description_ru"],
-            "description_en": item_base_data["description_en"],
             "classification": classification["classification"],
-            "additionalClassifications": classification["additionalClassifications"],
             "deliveryAddress": address["deliveryAddress"],
             "deliveryLocation": address["deliveryLocation"],
             "unit": item_base_data["unit"],
             "quantity": self.randomize_nb_elements(number=item_base_data["quantity"], le=80, ge=120)
         }
+        if item_base_data["cpv_id"] == "99999999-9":
+            scheme = classification["additionalClassifications"][0]["scheme"]
+            item.update({
+                "additionalClassifications": classification["additionalClassifications"],
+                "description": dk_descriptions[scheme][0],
+                "description_ru": dk_descriptions[scheme][1],
+                "description_en": dk_descriptions[scheme][2]
+            })
+        else:
+            item.update({
+                "description": item_base_data["description"],
+                "description_ru": item_base_data["description_ru"],
+                "description_en": item_base_data["description_en"]
+            })
         return deepcopy(item)
