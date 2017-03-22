@@ -449,7 +449,7 @@ ${award_index}      ${0}
   ...  award_complaint
   ...  non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля description вимоги про виправлення визначення ${award_index} переможця із ${USERS.users['${provider}'].claim_data.claim.data.description} для користувача ${viewer}
+  Звірити відображення поля description вимоги про виправлення визначення ${award_index} переможця із ${USERS.users['${provider}'].award_claim_data.claim.data.description} для користувача ${viewer}
 
 
 Відображення заголовку вимоги про виправлення визначення переможця
@@ -458,7 +458,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_complaint
   ...  non-critical
-  Звірити відображення поля title вимоги про виправлення визначення ${award_index} переможця із ${USERS.users['${provider}'].claim_data.claim.data.title} для користувача ${viewer}
+  Звірити відображення поля title вимоги про виправлення визначення ${award_index} переможця із ${USERS.users['${provider}'].award_claim_data.claim.data.title} для користувача ${viewer}
 
 
 Відображення заголовку документації вимоги про виправлення визначення переможця
@@ -467,7 +467,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_complaint
   ...  non-critical
-  Звірити відображення поля title документа ${USERS.users['${provider}'].claim_data.doc_id} до скарги ${USERS.users['${provider}'].claim_data.complaintID} з ${USERS.users['${provider}'].claim_data.doc_name} для користувача ${viewer}
+  Звірити відображення поля title документа ${USERS.users['${provider}'].award_claim_data.doc_id} до скарги ${USERS.users['${provider}'].award_claim_data.complaintID} з ${USERS.users['${provider}'].award_claim_data.doc_name} для користувача ${viewer}
 
 
 Відображення поданого статусу вимоги про виправлення визначення переможця
@@ -505,7 +505,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_complaint
   ...  non-critical
-  Звірити відображення поля resolutionType вимоги про виправлення визначення ${award_index} переможця із ${USERS.users['${tender_owner}'].claim_data.claim_answer.data.resolutionType} для користувача ${viewer}
+  Звірити відображення поля resolutionType вимоги про виправлення визначення ${award_index} переможця із ${USERS.users['${tender_owner}'].award_claim_data.claim_answer.data.resolutionType} для користувача ${viewer}
 
 
 Відображення вирішення вимоги про виправлення визначення переможця
@@ -514,7 +514,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_complaint
   ...  non-critical
-  Звірити відображення поля resolution вимоги про виправлення визначення ${award_index} переможця із ${USERS.users['${tender_owner}'].claim_data.claim_answer.data.resolution} для користувача ${viewer}
+  Звірити відображення поля resolution вимоги про виправлення визначення ${award_index} переможця із ${USERS.users['${tender_owner}'].award_claim_data.claim_answer.data.resolution} для користувача ${viewer}
 
 
 Можливість підтвердити задоволення вимоги про виправлення визначення переможця
@@ -543,7 +543,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_complaint
   ...  non-critical
-  Звірити відображення поля satisfied вимоги про виправлення визначення ${award_index} переможця із ${USERS.users['${provider}'].claim_data.claim_answer_confirm.data.satisfied} для користувача ${viewer}
+  Звірити відображення поля satisfied вимоги про виправлення визначення ${award_index} переможця із ${USERS.users['${provider}'].award_claim_data.claim_answer_confirm.data.satisfied} для користувача ${viewer}
 
 
 Можливість створити чернетку вимоги про виправлення визначення переможця і скасувати її
@@ -573,7 +573,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_complaint
   ...  non-critical
-  Звірити відображення поля cancellationReason вимоги про виправлення визначення ${award_index} переможця із ${USERS.users['${provider}'].claim_data.cancellation.data.cancellationReason} для користувача ${viewer}
+  Звірити відображення поля cancellationReason вимоги про виправлення визначення ${award_index} переможця із ${USERS.users['${provider}'].award_claim_data.cancellation.data.cancellationReason} для користувача ${viewer}
 
 
 Можливість створити, подати і скасувати вимогу про виправлення визначення переможця
@@ -647,7 +647,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_complaint
   ...  non-critical
-  Звірити відображення поля satisfied вимоги про виправлення визначення ${award_index} переможця із ${USERS.users['${provider}'].claim_data.escalation.data.satisfied} для користувача ${viewer}
+  Звірити відображення поля satisfied вимоги про виправлення визначення ${award_index} переможця із ${USERS.users['${provider}'].award_claim_data.escalation.data.satisfied} для користувача ${viewer}
 
 
 Можливість скасувати скаргу про виправлення визначення переможця
@@ -677,4 +677,4 @@ ${award_index}      ${0}
   ...  award_complaint
   ...  non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля cancellationReason вимоги про виправлення визначення ${award_index} переможця із ${USERS.users['${provider}'].claim_data.cancellation.data.cancellationReason} для користувача ${viewer}
+  Звірити відображення поля cancellationReason вимоги про виправлення визначення ${award_index} переможця із ${USERS.users['${provider}'].award_claim_data.cancellation.data.cancellationReason} для користувача ${viewer}
