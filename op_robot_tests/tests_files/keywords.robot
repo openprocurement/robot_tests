@@ -451,7 +451,7 @@ Log differences between dicts
   ...      The keyword will fail if the difference between
   ...      ``left`` and ``right`` dates is more than ``accuracy``,
   ...      otherwise it will pass.
-  [Arguments]  ${left}  ${right}  ${accuracy}=60  ${absolute_delta}=${False}
+  [Arguments]  ${left}  ${right}  ${accuracy}=90  ${absolute_delta}=${False}
   Log  ${left}
   Log  ${right}
   Should Not Be Equal  ${left}  ${None}
