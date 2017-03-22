@@ -241,3 +241,16 @@ APStender:
             enquiry: [0, 15]
             tender:  [0, 15]
     timeout_on_wait: 10
+etrade:
+   intervals:
+       default:
+           enquiry: [0, 8]
+           tender:  [0,  18]
+   keywords_file: etrade
+   roles:
+       tender_owner:   etrade_Owner
+       viewer:         etrade_Viewer
+       provider:       etrade_Provider1
+       provider1:      etrade_Provider2
+   timeout_on_wait: 120
+
