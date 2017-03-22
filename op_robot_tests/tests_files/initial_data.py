@@ -311,11 +311,11 @@ def test_bid_data():
     return bid
 
 
-def test_bid_value(max_value_amount):
+def test_bid_value(max_value_amount, minimalStep):
     return munchify({
         "value": {
             "currency": "UAH",
-            "amount": round(random.uniform(max_value_amount, max_value_amount * 1.05), 2),
+            "amount": round(random.uniform(1, 1.05)*(max_value_amount + minimalStep), 2),
             "valueAddedTaxIncluded": True
         }
     })
