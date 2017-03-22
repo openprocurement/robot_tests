@@ -100,6 +100,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  tender_complaint
   ...  critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість відповісти на вимогу про виправлення умов закупівлі
 
@@ -138,6 +139,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${provider}'].broker}
   ...  tender_complaint
   ...  critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість підтвердити задоволення вимоги про виправлення умов закупівлі
 
@@ -189,6 +191,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  lot_complaint
   ...  critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість відповісти на вимогу про виправлення умов лоту
 
@@ -199,6 +202,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${provider}'].broker}
   ...  lot_complaint
   ...  critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість підтвердити задоволення вимоги про виправлення умов лоту
 
@@ -242,6 +246,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${provider}'].broker}
   ...  lot_complaint
   ...  critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість створити чернетку вимоги про виправлення умов ${lot_index} лоту
   Можливість скасувати вимогу про виправлення умов лоту
@@ -277,6 +282,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${provider}'].broker}
   ...  lot_complaint
   ...  critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість створити вимогу про виправлення умов ${lot_index} лоту із документацією
   Можливість скасувати вимогу про виправлення умов лоту
@@ -315,6 +321,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${provider}'].broker}
   ...  lot_complaint
   ...  critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість створити вимогу про виправлення умов ${lot_index} лоту із документацією
   Дочекатись синхронізації з майданчиком  ${tender_owner}
@@ -365,6 +372,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${provider}'].broker}
   ...  tender_complaint
   ...  critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість скасувати вимогу про виправлення умов закупівлі
 
@@ -394,6 +402,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${provider}'].broker}
   ...  lot_complaint
   ...  critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість створити вимогу про виправлення умов ${lot_index} лоту із документацією
   Дочекатись синхронізації з майданчиком  ${tender_owner}
@@ -494,6 +503,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  award_complaint
   ...  critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість відповісти на вимогу про виправлення визначення ${award_index} переможця
 
@@ -532,6 +542,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${provider}'].broker}
   ...  award_complaint
   ...  critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість підтвердити задоволення вимоги про виправлення визначення ${award_index} переможця
 
@@ -561,6 +572,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${provider}'].broker}
   ...  award_complaint
   ...  critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість створити чернетку вимоги про виправлення визначення ${award_index} переможця
   Можливість скасувати вимогу про виправлення визначення ${award_index} переможця
@@ -591,6 +603,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${provider}'].broker}
   ...  award_complaint
   ...  critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість створити вимогу про виправлення визначення ${award_index} переможця із документацією
   Можливість скасувати вимогу про виправлення визначення ${award_index} переможця
@@ -612,6 +625,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${provider}'].broker}
   ...  award_complaint
   ...  critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість створити вимогу про виправлення визначення ${award_index} переможця із документацією
   Дочекатись синхронізації з майданчиком  ${tender_owner}
@@ -636,6 +650,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${provider}'].broker}
   ...  award_complaint
   ...  critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість створити вимогу про виправлення визначення ${award_index} переможця із документацією
   Дочекатись синхронізації з майданчиком  ${tender_owner}
@@ -669,6 +684,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${provider}'].broker}
   ...  award_complaint
   ...  critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість скасувати вимогу про виправлення визначення ${award_index} переможця
 
