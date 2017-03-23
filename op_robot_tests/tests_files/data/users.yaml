@@ -414,3 +414,33 @@ users:
         browser:  ff
         position: [0, 0]
         size:     [1400, 900]
+    alltenders_Owner:
+        broker:   alltenders
+        homepage: "https://prozorro.shadowy.eu/?mode=test&notification=off"
+        login:    butov@mail.ru
+        password: 111
+        browser:  chrome
+        position: [0, 0]
+        size:     [1210, 800]
+    alltenders_Provider1:
+        broker:   alltenders
+        homepage: "https://prozorro.shadowy.eu/?mode=test&notification=off"
+        login:    s.titarchuk@a-express.com.ua
+        password: gfhjkm
+        browser:  chrome
+        position: [0, 0]
+        size:     [1210, 800]
+    alltenders_Provider2:
+        broker:   alltenders
+        homepage: "https://prozorro.shadowy.eu/?mode=test&notification=off"
+        login:    murashkot@bigmir.net
+        password: 24091980
+        browser:  chrome
+        position: [0, 0]
+        size:     [1210, 800]
+    alltenders_Viewer:
+        broker:   alltenders
+        homepage: "https://prozorro.shadowy.eu/?mode=test&notification=off"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1210, 800]
