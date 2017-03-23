@@ -18,8 +18,6 @@
 -i add_tender_doc
 -i add_lot_doc
 -i modify_lot_value_amount
--i add_lot
-  -i delete_lot
 -i add_lot_meat
   -i delete_lot_meat
 
@@ -33,7 +31,7 @@
   -i modify_bid_by_provider
   -i add_doc_to_bid_by_provider
 -i make_bid_by_provider1
--i make_bid_by_provider2
+
 -i bid_view_in_tendering_period
 
 -i add_bid_doc_after_tendering_period_by_provider
@@ -48,7 +46,6 @@
 -i open_modify_tender_in_tendering_period
   -i open_confirm_first_bid
   -i open_confirm_second_bid
-  -i open_confirm_third_bid
 
 -i openeu_make_bid_doc_private_by_provider
 -i openeu_add_financial_bid_doc_by_provider
@@ -62,10 +59,7 @@
 
 -i pre-qualification_add_doc_to_first_bid
 -i pre-qualification_approve_first_bid
-
 -i pre-qualification_add_doc_to_second_bid
--i pre-qualification_reject_second_bid
-  -i pre-qualification_cancel_second_bid_qualification
 -i pre-qualification_approve_second_bid
 
 -i pre-qualification_approve_qualifications
