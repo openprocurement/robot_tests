@@ -448,6 +448,19 @@ ${award_index}      ${0}
   Дочекатись дати початку періоду кваліфікації  ${provider1}  ${TENDER['TENDER_UAID']}
 
 
+Можливість підтвердити учасника
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  qualification_approve_first_award  level1
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${file_path}  ${file_name}  ${file_content}=   create_fake_doc
+  Run As  ${tender_owner}  Завантажити документ рішення кваліфікаційної комісії  ${file_path}  ${TENDER['TENDER_UAID']}  0
+  Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  0
+  Remove File  ${file_path}
+
+
 Можливість створити вимогу про виправлення визначення переможця, додати до неї документацію і подати її користувачем
   [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...  provider
