@@ -9,7 +9,7 @@ from faker.providers.company.en_US import Provider as CompanyProviderEnUs
 from faker.providers.company.ru_RU import Provider as CompanyProviderRuRu
 from munch import munchify
 from op_faker import OP_Provider
-from .local_time import get_now
+from .local_time import get_now, TZ
 
 
 fake_en = Factory.create(locale='en_US')
@@ -99,7 +99,7 @@ def test_tender_data(params,
         period_dict[period_name + "Period"] = {}
         for i, j in zip(range(2), ("start", "end")):
             inc_dt += timedelta(minutes=params['intervals'][period_name][i])
-            period_dict[period_name + "Period"][j + "Date"] = inc_dt.isoformat()
+            period_dict[period_name + "Period"][j + "Date"] = inc_dt.astimezone(TZ).isoformat()
     data.update(period_dict)
     cpv_group = fake.cpv()[:4]
     if params.get('number_of_lots'):
@@ -319,8 +319,8 @@ def test_item_data(cpv=None):
     data["description_ru"] = field_with_id("i", data["description_ru"])
     days = fake.random_int(min=1, max=30)
     data["deliveryDate"] = {
-        "startDate": (get_now() + timedelta(days=days)).isoformat(),
-        "endDate": (get_now() + timedelta(days=days)).isoformat()
+        "startDate": (get_now() + timedelta(days=days)).astimezone(TZ).isoformat(),
+        "endDate": (get_now() + timedelta(days=days)).astimezone(TZ).isoformat()
     }
     data["deliveryAddress"]["countryName_en"] = translate_country_en(data["deliveryAddress"]["countryName"])
     data["deliveryAddress"]["countryName_ru"] = translate_country_ru(data["deliveryAddress"]["countryName"])
