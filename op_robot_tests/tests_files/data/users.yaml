@@ -444,4 +444,34 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1210, 800]
+    kapitalist_Owner:
+        broker:   Kapitalist
+        homepage: "http://185.9.41.105/Kapital-Ist/"
+        login:    qa_test@binka.me
+        password: Password1-
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    kapitalist_Provider:
+        broker:   Kapitalist
+        homepage: "http://185.9.41.105/Kapital-Ist/"
+        login:    provider_user@binka.me
+        password: Password1-
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    kapitalist_Provider1:
+        broker:   Kapitalist
+        homepage: "http://185.9.41.105/Kapital-Ist/"
+        login:    provider1_user@binka.me
+        password: Password1-
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    kapitalist_Viewer:
+        broker:   Kapitalist
+        homepage: "http://185.9.41.105/Kapital-Ist/"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
         
