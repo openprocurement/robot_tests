@@ -18,7 +18,7 @@ ${award_index}      ${0}
 *** Test Cases ***
 
 ##############################################################################################
-#             CREATE AND FIND TENDER
+#             CREATE AND FIND TENDER LOT VIEW
 ##############################################################################################
 
 Можливість оголосити однопредметний тендер
@@ -41,6 +41,16 @@ ${award_index}      ${0}
   ...  critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Можливість знайти тендер по ідентифікатору для усіх користувачів
+
+
+Відображення заголовку лотів
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      lot_view  level1
+  ...      critical
+  Звірити відображення поля title усіх лотів для усіх користувачів
 
 ##############################################################################################
 #             CREATE, ANSWER AND CONFIRM CLAIM
