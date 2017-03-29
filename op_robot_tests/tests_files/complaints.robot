@@ -185,16 +185,6 @@ ${award_index}      ${0}
   Можливість створити вимогу про виправлення умов ${lot_index} лоту із документацією
 
 
-Відображення стосунку вимоги до лоту
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  lot_complaint
-  ...  non-critical
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля relatedLot вимоги про виправлення умов ${lot_index} лоту із ${USERS.users['${provider}'].lot_claim_data.claim.data.relatedLot} для користувача ${viewer}
-
-
 Можливість відповісти на вимогу про виправлення умов лоту
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес оскарження
   ...  tender_owner
