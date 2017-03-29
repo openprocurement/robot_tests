@@ -20,7 +20,7 @@ ${mode}         single
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      minimal
-  [Documentation]  Створення закупівлі замовником, обовязково має повертати UAID закупівлі (номер тендера),
+  [Documentation]  Створення закупівлі замовником, обов'язково має повертати UAID закупівлі (номер тендера),
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${tender_data}=  Підготовка даних для створення тендера
   ${adapted_data}=  Адаптувати дані для оголошення тендера  ${tender_owner}  ${tender_data}
@@ -183,7 +183,7 @@ ${mode}         single
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryLocation.longitude
 
 
-Відображення назви нас. пункту доставки номенклатури однопредметного тендера
+Відображення назви населеного пункту доставки номенклатури однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -191,7 +191,7 @@ ${mode}         single
   Звірити поле тендера  ${viewer}  ${USERS.users['${tender_owner}'].initial_data}  items[0].deliveryAddress.countryName
 
 
-Відображення пошт. коду доставки номенклатури однопредметного тендера
+Відображення поштового коду доставки номенклатури однопредметного тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -337,7 +337,7 @@ ${mode}         single
 #             ВІДОБРАЖЕННЯ
 ##############################################################################################
 
-Відображення заголовку анонімного питання без відповіді
+Відображення заголовка анонімного питання без відповіді
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення запитання
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -635,3 +635,17 @@ ${mode}         single
   Should Be True  '${url}'
   Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.openprocurement\.org\/tenders\/([0-9A-Fa-f]{32})
   Log  URL аукціону для другого учасника: ${url}
+
+
+Перевірка завантаження документів через Document Service
+  [Tags]  ${USERS.users['${viewer}'].broker}: Document Service
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      provider1
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  ${documents}=  Get From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data}  documents
+  ${doc_number}=  count_dicts_in_list  ${documents}
+  Log  ${documents}
+  :FOR  ${doc_index}  IN RANGE  ${doc_number}
+  \  ${document_url}=  Get From Dictionary  ${documents[${doc_index}]}  url
+  \  Should Match Regexp  ${document_url} ^https?:\/\/upload.docs(?:-sandbox)?\.openprocurement\.org\/get\/([0-9A-Fa-f]{32})  msg=Not a Document Service Upload
