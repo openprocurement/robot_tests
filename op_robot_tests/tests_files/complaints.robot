@@ -9,9 +9,9 @@ ${MODE}         belowThreshold
 
 ${NUMBER_OF_ITEMS}  ${1}
 ${NUMBER_OF_LOTS}   ${1}
-${TENDER_MEAT}      ${1}
-${ITEM_MEAT}        ${1}
-${LOT_MEAT}         ${1}
+${TENDER_MEAT}      ${0}
+${ITEM_MEAT}        ${0}
+${LOT_MEAT}         ${0}
 ${lot_index}        ${0}
 ${award_index}      ${0}
 
