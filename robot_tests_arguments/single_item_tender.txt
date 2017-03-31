@@ -1,7 +1,6 @@
 -v MODE:belowThreshold
 
 -v NUMBER_OF_ITEMS:1
--v NUMBER_OF_LOTS:1
 
 -v TENDER_MEAT:False
 -v ITEM_MEAT:False
