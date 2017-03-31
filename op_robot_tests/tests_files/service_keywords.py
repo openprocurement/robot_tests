@@ -240,7 +240,9 @@ def compute_intrs(brokers_data, used_brokers):
     does not contain ``Default`` entry.
     Using `load_data_from` with ``mode='brokers'`` is recommended.
     """
-    def recur(l, r):
+    keys_to_prefer_lesser = ('accelerator',)
+
+    def recur(l, r, prefer_greater_numbers=True):
         l, r = deepcopy(l), deepcopy(r)
         if isinstance(l, list) and isinstance(r, list) and len(l) == len(r):
             lst = []
@@ -251,13 +253,15 @@ def compute_intrs(brokers_data, used_brokers):
             if l == r:
                 return l
             if l > r:
-                return l
+                return l if prefer_greater_numbers else r
             if l < r:
-                return r
+                return r if prefer_greater_numbers else l
         elif isinstance(l, dict) and isinstance(r, dict):
             for k, v in r.iteritems():
                 if k not in l.keys():
                     l[k] = v
+                elif k in keys_to_prefer_lesser:
+                   l[k] = recur(l[k], v, prefer_greater_numbers=False)
                 else:
                     l[k] = recur(l[k], v)
             return l
