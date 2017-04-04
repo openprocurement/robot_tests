@@ -127,7 +127,7 @@ users:
         browser:  chrome
         position: [800, 400]
         size:     [800, 700]
-     PrivatMarket_Viewer:
+    PrivatMarket_Viewer:
         broker:   PrivatMarket
         homepage: "https://rc.privatmarket.ua/business/tenders"
         email:    pbecommercetest2@ukr.net
