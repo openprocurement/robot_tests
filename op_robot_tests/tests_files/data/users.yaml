@@ -149,8 +149,8 @@ users:
         broker:   PrivatMarket
         homepage: "https://rc.privatmarket.ua/business/tenders"
         email:    pbecommercetest1@ukr.net
-        login:    380270010003
-        password: password0003
+        login:    380270010007
+        password: password8015
         browser:  firefox
         position: [0, 0]
         size:     [1920, 1080]
