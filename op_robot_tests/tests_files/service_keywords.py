@@ -504,6 +504,16 @@ def get_complaint_index_by_complaintID(data, complaintID):
     return index
 
 
+def get_current_bid_value(filepath, index):
+    artifact = load_data_from(filepath)
+    if (index == '0'):
+        return float(artifact['provider_bid_start_value']) + float(artifact['provider_bid_difference'])
+    if (index == '1'):
+        return float(artifact['provider1_bid_start_value']) + float(artifact['provider1_bid_difference'])
+    else:
+        raise ValueError("Invalid provider index")
+
+
 def generate_test_bid_data(tender_data):
     bid = test_bid_data()
     if 'aboveThreshold' in tender_data.get('procurementMethodType', '') or 'competitiveDialogue' in tender_data.get('procurementMethodType', ''):
@@ -560,6 +570,93 @@ def convert_datetime_to_dot_format(isodate):
 
 def local_path_to_file(file_name):
     return os.path.join(os.path.dirname(__file__), 'documents', file_name)
+
+
+def create_artifact():
+    api = BuiltIn().get_variable_value('${api_version}')
+    tender_data = BuiltIn().get_variable_value('${TENDER}')
+    users = BuiltIn().get_variable_value('${USERS.users}')
+    mode = BuiltIn().get_variable_value('${MODE}')
+    tender_owner = BuiltIn().get_variable_value('${tender_owner}')
+    provider = BuiltIn().get_variable_value('${provider}')
+    provider1 = BuiltIn().get_variable_value('${provider1}')
+
+    artifact = {
+        'api_version': api,
+        'mode': mode,
+        'tender_uaid': tender_data.get('TENDER_UAID', ''),
+        'last_modification_date': tender_data.get('LAST_MODIFICATION_DATE', ''),
+        'tender_owner': users[tender_owner].get('broker', ''),
+        'access_token': users[tender_owner].get('access_token', ''),
+        'tender_id': users[tender_owner]['tender_data']['data'].get('id', ''),
+        'provider_access_token': users[provider].get('access_token', ''),
+        'provider1_access_token': users[provider1].get('access_token', ''),
+        'provider_bid_id': users[provider].get('bid_id', ''),
+        'provider1_bid_id': users[provider1].get('bid_id', ''),
+        'provider_bid_start_value': users[provider].get('bid_start_value',''),
+        'provider1_bid_start_value': users[provider1].get('bid_start_value','')
+    }
+    if (users[provider].get('bid_changed_value','') != '' and artifact['provider_bid_start_value'] != ''):
+        if(float(users[provider].get('bid_changed_value','')) != 0):
+            artifact['provider_bid_difference'] = float(users[provider].get('bid_changed_value','')) - float(artifact['provider_bid_start_value'])
+    else:
+        artifact['provider_bid_difference'] = 0
+    if (users[provider1].get('bid_changed_value','') != '' and artifact['provider1_bid_start_value'] != ''):
+        if(float(users[provider1].get('bid_changed_value','')) != 0):
+            artifact['provider1_bid_difference'] = float(users[provider1].get('bid_changed_value','')) - float(artifact['provider1_bid_start_value'])
+    else:
+        artifact['provider1_bid_difference'] = 0
+
+    suite = BuiltIn().get_variable_value('${SUITE NAME}')
+    if ('openProcedure' in suite):
+        log_object_data(data=artifact, file_name='artifact', update=False, artifact=True)
+    else:
+        log_object_data(data=artifact, file_name='artifact', update=True, artifact=True)
+
+
+def load_tender_data(filepath):
+    artifact = load_data_from(filepath)
+    users = BuiltIn().get_variable_value('${USERS.users}')
+    tender_owner = BuiltIn().get_variable_value('${tender_owner}')
+    provider = BuiltIn().get_variable_value('${provider}')
+    provider1 = BuiltIn().get_variable_value('${provider1}')
+
+    provider_update = {
+        'access_token': artifact.get('provider_access_token', ''),
+        'bid_id': artifact.get('provider_bid_id', ''),
+        'bid_start_value': artifact.get('provider_bid_start_value', '')
+    }
+    provider1_update = {
+        'access_token': artifact.get('provider1_access_token', ''),
+        'bid_id': artifact.get('provider1_bid_id', ''),
+        'bid_start_value': artifact.get('provider1_bid_start_value', '')
+    }
+
+    users[provider].update(provider_update)
+    users[provider1].update(provider1_update)
+    users[tender_owner].access_token = artifact.get('access_token', '')
+
+    if (artifact['provider_bid_difference'] == 0):
+        users[provider].bid_changed_value = 0
+    else:
+        users[provider].bid_changed_value = artifact['provider_bid_start_value'] + artifact['provider_bid_difference']
+    if (artifact['provider1_bid_difference'] == 0):
+        users[provider1].bid_changed_value = 0
+    else:
+        users[provider1].bid_changed_value = artifact['provider1_bid_start_value'] + artifact['provider1_bid_difference']
+
+    mode = artifact.get('mode', '')
+    tender_data = {
+        'TENDER_UAID': artifact.get('tender_uaid', ''),
+        'LAST_MODIFICATION_DATE': artifact.get('last_modification_date', ''),
+        'LOT_ID': ''
+    }
+
+    BuiltIn().set_suite_variable("${MODE}", mode)
+    BuiltIn().set_suite_variable("${TENDER}", tender_data)
+    # Suite variable artifact - for reading bid_ids from artifact (not bidresponses)
+    BuiltIn().set_suite_variable("${ARTIFACT}", artifact)
+    log_object_data(data=artifact, file_name='artifact', update=True, artifact=True)
 
 
 def compare_CAV_groups(length, *items):

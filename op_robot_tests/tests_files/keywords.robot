@@ -25,7 +25,7 @@ Test Suite Setup
 
 Test Suite Teardown
   Close all browsers
-  Run Keyword And Ignore Error  Створити артефакт
+  create_artifact
 
 
 Set Suite Variable With Default Value
@@ -161,41 +161,6 @@ Get Broker Property By Username
   Run Keyword And Return  Get Broker Property  ${broker_name}  ${property}
 
 
-Створити артефакт
-  ${artifact}=  Create Dictionary
-  ...      api_version=${api_version}
-  ...      tender_uaid=${TENDER['TENDER_UAID']}
-  ...      last_modification_date=${TENDER['LAST_MODIFICATION_DATE']}
-  ...      mode=${MODE}
-  Run Keyword And Ignore Error  Set To Dictionary  ${artifact}
-  ...          tender_owner=${USERS.users['${tender_owner}'].broker}
-  ...          access_token=${USERS.users['${tender_owner}'].access_token}
-  ...          tender_id=${USERS.users['${tender_owner}'].tender_data.data.id}
-  Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  tender_owner_access_token=${USERS.users['${tender_owner}'].access_token}
-  Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider_access_token=${USERS.users['${provider}'].access_token}
-  Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider1_access_token=${USERS.users['${provider1}'].access_token}
-  Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider_bid_id=${USERS.users['${provider}'].bid_id}
-  Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider1_bid_id=${USERS.users['${provider1}'].bid_id}
-  Log   ${artifact}
-  log_object_data  ${artifact}  file_name=artifact  update=${True}  artifact=${True}
-
-
-Завантажити дані про тендер
-  ${file_path}=  Get Variable Value  ${ARTIFACT_FILE}  artifact.yaml
-  ${ARTIFACT}=  load_data_from  ${file_path}
-  Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token=${ARTIFACT.access_token}
-  ${TENDER}=  Create Dictionary  TENDER_UAID=${ARTIFACT.tender_uaid}  LAST_MODIFICATION_DATE=${ARTIFACT.last_modification_date}  LOT_ID=${Empty}
-  ${MODE}=  Get Variable Value  ${MODE}  ${ARTIFACT.mode}
-  Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token=${ARTIFACT.tender_owner_access_token}
-  Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider}']}  access_token=${ARTIFACT.provider_access_token}
-  Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider1}']}  access_token=${ARTIFACT.provider1_access_token}
-  Set Suite Variable  ${MODE}
-  Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider}']}  bid_id=${ARTIFACT.provider_bid_id}
-  Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider1}']}  bid_id=${ARTIFACT.provider1_bid_id}
-  Set Suite Variable  ${TENDER}
-  log_object_data  ${ARTIFACT}  file_name=artifact  update=${True}  artifact=${True}
-
-
 Підготувати дані для створення тендера
   [Arguments]  ${tender_parameters}
   ${period_intervals}=  compute_intrs  ${BROKERS}  ${used_brokers}
@@ -216,6 +181,7 @@ Get Broker Property By Username
 Підготувати дані для створення нецінового показника
   ${reply}=  test_feature_data
   [Return]  ${reply}
+
 
 Підготувати дані для подання вимоги
   ${claim}=  test_claim_data
@@ -403,6 +369,12 @@ Log differences between dicts
   [Arguments]  ${username}  ${tender_uaid}  ${left}  ${field}  ${object_id}=${Empty}
   ${right}=  Отримати дані із тендера  ${username}  ${tender_uaid}  ${field}  ${object_id}
   Порівняти об'єкти  ${left}  ${right}
+
+
+Звірити відображення ставки учасника
+  [Arguments]  ${username}  ${tender_uaid}  ${bid_index}
+  ${left}=  get_current_bid_value  artifact.yaml  ${bid_index}
+  Звірити поле тендера із значенням  ${username}  ${tender_uaid}  ${left}  bids[${bid_index}]['value']['amount']
 
 
 Звірити значення поля серед усіх документів тендера
