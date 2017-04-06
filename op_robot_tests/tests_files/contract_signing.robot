@@ -1,5 +1,6 @@
 *** Settings ***
 Resource        keywords.robot
+Resource        base_keywords.robot
 Resource        resource.robot
 Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
@@ -66,8 +67,7 @@ Suite Teardown  Test Suite Teardown
   ...  ${USERS.users['${viewer}'].broker}
   ...  contract_sign_view
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Run As  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
-  Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}  active  contracts[-1].status
+  Звірити статус підписаної угоди для користувача ${viewer}
 
 
 Відображення статусу завершення лоту
