@@ -14,12 +14,15 @@
 -i modify_auction_value
 -i modify_auction_step
 -i modify_auction_title_ua
+-i modify_auction_title_ru
+-i modify_auction_title_en
 -i modify_auction_guarantee
 -i modify_auction_periods
 -i tender_view_criteria
 -i modify_auction_criteria_ua
 -i modify_auction_procuringEntity
 -i modify_auction_description
+-i modify_dgfID
 -i modify_decisionDate
 -i modify_decisionID
 -i modify_tenderAttempts
