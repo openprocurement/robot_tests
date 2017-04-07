@@ -277,4 +277,28 @@ Kapitalist:
         provider1:      kapitalist_Provider1
         viewer:         kapitalist_Viewer
     timeout_on_wait: 80
-    
+pzo:
+    intervals:
+        default:
+            enquiry: [0, 20]
+            tender:  [0, 20]
+            accelerator: 1440
+        belowThreshold:
+            enquiry: [0, 25]
+            tender:  [0, 25]
+            accelerator: 180
+        openua:
+            tender:  [0, 25]
+            accelerator: 1440
+        openeu:
+            tender:  [0, 25]
+            accelerator: 1440
+    keywords_file: pzo
+    homepage: 'http://dev.pzo.com.ua/tenders'
+    syncpage: 'http://dev.pzo.com.ua/develop/sync?psw=369369'
+    roles:
+        provider:       pzo_Provider1
+        provider1:      pzo_Provider2
+        tender_owner:   pzo_Owner
+        viewer:         pzo_Viewer
+    timeout_on_wait: 1
