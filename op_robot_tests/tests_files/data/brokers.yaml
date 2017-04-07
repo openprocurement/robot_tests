@@ -112,7 +112,7 @@ PrivatMarket:
     intervals:
         default:
             enquiry: [0, 15]
-            tender:  [0, 20]
+            tender:  [0, 15]
     keywords_file: privatmarket
     roles:
         provider:       PrivatMarket_Provider
