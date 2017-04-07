@@ -91,7 +91,7 @@ class OP_Provider(BaseProvider):
                                     self.random_int(1000, 99999))
     @classmethod
     def dgfDecisionID(self):
-        return "{}/{}".format(2233, self.random_int(1, 9))
+        return "{}{}/{}".format(223, self.random_int(1,9), self.random_int(1, 9))
 
     @classmethod
     def description(self):

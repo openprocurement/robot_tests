@@ -28,6 +28,28 @@ def create_fake_sentence():
     return fake.sentence(nb_words=10, variable_nb_words=True)
 
 
+def create_fake_title(name):
+    if name == 'ua':
+        return fake.sentence(nb_words=3, variable_nb_words=True)
+    elif name == 'en':
+        return fake_en.sentence(nb_words=3, variable_nb_words=True)
+    elif name == 'ru':
+        return fake_ru.sentence(nb_words=3, variable_nb_words=True)
+
+
+def create_fake_description(name):
+    if name == 'ua':
+        return fake.sentence(nb_words=10, variable_nb_words=True)
+    elif name == 'en':
+        return fake_en.sentence(nb_words=10, variable_nb_words=True)
+    elif name == 'ru':
+        return fake_ru.sentence(nb_words=10, variable_nb_words=True)
+
+
+def create_fake_dgfID():
+    return fake.dgfID()
+
+
 def create_fake_dgfDecisionDate():
     return get_now().strftime('%Y-%m-%d')
 
@@ -37,7 +59,7 @@ def create_fake_dgfDecisionID():
 
 
 def create_fake_tenderAttempts():
-   return fake.random_int(min=1, max=4)
+    return fake.random_int(min=1, max=3)
 
 
 def create_fake_amount():
