@@ -59,7 +59,7 @@ def create_fake_dgfDecisionID():
 
 
 def create_fake_tenderAttempts():
-   return fake.random_int(min=1, max=4)
+    return fake.random_int(min=1, max=3)
 
 
 def create_fake_amount():
