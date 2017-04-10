@@ -75,6 +75,66 @@ users:
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
+    u25h8_Owner:
+        broker:   b25h8
+        homepage: "http://25h8.byustudio.in.ua"
+        login:    prozorroytenderowner@gmail.com
+        password: 123456
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    u25h8_Provider:
+        broker:   b25h8
+        homepage: "http://25h8.byustudio.in.ua"
+        login:    prozorroyprovider1@gmail.com
+        password: 123456
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    u25h8_Provider1:
+        broker:   b25h8
+        homepage: "http://25h8.byustudio.in.ua"
+        login:    prozorroyprovider2@gmail.com
+        password: 123456
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    u25h8_Viewer:
+        broker:   b25h8
+        homepage: "http://25h8.byustudio.in.ua"
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    tenderonline_Owner:
+        broker:   tenderonline
+        homepage: "http://tender-online.com.ua"
+        login:    prozorroytenderowner@gmail.com
+        password: 123456
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    tenderonline_Provider:
+        broker:   tenderonline
+        homepage: "http://tender-online.com.ua"
+        login:    prozorroyprovider1@gmail.com
+        password: 123456
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    tenderonline_Provider1:
+        broker:   tenderonline
+        homepage: "http://tender-online.com.ua"
+        login:    prozorroyprovider2@gmail.com
+        password: 123456
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    tenderonline_Viewer:
+        broker:   tenderonline
+        homepage: "http://tender-online.com.ua"
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
     ztv_Owner:
         broker:   ztv
         homepage: "http://ztv.byustudio.in.ua/web/"
