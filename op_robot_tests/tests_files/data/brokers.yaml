@@ -89,6 +89,60 @@ DZO:
         provider1:      DZO_Provider1
         viewer:         DZO_Viewer
     timeout_on_wait: 300
+b25h8:
+    intervals:
+        default:
+            accelerator: 720
+            enquiry: [0, 50]
+            tender:  [0, 15]
+        belowThreshold:
+            accelerator: 60
+            enquiry: [0, 60]
+            tender:  [0, 15]
+        openua:
+            accelerator: 720
+            tender:  [0, 70]
+        openeu:
+            accelerator: 720
+            tender:  [0, 61]
+        negotiation:
+            accelerator: 720
+            enquiry: [0, 20]
+            tender:  [0, 20]
+    keywords_file: 25h8
+    roles:
+        tender_owner:   u25h8_Owner
+        provider:       u25h8_Provider
+        provider1:      u25h8_Provider1
+        viewer:         u25h8_Viewer
+    timeout_on_wait: 180
+tenderonline:
+    intervals:
+        default:
+            accelerator: 720
+            enquiry: [0, 50]
+            tender:  [0, 15]
+        belowThreshold:
+            accelerator: 60
+            enquiry: [0, 60]
+            tender:  [0, 15]
+        openua:
+            accelerator: 720
+            tender:  [0, 70]
+        openeu:
+            accelerator: 720
+            tender:  [0, 62]
+        negotiation:
+            accelerator: 720
+            enquiry: [0, 20]
+            tender:  [0, 20]
+    keywords_file: tenderonline
+    roles:
+        tender_owner:   tenderonline_Owner
+        provider:       tenderonline_Provider
+        provider1:      tenderonline_Provider1
+        viewer:         tenderonline_Viewer
+    timeout_on_wait: 180
 ztv:
     intervals:
         default:
