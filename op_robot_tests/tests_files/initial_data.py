@@ -59,7 +59,7 @@ def create_fake_dgfDecisionID():
 
 
 def create_fake_tenderAttempts():
-    return fake.random_int(min=1, max=3)
+    return fake.random_int(min=1, max=4)
 
 
 def create_fake_amount():
@@ -500,7 +500,7 @@ def test_tender_data_dgf_financial(params):
     data['dgfID'] = fake.dgfID()
     data['dgfDecisionID'] = fake.dgfDecisionID()
     data['dgfDecisionDate'] = (get_now() + timedelta(days=-2)).strftime('%Y-%m-%d')
-    data['tenderAttempts'] = fake.random_int(min=1, max=4)
+    data['tenderAttempts'] = fake.random_int(min=1, max=3)
     del data["procuringEntity"]
 
     for i in range(params['number_of_items']):
