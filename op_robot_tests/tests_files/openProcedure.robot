@@ -283,6 +283,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_auction_title_ua  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_title}=  create_fake_title  ua
   Можливість змінити поле title тендера на ${new_title}
 
@@ -293,6 +294,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_auction_title_ru  level3
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_title}=  create_fake_title  ru
   Можливість змінити поле title_ru тендера на ${new_title}
 
@@ -303,6 +305,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_auction_title_en  level3
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_title}=  create_fake_title  en
   Можливість змінити поле title_en тендера на ${new_title}
 
@@ -313,6 +316,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_auction_description  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_description}=  create_fake_description  ua
   Можливість змінити поле description тендера на ${new_description}
 
@@ -323,6 +327,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_auction_description  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_description}=  create_fake_description  ru
   Можливість змінити поле description_ru тендера на ${new_description}
 
@@ -333,6 +338,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_auction_description  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_description}=  create_fake_description  en
   Можливість змінити поле description_en тендера на ${new_description}
 
@@ -417,6 +423,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_dgfID
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_date}=  create_fake_dgfID
   Можливість змінити поле dgfID тендера на ${new_date}
 
@@ -427,6 +434,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_decisionDate
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_date}=  create_fake_dgfDecisionDate
   Можливість змінити поле dgfDecisionDate тендера на ${new_date}
 
@@ -437,6 +445,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_decisionID
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_id}=  create_fake_dgfDecisionID
   Можливість змінити поле dgfDecisionID тендера на ${new_id}
 
@@ -447,6 +456,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_tenderAttempts
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість змінити поле tenderAttempts тендера на 4
 
 
