@@ -263,13 +263,13 @@ alltenders:
 Kapitalist:
     intervals:
         default:
-            enquiry: [0, 2]
-            tender:  [0, 2]
+            enquiry: [0, 15]
+            tender:  [0, 20]
+            accelerator: 1440
     keywords_file: kapitalist
     roles:
         tender_owner:   kapitalist_Owner
         provider:       kapitalist_Provider
         provider1:      kapitalist_Provider1
         viewer:         kapitalist_Viewer
-    timeout_on_wait: 80
-    
+    timeout_on_wait: 150
