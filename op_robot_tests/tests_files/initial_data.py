@@ -463,7 +463,7 @@ def test_tender_data_dgf_other(params):
     data['dgfID'] = fake.dgfID()
     data['dgfDecisionID'] = fake.dgfDecisionID()
     data['dgfDecisionDate'] =  (get_now() + timedelta(days=-2)).strftime('%Y-%m-%d')
-    data['tenderAttempts'] =  fake.random_int(min=1, max=4)
+    data['tenderAttempts'] =  fake.random_int(min=1, max=3)
     del data["procuringEntity"]
 
     for i in range(params['number_of_items']):
