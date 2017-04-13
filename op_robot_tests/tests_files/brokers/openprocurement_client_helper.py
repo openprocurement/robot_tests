@@ -29,7 +29,6 @@ def prepare_api_wrapper(key, host_url, api_version):
 
 
 class StableEDRClient(EDRClient):
-
     @retry(stop_max_attempt_number=100, wait_random_min=500,
            wait_random_max=4000, retry_on_exception=retry_if_request_failed)
     def request(self, *args, **kwargs):

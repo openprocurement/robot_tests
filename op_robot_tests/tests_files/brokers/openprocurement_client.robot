@@ -18,7 +18,7 @@ Library  openprocurement_client_helper.py
 
 Підготувати клієнт для користувача
   [Arguments]  ${username}
-  [Documentation]  Відкрити браузер, створити об’єкт api wrapper, тощо
+  [Documentation]  Відкрити браузер, створити об’єкт api wrapper, створити об’єкт edr_wrapper, тощо
   Log  ${API_HOST_URL}
   Log  ${API_VERSION}
   ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${API_HOST_URL}  ${API_VERSION}
@@ -26,17 +26,12 @@ Library  openprocurement_client_helper.py
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${EMPTY}
   ${id_map}=  Create Dictionary
   Set To Dictionary  ${USERS.users['${username}']}  id_map=${id_map}
-  Log Variables
-
-
-Підготувати ЄДР клієнт для користувача
-  [Arguments]  ${username}
-  [Documentation]  Налаштувати з'єднання до ЄДР проксі
   Log  ${EDR_HOST_URL}
   Log  ${EDR_USERNAME}
   Log  ${EDR_PASSWORD}
   ${edr_wrapper}=  prepare edr wrapper  ${EDR_HOST_URL}  ${EDR_USERNAME}  ${EDR_PASSWORD}
   Set To Dictionary  ${USERS.users['${username}']}  edr_client=${edr_wrapper}
+  Log Variables
 
 
 Завантажити документ
@@ -713,6 +708,8 @@ Library  openprocurement_client_helper.py
 
 Подати цінову пропозицію
   [Arguments]  ${username}  ${tender_uaid}  ${bid}  ${lots_ids}=${None}  ${features_ids}=${None}
+  ${verify_response}=  Run As  ${username}  Перевірити учасника за ЕДРПОУ  ${bid.data.tenderers[0].identifier.id}
+  Log  ${verify_response}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${lots_ids}=  Run Keyword IF  ${lots_ids}  Set Variable  ${lots_ids}
   ...     ELSE  Create List

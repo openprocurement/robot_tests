@@ -918,8 +918,6 @@ Resource           resource.robot
 
 Можливість подати цінову пропозицію користувачем ${username}
   ${bid}=  Підготувати дані для подання пропозиції
-  ${verify_response}=  Run As  ${username}  Перевірити учасника за ЕДРПОУ  ${bid.data.tenderers[0].identifier.id}
-  Log  ${verify_response}
   ${bidresponses}=  Create Dictionary  bid=${bid}
   Set To Dictionary  ${USERS.users['${username}']}  bidresponses=${bidresponses}
   ${lots}=  Get Variable Value  ${USERS.users['${tender_owner}'].initial_data.data.lots}  ${None}
