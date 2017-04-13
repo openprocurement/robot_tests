@@ -212,10 +212,10 @@ ${award_index}      ${0}
 ##############################################################################################
 
 Можливість дочекатися перевірки переможців по ЄДРПОУ
-  [Tags]  ${USERS.users['${viewer}'].broker}: Перевірка користувача по ЕДРПОУ
-  ...  tender_owner
-  ...  ${USERS.users['${tender_owner}'].broker}
-  ...  qualifications_check_by_edrpou
+  [Tags]   ${USERS.users['${viewer}'].broker}: Перевірка користувача по ЄДРПОУ
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      qualifications_check_by_edrpou
   Run as  ${tender_owner}  Дочекатися перевірки кваліфікацій  ${TENDER['TENDER_UAID']}
 
 
