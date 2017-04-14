@@ -89,6 +89,60 @@ DZO:
         provider1:      DZO_Provider1
         viewer:         DZO_Viewer
     timeout_on_wait: 300
+b25h8:
+    intervals:
+        default:
+            accelerator: 720
+            enquiry: [0, 50]
+            tender:  [0, 15]
+        belowThreshold:
+            accelerator: 60
+            enquiry: [0, 60]
+            tender:  [0, 15]
+        openua:
+            accelerator: 720
+            tender:  [0, 70]
+        openeu:
+            accelerator: 720
+            tender:  [0, 61]
+        negotiation:
+            accelerator: 720
+            enquiry: [0, 20]
+            tender:  [0, 20]
+    keywords_file: 25h8
+    roles:
+        tender_owner:   u25h8_Owner
+        provider:       u25h8_Provider
+        provider1:      u25h8_Provider1
+        viewer:         u25h8_Viewer
+    timeout_on_wait: 180
+tenderonline:
+    intervals:
+        default:
+            accelerator: 720
+            enquiry: [0, 50]
+            tender:  [0, 15]
+        belowThreshold:
+            accelerator: 60
+            enquiry: [0, 60]
+            tender:  [0, 15]
+        openua:
+            accelerator: 720
+            tender:  [0, 70]
+        openeu:
+            accelerator: 720
+            tender:  [0, 62]
+        negotiation:
+            accelerator: 720
+            enquiry: [0, 20]
+            tender:  [0, 20]
+    keywords_file: tenderonline
+    roles:
+        tender_owner:   tenderonline_Owner
+        provider:       tenderonline_Provider
+        provider1:      tenderonline_Provider1
+        viewer:         tenderonline_Viewer
+    timeout_on_wait: 180
 ztv:
     intervals:
         default:
@@ -111,12 +165,12 @@ Newtend:
 PrivatMarket:
     intervals:
         default:
-            enquiry: [0, 15]
-            tender:  [0, 15]
+            enquiry: [0, 18]
+            tender:  [0, 18]
     keywords_file: privatmarket
     roles:
         provider:       PrivatMarket_Provider
-        provider1:      PrivatMarket_Provider1
+        tender_owner:   PrivatMarket_Owner
         viewer:         PrivatMarket_Viewer
     timeout_on_wait: 30
 Prom:
@@ -244,14 +298,19 @@ APStender:
 alltenders:
     intervals:
         default:
+            accelerator: 1440
+            enquiry: [0, 15]
+            tender:  [0, 20]
+        belowThreshold:
+            accelerator: 1440
             enquiry: [0, 10]
-            tender:  [0, 30]
+            tender:  [0, 15]
+        openua:
+            accelerator: 1440
+            tender:  [0, 20]
         openeu:
-            accelerator: 3600
-            tender:  [1, 14]
-        single:
-            enquiry: [0, 7]
-            tender:  [0, 9]
+            accelerator: 1440
+            tender:  [0, 30]
     keywords_file: alltenders
     homepage: 'https://prozorro.shadowy.eu/?mode=test&notification=off'
     roles:
@@ -259,7 +318,7 @@ alltenders:
         provider1:      alltenders_Provider2
         tender_owner:   alltenders_Owner
         viewer:         alltenders_Viewer
-    timeout_on_wait: 70
+    timeout_on_wait: 65
 Kapitalist:
     intervals:
         default:
@@ -272,4 +331,33 @@ Kapitalist:
         provider:       kapitalist_Provider
         provider1:      kapitalist_Provider1
         viewer:         kapitalist_Viewer
+<<<<<<< HEAD
     timeout_on_wait: 150
+=======
+    timeout_on_wait: 80
+pzo:
+    intervals:
+        default:
+            enquiry: [0, 20]
+            tender:  [0, 20]
+            accelerator: 1440
+        belowThreshold:
+            enquiry: [0, 25]
+            tender:  [0, 25]
+            accelerator: 180
+        openua:
+            tender:  [0, 25]
+            accelerator: 1440
+        openeu:
+            tender:  [0, 25]
+            accelerator: 1440
+    keywords_file: pzo
+    homepage: 'http://dev.pzo.com.ua/tenders'
+    syncpage: 'http://dev.pzo.com.ua/develop/sync?psw=369369'
+    roles:
+        provider:       pzo_Provider1
+        provider1:      pzo_Provider2
+        tender_owner:   pzo_Owner
+        viewer:         pzo_Viewer
+    timeout_on_wait: 1
+>>>>>>> 08d042d91ee8455e4b1d634d4f148f579b03dc18

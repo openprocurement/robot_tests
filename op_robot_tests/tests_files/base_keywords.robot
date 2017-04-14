@@ -25,6 +25,17 @@ Resource           resource.robot
   Set To Dictionary  ${TENDER}  TENDER_UAID=${TENDER_UAID}
 
 
+Можливість перевірити завантаження документів через Document Service
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
+  \  ${status}=   Run Keyword And Return Status  List Should Contain Value  ${USERS.users['${username}'].tender_data.data}  documents
+  \  Run Keyword If  ${status}   Exit For Loop
+  ${documents}=  Get From Dictionary  ${USERS.users['${username}'].tender_data.data}  documents
+  ${doc_number}=  Get Length  ${documents}
+  :FOR  ${doc_index}  IN RANGE  ${doc_number}
+  \  ${document_url}=  Get From Dictionary  ${USERS.users['${username}'].tender_data.data.documents[${doc_index}]}  url
+  \  Should Match Regexp   ${document_url}   ^https?:\/\/public.docs(?:-sandbox)?\.openprocurement\.org\/get\/([0-9A-Fa-f]{32})   msg=Not a Document Service Upload
+
+
 Можливість знайти тендер по ідентифікатору для усіх користувачів
   :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${provider1}  ${viewer}
   \  Можливість знайти тендер по ідентифікатору для користувача ${username}

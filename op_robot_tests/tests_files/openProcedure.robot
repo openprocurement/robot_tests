@@ -1832,6 +1832,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      auction_url
+  ...      critical
   [Setup]  Дочекатись дати початку періоду аукціону  ${viewer}  ${TENDER['TENDER_UAID']}
   Можливість отримати посилання на аукціон для глядача
 
@@ -1841,6 +1842,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      auction_url
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   Можливість отримати посилання на аукціон для учасника ${provider}
 
@@ -1850,6 +1852,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      auction_url
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider1}
   Можливість отримати посилання на аукціон для учасника ${provider1}
 
@@ -1995,14 +1998,7 @@ ${ITEM_MEAT}        ${True}
 
 Перевірка завантаження документів до тендера через Document Service
   [Tags]   ${USERS.users['${viewer}'].broker}: Document Service
-  ...      viewer
-  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      viewer  tender_owner
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      document_service
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  ${documents}=  Get From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data}  documents
-  ${doc_number}=  Get Length  ${documents}
-  Log  ${documents}
-  :FOR  ${doc_index}  IN RANGE  ${doc_number}
-  \  ${document_url}=  Get From Dictionary  ${documents[${doc_index}]}  url
-  \  Should Match Regexp   ${document_url}   ^https?:\/\/public.docs(?:-sandbox)?\.openprocurement\.org\/get\/([0-9A-Fa-f]{32})   msg=Not a Document Service Upload
-  #  Url pattern may differ, because document service is being developed
+  Можливість перевірити завантаження документів через Document Service
