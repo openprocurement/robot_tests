@@ -331,9 +331,6 @@ Kapitalist:
         provider:       kapitalist_Provider
         provider1:      kapitalist_Provider1
         viewer:         kapitalist_Viewer
-<<<<<<< HEAD
-    timeout_on_wait: 150
-=======
     timeout_on_wait: 80
 pzo:
     intervals:

@@ -536,9 +536,6 @@ users:
         homepage: "https://prozorro.kapital-ist.kiev.ua/"
         browser:  chrome
         position: [0, 0]
-<<<<<<< HEAD
-        size:     [1366, 800]
-=======
         size:     [1366, 800]
     pzo_Owner:
         broker:   pzo
@@ -572,4 +569,3 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1000, 500]
->>>>>>> 08d042d91ee8455e4b1d634d4f148f579b03dc18
