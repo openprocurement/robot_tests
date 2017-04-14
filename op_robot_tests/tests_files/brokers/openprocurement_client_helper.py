@@ -35,8 +35,8 @@ class StableEDRClient(EDRClient):
         return super(StableEDRClient, self).request(*args, **kwargs)
 
 
-def prepare_edr_wrapper(host_url, username, password=''):
-    return StableEDRClient(host_url, username, password)
+def prepare_edr_wrapper(host_url, api_version, username, password):
+    return StableEDRClient(host_url, api_version, username, password)
 
 
 def get_complaint_internal_id(tender, complaintID):

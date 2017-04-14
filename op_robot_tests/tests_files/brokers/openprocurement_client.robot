@@ -27,11 +27,9 @@ Library  openprocurement_client_helper.py
   ${id_map}=  Create Dictionary
   Set To Dictionary  ${USERS.users['${username}']}  id_map=${id_map}
   Log  ${EDR_HOST_URL}
-  Log  ${EDR_USERNAME}
-  Log  ${EDR_PASSWORD}
-  ${edr_wrapper}=  prepare edr wrapper  ${EDR_HOST_URL}  ${EDR_USERNAME}  ${EDR_PASSWORD}
+  Log  ${EDR_VERSION}
+  ${edr_wrapper}=  prepare_edr_wrapper  ${EDR_HOST_URL}  ${EDR_VERSION}  ${USERS.users['${username}'].auth_edr[0]}  ${USERS.users['${username}'].auth_edr[1]}
   Set To Dictionary  ${USERS.users['${username}']}  edr_client=${edr_wrapper}
-  Log Variables
 
 
 Завантажити документ
@@ -700,7 +698,7 @@ Library  openprocurement_client_helper.py
 #             Bid operations
 ##############################################################################
 
-Перевірити учасника за ЕДРПОУ
+Перевірити учасника за ЄДРПОУ
   [Arguments]  ${username}  ${edrpou}
   ${reply}=  Call Method  ${USERS.users['${username}'].edr_client}  verify_member  ${edrpou}
   Log  ${reply}
@@ -708,7 +706,7 @@ Library  openprocurement_client_helper.py
 
 Подати цінову пропозицію
   [Arguments]  ${username}  ${tender_uaid}  ${bid}  ${lots_ids}=${None}  ${features_ids}=${None}
-  ${verify_response}=  Run As  ${username}  Перевірити учасника за ЕДРПОУ  ${bid.data.tenderers[0].identifier.id}
+  ${verify_response}=  Run As  ${username}  Перевірити учасника за ЄДРПОУ  ${bid.data.tenderers[0].identifier.id}
   Log  ${verify_response}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${lots_ids}=  Run Keyword IF  ${lots_ids}  Set Variable  ${lots_ids}
