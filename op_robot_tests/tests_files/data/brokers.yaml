@@ -357,4 +357,3 @@ pzo:
         tender_owner:   pzo_Owner
         viewer:         pzo_Viewer
     timeout_on_wait: 1
->>>>>>> 08d042d91ee8455e4b1d634d4f148f579b03dc18
