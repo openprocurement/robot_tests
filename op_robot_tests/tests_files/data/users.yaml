@@ -509,7 +509,7 @@ users:
         size:     [1210, 800]
     kapitalist_Owner:
         broker:   Kapitalist
-        homepage: "http://185.9.41.105/Kapital-Ist/"
+        homepage: "https://prozorro.kapital-ist.kiev.ua/"
         login:    qa_test@binka.me
         password: Password1-
         browser:  chrome
@@ -517,7 +517,7 @@ users:
         size:     [1366, 800]
     kapitalist_Provider:
         broker:   Kapitalist
-        homepage: "http://185.9.41.105/Kapital-Ist/"
+        homepage: "https://prozorro.kapital-ist.kiev.ua/"
         login:    provider_user@binka.me
         password: Password1-
         browser:  chrome
@@ -525,7 +525,7 @@ users:
         size:     [1366, 800]
     kapitalist_Provider1:
         broker:   Kapitalist
-        homepage: "http://185.9.41.105/Kapital-Ist/"
+        homepage: "https://prozorro.kapital-ist.kiev.ua/"
         login:    provider1_user@binka.me
         password: Password1-
         browser:  chrome
@@ -533,7 +533,7 @@ users:
         size:     [1366, 800]
     kapitalist_Viewer:
         broker:   Kapitalist
-        homepage: "http://185.9.41.105/Kapital-Ist/"
+        homepage: "https://prozorro.kapital-ist.kiev.ua/"
         browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
