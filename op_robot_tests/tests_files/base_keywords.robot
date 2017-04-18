@@ -1032,3 +1032,47 @@ Resource           resource.robot
   ...      ${TENDER['TENDER_UAID']}
   ...      ${0}
   Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.contracts[0]}  status
+
+##############################################################################################
+#             Pre-Qualifications
+##############################################################################################
+
+Дочекатися перевірки прекваліфікацій
+  [Documentation]
+  ...       [Arguments] Username, tender uaid
+  ...       [Description]  Waint until edr bridge check qualifications
+  ...       [Return]  Nothing
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  :FOR  ${qualification}  IN  @{tender.data.qualifications}
+  \   ${res}=  Wait until keyword succeeds
+  \   ...      10 min 15 sec
+  \   ...      30 sec
+  \   ...      Перевірити документ прекваліфікіції ${qualification.id} для користувача ${username} в тендері ${tender_uaid}
+
+
+Перевірити документ прекваліфікіції ${qualification_id} для користувача ${username} в тендері ${tender_uaid}
+  ${document}=  openprocurement_client.Отримати останній документ прекваліфікіції  ${username}  ${tender_uaid}  ${qualification_id}
+  Порівняти об'єкти  ${document['documentType']}  registerExtract
+
+##############################################################################################
+#             Qualifications
+##############################################################################################
+
+Дочекатися перевірки кваліфікацій
+  [Documentation]
+  ...       [Arguments] Username, tender uaid
+  ...       [Description]  Waint until edr bridge create check award
+  ...       [Return]  Nothing
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  :FOR  ${award}  IN  @{tender.data.awards}
+  \   Wait until keyword succeeds
+  \   ...      10 min 15 sec
+  \   ...      30 sec
+  \   ...      Перевірити документ кваліфікіції ${qualification.id} для користувача ${username} в тендері ${tender_uaid}
+
+
+Перевірити документ кваліфікіції ${qualification.id} для користувача ${username} в тендері ${tender_uaid}
+  ${document}=  openprocurement_client.Отримати останній документ кваліфікації  ${username}  ${tender_uaid}  ${award.id}
+  Порівняти об'єкти  ${document['documentType']}  registerExtract

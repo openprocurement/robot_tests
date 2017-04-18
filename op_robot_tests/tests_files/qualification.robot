@@ -211,6 +211,14 @@ ${award_index}      ${0}
 #             QUALIFICATION
 ##############################################################################################
 
+Можливість дочекатися перевірки переможців по ЄДРПОУ
+  [Tags]   ${USERS.users['${viewer}'].broker}: Перевірка користувача по ЄДРПОУ
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      qualifications_check_by_edrpou
+  Run as  ${tender_owner}  Дочекатися перевірки кваліфікацій  ${TENDER['TENDER_UAID']}
+
+
 Можливість завантажити документ рішення кваліфікаційної комісії для підтвердження постачальника
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner

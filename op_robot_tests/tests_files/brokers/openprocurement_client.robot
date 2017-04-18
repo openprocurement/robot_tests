@@ -806,6 +806,53 @@ Library  openprocurement_client_helper.py
 #             Qualification operations
 ##############################################################################
 
+
+Отримати список документів по прекваліфікації
+  [Documentation]
+  ...       [Arguments] Username, tender uaid, qualification id
+  ...       [Description] Return all qualification documents by id
+  ...       [Return] Reply from API
+  [Arguments]  ${username}  ${tender_uaid}  ${qualification_id}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${doc_list}=  Call Method  ${USERS.users['${username}'].client}  get_qualification_documents  ${tender}  ${qualification_id}
+  Log  ${doc_list}
+  [Return]  ${doc_list}
+
+
+Отримати список документів по кваліфікації
+  [Documentation]
+  ...       [Arguments] Username, tender uaid, award id
+  ...       [Description] Return all awards documents by id
+  ...       [Return] Reply from API
+  [Arguments]  ${username}  ${tender_uaid}  ${award_id}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${doc_list}=  Call Method  ${USERS.users['${username}'].client}  get_awards_documents  ${tender}  ${award_id}
+  Log  ${doc_list}
+  [Return]  ${doc_list}
+
+
+Отримати останній документ прекваліфікіції
+  [Documentation]
+  ...       [Arguments]  Username, tender uaid, qualification id
+  ...       [Description] Check documentType in last pre-quailfication document
+  ...       [Return] Last document from pre-quailfication
+  [Arguments]  ${username}  ${tender_uaid}  ${qualification_id}
+  ${docs}=  Run As  ${username}  Отримати список документів по прекваліфікації  ${tender_uaid}  ${qualification_id}
+  Log  ${docs}
+  [Return]  ${docs['data'][-1]}
+
+
+Отримати останній документ кваліфікації
+  [Documentation]
+  ...       [Arguments]  Username, tender uaid, award id
+  ...       [Description] Check documentType in last award document
+  ...       [Return] Last document for
+  [Arguments]  ${username}  ${tender_uaid}  ${award_id}
+  ${docs}=  Run As  ${username}  Отримати список документів по кваліфікації  ${tender_uaid}  ${award_id}
+  Log  ${docs}
+  [Return]  ${docs['data'][-1]}
+
+
 Завантажити документ рішення кваліфікаційної комісії
   [Documentation]
   ...      [Arguments] Username, tender uaid, qualification number and document to upload
