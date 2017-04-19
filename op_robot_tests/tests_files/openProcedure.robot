@@ -1658,7 +1658,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualifications_check_by_edrpou
   [Setup]  Дочекатись дати початку періоду прекваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
-  Run as  ${tender_owner}  Дочекатися перевірки прекваліфікацій  ${TENDER['TENDER_UAID']}
+  Дочекатися перевірки прекваліфікацій  ${tender_owner}  ${TENDER['TENDER_UAID']}
 
 
 Можливість підтвердити першу пропозицію кваліфікації
