@@ -226,6 +226,7 @@ uatenders:
     keywords_file: uatenders
     roles:
         provider:       uatenders_Provider
+        provider1:      uatenders_Provider1
         tender_owner:   uatenders_Owner
         viewer:         uatenders_Viewer
     timeout_on_wait: 60
