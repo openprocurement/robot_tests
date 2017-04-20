@@ -1070,9 +1070,9 @@ Resource           resource.robot
   \   Wait until keyword succeeds
   \   ...      10 min 15 sec
   \   ...      30 sec
-  \   ...      Перевірити документ кваліфікіції ${qualification.id} для користувача ${username} в тендері ${tender_uaid}
+  \   ...      Перевірити документ кваліфікіції ${award.id} для користувача ${username} в тендері ${tender_uaid}
 
 
-Перевірити документ кваліфікіції ${qualification.id} для користувача ${username} в тендері ${tender_uaid}
-  ${document}=  openprocurement_client.Отримати останній документ кваліфікації  ${username}  ${tender_uaid}  ${award.id}
+Перевірити документ кваліфікіції ${award_id} для користувача ${username} в тендері ${tender_uaid}
+  ${document}=  openprocurement_client.Отримати останній документ кваліфікації  ${username}  ${tender_uaid}  ${award_id}
   Порівняти об'єкти  ${document['documentType']}  registerExtract

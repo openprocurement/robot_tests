@@ -51,10 +51,11 @@ Quinta:
         openua:
             tender:  [1, 30]
         openeu:
-            tender:  [1, 35]
+            accelerator: 14400
+            tender:  [1, 12]
         open_competitive_dialogue:
-            accelerator: 1440
-            tender:  [0, 30]
+            accelerator: 14400
+            tender:  [0, 10]
     keywords_file: openprocurement_client
     roles:
         provider:       Tender_User
