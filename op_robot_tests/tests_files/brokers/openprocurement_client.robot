@@ -499,8 +499,7 @@ Library  openprocurement_client_helper.py
   ...      ${award_index}
   ...      ${document}
 
-  ${status}=  Set variable if  'open' in '${MODE}'  pending  claim
-  ${data}=  Create Dictionary  status=${status}
+  ${data}=  Create Dictionary  status=claim
   ${confirmation_data}=  Create Dictionary  data=${data}
   openprocurement_client.Подати вимогу про виправлення визначення переможця
   ...      ${username}
