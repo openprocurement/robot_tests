@@ -216,7 +216,7 @@ ${award_index}      ${0}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      qualifications_check_by_edrpou
-  Run as  ${tender_owner}  Дочекатися перевірки кваліфікацій  ${TENDER['TENDER_UAID']}
+  Дочекатися перевірки кваліфікацій  ${tender_owner}  ${TENDER['TENDER_UAID']}
 
 
 Можливість завантажити документ рішення кваліфікаційної комісії для підтвердження постачальника
