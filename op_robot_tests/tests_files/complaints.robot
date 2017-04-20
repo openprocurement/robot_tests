@@ -339,6 +339,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${provider}'].broker}
   ...  tender_complaint
   ...  critical
+  ...  below_complaint
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість створити вимогу про виправлення умов закупівлі із документацією
   Дочекатись синхронізації з майданчиком  ${tender_owner}
@@ -353,6 +354,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_complaint
   ...  non-critical
+  ...  below_complaint
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля status вимоги із pending для користувача ${viewer}
 
@@ -363,6 +365,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_complaint
   ...  non-critical
+  ...  below_complaint
   Звірити відображення поля satisfied вимоги із ${USERS.users['${provider}'].tender_claim_data.escalation.data.satisfied} для користувача ${viewer}
 
 
@@ -372,6 +375,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${provider}'].broker}
   ...  tender_complaint
   ...  critical
+  ...  below_complaint
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість скасувати вимогу про виправлення умов закупівлі
@@ -383,6 +387,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_complaint
   ...  non-critical
+  ...  below_complaint
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля status вимоги із cancelled для користувача ${viewer}
 
@@ -393,6 +398,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_complaint
   ...  non-critical
+  ...  below_complaint
   Звірити відображення поля cancellationReason вимоги із ${USERS.users['${provider}'].tender_claim_data.cancellation.data.cancellationReason} для користувача ${viewer}
 
 
@@ -402,6 +408,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${provider}'].broker}
   ...  lot_complaint
   ...  critical
+  ...  below_complaint
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість створити вимогу про виправлення умов ${lot_index} лоту із документацією
@@ -417,6 +424,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${provider}'].broker}
   ...  lot_complaint
   ...  critical
+  ...  below_complaint
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість скасувати вимогу про виправлення умов лоту
 
@@ -555,6 +563,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${provider}'].broker}
   ...  award_complaint
   ...  critical
+  ...  below_complaint
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість підтвердити задоволення вимоги про виправлення визначення ${award_index} переможця
@@ -566,6 +575,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_complaint
   ...  non-critical
+  ...  below_complaint
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля status вимоги про виправлення визначення ${award_index} переможця із resolved для користувача ${viewer}
 
@@ -576,6 +586,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_complaint
   ...  non-critical
+  ...  below_complaint
   Звірити відображення поля satisfied вимоги про виправлення визначення ${award_index} переможця із ${USERS.users['${provider}'].claim_data.claim_answer_confirm.data.satisfied} для користувача ${viewer}
 
 
@@ -657,7 +668,7 @@ ${award_index}      ${0}
   Звірити відображення поля status вимоги про виправлення визначення ${award_index} переможця із cancelled для користувача ${viewer}
 
 
-Можливість створити, подати, відповісти на вимогу про виправлення визначення переможця і перетворити її в скаргу
+Можливість створити чернетку вимоги про виправлення визначення переможця
   [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
@@ -665,10 +676,31 @@ ${award_index}      ${0}
   ...  critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість створити чернетку вимоги про виправлення визначення ${award_index} переможця
+
+
+Можливість подати і відповісти на вимогу про виправлення визначення переможця
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  award_complaint
+  ...  critical
+  ...  below_complaint
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість створити вимогу про виправлення визначення ${award_index} переможця із документацією
   Дочекатись синхронізації з майданчиком  ${tender_owner}
   Можливість відповісти на вимогу про виправлення визначення ${award_index} переможця
-  Дочекатись синхронізації з майданчиком  ${provider}
+
+
+Можливість подати скаргу про виправлення визначення переможця
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  award_complaint
+  ...  critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість перетворити вимогу про виправлення визначення ${award_index} переможця в скаргу
 
 
@@ -688,6 +720,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_complaint
   ...  non-critical
+  ...  below_complaint
   Звірити відображення поля satisfied вимоги про виправлення визначення ${award_index} переможця із ${USERS.users['${provider}'].claim_data.escalation.data.satisfied} для користувача ${viewer}
 
 
@@ -702,14 +735,15 @@ ${award_index}      ${0}
   Можливість скасувати вимогу про виправлення визначення ${award_index} переможця
 
 
-Відображення статусу 'cancelled' скарги про виправлення визначення переможця
+Відображення статусу 'cancelled'/'stopping' скарги про виправлення визначення переможця
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_complaint
   ...  non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля status вимоги про виправлення визначення ${award_index} переможця із cancelled для користувача ${viewer}
+  ${status}=  Set variable if  'open' in '${MODE}'  stopping  cancelled
+  Звірити відображення поля status вимоги про виправлення визначення ${award_index} переможця із ${status} для користувача ${viewer}
 
 
 Відображення причини скасування скарги про виправлення визначення переможця
