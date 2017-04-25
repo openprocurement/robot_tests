@@ -674,6 +674,15 @@ ${ITEM_MEAT}      ${False}
   Звірити відображення поля contracts[0].status тендера із pending для користувача ${viewer}
 
 
+Відображення закінчення періоду подачі скарг на пропозицію
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Відображення основних даних тендера
+  ...      tender_owner  viewer
+  ...      ${USERS.users['${tender_owner}'].broker}  ${USERS.users['${viewer}'].broker}
+  ...      tender_view
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
+  \  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  awards[0].complaintPeriod.endDate
+
+
 Можливість укласти угоду для переговорної процедури
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість укласти угоду для процедури
   ...  ${tender_owner}

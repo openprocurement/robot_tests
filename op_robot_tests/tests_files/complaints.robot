@@ -9,16 +9,16 @@ ${MODE}         belowThreshold
 
 ${NUMBER_OF_ITEMS}  ${1}
 ${NUMBER_OF_LOTS}   ${1}
-${TENDER_MEAT}      ${1}
-${ITEM_MEAT}        ${1}
-${LOT_MEAT}         ${1}
+${TENDER_MEAT}      ${0}
+${ITEM_MEAT}        ${0}
+${LOT_MEAT}         ${0}
 ${lot_index}        ${0}
 ${award_index}      ${0}
 
 *** Test Cases ***
 
 ##############################################################################################
-#             CREATE AND FIND TENDER
+#             CREATE AND FIND TENDER LOT VIEW
 ##############################################################################################
 
 Можливість оголосити однопредметний тендер
@@ -41,6 +41,16 @@ ${award_index}      ${0}
   ...  critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Можливість знайти тендер по ідентифікатору для усіх користувачів
+
+
+Відображення заголовку лотів
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      lot_view  level1
+  ...      critical
+  Звірити відображення поля title усіх лотів для усіх користувачів
 
 ##############################################################################################
 #             CREATE, ANSWER AND CONFIRM CLAIM
@@ -173,16 +183,6 @@ ${award_index}      ${0}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${lot_index}=  Convert To Integer  ${lot_index}
   Можливість створити вимогу про виправлення умов ${lot_index} лоту із документацією
-
-
-Відображення стосунку вимоги до лоту
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  lot_complaint
-  ...  non-critical
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля relatedLot вимоги про виправлення умов ${lot_index} лоту із ${USERS.users['${provider}'].lot_claim_data.claim.data.relatedLot} для користувача ${viewer}
 
 
 Можливість відповісти на вимогу про виправлення умов лоту
@@ -446,6 +446,19 @@ ${award_index}      ${0}
   Можливість подати цінову пропозицію користувачем ${provider1}
   Дочекатись дати закінчення прийому пропозицій  ${provider1}  ${TENDER['TENDER_UAID']}
   Дочекатись дати початку періоду кваліфікації  ${provider1}  ${TENDER['TENDER_UAID']}
+
+
+Можливість підтвердити учасника
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  qualification_approve_first_award  level1
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${file_path}  ${file_name}  ${file_content}=   create_fake_doc
+  Run As  ${tender_owner}  Завантажити документ рішення кваліфікаційної комісії  ${file_path}  ${TENDER['TENDER_UAID']}  0
+  Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  0
+  Remove File  ${file_path}
 
 
 Можливість створити вимогу про виправлення визначення переможця, додати до неї документацію і подати її користувачем
