@@ -49,7 +49,7 @@ Set Suite Variable With Default Value
   ${repo}=    Run  git remote -v
   ${branch}=  Run  git branch -vva
   ${status}=  Run  git status
-  ${diff}=  Run  git diff
+  ${diff}=    Run  git diff
   ${reflog}=  Run  git reflog
   Log  ${commit}
   Log  ${repo}
