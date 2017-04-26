@@ -329,7 +329,7 @@ Library         Selenium2Library
   ${last_amount}=  Get Text         id=max_bid_amount_price
   ${last_amount}=  convert_amount_string_to_float  ${last_amount}
   ${extra_amount}=  convert_amount_string_to_float  ${extra_amount}
-  ${last_amount}=  add_and_round  ${last_amount}  ${extra_amount}
+  ${last_amount}=  Evaluate  ${last_amount}+${extra_amount}
   Поставити ставку  ${last_amount}  Надто висока заявка
 
 
