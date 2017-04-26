@@ -1,5 +1,6 @@
 from openprocurement_client.client import Client
-from openprocurement_client.utils import get_tender_id_by_uaid
+from openprocurement_client.document_service_client \
+    import DocumentServiceClient
 from openprocurement_client.exceptions import IdNotFound
 from restkit.errors import RequestFailed, BadStatusLine
 from retrying import retry
@@ -19,13 +20,26 @@ def retry_if_request_failed(exception):
 
 
 class StableClient(Client):
-    @retry(stop_max_attempt_number=100, wait_random_min=500, wait_random_max=4000, retry_on_exception=retry_if_request_failed)
+    @retry(stop_max_attempt_number=100, wait_random_min=500,
+           wait_random_max=4000, retry_on_exception=retry_if_request_failed)
     def request(self, *args, **kwargs):
         return super(StableClient, self).request(*args, **kwargs)
 
 
-def prepare_api_wrapper(key, host_url, api_version):
-    return StableClient(key, host_url, api_version)
+class StableDsClient(DocumentServiceClient):
+    @retry(stop_max_attempt_number=100, wait_random_min=500,
+           wait_random_max=4000, retry_on_exception=retry_if_request_failed)
+    def request(self, *args, **kwargs):
+        return super(StableDsClient, self).request(*args, **kwargs)
+
+
+def prepare_api_wrapper(key, resource, host_url, api_version, ds_client=None):
+    return StableClient(key, resource, host_url, api_version,
+                        ds_client=ds_client)
+
+
+def prepare_ds_api_wrapper(ds_host_url, auth_ds):
+    return StableDsClient(ds_host_url, auth_ds)
 
 
 def get_complaint_internal_id(tender, complaintID):
