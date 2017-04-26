@@ -485,6 +485,8 @@ def test_tender_data_dgf_financial(params):
         data['items'].pop()
 
     url = params['api_host_url']
+
+    # TODO: handle this magic string
     if url == 'https://lb.api.ea.openprocurement.org':
         del data['procurementMethodDetails']
 
