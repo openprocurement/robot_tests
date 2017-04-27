@@ -18,7 +18,7 @@ Suite Teardown  Test Suite Teardown
   Завантажити дані про тендер
   :FOR  ${username}  in  @{used_roles}
   \  Run As  ${${username}}  Пошук тендера по ідентифікатору  ${TENDER['TENDER_UAID']}
-  ${CONTRACT_UAID}=  Get variable value  ${USERS.users['${tender_owner}'].tender_data.data.contracts[0].contractID}
+  ${CONTRACT_UAID}=  Get variable value  ${USERS.users['${tender_owner}'].tender_data.data.contracts[1].contractID}
   Set Suite Variable  ${CONTRACT_UAID}
 
 
