@@ -260,4 +260,4 @@ ${award_index}      ${0}
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_approve_second_award  level1
-  Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  -1
+  Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  1
