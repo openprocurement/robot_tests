@@ -1,5 +1,6 @@
 *** Settings ***
 Library  openprocurement_client_helper.py
+Library  openprocurement_client.utils
 
 
 *** Keywords ***
@@ -18,10 +19,20 @@ Library  openprocurement_client_helper.py
 
 Підготувати клієнт для користувача
   [Arguments]  ${username}
-  [Documentation]  Відкрити браузер, створити об’єкт api wrapper, створити об’єкт edr_wrapper, тощо
+  [Documentation]  Відкрити браузер, створити об’єкти api wrapper і
+  ...              ds api wrapper, приєднати їх атрибутами до користувача, тощо
+  Log  ${RESOURCE}
   Log  ${API_HOST_URL}
   Log  ${API_VERSION}
-  ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${API_HOST_URL}  ${API_VERSION}
+  Log  ${DS_HOST_URL}
+  ${auth_ds_all}=  get variable value  ${USERS.users.${username}.auth_ds}
+  ${auth_ds}=  set variable  ${auth_ds_all.${RESOURCE}}
+  Log  ${auth_ds}
+
+#  Uncomment this line if there is need to precess files operations without DS.
+#  ${ds_api_wraper}=  set variable  ${None}
+  ${ds_api_wraper}=  prepare_ds_api_wrapper  ${DS_HOST_URL}  ${auth_ds}
+  ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${RESOURCE}  ${API_HOST_URL}  ${API_VERSION}  ${ds_api_wraper}
   Set To Dictionary  ${USERS.users['${username}']}  client=${api_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${EMPTY}
   ${id_map}=  Create Dictionary
@@ -38,11 +49,11 @@ Library  openprocurement_client_helper.py
   Log  ${tender_uaid}
   Log  ${filepath}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${tender}=  set_access_key  ${tender}   ${USERS.users['${username}'].access_token}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  upload_document  ${filepath}  ${tender}
   Log object data   ${reply}  reply
   #return here is needed to have uploaded doc data in `Завантажити документ в лот` keyword
-  [return]   ${reply}
+  [return]  ${reply}
 
 
 Отримати інформацію із документа
@@ -773,13 +784,13 @@ Library  openprocurement_client_helper.py
 
 
 Змінити документ в ставці
-  [Arguments]  ${username}  ${tender_uaid}  ${path}  ${doc_id}
+  [Arguments]  ${username}  ${tender_uaid}  ${path}  ${doc_id}  ${doc_type}=documents
   ${bid_id}=  Get Variable Value   ${USERS.users['${username}'].bidresponses['bid'].data.id}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}']['access_token']}
   ${bid}=  openprocurement_client.Отримати пропозицію  ${username}  ${tender_uaid}
   ${bid_doc}=  get_document_by_id  ${bid.data}  ${doc_id}
-  ${response}=  Call Method  ${USERS.users['${username}'].client}  update_bid_document  ${path}  ${tender}   ${bid_id}   ${bid_doc['id']}
+  ${response}=  Call Method  ${USERS.users['${username}'].client}  update_bid_document  ${path}  ${tender}  ${bid_id}  ${bid_doc['id']}  ${doc_type}
   ${uploaded_file} =  Create Dictionary
   ...      filepath=${path}
   ...      upload_response=${response}

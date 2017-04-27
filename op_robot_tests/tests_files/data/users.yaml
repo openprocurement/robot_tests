@@ -1,21 +1,36 @@
 users:
     Tender_Owner:
+        auth_ds:
+            tenders:  [test.quintagroup.com, test.quintagroup.com]
+            auctions: [test.quintagroup.com, bc698baa8b814908bc75405ed3d63548]
         api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
         broker:   Quinta
         auth_edr: [test.quintagroup.com, f5111c99a97a45348d8165ba8fcf0d62]
     Tender_User:
+        auth_ds:
+            tenders:  [test.quintagroup.com, test.quintagroup.com]
+            auctions: [test.quintagroup.com, bc698baa8b814908bc75405ed3d63548]
         api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
         broker:   Quinta
         auth_edr: [test.quintagroup.com, f5111c99a97a45348d8165ba8fcf0d62]
     Tender_User1:
+        auth_ds:
+            tenders:  [test.quintagroup.com, test.quintagroup.com]
+            auctions: [test.quintagroup.com, bc698baa8b814908bc75405ed3d63548]
         api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
         broker:   Quinta
         auth_edr: [test.quintagroup.com, f5111c99a97a45348d8165ba8fcf0d62]
     Tender_User2:
+        auth_ds:
+            tenders:  [test.quintagroup.com, test.quintagroup.com]
+            auctions: [test.quintagroup.com, bc698baa8b814908bc75405ed3d63548]
         api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
         broker:   Quinta
         auth_edr: [test.quintagroup.com, f5111c99a97a45348d8165ba8fcf0d62]
     Tender_Viewer:
+        auth_ds:
+            tenders:  [test.quintagroup.com, test.quintagroup.com]
+            auctions: [test.quintagroup.com, bc698baa8b814908bc75405ed3d63548]
         api_key:  ""
         broker:   Quinta
         browser:  firefox
