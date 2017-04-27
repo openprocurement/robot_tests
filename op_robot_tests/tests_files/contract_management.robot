@@ -51,6 +51,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення зміни договору
   ...      tender_owner
   ...      ${USERS.users['${viewer}'].broker}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля rationale зміни до договору для користувача ${viewer}
 
 
@@ -99,6 +100,7 @@ Suite Teardown  Test Suite Teardown
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_contract_doc  level2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля title документа ${USERS.users['${tender_owner}']['change_doc']['id']} до договору з ${USERS.users['${tender_owner}']['change_doc']['name']} для користувача ${viewer}
 
 
@@ -133,6 +135,7 @@ Suite Teardown  Test Suite Teardown
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   Run As  ${tender_owner}  Застосувати зміну  ${CONTRACT_UAID}
   Set to dictionary  ${USERS.users['${tender_owner}'].change_data.data}  status=active
 
