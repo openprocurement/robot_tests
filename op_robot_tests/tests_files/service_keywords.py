@@ -473,6 +473,10 @@ def get_object_index_by_id(data, object_id):
     return index
 
 
+def get_id_from_doc_name(name):
+    return re.match(r'd\-[0-9a-fA-F]{8}', name).group(0)
+
+
 def get_object_by_id(data, given_object_id, slice_element, object_id):
     """
         data: object to slice
