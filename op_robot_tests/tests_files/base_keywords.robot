@@ -491,7 +491,7 @@ Resource           resource.robot
 
 
 Звірити відображення вмісту документа ${doc_id} до договору з ${left} для користувача ${username}
-  ${file_name}=  Run as  ${username}  Отримати документ до договору  ${CONTRACT_UAID}  ${doc_id}
+  ${file_name}=  Run As  ${username}  Отримати документ до договору  ${CONTRACT_UAID}  ${doc_id}
   ${right}=  Get File  ${OUTPUT_DIR}${/}${file_name}
   Порівняти об'єкти  ${left}  ${right}
 
@@ -528,6 +528,7 @@ Resource           resource.robot
   Set to dictionary  ${USERS.users['${tender_owner}']}  contract_doc=${doc}
   Run As  ${tender_owner}  Завантажити документацію до договору  ${CONTRACT_UAID}  ${file_path}
   Remove File  ${file_path}
+
 
 Закінчити договір
   ${amount}=  Get variable value  ${USERS.users['${tender_owner}'].contract_data.data.value.amount}
