@@ -976,13 +976,22 @@ ${ITEM_MEAT}        ${True}
 
 ##############################################################################################
 
-Можливість скасувати пропозицію
+Можливість скасувати пропозицію першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      cancel_bid_by_provider
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість скасувати цінову пропозицію користувачем ${provider}
+
+
+Можливість скасувати пропозицію другим учасником
+  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
+  ...      provider1
+  ...      ${USERS.users['${provider1}'].broker}
+  ...      cancel_bid_by_provider1
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість скасувати цінову пропозицію користувачем ${provider1}
 
 
 Неможливість побачити цінові пропозиції учасників під час прийому пропозицій
