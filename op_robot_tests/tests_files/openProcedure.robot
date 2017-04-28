@@ -285,7 +285,7 @@ ${ITEM_MEAT}        ${True}
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_title}=  create_fake_title  ua
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_title=[ТЕСТУВАННЯ] ${new_title}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_title=${new_title}
   Можливість змінити поле title тендера на ${new_title}
 
 
@@ -307,7 +307,7 @@ ${ITEM_MEAT}        ${True}
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_title}=  create_fake_title  ru
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_title_ru=[ТЕСТИРОВАНИЕ] ${new_title}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_title_ru=${new_title}
   Можливість змінити поле title_ru тендера на ${new_title}
 
 
@@ -329,7 +329,7 @@ ${ITEM_MEAT}        ${True}
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_title}=  create_fake_title  en
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_title_en=[TESTING] ${new_title}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_title_en=${new_title}
   Можливість змінити поле title_en тендера на ${new_title}
 
 
