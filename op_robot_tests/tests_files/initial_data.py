@@ -30,11 +30,11 @@ def create_fake_sentence():
 
 def create_fake_title(name):
     if name == 'ua':
-        return fake.sentence(nb_words=3, variable_nb_words=True)
+        return u"[ТЕСТУВАННЯ] {}".format(fake.sentence(nb_words=3, variable_nb_words=True))
     elif name == 'en':
-        return fake_en.sentence(nb_words=3, variable_nb_words=True)
+        return u"[TESTING] {}".format(fake_en.sentence(nb_words=3, variable_nb_words=True))
     elif name == 'ru':
-        return fake_ru.sentence(nb_words=3, variable_nb_words=True)
+        return u"[ТЕСТИРОВАНИЕ] {}".format(fake_ru.sentence(nb_words=3, variable_nb_words=True))
 
 
 def create_fake_description(name):
@@ -58,8 +58,10 @@ def create_fake_dgfDecisionID():
     return fake.dgfDecisionID()
 
 
-def create_fake_tenderAttempts():
-    return fake.random_int(min=1, max=4)
+def create_fake_tenderAttempts(attempt):
+    number = [1,2,3,4]
+    number.remove(attempt)
+    return  random.choice(number)
 
 
 def create_fake_amount():
@@ -500,7 +502,8 @@ def test_tender_data_dgf_financial(params):
     data['dgfID'] = fake.dgfID()
     data['dgfDecisionID'] = fake.dgfDecisionID()
     data['dgfDecisionDate'] = (get_now() + timedelta(days=-2)).strftime('%Y-%m-%d')
-    data['tenderAttempts'] = fake.random_int(min=1, max=3)
+    data['tenderAttempts'] = fake.random_int(min=1, max=4)
+
     del data["procuringEntity"]
 
     for i in range(params['number_of_items']):
