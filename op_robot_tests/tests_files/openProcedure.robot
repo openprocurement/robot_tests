@@ -556,7 +556,7 @@ ${ITEM_MEAT}        ${True}
   ...      modify_tenderAttempts  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${number_attempt}=  create_fake_tenderAttempts
+  ${number_attempt}=  create_fake_tenderAttempts  ${USERS.users['${viewer}'].tender_data.data.tenderAttempts}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  new_tenderAttempts=${number_attempt}
   Можливість змінити поле tenderAttempts тендера на ${number_attempt}
 

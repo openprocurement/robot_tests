@@ -58,11 +58,10 @@ def create_fake_dgfDecisionID():
     return fake.dgfDecisionID()
 
 
-def create_fake_tenderAttempts():
+def create_fake_tenderAttempts(attempt):
     number = [1,2,3,4]
-    new_number = random.choice(number)
-    number.remove(new_number)
-    return new_number
+    number.remove(attempt)
+    return  random.choice(number)
 
 
 def create_fake_amount():
@@ -466,7 +465,7 @@ def test_tender_data_dgf_other(params):
     data['dgfID'] = fake.dgfID()
     data['dgfDecisionID'] = fake.dgfDecisionID()
     data['dgfDecisionDate'] =  (get_now() + timedelta(days=-2)).strftime('%Y-%m-%d')
-    data['tenderAttempts'] =  fake.random_int(min=1, max=3)
+    data['tenderAttempts'] =  fake.random_int(min=1, max=4)
     del data["procuringEntity"]
 
     for i in range(params['number_of_items']):
@@ -503,7 +502,8 @@ def test_tender_data_dgf_financial(params):
     data['dgfID'] = fake.dgfID()
     data['dgfDecisionID'] = fake.dgfDecisionID()
     data['dgfDecisionDate'] = (get_now() + timedelta(days=-2)).strftime('%Y-%m-%d')
-    data['tenderAttempts'] = fake.random_int(min=1, max=3)
+    data['tenderAttempts'] = fake.random_int(min=1, max=4)
+
     del data["procuringEntity"]
 
     for i in range(params['number_of_items']):
