@@ -59,7 +59,10 @@ def create_fake_dgfDecisionID():
 
 
 def create_fake_tenderAttempts():
-    return fake.random_int(min=1, max=4)
+    number = [1,2,3,4]
+    new_number = random.choice(number)
+    number.remove(new_number)
+    return new_number
 
 
 def create_fake_amount():
