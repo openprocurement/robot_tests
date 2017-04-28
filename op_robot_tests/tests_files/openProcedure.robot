@@ -285,7 +285,18 @@ ${ITEM_MEAT}        ${True}
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_title}=  create_fake_title  ua
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_title=[ТЕСТУВАННЯ] ${new_title}
   Можливість змінити поле title тендера на ${new_title}
+
+
+Відображення зміненого заголовку лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_modify_auction_title_ua  level1
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  title
+  Звірити відображення поля title тендера із ${USERS.users['${tender_owner}'].new_title} для користувача ${viewer}
 
 
 Можливість змінити назву лоту російською мовою
@@ -296,7 +307,18 @@ ${ITEM_MEAT}        ${True}
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_title}=  create_fake_title  ru
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_title_ru=[ТЕСТИРОВАНИЕ] ${new_title}
   Можливість змінити поле title_ru тендера на ${new_title}
+
+
+Відображення зміненого заголовку лоту російською мовою
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_modify_auction_title_ru  level1
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  title_ru
+  Звірити відображення поля title_ru тендера із ${USERS.users['${tender_owner}'].new_title_ru} для користувача ${viewer}
 
 
 Можливість змінити назву лоту англійською мовою
@@ -307,40 +329,84 @@ ${ITEM_MEAT}        ${True}
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_title}=  create_fake_title  en
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_title_en=[TESTING] ${new_title}
   Можливість змінити поле title_en тендера на ${new_title}
+
+
+Відображення зміненого заголовку лоту англійською мовою
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_modify_auction_title_en  level1
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  title_en
+  Звірити відображення поля title_ru тендера із ${USERS.users['${tender_owner}'].new_title_en} для користувача ${viewer}
 
 
 Можливість змінити опис лоту українською мовою
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_auction_description  level2
+  ...      modify_auction_description_ua  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_description}=  create_fake_description  ua
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_description=${new_description}
   Можливість змінити поле description тендера на ${new_description}
+
+
+Відображення зміненого опис лоту українською мовою
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_modify_auction_description_ua  level1
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  description
+  Звірити відображення поля description тендера із ${USERS.users['${tender_owner}'].new_description} для користувача ${viewer}
 
 
 Можливість змінити опис лоту російською мовою
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_auction_description  level2
+  ...      modify_auction_description_ru  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_description}=  create_fake_description  ru
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_description_ru=${new_description}
   Можливість змінити поле description_ru тендера на ${new_description}
+
+
+Відображення зміненого опис лоту російською мовою
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_modify_auction_description_ru  level1
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  description_ru
+  Звірити відображення поля description_ru тендера із ${USERS.users['${tender_owner}'].new_description_ru} для користувача ${viewer}
 
 
 Можливість змінити опис лоту англійською мовою
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_auction_description  level2
+  ...      modify_auction_description_en  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_description}=  create_fake_description  en
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_description_en=${new_description}
   Можливість змінити поле description_en тендера на ${new_description}
+
+
+Відображення зміненого опис лоту англійською мовою
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_modify_auction_description_en  level1
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  description_en
+  Звірити відображення поля description_en тендера із ${USERS.users['${tender_owner}'].new_description_en} для користувача ${viewer}
 
 
 Неможливість змінити дані про організатора лоту
@@ -421,43 +487,88 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних лоту
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_dgfID
+  ...      modify_dgfID  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${new_date}=  create_fake_dgfID
-  Можливість змінити поле dgfID тендера на ${new_date}
+  ${new_ID}=  create_fake_dgfID
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_dgfID=${new_ID}
+  Можливість змінити поле dgfID тендера на ${new_ID}
+
+
+Відображення зміненого номера лоту ФГВ
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_modify_dgfID  level3
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  dgfID
+  Звірити відображення поля dgfID тендера із ${USERS.users['${tender_owner}'].new_dgfID} для користувача ${viewer}
 
 
 Можливість змінити дату рішення про затвердження умов продажу
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних лоту
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_decisionDate
+  ...      modify_decisionDate  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_date}=  create_fake_dgfDecisionDate
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_decisionDate=${new_date}
   Можливість змінити поле dgfDecisionDate тендера на ${new_date}
+
+
+Відображення зміненої дату рішення про затвердження умов продажу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_modify_decisionDate  level3
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  dgfDecisionDate
+  Звірити відображення поля dgfDecisionDate тендера із ${USERS.users['${tender_owner}'].new_decisionDate} для користувача ${viewer}
 
 
 Можливість змінити номер рішення про затвердження умов продажу
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних лоту
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_decisionID
+  ...      modify_decisionID  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_id}=  create_fake_dgfDecisionID
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_dgfDecisionID=${new_id}
   Можливість змінити поле dgfDecisionID тендера на ${new_id}
+
+
+Відображення зміненого номера рішення про затвердження умов продажу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_modify_dgfDecisionID  level3
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  dgfDecisionID
+  Звірити відображення поля dgfDecisionID тендера із ${USERS.users['${tender_owner}'].new_dgfDecisionID} для користувача ${viewer}
 
 
 Можливість змінити поле "Лоти виставляються"
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних лоту
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_tenderAttempts
+  ...      modify_tenderAttempts  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість змінити поле tenderAttempts тендера на 4
+  ${number_attempt}=  create_fake_tenderAttempts
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_tenderAttempts=${number_attempt}
+  Можливість змінити поле tenderAttempts тендера на ${number_attempt}
+
+
+Відображення зміненого поля "Лоти виставляються"
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_modify_tenderAttempts  level3
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  tenderAttempts
+  Звірити відображення поля tenderAttempts тендера із ${USERS.users['${tender_owner}'].new_tenderAttempts} для користувача ${viewer}
 
 
 Можливість додати документацію до лоту
