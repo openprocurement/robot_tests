@@ -1602,12 +1602,12 @@ ${ITEM_MEAT}        ${True}
 ##############################################################################################
 
 Неможливість завантажити документ першим учасником після закінчення прийому пропозицій
-  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
-  ...      ${USERS.users['${provider1}'].broker}
+  ...      ${USERS.users['${provider}'].broker}
   ...      add_bid_doc_after_tendering_period_by_provider
   ...      non-critical
-  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}  ${TENDER['TENDER_UAID']}
+  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
   Run Keyword And Expect Error  *  Можливість завантажити документ в пропозицію користувачем ${provider}
 
 
