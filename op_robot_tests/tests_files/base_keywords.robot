@@ -686,7 +686,7 @@ Resource           resource.robot
 Можливість створити вимогу про виправлення умов закупівлі із документацією користувачем ${username}
   ${claim}=  Підготувати дані для подання вимоги
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
-  ${complaintID}=  Run As  ${provider}
+  ${complaintID}=  Run As  ${username}
   ...      Створити вимогу про виправлення умов закупівлі
   ...      ${TENDER['TENDER_UAID']}
   ...      ${claim}
@@ -699,7 +699,7 @@ Resource           resource.robot
   ...      doc_id=${doc_id}
   ...      doc_content=${file_content}
   ${claim_data}=  munch_dict  arg=${claim_data}
-  Set To Dictionary  ${USERS.users['${provider}']}  tender_claim_data  ${claim_data}
+  Set To Dictionary  ${USERS.users['${username}']}  tender_claim_data  ${claim_data}
   Remove File  ${file_path}
 
 
