@@ -151,9 +151,9 @@ ztv:
     keywords_file: ztv
     roles:
         tender_owner:   ztv_Owner
-        provider:   ztv_Provider
-        provider1:   ztv_Provider1
-        viewer:   ztv_Viewer
+        provider:       ztv_Provider
+        provider1:      ztv_Provider1
+        viewer:         ztv_Viewer
     timeout_on_wait: 300
 Newtend:
     keywords_file: newtend
