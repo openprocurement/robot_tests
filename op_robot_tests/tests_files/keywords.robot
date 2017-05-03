@@ -844,3 +844,10 @@ Require Failure
   ${LAST_MODIFICATION_DATE}=  Get Current TZdate
   ${status}=  Get Variable Value  ${TEST_STATUS}  PASS
   Run Keyword If  '${status}' == 'PASS'  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE=${LAST_MODIFICATION_DATE}
+
+
+Отримати останній індекс
+  [Arguments]  ${object}
+  ${index}=  Get Length  ${object}
+  ${index}=  subtraction  ${index}  1
+  [Return]  ${index}

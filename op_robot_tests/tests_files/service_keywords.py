@@ -22,6 +22,7 @@ from .initial_data import (
     create_fake_amount,
     create_fake_date,
     fake,
+    subtraction,
     field_with_id,
     test_bid_data,
     test_bid_value,
