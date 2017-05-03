@@ -202,6 +202,21 @@ Library  openprocurement_client.utils
   Fail  Field not found: ${field_name}
 
 
+Отримати інформацію із плану
+  [Arguments]  ${username}  ${tender_uaid}  ${field_name}
+  openprocurement_client.Пошук плану по ідентифікатору
+  ...      ${username}
+  ...      ${tender_uaid}
+
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      Get from object
+  ...      ${USERS.users['${username}'].tender_data.data}
+  ...      ${field_name}
+  Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
+
+  Fail  Field not found: ${field_name}
+
+
 Внести зміни в тендер
   [Arguments]  ${username}  ${tender_uaid}  ${fieldname}  ${fieldvalue}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
