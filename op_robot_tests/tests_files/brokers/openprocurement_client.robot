@@ -1,5 +1,6 @@
 *** Settings ***
 Library  openprocurement_client_helper.py
+Library  openprocurement_client.utils
 
 
 *** Keywords ***
@@ -18,10 +19,21 @@ Library  openprocurement_client_helper.py
 
 Підготувати клієнт для користувача
   [Arguments]  ${username}
-  [Documentation]  Відкрити браузер, створити об’єкт api wrapper, тощо
+  [Documentation]  Відкрити браузер, створити об’єкти api wrapper і
+  ...              ds api wrapper, приєднати їх атрибутами до користувача, тощо
+  Log  ${resource}
   Log  ${api_host_url}
   Log  ${api_version}
-  ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${api_host_url}  ${api_version}
+  Log  ${ds_host_url}
+  ${auth_ds_all}=  get variable value  ${USERS.users.${username}.auth_ds}
+  ${auth_ds}=  set variable  ${auth_ds_all.${resource}}
+  Log  ${auth_ds}
+
+#  Uncomment this line if there is need to precess files operations without DS.
+#  ${ds_api_wraper}=  set variable  ${None}
+  ${ds_api_wraper}=  prepare_ds_api_wrapper  ${ds_host_url}  ${auth_ds}
+
+  ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${resource}  ${api_host_url}  ${api_version}  ${ds_api_wraper}
   Set To Dictionary  ${USERS.users['${username}']}  client=${api_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${EMPTY}
   ${id_map}=  Create Dictionary
@@ -665,11 +677,11 @@ Library  openprocurement_client_helper.py
 
 
 Змінити документ в ставці
-  [Arguments]  ${username}  ${tender_uaid}  ${path}  ${docid}
+  [Arguments]  ${username}  ${tender_uaid}  ${path}  ${docid}  ${doc_type}=documents
   ${bid_id}=  Get Variable Value   ${USERS.users['${username}'].bidresponses['resp'].data.id}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
-  ${response}=  Call Method  ${USERS.users['${username}'].client}  update_bid_document  ${path}  ${tender}   ${bid_id}   ${docid}
+  ${response}=  Call Method  ${USERS.users['${username}'].client}  update_bid_document  ${path}  ${tender}   ${bid_id}   ${docid}  ${doc_type}
   ${uploaded_file} =  Create Dictionary   filepath=${path}   upload_response=${response}
   Log object data   ${uploaded_file}
   [return]  ${uploaded_file}
