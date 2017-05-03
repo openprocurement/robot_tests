@@ -131,6 +131,10 @@ Resource           resource.robot
   Звірити поле тендера  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${field}
 
 
+Звірити відображення поля ${field} плану для користувача ${username}
+  Звірити поле плану  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${field}
+
+
 Отримати доступ до тендера другого етапу та зберегти його
   Run as  ${tender_owner}  Отримати тендер другого етапу та зберегти його  ${USERS.users['${tender_owner}'].tender_data.data.stage2TenderID}
   ${TENDER_UAID_second_stage}=  BuiltIn.Catenate  SEPARATOR=  ${TENDER['TENDER_UAID']}  .2
@@ -174,6 +178,17 @@ Resource           resource.robot
 Звірити відображення поля ${field} усіх предметів для користувача ${username}
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  Звірити відображення поля ${field} ${item_index} предмету для користувача ${username}
+
+
+Звірити відображення ${field} усіх предметів плану для усіх користувачів
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  \  Звірити відображення ${field} усіх предметів плану для користувача ${username}
+
+
+Звірити відображення ${field} усіх предметів плану для користувача ${username}
+  :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
+  \  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}]}
+  \  Звірити поле плану із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}].${field}}  ${field}  ${item_id}
 
 
 Звірити відображення поля ${field} ${item_index} предмету для користувача ${username}
