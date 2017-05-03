@@ -1,0 +1,14 @@
+ -v MODE:planning
+
+-v NUMBER_OF_ITEMS:2
+-v NUMBER_OF_LOTS:1
+
+-v TENDER_MEAT:False
+-v ITEM_MEAT:False
+-v LOT_MEAT:False
+
+
+-i create_plan
+-i find_plan
+-i plan_view
+-i modify_plan
