@@ -1,0 +1,12 @@
+-v MODE:
+
+-v NUMBER_OF_ITEMS:1
+-v NUMBER_OF_LOTS:0
+
+-v TENDER_MEAT:False
+-v ITEM_MEAT:False
+-v LOT_MEAT:False
+
+-i create_tender
+-i find_tender
+-i tender_cancelation
