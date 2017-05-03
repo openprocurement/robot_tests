@@ -421,6 +421,18 @@ Log differences between dicts
   Звірити поле тендера із значенням  ${username}  ${tender_uaid}  ${left}  ${field}
 
 
+Звірити поле плану
+  [Arguments]  ${username}  ${tender_uaid}  ${tender_data}  ${field}
+  ${left}=  get_from_object  ${tender_data.data}  ${field}
+  Звірити поле плану із значенням  ${username}  ${tender_uaid}  ${left}  ${field}
+
+
+Звірити поле плану із значенням
+  [Arguments]  ${username}  ${tender_uaid}  ${left}  ${field}  ${object_id}=${Empty}
+  ${right}=  Отримати дані із плану  ${username}  ${tender_uaid}  ${field}  ${object_id}
+  Порівняти об'єкти  ${left}  ${right}
+
+
 Звірити поле тендера із значенням
   [Arguments]  ${username}  ${tender_uaid}  ${left}  ${field}  ${object_id}=${Empty}
   ${right}=  Отримати дані із тендера  ${username}  ${tender_uaid}  ${field}  ${object_id}
@@ -527,6 +539,26 @@ Log differences between dicts
   # Else call broker to find field
   ${field_value}=  Run Keyword IF  '${object_id}'  Отримати дані із об’єкта тендера  ${username}  ${tender_uaid}  ${object_id}  ${field_name}
   ...                          ELSE  Run As  ${username}  Отримати інформацію із тендера  ${tender_uaid}  ${field}
+  # And caching its value before return
+  Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${field_value}
+  ${data}=  munch_dict  arg=${USERS.users['${username}'].tender_data.data}
+  Set To Dictionary  ${USERS.users['${username}'].tender_data}  data=${data}
+  Log  ${USERS.users['${username}'].tender_data.data}
+  [return]  ${field_value}
+
+
+Отримати дані із плану
+  [Arguments]  ${username}  ${tender_uaid}  ${field_name}  ${object_id}=${Empty}
+  ${field}=  Run Keyword If  '${object_id}'  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${object_id}
+  ...             ELSE  Set Variable  ${field_name}
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      get_from_object
+  ...      ${USERS.users['${username}'].tender_data.data}
+  ...      ${field}
+  # If field in cache, return its value
+  Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
+  # Else call broker to find field
+  ${field_value}=  Run As  ${username}  Отримати інформацію із плану  ${tender_uaid}  ${field}
   # And caching its value before return
   Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${field_value}
   ${data}=  munch_dict  arg=${USERS.users['${username}'].tender_data.data}
