@@ -13,7 +13,6 @@ Suite Teardown  Test Suite Teardown
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      create_tender
-  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість оголосити тендер
 
@@ -28,6 +27,65 @@ Suite Teardown  Test Suite Teardown
   \  Можливість знайти тендер по ідентифікатору для користувача ${username}
 
 ##############################################################################################
+#             LOT CANCELLATION
+##############################################################################################
+
+Можливість скасувати лот
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Скасування лота
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  lot_cancellation
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість скасувати 0 лот
+
+
+Відображення активного статусу скасування лота
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування лота
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  lot_cancellation
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  ${cancellation_index}=  Отримати останній індекс  cancellations  ${viewer}
+  Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}
+  ...      active
+  ...      cancellations[${cancellation_index}].status
+
+
+Відображення причини скасування лота
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування лота
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  lot_cancellation
+  ${cancellation_index}=  Отримати останній індекс  cancellations  ${viewer}
+  Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${tender_owner}']['lot_cancellation_data']['cancellation_reason']}
+  ...      cancellations[${cancellation_index}].reason
+
+
+Відображення опису документа до скасування лота
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування лота
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  lot_cancellation
+  Звірити відображення поля description документа ${USERS.users['${tender_owner}']['lot_cancellation_data']['document']['doc_id']} до скасування ${USERS.users['${tender_owner}']['lot_cancellation_data']['cancellation_id']} із ${USERS.users['${tender_owner}']['lot_cancellation_data']['description']} для користувача ${viewer}
+
+
+Відображення заголовку документа до скасування лота
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування лота
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  lot_cancellation
+  Звірити відображення поля title документа ${USERS.users['${tender_owner}']['lot_cancellation_data']['document']['doc_id']} до скасування ${USERS.users['${tender_owner}']['lot_cancellation_data']['cancellation_id']} із ${USERS.users['${tender_owner}']['lot_cancellation_data']['document']['doc_name']} для користувача ${viewer}
+
+
+Відображення вмісту документа до скасування лота
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування лота
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  lot_cancellation
+  Звірити відображення вмісту документа ${USERS.users['${tender_owner}']['lot_cancellation_data']['document']['doc_id']} до скасування ${USERS.users['${tender_owner}']['lot_cancellation_data']['cancellation_id']} з ${USERS.users['${tender_owner}']['lot_cancellation_data']['document']['doc_content']} для користувача ${viewer}
+
+##############################################################################################
 #             TENDER CANCELLATION
 ##############################################################################################
 
@@ -35,7 +93,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Скасування тендера
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ...  tender_cancelation
+  ...  tender_cancellation
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість скасувати тендер
 
@@ -44,28 +102,30 @@ Suite Teardown  Test Suite Teardown
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування тендера
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  tender_cancelation
+  ...  tender_cancellation
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  ${cancellation_index}=  Отримати останній індекс  cancellations  ${viewer}
   Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}
   ...      active
-  ...      cancellations[0].status
+  ...      cancellations[${cancellation_index}].status
 
 
 Відображення причини скасування тендера
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування тендера
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  tender_cancelation
+  ...  tender_cancellation
+  ${cancellation_index}=  Отримати останній індекс  cancellations  ${viewer}
   Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}']['tender_cancellation_data']['cancellation_reason']}
-  ...      cancellations[0].reason
+  ...      cancellations[${cancellation_index}].reason
 
 
 Відображення опису документа до скасування тендера
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування тендера
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  tender_cancelation
+  ...  tender_cancellation
   Звірити відображення поля description документа ${USERS.users['${tender_owner}']['tender_cancellation_data']['document']['doc_id']} до скасування ${USERS.users['${tender_owner}']['tender_cancellation_data']['cancellation_id']} із ${USERS.users['${tender_owner}']['tender_cancellation_data']['description']} для користувача ${viewer}
 
 
@@ -73,7 +133,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування тендера
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  tender_cancelation
+  ...  tender_cancellation
   Звірити відображення поля title документа ${USERS.users['${tender_owner}']['tender_cancellation_data']['document']['doc_id']} до скасування ${USERS.users['${tender_owner}']['tender_cancellation_data']['cancellation_id']} із ${USERS.users['${tender_owner}']['tender_cancellation_data']['document']['doc_name']} для користувача ${viewer}
 
 
@@ -81,65 +141,8 @@ Suite Teardown  Test Suite Teardown
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування тендера
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  tender_cancelation
+  ...  tender_cancellation
   Звірити відображення вмісту документа ${USERS.users['${tender_owner}']['tender_cancellation_data']['document']['doc_id']} до скасування ${USERS.users['${tender_owner}']['tender_cancellation_data']['cancellation_id']} з ${USERS.users['${tender_owner}']['tender_cancellation_data']['document']['doc_content']} для користувача ${viewer}
-
-##############################################################################################
-#             LOT CANCELLATION
-##############################################################################################
-
-Можливість скасувати лот
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Скасування лота
-  ...  tender_owner
-  ...  ${USERS.users['${tender_owner}'].broker}
-  ...  lot_cancelation
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість скасувати лот
-
-
-Відображення активного статусу скасування лота
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування лота
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  lot_cancelation
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}
-  ...      active
-  ...      cancellations[0].status
-
-
-Відображення причини скасування лота
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування лота
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  lot_cancelation
-  Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${tender_owner}']['lot_cancellation_data']['cancellation_reason']}
-  ...      cancellations[0].reason
-
-
-Відображення опису документа до скасування лота
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування лота
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  lot_cancelation
-  Звірити відображення поля description документа ${USERS.users['${tender_owner}']['lot_cancellation_data']['document']['doc_id']} до скасування ${USERS.users['${tender_owner}']['lot_cancellation_data']['cancellation_id']} із ${USERS.users['${tender_owner}']['lot_cancellation_data']['description']} для користувача ${viewer}
-
-
-Відображення заголовку документа до скасування лота
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування лота
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  lot_cancelation
-  Звірити відображення поля title документа ${USERS.users['${tender_owner}']['lot_cancellation_data']['document']['doc_id']} до скасування ${USERS.users['${tender_owner}']['lot_cancellation_data']['cancellation_id']} із ${USERS.users['${tender_owner}']['lot_cancellation_data']['document']['doc_name']} для користувача ${viewer}
-
-
-Відображення вмісту документа до скасування лота
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення скасування лота
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  lot_cancelation
-  Звірити відображення вмісту документа ${USERS.users['${tender_owner}']['lot_cancellation_data']['document']['doc_id']} до скасування ${USERS.users['${tender_owner}']['lot_cancellation_data']['cancellation_id']} з ${USERS.users['${tender_owner}']['lot_cancellation_data']['document']['doc_content']} для користувача ${viewer}
 
 ##############################################################################################
 #             DELETING LOT
@@ -151,7 +154,7 @@ Suite Teardown  Test Suite Teardown
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_lot
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Require Failure  ${tender_owner}  Видалити лот  ${TENDER['TENDER_UAID']}  ${TENDER['LOT_ID']}
+  Run Keyword And Expect Error  *  Можливість видалення 1 лоту
 
 
 *** Keywords ***
@@ -166,12 +169,13 @@ Suite Teardown  Test Suite Teardown
   Set To Dictionary  ${USERS.users['${tender_owner}']}  tender_cancellation_data=${cancellation_data}
 
 
-Можливість скасувати лот
+Можливість скасувати ${index} лот
   ${cancellation_data}=  Підготувати дані про скасування
+  ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data.lots[${index}]}
   Run As  ${tender_owner}
   ...      Скасувати лот
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${TENDER['LOT_ID']}
+  ...      ${lot_id}
   ...      ${cancellation_data['cancellation_reason']}
   ...      ${cancellation_data['document']['doc_path']}
   ...      ${cancellation_data['description']}

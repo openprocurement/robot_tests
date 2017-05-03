@@ -39,6 +39,8 @@ def create_fake_title():
 def create_fake_date():
     return get_now().isoformat()
 
+def subtraction(value1, value2):
+    return (int(value1) - int(value2))
 
 def create_fake_value_amount():
     return fake.random_int(min=1)
