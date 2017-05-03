@@ -150,3 +150,44 @@ class OP_Provider(BaseProvider):
                 "description_en": item_base_data["description_en"]
             })
         return deepcopy(item)
+
+
+    @classmethod
+    def fake_classifications(self, cpv_group=None):
+        """
+        Generate a random item for openprocurement tenders
+
+        :param cpv_group: gives possibility to generate items
+            from a specific cpv group. Cpv group is three digits
+            in the beginning of each cpv id.
+        """
+        if cpv_group is None:
+            item_base_data = self.random_element(self.items_base_data)
+        else:
+            cpv_group = str(cpv_group)
+            similar_cpvs = []
+            for cpv_element in self.cpvs:
+                if cpv_element.startswith(cpv_group):
+                    similar_cpvs.append(cpv_element)
+            cpv = self.random_element(similar_cpvs)
+            for entity in self.items_base_data:
+                if entity["cpv_id"] == cpv:
+                    item_base_data = entity
+                    break
+
+        # choose appropriate additional classification for item_base_data's cpv
+        additional_class = []
+        for entity in self.classifications:
+            if entity["classification"]["id"] == item_base_data["cpv_id"]:
+                additional_class.append(entity)
+        classification = self.random_element(additional_class)
+        address = self.random_element(self.addresses)
+        new_data= {
+            "classification": classification["classification"],
+        }
+        if item_base_data["cpv_id"] == "99999999-9":
+            scheme = classification["additionalClassifications"][0]["scheme"]
+            new_data.update({
+                "additionalClassifications": classification["additionalClassifications"],
+            })
+        return deepcopy(new_data)

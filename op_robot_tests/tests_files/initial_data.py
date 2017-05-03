@@ -151,6 +151,53 @@ def test_tender_data(params,
     return munchify(data)
 
 
+def test_tender_data_planning(params):
+    data = {
+        "budget": {
+            "amountNet": round(random.uniform(3000, 999999999.99), 2),
+            "description": fake.description(),
+            "project": {
+                "id": str(fake.random_int(min=1, max=999)),
+                "name": fake.description(),
+            },
+            "currency": "UAH",
+            "amount": round(random.uniform(3000, 99999999999.99), 2),
+            "id": str(fake.random_int(min=1, max=99999999999)) + "-" + str(fake.random_int(min=1, max=9)),
+        },
+        "procuringEntity": {
+            "identifier": {
+                "scheme": "UA-EDR",
+                "id": str(fake.random_int(min=1, max=999)),
+                "legalName": fake.description(),
+            },
+            "name": fake.description(),
+        },
+        "tender": {
+            "procurementMethod": "open",
+            "procurementMethodType": "belowThreshold",
+            "tenderPeriod": {
+                "startDate": (get_now().isoformat())
+            }
+        },
+        "items": []
+        }
+    id_cpv=fake.cpv()
+    new_data=fake.fake_classifications(id_cpv)
+    data.update(new_data)
+    for i in range(params['number_of_items']):
+        new_data=fake.fake_classifications(id_cpv)
+        data['items'].append(new_data)
+        data['items'][i]['description'] = fake.description()
+        data['items'][i]['deliveryDate']={
+                "endDate": get_now().isoformat()
+        }
+        data['items'][i]['unit']={
+                "code": fake.description(),
+                "name": fake.description(),
+        }
+        data['items'][i]['quantity']=fake.random_int(min=1, max=999)
+    return munchify(data)
+
 def test_tender_data_limited(params):
     data = test_tender_data(params)
     del data["submissionMethodDetails"]
