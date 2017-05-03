@@ -1,21 +1,36 @@
 *** Settings ***
 Resource        keywords.robot
 Resource        resource.robot
+Resource        base_keywords.robot
 Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
 *** Variables ***
-@{USED_ROLES}   tender_owner  viewer
+@{USED_ROLES}       tender_owner  provider  provider1  viewer
 
 
 *** Test Cases ***
-Можливість знайти закупівлю по ідентифікатору
-  [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера по ідентифікатору
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_cancelation  lot_cancelation  delete_lot
+Можливість оголосити тендер
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Оголошення тендера
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      create_tender  level1
+  ...      critical
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість оголосити тендер
+
+
+Можливість знайти тендер по ідентифікатору
+  [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      find_tender  level1
+  ...      critical
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість знайти тендер по ідентифікатору для усіх користувачів
+  Створити артефакт
   Завантажити дані про тендер
-  Run As  ${viewer}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
 
 ##############################################################################################
 #             TENDER CANCELLATION
