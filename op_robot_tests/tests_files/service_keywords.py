@@ -33,6 +33,7 @@ from .initial_data import (
     test_feature_data,
     test_invalid_features_data,
     test_item_data,
+    test_item_data_plan,
     test_lot_data,
     test_lot_document_data,
     test_related_question,
@@ -44,6 +45,7 @@ from .initial_data import (
     test_tender_data_limited,
     test_tender_data_openeu,
     test_tender_data_openua,
+    test_tender_data_planning,
 )
 from barbecue import chef
 from restkit import request
@@ -317,6 +319,9 @@ def prepare_test_tender_data(procedure_intervals,
         return munchify({'data': test_tender_data(
             tender_parameters,
             submissionMethodDetails=submissionMethodDetails)})
+    elif mode == 'planning':
+        return munchify({'data': test_tender_data_planning(
+            tender_parameters)})
         # The previous line needs an explicit keyword argument because,
         # unlike previous functions, this one has three arguments.
     raise ValueError("Invalid mode for prepare_test_tender_data")

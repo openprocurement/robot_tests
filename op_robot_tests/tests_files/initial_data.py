@@ -151,6 +151,65 @@ def test_tender_data(params,
     return munchify(data)
 
 
+def test_tender_data_planning(params):
+    data = {
+        "budget": {
+            "amountNet": round(random.uniform(3000, 999999999.99), 2),
+            "description": fake.description(),
+            "project": {
+                "id": str(fake.random_int(min=1, max=999)),
+                "name": fake.description(),
+            },
+            "currency": "UAH",
+            "amount": round(random.uniform(3000, 99999999999.99), 2),
+            "id": str(fake.random_int(min=1, max=99999999999)) + "-" + str(fake.random_int(min=1, max=9)),
+        },
+        "procuringEntity": {
+            "identifier": {
+                "scheme": "UA-EDR",
+                "id": str(fake.random_int(min=1, max=999)),
+                "legalName": fake.description(),
+            },
+            "name": fake.description(),
+        },
+        "tender": {
+            "procurementMethod": "open",
+            "procurementMethodType": "belowThreshold",
+            "tenderPeriod": {
+                "startDate": (get_now().isoformat())
+            }
+        },
+        "items": []
+        }
+    id_cpv=fake.cpv()[:4]
+    new_data=test_item_data_plan(id_cpv)
+    data.update(new_data)
+    del data['deliveryDate']
+    del data['description']
+    del data['description_en']
+    del data['description_ru']
+    del data['quantity']
+    del data['unit']
+    for i in range(params['number_of_items']):
+        new_data=test_item_data_plan(id_cpv)
+        data['items'].append(new_data)
+    return munchify(data)
+
+
+def test_item_data_plan(cpv=None):
+    data = fake.fake_item(cpv)
+    data["description"] = field_with_id("i", data["description"])
+    data["description_en"] = field_with_id("i", data["description_en"])
+    data["description_ru"] = field_with_id("i", data["description_ru"])
+    del data['deliveryAddress']
+    del data['deliveryLocation']
+    days = fake.random_int(min=1, max=30)
+    data["deliveryDate"] = {
+        "endDate": (get_now() + timedelta(days=days)).astimezone(TZ).isoformat()
+    }
+    return munchify(data)
+
+
 def test_tender_data_limited(params):
     data = test_tender_data(params)
     del data["submissionMethodDetails"]
