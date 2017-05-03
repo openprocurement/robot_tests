@@ -1386,37 +1386,33 @@ users:
         browser:  firefox
         position: [0, 0]
         size:     [1024, 768]
-    epsilon_Owner:
+    epsilon_Owner_auction:
         broker:   epsilon
-        homepage: "https://tbepsilon.com/user/login"
-        default_page: "https://tbepsilon.com/public"
-        login:    organizator
+        homepage: "https://tbepsilon.com"
+        login:    prozorroytenderowner@gmail.com
         password: 123456
-        browser:  firefox
+        browser:  Firefox
         position: [0, 0]
-        size:     [1024, 768]
-    epsilon_Provider:
+        size:     [1366, 800]
+    epsilon_Provider_auction:
         broker:   epsilon
-        homepage: "https://tbepsilon.com/user/login"
-        default_page: "https://tbepsilon.com/public"
-        login:    member
+        homepage: "https://tbepsilon.com"
+        login:    prozorroyprovider1@gmail.com
         password: 123456
-        browser:  firefox
+        browser:  Firefox
         position: [0, 0]
-        size:     [1024, 768]
-    epsilon_Provider1:
+        size:     [1366, 800]
+    epsilon_Provider1_auction:
         broker:   epsilon
-        homepage: "https://tbepsilon.com/user/login"
-        default_page: "https://tbepsilon.com/public"
-        login:    member1
+        homepage: "https://tbepsilon.com"
+        login:    prozorroyprovider2@gmail.com
         password: 123456
-        browser:  firefox
+        browser:  Firefox
         position: [0, 0]
-        size:     [1024, 768]
-    epsilon_Viewer:
+        size:     [1366, 800]
+    epsilon_Viewer_auction:
         broker:   epsilon
-        homepage: "https://tbepsilon.com/user/login"
-        default_page: "https://tbepsilon.com/public"
-        browser:  firefox
+        homepage: "https://tbepsilon.com"
+        browser:  Firefox
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 800]
