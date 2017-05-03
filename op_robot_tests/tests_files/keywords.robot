@@ -942,3 +942,12 @@ Require Failure
   ${LAST_MODIFICATION_DATE}=  Get Current TZdate
   ${status}=  Get Variable Value  ${TEST_STATUS}  PASS
   Run Keyword If  '${status}' == 'PASS'  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE=${LAST_MODIFICATION_DATE}
+
+
+Отримати останній індекс
+  [Arguments]  ${object}  ${username}
+  ${status}=  Run Keyword And Return Status  List Should Contain Value  ${USERS.users['${username}'].tender_data.data}  ${object}
+  Run Keyword If  '${status}' == 'False'  Fail  ${object} not found in \${USERS.users['${username}'].tender_data.data}
+  ${len_of_object}=  Get Length  ${USERS.users['${username}'].tender_data.data.${object}}
+  ${index}=  subtraction  ${len_of_object}  1
+  [Return]  ${index}
