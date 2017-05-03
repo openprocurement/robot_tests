@@ -36,6 +36,10 @@ def create_fake_date():
     return get_now().isoformat()
 
 
+def create_fake_value_amount():
+    return fake.random_int(min=1)
+
+
 def field_with_id(prefix, sentence):
     return u"{}-{}: {}".format(prefix, fake.uuid4()[:8], sentence)
 

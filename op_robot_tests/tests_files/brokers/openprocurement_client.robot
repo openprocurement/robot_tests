@@ -228,6 +228,16 @@ Library  openprocurement_client.utils
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
   Set_To_Object   ${USERS.users['${username}'].tender_data}   ${fieldname}   ${fieldvalue}
 
+
+Внести зміни в план
+  [Arguments]  ${username}  ${tender_uaid}  ${fieldname}  ${fieldvalue}
+  ${tender}=  openprocurement_client.Пошук плану по ідентифікатору  ${username}  ${tender_uaid}
+  Set_To_Object  ${tender.data}   ${fieldname}   ${fieldvalue}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
+  ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_plan  ${tender}
+  Set_To_Object   ${USERS.users['${username}'].tender_data}   ${fieldname}   ${fieldvalue}
+
+
 ##############################################################################
 #             Item operations
 ##############################################################################
