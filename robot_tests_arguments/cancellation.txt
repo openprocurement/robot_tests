@@ -1,0 +1,14 @@
+-v MODE:openeu
+
+-v NUMBER_OF_ITEMS:1
+-v NUMBER_OF_LOTS:2
+
+-v TENDER_MEAT:True
+-v ITEM_MEAT:True
+-v LOT_MEAT:True
+
+-i create_tender
+-i find_tender
+-i tender_cancellation
+-i lot_cancellation
+-i delete_lot
