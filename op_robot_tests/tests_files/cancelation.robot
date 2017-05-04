@@ -27,8 +27,6 @@ Suite Teardown  Test Suite Teardown
   ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість знайти тендер по ідентифікатору для усіх користувачів
-  Створити артефакт
-  Завантажити дані про тендер
 
 ##############################################################################################
 #             LOT CANCELLATION
@@ -154,7 +152,7 @@ Suite Teardown  Test Suite Teardown
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_lot
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Require Failure  ${tender_owner}  Видалити лот  ${TENDER['TENDER_UAID']}  ${TENDER['LOT_ID']}
+  Require Failure  ${tender_owner}  Видалити лот  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].tender_data.data.lots[0].id}
 
 
 *** Keywords ***
@@ -171,10 +169,11 @@ Suite Teardown  Test Suite Teardown
 
 Можливість скасувати лот
   ${cancellation_data}=  Підготувати дані про скасування
+  ${lot_id}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data.lots[0].id}
   Run As  ${tender_owner}
   ...      Скасувати лот
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${TENDER['LOT_ID']}
+  ...      ${lot_id}
   ...      ${cancellation_data['cancellation_reason']}
   ...      ${cancellation_data['document']['doc_path']}
   ...      ${cancellation_data['description']}

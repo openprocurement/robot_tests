@@ -250,7 +250,6 @@ Library  openprocurement_client_helper.py
 Скасувати лот
   [Arguments]  ${username}  ${tender_uaid}  ${lot_id}  ${cancellation_reason}  ${document}  ${new_description}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${lot_id}=  Get Variable Value  ${tender.data.lots[${lot_index}].id}
   ${data}=  Create dictionary
   ...      reason=${cancellation_reason}
   ...      cancellationOf=lot
