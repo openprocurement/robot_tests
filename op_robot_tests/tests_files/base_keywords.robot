@@ -66,6 +66,17 @@ Resource           resource.robot
   Run as  ${username}  Пошук тендера по ідентифікатору  ${TENDER['TENDER_UAID']}
 
 
+Можливість знайти план по ідентифікатору
+  :FOR  ${username}  IN  ${tender_owner}  ${viewer}
+  \  Можливість знайти план по ідентифікатору для користувача ${username}
+
+
+Можливість знайти план по ідентифікатору для користувача ${username}
+  Дочекатись синхронізації з майданчиком  ${username}
+  Run as  ${username}  Пошук плану по ідентифікатору  ${TENDER['TENDER_UAID']}
+
+
+
 Можливість знайти тендер по ідентифікатору ${tender_id} та зберегти його в ${save_location} для користувача ${username}
   Дочекатись синхронізації з майданчиком  ${username}
   Run as  ${username}  Пошук тендера по ідентифікатору  ${tender_id}  ${save_location}
