@@ -8,7 +8,6 @@ from retrying import retry
 import os
 import urllib
 
-
 def retry_if_request_failed(exception):
     if isinstance(exception, RequestFailed):
         status_code = getattr(exception, 'status_int', None)
