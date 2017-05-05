@@ -17,6 +17,19 @@ Library  openprocurement_client.utils
   [return]  ${tender_id}
 
 
+Отримати internal id плану по UAid
+  [Arguments]  ${username}  ${tender_uaid}
+  Log  ${username}
+  Log  ${tender_uaid}
+  Log Many  ${USERS.users['${username}'].id_map}
+  ${status}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${USERS.users['${username}'].id_map}  ${tender_uaid}
+  Run Keyword And Return If  ${status}  Get From Dictionary  ${USERS.users['${username}'].id_map}  ${tender_uaid}
+  Call Method  ${USERS.users['${username}'].client}  get_plans
+  ${tender_id}=  Wait Until Keyword Succeeds  5x  30 sec  get_plan_id_by_uaid  ${tender_uaid}  ${USERS.users['${username}'].client}
+  Set To Dictionary  ${USERS.users['${username}'].id_map}  ${tender_uaid}  ${tender_id}
+  [return]  ${tender_id}
+
+
 Підготувати клієнт для користувача
   [Arguments]  ${username}
   [Documentation]  Відкрити браузер, створити об’єкти api wrapper і
@@ -32,7 +45,9 @@ Library  openprocurement_client.utils
 #  Uncomment this line if there is need to process files operations without DS.
 #  ${ds_api_wraper}=  set variable  ${None}
   ${ds_api_wraper}=  prepare_ds_api_wrapper  ${DS_HOST_URL}  ${auth_ds}
-  ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${RESOURCE}  ${API_HOST_URL}  ${API_VERSION}  ${ds_api_wraper}
+  ${api_wrapper}=  Run Keyword If  '${MODE}' == 'planning'
+  ...     prepare_plan_api_wrapper  ${USERS.users['${username}'].api_key}  ${API_HOST_URL}  ${API_VERSION}
+  ...                     ELSE  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${RESOURCE}  ${API_HOST_URL}  ${API_VERSION}  ${ds_api_wraper}
   Set To Dictionary  ${USERS.users['${username}']}  client=${api_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${EMPTY}
   ${id_map}=  Create Dictionary
@@ -115,6 +130,20 @@ Library  openprocurement_client.utils
   Set To Dictionary  ${USERS.users['${username}']}   tender_data=${tender}
   Log   ${USERS.users['${username}'].tender_data}
   [return]  ${tender.data.tenderID}
+
+
+Створити план
+  [Arguments]  ${username}  ${tender_data}
+  ${tender}=  Call Method  ${USERS.users['${username}'].client}  create_plan  ${tender_data}
+  Log  ${tender}
+  ${access_token}=  Get Variable Value  ${tender.access.token}
+  ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_plan  ${tender}
+  Log  ${tender}
+  Log  ${\n}${API_HOST_URL}/api/${API_VERSION}/plans/${tender.data.id}${\n}  WARN
+  Set To Dictionary  ${USERS.users['${username}']}   access_token=${access_token}
+  Set To Dictionary  ${USERS.users['${username}']}   tender_data=${tender}
+  Log   ${USERS.users['${username}'].tender_data}
+  [return]  ${tender.data.planID}
 
 
 Пошук тендера по ідентифікатору
