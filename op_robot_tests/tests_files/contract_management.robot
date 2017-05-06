@@ -163,6 +163,29 @@ Suite Teardown  Test Suite Teardown
   Run As  ${tender_owner}  Редагувати поле договору  ${CONTRACT_UAID}  value.amount  ${value.amount}
 
 
+Можливість редагувати дату завершення дії договору
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_contract
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${endDate}=  create_fake_date
+  Set to dictionary  ${USERS.users['${tender_owner}']}  new_endDate=${endDate}
+  Run As  ${tender_owner}  Редагувати поле договору  ${CONTRACT_UAID}  period.endDate  ${endDate}
+
+
+Можливість редагувати дату початку дії договору
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_contract
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${startDate}=  create_fake_date
+  ${period.startDate}=  add_minutes_to_date  ${startDate}  -20
+  Set to dictionary  ${USERS.users['${tender_owner}']}  new_startDate=${period.startDate}
+  Run As  ${tender_owner}  Редагувати поле договору  ${CONTRACT_UAID}  period.startDate  ${period.startDate}
+
+
 Можливість застосувати зміну договору
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
   ...      tender_owner
