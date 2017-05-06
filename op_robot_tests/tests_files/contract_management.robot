@@ -245,6 +245,28 @@ Suite Teardown  Test Suite Teardown
   ...     ${CONTRACT_UAID}
   ...     ${USERS.users['${tender_owner}'].new_description}
   ...     description
+Відображення відредагованої дати початку дії договору
+  [Tags]   ${USERS.users['${viewer}'].broker}: Редагування договору
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_contract
+  Звірити поле договору із значенням
+  ...      ${viewer}
+  ...      ${CONTRACT_UAID}
+  ...      ${USERS.users['${tender_owner}'].new_startDate}
+  ...      period.startDate
+
+
+Відображення відредагованої дати завершення дії договору
+  [Tags]   ${USERS.users['${viewer}'].broker}: Редагування договору
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_contract
+  Звірити поле договору із значенням
+  ...      ${viewer}
+  ...      ${CONTRACT_UAID}
+  ...      ${USERS.users['${tender_owner}'].new_endDate}
+  ...      period.endDate
 
 
 Відображення підтвердженого статусу зміни договору
