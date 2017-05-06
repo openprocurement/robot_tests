@@ -1338,11 +1338,11 @@ Library  openprocurement_client.utils
 
 Додати документацію до зміни в договорі
   [Arguments]  ${username}  ${contract_uaid}  ${document}
-  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
-  ${reply_doc_create}=  Call Method  ${USERS.users['${username}'].contracting_client}  upload_document  ${document}  ${internalid}  ${USERS.users['${username}'].contract_access_token}
-  ${data}=  Create Dictionary  documentOf=change  relatedItem=${USERS.users['${username}'].changes[0].data.id}
-  ${data}=  Create Dictionary  data=${data}
-  ${reply_doc_patch}=  Call Method  ${USERS.users['${username}'].contracting_client}  patch_document  ${internalid}  ${reply_doc_create.data.id}  ${USERS.users['${username}'].contract_access_token}  ${data}
+  ${contract}=  openprocurement_client.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+  ${contract}=  set_access_key  ${contract}  ${USERS.users['${username}'].contract_access_token}
+  ${reply_doc_create}=  Call Method  ${USERS.users['${username}'].contracting_client}  upload_document  ${document}  ${contract}
+  ${change_document}=  test_change_document_data  ${reply_doc_create}  ${USERS.users['${username}'].changes[0].data.id}
+  ${reply_doc_patch}=  Call Method  ${USERS.users['${username}'].contracting_client}  patch_document  ${contract}  ${change_document}
   Log  ${reply_doc_create}
   Log  ${reply_doc_patch}
 
