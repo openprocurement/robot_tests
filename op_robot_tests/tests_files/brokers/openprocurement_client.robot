@@ -1357,6 +1357,19 @@ Library  openprocurement_client.utils
   Log  ${contract}
 
 
+Редагувати зміну
+  [Arguments]  ${username}  ${contract_uaid}  ${fieldname}  ${fieldvalue}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${data}=  Create Dictionary  ${fieldname}=${fieldvalue}
+  ${data}=  Create Dictionary  data=${data}
+  ${changes}=  Get variable value  ${USERS.users['${username}'].changes}
+  ${change}=  munchify  ${changes[-1]}
+  Log  ${change}
+  ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  patch_change  ${internalid}  ${USERS.users['${username}'].changes[-1].data.id}  ${USERS.users['${username}'].contract_access_token}  ${data}
+  Log  ${data}
+  Log  ${reply}
+
+
 Застосувати зміну
   [Arguments]  ${username}  ${contract_uaid}
   ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
