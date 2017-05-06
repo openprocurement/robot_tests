@@ -42,7 +42,7 @@ Library  openprocurement_client.utils
   ${edr_wrapper}=  prepare_edr_wrapper  ${EDR_HOST_URL}  ${EDR_VERSION}  ${USERS.users['${username}'].auth_edr[0]}  ${USERS.users['${username}'].auth_edr[1]}
   Set To Dictionary  ${USERS.users['${username}']}  edr_client=${edr_wrapper}
   #Variables for contracting_management module
-  ${contract_api_wrapper}=  prepare_contract_api_wrapper  ${USERS.users['${username}'].api_key}  ${api_host_url}  ${api_version}
+  ${contract_api_wrapper}=  prepare_contract_api_wrapper  ${USERS.users['${username}'].api_key}  ${api_host_url}  ${api_version}  ${ds_api_wraper}
   Set To Dictionary  ${USERS.users['${username}']}  contracting_client=${contract_api_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  contract_access_token=${EMPTY}
   ${contracts_id_map}=  Create Dictionary

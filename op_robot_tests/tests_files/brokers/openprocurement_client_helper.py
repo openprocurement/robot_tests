@@ -49,8 +49,8 @@ class ContractingStableClient(ContractingClient):
         return super(ContractingStableClient, self).request(*args, **kwargs)
 
 
-def prepare_contract_api_wrapper(key, host_url, api_version):
-    return ContractingStableClient(key, host_url, api_version)
+def prepare_contract_api_wrapper(key, host_url, api_version, ds_client=None):
+    return ContractingStableClient(key, host_url, api_version, ds_client=ds_client)
 
 
 class StableEDRClient(EDRClient):
