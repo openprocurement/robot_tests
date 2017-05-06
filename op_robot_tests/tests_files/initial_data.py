@@ -387,6 +387,10 @@ def test_lot_document_data(document, lot_id):
     document.data.update({"documentOf": "lot", "relatedItem": lot_id})
     return munchify(document)
 
+def test_change_document_data(document, change_id):
+    document.data.update({"documentOf": "change", "relatedItem": change_id})
+    return munchify(document)
+
 
 def test_tender_data_openua(params, submissionMethodDetails):
     # We should not provide any values for `enquiryPeriod` when creating

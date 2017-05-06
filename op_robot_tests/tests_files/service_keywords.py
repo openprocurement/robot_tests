@@ -47,6 +47,7 @@ from .initial_data import (
     test_tender_data_openua,
     create_fake_title,
     create_fake_value_amount,
+    test_change_document_data,
 )
 from barbecue import chef
 from restkit import request
