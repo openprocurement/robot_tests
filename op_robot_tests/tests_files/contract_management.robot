@@ -406,3 +406,14 @@ Suite Teardown  Test Suite Teardown
   ...      tender_owner
   ...      ${USERS.users['${viewer}'].broker}
   Звірити відображення поля amountPaid.currency договору із ${USERS.users['${tender_owner}']['terminating_data'].data.amountPaid.currency} для користувача ${tender_owner}
+
+
+Можливість завершити договір
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Завершення договору
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      contract_termination
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Run As  ${tender_owner}  Завершити договір  ${CONTRACT_UAID}
+
+

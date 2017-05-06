@@ -1398,6 +1398,14 @@ Library  openprocurement_client.utils
   Log  ${reply}
 
 
+Завершити договір
+  [Arguments]  ${username}  ${contract_uaid}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${data}=  Create Dictionary  status=terminated
+  ${data}=  Create Dictionary  data=${data}
+  ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  patch_contract  ${internalid}  ${USERS.users['${username}'].contract_access_token}  ${data}
+
+
 Отримати інформацію із договору
   [Arguments]  ${username}  ${contract_uaid}  ${field_name}
   openprocurement_client.Пошук договору по ідентифікатору
