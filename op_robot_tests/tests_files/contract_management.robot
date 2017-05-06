@@ -362,9 +362,36 @@ Suite Teardown  Test Suite Teardown
   ...      terminationDetails
 
 
+Можливість вказати дійсно оплачену суму
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
   ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      amount_paid
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Вказати дійсно оплачену суму
+
+
+Можливість редагувати обсяг дійсно оплаченої суми
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      amount_paid
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${amountPaid.amount}=  create_fake_value_amount
+  Set to dictionary  ${USERS.users['${tender_owner}']}  new_amountPaid_amount=${amountPaid.amount}
+  Run As  ${tender_owner}  Редагувати поле договору  ${CONTRACT_UAID}  amountPaid.amount  ${amountPaid.amount}
+
+
+Відображення відредагованого обсягу дійсно оплаченої суми
+  [Tags]   ${USERS.users['${viewer}'].broker}: Редагування договору
+  ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  Звірити відображення поля amountPaid.amount договору із ${USERS.users['${tender_owner}']['terminating_data'].data.amountPaid.amount} для користувача ${tender_owner}
+  ...      amount_paid
+  Звірити поле договору із значенням
+  ...      ${viewer}
+  ...      ${CONTRACT_UAID}
+  ...      ${USERS.users['${tender_owner}'].new_amountPaid_amount}
+  ...      amountPaid.amount
 
 
 Відображення врахованого ПДВ в дійсно оплачену суму в договорі

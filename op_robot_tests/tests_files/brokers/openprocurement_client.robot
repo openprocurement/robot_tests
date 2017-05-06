@@ -1397,7 +1397,7 @@ Library  openprocurement_client.utils
   Log  ${reply}
 
 
-Завершити договір
+Внести зміни в договір
   [Arguments]  ${username}  ${contract_uaid}  ${data}
   ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
   ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  patch_contract  ${internalid}  ${USERS.users['${username}'].contract_access_token}  ${data}
