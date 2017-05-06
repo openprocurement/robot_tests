@@ -278,6 +278,23 @@ Suite Teardown  Test Suite Teardown
   ...     ${CONTRACT_UAID}
   ...     active
   ...     status
+Неможливість додати документ до зміни договору після застосування зміни
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_change_contract_doc
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Run keyword and expect error  *  Додати документацію до зміни договору
+
+
+Неможливість редагувати опис причини зміни договору після застосування зміни
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування зміни договору
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_change
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${new_rationale}=  create_fake_sentence
+  Run keyword and expect error  *  Run As  ${tender_owner}  Редагувати зміну  ${CONTRACT_UAID}  rationale  ${new_rationale}
 
 
 Можливість завантажити документацію до договору
