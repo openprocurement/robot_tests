@@ -190,9 +190,11 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  ...      apply_change
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  Run As  ${tender_owner}  Застосувати зміну  ${CONTRACT_UAID}
+  ${dateSigned}=  create_fake_date
+  Run As  ${tender_owner}  Застосувати зміну  ${CONTRACT_UAID}  ${dateSigned}
   Set to dictionary  ${USERS.users['${tender_owner}'].change_data.data}  status=active
 
 
