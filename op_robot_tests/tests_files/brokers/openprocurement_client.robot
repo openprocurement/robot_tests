@@ -1298,8 +1298,9 @@ Library  openprocurement_client.utils
 
 Завантажити документацію до договору
   [Arguments]  ${username}  ${contract_uaid}  ${document}
-  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
-  ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  upload_document  ${document}  ${internalid}  ${USERS.users['${username}'].contract_access_token}
+  ${contract}=  openprocurement_client.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+  ${contract}=  set_access_key  ${contract}  ${USERS.users['${username}'].contract_access_token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  upload_document  ${document}  ${contract}
   Log  ${reply}
 
 
