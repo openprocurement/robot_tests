@@ -1284,9 +1284,9 @@ Library  openprocurement_client.utils
 
 
 Застосувати зміну
-  [Arguments]  ${username}  ${contract_uaid}
+  [Arguments]  ${username}  ${contract_uaid}  ${dateSigned}
   ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
-  ${data}=  Create Dictionary  status=active
+  ${data}=  Create Dictionary  status=active  dateSigned=${dateSigned}
   ${data}=  Create Dictionary  data=${data}
   ${changes}=  Get variable value  ${USERS.users['${username}'].changes}
   ${change}=  munchify  ${changes[-1]}
