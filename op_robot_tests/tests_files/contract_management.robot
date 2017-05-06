@@ -430,3 +430,10 @@ Suite Teardown  Test Suite Teardown
   ...      status
 
 
+Неможливість редагувати догововір після його завершення
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_contract
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Run keyword and expect error  *  Додати документацію до договору
