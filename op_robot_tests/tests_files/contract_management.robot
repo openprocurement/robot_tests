@@ -128,6 +128,17 @@ Suite Teardown  Test Suite Teardown
   ${description}=  create_fake_sentence
   Set to dictionary  ${USERS.users['${tender_owner}']}  new_description=${description}
   Run As  ${tender_owner}  Редагувати договір  ${CONTRACT_UAID}  description  ${description}
+Можливість редагувати опис причини зміни договору
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування зміни
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_change
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${new_rationale}=  create_fake_sentence
+  Set to dictionary  ${USERS.users['${tender_owner}']}  new_rationale=${new_rationale}
+  Run As  ${tender_owner}  Редагувати зміну  ${CONTRACT_UAID}  rationale  ${new_rationale}
+
+
 
 
 Можливість застосувати зміну договору
@@ -140,7 +151,44 @@ Suite Teardown  Test Suite Teardown
   Set to dictionary  ${USERS.users['${tender_owner}'].change_data.data}  status=active
 
 
-Відображення зміненого опису договору
+Відображення відредагованого опису договору
+  [Tags]   ${USERS.users['${viewer}'].broker}: Редагування договору
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view
+  Звірити поле договору із значенням
+  ...      ${viewer}
+  ...      ${CONTRACT_UAID}
+  ...      ${USERS.users['${tender_owner}'].new_description}
+  ...      description
+
+
+Відображення відредагованого опису причини зміни договору
+  [Tags]   ${USERS.users['${viewer}'].broker}: Редагування зміни договору
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_change
+  Remove From Dictionary  ${USERS.users['${viewer}'].contract_data.data.changes[0]}  rationale
+  Звірити поле договору із значенням
+  ...      ${viewer}
+  ...      ${CONTRACT_UAID}
+  ...      ${USERS.users['${tender_owner}'].new_rationale}
+  ...      changes[0].rationale
+
+
+Відображення відредагованої назви договору
+  [Tags]   ${USERS.users['${viewer}'].broker}: Редагування договору
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_contract
+  Звірити поле договору із значенням
+  ...      ${viewer}
+  ...      ${CONTRACT_UAID}
+  ...      ${USERS.users['${tender_owner}'].new_title}
+  ...      title
+
+
+Відображення відредагованої вартості договору
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування договору
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
