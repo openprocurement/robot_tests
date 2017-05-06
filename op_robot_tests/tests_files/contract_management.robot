@@ -329,14 +329,39 @@ Suite Teardown  Test Suite Teardown
   Звірити відображення поля documentOf документа ${USERS.users['${tender_owner}']['contract_doc']['id']} до договору з contract для користувача ${viewer}
 
 
+Можливість вказати причини розірвання договору
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
+  ...      termination_reasons
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Закінчити договір
+  ${terminationDetails}=  create_fake_sentence
+  Run As  ${tender_owner}  Редагувати поле договору  ${CONTRACT_UAID}  terminationDetails  ${terminationDetails}
 
 
-Відображення обсягу дійсно оплаченої суми в договорі
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних договору
+Можливість редагувати причини розірвання договору
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      termination_reasons
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${terminationDetails}=  create_fake_sentence
+  Set to dictionary  ${USERS.users['${tender_owner}']}  new_termination_details=${terminationDetails}
+  Run As  ${tender_owner}  Редагувати поле договору  ${CONTRACT_UAID}  terminationDetails  ${terminationDetails}
+
+
+Відображення відредагованих причин розірвання договору
+  [Tags]   ${USERS.users['${viewer}'].broker}: Редагування договору
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      termination_reasons
+  Звірити поле договору із значенням
+  ...      ${viewer}
+  ...      ${CONTRACT_UAID}
+  ...      ${USERS.users['${tender_owner}'].new_termination_details}
+  ...      terminationDetails
+
+
   ...      tender_owner
   ...      ${USERS.users['${viewer}'].broker}
   Звірити відображення поля amountPaid.amount договору із ${USERS.users['${tender_owner}']['terminating_data'].data.amountPaid.amount} для користувача ${tender_owner}
