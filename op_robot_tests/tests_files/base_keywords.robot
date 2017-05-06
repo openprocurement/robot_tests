@@ -508,7 +508,7 @@ Resource           resource.robot
 
 Додати документацію до зміни договору
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
-  ${doc_id}=  get_id_from_doc_name  ${file_name}
+  ${doc_id}=  get_id_from_string  ${file_name}
   ${doc}=  Create Dictionary
   ...      id=${doc_id}
   ...      name=${file_name}
@@ -520,7 +520,7 @@ Resource           resource.robot
 
 Додати документацію до договору
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
-  ${doc_id}=  get_id_from_doc_name  ${file_name}
+  ${doc_id}=  get_id_from_string  ${file_name}
   ${doc}=  Create Dictionary
   ...      id=${doc_id}
   ...      name=${file_name}
