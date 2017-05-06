@@ -141,6 +141,17 @@ Suite Teardown  Test Suite Teardown
 
 
 
+Можливість редагувати назву договору
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_contract
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${title}=  create_fake_title
+  Set to dictionary  ${USERS.users['${tender_owner}']}  new_title=${title}
+  Run As  ${tender_owner}  Редагувати поле договору  ${CONTRACT_UAID}  title  ${title}
+
+
 Можливість застосувати зміну договору
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
   ...      tender_owner

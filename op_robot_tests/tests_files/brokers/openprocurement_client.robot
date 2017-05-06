@@ -1353,7 +1353,7 @@ Library  openprocurement_client.utils
   Log  ${reply_doc_patch}
 
 
-Редагувати договір
+Редагувати поле договору
   [Arguments]  ${username}  ${contract_uaid}  ${fieldname}  ${fieldvalue}
   ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
   ${contract}=  openprocurement_client.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
