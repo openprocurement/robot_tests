@@ -470,14 +470,14 @@ Resource           resource.robot
   Remove File  ${file_path}
 
 
-Закінчити договір
+Вказати дійсно оплачену суму
   ${amount}=  Get variable value  ${USERS.users['${tender_owner}'].contract_data.data.value.amount}
-  ${data}=  Create Dictionary  status=terminated
   ${amountPaid}=  Create Dictionary  amount=${amount}  valueAddedTaxIncluded=${True}  currency=UAH
+  ${data}=  Create Dictionary  amountPaid=${amountPaid}
   ${data}=  Create Dictionary  data=${data}
-  Set to dictionary  ${data.data}  amountPaid=${amountPaid}
   Set to dictionary  ${USERS.users['${tender_owner}']}  terminating_data=${data}
-  Run As  ${tender_owner}  Завершити договір  ${CONTRACT_UAID}  ${data}
+  Run As  ${tender_owner}  Внести зміни в договір  ${CONTRACT_UAID}  ${data}
+
 
 ##############################################################################################
 #             QUESTIONS
