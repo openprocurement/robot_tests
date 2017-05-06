@@ -1228,7 +1228,7 @@ Library  openprocurement_client.utils
 Отримати доступ до договору
   [Arguments]  ${username}  ${contract_uaid}
   ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
-  ${contract}=  Call Method  ${USERS.users['${username}'].contracting_client}  get_contract_credentials  ${internalid}  ${USERS.users['${username}'].access_token}
+  ${contract}=  Call Method  ${USERS.users['${username}'].contracting_client}  retrieve_contract_credentials  ${internalid}  ${USERS.users['${username}'].access_token}
   ${contract}=  munch_dict  arg=${contract}
   Set To Dictionary  ${USERS.users['${username}']}  contract_data=${contract}
   Set To Dictionary  ${USERS.users['${username}']}  contract_access_token=${contract.access.token}
