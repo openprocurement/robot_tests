@@ -152,6 +152,17 @@ Suite Teardown  Test Suite Teardown
   Run As  ${tender_owner}  Редагувати поле договору  ${CONTRACT_UAID}  title  ${title}
 
 
+Можливість редагувати вартість договору
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_contract
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${value.amount}=  create_fake_value_amount
+  Set to dictionary  ${USERS.users['${tender_owner}']}  new_amount=${value.amount}
+  Run As  ${tender_owner}  Редагувати поле договору  ${CONTRACT_UAID}  value.amount  ${value.amount}
+
+
 Можливість застосувати зміну договору
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
   ...      tender_owner
