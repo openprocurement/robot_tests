@@ -417,3 +417,16 @@ Suite Teardown  Test Suite Teardown
   Run As  ${tender_owner}  Завершити договір  ${CONTRACT_UAID}
 
 
+Звірити статус завершеного договору
+  [Tags]   ${USERS.users['${viewer}'].broker}: Завершення договору
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      contract_termination
+  Remove From Dictionary  ${USERS.users['${viewer}'].contract_data.data}  status
+  Звірити поле договору із значенням
+  ...      ${viewer}
+  ...      ${CONTRACT_UAID}
+  ...      terminated
+  ...      status
+
+
