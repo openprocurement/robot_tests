@@ -820,3 +820,21 @@ tovprof:
             accelerator: 480
             auction: [20, 30]
     timeout_on_wait: 1
+tbetb:
+    keywords_file: tbetb
+    roles:
+        tender_owner:   tbetb_Owner
+        provider:       tbetb_Provider
+        provider1:      tbetb_Provider1
+        viewer:         tbetb_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 20]
+        dgfFinancialAssets:
+            accelerator: 480
+            auction: [20,30]
+        dgfOtherAssets:
+            accelerator: 480
+            auction: [20, 30]
+    timeout_on_wait: 1

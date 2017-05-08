@@ -1471,3 +1471,39 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
+    tbetb_Owner:
+        broker:   tbetb
+        homepage: "http://proz-test.tbetb.com.ua/auctions"
+        default_page: "http://proz-test.tbetb.com.ua/auctions"
+        login:    liquidatro1@aykcion.cm.ua
+        password: 1
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    tbetb_Provider:
+        broker:   tbetb
+        homepage: "http://proz-test.tbetb.com.ua/auctions"
+        default_page: "http://proz-test.tbetb.com.ua/auctions"
+        login:    l341938@mvrht.com
+        password: 1
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    tbetb_Provider1:
+        broker:   tbetb
+        homepage: "http://proz-test.tbetb.com.ua/auctions"
+        default_page: "http://proz-test.tbetb.com.ua/auctions"
+        login:    provider2@aykcion.com.ua
+        password: 1
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    tbetb_Viewer:
+        broker:   tbetb
+        homepage: "http://proz-test.tbetb.com.ua/auctions"
+        default_page: "http://proz-test.tbetb.com.ua/auctions"
+        login:    liquidatro1@aykcion.cm.ua
+        password: 1
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
