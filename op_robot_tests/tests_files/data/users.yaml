@@ -1471,8 +1471,8 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
-    tbetb_Owner:
-        broker:   tbetb
+    prozora_Owner:
+        broker:   prozora
         homepage: "http://proz-test.tbetb.com.ua/auctions"
         default_page: "http://proz-test.tbetb.com.ua/auctions"
         login:    liquidatro1@aykcion.cm.ua
@@ -1480,8 +1480,8 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
-    tbetb_Provider:
-        broker:   tbetb
+    prozora_Provider:
+        broker:   prozora
         homepage: "http://proz-test.tbetb.com.ua/auctions"
         default_page: "http://proz-test.tbetb.com.ua/auctions"
         login:    l341938@mvrht.com
@@ -1489,8 +1489,8 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
-    tbetb_Provider1:
-        broker:   tbetb
+    prozora_Provider1:
+        broker:   prozora
         homepage: "http://proz-test.tbetb.com.ua/auctions"
         default_page: "http://proz-test.tbetb.com.ua/auctions"
         login:    provider2@aykcion.com.ua
@@ -1498,8 +1498,8 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
-    tbetb_Viewer:
-        broker:   tbetb
+    prozora_Viewer:
+        broker:   prozora
         homepage: "http://proz-test.tbetb.com.ua/auctions"
         default_page: "http://proz-test.tbetb.com.ua/auctions"
         login:    liquidatro1@aykcion.cm.ua
