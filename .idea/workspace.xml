@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d71749e7-ecb4-4187-a41b-08d4f5dbfb74" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="d71749e7-ecb4-4187-a41b-08d4f5dbfb74" name="Default" comment="" />
     <list id="0ce45531-fac6-41c8-8aa3-929349e57126" name="Failed commit: Default" comment="c2">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/robot_tests.broker.tabua" afterPath="$PROJECT_DIR$/src/robot_tests.broker.tabua" />
     </list>
