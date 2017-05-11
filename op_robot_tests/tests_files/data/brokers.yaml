@@ -807,3 +807,14 @@ epsilon:
         provider1:   epsilon_Provider1_auction
         viewer:   epsilon_Viewer_auction
     timeout_on_wait: 180
+tabua:
+    intervals:
+        default:
+            accelerator: 360
+    keywords_file: tabua
+    roles:
+        provider1:      tabua_Provider1
+        provider:       tabua_Provider
+        tender_owner:   tabua_Owner
+        viewer:         tabua_Viewer
+    timeout_on_wait: 30
