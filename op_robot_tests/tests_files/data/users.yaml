@@ -1431,3 +1431,33 @@ users:
         browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
+    palata_Owner:
+        broker:   palata
+        homepage: "http://testing.palata.com.ua"
+        login:    palataliquidator@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1280, 800]
+    palata_Provider1:
+        broker:   palata
+        homepage: "http://testing.palata.com.ua"
+        login:    part1@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [0, 800]
+        size:     [1280, 800]
+    palata_Provider2:
+        broker:   palata
+        homepage: "http://testing.palata.com.ua"
+        login:    part2@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [800, 0]
+        size:     [1280, 800]
+    palata_Viewer:
+        broker:   palata
+        homepage: "http://testing.palata.com.ua"
+        browser:  chrome
+        position: [0, 500]
+        size:     [1280, 800]
