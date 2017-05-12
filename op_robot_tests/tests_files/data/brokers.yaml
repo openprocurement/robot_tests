@@ -807,3 +807,24 @@ epsilon:
         provider1:   epsilon_Provider1_auction
         viewer:   epsilon_Viewer_auction
     timeout_on_wait: 180
+palata:
+    intervals:
+        default:
+            enquiry: [0, 20]
+            tender:  [0, 30]
+        dgfFinancialAssets:
+            accelerator: 180
+            auction: [55,60]
+        dgfOtherAssets:
+            accelerator: 180
+            auction: [55,60]
+    keywords_file: palata
+    homepage: 'http://testing.palata.com.ua'
+    syncpage: 'http://testing.palata.com.ua/site/sync'
+    syncdocs: 'http://testing.palata.com.ua/site/syncdocs'
+    roles:
+        provider:       palata_Provider1
+        provider1:      palata_Provider2
+        tender_owner:   palata_Owner
+        viewer:         palata_Viewer
+    timeout_on_wait: 60
