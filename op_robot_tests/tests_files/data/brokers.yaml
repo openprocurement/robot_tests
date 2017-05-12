@@ -796,10 +796,10 @@ epsilon:
             tender:  [0, 19]
         dgfFinancialAssets:
            accelerator: 144
-           auction:  [55, 60]
+           auction:  [75, 80]
         dgfOtherAssets:
             accelerator: 144
-            auction:  [55, 60]
+            auction:  [75, 80]
     keywords_file: epsilon
     roles:
         tender_owner:   epsilon_Owner_auction
