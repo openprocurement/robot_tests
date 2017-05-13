@@ -1461,3 +1461,33 @@ users:
         browser:  chrome
         position: [0, 500]
         size:     [1280, 800]
+    tirex_Owner_auction:
+        broker:   tirex
+        homepage: "http://test.eauction-tendersale.com.ua"
+        login:    prozorroytenderowner@gmail.com
+        password: 123456
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    tirex_Provider_auction:
+        broker:   tirex
+        homepage: "http://test.eauction-tendersale.com.ua"
+        login:    prozorroyprovider1@gmail.com
+        password: 123456
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    tirex_Provider1_auction:
+        broker:   tirex
+        homepage: "http://test.eauction-tendersale.com.ua"
+        login:    prozorroyprovider2@gmail.com
+        password: 123456
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    tirex_Viewer_auction:
+        broker:   tirex
+        homepage: "http://test.eauction-tendersale.com.ua"
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
