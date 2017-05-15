@@ -813,13 +813,14 @@ tovprof:
         default:
             enquiry: [0, 15]
             tender:  [0, 20]
+            accelerator: 480
         dgfFinancialAssets:
             accelerator: 480
             auction: [20,30]
         dgfOtherAssets:
             accelerator: 480
             auction: [20, 30]
-    timeout_on_wait: 1
+    timeout_on_wait: 15
 prozora:
     keywords_file: prozora
     roles:
@@ -829,12 +830,13 @@ prozora:
         viewer:         prozora_Viewer
     intervals:
         default:
-            enquiry: [0, 10]
+            enquiry: [0, 15]
             tender:  [0, 20]
+            accelerator: 480
         dgfFinancialAssets:
             accelerator: 480
             auction: [20,30]
         dgfOtherAssets:
             accelerator: 480
             auction: [20, 30]
-    timeout_on_wait: 1
+    timeout_on_wait: 15
