@@ -785,3 +785,17 @@ epsilon:
             tender:  [0, 25]
             auction: [25, 30]
     timeout_on_wait: 10
+ukrinvest:
+    keywords_file: ukrinvest
+    roles:
+        tender_owner:   ukrinvest_Owner
+        provider:       ukrinvest_Provider
+        provider1:      ukrinvest_Provider1
+        viewer:         ukrinvest_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
+
