@@ -668,6 +668,7 @@ cuex:
     timeout_on_wait: 200
 nkcentr:
     keywords_file: nkcentr
+    accelerator: 360
     roles:
         tender_owner:   nkcentr_Owner
         provider:       nkcentr_Provider
@@ -748,6 +749,7 @@ tbkmfb:
     timeout_on_wait: 10
 utsb:
     keywords_file: utsb
+    accelerator: 360
     roles:
         tender_owner:   utsb_Owner
         provider:       utsb_Provider
