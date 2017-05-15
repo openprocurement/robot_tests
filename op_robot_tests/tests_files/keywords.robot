@@ -597,8 +597,8 @@ Log differences between dicts
 Можливість вичитати посилання на аукціон для глядача
   ${timeout_on_wait}=  Get Broker Property By Username  ${viewer}  timeout_on_wait
   ${timeout_on_wait}=  Set Variable If
-  ...                  ${timeout_on_wait} < ${120}
-  ...                  ${120}
+  ...                  ${timeout_on_wait} < ${600}
+  ...                  ${600}
   ...                  ${timeout_on_wait}
   ${url}=  Wait Until Keyword Succeeds
   ...      ${timeout_on_wait}
@@ -612,8 +612,8 @@ Log differences between dicts
 Можливість вичитати посилання на аукціон для учасника ${username}
   ${timeout_on_wait}=  Get Broker Property By Username  ${username}  timeout_on_wait
   ${timeout_on_wait}=  Set Variable If
-  ...                  ${timeout_on_wait} < ${120}
-  ...                  ${120}
+  ...                  ${timeout_on_wait} < ${600}
+  ...                  ${600}
   ...                  ${timeout_on_wait}
   ${url}=  Wait Until Keyword Succeeds
   ...      ${timeout_on_wait}
