@@ -828,3 +828,21 @@ palata:
         tender_owner:   palata_Owner
         viewer:         palata_Viewer
     timeout_on_wait: 60
+tirex:
+    intervals:
+        default:
+            enquiry: [0, 17]
+            tender:  [0, 19]
+        dgfFinancialAssets:
+           accelerator: 144
+           auction:  [75, 80]
+        dgfOtherAssets:
+            accelerator: 144
+            auction:  [75, 80]
+    keywords_file: tirex
+    roles:
+        tender_owner:   tirex_Owner_auction
+        provider:   tirex_Provider_auction
+        provider1:   tirex_Provider1_auction
+        viewer:   tirex_Viewer_auction
+    timeout_on_wait: 180
