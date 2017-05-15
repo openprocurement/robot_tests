@@ -426,23 +426,19 @@ proztorg:
         viewer:         proztorg_Viewer
     timeout_on_wait: 50
 uub:
-    intervals:
-        default:
-            enquiry: [0, 8]
-            tender:  [0, 10]
-        openua:
-            accelerator: 1440
-            tender:  [0, 15]
-        openeu:
-            tender:  [0, 30]
-            accelerator: 1440
     keywords_file: uub
+    accelerator: 360
     roles:
         tender_owner:   uub_Owner
         provider:       uub_Provider
         provider1:      uub_Provider1
         viewer:         uub_Viewer
-    timeout_on_wait: 15
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
 APStender:
     keywords_file: aps
     roles:
@@ -672,6 +668,7 @@ cuex:
     timeout_on_wait: 200
 nkcentr:
     keywords_file: nkcentr
+    accelerator: 360
     roles:
         tender_owner:   nkcentr_Owner
         provider:       nkcentr_Provider
@@ -752,6 +749,7 @@ tbkmfb:
     timeout_on_wait: 10
 utsb:
     keywords_file: utsb
+    accelerator: 360
     roles:
         tender_owner:   utsb_Owner
         provider:       utsb_Provider
