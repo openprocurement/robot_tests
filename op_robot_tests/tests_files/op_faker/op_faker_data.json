@@ -818,50 +818,6 @@
         },
         {
             "contactPoint": {
-                "url": "http://www.energoatom.kiev.ua/ua/separated/atc/",
-                "telephone": "044-406-56-84",
-                "email": "tverdovska@atc.gov.ua",
-                "name": "Твердовська Тетяна Нінелівна",
-                "faxNumber": "044-406-56-84"
-            },
-            "identifier": {
-                "scheme": "UA-EDR",
-                "id": "20055078",
-                "legalName": "ВП «Аварійно-технічний центр» ДП «НАЕК «Енергоатом»"
-            },
-            "name": "ВП «Аварійно-технічний центр» ДП «НАЕК «Енергоатом»",
-            "address": {
-                "postalCode": "08140",
-                "countryName": "Україна",
-                "streetAddress": "вулиця Припятська, 2",
-                "region": "Київська область",
-                "locality": "Білогородка"
-            }
-        },
-        {
-            "contactPoint": {
-                "url": "http://www.delta-pilot.ua/",
-                "telephone": "0512501151",
-                "email": "kryukovsky@delta-pilot.ua",
-                "name": "Філія \"Дельта-лоцман\" державного підприємства \"Адміністрація морських портів України\"",
-                "faxNumber": "0512501162"
-            },
-            "identifier": {
-                "scheme": "UA-EDR",
-                "id": "38728507",
-                "legalName": "Філія \"Дельта-лоцман\" державного підприємства \"Адміністрація морських портів України\""
-            },
-            "name": "Філія \"Дельта-лоцман\" державного підприємства \"Адміністрація морських портів України\"",
-            "address": {
-                "postalCode": "54017",
-                "countryName": "Україна",
-                "streetAddress": "вулиця Лягіна, 26",
-                "region": "Миколаївська область",
-                "locality": "Миколаїв"
-            }
-        },
-        {
-            "contactPoint": {
                 "url": "http://plus.google.com/106215980992271934972/about?gl=ua&hl=ru",
                 "telephone": "0445646186",
                 "email": "darnsp@health.kiev.ua",
@@ -924,50 +880,6 @@
                 "streetAddress": "вулиця Назарівська, 98, 23",
                 "region": "місто Київ",
                 "locality": "Київ"
-            }
-        },
-        {
-            "contactPoint": {
-                "url": "http://www.uspa.gov.ua/",
-                "telephone": "380512508797",
-                "email": "shyrikm@ukr.net",
-                "name": "МФ ДП \"АМПУ\" (адміністрація Миколаївського МП)",
-                "faxNumber": "380512508818"
-            },
-            "identifier": {
-                "scheme": "UA-EDR",
-                "id": "38728444",
-                "legalName": "МФ ДП \"АМПУ\" (адміністрація Миколаївського МП)"
-            },
-            "name": "МФ ДП \"АМПУ\" (адміністрація Миколаївського МП)",
-            "address": {
-                "postalCode": "54020",
-                "countryName": "Україна",
-                "streetAddress": "вулиця Млинна, 23, 23",
-                "region": "Миколаївська область",
-                "locality": "Миколаїв"
-            }
-        },
-        {
-            "contactPoint": {
-                "url": "http://www.uspa.gov.ua/",
-                "telephone": "380512508797",
-                "email": "shyrikm@ukr.net",
-                "name": "МФ ДП \"АМПУ\" (адміністрація Миколаївського МП)",
-                "faxNumber": "380512508818"
-            },
-            "identifier": {
-                "scheme": "UA-EDR",
-                "id": "38728444",
-                "legalName": "МФ ДП \"АМПУ\" (адміністрація Миколаївського МП)"
-            },
-            "name": "МФ ДП \"АМПУ\" (адміністрація Миколаївського МП)",
-            "address": {
-                "postalCode": "54020",
-                "countryName": "Україна",
-                "streetAddress": "вулиця Млинна, 23, 23",
-                "region": "Миколаївська область",
-                "locality": "Миколаїв"
             }
         },
         {
