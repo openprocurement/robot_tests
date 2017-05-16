@@ -882,3 +882,17 @@ tbetb:
             accelerator: 480
             auction: [20, 30]
     timeout_on_wait: 15
+ukin:
+    keywords_file: ukin
+    roles:
+        tender_owner:   ukin_Owner
+        provider:       ukin_Provider
+        provider1:      ukin_Provider1
+        viewer:         ukin_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
+
