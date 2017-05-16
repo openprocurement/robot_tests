@@ -426,23 +426,19 @@ proztorg:
         viewer:         proztorg_Viewer
     timeout_on_wait: 50
 uub:
-    intervals:
-        default:
-            enquiry: [0, 8]
-            tender:  [0, 10]
-        openua:
-            accelerator: 1440
-            tender:  [0, 15]
-        openeu:
-            tender:  [0, 30]
-            accelerator: 1440
     keywords_file: uub
+    accelerator: 360
     roles:
         tender_owner:   uub_Owner
         provider:       uub_Provider
         provider1:      uub_Provider1
         viewer:         uub_Viewer
-    timeout_on_wait: 15
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
 APStender:
     keywords_file: aps
     roles:
@@ -672,6 +668,7 @@ cuex:
     timeout_on_wait: 200
 nkcentr:
     keywords_file: nkcentr
+    accelerator: 360
     roles:
         tender_owner:   nkcentr_Owner
         provider:       nkcentr_Provider
@@ -752,6 +749,7 @@ tbkmfb:
     timeout_on_wait: 10
 utsb:
     keywords_file: utsb
+    accelerator: 360
     roles:
         tender_owner:   utsb_Owner
         provider:       utsb_Provider
@@ -790,12 +788,24 @@ zupb:
             auction: [25, 30]
     timeout_on_wait: 10
 epsilon:
+    intervals:
+        default:
+            enquiry: [0, 17]
+            tender:  [0, 19]
+        dgfFinancialAssets:
+           accelerator: 144
+           auction:  [75, 80]
+        dgfOtherAssets:
+            accelerator: 144
+            auction:  [75, 80]
     keywords_file: epsilon
     roles:
-        tender_owner:   epsilon_Owner
-        provider:       epsilon_Provider
-        provider1:      epsilon_Provider1
-        viewer:         epsilon_Viewer
+        tender_owner:   epsilon_Owner_auction
+        provider:   epsilon_Provider_auction
+        provider1:   epsilon_Provider1_auction
+        viewer:   epsilon_Viewer_auction
+    timeout_on_wait: 180
+palata:
     intervals:
         default:
             enquiry: [0, 10]
@@ -840,3 +850,40 @@ prozora:
             accelerator: 480
             auction: [20, 30]
     timeout_on_wait: 15
+            enquiry: [0, 20]
+            tender:  [0, 30]
+        dgfFinancialAssets:
+            accelerator: 180
+            auction: [55,60]
+        dgfOtherAssets:
+            accelerator: 180
+            auction: [55,60]
+    keywords_file: palata
+    homepage: 'http://testing.palata.com.ua'
+    syncpage: 'http://testing.palata.com.ua/site/sync'
+    syncdocs: 'http://testing.palata.com.ua/site/syncdocs'
+    roles:
+        provider:       palata_Provider1
+        provider1:      palata_Provider2
+        tender_owner:   palata_Owner
+        viewer:         palata_Viewer
+    timeout_on_wait: 60
+tirex:
+    intervals:
+        default:
+            enquiry: [0, 17]
+            tender:  [0, 19]
+        dgfFinancialAssets:
+           accelerator: 144
+           auction:  [75, 80]
+        dgfOtherAssets:
+            accelerator: 144
+            auction:  [75, 80]
+    keywords_file: tirex
+    roles:
+        tender_owner:   tirex_Owner_auction
+        provider:   tirex_Provider_auction
+        provider1:   tirex_Provider1_auction
+        viewer:   tirex_Viewer_auction
+    timeout_on_wait: 180
+

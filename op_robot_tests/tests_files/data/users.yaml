@@ -672,32 +672,32 @@ users:
         size:     [1000, 500]
     uub_Owner:
         broker:   uub
-        homepage: "https://prozorro.uub.com.ua/Registration.aspx?CN=-1"
-        default_page: "https://prozorro.uub.com.ua/PositionList.aspx?CN=-1"
+        homepage: "https://sale.uub.com.ua/Registration.aspx"
+        default_page: "https://sale.uub.com.ua/PositionList.aspx"
         login:    UUB_Owner@1.ua
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
     uub_Provider:
         broker:   uub
-        homepage: "https://prozorro.uub.com.ua/Registration.aspx?CN=-2"
-        default_page: "https://prozorro.uub.com.ua/PositionList.aspx?CN=-2"
+        homepage: "https://sale.uub.com.ua/Registration.aspx"
+        default_page: "https://sale.uub.com.ua/PositionList.aspx"
         login:    UUB_Provider@1.ua
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
     uub_Provider1:
         broker:   uub
-        homepage: "https://prozorro.uub.com.ua/Registration.aspx?CN=-3"
-        default_page: "https://prozorro.uub.com.ua/PositionList.aspx?CN=-3"
+        homepage: "https://sale.uub.com.ua/Registration.aspx"
+        default_page: "https://sale.uub.com.ua/PositionList.aspx"
         login:    UUB_Provider1@1.ua
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
     uub_Viewer:
         broker:   uub
-        homepage: "https://prozorro.uub.com.ua/Registration.aspx?CN=-4"
-        default_page: "https://prozorro.uub.com.ua/PositionList.aspx?CN=-4"
+        homepage: "https://sale.uub.com.ua/Registration.aspx"
+        default_page: "https://sale.uub.com.ua/PositionList.aspx"
         login:    UUB_Viewer@1.ua
         browser:  firefox
         position: [0, 0]
@@ -1401,38 +1401,34 @@ users:
         browser:  firefox
         position: [0, 0]
         size:     [1024, 768]
-    epsilon_Owner:
+    epsilon_Owner_auction:
         broker:   epsilon
-        homepage: "https://tbepsilon.com/user/login"
-        default_page: "https://tbepsilon.com/public"
-        login:    organizator
+        homepage: "https://tbepsilon.com"
+        login:    prozorroytenderowner@gmail.com
         password: 123456
-        browser:  firefox
+        browser:  Firefox
         position: [0, 0]
-        size:     [1024, 768]
-    epsilon_Provider:
+        size:     [1366, 800]
+    epsilon_Provider_auction:
         broker:   epsilon
-        homepage: "https://tbepsilon.com/user/login"
-        default_page: "https://tbepsilon.com/public"
-        login:    member
+        homepage: "https://tbepsilon.com"
+        login:    prozorroyprovider1@gmail.com
         password: 123456
-        browser:  firefox
+        browser:  Firefox
         position: [0, 0]
-        size:     [1024, 768]
-    epsilon_Provider1:
+        size:     [1366, 800]
+    epsilon_Provider1_auction:
         broker:   epsilon
-        homepage: "https://tbepsilon.com/user/login"
-        default_page: "https://tbepsilon.com/public"
-        login:    member1
+        homepage: "https://tbepsilon.com"
+        login:    prozorroyprovider2@gmail.com
         password: 123456
-        browser:  firefox
+        browser:  Firefox
         position: [0, 0]
-        size:     [1024, 768]
-    epsilon_Viewer:
+        size:     [1366, 800]
+    epsilon_Viewer_auction:
         broker:   epsilon
-        homepage: "https://tbepsilon.com/user/login"
-        default_page: "https://tbepsilon.com/public"
-        browser:  firefox
+        homepage: "https://tbepsilon.com"
+        browser:  Firefox
         position: [0, 0]
         size:     [1024, 768]
     tovprof_Owner:
@@ -1507,3 +1503,64 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
+    palata_Owner:
+        broker:   palata
+        homepage: "http://testing.palata.com.ua"
+        login:    palataliquidator@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1280, 800]
+    palata_Provider1:
+        broker:   palata
+        homepage: "http://testing.palata.com.ua"
+        login:    part1@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [0, 800]
+        size:     [1280, 800]
+    palata_Provider2:
+        broker:   palata
+        homepage: "http://testing.palata.com.ua"
+        login:    part2@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [800, 0]
+        size:     [1280, 800]
+    palata_Viewer:
+        broker:   palata
+        homepage: "http://testing.palata.com.ua"
+        browser:  chrome
+        position: [0, 500]
+        size:     [1280, 800]
+    tirex_Owner_auction:
+        broker:   tirex
+        homepage: "http://test.eauction-tendersale.com.ua"
+        login:    prozorroytenderowner@gmail.com
+        password: 123456
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    tirex_Provider_auction:
+        broker:   tirex
+        homepage: "http://test.eauction-tendersale.com.ua"
+        login:    prozorroyprovider1@gmail.com
+        password: 123456
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    tirex_Provider1_auction:
+        broker:   tirex
+        homepage: "http://test.eauction-tendersale.com.ua"
+        login:    prozorroyprovider2@gmail.com
+        password: 123456
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    tirex_Viewer_auction:
+        broker:   tirex
+        homepage: "http://test.eauction-tendersale.com.ua"
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+
