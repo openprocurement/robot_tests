@@ -167,6 +167,8 @@ PrivatMarket:
         default:
             enquiry: [0, 18]
             tender:  [0, 18]
+        openeu:
+            tender:  [0, 40]
     keywords_file: privatmarket
     roles:
         provider:       PrivatMarket_Provider
