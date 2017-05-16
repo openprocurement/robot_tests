@@ -2,8 +2,9 @@ from openprocurement_client.client import Client, EDRClient
 from openprocurement_client.document_service_client \
     import DocumentServiceClient
 from openprocurement_client.exceptions import IdNotFound
-from restkit.errors import RequestFailed, BadStatusLine
+from restkit.errors import RequestFailed, BadStatusLine, ResourceError
 from retrying import retry
+from time import sleep
 import os
 import urllib
 
@@ -46,7 +47,14 @@ class StableEDRClient(EDRClient):
     @retry(stop_max_attempt_number=100, wait_random_min=500,
            wait_random_max=4000, retry_on_exception=retry_if_request_failed)
     def request(self, *args, **kwargs):
-        return super(StableEDRClient, self).request(*args, **kwargs)
+        try:
+            res = super(StableEDRClient, self).request(*args, **kwargs)
+        except ResourceError as re:
+            if re.status_int == 429:
+                sleep(int(re.response.headers.get('Retry-After', '30')))
+            raise re
+        else:
+            return res
 
 
 def prepare_edr_wrapper(host_url, api_version, username, password):
