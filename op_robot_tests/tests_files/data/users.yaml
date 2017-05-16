@@ -1430,78 +1430,6 @@ users:
         homepage: "https://tbepsilon.com"
         browser:  Firefox
         position: [0, 0]
-        size:     [1024, 768]
-    tovprof_Owner:
-        broker:   tovprof
-        homepage: "http://proz-test.aykcion.com.ua/auctions"
-        default_page: "http://proz-test.aykcion.com.ua/auctions"
-        login:    liquidatro1@aykcion.cm.ua
-        password: 1
-        browser:  chrome
-        position: [0, 0]
-        size:     [1366, 800]
-    tovprof_Provider:
-        broker:   tovprof
-        homepage: "http://proz-test.aykcion.com.ua/auctions"
-        default_page: "http://proz-test.aykcion.com.ua/auctions"
-        login:    l341938@mvrht.com
-        password: 1
-        browser:  chrome
-        position: [0, 0]
-        size:     [1366, 800]
-    tovprof_Provider1:
-        broker:   tovprof
-        homepage: "http://proz-test.aykcion.com.ua/auctions"
-        default_page: "http://proz-test.aykcion.com.ua/auctions"
-        login:    provider2@aykcion.com.ua
-        password: 1
-        browser:  chrome
-        position: [0, 0]
-        size:     [1366, 800]
-    tovprof_Viewer:
-        broker:   tovprof
-        homepage: "http://proz-test.aykcion.com.ua/auctions"
-        default_page: "http://proz-test.aykcion.com.ua/auctions"
-        login:    liquidatro1@aykcion.cm.ua
-        password: 1
-        browser:  chrome
-        position: [0, 0]
-        size:     [1366, 800]
-    prozora_Owner:
-        broker:   prozora
-        homepage: "http://proz-test.tbetb.com.ua/auctions"
-        default_page: "http://proz-test.tbetb.com.ua/auctions"
-        login:    liquidatro1@aykcion.cm.ua
-        password: 1
-        browser:  chrome
-        position: [0, 0]
-        size:     [1366, 800]
-    prozora_Provider:
-        broker:   prozora
-        homepage: "http://proz-test.tbetb.com.ua/auctions"
-        default_page: "http://proz-test.tbetb.com.ua/auctions"
-        login:    l341938@mvrht.com
-        password: 1
-        browser:  chrome
-        position: [0, 0]
-        size:     [1366, 800]
-    prozora_Provider1:
-        broker:   prozora
-        homepage: "http://proz-test.tbetb.com.ua/auctions"
-        default_page: "http://proz-test.tbetb.com.ua/auctions"
-        login:    provider2@aykcion.com.ua
-        password: 1
-        browser:  chrome
-        position: [0, 0]
-        size:     [1366, 800]
-    prozora_Viewer:
-        broker:   prozora
-        homepage: "http://proz-test.tbetb.com.ua/auctions"
-        default_page: "http://proz-test.tbetb.com.ua/auctions"
-        login:    liquidatro1@aykcion.cm.ua
-        password: 1
-        browser:  chrome
-        position: [0, 0]
         size:     [1366, 800]
     palata_Owner:
         broker:   palata
@@ -1563,4 +1491,3 @@ users:
         browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
-

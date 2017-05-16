@@ -808,48 +808,6 @@ epsilon:
 palata:
     intervals:
         default:
-            enquiry: [0, 10]
-            tender:  [0, 25]
-            auction: [25, 30]
-    timeout_on_wait: 10
-tovprof:
-    keywords_file: tovprof
-    roles:
-        tender_owner:   tovprof_Owner
-        provider:       tovprof_Provider
-        provider1:      tovprof_Provider1
-        viewer:         tovprof_Viewer
-    intervals:
-        default:
-            enquiry: [0, 15]
-            tender:  [0, 20]
-            accelerator: 480
-        dgfFinancialAssets:
-            accelerator: 480
-            auction: [20,30]
-        dgfOtherAssets:
-            accelerator: 480
-            auction: [20, 30]
-    timeout_on_wait: 15
-prozora:
-    keywords_file: prozora
-    roles:
-        tender_owner:   prozora_Owner
-        provider:       prozora_Provider
-        provider1:      prozora_Provider1
-        viewer:         prozora_Viewer
-    intervals:
-        default:
-            enquiry: [0, 15]
-            tender:  [0, 20]
-            accelerator: 480
-        dgfFinancialAssets:
-            accelerator: 480
-            auction: [20,30]
-        dgfOtherAssets:
-            accelerator: 480
-            auction: [20, 30]
-    timeout_on_wait: 15
             enquiry: [0, 20]
             tender:  [0, 30]
         dgfFinancialAssets:
@@ -886,4 +844,3 @@ tirex:
         provider1:   tirex_Provider1_auction
         viewer:   tirex_Viewer_auction
     timeout_on_wait: 180
-
