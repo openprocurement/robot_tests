@@ -1,4 +1,4 @@
--v MODE:
+-v MODE:reporting
 
 -v NUMBER_OF_ITEMS:1
 -v NUMBER_OF_LOTS:0
@@ -9,4 +9,4 @@
 
 -i create_tender
 -i find_tender
--i tender_cancelation
+-i tender_cancellation
