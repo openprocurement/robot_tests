@@ -813,10 +813,10 @@ palata:
             tender:  [0, 30]
         dgfFinancialAssets:
             accelerator: 180
-            auction: [55,60]
+            auction: [65,70]
         dgfOtherAssets:
             accelerator: 180
-            auction: [55,60]
+            auction: [65,70]
     keywords_file: palata
     homepage: 'http://testing.palata.com.ua'
     syncpage: 'http://testing.palata.com.ua/site/sync'
@@ -826,7 +826,7 @@ palata:
         provider1:      palata_Provider2
         tender_owner:   palata_Owner
         viewer:         palata_Viewer
-    timeout_on_wait: 60
+    timeout_on_wait: 90
 tirex:
     intervals:
         default:
