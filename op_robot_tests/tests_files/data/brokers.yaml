@@ -696,6 +696,7 @@ kif:
     timeout_on_wait: 10
 agrex:
     keywords_file: kif
+    accelerator: 360
     roles:
         tender_owner:   agrex_Owner
         provider:       agrex_Provider
@@ -709,6 +710,7 @@ agrex:
     timeout_on_wait: 10
 vidrodzhennia:
     keywords_file: vidrodzhennia
+    accelerator: 360
     roles:
         tender_owner:   vidrodzhennia_Owner
         provider:       vidrodzhennia_Provider
