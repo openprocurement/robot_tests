@@ -695,7 +695,8 @@ kif:
             auction: [25, 30]
     timeout_on_wait: 10
 agrex:
-    keywords_file: kif
+    keywords_file: agrex
+    accelerator: 360
     roles:
         tender_owner:   agrex_Owner
         provider:       agrex_Provider
