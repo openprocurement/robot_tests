@@ -189,7 +189,7 @@ users:
         size:     [800, 700]
     PrivatMarket_Viewer:
         broker:   PrivatMarket
-        homepage: "https://rc.privatmarket.ua/business/tenders"
+        homepage: "https://rc.privatmarket.ua/business/tenders?_locale=uk"
         email:    pbecommercetest2@ukr.net
         login:    380270010001
         password: password0001
