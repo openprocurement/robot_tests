@@ -1597,4 +1597,35 @@ users:
         browser:  firefox
         position: [0, 0]
         size:     [1024, 768]
+    tabua_Owner:
+        broker:   tabua
+        homepage: "http://sale_user:sale_password@staging_sale.tab.com.ua/login"
+        login:    test_bank@test.com
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1200, 1200]
+        username: tabua0
+    tabua_Provider1:
+        broker:   tabua
+        homepage: "http://sale_user:sale_password@staging_sale.tab.com.ua/login"
+        login:    test_participant@test.com
+        password: 123456
+        browser:  chrome
+        position: [700, 0]
+        size:     [800, 700]
+    tabua_Provider:
+        broker:   tabua
+        homepage: "http://sale_user:sale_password@staging_sale.tab.com.ua/login"
+        login:    test_finance@test.com
+        password: 123456
+        browser:  chrome
+        position: [700, 0]
+        size:     [800, 700]
+    tabua_Viewer:
+        broker:   tabua
+        homepage: "http://sale_user:sale_password@staging_sale.tab.com.ua/login"
+        browser:  chrome
+        position: [800, 400]
+        size:     [800, 700]
 
