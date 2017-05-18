@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Buildout Eggs" type="python">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/eggs/setuptools-18.3.2-py2.7.egg!/" />
-      <root url="file://$PROJECT_DIR$/eggs/zc.buildout-2.5.3-py2.7.egg" />
-    </CLASSES>
-    <SOURCES />
-  </library>
-</component>
