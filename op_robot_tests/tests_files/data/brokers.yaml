@@ -695,7 +695,8 @@ kif:
             auction: [25, 30]
     timeout_on_wait: 10
 agrex:
-    keywords_file: kif
+    keywords_file: agrex
+    accelerator: 360
     roles:
         tender_owner:   agrex_Owner
         provider:       agrex_Provider
@@ -709,6 +710,7 @@ agrex:
     timeout_on_wait: 10
 vidrodzhennia:
     keywords_file: vidrodzhennia
+    accelerator: 360
     roles:
         tender_owner:   vidrodzhennia_Owner
         provider:       vidrodzhennia_Provider
@@ -812,10 +814,10 @@ palata:
             tender:  [0, 30]
         dgfFinancialAssets:
             accelerator: 180
-            auction: [55,60]
+            auction: [65,70]
         dgfOtherAssets:
             accelerator: 180
-            auction: [55,60]
+            auction: [65,70]
     keywords_file: palata
     homepage: 'http://testing.palata.com.ua'
     syncpage: 'http://testing.palata.com.ua/site/sync'
@@ -825,7 +827,7 @@ palata:
         provider1:      palata_Provider2
         tender_owner:   palata_Owner
         viewer:         palata_Viewer
-    timeout_on_wait: 60
+    timeout_on_wait: 90
 tirex:
     intervals:
         default:
@@ -882,3 +884,16 @@ tbetb:
             accelerator: 480
             auction: [20, 30]
     timeout_on_wait: 15
+ukin:
+    keywords_file: ukin
+    roles:
+        tender_owner:   ukin_Owner
+        provider:       ukin_Provider
+        provider1:      ukin_Provider1
+        viewer:         ukin_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10

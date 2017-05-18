@@ -1175,32 +1175,32 @@ users:
         size:     [1366, 800]
     agrex_Owner:
         broker:   agrex
-        homepage: "https://etp.agrex.gov.ua/test/Registration.aspx"
-        default_page: "https://etp.agrex.gov.ua/test/TenderList.aspx"
+        homepage: "https://sale.agrex.gov.ua/test/Registration.aspx"
+        default_page: "https://sale.agrex.gov.ua/test/AuctionList.aspx"
         login:    ae_owner@a.ua
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
     agrex_Provider:
         broker:   agrex
-        homepage: "https://etp.agrex.gov.ua/test/Registration.aspx"
-        default_page: "https://etp.agrex.gov.ua/test/TenderList.aspx"
+        homepage: "https://sale.agrex.gov.ua/test/Registration.aspx"
+        default_page: "https://sale.agrex.gov.ua/test/AuctionList.aspx"
         login:    ae_provider@a.ua
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
     agrex_Provider1:
         broker:   agrex
-        homepage: "https://etp.agrex.gov.ua/test/Registration.aspx"
-        default_page: "https://etp.agrex.gov.ua/test/TenderList.aspx"
+        homepage: "https://sale.agrex.gov.ua/test/Registration.aspx"
+        default_page: "https://sale.agrex.gov.ua/test/AuctionList.aspx"
         login:    ae_provider1@a.ua
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
     agrex_Viewer:
         broker:   agrex
-        homepage: "https://etp.agrex.gov.ua/test/Registration.aspx"
-        default_page: "https://etp.agrex.gov.ua/test/TenderList.aspx"
+        homepage: "https://sale.agrex.gov.ua/test/Registration.aspx"
+        default_page: "https://sale.agrex.gov.ua/test/AuctionList.aspx"
         login:    ae_viewer@a.ua
         browser:  firefox
         position: [0, 0]
@@ -1563,3 +1563,37 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
+    ukin_Owner:
+        broker:   ukin
+        homepage: "https://ukin.com.ua/user/login"
+        default_page: "https://ukin.com.ua/public"
+        login:    organizator
+        password: 123456
+        browser:  firefox
+        position: [0, 0]
+        size:     [1024, 768]
+    ukin_Provider:
+        broker:   ukin
+        homepage: "https://ukin.com.ua/user/login"
+        default_page: "https://ukin.com.ua/public"
+        login:    member
+        password: 123456
+        browser:  firefox
+        position: [0, 0]
+        size:     [1024, 768]
+    ukin_Provider1:
+        broker:   ukin
+        homepage: "https://ukin.com.ua/user/login"
+        default_page: "https://ukin.com.ua/public"
+        login:    member1
+        password: 123456
+        browser:  firefox
+        position: [0, 0]
+        size:     [1024, 768]
+    ukin_Viewer:
+        broker:   ukin
+        homepage: "https://ukin.com.ua/user/login"
+        default_page: "https://ukin.com.ua/public"
+        browser:  firefox
+        position: [0, 0]
+        size:     [1024, 768]
