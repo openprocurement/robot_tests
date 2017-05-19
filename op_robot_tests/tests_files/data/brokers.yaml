@@ -772,10 +772,10 @@ uisce:
         viewer:         uisce_Viewer
     intervals:
         default:
-            enquiry: [0, 10]
-            tender:  [0, 25]
-            auction: [25, 30]
-    timeout_on_wait: 10
+            enquiry: [0, 50]
+            tender:  [0, 50]
+            auction: [50, 75]
+    timeout_on_wait: 50
 zupb:
     keywords_file: zupb
     roles:
@@ -785,10 +785,10 @@ zupb:
         viewer:         zupb_Viewer
     intervals:
         default:
-            enquiry: [0, 10]
-            tender:  [0, 25]
-            auction: [25, 30]
-    timeout_on_wait: 10
+            enquiry: [0, 50]
+            tender:  [0, 50]
+            auction: [50, 75]
+    timeout_on_wait: 50
 epsilon:
     intervals:
         default:
@@ -893,7 +893,7 @@ ukin:
         viewer:         ukin_Viewer
     intervals:
         default:
-            enquiry: [0, 10]
-            tender:  [0, 25]
-            auction: [25, 30]
-    timeout_on_wait: 10
+            enquiry: [0, 50]
+            tender:  [0, 50]
+            auction: [50, 75]
+    timeout_on_wait: 50
