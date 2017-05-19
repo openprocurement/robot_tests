@@ -5,7 +5,7 @@ Suite Teardown  Test Suite Teardown
 
 *** Variables ***
 ${MODE}         planning
-@{USED_ROLES}   tender_owner  provider  provider1  viewer
+@{USED_ROLES}   tender_owner  viewer
 
 
 *** Test Cases ***
@@ -21,7 +21,7 @@ ${MODE}         planning
 
 Можливість знайти план по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук плану
-  ...      viewer  tender_owner  provider  provider1
+  ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      find_plan  level1
@@ -170,7 +170,7 @@ ${MODE}         planning
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view  level2
   ...      non-critical
-  Звірити відображення поля items.[-1].description плану для користувача ${viewer}
+  Звірити відображення поля items.[0].description плану для користувача ${viewer}
 
 
 Відображення кількості необхідних одиниць об'єкта
@@ -179,7 +179,7 @@ ${MODE}         planning
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view  level2
   ...      non-critical
-  Звірити відображення поля items.[-1].quantity плану для користувача ${viewer}
+  Звірити відображення поля items.[0].quantity плану для користувача ${viewer}
 
 
 Відображення кінцевої дати доставки
@@ -188,7 +188,7 @@ ${MODE}         planning
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view  level2
   ...      non-critical
-  Звірити відображення поля items.[-1].deliveryDate.endDate плану для користувача ${viewer}
+  Звірити відображення поля items.[0].deliveryDate.endDate плану для користувача ${viewer}
 
 
 Відображення коду одиниці виміру
@@ -197,7 +197,7 @@ ${MODE}         planning
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view  level2
   ...      non-critical
-  Звірити відображення поля items.[-1].unit.code плану для користувача ${viewer}
+  Звірити відображення поля items.[0].unit.code плану для користувача ${viewer}
 
 
 Відображення назви одиниці виміру
@@ -206,7 +206,7 @@ ${MODE}         planning
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view  level2
   ...      non-critical
-  Звірити відображення поля items.[-1].unit.name плану для користувача ${viewer}
+  Звірити відображення поля items.[0].unit.name плану для користувача ${viewer}
 
 
 Відображення опису класифікації об'єкта
@@ -215,7 +215,7 @@ ${MODE}         planning
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view  level2
   ...      non-critical
-  Звірити відображення поля items.[-1].classification.description плану для користувача ${viewer}
+  Звірити відображення поля items.[0].classification.description плану для користувача ${viewer}
 
 
 Відображення схеми класифікації об'єкта
@@ -224,7 +224,7 @@ ${MODE}         planning
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view  level2
   ...      non-critical
-  Звірити відображення поля items.[-1].classification.scheme плану для користувача ${viewer}
+  Звірити відображення поля items.[0].classification.scheme плану для користувача ${viewer}
 
 
 Відображення коду класифікації об'єкта
@@ -233,7 +233,7 @@ ${MODE}         planning
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view  level2
   ...      non-critical
-  Звірити відображення поля items.[-1].classification.id плану для користувача ${viewer}
+  Звірити відображення поля items.[0].classification.id плану для користувача ${viewer}
 
 
 Можливість змінити опис бюджету
@@ -256,8 +256,7 @@ ${MODE}         planning
   ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${value}=  Convert To Number  9999999
-  ${new_amount}=  create_fake_amount  ${value}
+  ${new_amount}=  create_fake_value_amount
   Можливість змінити поле budget.amount плану на ${new_amount}
 
 
@@ -281,6 +280,5 @@ ${MODE}         planning
   ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${value}=  Convert To Number  99
-  ${new_quantity}=  create_fake_amount  ${value}
+  ${new_quantity}=  create_fake_value_amount
   Можливість змінити поле items[0].quantity плану на ${new_quantity}

@@ -1,4 +1,4 @@
- -v MODE:planning
+-v MODE:planning
 
 -v NUMBER_OF_ITEMS:2
 -v NUMBER_OF_LOTS:1

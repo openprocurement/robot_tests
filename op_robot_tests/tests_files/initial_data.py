@@ -36,6 +36,10 @@ def create_fake_date():
     return get_now().isoformat()
 
 
+def create_fake_value_amount():
+    return fake.random_int(min=1)
+
+
 def field_with_id(prefix, sentence):
     return u"{}-{}: {}".format(prefix, fake.uuid4()[:8], sentence)
 
@@ -181,22 +185,27 @@ def test_tender_data_planning(params):
         },
         "items": []
         }
-    id_cpv=fake.cpv()
-    new_data=fake.fake_classifications(id_cpv)
+    id_cpv=fake.cpv()[:4]
+    new_data=fake.fake_item(id_cpv)
     data.update(new_data)
+    del data['deliveryAddress']
+    del data['deliveryLocation']
+    del data['description']
+    del data['description_en']
+    del data['description_ru']
+    del data['quantity']
+    del data['unit']
     for i in range(params['number_of_items']):
-        new_data=fake.fake_classifications(id_cpv)
+        new_data=fake.fake_item(id_cpv)
+        del new_data['deliveryAddress']
+        del new_data['deliveryLocation']
         data['items'].append(new_data)
         data['items'][i]['description'] = fake.description()
-        data['items'][i]['deliveryDate']={
+        data['items'][i]['deliveryDate'] = {
                 "endDate": get_now().isoformat()
-        }
-        data['items'][i]['unit']={
-                "code": fake.description(),
-                "name": fake.description(),
-        }
-        data['items'][i]['quantity']=fake.random_int(min=1, max=999)
+        }    
     return munchify(data)
+
 
 def test_tender_data_limited(params):
     data = test_tender_data(params)

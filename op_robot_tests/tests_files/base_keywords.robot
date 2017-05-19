@@ -67,7 +67,7 @@ Resource           resource.robot
 
 
 Можливість знайти план по ідентифікатору для усіх користувачів
-  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${provider1}  ${viewer}
+  :FOR  ${username}  IN  ${tender_owner}  ${viewer}
   \  Можливість знайти план по ідентифікатору для користувача ${username}
 
 
