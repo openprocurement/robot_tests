@@ -865,13 +865,13 @@ tovprof:
             accelerator: 480
             auction: [20, 30]
     timeout_on_wait: 15
-tbetb:
-    keywords_file: tbetb
+prozora:
+    keywords_file: prozora
     roles:
-        tender_owner:   tbetb_Owner
-        provider:       tbetb_Provider
-        provider1:      tbetb_Provider1
-        viewer:         tbetb_Viewer
+        tender_owner:   prozora_Owner
+        provider:       prozora_Provider
+        provider1:      prozora_Provider1
+        viewer:         prozora_Viewer
     intervals:
         default:
             enquiry: [0, 15]
@@ -911,4 +911,3 @@ tabua:
         tender_owner:   tabua_Owner
         viewer:         tabua_Viewer
     timeout_on_wait: 30
-
