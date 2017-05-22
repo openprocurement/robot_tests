@@ -911,3 +911,17 @@ vertas:
             tender:  [0, 25]
             auction: [25, 30]
     timeout_on_wait: 10
+podilska:
+    keywords_file: podilska
+    accelerator: 360
+    roles:
+        tender_owner:   podilska_Owner
+        provider:       podilska_Provider
+        provider1:      podilska_Provider1
+        viewer:         podilska_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
