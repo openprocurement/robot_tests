@@ -266,7 +266,7 @@ Get Broker Property By Username
 
 Підготувати дані для подання пропозиції для другого етапу
   [Arguments]  ${index}=0
-  ${bid}=  generate_test_bid_data_second_stage  ${USERS.users['${tender_owner}'].initialdata.data}  ${index}
+  ${bid}=  generate_test_bid_data_second_stage  ${USERS.users['${tender_owner}'].tender_data.data}  ${index}
   [Return]  ${bid}
 
 
