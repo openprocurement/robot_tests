@@ -957,12 +957,11 @@ Library  openprocurement_client.utils
   ...       [Return] Last document from pre-quailfication
   [Arguments]  ${username}  ${tender_uaid}  ${qualification_id}
   ${docs}=  Run As  ${username}  Отримати список документів по прекваліфікації  ${tender_uaid}  ${qualification_id}
-  ${res}=  Create List
+  ${res}=  Set Variable  ${None}
   :FOR  ${item}  IN  @{docs['data']}
-  \  Run Keyword If  '${item.documentType}'=='registerExtract'
-  \  ...     Append To List  ${res}  ${item}
+  \  ${res}=  Run Keyword If  '${item.documentType}'=='registerExtract'  Set Variable  ${item}
   Log  ${res}
-  [Return]  ${res[-1]}
+  [Return]  ${res}
 
 
 Отримати останній документ кваліфікації
