@@ -897,3 +897,17 @@ ukin:
             tender:  [0, 50]
             auction: [50, 75]
     timeout_on_wait: 50
+vertas:
+    keywords_file: vertas
+    accelerator: 360
+    roles:
+        tender_owner:   vertas_Owner
+        provider:       vertas_Provider
+        provider1:      vertas_Provider1
+        viewer:         vertas_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
