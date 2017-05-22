@@ -1364,7 +1364,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      modify_bid_by_provider
+  ...      add_doc_to_bid_by_provider
   ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість завантажити документ в пропозицію користувачем ${provider}
