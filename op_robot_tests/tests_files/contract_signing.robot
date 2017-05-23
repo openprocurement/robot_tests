@@ -27,7 +27,7 @@ Suite Teardown  Test Suite Teardown
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      tender_view
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
-  \  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  awards[1].complaintPeriod.endDate
+  \  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  awards[0].complaintPeriod.endDate
 
 
 Дочекатися закічення stand still періоду
@@ -35,7 +35,7 @@ Suite Teardown  Test Suite Teardown
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      contract_sign
-  ${standstillEnd}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data.awards[1].complaintPeriod.endDate}
+  ${standstillEnd}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data.awards[0].complaintPeriod.endDate}
   Дочекатись дати  ${standstillEnd}
 
 
@@ -45,7 +45,7 @@ Suite Teardown  Test Suite Teardown
   ...      ${USERS.users['${viewer}'].broker}
   ...      contract_view
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Отримати дані із поля awards[1].value.amount тендера для користувача ${viewer}
+  Отримати дані із поля awards[0].value.amount тендера для користувача ${viewer}
 
 
 Можливість редагувати вартість угоди
@@ -55,7 +55,7 @@ Suite Teardown  Test Suite Teardown
   ...      modify_contract
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${award_amount}=  Get From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[1].value}  amount
+  ${award_amount}=  Get From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[0].value}  amount
   ${amount}=  create_fake_amount  ${award_amount}
   Set to dictionary  ${USERS.users['${tender_owner}']}  new_amount=${amount}
   Run As  ${tender_owner}  Редагувати угоду  ${TENDER['TENDER_UAID']}  1  value.amount  ${amount}
