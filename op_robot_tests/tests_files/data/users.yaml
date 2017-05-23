@@ -1661,3 +1661,35 @@ users:
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
+    stolitsa_Owner:
+        broker:   stolitsa
+        homepage: "https://sale.ce-stolitsa.com.ua/test/Registration.aspx"
+        default_page: "https://sale.ce-stolitsa.com.ua/test/AuctionList.aspx"
+        login:    st_owner@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    stolitsa_Provider:
+        broker:   stolitsa
+        homepage: "https://sale.ce-stolitsa.com.ua/test/Registration.aspx"
+        default_page: "https://sale.ce-stolitsa.com.ua/test/AuctionList.aspx"
+        login:    st_provider@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    stolitsa_Provider1:
+        broker:   stolitsa
+        homepage: "https://sale.ce-stolitsa.com.ua/test/Registration.aspx"
+        default_page: "https://sale.ce-stolitsa.com.ua/test/AuctionList.aspx"
+        login:    st_provider1@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    stolitsa_Viewer:
+        broker:   stolitsa
+        homepage: "https://sale.ce-stolitsa.com.ua/test/Registration.aspx"
+        default_page: "https://sale.ce-stolitsa.com.ua/test/AuctionList.aspx"
+        login:    st_viewer@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
