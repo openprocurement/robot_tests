@@ -267,3 +267,13 @@ ${MODE}         planning
   ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість додати предмет закупівлі в план
+
+
+Можливість видалити предмет закупівлі
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування плану
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      delete_item
+  ...      critical
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість видалити предмет закупівлі з плану
