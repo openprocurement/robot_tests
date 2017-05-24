@@ -744,7 +744,10 @@ Library  openprocurement_client.utils
   \    Set To Dictionary  ${bid.data.parameters[${index}]}  code=${code}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_bid  ${tender}  ${bid}
   Log  ${reply}
-  ${status}=  Set Variable If  '${MODE}'=='openeu'  pending  active
+  Set To Dictionary  ${USERS.users['${username}']}  bid_access_token=${reply.access.token}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bid_access_token}
+  ${procurementMethodType}=  Get variable value  ${USERS.users['${username}'].tender_data.data.procurementMethodType}
+  ${status}=  Set Variable If  'EU' in '${procurementMethodType}' or '${procurementMethodType}'=='competitiveDialogueUA'  pending  active
   Set To Dictionary  ${reply['data']}  status=${status}
   ${reply_active}=  Call Method  ${USERS.users['${username}'].client}  patch_bid  ${tender}  ${reply}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${reply['access']['token']}

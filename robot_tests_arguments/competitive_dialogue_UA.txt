@@ -1,5 +1,6 @@
 -v MODE:open_competitive_dialogue
 
+-v DIALOGUE_TYPE:UA
 
 -v NUMBER_OF_ITEMS:1
 -v NUMBER_OF_LOTS:1
@@ -41,13 +42,6 @@
 
 -i make_bid_by_provider_second_stage
 -i make_bid_by_provider1_second_stage
-
--i qualifications_check_by_edrpou
-
--i pre-qualification_approve_first_bid_second_stage
--i pre-qualification_approve_second_bid_second_stage
-
--i pre-qualification_approve_qualifications_second_stage
 
 -i auction
 

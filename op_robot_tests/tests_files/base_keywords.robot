@@ -967,6 +967,7 @@ Resource           resource.robot
   ...     ELSE  Set Variable  ${None}
   Run As  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}  ${lots_ids}  ${features_ids}
 
+
 Неможливість подати цінову пропозицію без прив’язки до лоту користувачем ${username}
   ${bid}=  Підготувати дані для подання пропозиції
   ${values}=  Get Variable Value  ${bid.data.lotValues[0]}

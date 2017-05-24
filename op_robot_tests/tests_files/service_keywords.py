@@ -533,8 +533,8 @@ def generate_test_bid_data_second_stage(tender_data, index='0'):
     bid['data']['tenderers'][0]['identifier']['id'] = tender_data['shortlistedFirms'][index]['identifier']['id']
     bid['data']['tenderers'][0]['identifier']['scheme'] = tender_data['shortlistedFirms'][index]['identifier']['scheme']
     bid['data']['tenderers'][0]['identifier']['legalName'] = tender_data['shortlistedFirms'][index]['identifier']['legalName']
-
-    if tender_data.get('procurementMethodType', '')[:-2] in ('aboveThreshold', 'competitiveDialogue'):
+    bid['data']['tenderers'][0]['name'] = tender_data['shortlistedFirms'][index]['name']
+    if tender_data.get('procurementMethodType', '') in ('competitiveDialogueEU.stage2', 'competitiveDialogueUA.stage2'):
         bid.data.selfEligible = True
         bid.data.selfQualified = True
     if 'lots' in tender_data:
