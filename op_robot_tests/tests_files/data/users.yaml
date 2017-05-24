@@ -1369,7 +1369,7 @@ users:
         size:     [1024, 768]
     zupb_Owner:
         broker:   zupb
-        homepage: "https://etm.zub.com.ua/user/login"
+        homepage: "https://etm.zub.com.ua"
         default_page: "https://etm.zub.com.ua/public"
         login:    organizator
         password: 123456
@@ -1378,7 +1378,7 @@ users:
         size:     [1024, 768]
     zupb_Provider:
         broker:   zupb
-        homepage: "https://etm.zub.com.ua/user/login"
+        homepage: "https://etm.zub.com.ua"
         default_page: "https://etm.zub.com.ua/public"
         login:    member
         password: 123456
@@ -1387,7 +1387,7 @@ users:
         size:     [1024, 768]
     zupb_Provider1:
         broker:   zupb
-        homepage: "https://etm.zub.com.ua/user/login"
+        homepage: "https://etm.zub.com.ua"
         default_page: "https://etm.zub.com.ua/public"
         login:    member1
         password: 123456
@@ -1396,7 +1396,7 @@ users:
         size:     [1024, 768]
     zupb_Viewer:
         broker:   zupb
-        homepage: "https://etm.zub.com.ua/user/login"
+        homepage: "https://etm.zub.com.ua"
         default_page: "https://etm.zub.com.ua/public"
         browser:  firefox
         position: [0, 0]
