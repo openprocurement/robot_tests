@@ -252,3 +252,12 @@ ${MODE}         planning
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_quantity}=  create_fake_value_amount
   Можливість змінити поле items[0].quantity плану на ${new_quantity}
+
+
+Можливість додати предмет закупівлі
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування плану
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_item
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість додати предмет закупівлі в план

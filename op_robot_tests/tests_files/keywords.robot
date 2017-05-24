@@ -222,6 +222,15 @@ Get Broker Property By Username
   [Return]  ${item}
 
 
+Підготувати дані для створення предмету закупівлі плану
+  [Arguments]  ${cpv}
+  ${item}=  test_item_data  ${cpv[0:4]}
+  Remove From Dictionary  ${item}  deliveryAddress
+  Remove From Dictionary  ${item}  deliveryLocation
+  Remove From Dictionary  ${item}  deliveryDate.startDate
+  [Return]  ${item}
+
+
 Підготувати дані для створення лоту
   [Arguments]  ${max_lot_value_amount}
   ${lot}=  test_lot_data  ${max_lot_value_amount}

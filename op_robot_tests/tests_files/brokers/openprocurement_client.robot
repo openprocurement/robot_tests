@@ -249,6 +249,13 @@ Library  openprocurement_client.utils
   Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
 
 
+Додати предмет закупівлі в план
+  [Arguments]  ${username}  ${tender_uaid}  ${item}
+  ${tender}=  openprocurement_client.Пошук плану по ідентифікатору  ${username}  ${tender_uaid}
+  Append To List  ${tender.data['items']}  ${item}
+  Call Method  ${USERS.users['${username}'].client}  patch_plan  ${tender}
+
+
 Отримати інформацію із предмету
   [Arguments]  ${username}  ${tender_uaid}  ${item_id}  ${field_name}
   ${field_name}=  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${item_id}

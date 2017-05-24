@@ -109,6 +109,17 @@ Resource           resource.robot
   Set To Dictionary  ${USERS.users['${tender_owner}']}  item_data=${item_data}
 
 
+Можливість додати предмет закупівлі в план
+  ${item}=  Підготувати дані для створення предмету закупівлі плану  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['id']}
+  Run As  ${tender_owner}  Додати предмет закупівлі в план  ${TENDER['TENDER_UAID']}  ${item}
+  ${item_id}=  get_id_from_object  ${item}
+  ${item_data}=  Create Dictionary
+  ...      item=${item}
+  ...      item_id=${item_id}
+  ${item_data}=  munch_dict  arg=${item_data}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  item_data=${item_data}
+
+
 Можливість видалити предмет закупівлі з тендера
   Run As  ${tender_owner}  Видалити предмет закупівлі  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].item_data.item_id}
 
