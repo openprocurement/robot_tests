@@ -269,6 +269,13 @@ Library  openprocurement_client.utils
   Remove From List  ${tender.data['items']}  ${item_index}
   Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
 
+Видалити предмет закупівлі плану
+  [Arguments]  ${username}  ${tender_uaid}  ${item_id}  ${lot_id}=${Empty}
+  ${tender}=  openprocurement_client.Пошук плану по ідентифікатору  ${username}  ${tender_uaid}
+  ${item_index}=  get_object_index_by_id  ${tender.data['items']}  ${item_id}
+  Remove From List  ${tender.data['items']}  ${item_index}
+  Call Method  ${USERS.users['${username}'].client}  patch_plan  ${tender}
+
 ##############################################################################
 #             Lot operations
 ##############################################################################
