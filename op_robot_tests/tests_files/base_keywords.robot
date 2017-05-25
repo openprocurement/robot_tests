@@ -38,14 +38,11 @@ Resource           resource.robot
 
 
 Можливість створити план закупівлі
-  ${NUMBER_OF_LOTS}=  Convert To Integer  ${NUMBER_OF_LOTS}
   ${NUMBER_OF_ITEMS}=  Convert To Integer  ${NUMBER_OF_ITEMS}
   ${tender_parameters}=  Create Dictionary
   ...      mode=${MODE}
   ...      number_of_items=${NUMBER_OF_ITEMS}
-  ...      number_of_lots=${NUMBER_OF_LOTS}
   ...      tender_meat=${${TENDER_MEAT}}
-  ...      lot_meat=${${LOT_MEAT}}
   ...      item_meat=${${ITEM_MEAT}}
   ${DIALOGUE_TYPE}=  Get Variable Value  ${DIALOGUE_TYPE}
   Run keyword if  '${DIALOGUE_TYPE}' != '${None}'  Set to dictionary  ${tender_parameters}  dialogue_type=${DIALOGUE_TYPE}
