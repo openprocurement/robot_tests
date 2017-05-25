@@ -962,7 +962,6 @@ tabua:
     keywords_file: tabua
     startpage: 'http://staging_sale.tab.com.ua/'
     auctionpage: 'http://staging_sale.tab.com.ua/auctions'
-    eligibilitycriteria: 'Only licensed financial institutions are eligible to participate.'
     roles:
         provider1:      tabua_Provider1
         provider:       tabua_Provider
