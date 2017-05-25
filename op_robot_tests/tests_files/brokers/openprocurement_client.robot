@@ -864,7 +864,7 @@ Library  openprocurement_client.utils
   ${docs}=  Run As  ${username}  Отримати список документів по прекваліфікації  ${tender_uaid}  ${qualification_id}
   ${res}=  Set Variable  ${None}
   :FOR  ${item}  IN  @{docs['data']}
-  \  ${res}=  Run Keyword If  '${item.documentType}'=='registerExtract'  Set Variable  ${item}
+  \  ${res}=  Run Keyword If  $item.get('documentType')=='registerExtract'  Set Variable  ${item}
   Log  ${res}
   [Return]  ${res}
 
@@ -878,7 +878,7 @@ Library  openprocurement_client.utils
   ${docs}=  Run As  ${username}  Отримати список документів по кваліфікації  ${tender_uaid}  ${award_id}
   ${res}=  Set Variable  ${None}
   :FOR  ${item}  IN  @{docs['data']}
-  \  ${res}=  Run Keyword If  '${item.documentType}'=='registerExtract'  Set Variable  ${item}
+  \  ${res}=  Run Keyword If  $item.get('documentType')=='registerExtract'  Set Variable  ${item}
   Log  ${res}
   [Return]  ${res}
 
