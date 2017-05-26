@@ -18,7 +18,7 @@
 
 -i open_tender_view
 
--i pre-qualifications_check_by_edrpou
+# -i pre-qualifications_check_by_edrpou
 
 -i pre-qualification_approve_first_bid
 -i pre-qualification_approve_second_bid
@@ -26,7 +26,7 @@
 
 -i auction
 
--i qualifications_check_by_edrpou
+# -i qualifications_check_by_edrpou
 -i qualification_approve_first_award
 
 -i contract_sign
