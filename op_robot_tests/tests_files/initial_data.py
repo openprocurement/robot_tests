@@ -36,6 +36,10 @@ def create_fake_date():
     return get_now().isoformat()
 
 
+def create_fake_value_amount():
+    return fake.random_int(min=1)
+
+
 def field_with_id(prefix, sentence):
     return u"{}-{}: {}".format(prefix, fake.uuid4()[:8], sentence)
 
@@ -148,6 +152,56 @@ def test_tender_data(params,
     if not data['features']:
         del data['features']
     data['status'] = 'draft'
+    return munchify(data)
+
+
+def test_tender_data_planning(params):
+    data = {
+        "budget": {
+            "amountNet": round(random.uniform(3000, 999999999.99), 2),
+            "description": fake.description(),
+            "project": {
+                "id": str(fake.random_int(min=1, max=999)),
+                "name": fake.description(),
+            },
+            "currency": "UAH",
+            "amount": round(random.uniform(3000, 99999999999.99), 2),
+            "id": str(fake.random_int(min=1, max=99999999999)) + "-" + str(fake.random_int(min=1, max=9)),
+        },
+        "procuringEntity": {
+            "identifier": {
+                "scheme": "UA-EDR",
+                "id": str(fake.random_int(min=1, max=999)),
+                "legalName": fake.description(),
+            },
+            "name": fake.description(),
+        },
+        "tender": {
+            "procurementMethod": "open",
+            "procurementMethodType": "belowThreshold",
+            "tenderPeriod": {
+                "startDate": (get_now().isoformat())
+            }
+        },
+        "items": []
+        }
+    id_cpv=fake.cpv()[:4]
+    cpv_data=test_item_data(id_cpv)
+    data.update(cpv_data)
+    del data['deliveryDate']
+    del data['description']
+    del data['description_en']
+    del data['description_ru']
+    del data['deliveryAddress']
+    del data['deliveryLocation']
+    del data['quantity']
+    del data['unit']
+    for i in range(params['number_of_items']):
+        item_data=test_item_data(id_cpv)
+        del item_data['deliveryAddress']
+        del item_data['deliveryLocation']
+        del item_data['deliveryDate']['startDate']
+        data['items'].append(item_data)
     return munchify(data)
 
 

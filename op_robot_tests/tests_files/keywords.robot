@@ -222,6 +222,15 @@ Get Broker Property By Username
   [Return]  ${item}
 
 
+Підготувати дані для створення предмету закупівлі плану
+  [Arguments]  ${cpv}
+  ${item}=  test_item_data  ${cpv[0:4]}
+  Remove From Dictionary  ${item}  deliveryAddress
+  Remove From Dictionary  ${item}  deliveryLocation
+  Remove From Dictionary  ${item}  deliveryDate.startDate
+  [Return]  ${item}
+
+
 Підготувати дані для створення лоту
   [Arguments]  ${max_lot_value_amount}
   ${lot}=  test_lot_data  ${max_lot_value_amount}
@@ -408,8 +417,9 @@ Log differences between dicts
   ...      ${last_modification_date_corrected}
   ...      ${USERS.users['${username}']['LAST_REFRESH_DATE']}
   ${LAST_REFRESH_DATE}=  Get Current TZdate
-  Run Keyword If  ${time_diff} > 0  Run keywords
-  ...      Run As  ${username}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  Run Keyword If  ${time_diff} > 0  Run Keyword If  '${MODE}' == 'planning'
+  ...      Run As  ${username}  Оновити сторінку з планом  ${TENDER['TENDER_UAID']}
+  ...                     ELSE  Run As  ${username}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
   ...      AND
   ...      Set To Dictionary  ${USERS.users['${username}']}  LAST_REFRESH_DATE=${LAST_REFRESH_DATE}
 
@@ -418,6 +428,18 @@ Log differences between dicts
   [Arguments]  ${username}  ${tender_uaid}  ${tender_data}  ${field}
   ${left}=  get_from_object  ${tender_data.data}  ${field}
   Звірити поле тендера із значенням  ${username}  ${tender_uaid}  ${left}  ${field}
+
+
+Звірити поле плану
+  [Arguments]  ${username}  ${tender_uaid}  ${tender_data}  ${field}
+  ${left}=  get_from_object  ${tender_data.data}  ${field}
+  Звірити поле плану із значенням  ${username}  ${tender_uaid}  ${left}  ${field}
+
+
+Звірити поле плану із значенням
+  [Arguments]  ${username}  ${tender_uaid}  ${left}  ${field}  ${object_id}=${Empty}
+  ${right}=  Отримати дані із плану  ${username}  ${tender_uaid}  ${field}  ${object_id}
+  Порівняти об'єкти  ${left}  ${right}
 
 
 Звірити поле тендера із значенням
@@ -526,6 +548,26 @@ Log differences between dicts
   # Else call broker to find field
   ${field_value}=  Run Keyword IF  '${object_id}'  Отримати дані із об’єкта тендера  ${username}  ${tender_uaid}  ${object_id}  ${field_name}
   ...                          ELSE  Run As  ${username}  Отримати інформацію із тендера  ${tender_uaid}  ${field}
+  # And caching its value before return
+  Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${field_value}
+  ${data}=  munch_dict  arg=${USERS.users['${username}'].tender_data.data}
+  Set To Dictionary  ${USERS.users['${username}'].tender_data}  data=${data}
+  Log  ${USERS.users['${username}'].tender_data.data}
+  [return]  ${field_value}
+
+
+Отримати дані із плану
+  [Arguments]  ${username}  ${tender_uaid}  ${field_name}  ${object_id}=${Empty}
+  ${field}=  Run Keyword If  '${object_id}'  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${object_id}
+  ...             ELSE  Set Variable  ${field_name}
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      get_from_object
+  ...      ${USERS.users['${username}'].tender_data.data}
+  ...      ${field}
+  # If field in cache, return its value
+  Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
+  # Else call broker to find field
+  ${field_value}=  Run As  ${username}  Отримати інформацію із плану  ${tender_uaid}  ${field}
   # And caching its value before return
   Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${field_value}
   ${data}=  munch_dict  arg=${USERS.users['${username}'].tender_data.data}

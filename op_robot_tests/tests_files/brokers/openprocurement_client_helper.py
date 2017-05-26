@@ -1,13 +1,13 @@
 from openprocurement_client.client import Client, EDRClient
 from openprocurement_client.document_service_client \
     import DocumentServiceClient
+from openprocurement_client.plan import PlansClient
 from openprocurement_client.exceptions import IdNotFound
 from restkit.errors import RequestFailed, BadStatusLine, ResourceError
 from retrying import retry
 from time import sleep
 import os
 import urllib
-
 
 def retry_if_request_failed(exception):
     if isinstance(exception, RequestFailed):
@@ -114,3 +114,13 @@ def download_file_from_url(url, path_to_save_file):
     f.write(urllib.urlopen(url).read())
     f.close()
     return os.path.basename(f.name)
+
+
+class StableClient_plan(PlansClient):
+    @retry(stop_max_attempt_number=100, wait_random_min=500, wait_random_max=4000, retry_on_exception=retry_if_request_failed)
+    def request(self, *args, **kwargs):
+        return super(StableClient_plan, self).request(*args, **kwargs)
+
+
+def prepare_plan_api_wrapper(key, host_url, api_version):
+    return StableClient_plan(key, host_url, api_version)

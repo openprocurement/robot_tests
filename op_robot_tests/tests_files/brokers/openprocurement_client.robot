@@ -17,6 +17,19 @@ Library  openprocurement_client.utils
   [return]  ${tender_id}
 
 
+Отримати internal id плану по UAid
+  [Arguments]  ${username}  ${tender_uaid}
+  Log  ${username}
+  Log  ${tender_uaid}
+  Log Many  ${USERS.users['${username}'].id_map}
+  ${status}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${USERS.users['${username}'].id_map}  ${tender_uaid}
+  Run Keyword And Return If  ${status}  Get From Dictionary  ${USERS.users['${username}'].id_map}  ${tender_uaid}
+  Call Method  ${USERS.users['${username}'].client}  get_plans
+  ${tender_id}=  Wait Until Keyword Succeeds  5x  30 sec  get_plan_id_by_uaid  ${tender_uaid}  ${USERS.users['${username}'].client}
+  Set To Dictionary  ${USERS.users['${username}'].id_map}  ${tender_uaid}  ${tender_id}
+  [return]  ${tender_id}
+
+
 Підготувати клієнт для користувача
   [Arguments]  ${username}
   [Documentation]  Відкрити браузер, створити об’єкти api wrapper і
@@ -32,7 +45,9 @@ Library  openprocurement_client.utils
 #  Uncomment this line if there is need to process files operations without DS.
 #  ${ds_api_wraper}=  set variable  ${None}
   ${ds_api_wraper}=  prepare_ds_api_wrapper  ${DS_HOST_URL}  ${auth_ds}
-  ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${RESOURCE}  ${API_HOST_URL}  ${API_VERSION}  ${ds_api_wraper}
+  ${api_wrapper}=  Run Keyword If  '${MODE}' == 'planning'
+  ...     prepare_plan_api_wrapper  ${USERS.users['${username}'].api_key}  ${API_HOST_URL}  ${API_VERSION}
+  ...                     ELSE  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${RESOURCE}  ${API_HOST_URL}  ${API_VERSION}  ${ds_api_wraper}
   Set To Dictionary  ${USERS.users['${username}']}  client=${api_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${EMPTY}
   ${id_map}=  Create Dictionary
@@ -117,10 +132,35 @@ Library  openprocurement_client.utils
   [return]  ${tender.data.tenderID}
 
 
+Створити план
+  [Arguments]  ${username}  ${tender_data}
+  ${tender}=  Call Method  ${USERS.users['${username}'].client}  create_plan  ${tender_data}
+  Log  ${tender}
+  ${access_token}=  Get Variable Value  ${tender.access.token}
+  ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_plan  ${tender}
+  Log  ${tender}
+  Log  ${\n}${API_HOST_URL}/api/${API_VERSION}/plans/${tender.data.id}${\n}  WARN
+  Set To Dictionary  ${USERS.users['${username}']}   access_token=${access_token}
+  Set To Dictionary  ${USERS.users['${username}']}   tender_data=${tender}
+  Log   ${USERS.users['${username}'].tender_data}
+  [return]  ${tender.data.planID}
+
+
 Пошук тендера по ідентифікатору
   [Arguments]  ${username}  ${tender_uaid}  ${save_key}=tender_data
   ${internalid}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
+  Set To Dictionary  ${USERS.users['${username}']}  ${save_key}=${tender}
+  ${tender}=  munch_dict  arg=${tender}
+  Log  ${tender}
+  [return]   ${tender}
+
+
+Пошук плану по ідентифікатору
+  [Arguments]  ${username}  ${tender_uaid}  ${save_key}=tender_data
+  ${internalid}=  openprocurement_client.Отримати internal id плану по UAid  ${username}  ${tender_uaid}
+  ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_plan  ${internalid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   Set To Dictionary  ${USERS.users['${username}']}  ${save_key}=${tender}
   ${tender}=  munch_dict  arg=${tender}
@@ -142,9 +182,29 @@ Library  openprocurement_client.utils
   openprocurement_client.Пошук тендера по ідентифікатору    ${username}  ${tender_uaid}
 
 
+Оновити сторінку з планом
+  [Arguments]  ${username}  ${tender_uaid}
+  openprocurement_client.Пошук плану по ідентифікатору  ${username}  ${tender_uaid}
+
+
 Отримати інформацію із тендера
   [Arguments]  ${username}  ${tender_uaid}  ${field_name}
   openprocurement_client.Пошук тендера по ідентифікатору
+  ...      ${username}
+  ...      ${tender_uaid}
+
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      Get from object
+  ...      ${USERS.users['${username}'].tender_data.data}
+  ...      ${field_name}
+  Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
+
+  Fail  Field not found: ${field_name}
+
+
+Отримати інформацію із плану
+  [Arguments]  ${username}  ${tender_uaid}  ${field_name}
+  openprocurement_client.Пошук плану по ідентифікатору
   ...      ${username}
   ...      ${tender_uaid}
 
@@ -168,6 +228,16 @@ Library  openprocurement_client.utils
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
   Set_To_Object   ${USERS.users['${username}'].tender_data}   ${fieldname}   ${fieldvalue}
 
+
+Внести зміни в план
+  [Arguments]  ${username}  ${tender_uaid}  ${fieldname}  ${fieldvalue}
+  ${tender}=  openprocurement_client.Пошук плану по ідентифікатору  ${username}  ${tender_uaid}
+  Set_To_Object  ${tender.data}   ${fieldname}   ${fieldvalue}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
+  ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_plan  ${tender}
+  Set_To_Object   ${USERS.users['${username}'].tender_data}   ${fieldname}   ${fieldvalue}
+
+
 ##############################################################################
 #             Item operations
 ##############################################################################
@@ -177,6 +247,13 @@ Library  openprocurement_client.utils
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   Append To List  ${tender.data['items']}  ${item}
   Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+
+
+Додати предмет закупівлі в план
+  [Arguments]  ${username}  ${tender_uaid}  ${item}
+  ${tender}=  openprocurement_client.Пошук плану по ідентифікатору  ${username}  ${tender_uaid}
+  Append To List  ${tender.data['items']}  ${item}
+  Call Method  ${USERS.users['${username}'].client}  patch_plan  ${tender}
 
 
 Отримати інформацію із предмету
@@ -191,6 +268,13 @@ Library  openprocurement_client.utils
   ${item_index}=  get_object_index_by_id  ${tender.data['items']}  ${item_id}
   Remove From List  ${tender.data['items']}  ${item_index}
   Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+
+Видалити предмет закупівлі плану
+  [Arguments]  ${username}  ${tender_uaid}  ${item_id}  ${lot_id}=${Empty}
+  ${tender}=  openprocurement_client.Пошук плану по ідентифікатору  ${username}  ${tender_uaid}
+  ${item_index}=  get_object_index_by_id  ${tender.data['items']}  ${item_id}
+  Remove From List  ${tender.data['items']}  ${item_index}
+  Call Method  ${USERS.users['${username}'].client}  patch_plan  ${tender}
 
 ##############################################################################
 #             Lot operations

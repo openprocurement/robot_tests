@@ -37,6 +37,22 @@ Resource           resource.robot
   \  Should Match Regexp   ${document_url}   ^https?:\/\/public.docs(?:-sandbox)?\.openprocurement\.org\/get\/([0-9A-Fa-f]{32})   msg=Not a Document Service Upload
 
 
+Можливість створити план закупівлі
+  ${NUMBER_OF_ITEMS}=  Convert To Integer  ${NUMBER_OF_ITEMS}
+  ${tender_parameters}=  Create Dictionary
+  ...      mode=${MODE}
+  ...      number_of_items=${NUMBER_OF_ITEMS}
+  ...      tender_meat=${${TENDER_MEAT}}
+  ...      item_meat=${${ITEM_MEAT}}
+  ${DIALOGUE_TYPE}=  Get Variable Value  ${DIALOGUE_TYPE}
+  Run keyword if  '${DIALOGUE_TYPE}' != '${None}'  Set to dictionary  ${tender_parameters}  dialogue_type=${DIALOGUE_TYPE}
+  ${tender_data}=  Підготувати дані для створення тендера  ${tender_parameters}
+  ${adapted_data}=  Адаптувати дані для оголошення тендера  ${tender_data}
+  ${TENDER_UAID}=  Run As  ${tender_owner}  Створити план  ${adapted_data}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data=${adapted_data}
+  Set To Dictionary  ${TENDER}  TENDER_UAID=${TENDER_UAID}
+
+
 Можливість знайти тендер по ідентифікатору для усіх користувачів
   :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${provider1}  ${viewer}
   \  Можливість знайти тендер по ідентифікатору для користувача ${username}
@@ -47,6 +63,16 @@ Resource           resource.robot
   Run as  ${username}  Пошук тендера по ідентифікатору  ${TENDER['TENDER_UAID']}
 
 
+Можливість знайти план по ідентифікатору
+  :FOR  ${username}  IN  ${tender_owner}  ${viewer}
+  \  Можливість знайти план по ідентифікатору для користувача ${username}
+
+
+Можливість знайти план по ідентифікатору для користувача ${username}
+  Дочекатись синхронізації з майданчиком  ${username}
+  Run as  ${username}  Пошук плану по ідентифікатору  ${TENDER['TENDER_UAID']}
+
+
 Можливість знайти тендер по ідентифікатору ${tender_id} та зберегти його в ${save_location} для користувача ${username}
   Дочекатись синхронізації з майданчиком  ${username}
   Run as  ${username}  Пошук тендера по ідентифікатору  ${tender_id}  ${save_location}
@@ -54,6 +80,10 @@ Resource           resource.robot
 
 Можливість змінити поле ${field_name} тендера на ${field_value}
   Run As  ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  ${field_name}  ${field_value}
+
+
+Можливість змінити поле ${field_name} плану на ${field_value}
+  Run As  ${tender_owner}  Внести зміни в план  ${TENDER['TENDER_UAID']}  ${field_name}  ${field_value}
 
 
 Можливість додати документацію до тендера
@@ -79,8 +109,23 @@ Resource           resource.robot
   Set To Dictionary  ${USERS.users['${tender_owner}']}  item_data=${item_data}
 
 
+Можливість додати предмет закупівлі в план
+  ${item}=  Підготувати дані для створення предмету закупівлі плану  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['id']}
+  Run As  ${tender_owner}  Додати предмет закупівлі в план  ${TENDER['TENDER_UAID']}  ${item}
+  ${item_id}=  get_id_from_object  ${item}
+  ${item_data}=  Create Dictionary
+  ...      item=${item}
+  ...      item_id=${item_id}
+  ${item_data}=  munch_dict  arg=${item_data}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  item_data=${item_data}
+
+
 Можливість видалити предмет закупівлі з тендера
   Run As  ${tender_owner}  Видалити предмет закупівлі  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].item_data.item_id}
+
+
+Можливість видалити предмет закупівлі з плану
+  Run As  ${tender_owner}  Видалити предмет закупівлі плану  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].item_data.item_id}
 
 
 Звірити відображення поля ${field} документа ${doc_id} із ${left} для користувача ${username}
@@ -99,6 +144,10 @@ Resource           resource.robot
 
 Звірити відображення поля ${field} тендера для користувача ${username}
   Звірити поле тендера  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${field}
+
+
+Звірити відображення поля ${field} плану для користувача ${username}
+  Звірити поле плану  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${field}
 
 
 Отримати доступ до тендера другого етапу та зберегти його
@@ -144,6 +193,17 @@ Resource           resource.robot
 Звірити відображення поля ${field} усіх предметів для користувача ${username}
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  Звірити відображення поля ${field} ${item_index} предмету для користувача ${username}
+
+
+Звірити відображення ${field} усіх предметів плану для усіх користувачів
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
+  \  Звірити відображення ${field} усіх предметів плану для користувача ${username}
+
+
+Звірити відображення ${field} усіх предметів плану для користувача ${username}
+  :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
+  \  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}]}
+  \  Звірити поле плану із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}].${field}}  ${field}  ${item_id}
 
 
 Звірити відображення поля ${field} ${item_index} предмету для користувача ${username}
