@@ -1707,7 +1707,7 @@ users:
         homepage: "http://sale_user:sale_password@staging_sale.tab.com.ua/login"
         login:    test_bank@test.com
         password: 123456
-        browser:  chrome
+        browser:  firefox
         position: [0, 0]
         size:     [1200, 1200]
     tabua_Provider1:
@@ -1715,7 +1715,7 @@ users:
         homepage: "http://sale_user:sale_password@staging_sale.tab.com.ua/login"
         login:    test_participant@test.com
         password: 123456
-        browser:  chrome
+        browser:  firefox
         position: [700, 0]
         size:     [800, 700]
     tabua_Provider:
@@ -1723,12 +1723,12 @@ users:
         homepage: "http://sale_user:sale_password@staging_sale.tab.com.ua/login"
         login:    test_finance@test.com
         password: 123456
-        browser:  chrome
+        browser:  firefox
         position: [700, 0]
         size:     [800, 700]
     tabua_Viewer:
         broker:   tabua
         homepage: "http://sale_user:sale_password@staging_sale.tab.com.ua/login"
-        browser:  chrome
+        browser:  firefox
         position: [800, 400]
         size:     [800, 700]
