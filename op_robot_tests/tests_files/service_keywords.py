@@ -20,7 +20,6 @@ from .initial_data import (
     create_fake_doc,
     create_fake_sentence,
     create_fake_amount,
-    create_fake_value_amount,
     create_fake_date,
     fake,
     field_with_id,
