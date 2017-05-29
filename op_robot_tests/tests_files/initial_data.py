@@ -31,11 +31,10 @@ def create_fake_sentence():
 def create_fake_amount(award_amount):
     return round(random.uniform(1, award_amount), 2)
 
+
 def create_fake_title():
     return u"[ТЕСТУВАННЯ] {}".format(fake.title())
 
-def create_fake_value_amount():
-    return fake.random_int(min=1)
 
 def create_fake_date():
     return get_now().isoformat()
