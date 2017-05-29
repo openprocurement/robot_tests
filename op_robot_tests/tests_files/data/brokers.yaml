@@ -943,6 +943,12 @@ tabua:
     intervals:
         default:
             accelerator: 360
+        dgfFinancialAssets:
+           accelerator: 144
+           auction:  [75, 80]
+        dgfOtherAssets:
+            accelerator: 144
+            auction:  [75, 80]
     keywords_file: tabua
     startpage: 'http://staging_sale.tab.com.ua/'
     auctionpage: 'http://staging_sale.tab.com.ua/auctions'
