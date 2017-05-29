@@ -497,7 +497,6 @@ Resource           resource.robot
 
 
 Звірити відображення причин зміни договору
-  # here we need to receive list of rationale types from broker
   ${rationale_types_from_broker}=  Run as  ${viewer}  Отримати інформацію із договору  ${CONTRACT_UAID}  changes[0].rationaleTypes
   ${rationale_types_from_robot}=  Get variable value  ${USERS.users['${tender_owner}'].change_data.data.rationaleTypes}
   Log  ${rationale_types_from_broker}
