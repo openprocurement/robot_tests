@@ -32,6 +32,10 @@ def create_fake_amount(award_amount):
     return round(random.uniform(1, award_amount), 2)
 
 
+def create_fake_title():
+    return u"[ТЕСТУВАННЯ] {}".format(fake.title())
+
+
 def create_fake_date():
     return get_now().isoformat()
 
@@ -436,6 +440,10 @@ def test_lot_document_data(document, lot_id):
     document.data.update({"documentOf": "lot", "relatedItem": lot_id})
     return munchify(document)
 
+def test_change_document_data(document, change_id):
+    document.data.update({"documentOf": "change", "relatedItem": change_id})
+    return munchify(document)
+
 
 def test_tender_data_openua(params, submissionMethodDetails):
     # We should not provide any values for `enquiryPeriod` when creating
@@ -482,3 +490,17 @@ def test_tender_data_competitive_dialogue(params, submissionMethodDetails):
     data['procuringEntity']['identifier']['legalName_en'] = fake_en.sentence(nb_words=10, variable_nb_words=True)
     data['procuringEntity']['kind'] = 'general'
     return data
+
+
+def test_change_data():
+    return munchify(
+    {
+        "data":
+        {
+            "rationale": fake.description(),
+            "rationale_en": fake_en.sentence(nb_words=10, variable_nb_words=True),
+            "rationale_ru": fake_ru.sentence(nb_words=10, variable_nb_words=True),
+            "rationaleTypes": fake.rationaleTypes(amount=3), 
+            "status": "pending"
+        }
+    })

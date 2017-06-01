@@ -310,6 +310,14 @@ Get Broker Property By Username
   [Return]  ${cancellation_data}
 
 
+Підготувати дані про зміну до договору
+  [Arguments]  ${username}
+  ${change_data}=  test_change_data
+  Set To Dictionary  ${USERS.users['${username}']}  change_data=${change_data}
+  Log  ${change_data}
+  [Return]  ${change_data}
+
+
 Адаптувати дані для оголошення тендера
   [Arguments]  ${tender_data}
   # munchify is used to make deep copy of ${tender_data}
@@ -453,6 +461,31 @@ Log differences between dicts
   Порівняти об'єкти  ${left}  ${right}
 
 
+Звірити поле договору
+  [Arguments]  ${username}  ${contract_uaid}  ${cotract_data}  ${field}
+  ${left}=  get_from_object  ${contract_data.data}  ${field}
+  Звірити поле договору із значенням  ${username}  ${contract_uaid}  ${left}  ${field}
+
+
+Звірити поле договору із значенням
+  [Arguments]  ${username}  ${contract_uaid}  ${left}  ${field}
+  ${right}=  Отримати дані із договору  ${username}  ${contract_uaid}  ${field}
+  Порівняти об'єкти  ${left}  ${right}
+
+
+Звірити поле зміни до договору
+  [Arguments]  ${username}  ${contract_uaid}  ${change_data}  ${field}
+  ${left}=  get_from_object  ${change_data.data}  ${field}
+  Звірити поле зміни до договору із значенням  ${username}  ${contract_uaid}  ${left}  ${field}
+
+
+Звірити поле зміни до договору із значенням
+  [Arguments]  ${username}  ${contract_uaid}  ${left}  ${field}
+  ${field}=  Evaluate  "{}{}".format('changes[0].', '${field}')
+  ${right}=  Отримати дані із договору  ${username}  ${contract_uaid}  ${field}
+  Порівняти об'єкти  ${left}  ${right}
+
+
 Порівняти об'єкти
   [Arguments]  ${left}  ${right}
   Log  ${left}
@@ -578,6 +611,24 @@ Log differences between dicts
   ${data}=  munch_dict  arg=${USERS.users['${username}'].tender_data.data}
   Set To Dictionary  ${USERS.users['${username}'].tender_data}  data=${data}
   Log  ${USERS.users['${username}'].tender_data.data}
+  [return]  ${field_value}
+
+
+Отримати дані із договору
+  [Arguments]  ${username}  ${contract_uaid}  ${field}
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      get_from_object
+  ...      ${USERS.users['${username}'].contract_data.data}
+  ...      ${field}
+  # If field in cache, return its value
+  Run Keyword if  '${status}' == 'PASS'  Return from keyword  ${field_value}
+  # Else call broker to find field
+  ${field_value}=  Run As  ${username}  Отримати інформацію із договору  ${contract_uaid}  ${field}
+  # And caching its value before return
+  Set_To_Object  ${USERS.users['${username}'].contract_data.data}  ${field}  ${field_value}
+  ${data}=  munch_dict  arg=${USERS.users['${username}'].contract_data.data}
+  Set To Dictionary  ${USERS.users['${username}'].contract_data}  data=${data}
+  Log  ${USERS.users['${username}'].contract_data.data}
   [return]  ${field_value}
 
 

@@ -103,4 +103,19 @@
 -i qualification_add_doc_to_second_award
 -i qualification_approve_second_award
 
+-i contract_view
+-i modify_contract
+-i add_doc_to_contract
 -i contract_sign
+
+-i find_contract
+-i access_contract
+-i submit_change
+-i view_change
+-i upload_change_document
+-i modify_change
+-i apply_change
+-i add_contract_doc
+-i termination_reasons
+-i amount_paid
+-i contract_termination

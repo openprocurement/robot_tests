@@ -56,6 +56,13 @@ Library  openprocurement_client.utils
   Log  ${EDR_VERSION}
   ${edr_wrapper}=  prepare_edr_wrapper  ${EDR_HOST_URL}  ${EDR_VERSION}  ${USERS.users['${username}'].auth_edr[0]}  ${USERS.users['${username}'].auth_edr[1]}
   Set To Dictionary  ${USERS.users['${username}']}  edr_client=${edr_wrapper}
+  #Variables for contracting_management module
+  ${contract_api_wrapper}=  prepare_contract_api_wrapper  ${USERS.users['${username}'].api_key}  ${api_host_url}  ${api_version}  ${ds_api_wraper}
+  Set To Dictionary  ${USERS.users['${username}']}  contracting_client=${contract_api_wrapper}
+  Set To Dictionary  ${USERS.users['${username}']}  contract_access_token=${EMPTY}
+  ${contracts_id_map}=  Create Dictionary
+  Set To Dictionary  ${USERS.users['${username}']}  contracts_id_map=${contracts_id_map}
+  Log Variables
 
 
 Завантажити документ
@@ -1272,3 +1279,159 @@ Library  openprocurement_client.utils
   Log  ${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract  ${tender}  ${data}
   Log  ${reply}
+  [Return]  ${reply}
+
+##############################################################################
+#             CONTRACT MANAGEMENT
+##############################################################################
+
+Отримати internal id по UAid для договору
+  [Arguments]  ${username}  ${contract_uaid}
+  Log  ${contract_uaid}
+  Log  ${USERS.users['${username}'].contracts_id_map}
+  ${status}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${USERS.users['${username}'].contracts_id_map}  ${contract_uaid}
+  Run Keyword and Return If  ${status}  Get From Dictionary  ${USERS.users['${username}'].contracts_id_map}  ${contract_uaid}
+  Call Method  ${USERS.users['${username}'].contracting_client}  get_contracts
+  ${contract_id}=  Wait Until Keyword Succeeds  15x  10 sec  get_contract_id_by_uaid  ${contract_uaid}  ${USERS.users['${username}'].contracting_client}
+  Set To Dictionary  ${USERS.users['${username}'].contracts_id_map}  ${contract_uaid}  ${contract_id}
+  [Return]  ${contract_id}
+
+
+Оновити сторінку з договором
+  [Arguments]  ${username}  ${contract_uaid}
+  openprocurement_client.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+
+
+Пошук договору по ідентифікатору
+  [Arguments]  ${username}  ${contract_uaid}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${contract}=  Call Method  ${USERS.users['${username}'].contracting_client}  get_contract  ${internalid}
+  ${contract}=  munch_dict  arg=${contract}
+  Set To Dictionary  ${USERS.users['${username}']}  contract_data=${contract}
+  Log  ${contract}
+  [return]  ${contract}
+
+
+Отримати доступ до договору
+  [Arguments]  ${username}  ${contract_uaid}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${contract}=  Call Method  ${USERS.users['${username}'].contracting_client}  retrieve_contract_credentials  ${internalid}  ${USERS.users['${username}'].access_token}
+  ${contract}=  munch_dict  arg=${contract}
+  Set To Dictionary  ${USERS.users['${username}']}  contract_data=${contract}
+  Set To Dictionary  ${USERS.users['${username}']}  contract_access_token=${contract.access.token}
+  Log  ${contract}
+  [return]  ${contract}
+
+
+Внести зміну в договір
+  [Arguments]  ${username}  ${contract_uaid}  ${change_data}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  create_change  ${internalid}  ${USERS.users['${username}'].contract_access_token}  ${change_data}
+  # we need this to have change id in `Додати документацію до зміни в договорі` and `Застосувати зміну` keywords
+  ${empty_list}=  Create List
+  ${changes}=  Get variable value  ${USERS.users['${username}'].changes}  ${empty_list}
+  Append to list  ${changes}  ${reply}
+  Set to dictionary  ${USERS.users['${username}']}  changes=${changes}
+  Log  ${change_data}
+  Log  ${reply}
+
+
+Додати документацію до зміни в договорі
+  [Arguments]  ${username}  ${contract_uaid}  ${document}
+  ${contract}=  openprocurement_client.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+  ${contract}=  set_access_key  ${contract}  ${USERS.users['${username}'].contract_access_token}
+  ${reply_doc_create}=  Call Method  ${USERS.users['${username}'].contracting_client}  upload_document  ${document}  ${contract}
+  ${change_document}=  test_change_document_data  ${reply_doc_create}  ${USERS.users['${username}'].changes[0].data.id}
+  ${reply_doc_patch}=  Call Method  ${USERS.users['${username}'].contracting_client}  patch_document  ${contract}  ${change_document}
+  Log  ${reply_doc_create}
+  Log  ${reply_doc_patch}
+
+
+Редагувати поле договору
+  [Arguments]  ${username}  ${contract_uaid}  ${fieldname}  ${fieldvalue}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${contract}=  openprocurement_client.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+  Set_To_Object  ${contract.data}   ${fieldname}   ${fieldvalue}
+  Log  ${contract}
+  ${contract}=  Call Method  ${USERS.users['${username}'].contracting_client}  patch_contract  ${internalid}  ${USERS.users['${username}'].contract_access_token}  ${contract}
+  Log  ${contract}
+
+
+Редагувати зміну
+  [Arguments]  ${username}  ${contract_uaid}  ${fieldname}  ${fieldvalue}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${data}=  Create Dictionary  ${fieldname}=${fieldvalue}
+  ${data}=  Create Dictionary  data=${data}
+  ${changes}=  Get variable value  ${USERS.users['${username}'].changes}
+  ${change}=  munchify  ${changes[-1]}
+  Log  ${change}
+  ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  patch_change  ${internalid}  ${USERS.users['${username}'].changes[-1].data.id}  ${USERS.users['${username}'].contract_access_token}  ${data}
+  Log  ${data}
+  Log  ${reply}
+
+
+Застосувати зміну
+  [Arguments]  ${username}  ${contract_uaid}  ${dateSigned}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${data}=  Create Dictionary  status=active  dateSigned=${dateSigned}
+  ${data}=  Create Dictionary  data=${data}
+  ${changes}=  Get variable value  ${USERS.users['${username}'].changes}
+  ${change}=  munchify  ${changes[-1]}
+  Log  ${change}
+  ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  patch_change  ${internalid}  ${USERS.users['${username}'].changes[-1].data.id}  ${USERS.users['${username}'].contract_access_token}  ${data}
+  Log  ${data}
+  Log  ${reply}
+
+
+Завантажити документацію до договору
+  [Arguments]  ${username}  ${contract_uaid}  ${document}
+  ${contract}=  openprocurement_client.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+  ${contract}=  set_access_key  ${contract}  ${USERS.users['${username}'].contract_access_token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  upload_document  ${document}  ${contract}
+  Log  ${reply}
+
+
+Внести зміни в договір
+  [Arguments]  ${username}  ${contract_uaid}  ${data}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  patch_contract  ${internalid}  ${USERS.users['${username}'].contract_access_token}  ${data}
+  Log  ${reply}
+
+
+Завершити договір
+  [Arguments]  ${username}  ${contract_uaid}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${data}=  Create Dictionary  status=terminated
+  ${data}=  Create Dictionary  data=${data}
+  ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  patch_contract  ${internalid}  ${USERS.users['${username}'].contract_access_token}  ${data}
+
+
+Отримати інформацію із договору
+  [Arguments]  ${username}  ${contract_uaid}  ${field_name}
+  openprocurement_client.Пошук договору по ідентифікатору
+  ...      ${username}
+  ...      ${contract_uaid}
+
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      Get from object
+  ...      ${USERS.users['${username}'].contract_data.data}
+  ...      ${field_name}
+  Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
+
+  Fail  Field not found: ${field_name}
+
+
+Отримати інформацію із документа до договору
+  [Arguments]  ${username}  ${contract_uaid}  ${doc_id}  ${field_name}
+  ${tender}=  openprocurement_client.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+  ${document}=  get_document_by_id  ${tender.data}  ${doc_id}
+  Log  ${document}
+  [Return]  ${document['${field_name}']}
+
+
+Отримати документ до договору
+  [Arguments]  ${username}  ${contract_uaid}  ${doc_id}
+  ${tender}=  openprocurement_client.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+  ${document}=  get_document_by_id  ${tender.data}  ${doc_id}
+  ${filename}=  download_file_from_url  ${document.url}  ${OUTPUT_DIR}${/}${document.title}
+  [return]  ${filename}

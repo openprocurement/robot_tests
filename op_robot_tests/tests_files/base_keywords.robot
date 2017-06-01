@@ -473,6 +473,71 @@ Resource           resource.robot
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
   \  Remove From List  ${USERS.users['${username}'].tender_data.data['features']}  ${feature_index}
 
+
+Звірити відображення поля ${field} зміни до договору для користувача ${username}
+  Звірити поле зміни до договору  ${username}  ${CONTRACT_UAID}
+  ...      ${USERS.users['${tender_owner}'].change_data}
+  ...      ${field}
+
+
+Звірити відображення поля ${field} договору із ${left} для користувача ${username}
+  ${right}=  Run As  ${username}  Отримати інформацію із договору  ${CONTRACT_UAID}  ${field}
+  Порівняти об'єкти  ${left}  ${right}
+
+
+Звірити відображення поля ${field} документа ${doc_id} до договору з ${left} для користувача ${username}
+  ${right}=  Run As  ${username}  Отримати інформацію із документа до договору  ${CONTRACT_UAID}  ${doc_id}  ${field}
+  Порівняти об'єкти  ${left}  ${right}
+
+
+Звірити відображення вмісту документа ${doc_id} до договору з ${left} для користувача ${username}
+  ${file_name}=  Run As  ${username}  Отримати документ до договору  ${CONTRACT_UAID}  ${doc_id}
+  ${right}=  Get File  ${OUTPUT_DIR}${/}${file_name}
+  Порівняти об'єкти  ${left}  ${right}
+
+
+Звірити відображення причин зміни договору
+  ${rationale_types_from_broker}=  Run as  ${viewer}  Отримати інформацію із договору  ${CONTRACT_UAID}  changes[0].rationaleTypes
+  ${rationale_types_from_robot}=  Get variable value  ${USERS.users['${tender_owner}'].change_data.data.rationaleTypes}
+  Log  ${rationale_types_from_broker}
+  Log  ${rationale_types_from_robot}
+  ${result}=  compare_rationale_types  ${rationale_types_from_broker}  ${rationale_types_from_robot}
+  Run keyword if  ${result} == ${False}  Fail  Rationale types are not equal
+
+
+Додати документацію до зміни договору
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
+  ${doc_id}=  get_id_from_string  ${file_name}
+  ${doc}=  Create Dictionary
+  ...      id=${doc_id}
+  ...      name=${file_name}
+  ...      content=${file_content}
+  Set to dictionary  ${USERS.users['${tender_owner}']}  change_doc=${doc}
+  Run As  ${tender_owner}  Додати документацію до зміни в договорі  ${CONTRACT_UAID}  ${file_path}
+  Remove File  ${file_path}
+
+
+Додати документацію до договору
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
+  ${doc_id}=  get_id_from_string  ${file_name}
+  ${doc}=  Create Dictionary
+  ...      id=${doc_id}
+  ...      name=${file_name}
+  ...      content=${file_content}
+  Set to dictionary  ${USERS.users['${tender_owner}']}  contract_doc=${doc}
+  Run As  ${tender_owner}  Завантажити документацію до договору  ${CONTRACT_UAID}  ${file_path}
+  Remove File  ${file_path}
+
+
+Вказати дійсно оплачену суму
+  ${amount}=  Get variable value  ${USERS.users['${tender_owner}'].contract_data.data.value.amount}
+  ${amountPaid}=  Create Dictionary  amount=${amount}  valueAddedTaxIncluded=${True}  currency=UAH
+  ${data}=  Create Dictionary  amountPaid=${amountPaid}
+  ${data}=  Create Dictionary  data=${data}
+  Set to dictionary  ${USERS.users['${tender_owner}']}  terminating_data=${data}
+  Run As  ${tender_owner}  Внести зміни в договір  ${CONTRACT_UAID}  ${data}
+
+
 ##############################################################################################
 #             QUESTIONS
 ##############################################################################################

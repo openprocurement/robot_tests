@@ -20,12 +20,12 @@ from .initial_data import (
     create_fake_doc,
     create_fake_sentence,
     create_fake_amount,
-    create_fake_value_amount,
     create_fake_date,
     fake,
     field_with_id,
     test_bid_data,
     test_bid_value,
+    test_change_data,
     test_claim_answer_data,
     test_claim_data,
     test_complaint_data,
@@ -46,6 +46,9 @@ from .initial_data import (
     test_tender_data_openeu,
     test_tender_data_openua,
     test_tender_data_planning,
+    create_fake_title,
+    create_fake_value_amount,
+    test_change_document_data,
 )
 from barbecue import chef
 from restkit import request
@@ -557,5 +560,11 @@ def generate_test_bid_data_second_stage(tender_data, index='0'):
             bid.data.parameters.append(parameter)
     return bid
 
+
 def convert_amount_string_to_float(amount_string):
     return float(amount_string.replace(' ', '').replace(',', '.'))
+
+
+def compare_rationale_types(type1, type2):
+    return set(type1) == set(type2)
+
