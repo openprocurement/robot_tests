@@ -950,26 +950,32 @@ Library  openprocurement_client.utils
   [Return]  ${doc_list}
 
 
-Отримати останній документ прекваліфікіції
+Отримати останній документ прекваліфікації з типом registerExtract
   [Documentation]
   ...       [Arguments]  Username, tender uaid, qualification id
   ...       [Description] Check documentType in last pre-quailfication document
   ...       [Return] Last document from pre-quailfication
   [Arguments]  ${username}  ${tender_uaid}  ${qualification_id}
   ${docs}=  Run As  ${username}  Отримати список документів по прекваліфікації  ${tender_uaid}  ${qualification_id}
-  Log  ${docs}
-  [Return]  ${docs['data'][-1]}
+  :FOR  ${item}  IN  @{docs['data']}
+  \  ${status}  ${_}=  Run Keyword And Ignore Error  Dictionary Should Contain Key  ${item}  documentType
+  \  Run Keyword If  '${status}' == 'PASS'  Exit For Loop
+  Log  ${item}
+  [Return]  ${item}
 
 
-Отримати останній документ кваліфікації
+Отримати останній документ кваліфікації з типом registerExtract
   [Documentation]
   ...       [Arguments]  Username, tender uaid, award id
   ...       [Description] Check documentType in last award document
   ...       [Return] Last document for
   [Arguments]  ${username}  ${tender_uaid}  ${award_id}
   ${docs}=  Run As  ${username}  Отримати список документів по кваліфікації  ${tender_uaid}  ${award_id}
-  Log  ${docs}
-  [Return]  ${docs['data'][-1]}
+  :FOR  ${item}  IN  @{docs['data']}
+  \  ${status}  ${_}=  Run Keyword And Ignore Error  Dictionary Should Contain Key  ${item}  documentType
+  \  Run Keyword If  '${status}' == 'PASS'  Exit For Loop
+  Log  ${item}
+  [Return]  ${item}
 
 
 Завантажити документ рішення кваліфікаційної комісії
