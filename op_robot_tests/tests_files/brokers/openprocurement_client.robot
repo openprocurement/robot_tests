@@ -957,11 +957,11 @@ Library  openprocurement_client.utils
   ...       [Return] Last document from pre-quailfication
   [Arguments]  ${username}  ${tender_uaid}  ${qualification_id}
   ${docs}=  Run As  ${username}  Отримати список документів по прекваліфікації  ${tender_uaid}  ${qualification_id}
-  ${res}=  Set Variable  ${None}
   :FOR  ${item}  IN  @{docs['data']}
-  \  ${res}=  Run Keyword If  $item.get('documentType')=='registerExtract'  Set Variable  ${item}
-  Log  ${res}
-  [Return]  ${res}
+  \  ${status}  ${_}=  Run Keyword And Ignore Error  Dictionary Should Contain Key  ${item}  documentType
+  \  Run Keyword If  '${status}' == 'PASS'  Exit For Loop
+  Log  ${item}
+  [Return]  ${item}
 
 
 Отримати останній документ кваліфікації з типом registerExtract
@@ -971,11 +971,11 @@ Library  openprocurement_client.utils
   ...       [Return] Last document for
   [Arguments]  ${username}  ${tender_uaid}  ${award_id}
   ${docs}=  Run As  ${username}  Отримати список документів по кваліфікації  ${tender_uaid}  ${award_id}
-  ${res}=  Set Variable  ${None}
   :FOR  ${item}  IN  @{docs['data']}
-  \  ${res}=  Run Keyword If  $item.get('documentType')=='registerExtract'  Set Variable  ${item}
-  Log  ${res}
-  [Return]  ${res}
+  \  ${status}  ${_}=  Run Keyword And Ignore Error  Dictionary Should Contain Key  ${item}  documentType
+  \  Run Keyword If  '${status}' == 'PASS'  Exit For Loop
+  Log  ${item}
+  [Return]  ${item}
 
 
 Завантажити документ рішення кваліфікаційної комісії
