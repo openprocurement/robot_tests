@@ -52,10 +52,11 @@ from .initial_data import (
     create_fake_value_amount,
     test_change_document_data,
     convert_amount,
+    get_number_of_minutes,
 )
 from barbecue import chef
 from restkit import request
-# End of non-pointless imports
+# End of non-pointless import
 import os
 import re
 
