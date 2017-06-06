@@ -51,6 +51,7 @@ from .initial_data import (
     create_fake_value_amount,
     test_change_document_data,
     test_tender_data_openua_defense,
+    get_number_of_minutes,
 )
 from barbecue import chef
 from restkit import request
