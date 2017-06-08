@@ -210,8 +210,8 @@ users:
         homepage: "https://pmarket-rc-2.privatbank.ua/business/tenders?_locale=uk"
         #homepage: "https://rc.privatmarket.ua/business/tenders?_locale=uk"
         email: pbecommercetest1@ukr.net
-        login: 380270010003 #todo: return old user
-        password: password0003 #todo: return old user
+        login: 380270010003
+        password: password0003
         browser: firefox
         position: [0, 0]
         size: [1920, 1080]
