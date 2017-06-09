@@ -73,7 +73,7 @@
 -i auction
 
 -i qualification_add_doc_to_first_award
--i qualifications_check_by_edrpou
+#-i qualifications_check_by_edrpou
 -i qualification_approve_first_award
 -i qualification_cancel_first_award_qualification
 -i qualification_add_doc_to_second_award
