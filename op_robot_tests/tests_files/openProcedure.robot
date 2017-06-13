@@ -1460,7 +1460,6 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_after_enquiry_period
   [Setup]  Дочекатись дати закінчення періоду уточнень  ${provider}
-  [Teardown]  Дочекатись синхронізації з майданчиком  ${provider}
   Run Keyword And Expect Error  *  Можливість задати запитання на тендер користувачем ${provider}
 
 
@@ -1479,7 +1478,6 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      answer_question_after_clarifications_period
   [Setup]  Дочекатись дати закінчення періоду відповідей на запитання  ${tender_owner}
-  [Teardown]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   Run Keyword And Expect Error  *  Можливість відповісти на запитання на тендер
 
 

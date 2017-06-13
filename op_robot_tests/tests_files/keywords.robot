@@ -765,12 +765,14 @@ Require Failure
   [Arguments]  ${username}
   Дочекатись дати  ${USERS.users['${username}'].tender_data.data.enquiryPeriod.endDate}
   Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
 
 
 Дочекатись дати закінчення періоду відповідей на запитання
   [Arguments]  ${username}
   Дочекатись дати  ${USERS.users['${username}'].tender_data.data.enquiryPeriod.clarificationsUntil}
   Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
 
 
 Звірити статус тендера
