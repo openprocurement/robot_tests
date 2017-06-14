@@ -39,8 +39,13 @@ def create_fake_title():
 def create_fake_date():
     return get_now().isoformat()
 
+
 def subtraction(value1, value2):
-    return (int(value1) - int(value2))
+    if "." in str (value1) or "." in str (value2):
+        return (float (value1) - float (value2))
+    else:
+        return (int (value1) - int (value2))
+
 
 def create_fake_value_amount():
     return fake.random_int(min=1)
@@ -55,6 +60,10 @@ def translate_country_en(country):
         return "Ukraine"
     else:
         raise Exception(u"Cannot translate country to english: {}".format(country))
+
+
+def convert_amount(amount):
+    return  (("{:,}".format(float (amount))).replace(',',' ').replace('.',','))
 
 
 def translate_country_ru(country):

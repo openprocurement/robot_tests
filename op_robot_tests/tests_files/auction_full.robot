@@ -321,6 +321,9 @@ Library         Selenium2Library
 Поставити максимально можливу ставку
   Wait Until Page Contains Element    id=max_bid_amount_price
   ${last_amount}=     Get Text        id=max_bid_amount_price
+  ${last_amount}=  convert_amount_string_to_float  ${last_amount}
+  ${value}=  Convert To Number  0.01
+  ${last_amount}=  subtraction  ${last_amount}  ${value}
   Поставити ставку   ${last_amount}   Заявку прийнято
 
 
@@ -373,4 +376,5 @@ Library         Selenium2Library
 
 
 Перевірити чи ставка була прийнята
-  Page Should Contain  ${USERS['${CURRENT_USER}']['last_amount']}
+  ${last_amount}=  convert_amount  ${USERS['${CURRENT_USER}']['last_amount']}
+  Page Should Contain  ${last_amount}
