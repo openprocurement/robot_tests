@@ -943,7 +943,7 @@ ${ITEM_MEAT}        ${True}
   ...  create_tender_claim
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість створити вимогу про виправлення умов закупівлі із документацією
+  Можливість створити вимогу про виправлення умов закупівлі із документацією користувачем ${provider}
 
 
 Відображення опису вимоги про виправлення умов закупівлі
@@ -1454,6 +1454,66 @@ ${ITEM_MEAT}        ${True}
   Можливість завантажити eligibility_documents документ до пропозиції учасником ${provider}
 
 
+Неможливість задати запитання на тендер після завершення періоду уточнень
+  [Tags]  ${USERS.users['${provider}'].broker}: Задання запитання
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      ask_question_after_enquiry_period
+  [Setup]  Дочекатись дати закінчення періоду уточнень  ${provider}
+  Run Keyword And Expect Error  *  Можливість задати запитання на тендер користувачем ${provider}
+
+
+Неможливість подати вимогу про виправлення умов закупівлі після закінчення періоду подання скарг
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      create_tender_complaint_after_complaint_period
+  [Setup]  Дочекатись дати закінчення періоду подання скарг  ${provider}
+  Run Keyword And Expect Error  *  Можливість створити вимогу про виправлення умов закупівлі із документацією користувачем ${provider}
+
+
+Неможливість відповісти на запитання до тендера після завершення періоду відповідей
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Відповідь на запитання
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      answer_question_after_clarifications_period
+  [Setup]  Дочекатись дати закінчення періоду відповідей на запитання  ${tender_owner}
+  Run Keyword And Expect Error  *  Можливість відповісти на запитання на тендер
+
+
+Неможливість редагувати однопредметний тендер менше ніж за 2 дні до завершення періоду подання пропозицій
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_tender_in_tendering_period
+  ${new_description}=  create_fake_sentence
+  Run Keyword And Expect Error  *  Можливість змінити поле description тендера на ${new_description}
+
+
+Можливість відповісти на запитання до тендера після продовження періоду прийому пропозицій
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Відповідь на запитання
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      answer_question_after_clarifications_period
+  ...      extend_enquiry_period
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість продовжити період подання пропозиції на 3 днів
+  Можливість відповісти на запитання на тендер
+
+
+Можливість редагувати тендер після продовження періоду прийому пропозицій
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_tender_in_tendering_period
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${new_description}=  create_fake_sentence
+  Можливість змінити поле description тендера на ${new_description}
+  Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data}  description
+
+
 Можливість редагувати однопредметний тендер більше ніж за 7 днів до завершення періоду подання пропозицій
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
   ...      tender_owner
@@ -1540,12 +1600,12 @@ ${ITEM_MEAT}        ${True}
 ##############################################################################################
 
 Неможливість завантажити документ першим учасником після закінчення прийому пропозицій
-  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
-  ...      ${USERS.users['${provider1}'].broker}
+  ...      ${USERS.users['${provider}'].broker}
   ...      add_bid_doc_after_tendering_period_by_provider
   ...      non-critical
-  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}  ${TENDER['TENDER_UAID']}
+  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
   Run Keyword And Expect Error  *  Можливість завантажити документ в пропозицію користувачем ${provider}
 
 

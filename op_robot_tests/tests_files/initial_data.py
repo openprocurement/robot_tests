@@ -50,6 +50,8 @@ def subtraction(value1, value2):
 def create_fake_value_amount():
     return fake.random_int(min=1)
 
+def get_number_of_minutes(days, accelerator):
+    return 1440 * int(days) / accelerator
 
 def field_with_id(prefix, sentence):
     return u"{}-{}: {}".format(prefix, fake.uuid4()[:8], sentence)
@@ -463,6 +465,16 @@ def test_tender_data_openua(params, submissionMethodDetails):
     data = test_tender_data(params, ('tender',), submissionMethodDetails)
     data['procurementMethodType'] = 'aboveThresholdUA'
     data['procuringEntity']['kind'] = 'general'
+    return data
+
+
+def test_tender_data_openua_defense(params, submissionMethodDetails):
+    """We should not provide any values for `enquiryPeriod` when creating
+    an openUA, openEU or openUA_defense procedure. That field should not be present at all.
+    Therefore, we pass a nondefault list of periods to `test_tender_data()`."""
+    data = test_tender_data(params, ('tender',), submissionMethodDetails)
+    data['procurementMethodType'] = 'aboveThresholdUA.defense'
+    data['procuringEntity']['kind'] = 'defense'
     return data
 
 

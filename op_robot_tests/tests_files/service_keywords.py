@@ -47,14 +47,16 @@ from .initial_data import (
     test_tender_data_openeu,
     test_tender_data_openua,
     test_tender_data_planning,
+    test_tender_data_openua_defense,
     create_fake_title,
     create_fake_value_amount,
     test_change_document_data,
     convert_amount,
+    get_number_of_minutes,
 )
 from barbecue import chef
 from restkit import request
-# End of non-pointless imports
+# End of non-pointless import
 import os
 import re
 
@@ -315,6 +317,9 @@ def prepare_test_tender_data(procedure_intervals,
     elif mode == 'openua':
         return munchify({'data': test_tender_data_openua(
             tender_parameters, submissionMethodDetails)})
+    elif mode == 'openua_defense':
+        return munchify({'data': test_tender_data_openua_defense(
+            tender_parameters, submissionMethodDetails)})
     elif mode == 'open_competitive_dialogue':
         return munchify({'data': test_tender_data_competitive_dialogue(
             tender_parameters, submissionMethodDetails)})
@@ -511,7 +516,13 @@ def get_object_by_id(data, given_object_id, slice_element, object_id):
 
 def generate_test_bid_data(tender_data):
     bid = test_bid_data()
-    if tender_data.get('procurementMethodType', '')[:-2] in ('aboveThreshold', 'competitiveDialogue'):
+    if tender_data.get('procurementMethodType', '') in (
+            'aboveThresholdUA',
+            'aboveThresholdUA.defense',
+            'aboveThresholdEU',
+            'competitiveDialogueUA'
+            'competitiveDialogueEU'
+        ):
         bid.data.selfEligible = True
         bid.data.selfQualified = True
     if 'lots' in tender_data:
