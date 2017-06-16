@@ -520,7 +520,7 @@ def generate_test_bid_data(tender_data):
             'aboveThresholdUA',
             'aboveThresholdUA.defense',
             'aboveThresholdEU',
-            'competitiveDialogueUA'
+            'competitiveDialogueUA',
             'competitiveDialogueEU'
         ):
         bid.data.selfEligible = True
