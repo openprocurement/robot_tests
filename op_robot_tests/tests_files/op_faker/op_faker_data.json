@@ -2940,94 +2940,45 @@
         {
            "classification": {
                "scheme": "CAV",
-               "id": "04000000-8",
-               "description": "Нерухоме майно"
-            }
-       },
-       {
-           "classification": {
-               "scheme": "CAV",
-               "id": "04111000-9",
-               "description": "Квартира в будинку малоповерхового житлового будівництва"
-            }
-       },
-       {
-           "classification": {
-               "scheme": "CAV",
-               "id": "04111100-0",
-               "description": "Квартира"
-            }
-       },
-       {
-           "classification": {
-               "scheme": "CAV",
-               "id": "04111200-1",
-               "description": "Таунхаус"
-            }
-       },
-       {
-           "classification": {
-               "scheme": "CAV",
-               "id": "30100000-0",
-               "description": "Офісні техніка, устаткування та приладдя, крім комп’ютерів, принтерів та меблів"
-            }
-       },
-       {
-           "classification": {
-               "scheme": "CAV",
-               "id": "30123200-9",
-               "description": "Банкомати"
-            }
-       },
-       {
-           "classification": {
-               "scheme": "CAV",
-               "id": "39700000-9",
-               "description": "Побутова техніка"
-            }
-       },
-        {
-           "classification": {
-               "scheme": "CAV",
-               "id": "39714110-4",
-               "description": "Витяжні вентилятори"
-            }
-       }
-    ],
-    "classifications_financial":[
-        {
-           "classification": {
-               "scheme": "CAV",
-               "id": "07100000-0",
+               "id": "06000000-2",
                "description": "Кредити Юридичних осіб"
             }
         },
         {
            "classification": {
                "scheme": "CAV",
-               "id": "07110000-3",
+               "id": "06020000-8",
                "description": "Кредити Юридичних осіб беззаставні"
             }
         },
         {
            "classification": {
                "scheme": "CAV",
-               "id": "07120000-6",
+               "id": "06060000-0",
                "description": "Кредити Юридичних осіб заставні"
             }
-        },
+        }
+    ],
+    "classifications_financial":[
         {
            "classification": {
                "scheme": "CAV",
-               "id": "07000000-9",
-               "description": "Права вимоги за кредитними договорами"
+               "id": "06000000-2",
+               "description": "Кредити Юридичних осіб"
             }
         },
         {
            "classification": {
                "scheme": "CAV",
-               "id": "07223000-8",
-               "description": "Застава - Земельні ділянки"
+               "id": "06020000-8",
+               "description": "Кредити Юридичних осіб беззаставні"
+            }
+        },
+        {
+           "classification": {
+               "scheme": "CAV",
+               "id": "06060000-0",
+               "description": "Кредити Юридичних осіб заставні"
             }
         }
     ],
@@ -3114,19 +3065,18 @@
         }
     ],
     "cavs_other": [
-        "04000000-8",
-        "04111000-9",
-        "30100000-0",
-        "39700000-9"
+        "06000000-2",
+        "06020000-8",
+        "06060000-0"
     ],
     "cavs_financial": [
-        "07100000-0",
-        "07000000-9",
-        "07223000-8"
+        "06000000-2",
+        "06020000-8",
+        "06060000-0"
     ],
     "items_base_data_other": [
-           {
-            "cav_id": "04000000-8",
+        {
+            "cav_id": "06000000-2",
             "description": "Нерухоме майно",
             "description_ru": "Недвижимое имущество",
             "description_en": "Real estate",
@@ -3137,7 +3087,7 @@
             }
         },
         {
-            "cav_id": "04111000-9",
+            "cav_id": "06020000-8",
             "description": "Квартира в будинку малоповерхового житлового будівництва",
             "description_ru": "Квартира в доме малоэтажного строительства",
             "description_en": "Flat in low-rise building",
@@ -3148,7 +3098,7 @@
             }
         },
         {
-            "cav_id": "04111100-0",
+            "cav_id": "06060000-0",
             "description": "Квартира",
             "description_ru": "Квартира",
             "description_en": "Flat",
@@ -3157,117 +3107,40 @@
                 "code": "H87",
                 "name": "штуки"
             }
-        },
-        {
-            "cav_id": "04111200-1",
-            "description": "Таунхаус",
-            "description_ru": "Таунхаус",
-            "description_en": "Townhouse",
-            "quantity": 10,
+        }
+    ],
+    "items_base_data_financial": [
+           {
+            "cav_id": "06000000-2",
+            "description": "Нерухоме майно",
+            "description_ru": "Недвижимое имущество",
+            "description_en": "Real estate",
+            "quantity": 50,
             "unit": {
-                "code": "H87",
-                "name": "штуки"
+                "code": "MTK",
+                "name": "метри квадратні"
             }
         },
         {
-            "cav_id": "30100000-0",
-            "description": "Офісні техніка, устаткування та приладдя, крім комп’ютерів, принтерів та меблів",
-            "description_ru": "Office techniccs besides computers, printers and futniture",
-            "description_en": "Офисная техника кроме компютеров, принтеров и мебели",
+            "cav_id": "06020000-8",
+            "description": "Квартира в будинку малоповерхового житлового будівництва",
+            "description_ru": "Квартира в доме малоэтажного строительства",
+            "description_en": "Flat in low-rise building",
             "quantity": 15,
             "unit": {
                 "code": "H87",
                 "name": "штуки"
             }
         },
-                {
-            "cav_id": "30123200-9",
-            "description": "Банкомати",
-            "description_ru": "Банкоматы",
-            "description_en": "ATM",
-            "quantity": 20,
+        {
+            "cav_id": "06060000-0",
+            "description": "Квартира",
+            "description_ru": "Квартира",
+            "description_en": "Flat",
+            "quantity": 12,
             "unit": {
                 "code": "H87",
                 "name": "штуки"
-            }
-        },
-            {
-            "cav_id": "39700000-9",
-            "description": "Побутова техніка",
-            "description_ru": "Бытовая техника",
-            "description_en": "Household technics",
-            "quantity": 22,
-            "unit": {
-                "code": "H87",
-                "name": "штуки"
-            }
-        },
-                   {
-            "cav_id": "39714110-4",
-            "description": "Витяжні вентилятори",
-            "description_ru": "Вытяжные вентиляторы",
-            "description_en": "Exhaust fans",
-            "quantity": 22,
-            "unit": {
-                "code": "H87",
-                "name": "штуки"
-            }
-        }
-    ],
-    "items_base_data_financial": [
-           {
-            "cav_id": "07100000-0",
-            "description": "Кредити Юридичних осіб",
-            "description_ru": "Кредиты юридических лиц",
-            "description_en": "Corporate loans",
-            "quantity": 50,
-            "unit": {
-                "code": "E48",
-                "name": "послуга"
-            }
-        },
-        {
-            "cav_id": "07110000-3",
-            "description": "Кредити Юридичних осіб беззаставні",
-            "description_ru": "Кредиты юридических лиц беззалоговые",
-            "description_en": "Unsecured corporate loans",
-            "quantity": 50,
-            "unit": {
-                "code": "E48",
-                "name": "послуга"
-            }
-        },
-        {
-            "cav_id": "07120000-6",
-            "description": "Кредити Юридичних осіб заставні",
-            "description_ru": "Кредиты юридических лиц залоговые",
-            "description_en": "Secured corporate loans",
-            "quantity": 50,
-            "unit": {
-                "code": "E48",
-                "name": "послуга"
-            }
-        },
-        {
-            "cav_id": "07000000-9",
-            "description": "Права вимоги за кредитними договорами",
-            "description_ru": "Права и требования по кредитным договорам",
-            "description_en": "Rights and claims under credit agreements",
-            "quantity": 50,
-            "unit": {
-                "code": "E48",
-                "name": "послуга"
-            }
-        },
-        {
-            "cav_id": "07223000-8",
-            "description": "Застава - Земельні ділянки",
-            "description_ru": "Залог: земельные участки",
-            "description_en": "Motrgage land",
-            "quantity": 50,
-            "unit": {
-                "code": "E48",
-                "name": "послуга"
             }
         }
     ]
