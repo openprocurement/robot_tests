@@ -23,10 +23,10 @@ class OP_Provider(BaseProvider):
     procuringEntities_other = __fake_data.procuringEntities_other
     addresses = __fake_data.addresses
     classifications_other = __fake_data.classifications_other
-    cavs_other = __fake_data.cavs_other
+    cpvs_other = __fake_data.cpvs_other
     items_base_data_other = __fake_data.items_base_data_other
     classifications_financial = __fake_data.classifications_financial
-    cavs_financial = __fake_data.cavs_financial
+    cpvs_financial = __fake_data.cpvs_financial
     items_base_data_financial = __fake_data.items_base_data_financial
     additionalIdentifiers = __fake_data.additionalIdentifiers
 
@@ -108,40 +108,40 @@ class OP_Provider(BaseProvider):
         return deepcopy(self.random_element(procuringEntities))
 
     @classmethod
-    def cav_other(self):
-        return self.random_element(self.cavs_other)
+    def cpv_other(self):
+        return self.random_element(self.cpvs_other)
 
     @classmethod
-    def cav_financial(self):
-        return self.random_element(self.cavs_financial)
+    def cpv_financial(self):
+        return self.random_element(self.cpvs_financial)
 
     @classmethod
     def additionalIdentifier(self):
         return self.random_element(self.additionalIdentifiers)
 
     @classmethod
-    def fake_item(self, cav_group):
+    def fake_item(self, cpv_group):
         # """
         # Generate a random item for openprocurement tenders
 
-        # :param cav_group: gives possibility to generate items
-        #     from a specific cav group. cav group is three digits
-        #     in the beginning of each cav id.
+        # :param cpv_group: gives possibility to generate items
+        #     from a specific cpv group. cpv group is three digits
+        #     in the beginning of each cpv id.
         # """
         # for dgf other mode, and all other modes besides dgf financial
-        # generates items from dgf_other CAV group
-        cav_group = str(cav_group)
-        similar_cavs = []
-        for cav_element in self.classifications_other:
-            if cav_element["classification"]["id"].startswith(cav_group):
-                similar_cavs.append(cav_element)
-        cav = self.random_element(similar_cavs)["classification"]["id"]
+        # generates items from dgf_other CPV group
+        cpv_group = str(cpv_group)
+        similar_cpvs = []
+        for cpv_element in self.classifications_other:
+            if cpv_element["classification"]["id"].startswith(cpv_group):
+                similar_cpvs.append(cpv_element)
+        cpv = self.random_element(similar_cpvs)["classification"]["id"]
         for entity in self.items_base_data_other:
-            if entity["cav_id"] == cav:
+            if entity["cpv_id"] == cpv:
                 item_base_data = entity
                 break
         for entity in self.classifications_other:
-            if entity["classification"]["id"] == item_base_data["cav_id"]:
+            if entity["classification"]["id"] == item_base_data["cpv_id"]:
                 classification = entity
                 break
 
@@ -159,21 +159,21 @@ class OP_Provider(BaseProvider):
         return deepcopy(item)
 
     @classmethod
-    def fake_item_financial(self, cav_group):
+    def fake_item_financial(self, cpv_group):
         # for dgf financial assets mode
-        # generates items from financial CAV group
-        cav_group = str(cav_group)
-        similar_cavs = []
-        for cav_element in self.classifications_financial:
-            if cav_element["classification"]["id"].startswith(cav_group):
-                similar_cavs.append(cav_element)
-        cav = self.random_element(similar_cavs)["classification"]["id"]
+        # generates items from financial CPV group
+        cpv_group = str(cpv_group)
+        similar_cpvs = []
+        for cpv_element in self.classifications_financial:
+            if cpv_element["classification"]["id"].startswith(cpv_group):
+                similar_cpvs.append(cpv_element)
+        cpv = self.random_element(similar_cpvs)["classification"]["id"]
         for entity in self.items_base_data_financial:
-            if entity["cav_id"] == cav:
+            if entity["cpv_id"] == cpv:
                 item_base_data = entity
                 break
         for entity in self.classifications_financial:
-            if entity["classification"]["id"] == item_base_data["cav_id"]:
+            if entity["classification"]["id"] == item_base_data["cpv_id"]:
                 classification = entity
                 break
 

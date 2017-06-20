@@ -149,9 +149,9 @@ def test_tender_data(params, periods=("enquiry", "tender")):
 
     data["procuringEntity"]["kind"] = "other"
 
-    cav_group = fake.cav_other()[:3]
+    cpv_group = fake.cpv_other()[:3]
     for i in range(params['number_of_items']):
-        new_item = test_item_data(cav_group)
+        new_item = test_item_data(cpv_group)
         data['items'].append(new_item)
 
     if data.get("mode") == "test":
@@ -337,10 +337,10 @@ def test_supplier_data():
     })
 
 
-def test_item_data(cav):
+def test_item_data(cpv):
     #using typical functions for dgf other and all other modes besides dgf financial
     #items will be genareted from other CAV group
-    data = fake.fake_item(cav)
+    data = fake.fake_item(cpv)
 
     data["description"] = field_with_id("i", data["description"])
     data["description_en"] = field_with_id("i", data["description_en"])
@@ -352,10 +352,10 @@ def test_item_data(cav):
     return munchify(data)
 
 
-def test_item_data_financial(cav):
+def test_item_data_financial(cpv):
     #using special function for generating items from financial CAV group
     #in dgf finsncial mode
-    data = fake.fake_item_financial(cav)
+    data = fake.fake_item_financial(cpv)
 
     data["description"] = field_with_id("i", data["description"])
     data["description_en"] = field_with_id("i", data["description_en"])
@@ -461,14 +461,14 @@ def test_tender_data_dgf_other(params):
     data['procurementMethodType'] = 'dgfOtherAssets'
     data["procuringEntity"] = fake.procuringEntity_other()
 
-    cav_group_other = fake.cav_other()[:3]
-    used_cavs = [cav_group_other]
+    cpv_group_other = fake.cpv_other()[:3]
+    used_cpvs = [cpv_group_other]
     for i in range(params['number_of_items']):
-        new_item = test_item_data(cav_group_other)
+        new_item = test_item_data(cpv_group_other)
         data['items'].append(new_item)
-        while (cav_group_other in used_cavs) and (i != (params['number_of_items'] - 1)):
-            cav_group_other = fake.cav_other()[:3]
-        used_cavs.append(cav_group_other)
+        while (cpv_group_other in used_cpvs) and (i != (params['number_of_items'] - 1)):
+            cpv_group_other = fake.cpv_other()[:3]
+        used_cpvs.append(cpv_group_other)
     return data
 
 
@@ -501,8 +501,8 @@ def test_tender_data_dgf_financial(params):
     data["procuringEntity"] = fake.procuringEntity()
 
     for i in range(params['number_of_items']):
-        cav_group_financial = fake.cav_financial()[:3]
-        new_item = test_item_data_financial(cav_group_financial)
+        cpv_group_financial = fake.cpv_financial()[:3]
+        new_item = test_item_data_financial(cpv_group_financial)
         data['items'].append(new_item)
 
     return data
