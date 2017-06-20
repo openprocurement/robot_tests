@@ -30,7 +30,7 @@ Library  openprocurement_client.utils
   Log  ${auth_ds}
 
 #  Uncomment this line if there is need to precess files operations without DS.
-#  ${ds_api_wraper}=  set variable  ${None}
+# ${ds_api_wraper}=  set variable  ${None}
   ${ds_api_wraper}=  prepare_ds_api_wrapper  ${ds_host_url}  ${auth_ds}
 
   ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${resource}  ${api_host_url}  ${api_version}  ${ds_api_wraper}
