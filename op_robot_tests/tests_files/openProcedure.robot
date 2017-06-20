@@ -257,24 +257,46 @@ ${ITEM_MEAT}        ${True}
 #             Редагування лоту
 ##############################################################################################
 
-Неможливість змінити початкову вартість лоту
+Можливість змінити початкову вартість лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_auction_value  level2
+  ...      tender_view  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   ${new_amount}=  create_fake_amount
-  Перевірити неможливість зміни поля value.amount тендера на значення ${new_amount} для користувача ${tender_owner}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_amount=${new_amount}
+  Можливість змінити поле value.amount тендера на ${new_amount}
 
 
-Неможливість змінити мінімальний крок лоту
+Відображення зміненої початкової вартості лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view  level1
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  value.amount
+  Звірити відображення поля value.amount тендера із ${USERS.users['${tender_owner}'].new_amount} для користувача ${viewer}
+
+
+Можливість змінити мінімальний крок лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_auction_step  level2
+  ...      tender_view  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  ${new_amount}=  create_fake_minimal_step  ${USERS.users['${tender_owner}'].tender_data.data.value.amount}
-  Перевірити неможливість зміни поля minimalStep.amount тендера на значення ${new_amount} для користувача ${tender_owner}
+  ${new_minimal_step}=  create_fake_minimal_step  ${USERS.users['${tender_owner}'].tender_data.data.value.amount}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_minimal_step=${new_minimal_step}
+  Можливість змінити поле minimalStep.amount тендера на ${new_minimal_step}
+
+
+Відображення зміненого мінімального кроку лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view  level1
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  minimalStep.amount
+  Звірити відображення поля minimalStep.amount тендера із ${USERS.users['${tender_owner}'].new_minimal_step} для користувача ${viewer}
 
 
 Неможливість змінити назву лоту українською мовою
@@ -377,18 +399,25 @@ ${ITEM_MEAT}        ${True}
   Перевірити неможливість зміни поля eligibilityCriteria_en тендера на значення ${new_title} для користувача ${tender_owner}
 
 
-Неможливість змінити гарантування лоту
+Можливість змінити гарантування лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_auction_guarantee  level2
+  ...      tender_view  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
-  ${new_amount}=  create_fake_guarantee  ${USERS.users['${tender_owner}'].tender_data.data.value.amount}
-  ${new_value}=  Create Dictionary
-  Set To Dictionary  ${new_value}
-  ...                amount=${new_amount}
-  ...                currency=UAH
-  Перевірити неможливість зміни поля guarantee тендера на значення ${new_value} для користувача ${tender_owner}
+  ${new_g_amount}=  create_fake_guarantee  ${USERS.users['${tender_owner}'].tender_data.data.value.amount}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_g_value=${new_g_amount}
+  Можливість змінити поле guarantee.amount тендера на ${new_g_amount}
+
+
+Відображення зміненого гарантування лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view  level1
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  guarantee
+  Звірити відображення поля guarantee.amount тендера із ${USERS.users['${tender_owner}'].new_g_value} для користувача ${viewer}
 
 
 Неможливість змінити дату рішення про затвердження умов продажу
