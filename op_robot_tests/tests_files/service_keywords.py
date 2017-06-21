@@ -48,6 +48,7 @@ from .initial_data import (
     test_tender_data_openua,
     test_tender_data_planning,
     test_tender_data_openua_defense,
+    test_bid_competitive_data,
     create_fake_title,
     create_fake_value_amount,
     test_change_document_data,
@@ -515,7 +516,6 @@ def get_object_by_id(data, given_object_id, slice_element, object_id):
 
 
 def generate_test_bid_data(tender_data):
-    bid = test_bid_data()
     if tender_data.get('procurementMethodType', '') in (
             'aboveThresholdUA',
             'aboveThresholdUA.defense',
@@ -523,8 +523,11 @@ def generate_test_bid_data(tender_data):
             'competitiveDialogueUA',
             'competitiveDialogueEU'
         ):
+        bid = test_bid_competitive_data()
         bid.data.selfEligible = True
         bid.data.selfQualified = True
+    else:
+        bid = test_bid_data()
     if 'lots' in tender_data:
         bid.data.lotValues = []
         for lot in tender_data['lots']:

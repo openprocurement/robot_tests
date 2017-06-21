@@ -17,7 +17,7 @@ fake_ru = Factory.create(locale='ru_RU')
 fake_uk = Factory.create(locale='uk_UA')
 fake_uk.add_provider(OP_Provider)
 fake = fake_uk
-
+used_identifier_id = []
 # This workaround fixes an error caused by missing "catch_phrase" class method
 # for the "ru_RU" locale in Faker >= 0.7.4
 fake_ru.add_provider(CompanyProviderEnUs)
@@ -349,6 +349,31 @@ def test_complaint_reply_data():
             "status": "resolved"
         }
     })
+
+
+def test_bid_competitive_data():
+    bid = munchify({
+        "data": {
+            "tenderers": [
+                fake.procuringEntity()
+            ]
+        }
+    })
+    id = bid.data.tenderers[0].identifier.id
+    while (id in used_identifier_id):
+        bid = munchify({
+        "data": {
+            "tenderers": [
+                fake.procuringEntity()
+            ]
+        }
+    })
+        id = bid.data.tenderers[0].identifier.id
+    used_identifier_id.append(id)
+    bid.data.tenderers[0].address.countryName_en = translate_country_en(bid.data.tenderers[0].address.countryName)
+    bid.data.tenderers[0].address.countryName_ru = translate_country_ru(bid.data.tenderers[0].address.countryName)
+    bid.data['status'] = 'draft'
+    return bid
 
 
 def test_bid_data():
