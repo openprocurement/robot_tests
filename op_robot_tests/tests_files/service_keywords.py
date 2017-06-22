@@ -56,6 +56,7 @@ from .initial_data import (
     create_fake_dgfDecisionID,
     create_fake_dgfDecisionDate,
     create_fake_tenderAttempts,
+    fake_schema_properties,
 
 )
 from barbecue import chef
