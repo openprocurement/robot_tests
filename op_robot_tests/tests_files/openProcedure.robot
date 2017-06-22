@@ -253,6 +253,78 @@ ${ITEM_MEAT}        ${True}
   ...      tender_view  level2
   Звірити відображення поля quantity усіх предметів для користувача ${viewer}
 
+
+Відображення коду схеми активів лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view
+  Звірити відображення поля schema_properties.code усіх предметів для користувача ${viewer}
+
+
+Відображення версії схеми активів лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view
+  Звірити відображення поля schema_properties.version усіх предметів для користувача ${viewer}
+
+
+Відображення області активів лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view
+  Звірити відображення поля schema_properties.properties.region усіх предметів для користувача ${viewer}
+
+
+Відображення району активів лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view
+  Звірити відображення поля schema_properties.properties.district усіх предметів для користувача ${viewer}
+
+
+Відображення кадастрового номеру активів лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view
+  Звірити відображення поля schema_properties.properties.cadastral_number усіх предметів для користувача ${viewer}
+
+
+Відображення площі активів лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view
+  Звірити відображення поля schema_properties.properties.area усіх предметів для користувача ${viewer}
+
+
+Відображення форми власності на землю активів лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view
+  Звірити відображення поля schema_properties.properties.forms_of_land_ownership усіх предметів для користувача ${viewer}
+
+
+Відображення наявності співвласника активів лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view
+  Звірити відображення поля schema_properties.properties.co_owners усіх предметів для користувача ${viewer}
+
+
+Відображення поточного використання активів лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view
+  Звірити відображення поля schema_properties.properties.availability_of_utilities усіх предметів для користувача ${viewer}
+
 ##############################################################################################
 #             Редагування лоту
 ##############################################################################################
