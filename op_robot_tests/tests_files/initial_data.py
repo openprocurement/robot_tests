@@ -388,7 +388,35 @@ def test_item_data_financial(cav):
     data["deliveryDate"] = {"endDate": (get_now() + timedelta(days=days)).isoformat()}
     data["deliveryAddress"]["countryName_en"] = translate_country_en(data["deliveryAddress"]["countryName"])
     data["deliveryAddress"]["countryName_ru"] = translate_country_ru(data["deliveryAddress"]["countryName"])
+    schema_properties = fake_schema_properties(cav)
+    data.update(schema_properties)
     return munchify(data)
+
+
+def fake_schema_properties(cav):
+    data = {
+        "schema_properties" : {
+                "code": "06",
+                "version": "001",
+                "properties": {
+                    "region": u"Київська область",
+                    "district": u"м.Київ",
+                    "cadastral_number": str (random.randint(10, 1000)),
+                    "area": random.randint(10, 1000),
+                    "forms_of_land_ownership": [random.choice([u"державна", u"приватна", u"комунальна"])],
+                    "co_owners": random.choice([True, False]),
+                    "availability_of_utilities": random.choice([True, False]),
+                    "current_use": random.choice([True, False])
+                    }
+                }
+            }
+    if "0611" in cav:
+        data["schema_properties"]["code"] = "0611"
+        data["schema_properties"]["properties"]["city"] = u"Київ"
+    if "0612" in cav:
+        data["schema_properties"]["code"] = "0612"
+        data["schema_properties"]["properties"]["land_ownership"] = fake.description()
+    return data
 
 
 def test_invalid_features_data():
