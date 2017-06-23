@@ -485,9 +485,6 @@ def get_complaint_index_by_complaintID(data, complaintID):
 
 def generate_test_bid_data(tender_data):
     bid = test_bid_data()
-    if 'aboveThreshold' in tender_data.get('procurementMethodType', '') or 'competitiveDialogue' in tender_data.get('procurementMethodType', ''):
-        bid.data.selfEligible = True
-        bid.data.selfQualified = True
     if 'lots' in tender_data:
         bid.data.lotValues = []
         for lot in tender_data['lots']:
@@ -503,11 +500,6 @@ def generate_test_bid_data(tender_data):
             bid.data.parameters.append(parameter)
     if 'dgfOtherAssets' in tender_data.get('procurementMethodType', ''):
         bid.data.qualified = True
-    if 'dgfFinancialAssets' in tender_data.get('procurementMethodType', ''):
-        bid.data.eligible = True
-        bid.data.qualified = True
-        bid.data.tenderers[0]["additionalIdentifiers"] = [fake.additionalIdentifier()]
-
     return bid
 
 

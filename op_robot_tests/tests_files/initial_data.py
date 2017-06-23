@@ -175,35 +175,6 @@ def test_tender_data(params, periods=("enquiry", "tender")):
     return munchify(data)
 
 
-def test_tender_data_limited(params):
-    data = test_tender_data(params)
-    del data["submissionMethodDetails"]
-    del data["minimalStep"]
-    del data["enquiryPeriod"]
-    del data["tenderPeriod"]
-    data["procuringEntity"]["kind"] = "general"
-    data.update({"procurementMethodType": params['mode'], "procurementMethod": "limited"})
-    if params['mode'] == "negotiation":
-        cause_variants = (
-            "artContestIP",
-            "noCompetition",
-            "twiceUnsuccessful",
-            "additionalPurchase",
-            "additionalConstruction",
-            "stateLegalServices"
-        )
-        cause = fake.random_element(cause_variants)
-    elif params['mode'] == "negotiation.quick":
-        cause_variants = ('quick',)
-    if params['mode'] in ("negotiation", "negotiation.quick"):
-        cause = fake.random_element(cause_variants)
-        data.update({
-            "cause": cause,
-            "causeDescription": fake.description()
-        })
-    return munchify(data)
-
-
 def test_feature_data():
     return munchify({
         "code": uuid4().hex,
@@ -377,53 +348,6 @@ def test_invalid_features_data():
     ]
 
 
-def test_tender_data_openua(params):
-    # We should not provide any values for `enquiryPeriod` when creating
-    # an openUA or openEU procedure. That field should not be present at all.
-    # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
-    data = test_tender_data(params, ('tender',))
-    data['procurementMethodType'] = 'aboveThresholdUA'
-    data['procuringEntity']['kind'] = 'general'
-    return data
-
-
-def test_tender_data_openeu(params):
-    # We should not provide any values for `enquiryPeriod` when creating
-    # an openUA or openEU procedure. That field should not be present at all.
-    # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
-    data = test_tender_data(params, ('tender',))
-    data['procurementMethodType'] = 'aboveThresholdEU'
-    data['title_en'] = "[TESTING]"
-    for item_number, item in enumerate(data['items']):
-        item['description_en'] = "Test item #{}".format(item_number)
-    data['procuringEntity']['name_en'] = fake_en.name()
-    data['procuringEntity']['contactPoint']['name_en'] = fake_en.name()
-    data['procuringEntity']['contactPoint']['availableLanguage'] = "en"
-    data['procuringEntity']['identifier']['legalName_en'] = "Institution \"Vinnytsia City Council primary and secondary general school № 10\""
-    data['procuringEntity']['kind'] = 'general'
-    return data
-
-
-def test_tender_data_competitive_dialogue(params):
-    # We should not provide any values for `enquiryPeriod` when creating
-    # an openUA or openEU procedure. That field should not be present at all.
-    # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
-    data = test_tender_data(params, ('tender',))
-    if params.get('dialogue_type') == 'UA':
-        data['procurementMethodType'] = 'competitiveDialogueUA'
-    else:
-        data['procurementMethodType'] = 'competitiveDialogueEU'
-        data['procuringEntity']['contactPoint']['availableLanguage'] = "en"
-    data['title_en'] = "[TESTING] {}".format(fake_en.sentence(nb_words=3, variable_nb_words=True))
-    for item in data['items']:
-        item['description_en'] = fake_en.sentence(nb_words=3, variable_nb_words=True)
-    data['procuringEntity']['name_en'] = fake_en.name()
-    data['procuringEntity']['contactPoint']['name_en'] = fake_en.name()
-    data['procuringEntity']['identifier']['legalName_en'] = fake_en.sentence(nb_words=10, variable_nb_words=True)
-    data['procuringEntity']['kind'] = 'general'
-    return data
-
-
 def test_tender_data_dgf_other(params):
     data = test_tender_data(params, [])
 
@@ -450,48 +374,13 @@ def test_tender_data_dgf_other(params):
     data['procurementMethodType'] = 'dgfOtherAssets'
     data["procuringEntity"] = fake.procuringEntity_other()
 
-    cpv_group_other = fake.cpv_other()[:3]
-    used_cpvs = [cpv_group_other]
+    scheme_group_other = fake.scheme_other()[:3]
+    used_scheme = [scheme_group_other]
     for i in range(params['number_of_items']):
-        new_item = test_item_data(cpv_group_other)
+        new_item = test_item_data(scheme_group_other)
         data['items'].append(new_item)
-        while (cpv_group_other in used_cpvs) and (i != (params['number_of_items'] - 1)):
-            cpv_group_other = fake.cpv_other()[:3]
-        used_cpvs.append(cpv_group_other)
+        while (scheme_group_other in used_scheme) and (i != (params['number_of_items'] - 1)):
+            scheme_group_other = fake.scheme_other()[:3]
+        used_scheme.append(scheme_group_other)
     return data
 
-
-def test_tender_data_dgf_financial(params):
-    data = test_tender_data(params, [])
-
-    data['dgfID'] = fake.dgfID()
-    data['dgfDecisionID'] = fake.dgfDecisionID()
-    data['dgfDecisionDate'] = (get_now() + timedelta(days=-2)).strftime('%Y-%m-%d')
-    data['tenderAttempts'] = fake.random_int(min=1, max=4)
-    del data["procuringEntity"]
-
-    for i in range(params['number_of_items']):
-        data['items'].pop()
-
-    url = params['api_host_url']
-
-    # TODO: handle this magic string
-    if url == 'https://lb.api.ea.openprocurement.org':
-        del data['procurementMethodDetails']
-
-    period_dict = {}
-    inc_dt = get_now()
-    period_dict["auctionPeriod"] = {}
-    inc_dt += timedelta(minutes=params['intervals']['auction'][0])
-    period_dict["auctionPeriod"]["startDate"] = inc_dt.isoformat()
-    data.update(period_dict)
-
-    data['procurementMethodType'] = 'dgfFinancialAssets'
-    data["procuringEntity"] = fake.procuringEntity()
-
-    for i in range(params['number_of_items']):
-        cpv_group_financial = fake.cpv_financial()[:3]
-        new_item = test_item_data_financial(cpv_group_financial)
-        data['items'].append(new_item)
-
-    return data

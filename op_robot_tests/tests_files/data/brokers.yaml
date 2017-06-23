@@ -29,21 +29,9 @@ Default:
             # This is not a name of period
             # Please refer to API documentation to find out what's this
             accelerator: 1440
-        openua:
-            accelerator: 1440
-            tender:  [0, 15]
             # Please remember that openUA and openEU procedures
             # forbid anyone to set or modify enquiryPeriod
             # (it is set automatically)
-        openeu:
-            accelerator: 1440
-            tender:  [0, 30]
-        open_competitive_dialogue:
-            accelerator: 1440
-            tender:  [0, 30]
-        dgfFinancialAssets:
-           accelerator: 1440
-           auction:  [25, 30]
         dgfOtherAssets:
             accelerator: 1440
             auction:  [25, 30]
@@ -54,13 +42,6 @@ Quinta:
         default:
             enquiry: [0, 20]
             tender:  [0, 20]
-        openua:
-            tender:  [1, 30]
-        openeu:
-            tender:  [1, 35]
-        open_competitive_dialogue:
-            accelerator: 1440
-            tender:  [0, 30]
     keywords_file: openprocurement_client
     roles:
         provider:       Tender_User
