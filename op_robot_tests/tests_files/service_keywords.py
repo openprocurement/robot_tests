@@ -318,24 +318,8 @@ def prepare_test_tender_data(procedure_intervals, tender_parameters):
         "not '{}'".format(type(intervals['accelerator']).__name__)
     assert intervals['accelerator'] >= 0, \
         "Accelerator should not be less than 0"
-    if mode == 'belowThreshold':
-        return munchify({'data': test_tender_data(tender_parameters)})
-    elif mode == 'dgfFinancialAssets':
-        return munchify({'data': test_tender_data_dgf_financial(tender_parameters)})
-    elif mode == 'dgfOtherAssets':
+    if mode == 'dgfOtherAssets':
         return munchify({'data': test_tender_data_dgf_other(tender_parameters)})
-    elif mode == 'negotiation':
-        return munchify({'data': test_tender_data_limited(tender_parameters)})
-    elif mode == 'negotiation.quick':
-        return munchify({'data': test_tender_data_limited(tender_parameters)})
-    elif mode == 'openeu':
-        return munchify({'data': test_tender_data_openeu(tender_parameters)})
-    elif mode == 'openua':
-        return munchify({'data': test_tender_data_openua(tender_parameters)})
-    elif mode == 'open_competitive_dialogue':
-        return munchify({'data': test_tender_data_competitive_dialogue(tender_parameters)})
-    elif mode == 'reporting':
-        return munchify({'data': test_tender_data_limited(tender_parameters)})
     raise ValueError("Invalid mode for prepare_test_tender_data")
 
 
@@ -557,18 +541,18 @@ def local_path_to_file(file_name):
     return os.path.join(os.path.dirname(__file__), 'documents', file_name)
 
 
-def compare_CPV_groups(length, *items):
-    # Checks CPV groups of *items
+def compare_scheme_groups(length, *items):
+    # Checks scheme groups of *items
     # Arguments: length - number of items
     #            *items - list of items
-    # Return True, if all items have different CPV groups, and
-    # return False, if at least two items have same CPV group.
+    # Return True, if all items have different scheme groups, and
+    # return False, if at least two items have same scheme group.
     for i in range(length):
         i_classification = items[i].get('classification', '')
-        i_cpv_group = i_classification.get('id', '')
+        i_scheme_group = i_classification.get('id', '')
         for j in range(length):
             j_classification = items[j].get('classification', '')
-            j_cpv_group = j_classification.get('id', '')
-            if(i_cpv_group == j_cpv_group and i != j):
+            j_scheme_group = j_classification.get('id', '')
+            if(i_scheme_group == j_scheme_group and i != j):
                 return False
     return True

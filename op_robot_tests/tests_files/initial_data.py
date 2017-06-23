@@ -153,9 +153,9 @@ def test_tender_data(params, periods=("enquiry", "tender")):
 
     data["procuringEntity"]["kind"] = "other"
 
-    cpv_group = fake.cpv_other()[:3]
+    scheme_group = fake.scheme_other()[:3]
     for i in range(params['number_of_items']):
-        new_item = test_item_data(cpv_group)
+        new_item = test_item_data(scheme_group)
         data['items'].append(new_item)
 
     if data.get("mode") == "test":
@@ -341,25 +341,10 @@ def test_supplier_data():
     })
 
 
-def test_item_data(cpv):
+def test_item_data(scheme):
     #using typical functions for dgf other and all other modes besides dgf financial
     #items will be genareted from other CAV group
-    data = fake.fake_item(cpv)
-
-    data["description"] = field_with_id("i", data["description"])
-    data["description_en"] = field_with_id("i", data["description_en"])
-    data["description_ru"] = field_with_id("i", data["description_ru"])
-    days = fake.random_int(min=1, max=30)
-    data["deliveryDate"] = {"endDate": (get_now() + timedelta(days=days)).isoformat()}
-    data["deliveryAddress"]["countryName_en"] = translate_country_en(data["deliveryAddress"]["countryName"])
-    data["deliveryAddress"]["countryName_ru"] = translate_country_ru(data["deliveryAddress"]["countryName"])
-    return munchify(data)
-
-
-def test_item_data_financial(cpv):
-    #using special function for generating items from financial CAV group
-    #in dgf finsncial mode
-    data = fake.fake_item_financial(cpv)
+    data = fake.fake_item(scheme)
 
     data["description"] = field_with_id("i", data["description"])
     data["description_en"] = field_with_id("i", data["description_en"])
