@@ -252,6 +252,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_auction_value
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_amount}=  create_fake_value  ${USERS.users['${tender_owner}'].tender_data.data.value.amount}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  new_amount=${new_amount}
   Можливість змінити поле value.amount тендера на ${new_amount}
@@ -273,6 +274,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_auction_step
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_minimal_step}=  create_fake_value  ${USERS.users['${tender_owner}'].tender_data.data.minimalStep.amount}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  new_minimal_step=${new_minimal_step}
   Можливість змінити поле minimalStep.amount тендера на ${new_minimal_step}
@@ -394,6 +396,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_auction_guarantee
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_guarantee_amount}=  create_fake_value  ${USERS.users['${tender_owner}'].tender_data.data.guarantee.amount}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  new_guarantee_value=${new_guarantee_amount}
   Можливість змінити поле guarantee.amount тендера на ${new_guarantee_amount}
