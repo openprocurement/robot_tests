@@ -1,14 +1,11 @@
 *** Settings ***
 Resource        base_keywords.robot
-Resource        aboveThreshold_keywords.robot
 Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
 
 *** Variables ***
-${MODE}             openeu
 @{USED_ROLES}       tender_owner  provider  provider1  provider2  viewer
-${DIALOGUE_TYPE}    EU
 
 ${NUMBER_OF_ITEMS}  ${1}
 ${TENDER_MEAT}      ${True}
