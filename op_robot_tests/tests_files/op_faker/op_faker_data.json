@@ -2938,96 +2938,115 @@
     ],
     "classifications_other":[
         {
+            "additionalClassifications": [
+                {
+                    "scheme": "CPVS",
+                    "id": "PA01-7",
+                    "description": "Найм"
+                }
+            ],
             "classification": {
-                "scheme": "CPV",
-                "id": "39831100-7",
-                "description": "Диспергатори"
+                "scheme": "CAV",
+                "id": "05110000-9",
+                "description": "Молокозаводи"
             }
         },
         {
+            "additionalClassifications": [
+                {
+                    "scheme": "CPVS",
+                    "id": "PA01-7",
+                    "description": "Найм"
+                }
+            ],
             "classification": {
-                "scheme": "CPV",
-                "id": "39513200-3",
-                "description": "Столові серветки"
+                "scheme": "CAV",
+                "id": "06110000-6",
+                "description": "Земельні ділянки призначені для забудови"
             }
         },
         {
+            "additionalClassifications": [
+                {
+                    "scheme": "CPVS",
+                    "id": "PA01-7",
+                    "description": "Найм"
+                }
+            ],
             "classification": {
-                "scheme": "CPV",
-                "id": "39514000-8",
-                "description": "Туалетна та кухонна білизна"
+                "scheme": "CAV",
+                "id": "04211000-0",
+                "description": "Промислова заводська, фабрична будівля та їх частини"
             }
         },
         {
+            "additionalClassifications": [
+                {
+                    "scheme": "CPVS",
+                    "id": "PA01-7",
+                    "description": "Найм"
+                }
+            ],
             "classification": {
-                "scheme": "CPV",
-                "id": "22612000-3",
-                "description": "Туш"
+                "scheme": "CAV",
+                "id": "04111000-9",
+                "description": "Квартира"
             }
         },
         {
+            "additionalClassifications": [
+                {
+                    "scheme": "CPVS",
+                    "id": "PA01-7",
+                    "description": "Найм"
+                }
+            ],
             "classification": {
                 "scheme": "CPV",
-                "id": "30195400-6",
-                "description": "Маркерні дошки чи приладдя"
+                "id": "30111000-0",
+                "description": "Текстові процесори"
             }
         },
         {
+            "additionalClassifications": [
+                {
+                    "scheme": "CPVS",
+                    "id": "PA01-7",
+                    "description": "Найм"
+                }
+            ],
             "classification": {
                 "scheme": "CPV",
-                "id": "22991000-3",
-                "description": "Газетний папір"
+                "id": "34110000-1",
+                "description": "Легкові автомобілі"
             }
         },
         {
+            "additionalClassifications": [
+                {
+                    "scheme": "CPVS",
+                    "id": "PA01-7",
+                    "description": "Найм"
+                }
+            ],
             "classification": {
                 "scheme": "CPV",
-                "id": "39812100-8",
-                "description": "Поліролі для підлоги"
+                "id": "39710000-2",
+                "description": "Електричні побутові прилади"
             }
         },
         {
+            "additionalClassifications": [
+                {
+                    "scheme": "CPVS",
+                    "id": "PA01-7",
+                    "description": "Найм"
+                }
+            ],
             "classification": {
                 "scheme": "CPV",
-                "id": "30192133-2",
-                "description": "Точила для олівців"
-            }
-        }
-    ],
-    "classifications_financial":[
-        {
-            "classification": {
-                "scheme": "CPV",
-                "id": "39831100-7",
-                "description": "Диспергатори"
-            }
-        },
-        {
-            "classification": {
-                "scheme": "CPV",
-                "id": "39513200-3",
-                "description": "Столові серветки"
-            }
-        },
-        {
-            "classification": {
-                "scheme": "CPV",
-                "id": "39514000-8",
-                "description": "Туалетна та кухонна білизна"
-            }
-        },
-        {
-            "classification": {
-                "scheme": "CPV",
-                "id": "22612000-3",
-                "description": "Туш"
-            }
-        },
-        {
-            "classification": {
-                "scheme": "CPV",
-                "id": "30195400-6",
-                "description": "Маркерні дошки чи приладдя"
+                "id": "16720000-8",
+                "description": "Трактори, що були у використанні"
             }
         }
     ],
@@ -3113,45 +3132,44 @@
             "name": "блок"
         }
     ],
-    "cpvs_other": [
-        "39831100-7",
-        "39513200-3",
-        "39514000-8",
-        "22612000-3"
-    ],
-    "cpvs_financial": [
-        "39831100-7",
-        "39513200-3",
-        "39514000-8"
+    "schemes_other": [
+        "05110000-9",
+        "06110000-6",
+        "04211000-0",
+        "04111000-9",
+        "30111000-0",
+        "34110000-1",
+        "39710000-2",
+        "16720000-8"
     ],
     "items_base_data_other": [
            {
-            "cpv_id": "22991000-3",
-            "description": "Нерухоме майно",
-            "description_ru": "Недвижимое имущество",
-            "description_en": "Real estate",
-            "quantity": 50,
-            "unit": {
-                "code": "MTK",
-                "name": "метри квадратні"
-            }
-        },
-        {
-            "cpv_id": "39831100-7",
-            "description": "Квартира в будинку малоповерхового житлового будівництва",
-            "description_ru": "Квартира в доме малоэтажного строительства",
-            "description_en": "Flat in low-rise building",
-            "quantity": 15,
+            "scheme_id": "05110000-9",
+            "description": "Молокозаводи",
+            "description_ru": "Молокозаводы",
+            "description_en": "Dairy factories",
+            "quantity": 5,
             "unit": {
                 "code": "H87",
                 "name": "штуки"
             }
         },
         {
-            "cpv_id": "39513200-3",
-            "description": "Квартира",
-            "description_ru": "Квартира",
-            "description_en": "Flat",
+            "scheme_id": "06110000-6",
+            "description": "Земельні ділянки призначені для забудови",
+            "description_ru": "Земельные участки предназначены для застройки",
+            "description_en": "The land is intended for development",
+            "quantity": 7,
+            "unit": {
+                "code": "MTK",
+                "name": "метри квадратні"
+            }
+        },
+        {
+            "scheme_id": "04211000-0",
+            "description": "Промислова заводська, фабрична будівля та їх частини",
+            "description_ru": "Промышленная заводская, фабричная здание и их части",
+            "description_en": "Industrial factory, factory building and their parts",
             "quantity": 12,
             "unit": {
                 "code": "H87",
@@ -3159,10 +3177,10 @@
             }
         },
         {
-            "cpv_id": "39514000-8",
-            "description": "Таунхаус",
-            "description_ru": "Таунхаус",
-            "description_en": "Townhouse",
+            "scheme_id": "04111000-9",
+            "description": "Квартира",
+            "description_ru": "Квартира",
+            "description_en": "Apartment",
             "quantity": 10,
             "unit": {
                 "code": "H87",
@@ -3170,10 +3188,10 @@
             }
         },
         {
-            "cpv_id": "22612000-3",
-            "description": "Офісні техніка, устаткування та приладдя, крім комп’ютерів, принтерів та меблів",
-            "description_ru": "Office techniccs besides computers, printers and futniture",
-            "description_en": "Офисная техника кроме компютеров, принтеров и мебели",
+            "scheme_id": "30111000-0",
+            "description": "Текстові процесори",
+            "description_ru": "Текстовые процессоры",
+            "description_en": "Text processors",
             "quantity": 15,
             "unit": {
                 "code": "H87",
@@ -3181,21 +3199,21 @@
             }
         },
                 {
-            "cpv_id": "30123200-9",
-            "description": "Банкомати",
-            "description_ru": "Банкоматы",
-            "description_en": "ATM",
-            "quantity": 20,
+            "scheme_id": "34110000-1",
+            "description": "Легкові автомобілі",
+            "description_ru": "Легковые автомобили",
+            "description_en": "Cars",
+            "quantity": 2,
             "unit": {
                 "code": "H87",
                 "name": "штуки"
             }
         },
             {
-            "cpv_id": "39812100-8",
-            "description": "Побутова техніка",
-            "description_ru": "Бытовая техника",
-            "description_en": "Household technics",
+            "scheme_id": "39710000-2",
+            "description": "Електричні побутові прилади",
+            "description_ru": "Электрические бытовые приборы",
+            "description_en": "Electric household appliances",
             "quantity": 22,
             "unit": {
                 "code": "H87",
@@ -3203,71 +3221,14 @@
             }
         },
                    {
-            "cpv_id": "30192133-2",
-            "description": "Витяжні вентилятори",
-            "description_ru": "Вытяжные вентиляторы",
-            "description_en": "Exhaust fans",
+            "scheme_id": "16720000-8",
+            "description": "Трактори, що були у використанні",
+            "description_ru": "Тракторы бывшие в употреблении",
+            "description_en": "Tractors that were in use",
             "quantity": 22,
             "unit": {
                 "code": "H87",
                 "name": "штуки"
-            }
-        }
-    ],
-    "items_base_data_financial": [
-           {
-            "cpv_id": "39831100-7",
-            "description": "Кредити Юридичних осіб",
-            "description_ru": "Кредиты юридических лиц",
-            "description_en": "Corporate loans",
-            "quantity": 50,
-            "unit": {
-                "code": "E48",
-                "name": "послуга"
-            }
-        },
-        {
-            "cpv_id": "39513200-3",
-            "description": "Кредити Юридичних осіб беззаставні",
-            "description_ru": "Кредиты юридических лиц беззалоговые",
-            "description_en": "Unsecured corporate loans",
-            "quantity": 50,
-            "unit": {
-                "code": "E48",
-                "name": "послуга"
-            }
-        },
-        {
-            "cpv_id": "22612000-3",
-            "description": "Кредити Юридичних осіб заставні",
-            "description_ru": "Кредиты юридических лиц залоговые",
-            "description_en": "Secured corporate loans",
-            "quantity": 50,
-            "unit": {
-                "code": "E48",
-                "name": "послуга"
-            }
-        },
-        {
-            "cpv_id": "39514000-8",
-            "description": "Права вимоги за кредитними договорами",
-            "description_ru": "Права и требования по кредитным договорам",
-            "description_en": "Rights and claims under credit agreements",
-            "quantity": 50,
-            "unit": {
-                "code": "E48",
-                "name": "послуга"
-            }
-        },
-        {
-            "cpv_id": "30195400-6",
-            "description": "Застава - Земельні ділянки",
-            "description_ru": "Залог: земельные участки",
-            "description_en": "Motrgage land",
-            "quantity": 50,
-            "unit": {
-                "code": "E48",
-                "name": "послуга"
             }
         }
     ]

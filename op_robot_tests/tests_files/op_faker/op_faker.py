@@ -144,6 +144,7 @@ class OP_Provider(BaseProvider):
             "description_ru": item_base_data["description_ru"],
             "description_en": item_base_data["description_en"],
             "classification": classification["classification"],
+            "additionalClassifications": classification["additionalClassifications"],
             "deliveryAddress": address["deliveryAddress"],
             "deliveryLocation": address["deliveryLocation"],
             "unit": item_base_data["unit"],
