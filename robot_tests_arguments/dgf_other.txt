@@ -34,7 +34,8 @@
   -i answer_question_to_tender
 -i ask_question_to_item
   -i answer_question_to_item
-
+-i add_item
+  -i delete_item
 
 -i make_bid_by_provider_without_qualification
 -i make_bid_without_parameters
