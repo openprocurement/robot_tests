@@ -287,13 +287,8 @@ def test_tender_data_dgf_other(params):
     data['procurementMethodType'] = 'dgfOtherAssets'
     data["procuringEntity"] = fake.procuringEntity_other()
 
-    scheme_group_other = fake.scheme_other()[:3]
-    used_scheme = [scheme_group_other]
     for i in range(params['number_of_items']):
+        scheme_group_other = fake.scheme_other()[:4]
         new_item = test_item_data(scheme_group_other)
         data['items'].append(new_item)
-        while (scheme_group_other in used_scheme) and (i != (params['number_of_items'] - 1)):
-            scheme_group_other = fake.scheme_other()[:3]
-        used_scheme.append(scheme_group_other)
     return data
-
