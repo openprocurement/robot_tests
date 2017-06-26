@@ -171,6 +171,9 @@ PrivatMarket:
         openeu:
             accelerator: 1440
             tender:  [0, 40]
+        openua:
+            accelerator: 1440
+            tender:  [0, 50]
         belowThreshold:
             accelerator: 1440
             enquiry: [0, 25]
