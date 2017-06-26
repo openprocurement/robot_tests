@@ -175,30 +175,6 @@ def test_tender_data(params, periods=("enquiry", "tender")):
     return munchify(data)
 
 
-def test_feature_data():
-    return munchify({
-        "code": uuid4().hex,
-        "title": field_with_id("f", fake.title()),
-        "title_en": field_with_id('f', fake_en.sentence(nb_words=5, variable_nb_words=True)),
-        "title_ru": field_with_id('f', fake_ru.sentence(nb_words=5, variable_nb_words=True)),
-        "description": fake.description(),
-        "enum": [
-            {
-                "value": 0.05,
-                "title": fake.word()
-            },
-            {
-                "value": 0.01,
-                "title": fake.word()
-            },
-            {
-                "value": 0,
-                "title": fake.word()
-            }
-        ]
-    })
-
-
 def test_question_data():
     return munchify({
         "data": {
@@ -222,53 +198,11 @@ def test_question_answer_data():
     })
 
 
-def test_complaint_data():
-    data = munchify({
-        "data": {
-            "author": fake.procuringEntity(),
-            "description": fake.description(),
-            "title": fake.title()
-        }
-    })
-    return data
-
-
-test_claim_data = test_complaint_data
-
-
-def test_claim_answer_data():
-    return munchify({
-        "data": {
-            "status": "answered",
-            "resolutionType": "resolved",
-            "tendererAction": fake.sentence(nb_words=10, variable_nb_words=True),
-            "resolution": fake.sentence(nb_words=15, variable_nb_words=True)
-        }
-    })
-
-
 def test_confirm_data(id):
     return munchify({
         "data": {
             "status": "active",
             "id": id
-        }
-    })
-
-
-def test_submit_claim_data(claim_id):
-    return munchify({
-        "data": {
-            "id": claim_id,
-            "status": "claim"
-        }
-    })
-
-
-def test_complaint_reply_data():
-    return munchify({
-        "data": {
-            "status": "resolved"
         }
     })
 
@@ -325,27 +259,6 @@ def test_item_data(scheme):
     data["deliveryAddress"]["countryName_en"] = translate_country_en(data["deliveryAddress"]["countryName"])
     data["deliveryAddress"]["countryName_ru"] = translate_country_ru(data["deliveryAddress"]["countryName"])
     return munchify(data)
-
-
-def test_invalid_features_data():
-    return [
-        {
-            "code": "ee3e24bc17234a41bd3e3a04cc28e9c6",
-            "featureOf": "tenderer",
-            "title": fake.title(),
-            "description": fake.description(),
-            "enum": [
-                {
-                    "value": 0.35,
-                    "title": fake.word()
-                },
-                {
-                    "value": 0,
-                    "title": fake.word()
-                }
-            ]
-        }
-    ]
 
 
 def test_tender_data_dgf_other(params):

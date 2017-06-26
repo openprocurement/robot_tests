@@ -213,26 +213,6 @@ Get Broker Property By Username
   [Return]  ${item}
 
 
-Підготувати дані для створення нецінового показника
-  ${reply}=  test_feature_data
-  [Return]  ${reply}
-
-Підготувати дані для подання вимоги
-  ${claim}=  test_claim_data
-  [Return]  ${claim}
-
-
-Підготувати дані для подання скарги
-  [Arguments]  ${lot}=${False}
-  ${complaint}=  test_complaint_data  ${lot}
-  [Return]  ${complaint}
-
-
-Підготувати дані для відповіді на скаргу
-  ${reply}=  test_complaint_reply_data
-  [Return]  ${reply}
-
-
 Підготувати дані для запитання
   ${question}=  test_question_data
   [Return]  ${question}
@@ -792,78 +772,6 @@ Require Failure
   ...      active.tendering
 
 
-Дочекатись дати початку періоду прекваліфікації
-  [Arguments]  ${username}  ${tender_uaid}
-  # XXX: HACK: Same as above
-  ${status}  ${date}=  Run Keyword And Ignore Error
-  ...      Set Variable
-  ...      ${USERS.users['${username}'].tender_data.data.tenderPeriod.endDate}
-  ${date}=  Set Variable If
-  ...      '${status}' == 'FAIL'
-  ...      ${USERS.users['${tender_owner}'].initial_data.data.tenderPeriod.endDate}
-  ...      ${date}
-  wait_and_write_to_console  ${date}
-  Оновити LAST_MODIFICATION_DATE
-  Дочекатись синхронізації з майданчиком  ${username}
-  Wait until keyword succeeds
-  ...      5 min 15 sec
-  ...      15 sec
-  ...      Звірити статус тендера
-  ...      ${username}
-  ...      ${tender_uaid}
-  ...      active.pre-qualification
-
-
-Дочекатись дати початку очікування
-  [Arguments]  ${username}  ${tender_uaid}
-  # XXX: HACK: Same as above
-  ${status}  ${date}=  Run Keyword And Ignore Error
-  ...      Set Variable
-  ...      ${USERS.users['${username}'].tender_data.data.tenderPeriod.endDate}
-  ${date}=  Set Variable If
-  ...      '${status}' == 'FAIL'
-  ...      ${USERS.users['${tender_owner}'].initial_data.data.tenderPeriod.endDate}
-  ...      ${date}
-  wait_and_write_to_console  ${date}
-  Оновити LAST_MODIFICATION_DATE
-  Дочекатись синхронізації з майданчиком  ${username}
-  Wait until keyword succeeds
-  ...      5 min 15 sec
-  ...      15 sec
-  ...      Звірити статус тендера
-  ...      ${username}
-  ...      ${tender_uaid}
-  ...      active.stage2.pending
-
-
-Дочекатись дати закінчення періоду прекваліфікації
-  [Arguments]  ${username}  ${tender_uaid}
-  wait_and_write_to_console  ${USERS.users['${username}'].tender_data.data.qualificationPeriod.endDate}
-  Оновити LAST_MODIFICATION_DATE
-  Дочекатись синхронізації з майданчиком  ${username}
-  Wait until keyword succeeds
-  ...      5 min 15 sec
-  ...      15 sec
-  ...      Run Keyword And Expect Error  *
-  ...      Звірити статус тендера
-  ...      ${username}
-  ...      ${tender_uaid}
-  ...      active.pre-qualification.stand-still
-
-
-Дочекатися створення нового етапу мостом
-  [Arguments]  ${username}  ${tender_uaid}
-  Оновити LAST_MODIFICATION_DATE
-  Дочекатись синхронізації з майданчиком  ${username}
-  Wait until keyword succeeds
-  ...      10 min 15 sec
-  ...      15 sec
-  ...      Звірити статус тендера
-  ...      ${username}
-  ...      ${tender_uaid}
-  ...      complete
-
-
 Дочекатись дати початку періоду аукціону
   [Arguments]  ${username}  ${tender_uaid}
   Оновити LAST_MODIFICATION_DATE
@@ -888,13 +796,6 @@ Require Failure
   ...      ${username}
   ...      ${tender_uaid}
   ...      active.qualification
-
-
-Дочекатись дати закінчення періоду подання скарг
-  [Arguments]  ${username}
-  wait_and_write_to_console  ${USERS.users['${username}'].tender_data.data.complaintPeriod.endDate}
-  Оновити LAST_MODIFICATION_DATE
-  Дочекатись синхронізації з майданчиком  ${username}
 
 
 Оновити LAST_MODIFICATION_DATE

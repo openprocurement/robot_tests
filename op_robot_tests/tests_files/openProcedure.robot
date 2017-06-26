@@ -166,14 +166,6 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля minimalStep.amount тендера для усіх користувачів
 
 
-Відображення фінансового критерію лоту
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view_criteria  level2
-  Отримати дані із поля eligibilityCriteria тендера для усіх користувачів
-
-
 Відображення типу оголошеного лоту
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
@@ -384,36 +376,6 @@ ${ITEM_MEAT}        ${True}
   Перевірити неможливість зміни поля enquiryPeriod.endDate тендера на значення ${new_value} для користувача ${tender_owner}
 
 
-Неможливість змінити значення фінансового критерію лоту
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_auction_criteria_ua  level2
-  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  ${new_title}=  create_fake_sentence
-  Перевірити неможливість зміни поля eligibilityCriteria тендера на значення ${new_title} для користувача ${tender_owner}
-
-
-Неможливість змінити значення фінансового критерію лоту російською мовою
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_auction_criteria  level3
-  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  ${new_title}=  create_fake_sentence
-  Перевірити неможливість зміни поля eligibilityCriteria_ru тендера на значення ${new_title} для користувача ${tender_owner}
-
-
-Неможливість змінити значення фінансового критерію лоту англійською мовою
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_auction_criteria  level3
-  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  ${new_title}=  create_fake_sentence
-  Перевірити неможливість зміни поля eligibilityCriteria_en тендера на значення ${new_title} для користувача ${tender_owner}
-
-
 Можливість змінити гарантування лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
   ...      tender_owner
@@ -482,15 +444,6 @@ ${ITEM_MEAT}        ${True}
   ...      add_tender_illustration  level2
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість додати ілюстрацію до тендера
-
-
-Можливість додати Virtual Data Room до лоту
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      add_tender_vdr  level2
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість додати Virtual Data Room до тендера
 
 
 Можливість додати посилання на публічний паспорт активу до лоту
@@ -773,101 +726,6 @@ ${ITEM_MEAT}        ${True}
   ...      make_bid_by_provider2  level1
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider2}
-
-##############################################################################################
-#             ABOVETRHESHOLD  BIDDING
-##############################################################################################
-
-Можливість змінити документацію цінової пропозиції з публічної на приватну
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
-  ...      provider
-  ...      ${USERS.users['${provider}'].broker}
-  ...      openeu_make_bid_doc_private_by_provider
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість змінити документацію цінової пропозиції з публічної на приватну учасником ${provider}
-
-
-Можливість завантажити фінансовий документ до пропозиції першим учасником
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
-  ...      provider
-  ...      ${USERS.users['${provider}'].broker}
-  ...      openeu_add_financial_bid_doc_by_provider
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість завантажити financial_documents документ до пропозиції учасником ${provider}
-
-
-Можливість завантажити кваліфікаційний документ до пропозиції першим учасником
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
-  ...      provider
-  ...      ${USERS.users['${provider}'].broker}
-  ...      openeu_add_qualification_bid_doc_by_provider
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість завантажити qualification_documents документ до пропозиції учасником ${provider}
-
-
-Можливість завантажити документ для критеріїв прийнятності до пропозиції першим учасником
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
-  ...      provider
-  ...      ${USERS.users['${provider}'].broker}
-  ...      openeu_add_eligibility_bid_doc_by_provider
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість завантажити eligibility_documents документ до пропозиції учасником ${provider}
-
-
-Можливість редагувати однопредметний тендер більше ніж за 7 днів до завершення періоду подання пропозицій
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      open_modify_tender_in_tendering_period
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${new_description}=  create_fake_sentence
-  Можливість змінити поле description тендера на ${new_description}
-  Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data}  description
-
-
-Відображення зміни статусу першої пропозиції після редагування інформації про тендер
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
-  ...      provider
-  ...      ${USERS.users['${provider}'].broker}
-  ...      open_confirm_first_bid
-  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
-  Відображення зміни статусу пропозицій на invalid для учасника ${provider}
-
-
-Відображення зміни статусу другої пропозиції після редагування інформації про тендер
-  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
-  ...      provider1
-  ...      ${USERS.users['${provider1}'].broker}
-  ...      open_confirm_second_bid
-  [Setup]  Дочекатись синхронізації з майданчиком  ${provider1}
-  Відображення зміни статусу пропозицій на invalid для учасника ${provider1}
-
-
-Можливість підтвердити цінову пропозицію після зміни умов тендера першим учасником
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
-  ...      provider
-  ...      ${USERS.users['${provider}'].broker}
-  ...      open_confirm_first_bid
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість підтвердити цінову пропозицію учасником ${provider}
-
-
-Можливість підтвердити цінову пропозицію після зміни умов тендера другим учасником
-  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
-  ...      provider1
-  ...      ${USERS.users['${provider1}'].broker}
-  ...      open_confirm_second_bid
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість підтвердити цінову пропозицію учасником ${provider1}
-
-
-Можливість підтвердити цінову пропозицію після зміни умов третьому учаснику
-  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
-  ...      provider2
-  ...      ${USERS.users['${provider1}'].broker}
-  ...      open_confirm_third_bid
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість підтвердити цінову пропозицію учасником ${provider2}
 
 ##############################################################################################
 
