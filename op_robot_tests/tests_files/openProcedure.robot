@@ -219,6 +219,30 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля classification.description усіх предметів для користувача ${viewer}
 
 
+Відображення схеми додаткової класифікації активів лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view  level1
+  Звірити відображення поля additionalClassifications[0].scheme усіх предметів для користувача ${viewer}
+
+
+Відображення ідентифікатора додаткової класифікації активів лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view  level2
+  Звірити відображення поля additionalClassifications[0].id усіх предметів для користувача ${viewer}
+
+
+Відображення опису додаткової класифікації активів лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view  level2
+  Звірити відображення поля additionalClassifications[0].description усіх предметів для користувача ${viewer}
+
+
 Відображення назви одиниці активів лоту
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
   ...      viewer
