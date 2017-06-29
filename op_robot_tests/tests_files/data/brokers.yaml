@@ -175,7 +175,7 @@ PrivatMarket:
             accelerator: 1440
             tender:  [0, 50]
         belowThreshold:
-            accelerator: 1440
+            accelerator: 720
             enquiry: [0, 25]
             tender:  [0, 18]
     keywords_file: privatmarket
