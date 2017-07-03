@@ -173,11 +173,12 @@ PrivatMarket:
             tender:  [0, 40]
         openua:
             accelerator: 1440
+            enquiry: [0, 25]
             tender:  [0, 50]
         belowThreshold:
             accelerator: 720
-            enquiry: [0, 25]
-            tender:  [0, 18]
+            enquiry: [0, 50]
+            tender:  [0, 20]
     keywords_file: privatmarket
     roles:
         provider:       PrivatMarket_Provider
