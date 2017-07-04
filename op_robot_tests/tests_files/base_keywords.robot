@@ -34,7 +34,7 @@ Resource           resource.robot
   ${doc_number}=  Get Length  ${documents}
   :FOR  ${doc_index}  IN RANGE  ${doc_number}
   \  ${document_url}=  Get From Dictionary  ${USERS.users['${username}'].tender_data.data.documents[${doc_index}]}  url
-  \  Should Match Regexp   ${document_url}   ^https?:\/\/public.docs(?:-sandbox)?\.openprocurement\.org\/get\/([0-9A-Fa-f]{32})   msg=Not a Document Service Upload
+  \  Should Match Regexp   ${document_url}   ^https?:\/\/public-docs(?:-dev)?\.prozorro\.gov\.ua\/get\/([0-9A-Fa-f]{32})   msg=Not a Document Service Upload
 
 
 Можливість створити план закупівлі
