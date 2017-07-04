@@ -79,7 +79,7 @@ Suite Teardown  Test Suite Teardown
 Можливість вичитати посилання на аукціон для ${username}
   ${url}=  Run As  ${username}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}  ${TENDER['LOT_ID']}
   Should Be True  '${url}'
-  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.openprocurement\.org\/tenders\/([0-9A-Fa-f]{32})
+  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-dev)?\.prozorro\.gov\.ua\/tenders\/([0-9A-Fa-f]{32})
   Log  URL аукціону для глядача: ${url}
 
 
