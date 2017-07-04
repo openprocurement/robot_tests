@@ -794,7 +794,7 @@ Resource           resource.robot
 
 Можливість скасувати вимогу про виправлення визначення ${award_index} переможця
   ${cancellation_reason}=  create_fake_sentence
-  ${status}=  Set variable if  'open' in '${MODE}'  stopping  cancelled
+  ${status}=  Set variable if  "${USERS.users['${provider}'].tender_data.data.awards[${award_index}].complaints[-1].status}" == 'pending' and 'open' in '${MODE}'  stopping  cancelled
   ${data}=  Create Dictionary
   ...      status=${status}
   ...      cancellationReason=${cancellation_reason}
@@ -807,7 +807,6 @@ Resource           resource.robot
   ...      ${cancellation_data}
   ...      ${award_index}
   Set To Dictionary  ${USERS.users['${provider}'].claim_data}  cancellation  ${cancellation_data}
-  ${status}=  Set variable if  'open' in '${MODE}'  stopping  cancelled
   Wait until keyword succeeds
   ...      5 min 15 sec
   ...      15 sec
