@@ -53,22 +53,6 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля dgfID тендера для користувача ${viewer}
 
 
-Відображення дати рішення про затвердження умов продажу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view_decisionDate
-  Звірити відображення поля dgfDecisionDate тендера для користувача ${viewer}
-
-
-Відображення номера рішення про затвердження умов продажу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view_decisionID
-  Звірити відображення поля dgfDecisionID тендера для користувача ${viewer}
-
-
 Відображення поля "Лоти виставляються"
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
@@ -396,26 +380,6 @@ ${ITEM_MEAT}        ${True}
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.guarantee}  amount
   Звірити відображення поля guarantee.amount тендера із ${USERS.users['${tender_owner}'].new_guarantee_value} для користувача ${viewer}
-
-
-Неможливість змінити дату рішення про затвердження умов продажу
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних лоту
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_decisionDate
-  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  ${new_date}=  create_fake_dgfDecisionDate
-  Перевірити неможливість зміни поля dgfDecisionDate тендера на значення ${new_date} для користувача ${tender_owner}
-
-
-Неможливість змінити номер рішення про затвердження умов продажу
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних лоту
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_decisionID
-  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  ${new_id}=  create_fake_dgfDecisionID
-  Перевірити неможливість зміни поля dgfDecisionID тендера на значення ${new_id} для користувача ${tender_owner}
 
 
 Неможливість змінити поле "Лоти виставляються"

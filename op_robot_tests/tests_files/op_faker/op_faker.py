@@ -86,9 +86,6 @@ class OP_Provider(BaseProvider):
     def dgfID(self):
         return "{}{}-{:05d}".format("F", self.random_int(10000000, 99999999),
                                     self.random_int(1000, 99999))
-    @classmethod
-    def dgfDecisionID(self):
-        return "{}/{}".format(2233, self.random_int(1, 9))
 
     @classmethod
     def description(self):

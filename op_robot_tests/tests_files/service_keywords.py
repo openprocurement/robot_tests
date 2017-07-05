@@ -39,8 +39,6 @@ from .initial_data import (
     test_supplier_data,
     test_tender_data,
     test_tender_data_dgf_other,
-    create_fake_dgfDecisionID,
-    create_fake_dgfDecisionDate,
     create_fake_tenderAttempts,
 
 )

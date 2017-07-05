@@ -28,14 +28,6 @@ def create_fake_sentence():
     return fake.sentence(nb_words=10, variable_nb_words=True)
 
 
-def create_fake_dgfDecisionDate():
-    return get_now().strftime('%Y-%m-%d')
-
-
-def create_fake_dgfDecisionID():
-    return fake.dgfDecisionID()
-
-
 def create_fake_tenderAttempts():
    return fake.random_int(min=1, max=4)
 
@@ -265,8 +257,6 @@ def test_tender_data_dgf_other(params):
     data = test_tender_data(params, [])
 
     data['dgfID'] = fake.dgfID()
-    data['dgfDecisionID'] = fake.dgfDecisionID()
-    data['dgfDecisionDate'] =  (get_now() + timedelta(days=-2)).strftime('%Y-%m-%d')
     data['tenderAttempts'] =  fake.random_int(min=1, max=4)
     del data["procuringEntity"]
 
