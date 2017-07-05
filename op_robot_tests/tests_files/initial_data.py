@@ -240,7 +240,7 @@ def test_supplier_data():
 
 def test_item_data(scheme):
     #using typical functions for dgf other and all other modes besides dgf financial
-    #items will be genareted from other CAV group
+    #items will be genareted from other CAV-PS group
     data = fake.fake_item(scheme)
 
     data["description"] = field_with_id("i", data["description"])
