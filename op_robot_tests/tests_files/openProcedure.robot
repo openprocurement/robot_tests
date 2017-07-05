@@ -526,15 +526,6 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення вмісту документа ${USERS.users['${tender_owner}'].tender_document.doc_id} із ${USERS.users['${tender_owner}'].tender_document.doc_content} для користувача ${viewer}
 
 
-Неможливість додати актив лоту
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування лота
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      add_item  level3
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Неможливість додати предмет закупівлі в тендер
-
-
 Відображення опису нової номенклатури
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури лота
   ...      viewer
@@ -542,16 +533,6 @@ ${ITEM_MEAT}        ${True}
   ...      add_item_view  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля description у новоствореному предметі для усіх користувачів
-
-
-Неможливість видалити актив лоту
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування лота
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      delete_item  level3
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Неможливість видалити предмет закупівлі з тендера
-
 
 ##############################################################################################
 #             QUESTIONS
