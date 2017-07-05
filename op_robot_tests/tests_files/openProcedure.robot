@@ -320,26 +320,6 @@ ${ITEM_MEAT}        ${True}
   Перевірити неможливість зміни поля title_en тендера на значення ${new_title} для користувача ${tender_owner}
 
 
-Неможливість змінити опис лоту
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_auction_description  level2
-  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  ${new_description}=  create_fake_sentence
-  Перевірити неможливість зміни поля description тендера на значення ${new_description} для користувача ${tender_owner}
-
-
-Неможливість змінити дані про організатора лоту
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_auction_procuringEntity  level2
-  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  ${new_procuringEntity_name}=  create_fake_sentence
-  Перевірити неможливість зміни поля procuringEntity.name тендера на значення ${new_procuringEntity_name} для користувача ${tender_owner}
-
-
 Неможливість змінити початок періоду подання пропозицій лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
   ...      tender_owner
@@ -410,15 +390,6 @@ ${ITEM_MEAT}        ${True}
   Можливість додати ілюстрацію до тендера
 
 
-Можливість додати посилання на публічний паспорт активу до лоту
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      add_tender_public_asset_certificate  level2
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість додати публічний паспорт активу до тендера
-
-
 Можливість завантажити договір про нерозголошення до лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
   ...      tender_owner
@@ -462,15 +433,6 @@ ${ITEM_MEAT}        ${True}
   ...      add_tender_asset_familiarization  level2
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість додати офлайн документ
-
-
-Відображення документа з реквізитами
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      add_tender_doc  level2
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити значення поля серед усіх документів тендера  ${viewer}  ${TENDER['TENDER_UAID']}  documentType  x_dgfPlatformLegalDetails
 
 
 Відображення заголовку документації до лоту
