@@ -165,14 +165,14 @@ Newtend:
 PrivatMarket:
     intervals:
         default:
-            accelerator: 144
+            accelerator: 1440
             enquiry: [0, 18]
             tender:  [0, 18]
         openeu:
             accelerator: 1440
             tender:  [0, 40]
         belowThreshold:
-            accelerator: 1440
+            accelerator: 144
             enquiry: [0, 25]
             tender:  [0, 18]
     keywords_file: privatmarket
