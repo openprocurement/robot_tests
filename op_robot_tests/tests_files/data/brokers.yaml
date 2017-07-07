@@ -173,8 +173,6 @@ PrivatMarket:
             tender:  [0, 40]
         belowThreshold:
             accelerator: 144
-        openua:
-            accelerator: 1440
             enquiry: [0, 25]
             tender:  [0, 18]
         negotiation:
