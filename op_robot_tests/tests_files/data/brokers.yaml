@@ -175,6 +175,10 @@ PrivatMarket:
             accelerator: 144
             enquiry: [0, 25]
             tender:  [0, 18]
+        negotiation:
+            accelerator: 1080
+            enquiry: [0, 20]
+            tender:  [0, 20]
     keywords_file: privatmarket
     roles:
         provider:       PrivatMarket_Provider
