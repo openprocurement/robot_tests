@@ -169,15 +169,15 @@ PrivatMarket:
             enquiry: [0, 18]
             tender:  [0, 18]
         openeu:
-            accelerator: 1440
+            accelerator: 720
             tender:  [0, 40]
         openua:
             accelerator: 1440
             enquiry: [0, 25]
-            tender:  [0, 50]
+            tender:  [0, 65]
         belowThreshold:
             accelerator: 720
-            enquiry: [0, 50]
+            enquiry: [0, 35]
             tender:  [0, 20]
     keywords_file: privatmarket
     roles:
