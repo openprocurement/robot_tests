@@ -165,19 +165,21 @@ Newtend:
 PrivatMarket:
     intervals:
         default:
-            accelerator: 144
+            accelerator: 1440
             enquiry: [0, 18]
             tender:  [0, 18]
         openeu:
-            accelerator: 720
+            accelerator: 1440
             tender:  [0, 40]
+        belowThreshold:
+            accelerator: 144
         openua:
             accelerator: 1440
             enquiry: [0, 25]
-            tender:  [0, 65]
-        belowThreshold:
-            accelerator: 720
-            enquiry: [0, 35]
+            tender:  [0, 18]
+        negotiation:
+            accelerator: 1080
+            enquiry: [0, 20]
             tender:  [0, 20]
     keywords_file: privatmarket
     roles:
