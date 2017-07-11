@@ -831,6 +831,32 @@ Require Failure
   Дочекатись синхронізації з майданчиком  ${username}
 
 
+Дочекатись зміни статусу не задоволеної вимоги
+  [Arguments]  ${username}  ${tender_uaid}
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      10 min 15 sec
+  ...      15 sec
+  ...      Звірити статус вимоги/скарги
+  ...      ${provider}
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}']['tender_claim_data']['complaintID']}
+  ...      declined
+
+
+Дочекатись зміни статусу відхиленої вимоги
+  [Arguments]  ${username}  ${tender_uaid}
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      10 min 15 sec
+  ...      15 sec
+  ...      Звірити статус вимоги/скарги
+  ...      ${provider}
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}']['tender_claim_data']['complaintID']}
+  ...      invalid
+
+
 Оновити LAST_MODIFICATION_DATE
   [Documentation]
   ...      Variable ``${TEST_STATUS}`` is only available in test case teardown.

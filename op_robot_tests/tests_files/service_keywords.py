@@ -24,6 +24,8 @@ from .initial_data import (
     test_bid_data,
     test_bid_value,
     test_claim_answer_data,
+    test_claim_declined_answer_data,
+    test_claim_invalid_answer_data,
     test_claim_data,
     test_complaint_data,
     test_complaint_reply_data,

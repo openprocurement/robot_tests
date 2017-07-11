@@ -246,6 +246,27 @@ def test_claim_answer_data():
     })
 
 
+def test_claim_declined_answer_data():
+    return munchify({
+        "data": {
+            "status": "answered",
+            "resolutionType": "declined",
+            "tendererAction": fake.sentence(nb_words=10, variable_nb_words=True),
+            "resolution": fake.sentence(nb_words=15, variable_nb_words=True)
+        }
+    })
+
+def test_claim_invalid_answer_data():
+    return munchify({
+        "data": {
+            "status": "answered",
+            "resolutionType": "invalid",
+            "tendererAction": fake.sentence(nb_words=10, variable_nb_words=True),
+            "resolution": fake.sentence(nb_words=15, variable_nb_words=True)
+        }
+    })
+
+
 def test_confirm_data(id):
     return munchify({
         "data": {

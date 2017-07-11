@@ -173,6 +173,72 @@ ${award_index}      ${0}
   Звірити відображення поля satisfied вимоги із ${USERS.users['${provider}'].tender_claim_data.claim_answer_confirm.data.satisfied} для користувача ${viewer}
 
 
+Можливість створити вимогу про виправлення умов закупівлі, додати документацію і подати її користувачем
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  tender_complaint
+  ...  critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість створити вимогу про виправлення умов закупівлі із документацією
+
+
+Можливість незадоволено відповісти на вимогу про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес оскарження
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  tender_complaint
+  ...  critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість відповісти 'declined' на вимогу про виправлення умов закупівлі
+
+
+Відображення статусу 'declined' вимогим
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  tender_complaint
+  ...  non-critical
+  [Setup]  Дочекатись зміни статусу не задоволеної вимоги  ${provider}  ${TENDER['TENDER_UAID']}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Звірити відображення поля status вимоги із declined для користувача ${viewer}
+
+
+Можливість створити вимогу про виправлення умов закупівлі, додати до неї документацію і подати її
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  tender_complaint
+  ...  critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість створити вимогу про виправлення умов закупівлі із документацією
+
+
+Можливість відхилити вимогу про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес оскарження
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  tender_complaint
+  ...  critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість відповісти 'invalid' на вимогу про виправлення умов закупівлі
+
+
+Відображення статусу 'invalid' вимогим
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  tender_complaint
+  ...  non-critical
+  [Setup]  Дочекатись зміни статусу відхиленої вимоги  ${provider}  ${TENDER['TENDER_UAID']}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Звірити відображення поля status вимоги із invalid для користувача ${viewer}
+
+
 Можливість створити вимогу про виправлення умов лоту, додати до неї документацію і подати її користувачем
   [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...  provider
