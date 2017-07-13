@@ -86,6 +86,15 @@ Library  openprocurement_client.utils
   [Return]  ${document['${field}']}
 
 
+Отримати інформацію про документ
+  [Arguments]  ${username}  ${tender_uaid}  ${doc_id}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${document}=  get_document_by_id  ${tender.data}  ${doc_id}
+  ${file_properties}=  Call Method  ${USERS.users['${username}'].client}  get_file_properties  ${document.url}  ${document.hash}
+  Log  ${file_properties}
+  [return]  ${file_properties}
+
+
 Отримати документ
   [Arguments]  ${username}  ${tender_uaid}  ${doc_id}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
