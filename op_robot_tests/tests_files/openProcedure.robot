@@ -476,6 +476,42 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля title документа ${USERS.users['${tender_owner}']['tender_document']['doc_id']} із ${USERS.users['${tender_owner}'].tender_document.doc_name} для користувача ${viewer}
 
 
+Можливість отримати інформацію про документацію до тендера
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      get_file_properties
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  Отримати інформацію про документ тендера ${USERS.users['${tender_owner}'].tender_document.doc_id} ${tender_owner}
+
+
+Можливість отримати інформацію про документацію до лотів
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      get_file_properties
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  Отримати інформацію про документ лотів ${USERS.users['${tender_owner}'].lots_documents[0].doc_id} ${tender_owner}
+
+
+Можливість перевірити інформацію про документацію до тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      compare_file_properties
+  Завантажити дані про тендер
+  Звірити інформацію про документацію ${USERS.users['${viewer}'].tender_file_properties}
+
+
+Можливість перевірити інформацію про документацію до лотів
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      compare_file_properties
+  Завантажити дані про тендер
+  Звірити інформацію про документацію ${USERS.users['${viewer}'].lot_file_properties}
+
+
 Відображення заголовку документації до всіх лотів
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
   ...      viewer
