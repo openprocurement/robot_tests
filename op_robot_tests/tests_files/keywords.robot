@@ -176,6 +176,9 @@ Get Broker Property By Username
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider1_access_token=${USERS.users['${provider1}'].access_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider_bid_id=${USERS.users['${provider}'].bid_id}
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider1_bid_id=${USERS.users['${provider1}'].bid_id}
+  Run Keyword And Ignore Error  Set To Dictionary  ${artifact}
+  ...      tender_file_properties=${USERS.users['${tender_owner}'].tender_document.file_properties}
+  ...      lot_file_properties=${USERS.users['${tender_owner}'].lots_documents[0].file_properties}
   ${status}  ${lots_ids}=  Run Keyword And Ignore Error  Отримати ідентифікатори об’єктів  ${viewer}  lots
   Run Keyword If  '${status}'=='PASS'
   ...      Set To Dictionary   ${artifact}   lots=${lots_ids}
@@ -195,6 +198,8 @@ Get Broker Property By Username
   Run Keyword And Ignore Error  Set To Dictionary  ${TENDER}  LOT_ID=${ARTIFACT.lots[${lot_index}]}
   ${MODE}=  Get Variable Value  ${MODE}  ${ARTIFACT.mode}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token=${ARTIFACT.tender_owner_access_token}
+  Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${viewer}']}  tender_file_properties=${ARTIFACT.tender_file_properties}
+  Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${viewer}']}  lot_file_properties=${ARTIFACT.lot_file_properties}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider}']}  access_token=${ARTIFACT.provider_access_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider1}']}  access_token=${ARTIFACT.provider1_access_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider}']}  bid_id=${ARTIFACT.provider_bid_id}
