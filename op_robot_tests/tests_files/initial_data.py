@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -
 import os
 import random
+import hashlib
 from datetime import timedelta
 from tempfile import NamedTemporaryFile
 from uuid import uuid4
@@ -552,3 +553,7 @@ def test_change_data():
             "status": "pending"
         }
     })
+
+
+def get_hash(file_contents):
+    return ("md5:"+hashlib.md5(file_contents).hexdigest())

@@ -103,6 +103,12 @@ Library  openprocurement_client.utils
   [return]  ${filename}
 
 
+Отримати вміст документа ${url}
+  ${file_name}=  download_file_from_url  ${url}  ${OUTPUT_DIR}${/}file
+  ${file_contents}=  Get File  ${OUTPUT_DIR}${/}${file_name}
+  [return]  ${file_contents}
+
+
 Отримати посилання на аукціон для глядача
   [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
