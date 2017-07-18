@@ -177,7 +177,10 @@ Resource           resource.robot
 
 
 Звірити інформацію про документацію ${file_properties}
-  ${new_file_properties}=  Call Method  ${USERS.users['${tender_owner}'].client}  get_file_properties  ${file_properties.url}  ${file_properties.hash}
+  ${file_name}=  download_file_from_url  ${file_properties.url}  ${OUTPUT_DIR}${/}file
+  ${file_contents}=  Get File  ${OUTPUT_DIR}${/}${file_name}
+  ${file_hash}=  get_hash  ${file_contents}
+  ${new_file_properties}=  Call Method  ${USERS.users['${tender_owner}'].client}  get_file_properties  ${file_properties.url}  ${file_hash}
   Порівняти об'єкти  ${new_file_properties}  ${file_properties}
 
 
