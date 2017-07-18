@@ -1,7 +1,7 @@
 -v MODE:belowThreshold
 
 -v NUMBER_OF_ITEMS:1
--v NUMBER_OF_LOTS:1
+-v NUMBER_OF_LOTS:0
 
 -v TENDER_MEAT:False
 -v ITEM_MEAT:False
@@ -11,7 +11,6 @@
 -i add_tender_doc
 -i find_tender
 -i tender_view
--i lot_view
 -i extend_tendering_period
 -i ask_question_to_tender
 -i answer_question_to_tender

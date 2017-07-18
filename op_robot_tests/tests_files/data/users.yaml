@@ -208,7 +208,6 @@ users:
     PrivatMarket_Owner:
         broker: PrivatMarket
         homepage: "https://rc.privatmarket.ua/business/tenders?_locale=uk"
-        #homepage: "https://rc.privatmarket.ua/business/tenders?_locale=uk"
         email: pbecommercetest1@ukr.net
         login: 380270010003
         password: password0003
