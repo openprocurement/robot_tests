@@ -176,8 +176,10 @@ Resource           resource.robot
   Log  ${file_properties}
 
 
-Звірити інформацію про документацію ${file_properties}
-  ${new_file_properties}=  Call Method  ${USERS.users['${tender_owner}'].client}  get_file_properties  ${file_properties.url}  ${file_properties.hash}
+Звірити інформацію про документацію ${file_properties} ${username}
+  ${file_contents}=  Run as  ${username}  Отримати вміст документа  ${file_properties.url}
+  ${file_hash}=  get_hash  ${file_contents}
+  ${new_file_properties}=  Call Method  ${USERS.users['${viewer}'].client}  get_file_properties  ${file_properties.url}  ${file_hash}
   Порівняти об'єкти  ${new_file_properties}  ${file_properties}
 
 

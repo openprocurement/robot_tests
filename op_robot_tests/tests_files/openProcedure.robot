@@ -500,7 +500,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${viewer}'].broker}
   ...      compare_file_properties
   Завантажити дані про тендер
-  Звірити інформацію про документацію ${USERS.users['${viewer}'].tender_file_properties}
+  Звірити інформацію про документацію ${USERS.users['${viewer}'].tender_file_properties} ${viewer}
 
 
 Можливість перевірити інформацію про документацію до лотів
@@ -509,7 +509,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${viewer}'].broker}
   ...      compare_file_properties
   Завантажити дані про тендер
-  Звірити інформацію про документацію ${USERS.users['${viewer}'].lot_file_properties}
+  Звірити інформацію про документацію ${USERS.users['${viewer}'].lot_file_properties} ${viewer}
 
 
 Відображення заголовку документації до всіх лотів
