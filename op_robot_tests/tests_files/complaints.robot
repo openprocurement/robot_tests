@@ -25,8 +25,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Оголошення тендера
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ...  lot_complaint
-  ...  tender_complaint
+  ...  create_tender
   ...  critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість оголосити тендер
@@ -36,8 +35,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${viewer}'].broker}: Пошук тендера
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  lot_complaint
-  ...  tender_complaint
+  ...  find_tender
   ...  critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Можливість знайти тендер по ідентифікатору для усіх користувачів
@@ -48,7 +46,7 @@ ${award_index}      ${0}
   ...      viewer  tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
-  ...      lot_view  level1
+  ...      tender_view
   ...      critical
   Звірити відображення поля title усіх лотів для усіх користувачів
 
@@ -649,7 +647,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
-  ...  award_complaint
+  ...  award_complaints
   ...  critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
@@ -661,7 +659,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  award_complaint
+  ...  award_complaints
   ...  non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля status вимоги про виправлення визначення ${award_index} переможця із cancelled для користувача ${viewer}
@@ -671,7 +669,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  award_complaint
+  ...  award_complaints
   ...  non-critical
   Звірити відображення поля cancellationReason вимоги про виправлення визначення ${award_index} переможця із ${USERS.users['${provider}'].claim_data.cancellation.data.cancellationReason} для користувача ${viewer}
 
@@ -680,7 +678,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
-  ...  award_complaint
+  ...  award_complaints
   ...  critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
@@ -692,7 +690,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  award_complaint
+  ...  award_complaints
   ...  non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля status вимоги про виправлення визначення ${award_index} переможця із cancelled для користувача ${viewer}
@@ -717,7 +715,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  award_complaint
+  ...  award_complaints
   ...  non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля status вимоги про виправлення визначення ${award_index} переможця із cancelled для користувача ${viewer}
