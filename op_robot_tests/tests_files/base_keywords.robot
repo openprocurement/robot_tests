@@ -634,7 +634,7 @@ Resource           resource.robot
   ...      ${cancellation_data}
   Set To Dictionary  ${USERS.users['${provider}'].tender_claim_data}  cancellation  ${cancellation_data}
   Wait until keyword succeeds
-  ...      5 min 15 sec
+  ...      40 min 15 sec
   ...      15 sec
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
@@ -657,7 +657,7 @@ Resource           resource.robot
   ...      ${cancellation_data}
   Set To Dictionary  ${USERS.users['${provider}'].lot_claim_data}  cancellation  ${cancellation_data}
   Wait until keyword succeeds
-  ...      5 min 15 sec
+  ...      40 min 15 sec
   ...      15 sec
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
@@ -683,7 +683,7 @@ Resource           resource.robot
   Set To Dictionary  ${USERS.users['${provider}'].claim_data}  cancellation  ${cancellation_data}
   ${status}=  Set variable if  'open' in '${MODE}'  stopping  cancelled
   Wait until keyword succeeds
-  ...      5 min 15 sec
+  ...      40 min 15 sec
   ...      15 sec
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
@@ -706,7 +706,7 @@ Resource           resource.robot
   ...      ${escalation_data}
   Set To Dictionary  ${USERS.users['${provider}'].tender_claim_data}  escalation  ${escalation_data}
   Wait until keyword succeeds
-  ...      5 min 15 sec
+  ...      40 min 15 sec
   ...      15 sec
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
@@ -728,7 +728,7 @@ Resource           resource.robot
   ...      ${escalation_data}
   Set To Dictionary  ${USERS.users['${provider}'].lot_claim_data}  escalation  ${escalation_data}
   Wait until keyword succeeds
-  ...      5 min 15 sec
+  ...      40 min 15 sec
   ...      15 sec
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
@@ -751,7 +751,7 @@ Resource           resource.robot
   ...      ${award_index}
   Set To Dictionary  ${USERS.users['${provider}'].claim_data}  escalation  ${escalation_data}
   Wait until keyword succeeds
-  ...      5 min 15 sec
+  ...      40 min 15 sec
   ...      15 sec
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
@@ -802,7 +802,7 @@ Resource           resource.robot
   ${claim_data}=  munch_dict  arg=${claim_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  tender_claim_data  ${claim_data}
   Wait until keyword succeeds
-  ...      5 min 15 sec
+  ...      40 min 15 sec
   ...      15 sec
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
@@ -823,7 +823,7 @@ Resource           resource.robot
   ${claim_data}=  munch_dict  arg=${claim_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  tender_claim_data  ${claim_data}
   Wait until keyword succeeds
-  ...      5 min 15 sec
+  ...      40 min 15 sec
   ...      15 sec
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
@@ -844,7 +844,7 @@ Resource           resource.robot
   ${claim_data}=  munch_dict  arg=${claim_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  tender_claim_data  ${claim_data}
   Wait until keyword succeeds
-  ...      5 min 15 sec
+  ...      40 min 15 sec
   ...      15 sec
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
@@ -910,7 +910,7 @@ Resource           resource.robot
   ...      ${confirmation_data}
   Set To Dictionary  ${USERS.users['${provider}']['tender_claim_data']}  claim_answer_confirm  ${confirmation_data}
   Wait until keyword succeeds
-  ...      5 min 15 sec
+  ...      40 min 15 sec
   ...      15 sec
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
@@ -932,7 +932,7 @@ Resource           resource.robot
   ...      ${confirmation_data}
   Set To Dictionary  ${USERS.users['${provider}']['lot_claim_data']}  claim_answer_confirm  ${confirmation_data}
   Wait until keyword succeeds
-  ...      5 min 15 sec
+  ...      40 min 15 sec
   ...      15 sec
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
@@ -955,7 +955,7 @@ Resource           resource.robot
   ...      ${award_index}
   Set To Dictionary  ${USERS.users['${provider}']['claim_data']}  claim_answer_confirm  ${confirmation_data}
   Wait until keyword succeeds
-  ...      5 min 15 sec
+  ...      40 min 15 sec
   ...      15 sec
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
