@@ -872,3 +872,53 @@ ${award_index}      ${0}
   ...  non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля cancellationReason вимоги про виправлення визначення ${award_index} переможця із ${USERS.users['${provider}'].claim_data.cancellation.data.cancellationReason} для користувача ${viewer}
+
+
+Можливість створити вимогу про виправлення визначення переможця, додати документацію і подати її переможцем
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  award_complaints
+  ...  critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${award_index}=  Convert To Integer  ${award_index}
+  Можливість створити вимогу про виправлення визначення ${award_index} переможця із документацією
+
+
+Відображення закінчення періоду подачі скарг на пропозицію
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних тендера
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      contract_sign
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
+  \  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  awards[-1].complaintPeriod.endDate
+
+
+Дочекатися закічення stand still періоду
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Процес укладання угоди
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      contract_sign
+  ${standstillEnd}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data.awards[-1].complaintPeriod.endDate}
+  Дочекатись дати  ${standstillEnd}
+
+
+Можливість укласти угоду для закупівлі
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес укладання угоди
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  contract_sign  level1
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Run As  ${tender_owner}  Підтвердити підписання контракту  ${TENDER['TENDER_UAID']}  -1
+
+
+Відображення статусу 'ignored' вимоги про виправлення визначення переможця
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  contract_sign
+  ...  non-critical
+  [Setup]  Дочекатись зміни статусу проігнорованої вимоги  ${provider}  ${USERS.users['${provider}']['claim_data']['complaintID']}  ${award_index}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Звірити відображення поля status вимоги про виправлення визначення ${award_index} переможця із ignored для користувача ${viewer}
