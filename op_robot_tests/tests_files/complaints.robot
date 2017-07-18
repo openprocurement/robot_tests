@@ -290,6 +290,74 @@ ${award_index}      ${0}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість підтвердити задоволення вимоги про виправлення умов лоту
 
+
+Можливість створити вимогу про виправлення умов лоту, додати документацію і подати її користувачем
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  lot_complaint
+  ...  critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${lot_index}=  Convert To Integer  ${lot_index}
+  Можливість створити вимогу про виправлення умов ${lot_index} лоту із документацією
+
+
+Можливість незадовільно відповісти на вимогу про виправлення умов лоту
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес оскарження
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  lot_complaint
+  ...  critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість відповісти 'declined' на вимогу про виправлення умов лоту
+
+
+Відображення статусу 'declined' вимоги про виправлення умов лоту
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  lot_complaint
+  ...  non-critical
+  [Setup]  Дочекатись зміни статусу незадоволеної вимоги  ${provider}  ${USERS.users['${provider}'].lot_claim_data['complaintID']}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Звірити відображення поля status вимоги про виправлення умов ${lot_index} лоту із declined для користувача ${viewer}
+
+
+Можливість створити вимогу про виправлення умов лоту, додати до неї документацію і подати її
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  lot_complaint
+  ...  critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${lot_index}=  Convert To Integer  ${lot_index}
+  Можливість створити вимогу про виправлення умов ${lot_index} лоту із документацією
+
+
+Можливість відхилити вимогу про виправлення умов лоту
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес оскарження
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  lot_complaint
+  ...  critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість відповісти 'invalid' на вимогу про виправлення умов лоту
+
+
+Відображення статусу 'invalid' вимоги про виправлення умов лоту
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  lot_complaint
+  ...  non-critical
+  [Setup]  Дочекатись зміни статусу відхиленої вимоги  ${provider}  ${USERS.users['${provider}'].lot_claim_data['complaintID']}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Звірити відображення поля status вимоги про виправлення умов ${lot_index} лоту із invalid для користувача ${viewer}
+
 ##############################################################################################
 #             CREATE AND CANCEL CLAIM
 ##############################################################################################
