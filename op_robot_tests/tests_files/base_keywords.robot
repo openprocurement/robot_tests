@@ -164,6 +164,25 @@ Resource           resource.robot
   Порівняти об'єкти  ${left}  ${right}
 
 
+Отримати інформацію про документ тендера ${doc_id} ${username}
+  ${file_properties} =  Run as  ${username}  Отримати інформацію про документ  ${TENDER['TENDER_UAID']}  ${doc_id}
+  Set To Dictionary  ${USERS.users['${tender_owner}'].tender_document}  file_properties=${file_properties}
+  Log  ${file_properties}
+
+
+Отримати інформацію про документ лотів ${doc_id} ${username}
+  ${file_properties} =  Run as  ${username}  Отримати інформацію про документ  ${TENDER['TENDER_UAID']}  ${doc_id}
+  Set To Dictionary  ${USERS.users['${tender_owner}'].lots_documents[0]}  file_properties=${file_properties}
+  Log  ${file_properties}
+
+
+Звірити інформацію про документацію ${file_properties} ${username}
+  ${file_contents}=  Run as  ${username}  Отримати вміст документа  ${file_properties.url}
+  ${file_hash}=  get_hash  ${file_contents}
+  ${new_file_properties}=  Call Method  ${USERS.users['${viewer}'].client}  get_file_properties  ${file_properties.url}  ${file_hash}
+  Порівняти об'єкти  ${new_file_properties}  ${file_properties}
+
+
 Звірити відображення дати ${date} тендера для усіх користувачів
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
   \  Звірити відображення дати ${date} тендера для користувача ${username}

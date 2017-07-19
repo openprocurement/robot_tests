@@ -54,6 +54,7 @@ from .initial_data import (
     test_change_document_data,
     convert_amount,
     get_number_of_minutes,
+    get_hash,
 )
 from barbecue import chef
 from restkit import request
