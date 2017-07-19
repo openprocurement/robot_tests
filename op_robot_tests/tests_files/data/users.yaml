@@ -189,7 +189,7 @@ users:
         size:     [800, 700]
     PrivatMarket_Viewer:
         broker:   PrivatMarket
-        homepage: "https://rc.privatmarket.ua/business/tenders"
+        homepage: "https://rc.privatmarket.ua/business/tenders?_locale=uk"
         email:    pbecommercetest2@ukr.net
         login:    380270010001
         password: password0001
@@ -200,20 +200,20 @@ users:
         broker:   PrivatMarket
         homepage: "https://rc.privatmarket.ua/business/tenders"
         email:    pbecommercetest2@ukr.net
-        login:    380270010002
-        password: password0002
-        browser:  firefox
-        position: [0, 0]
-        size:     [1920, 1080]
+        login:    +380639405094
+        password: password5094
+        browser:  chrome
+        position: [-1500, 0]
+        size:     [1000, 1000]
     PrivatMarket_Owner:
-        broker:   PrivatMarket
-        homepage: "https://rc.privatmarket.ua/business/tenders"
-        email:    pbecommercetest1@ukr.net
-        login:    380270010003
+        broker: PrivatMarket
+        homepage: "https://rc.privatmarket.ua/business/tenders?_locale=uk"
+        email: pbecommercetest1@ukr.net
+        login: 380270010003
         password: password0003
-        browser:  firefox
+        browser: chrome
         position: [0, 0]
-        size:     [1920, 1080]
+        size: [1920, 1080]
     Prom_Owner:
         broker:   Prom
         homepage: "http://zakupki.dz-test.net/"
