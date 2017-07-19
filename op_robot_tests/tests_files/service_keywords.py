@@ -282,7 +282,8 @@ def compute_intrs(brokers_data, used_brokers):
 
 def prepare_test_tender_data(procedure_intervals,
                              tender_parameters,
-                             submissionMethodDetails):
+                             submissionMethodDetails,
+                             accelerator):
     # Get actual intervals by mode name
     mode = tender_parameters['mode']
     if mode in procedure_intervals:
@@ -316,7 +317,8 @@ def prepare_test_tender_data(procedure_intervals,
     elif mode == 'belowThreshold':
         return munchify({'data': test_tender_data(
             tender_parameters,
-            submissionMethodDetails=submissionMethodDetails)})
+            submissionMethodDetails=submissionMethodDetails,
+            accelerator=accelerator)})
         # The previous line needs an explicit keyword argument because,
         # unlike previous functions, this one has three arguments.
     raise ValueError("Invalid mode for prepare_test_tender_data")

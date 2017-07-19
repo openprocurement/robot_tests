@@ -58,7 +58,8 @@ def create_fake_doc():
 
 def test_tender_data(params,
                      periods=("enquiry", "tender"),
-                     submissionMethodDetails=None):
+                     submissionMethodDetails=None,
+                     accelerator=None):
     submissionMethodDetails = submissionMethodDetails \
         if submissionMethodDetails else "quick"
     now = get_now()
@@ -85,7 +86,8 @@ def test_tender_data(params,
         "items": [],
         "features": []
     }
-    accelerator = params['intervals']['accelerator']
+    accelerator = accelerator \
+        if accelerator else params['intervals']['accelerator']
     data['procurementMethodDetails'] = 'quick, ' \
         'accelerator={}'.format(accelerator)
     data["procuringEntity"]["kind"] = "other"

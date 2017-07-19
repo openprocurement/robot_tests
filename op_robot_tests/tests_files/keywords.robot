@@ -205,7 +205,8 @@ Get Broker Property By Username
   [Arguments]  ${tender_parameters}
   ${period_intervals}=  compute_intrs  ${BROKERS}  ${used_brokers}
   ${submissionMethodDetails}=  Get Variable Value  ${submissionMethodDetails}
-  ${tender_data}=  prepare_test_tender_data  ${period_intervals}  ${tender_parameters}  ${submissionMethodDetails}
+  ${accelerator}=  Get Variable Value  ${accelerator}
+  ${tender_data}=  prepare_test_tender_data  ${period_intervals}  ${tender_parameters}  ${submissionMethodDetails}  ${accelerator}
   ${TENDER}=  Create Dictionary
   Set Global Variable  ${TENDER}
   Log  ${tender_data}
@@ -816,7 +817,7 @@ Require Failure
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
-  ...      10 min 15 sec
+  ...      40 min 15 sec
   ...      15 sec
   ...      Звірити статус тендера
   ...      ${username}
