@@ -63,6 +63,7 @@ import os
 import re
 
 NUM_TYPES = (int, long, float)
+used_identifier_id = []
 
 
 def get_current_tzdate():
@@ -525,6 +526,10 @@ def generate_test_bid_data(tender_data):
             'competitiveDialogueEU'
         ):
         bid = test_bid_competitive_data()
+        if bid.data.tenderers[0].identifier.id in used_identifier_id:
+            bid = test_bid_competitive_data()
+        else:
+            used_identifier_id.append(bid.data.tenderers[0].identifier.id)
         bid.data.selfEligible = True
         bid.data.selfQualified = True
     else:
