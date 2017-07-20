@@ -214,7 +214,7 @@ ${award_index}      ${0}
   Звірити відображення поля satisfied вимоги із ${USERS.users['${provider}'].tender_claim_data.claim_answer_confirm.data.satisfied} для користувача ${viewer}
 
 
-Відображення статусу 'declined' незадоволеної вимоги
+Відображення статусу 'declined' вимоги про виправлення умов закупівлі
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
