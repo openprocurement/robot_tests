@@ -237,7 +237,16 @@ def test_complaint_data():
 test_claim_data = test_complaint_data
 
 
-def test_claim_answer_data():
+def test_claim_answer_data(status):
+    data = test_claim_resolved_answer_data()
+    if status == 'declined':
+        data = test_claim_declined_answer_data()
+    elif status == 'invalid':
+        data = test_claim_invalid_answer_data()
+    return data
+
+
+def test_claim_resolved_answer_data():
     return munchify({
         "data": {
             "status": "answered",

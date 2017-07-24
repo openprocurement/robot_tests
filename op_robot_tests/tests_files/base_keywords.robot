@@ -790,8 +790,8 @@ Resource           resource.robot
   ...      ${award_index}
 
 
-Можливість відповісти 'invalid' на вимогу про виправлення умов закупівлі
-  ${answer_data}=  test_claim_invalid_answer_data
+Можливість відповісти ${status} на вимогу про виправлення умов закупівлі
+  ${answer_data}=  test_claim_answer_data  ${status}
   Log  ${answer_data}
   Run As  ${tender_owner}
   ...      Відповісти на вимогу про виправлення умов закупівлі
@@ -811,50 +811,8 @@ Resource           resource.robot
   ...      answered
 
 
-Можливість відповісти 'declined' на вимогу про виправлення умов закупівлі
-  ${answer_data}=  test_claim_declined_answer_data
-  Log  ${answer_data}
-  Run As  ${tender_owner}
-  ...      Відповісти на вимогу про виправлення умов закупівлі
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['tender_claim_data']['complaintID']}
-  ...      ${answer_data}
-  ${claim_data}=  Create Dictionary  claim_answer=${answer_data}
-  ${claim_data}=  munch_dict  arg=${claim_data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  tender_claim_data  ${claim_data}
-  Wait until keyword succeeds
-  ...      40 min 15 sec
-  ...      15 sec
-  ...      Звірити статус вимоги/скарги
-  ...      ${provider}
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['tender_claim_data']['complaintID']}
-  ...      answered
-
-
-Можливість відповісти на вимогу про виправлення умов закупівлі
-  ${answer_data}=  test_claim_answer_data
-  Log  ${answer_data}
-  Run As  ${tender_owner}
-  ...      Відповісти на вимогу про виправлення умов закупівлі
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['tender_claim_data']['complaintID']}
-  ...      ${answer_data}
-  ${claim_data}=  Create Dictionary  claim_answer=${answer_data}
-  ${claim_data}=  munch_dict  arg=${claim_data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  tender_claim_data  ${claim_data}
-  Wait until keyword succeeds
-  ...      40 min 15 sec
-  ...      15 sec
-  ...      Звірити статус вимоги/скарги
-  ...      ${provider}
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['tender_claim_data']['complaintID']}
-  ...      answered
-
-
-Можливість відповісти на вимогу про виправлення умов лоту
-  ${answer_data}=  test_claim_answer_data
+Можливість відповісти ${status} на вимогу про виправлення умов лоту
+  ${answer_data}=  test_claim_answer_data  ${status}
   Log  ${answer_data}
   Run As  ${tender_owner}
   ...      Відповісти на вимогу про виправлення умов лоту
@@ -874,96 +832,8 @@ Resource           resource.robot
   ...      answered
 
 
-Можливість відповісти 'declined' на вимогу про виправлення умов лоту
-  ${answer_data}=  test_claim_declined_answer_data
-  Log  ${answer_data}
-  Run As  ${tender_owner}
-  ...      Відповісти на вимогу про виправлення умов лоту
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['lot_claim_data']['complaintID']}
-  ...      ${answer_data}
-  ${claim_data}=  Create Dictionary  claim_answer=${answer_data}
-  ${claim_data}=  munch_dict  arg=${claim_data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  lot_claim_data  ${claim_data}
-  Wait until keyword succeeds
-  ...      40 min 15 sec
-  ...      15 sec
-  ...      Звірити статус вимоги/скарги
-  ...      ${provider}
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['lot_claim_data']['complaintID']}
-  ...      answered
-
-
-Можливість відповісти 'invalid' на вимогу про виправлення умов лоту
-  ${answer_data}=  test_claim_invalid_answer_data
-  Log  ${answer_data}
-  Run As  ${tender_owner}
-  ...      Відповісти на вимогу про виправлення умов лоту
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['lot_claim_data']['complaintID']}
-  ...      ${answer_data}
-  ${claim_data}=  Create Dictionary  claim_answer=${answer_data}
-  ${claim_data}=  munch_dict  arg=${claim_data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  lot_claim_data  ${claim_data}
-  Wait until keyword succeeds
-  ...      40 min 15 sec
-  ...      15 sec
-  ...      Звірити статус вимоги/скарги
-  ...      ${provider}
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['lot_claim_data']['complaintID']}
-  ...      answered
-
-
-Можливість відповісти на вимогу про виправлення визначення ${award_index} переможця
-  ${answer_data}=  test_claim_answer_data
-  Log  ${answer_data}
-  Run As  ${tender_owner}
-  ...      Відповісти на вимогу про виправлення визначення переможця
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
-  ...      ${answer_data}
-  ...      ${award_index}
-  ${claim_data}=  Create Dictionary  claim_answer=${answer_data}
-  ${claim_data}=  munch_dict  arg=${claim_data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  claim_data  ${claim_data}
-  Wait until keyword succeeds
-  ...      40 min 15 sec
-  ...      15 sec
-  ...      Звірити статус вимоги/скарги
-  ...      ${provider}
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
-  ...      answered
-  ...      ${award_index}
-
-
-Можливість відповісти 'declined' на вимогу про виправлення визначення ${award_index} переможця
-  ${answer_data}=  test_claim_declined_answer_data
-  Log  ${answer_data}
-  Run As  ${tender_owner}
-  ...      Відповісти на вимогу про виправлення визначення переможця
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
-  ...      ${answer_data}
-  ...      ${award_index}
-  ${claim_data}=  Create Dictionary  claim_answer=${answer_data}
-  ${claim_data}=  munch_dict  arg=${claim_data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  claim_data  ${claim_data}
-  Wait until keyword succeeds
-  ...      40 min 15 sec
-  ...      15 sec
-  ...      Звірити статус вимоги/скарги
-  ...      ${provider}
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
-  ...      answered
-  ...      ${award_index}
-
-
-Можливість відповісти 'invalid' на вимогу про виправлення визначення ${award_index} переможця
-  ${answer_data}=  test_claim_invalid_answer_data
+Можливість відповісти ${status} на вимогу про виправлення визначення ${award_index} переможця
+  ${answer_data}=  test_claim_answer_data  ${status}
   Log  ${answer_data}
   Run As  ${tender_owner}
   ...      Відповісти на вимогу про виправлення визначення переможця
