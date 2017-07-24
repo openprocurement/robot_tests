@@ -360,6 +360,7 @@ def test_bid_competitive_data():
             ]
         }
     })
+    if len(used_identifier_id)==3: del used_identifier_id[0]
     id = bid.data.tenderers[0].identifier.id
     while (id in used_identifier_id):
         bid = munchify({
