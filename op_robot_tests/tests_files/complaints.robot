@@ -252,7 +252,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_complaint
   ...  non-critical
-  [Setup]  Дочекатись зміни статусу відхиленої вимоги  ${provider}  ${USERS.users['${provider}']['tender_claim_data']['complaintID']}
+  [Setup]  Дочекатись зміни статусу вимоги  ${provider}  invalid  ${USERS.users['${provider}']['tender_claim_data']['complaintID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Звірити відображення поля status вимоги із invalid для користувача ${viewer}
 
@@ -320,7 +320,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${viewer}'].broker}
   ...  lot_complaint
   ...  non-critical
-  [Setup]  Дочекатись зміни статусу незадоволеної вимоги  ${provider}  ${USERS.users['${provider}'].lot_claim_data['complaintID']}
+  [Setup]  Дочекатись зміни статусу вимоги  ${provider}  declined  ${USERS.users['${provider}'].lot_claim_data['complaintID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Звірити відображення поля status вимоги про виправлення умов ${lot_index} лоту із declined для користувача ${viewer}
 
@@ -354,7 +354,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${viewer}'].broker}
   ...  lot_complaint
   ...  non-critical
-  [Setup]  Дочекатись зміни статусу відхиленої вимоги  ${provider}  ${USERS.users['${provider}'].lot_claim_data['complaintID']}
+  [Setup]  Дочекатись зміни статусу вимоги  ${provider}  invalid  ${USERS.users['${provider}'].lot_claim_data['complaintID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Звірити відображення поля status вимоги про виправлення умов ${lot_index} лоту із invalid для користувача ${viewer}
 
@@ -919,6 +919,6 @@ ${award_index}      ${0}
   ...  ${USERS.users['${viewer}'].broker}
   ...  award_complaint
   ...  non-critical
-  [Setup]  Дочекатись зміни статусу проігнорованої вимоги  ${provider}  ${USERS.users['${provider}']['claim_data']['complaintID']}  ${award_index}
+  [Setup]  Дочекатись зміни статусу вимоги  ${provider}  ignored  ${USERS.users['${provider}']['claim_data']['complaintID']}  ${award_index}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Звірити відображення поля status вимоги про виправлення визначення ${award_index} переможця із ignored для користувача ${viewer}

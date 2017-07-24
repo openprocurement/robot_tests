@@ -832,8 +832,8 @@ Require Failure
   Дочекатись синхронізації з майданчиком  ${username}
 
 
-Дочекатись зміни статусу незадоволеної вимоги
-  [Arguments]  ${username}  ${complaintID}  ${award_index}=${None}
+Дочекатись зміни статусу вимоги
+  [Arguments]  ${username}  ${status}  ${complaintID}  ${award_index}=${None}
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
   ...      40 min 15 sec
@@ -842,35 +842,7 @@ Require Failure
   ...      ${provider}
   ...      ${TENDER['TENDER_UAID']}
   ...      ${complaintID}
-  ...      declined
-  ...      ${award_index}
-
-
-Дочекатись зміни статусу відхиленої вимоги
-  [Arguments]  ${username}  ${complaintID}  ${award_index}=${None}
-  Дочекатись синхронізації з майданчиком  ${username}
-  Wait until keyword succeeds
-  ...      40 min 15 sec
-  ...      15 sec
-  ...      Звірити статус вимоги/скарги
-  ...      ${provider}
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${complaintID}
-  ...      invalid
-  ...      ${award_index}
-
-
-Дочекатись зміни статусу проігнорованої вимоги
-  [Arguments]  ${username}  ${complaintID}  ${award_index}=${None}
-  Дочекатись синхронізації з майданчиком  ${username}
-  Wait until keyword succeeds
-  ...      40 min 15 sec
-  ...      15 sec
-  ...      Звірити статус вимоги/скарги
-  ...      ${provider}
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${complaintID}
-  ...      ignored
+  ...      ${status}
   ...      ${award_index}
 
 
