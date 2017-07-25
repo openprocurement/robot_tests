@@ -790,45 +790,28 @@ Resource           resource.robot
   ...      ${award_index}
 
 
-Можливість відповісти ${status} на вимогу про виправлення умов закупівлі
+Можливість відповісти ${status} на вимогу про виправлення умов ${tender_or_lot}
   ${answer_data}=  test_claim_answer_data  ${status}
   Log  ${answer_data}
+  ${data}=  Set Variable If  '${tender_or_lot}' == 'tender'  ${USERS.users['${provider}']['tender_claim_data']['complaintID']}  ${USERS.users['${provider}']['lot_claim_data']['complaintID']}
   Run As  ${tender_owner}
   ...      Відповісти на вимогу про виправлення умов закупівлі
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['tender_claim_data']['complaintID']}
+  ...      ${data}
   ...      ${answer_data}
   ${claim_data}=  Create Dictionary  claim_answer=${answer_data}
   ${claim_data}=  munch_dict  arg=${claim_data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  tender_claim_data  ${claim_data}
+  Run Keyword If  '${tender_or_lot}' == 'tender'
+  ...       Set To Dictionary  ${USERS.users['${tender_owner}']}  tender_claim_data  ${claim_data}
+  ...       ELSE
+  ...       Set To Dictionary  ${USERS.users['${tender_owner}']}  lot_claim_data  ${claim_data}
   Wait until keyword succeeds
   ...      40 min 15 sec
   ...      15 sec
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
   ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['tender_claim_data']['complaintID']}
-  ...      answered
-
-
-Можливість відповісти ${status} на вимогу про виправлення умов лоту
-  ${answer_data}=  test_claim_answer_data  ${status}
-  Log  ${answer_data}
-  Run As  ${tender_owner}
-  ...      Відповісти на вимогу про виправлення умов лоту
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['lot_claim_data']['complaintID']}
-  ...      ${answer_data}
-  ${claim_data}=  Create Dictionary  claim_answer=${answer_data}
-  ${claim_data}=  munch_dict  arg=${claim_data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  lot_claim_data  ${claim_data}
-  Wait until keyword succeeds
-  ...      40 min 15 sec
-  ...      15 sec
-  ...      Звірити статус вимоги/скарги
-  ...      ${provider}
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['lot_claim_data']['complaintID']}
+  ...      ${data}
   ...      answered
 
 
