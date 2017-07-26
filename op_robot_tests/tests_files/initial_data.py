@@ -359,15 +359,17 @@ def test_bid_competitive_data():
             ]
         }
     })
+    if len(used_identifier_id) == 3:
+        del used_identifier_id[0]
     id = bid.data.tenderers[0].identifier.id
     while (id in used_identifier_id):
         bid = munchify({
-        "data": {
-            "tenderers": [
-                fake.procuringEntity()
-            ]
-        }
-    })
+            "data": {
+                "tenderers": [
+                    fake.procuringEntity()
+                ]
+            }
+        })
         id = bid.data.tenderers[0].identifier.id
     used_identifier_id.append(id)
     bid.data.tenderers[0].address.countryName_en = translate_country_en(bid.data.tenderers[0].address.countryName)

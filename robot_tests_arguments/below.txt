@@ -40,13 +40,11 @@
 
 -i create_tender_claim
   -i answer_tender_claim
-  -i escalate_tender_claim
   -i cancel_tender_claim
 -i modify_tender_after_claim
 
 -i create_lot_claim
   -i answer_lot_claim
-  -i escalate_lot_claim
   -i cancel_lot_claim
 -i modify_lot_after_claim
 
@@ -72,7 +70,6 @@
 
 -i create_award_claim
 -i answer_award_claim
--i escalate_award_claim
 -i cancel_award_claim
 
 -i qualification_add_doc_to_first_award
