@@ -170,7 +170,7 @@ PrivatMarket:
             tender:  [0, 18]
         openeu:
             accelerator: 1440
-            tender:  [0, 40]
+            tender:  [0, 50]
         openua:
             accelerator: 1440
             tender:  [0, 65]
