@@ -249,6 +249,10 @@ def test_item_data(scheme):
     days = fake.random_int(min=1, max=30)
     data["deliveryAddress"]["countryName_en"] = translate_country_en(data["deliveryAddress"]["countryName"])
     data["deliveryAddress"]["countryName_ru"] = translate_country_ru(data["deliveryAddress"]["countryName"])
+    data["contractPeriod"] = {
+                "startDate": (get_now() + timedelta(minutes=70)).isoformat(),
+                "endDate": (get_now() + timedelta(minutes=100)).isoformat()
+    }
     return munchify(data)
 
 
