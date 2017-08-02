@@ -7,6 +7,9 @@ Suite Teardown  Test Suite Teardown
 ${MODE}         planning
 @{USED_ROLES}   tender_owner  viewer
 
+${NUMBER_OF_ITEMS}  ${2}
+${TENDER_MEAT}      ${False}
+${ITEM_MEAT}        ${False}
 
 *** Test Cases ***
 Можливість створити план закупівлі
@@ -31,6 +34,7 @@ ${MODE}         planning
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля budget.amount плану для користувача ${viewer}
 
 
@@ -215,7 +219,6 @@ ${MODE}         planning
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_plan
-  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_description}=  create_fake_sentence
   Можливість змінити поле budget.description плану на ${new_description}
@@ -259,6 +262,7 @@ ${MODE}         planning
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      add_item
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість додати предмет закупівлі в план
 
@@ -268,5 +272,6 @@ ${MODE}         planning
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_item
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість видалити предмет закупівлі з плану
