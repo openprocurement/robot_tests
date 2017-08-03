@@ -372,3 +372,21 @@ pzo:
         tender_owner:   pzo_Owner
         viewer:         pzo_Viewer
     timeout_on_wait: 1
+aladdin:
+    intervals:
+        belowThreshold:
+            enquiry: [0, 60]
+            tender:  [0, 15]
+        openua:
+            accelerator: 1440
+            tender:  [0, 30]
+        openeu:
+            tender:  [0, 30]
+            accelerator: 1440
+    keywords_file: aladdin
+    roles:
+        tender_owner:   aladdin_Owner
+        provider:       aladdin_Provider
+        provider1:      aladdin_Provider1
+        viewer:         aladdin_Viewer
+    timeout_on_wait: 1

@@ -569,3 +569,33 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1000, 500]
+    aladdin_Owner:
+        broker:   aladdin
+        homepage: "http://test-gov.ald.in.ua"
+        login:    aladdin.for.test+owner@gmail.com
+        password: 'zxcvbn00'
+        browser:  chrome
+        position: [0, 0]
+        size:     [1100, 5000]
+    aladdin_Provider:
+        broker:   aladdin
+        homepage: "http://test-gov.ald.in.ua"
+        login:    senya22051989@gmail.com
+        password: '123456'
+        browser:  chrome
+        position: [0, 0]
+        size:     [1100, 5000]
+    aladdin_Provider1:
+        broker:   aladdin
+        homepage: "http://test-gov.ald.in.ua"
+        login:    qa2@gmail.com
+        password: '158263'
+        browser:  chrome
+        position: [0, 0]
+        size:     [1100, 5000]
+    aladdin_Viewer:
+        broker:   aladdin
+        homepage: "http://test-gov.ald.in.ua"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1100, 5000]
