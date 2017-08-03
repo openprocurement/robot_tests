@@ -836,7 +836,7 @@ Require Failure
   [Arguments]  ${username}  ${status}  ${complaintID}  ${award_index}=${None}
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
-  ...      40 min 15 sec
+  ...      90 min 15 sec
   ...      15 sec
   ...      Звірити статус вимоги/скарги
   ...      ${provider}
