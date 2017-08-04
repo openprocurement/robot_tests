@@ -71,8 +71,9 @@ ${ITEM_MEAT}        ${True}
 
 Відображення початкової вартості лоту
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      tender_view  level1
   Звірити відображення поля value.amount тендера для усіх користувачів
 
@@ -111,32 +112,36 @@ ${ITEM_MEAT}        ${True}
 
 Відображення початку періоду уточнення лоту
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      tender_view_enquiryPeriod
   Отримати дані із поля enquiryPeriod.startDate тендера для усіх користувачів
 
 
 Відображення закінчення періоду уточнення лоту
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      tender_view_enquiryPeriod  level2
   Отримати дані із поля enquiryPeriod.endDate тендера для усіх користувачів
 
 
 Відображення початку періоду прийому пропозицій лоту
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      tender_view_tenderPeriod_startDate  level2
   Отримати дані із поля tenderPeriod.startDate тендера для усіх користувачів
 
 
 Відображення закінчення періоду прийому пропозицій лоту
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      tender_view_tenderPeriod  level2
   Отримати дані із поля tenderPeriod.endDate тендера для усіх користувачів
 
@@ -152,8 +157,9 @@ ${ITEM_MEAT}        ${True}
 
 Відображення типу оголошеного лоту
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      tender_view  level2
   Звірити відображення поля procurementMethodType тендера для усіх користувачів
 
@@ -163,8 +169,9 @@ ${ITEM_MEAT}        ${True}
 
 Відображення опису активів лоту
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      tender_view  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля description усіх предметів для усіх користувачів
@@ -244,18 +251,20 @@ ${ITEM_MEAT}        ${True}
 
 Відображення початку періоду контракту
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      tender_view_contractPeriod  level2
-  Звірити відображення поля contractPeriod.startDate усіх предметів для користувача ${viewer}
+  Звірити відображення поля contractPeriod.startDate усіх предметів для усіх користувачів
 
 
 Відображення кінця періоду контракту
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      tender_view_contractPeriod  level2
-  Звірити відображення поля contractPeriod.endDate усіх предметів для користувача ${viewer}
+  Звірити відображення поля contractPeriod.endDate усіх предметів для усіх користувачів
 
 ##############################################################################################
 #             Редагування лоту
@@ -469,8 +478,9 @@ ${ITEM_MEAT}        ${True}
 
 Відображення опису нової номенклатури
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури лота
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      add_item_view  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля description у новоствореному предметі для усіх користувачів
@@ -490,16 +500,18 @@ ${ITEM_MEAT}        ${True}
 
 Відображення заголовку анонімного запитання на лот без відповіді
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення запитання
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      ask_question_to_tender
   Звірити відображення поля title запитання на тендер для усіх користувачів
 
 
 Відображення опису анонімного запитання на лот без відповіді
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення запитання
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      ask_question_to_tender
   Звірити відображення поля description запитання на тендер для усіх користувачів
 
@@ -535,8 +547,9 @@ ${ITEM_MEAT}        ${True}
 
 Відображення заголовку анонімного запитання на всі предмети без відповіді
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення запитання
-  ...      viewer tender_owner provider provider1
-  ...      ${USERS.users['${viewer}'].broker}
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      ask_question_to_item
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  Звірити відображення поля title запитання на ${item_index} предмет для усіх користувачів
@@ -544,8 +557,9 @@ ${ITEM_MEAT}        ${True}
 
 Відображення опису анонімного запитання на всі предмети без відповіді
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення запитання
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      ask_question_to_item
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  Звірити відображення поля description запитання на ${item_index} предмет для усіх користувачів
