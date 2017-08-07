@@ -37,6 +37,22 @@ Resource           resource.robot
   \  Should Match Regexp   ${document_url}   ^https?:\/\/public.docs(?:-sandbox)?\.openprocurement\.org\/get\/([0-9A-Fa-f]{32})   msg=Not a Document Service Upload
 
 
+Можливість створити план закупівлі
+  ${NUMBER_OF_ITEMS}=  Convert To Integer  ${NUMBER_OF_ITEMS}
+  ${tender_parameters}=  Create Dictionary
+  ...      mode=${MODE}
+  ...      number_of_items=${NUMBER_OF_ITEMS}
+  ...      tender_meat=${${TENDER_MEAT}}
+  ...      item_meat=${${ITEM_MEAT}}
+  ${DIALOGUE_TYPE}=  Get Variable Value  ${DIALOGUE_TYPE}
+  Run keyword if  '${DIALOGUE_TYPE}' != '${None}'  Set to dictionary  ${tender_parameters}  dialogue_type=${DIALOGUE_TYPE}
+  ${tender_data}=  Підготувати дані для створення тендера  ${tender_parameters}
+  ${adapted_data}=  Адаптувати дані для оголошення тендера  ${tender_data}
+  ${TENDER_UAID}=  Run As  ${tender_owner}  Створити план  ${adapted_data}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data=${adapted_data}
+  Set To Dictionary  ${TENDER}  TENDER_UAID=${TENDER_UAID}
+
+
 Можливість знайти тендер по ідентифікатору для усіх користувачів
   :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${provider1}  ${viewer}
   \  Можливість знайти тендер по ідентифікатору для користувача ${username}
@@ -47,6 +63,16 @@ Resource           resource.robot
   Run as  ${username}  Пошук тендера по ідентифікатору  ${TENDER['TENDER_UAID']}
 
 
+Можливість знайти план по ідентифікатору
+  :FOR  ${username}  IN  ${tender_owner}  ${viewer}
+  \  Можливість знайти план по ідентифікатору для користувача ${username}
+
+
+Можливість знайти план по ідентифікатору для користувача ${username}
+  Дочекатись синхронізації з майданчиком  ${username}
+  Run as  ${username}  Пошук плану по ідентифікатору  ${TENDER['TENDER_UAID']}
+
+
 Можливість знайти тендер по ідентифікатору ${tender_id} та зберегти його в ${save_location} для користувача ${username}
   Дочекатись синхронізації з майданчиком  ${username}
   Run as  ${username}  Пошук тендера по ідентифікатору  ${tender_id}  ${save_location}
@@ -54,6 +80,10 @@ Resource           resource.robot
 
 Можливість змінити поле ${field_name} тендера на ${field_value}
   Run As  ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  ${field_name}  ${field_value}
+
+
+Можливість змінити поле ${field_name} плану на ${field_value}
+  Run As  ${tender_owner}  Внести зміни в план  ${TENDER['TENDER_UAID']}  ${field_name}  ${field_value}
 
 
 Можливість додати документацію до тендера
@@ -79,8 +109,23 @@ Resource           resource.robot
   Set To Dictionary  ${USERS.users['${tender_owner}']}  item_data=${item_data}
 
 
+Можливість додати предмет закупівлі в план
+  ${item}=  Підготувати дані для створення предмету закупівлі плану  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['id']}
+  Run As  ${tender_owner}  Додати предмет закупівлі в план  ${TENDER['TENDER_UAID']}  ${item}
+  ${item_id}=  get_id_from_object  ${item}
+  ${item_data}=  Create Dictionary
+  ...      item=${item}
+  ...      item_id=${item_id}
+  ${item_data}=  munch_dict  arg=${item_data}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  item_data=${item_data}
+
+
 Можливість видалити предмет закупівлі з тендера
   Run As  ${tender_owner}  Видалити предмет закупівлі  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].item_data.item_id}
+
+
+Можливість видалити предмет закупівлі з плану
+  Run As  ${tender_owner}  Видалити предмет закупівлі плану  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].item_data.item_id}
 
 
 Звірити відображення поля ${field} документа ${doc_id} із ${left} для користувача ${username}
@@ -101,6 +146,10 @@ Resource           resource.robot
   Звірити поле тендера  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${field}
 
 
+Звірити відображення поля ${field} плану для користувача ${username}
+  Звірити поле плану  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${field}
+
+
 Отримати доступ до тендера другого етапу та зберегти його
   Run as  ${tender_owner}  Отримати тендер другого етапу та зберегти його  ${USERS.users['${tender_owner}'].tender_data.data.stage2TenderID}
   ${TENDER_UAID_second_stage}=  BuiltIn.Catenate  SEPARATOR=  ${TENDER['TENDER_UAID']}  .2
@@ -113,6 +162,25 @@ Resource           resource.robot
   ${file_name}=  Run as  ${username}  Отримати документ  ${TENDER['TENDER_UAID']}  ${doc_id}
   ${right}=  Get File  ${OUTPUT_DIR}${/}${file_name}
   Порівняти об'єкти  ${left}  ${right}
+
+
+Отримати інформацію про документ тендера ${doc_id} ${username}
+  ${file_properties} =  Run as  ${username}  Отримати інформацію про документ  ${TENDER['TENDER_UAID']}  ${doc_id}
+  Set To Dictionary  ${USERS.users['${tender_owner}'].tender_document}  file_properties=${file_properties}
+  Log  ${file_properties}
+
+
+Отримати інформацію про документ лотів ${doc_id} ${username}
+  ${file_properties} =  Run as  ${username}  Отримати інформацію про документ  ${TENDER['TENDER_UAID']}  ${doc_id}
+  Set To Dictionary  ${USERS.users['${tender_owner}'].lots_documents[0]}  file_properties=${file_properties}
+  Log  ${file_properties}
+
+
+Звірити інформацію про документацію ${file_properties} ${username}
+  ${file_contents}=  Run as  ${username}  Отримати вміст документа  ${file_properties.url}
+  ${file_hash}=  get_hash  ${file_contents}
+  ${new_file_properties}=  Call Method  ${USERS.users['${viewer}'].client}  get_file_properties  ${file_properties.url}  ${file_hash}
+  Порівняти об'єкти  ${new_file_properties}  ${file_properties}
 
 
 Звірити відображення дати ${date} тендера для усіх користувачів
@@ -144,6 +212,17 @@ Resource           resource.robot
 Звірити відображення поля ${field} усіх предметів для користувача ${username}
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  Звірити відображення поля ${field} ${item_index} предмету для користувача ${username}
+
+
+Звірити відображення ${field} усіх предметів плану для усіх користувачів
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
+  \  Звірити відображення ${field} усіх предметів плану для користувача ${username}
+
+
+Звірити відображення ${field} усіх предметів плану для користувача ${username}
+  :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
+  \  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}]}
+  \  Звірити поле плану із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}].${field}}  ${field}  ${item_id}
 
 
 Звірити відображення поля ${field} ${item_index} предмету для користувача ${username}
@@ -413,6 +492,71 @@ Resource           resource.robot
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
   \  Remove From List  ${USERS.users['${username}'].tender_data.data['features']}  ${feature_index}
 
+
+Звірити відображення поля ${field} зміни до договору для користувача ${username}
+  Звірити поле зміни до договору  ${username}  ${CONTRACT_UAID}
+  ...      ${USERS.users['${tender_owner}'].change_data}
+  ...      ${field}
+
+
+Звірити відображення поля ${field} договору із ${left} для користувача ${username}
+  ${right}=  Run As  ${username}  Отримати інформацію із договору  ${CONTRACT_UAID}  ${field}
+  Порівняти об'єкти  ${left}  ${right}
+
+
+Звірити відображення поля ${field} документа ${doc_id} до договору з ${left} для користувача ${username}
+  ${right}=  Run As  ${username}  Отримати інформацію із документа до договору  ${CONTRACT_UAID}  ${doc_id}  ${field}
+  Порівняти об'єкти  ${left}  ${right}
+
+
+Звірити відображення вмісту документа ${doc_id} до договору з ${left} для користувача ${username}
+  ${file_name}=  Run As  ${username}  Отримати документ до договору  ${CONTRACT_UAID}  ${doc_id}
+  ${right}=  Get File  ${OUTPUT_DIR}${/}${file_name}
+  Порівняти об'єкти  ${left}  ${right}
+
+
+Звірити відображення причин зміни договору
+  ${rationale_types_from_broker}=  Run as  ${viewer}  Отримати інформацію із договору  ${CONTRACT_UAID}  changes[0].rationaleTypes
+  ${rationale_types_from_robot}=  Get variable value  ${USERS.users['${tender_owner}'].change_data.data.rationaleTypes}
+  Log  ${rationale_types_from_broker}
+  Log  ${rationale_types_from_robot}
+  ${result}=  compare_rationale_types  ${rationale_types_from_broker}  ${rationale_types_from_robot}
+  Run keyword if  ${result} == ${False}  Fail  Rationale types are not equal
+
+
+Додати документацію до зміни договору
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
+  ${doc_id}=  get_id_from_string  ${file_name}
+  ${doc}=  Create Dictionary
+  ...      id=${doc_id}
+  ...      name=${file_name}
+  ...      content=${file_content}
+  Set to dictionary  ${USERS.users['${tender_owner}']}  change_doc=${doc}
+  Run As  ${tender_owner}  Додати документацію до зміни в договорі  ${CONTRACT_UAID}  ${file_path}
+  Remove File  ${file_path}
+
+
+Додати документацію до договору
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
+  ${doc_id}=  get_id_from_string  ${file_name}
+  ${doc}=  Create Dictionary
+  ...      id=${doc_id}
+  ...      name=${file_name}
+  ...      content=${file_content}
+  Set to dictionary  ${USERS.users['${tender_owner}']}  contract_doc=${doc}
+  Run As  ${tender_owner}  Завантажити документацію до договору  ${CONTRACT_UAID}  ${file_path}
+  Remove File  ${file_path}
+
+
+Вказати дійсно оплачену суму
+  ${amount}=  Get variable value  ${USERS.users['${tender_owner}'].contract_data.data.value.amount}
+  ${amountPaid}=  Create Dictionary  amount=${amount}  valueAddedTaxIncluded=${True}  currency=UAH
+  ${data}=  Create Dictionary  amountPaid=${amountPaid}
+  ${data}=  Create Dictionary  data=${data}
+  Set to dictionary  ${USERS.users['${tender_owner}']}  terminating_data=${data}
+  Run As  ${tender_owner}  Внести зміни в договір  ${CONTRACT_UAID}  ${data}
+
+
 ##############################################################################################
 #             QUESTIONS
 ##############################################################################################
@@ -669,7 +813,7 @@ Resource           resource.robot
 
 Можливість скасувати вимогу про виправлення визначення ${award_index} переможця
   ${cancellation_reason}=  create_fake_sentence
-  ${status}=  Set variable if  'open' in '${MODE}'  stopping  cancelled
+  ${status}=  Set variable if  "${USERS.users['${provider}'].tender_data.data.awards[${award_index}].complaints[-1].status}" == 'pending' and 'open' in '${MODE}'  stopping  cancelled
   ${data}=  Create Dictionary
   ...      status=${status}
   ...      cancellationReason=${cancellation_reason}
@@ -682,7 +826,6 @@ Resource           resource.robot
   ...      ${cancellation_data}
   ...      ${award_index}
   Set To Dictionary  ${USERS.users['${provider}'].claim_data}  cancellation  ${cancellation_data}
-  ${status}=  Set variable if  'open' in '${MODE}'  stopping  cancelled
   Wait until keyword succeeds
   ...      40 min 15 sec
   ...      15 sec
@@ -971,6 +1114,7 @@ Resource           resource.robot
   ...     ELSE  Set Variable  ${None}
   Run As  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}  ${lots_ids}  ${features_ids}
 
+
 Неможливість подати цінову пропозицію без прив’язки до лоту користувачем ${username}
   ${bid}=  Підготувати дані для подання пропозиції
   ${values}=  Get Variable Value  ${bid.data.lotValues[0]}
@@ -1042,9 +1186,65 @@ Resource           resource.robot
   Remove File  ${file_path}
 
 
+Можливість завантажити документ в ${contract_index} угоду користувачем ${username}
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
+  ${doc_id}=  get_id_from_string  ${file_name}
+  ${doc}=  Create Dictionary
+  ...      id=${doc_id}
+  ...      name=${file_name}
+  ...      content=${file_content}
+  Set to dictionary  ${USERS.users['${tender_owner}']}  contract_doc=${doc}
+  Run As  ${username}  Завантажити документ в угоду  ${file_path}  ${TENDER['TENDER_UAID']}  ${contract_index}
+  Remove File  ${file_path}
+
+
 Можливість укласти угоду для закупівлі
   Run as  ${tender_owner}
   ...      Підтвердити підписання контракту
   ...      ${TENDER['TENDER_UAID']}
   ...      ${0}
   Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.contracts[0]}  status
+
+##############################################################################################
+#             Pre-Qualifications
+##############################################################################################
+
+Дочекатися перевірки прекваліфікацій
+  [Documentation]
+  ...       [Arguments] Username, tender uaid
+  ...       [Description]  Waint until edr bridge check qualifications
+  ...       [Return]  Nothing
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  :FOR  ${qualification}  IN  @{tender.data.qualifications}
+  \   ${res}=  Wait until keyword succeeds
+  \   ...      10 min 15 sec
+  \   ...      30 sec
+  \   ...      Перевірити документ прекваліфікіції ${qualification.id} для користувача ${username} в тендері ${tender_uaid}
+
+
+Перевірити документ прекваліфікіції ${qualification_id} для користувача ${username} в тендері ${tender_uaid}
+  ${document}=  openprocurement_client.Отримати останній документ прекваліфікації з типом registerExtract  ${username}  ${tender_uaid}  ${qualification_id}
+  Порівняти об'єкти  ${document['documentType']}  registerExtract
+
+##############################################################################################
+#             Qualifications
+##############################################################################################
+
+Дочекатися перевірки кваліфікацій
+  [Documentation]
+  ...       [Arguments] Username, tender uaid
+  ...       [Description]  Waint until edr bridge create check award
+  ...       [Return]  Nothing
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  :FOR  ${award}  IN  @{tender.data.awards}
+  \   Wait until keyword succeeds
+  \   ...      10 min 15 sec
+  \   ...      30 sec
+  \   ...      Перевірити документ кваліфікіції ${award.id} для користувача ${username} в тендері ${tender_uaid}
+
+
+Перевірити документ кваліфікіції ${award_id} для користувача ${username} в тендері ${tender_uaid}
+  ${document}=  openprocurement_client.Отримати останній документ кваліфікації з типом registerExtract  ${username}  ${tender_uaid}  ${award_id}
+  Порівняти об'єкти  ${document['documentType']}  registerExtract

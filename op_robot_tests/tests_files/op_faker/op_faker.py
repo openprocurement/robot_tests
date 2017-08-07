@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from faker.providers import BaseProvider
+from faker.generator import random
 from copy import deepcopy
 from munch import Munch
 from json import load
@@ -17,13 +18,14 @@ def load_data_from_file(file_name):
 
 
 class OP_Provider(BaseProvider):
-    __fake_data = load_data_from_file("op_faker_data.json")
-    word_list = __fake_data.words
-    procuringEntities = __fake_data.procuringEntities
-    addresses = __fake_data.addresses
-    classifications = __fake_data.classifications
-    cpvs = __fake_data.cpvs
-    items_base_data = __fake_data.items_base_data
+    _fake_data = load_data_from_file("op_faker_data.json")
+    word_list = _fake_data.words
+    procuringEntities = _fake_data.procuringEntities
+    addresses = _fake_data.addresses
+    classifications = _fake_data.classifications
+    cpvs = _fake_data.cpvs
+    items_base_data = _fake_data.items_base_data
+    rationale_types = _fake_data.rationale_types
 
     @classmethod
     def randomize_nb_elements(self, number=10, le=60, ge=140):
@@ -150,3 +152,7 @@ class OP_Provider(BaseProvider):
                 "description_en": item_base_data["description_en"]
             })
         return deepcopy(item)
+
+    @classmethod
+    def rationaleTypes(self, amount=3):
+        return random.sample(self.rationale_types, amount)

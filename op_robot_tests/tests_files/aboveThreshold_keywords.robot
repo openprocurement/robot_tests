@@ -14,9 +14,12 @@ Resource           base_keywords.robot
   Require Failure  ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  description  description
 
 
-Можливість продовжити період подання пропозиції на 7 днів
-  ${endDate}=  add_minutes_to_date  ${USERS.users['${tender_owner}'].tender_data.data.tenderPeriod.endDate}  7
+Можливість продовжити період подання пропозиції на ${number_of_days} днів
+  ${period_intervals}=  compute_intrs  ${BROKERS}  ${used_brokers}
+  ${number_of_minutes}=  get_number_of_minutes  ${number_of_days}  ${period_intervals.${MODE}.accelerator}
+  ${endDate}=  add_minutes_to_date  ${USERS.users['${tender_owner}'].tender_data.data.tenderPeriod.endDate}  ${number_of_minutes}
   Можливість змінити поле tenderPeriod.endDate тендера на ${endDate}
+  Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data.tenderPeriod}  endDate
 
 ##############################################################################################
 #             BIDDING
@@ -31,7 +34,7 @@ Resource           base_keywords.robot
 
 Можливість підтвердити цінову пропозицію учасником ${username}
   ${status}=  Run Keyword IF  '${MODE}'=='openeu'  Set Variable  pending
-  ...                     ELSE IF  '${MODE}'=='openua'  Set Variable  active
+  ...                     ELSE IF  '${MODE}'=='openua' or '${MODE}'=='openua_defense'  Set Variable  active
   Run As  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  status  ${status}
 
 ##############################################################################################
