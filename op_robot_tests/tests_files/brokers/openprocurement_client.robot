@@ -861,6 +861,38 @@ Library  openprocurement_client_helper.py
   Log  ${reply}
 
 ##############################################################################
+#             Contract operations
+##############################################################################
+
+Отримати всі id виграшів з однаковими identifier
+  [Documentation]
+  ...      [Arguments]  Username, tender uaid, contract.susplier.identifier.id, contract.susplier.identifier.schema
+  ...      [Description]  Find all contracts which have same identifier id and scheme
+  ...      [Return] Find contracts
+  [Arguments]  ${username}  ${tender_uaid}  ${identifier_id}  ${identifier_schema}  ${contract_id}
+  ${tender}  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${merge_contracts} =  Create List
+  :FOR  ${contract}  IN  @{tender.data['contracts']}
+  \  Run Keyword If  '${contract.suppliers[0].identifier.id}'=='${identifier_id}' and '${contract.id}'!='${contract_id}' and '${contract.suppliers[0].identifier.scheme}'=='${identifier_schema}'
+  \  ...     Append To List  ${merge_contracts}  ${contract.awardID}
+  Log  ${merge_contracts}
+  [Return]  ${merge_contracts}
+
+
+Об'єднати контракти
+  [Documentation]
+  ...      [Arguments]  Username, tender uaid, contract id, additional_awards_ids
+  ...      [Description]  Add additional awards to contract by contract_id
+  ...      [Return]  Return replay from api
+  [Arguments]  ${username}  ${tender_uaid}  ${contract_id}  ${additional_awards}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${data}=  test_additional_awards  ${contract_id}  ${additional_awards}
+  Log  ${data}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract  ${tender}  ${data}
+  Log  ${reply}
+  [Return]  ${reply}
+
+##############################################################################
 #             Limited procurement
 ##############################################################################
 
