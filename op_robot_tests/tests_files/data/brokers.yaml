@@ -312,7 +312,7 @@ alltenders:
             accelerator: 1440
             tender:  [0, 30]
     keywords_file: alltenders
-    homepage: 'https://prozorro.shadowy.eu/?mode=test&notification=off'
+    homepage: 'https://prozorro.alltenders.com.ua/?mode=test&notification=off'
     roles:
         provider:       alltenders_Provider1
         provider1:      alltenders_Provider2
