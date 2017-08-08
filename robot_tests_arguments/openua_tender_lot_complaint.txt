@@ -1,4 +1,4 @@
--v MODE:belowThreshold
+-v MODE:openua
 
 -i create_tender
 -i find_tender
@@ -6,4 +6,3 @@
 
 -i tender_complaint
 -i lot_complaint
--i below_complaint
