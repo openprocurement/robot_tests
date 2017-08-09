@@ -86,12 +86,28 @@ Library  openprocurement_client.utils
   [Return]  ${document['${field}']}
 
 
+Отримати інформацію про документ
+  [Arguments]  ${username}  ${tender_uaid}  ${doc_id}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${document}=  get_document_by_id  ${tender.data}  ${doc_id}
+  ${file_properties}=  Call Method  ${USERS.users['${username}'].client}  get_file_properties  ${document.url}  ${document.hash}
+  Log  ${file_properties}
+  [return]  ${file_properties}
+
+
 Отримати документ
   [Arguments]  ${username}  ${tender_uaid}  ${doc_id}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${document}=  get_document_by_id  ${tender.data}  ${doc_id}
   ${filename}=  download_file_from_url  ${document.url}  ${OUTPUT_DIR}${/}${document.title}
   [return]  ${filename}
+
+
+Отримати вміст документа
+  [Arguments]  ${username}  ${url}
+  ${file_name}=  download_file_from_url  ${url}  ${OUTPUT_DIR}${/}file
+  ${file_contents}=  Get File  ${OUTPUT_DIR}${/}${file_name}
+  [return]  ${file_contents}
 
 
 Отримати посилання на аукціон для глядача
