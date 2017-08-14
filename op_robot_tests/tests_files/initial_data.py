@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -
 import os
 import random
+import hashlib
 from datetime import timedelta
 from tempfile import NamedTemporaryFile
 from uuid import uuid4
@@ -17,7 +18,7 @@ fake_ru = Factory.create(locale='ru_RU')
 fake_uk = Factory.create(locale='uk_UA')
 fake_uk.add_provider(OP_Provider)
 fake = fake_uk
-
+used_identifier_id = []
 # This workaround fixes an error caused by missing "catch_phrase" class method
 # for the "ru_RU" locale in Faker >= 0.7.4
 fake_ru.add_provider(CompanyProviderEnUs)
@@ -28,6 +29,31 @@ def create_fake_sentence():
     return fake.sentence(nb_words=10, variable_nb_words=True)
 
 
+def create_fake_amount(award_amount):
+    return round(random.uniform(1, award_amount), 2)
+
+
+def create_fake_title():
+    return u"[ТЕСТУВАННЯ] {}".format(fake.title())
+
+
+def create_fake_date():
+    return get_now().isoformat()
+
+
+def subtraction(value1, value2):
+    if "." in str (value1) or "." in str (value2):
+        return (float (value1) - float (value2))
+    else:
+        return (int (value1) - int (value2))
+
+
+def create_fake_value_amount():
+    return fake.random_int(min=1)
+
+def get_number_of_minutes(days, accelerator):
+    return 1440 * int(days) / accelerator
+
 def field_with_id(prefix, sentence):
     return u"{}-{}: {}".format(prefix, fake.uuid4()[:8], sentence)
 
@@ -37,6 +63,10 @@ def translate_country_en(country):
         return "Ukraine"
     else:
         raise Exception(u"Cannot translate country to english: {}".format(country))
+
+
+def convert_amount(amount):
+    return  (("{:,}".format(float (amount))).replace(',',' ').replace('.',','))
 
 
 def translate_country_ru(country):
@@ -63,7 +93,7 @@ def test_tender_data(params,
     submissionMethodDetails = submissionMethodDetails \
         if submissionMethodDetails else "quick"
     now = get_now()
-    value_amount = round(random.uniform(3000, 99999999999.99), 2)  # max value equals to budget of Ukraine in hryvnias
+    value_amount = round(random.uniform(3000, 99999999.99), 2)  # max value equals to budget of Ukraine in hryvnias
     data = {
         "mode": "test",
         "submissionMethodDetails": submissionMethodDetails,
@@ -142,6 +172,56 @@ def test_tender_data(params,
     if not data['features']:
         del data['features']
     data['status'] = 'draft'
+    return munchify(data)
+
+
+def test_tender_data_planning(params):
+    data = {
+        "budget": {
+            "amountNet": round(random.uniform(3000, 999999999.99), 2),
+            "description": fake.description(),
+            "project": {
+                "id": str(fake.random_int(min=1, max=999)),
+                "name": fake.description(),
+            },
+            "currency": "UAH",
+            "amount": round(random.uniform(3000, 99999999999.99), 2),
+            "id": str(fake.random_int(min=1, max=99999999999)) + "-" + str(fake.random_int(min=1, max=9)),
+        },
+        "procuringEntity": {
+            "identifier": {
+                "scheme": "UA-EDR",
+                "id": str(fake.random_int(min=1, max=999)),
+                "legalName": fake.description(),
+            },
+            "name": fake.description(),
+        },
+        "tender": {
+            "procurementMethod": "open",
+            "procurementMethodType": "belowThreshold",
+            "tenderPeriod": {
+                "startDate": (get_now().isoformat())
+            }
+        },
+        "items": []
+        }
+    id_cpv=fake.cpv()[:4]
+    cpv_data=test_item_data(id_cpv)
+    data.update(cpv_data)
+    del data['deliveryDate']
+    del data['description']
+    del data['description_en']
+    del data['description_ru']
+    del data['deliveryAddress']
+    del data['deliveryLocation']
+    del data['quantity']
+    del data['unit']
+    for i in range(params['number_of_items']):
+        item_data=test_item_data(id_cpv)
+        del item_data['deliveryAddress']
+        del item_data['deliveryLocation']
+        del item_data['deliveryDate']['startDate']
+        data['items'].append(item_data)
     return munchify(data)
 
 
@@ -274,6 +354,33 @@ def test_complaint_reply_data():
     })
 
 
+def test_bid_competitive_data():
+    bid = munchify({
+        "data": {
+            "tenderers": [
+                fake.procuringEntity()
+            ]
+        }
+    })
+    if len(used_identifier_id) == 3:
+        del used_identifier_id[0]
+    id = bid.data.tenderers[0].identifier.id
+    while (id in used_identifier_id):
+        bid = munchify({
+            "data": {
+                "tenderers": [
+                    fake.procuringEntity()
+                ]
+            }
+        })
+        id = bid.data.tenderers[0].identifier.id
+    used_identifier_id.append(id)
+    bid.data.tenderers[0].address.countryName_en = translate_country_en(bid.data.tenderers[0].address.countryName)
+    bid.data.tenderers[0].address.countryName_ru = translate_country_ru(bid.data.tenderers[0].address.countryName)
+    bid.data['status'] = 'draft'
+    return bid
+
+
 def test_bid_data():
     bid = munchify({
         "data": {
@@ -292,7 +399,7 @@ def test_bid_value(max_value_amount):
     return munchify({
         "value": {
             "currency": "UAH",
-            "amount": round(random.uniform(1, max_value_amount), 2),
+            "amount": round(random.uniform((0.95 * max_value_amount), max_value_amount), 2),
             "valueAddedTaxIncluded": True
         }
     })
@@ -376,6 +483,10 @@ def test_lot_document_data(document, lot_id):
     document.data.update({"documentOf": "lot", "relatedItem": lot_id})
     return munchify(document)
 
+def test_change_document_data(document, change_id):
+    document.data.update({"documentOf": "change", "relatedItem": change_id})
+    return munchify(document)
+
 
 def test_tender_data_openua(params, submissionMethodDetails):
     # We should not provide any values for `enquiryPeriod` when creating
@@ -384,6 +495,16 @@ def test_tender_data_openua(params, submissionMethodDetails):
     data = test_tender_data(params, ('tender',), submissionMethodDetails)
     data['procurementMethodType'] = 'aboveThresholdUA'
     data['procuringEntity']['kind'] = 'general'
+    return data
+
+
+def test_tender_data_openua_defense(params, submissionMethodDetails):
+    """We should not provide any values for `enquiryPeriod` when creating
+    an openUA, openEU or openUA_defense procedure. That field should not be present at all.
+    Therefore, we pass a nondefault list of periods to `test_tender_data()`."""
+    data = test_tender_data(params, ('tender',), submissionMethodDetails)
+    data['procurementMethodType'] = 'aboveThresholdUA.defense'
+    data['procuringEntity']['kind'] = 'defense'
     return data
 
 
@@ -422,3 +543,21 @@ def test_tender_data_competitive_dialogue(params, submissionMethodDetails):
     data['procuringEntity']['identifier']['legalName_en'] = fake_en.sentence(nb_words=10, variable_nb_words=True)
     data['procuringEntity']['kind'] = 'general'
     return data
+
+
+def test_change_data():
+    return munchify(
+    {
+        "data":
+        {
+            "rationale": fake.description(),
+            "rationale_en": fake_en.sentence(nb_words=10, variable_nb_words=True),
+            "rationale_ru": fake_ru.sentence(nb_words=10, variable_nb_words=True),
+            "rationaleTypes": fake.rationaleTypes(amount=3), 
+            "status": "pending"
+        }
+    })
+
+
+def get_hash(file_contents):
+    return ("md5:"+hashlib.md5(file_contents).hexdigest())

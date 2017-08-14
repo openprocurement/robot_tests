@@ -1,4 +1,4 @@
--v MODE:belowThreshold
+-v MODE:openua_defense
 
 -v NUMBER_OF_ITEMS:1
 -v NUMBER_OF_LOTS:1
@@ -13,6 +13,7 @@
 -i tender_view
 -i meat_view
 -i lot_view
+-i open_tender_view
 
 -i extend_tendering_period
 -i add_tender_doc
@@ -30,7 +31,6 @@
   -i delete_item_meat
 
 -i ask_question_to_tender
-  -i answer_question_to_tender
 -i ask_question_to_item
   -i answer_question_to_item
 -i ask_question_to_lot
@@ -40,57 +40,29 @@
 
 -i create_tender_claim
   -i answer_tender_claim
-  -i cancel_tender_claim
+  -i resolve_tender_claim
 -i modify_tender_after_claim
 
 -i create_lot_claim
   -i answer_lot_claim
-  -i cancel_lot_claim
+  -i resolve_lot_claim
 -i modify_lot_after_claim
 
--i make_bid_before_tendering_period
 -i make_bid_without_related_lot
 -i make_bid_without_parameters
 -i make_bid_by_provider
   -i modify_bid_by_provider
   -i add_doc_to_bid_by_provider
--i make_bid_by_provider1
+-i ask_question_after_enquiry_period
+-i create_tender_complaint_after_complaint_period
+-i answer_question_after_clarifications_period
+-i modify_tender_in_tendering_period
+  -i open_confirm_first_bid
 -i bid_view_in_tendering_period
 
 -i add_bid_doc_after_tendering_period_by_provider
--i modify_bid_doc_after_tendering_period_by_provider
--i modify_bid_after_tendering_period_by_provider1
--i cancel_bid_after_tendering_period_by_provider1
-
--i ask_question_to_tender_after_tendering_period
--i ask_question_to_item_after_tendering_period
--i ask_question_to_lot_after_tendering_period
-
--i auction
-
--i create_award_claim
--i answer_award_claim
--i cancel_award_claim
 
 -i qualification_add_doc_to_first_award
 -i qualification_approve_first_award
--i qualification_cancel_first_award_qualification
--i qualification_add_doc_to_second_award
--i qualification_approve_second_award
 
--i contract_view
--i modify_contract
--i add_doc_to_contract
 -i contract_sign
-
--i find_contract
--i access_contract
--i submit_change
--i view_change
--i upload_change_document
--i modify_change
--i apply_change
--i add_contract_doc
--i termination_reasons
--i amount_paid
--i contract_termination

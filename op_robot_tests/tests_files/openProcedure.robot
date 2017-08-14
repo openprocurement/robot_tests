@@ -476,6 +476,42 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля title документа ${USERS.users['${tender_owner}']['tender_document']['doc_id']} із ${USERS.users['${tender_owner}'].tender_document.doc_name} для користувача ${viewer}
 
 
+Можливість отримати інформацію про документацію до тендера
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      get_file_properties
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  Отримати інформацію про документ тендера ${USERS.users['${tender_owner}'].tender_document.doc_id} ${tender_owner}
+
+
+Можливість отримати інформацію про документацію до лотів
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      get_file_properties
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  Отримати інформацію про документ лотів ${USERS.users['${tender_owner}'].lots_documents[0].doc_id} ${tender_owner}
+
+
+Можливість перевірити інформацію про документацію до тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      compare_file_properties
+  Завантажити дані про тендер
+  Звірити інформацію про документацію ${USERS.users['${viewer}'].tender_file_properties} ${viewer}
+
+
+Можливість перевірити інформацію про документацію до лотів
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      compare_file_properties
+  Завантажити дані про тендер
+  Звірити інформацію про документацію ${USERS.users['${viewer}'].lot_file_properties} ${viewer}
+
+
 Відображення заголовку документації до всіх лотів
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
   ...      viewer
@@ -1002,7 +1038,7 @@ ${ITEM_MEAT}        ${True}
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  answer_tender_claim
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість відповісти на вимогу про виправлення умов закупівлі
+  Можливість відповісти resolved на вимогу про виправлення умов tender
 
 
 Відображення статусу 'answered' вимоги про виправлення умов закупівлі
@@ -1189,7 +1225,7 @@ ${ITEM_MEAT}        ${True}
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  answer_lot_claim
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість відповісти на вимогу про виправлення умов лоту
+  Можливість відповісти resolved на вимогу про виправлення умов lot
 
 
 Відображення статусу 'answered' вимоги про виправлення умов лоту
@@ -1364,7 +1400,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      modify_bid_by_provider
+  ...      add_doc_to_bid_by_provider
   ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість завантажити документ в пропозицію користувачем ${provider}
@@ -1389,6 +1425,15 @@ ${ITEM_MEAT}        ${True}
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider1}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider1}
+
+
+Можливість зменшити пропозицію на 5% другим учасником
+  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
+  ...      provider1
+  ...      ${USERS.users['${provider1}'].broker}
+  ...      modify_bid_by_provider1
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість зменшити пропозицію до 95 відсотків користувачем ${provider1}
 
 
 Можливість подати пропозицію третім учасником
@@ -1443,6 +1488,66 @@ ${ITEM_MEAT}        ${True}
   ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість завантажити eligibility_documents документ до пропозиції учасником ${provider}
+
+
+Неможливість задати запитання на тендер після завершення періоду уточнень
+  [Tags]  ${USERS.users['${provider}'].broker}: Задання запитання
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      ask_question_after_enquiry_period
+  [Setup]  Дочекатись дати закінчення періоду уточнень  ${provider}
+  Run Keyword And Expect Error  *  Можливість задати запитання на тендер користувачем ${provider}
+
+
+Неможливість подати вимогу про виправлення умов закупівлі після закінчення періоду подання скарг
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      create_tender_complaint_after_complaint_period
+  [Setup]  Дочекатись дати закінчення періоду подання скарг  ${provider}
+  Run Keyword And Expect Error  *  Можливість створити вимогу про виправлення умов закупівлі із документацією
+
+
+Неможливість відповісти на запитання до тендера після завершення періоду відповідей
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Відповідь на запитання
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      answer_question_after_clarifications_period
+  [Setup]  Дочекатись дати закінчення періоду відповідей на запитання  ${tender_owner}
+  Run Keyword And Expect Error  *  Можливість відповісти resolved на вимогу про виправлення умов tender
+
+
+Неможливість редагувати однопредметний тендер менше ніж за 2 дні до завершення періоду подання пропозицій
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_tender_in_tendering_period
+  ${new_description}=  create_fake_sentence
+  Run Keyword And Expect Error  *  Можливість змінити поле description тендера на ${new_description}
+
+
+Можливість відповісти на запитання до тендера після продовження періоду прийому пропозицій
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Відповідь на запитання
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      answer_question_after_clarifications_period
+  ...      extend_enquiry_period
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість продовжити період подання пропозиції на 3 днів
+  Можливість відповісти на запитання на тендер
+
+
+Можливість редагувати тендер після продовження періоду прийому пропозицій
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_tender_in_tendering_period
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${new_description}=  create_fake_sentence
+  Можливість змінити поле description тендера на ${new_description}
+  Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data}  description
 
 
 Можливість редагувати однопредметний тендер більше ніж за 7 днів до завершення періоду подання пропозицій
@@ -1531,12 +1636,12 @@ ${ITEM_MEAT}        ${True}
 ##############################################################################################
 
 Неможливість завантажити документ першим учасником після закінчення прийому пропозицій
-  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
-  ...      ${USERS.users['${provider1}'].broker}
+  ...      ${USERS.users['${provider}'].broker}
   ...      add_bid_doc_after_tendering_period_by_provider
   ...      non-critical
-  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}  ${TENDER['TENDER_UAID']}
+  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
   Run Keyword And Expect Error  *  Можливість завантажити документ в пропозицію користувачем ${provider}
 
 
@@ -1650,6 +1755,15 @@ ${ITEM_MEAT}        ${True}
   ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість завантажити документ у кваліфікацію 0 пропозиції
+
+
+Можливість дочекатися перевірки учасників по ЄДРПОУ
+  [Tags]   ${USERS.users['${viewer}'].broker}: Перевірка користувачів по ЄДРПОУ
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      pre-qualifications_check_by_edrpou
+  [Setup]  Дочекатись дати початку періоду прекваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
+  Дочекатися перевірки прекваліфікацій  ${tender_owner}  ${TENDER['TENDER_UAID']}
 
 
 Можливість підтвердити першу пропозицію кваліфікації

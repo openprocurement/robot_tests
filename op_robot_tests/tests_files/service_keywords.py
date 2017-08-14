@@ -19,10 +19,14 @@ from robot.output.loggerhelper import Message
 from .initial_data import (
     create_fake_doc,
     create_fake_sentence,
+    create_fake_amount,
+    create_fake_date,
     fake,
+    subtraction,
     field_with_id,
     test_bid_data,
     test_bid_value,
+    test_change_data,
     test_claim_answer_data,
     test_claim_data,
     test_complaint_data,
@@ -42,10 +46,19 @@ from .initial_data import (
     test_tender_data_limited,
     test_tender_data_openeu,
     test_tender_data_openua,
+    test_tender_data_planning,
+    test_tender_data_openua_defense,
+    test_bid_competitive_data,
+    create_fake_title,
+    create_fake_value_amount,
+    test_change_document_data,
+    convert_amount,
+    get_number_of_minutes,
+    get_hash,
 )
 from barbecue import chef
 from restkit import request
-# End of non-pointless imports
+# End of non-pointless import
 import os
 import re
 
@@ -307,6 +320,9 @@ def prepare_test_tender_data(procedure_intervals,
     elif mode == 'openua':
         return munchify({'data': test_tender_data_openua(
             tender_parameters, submissionMethodDetails)})
+    elif mode == 'openua_defense':
+        return munchify({'data': test_tender_data_openua_defense(
+            tender_parameters, submissionMethodDetails)})
     elif mode == 'open_competitive_dialogue':
         return munchify({'data': test_tender_data_competitive_dialogue(
             tender_parameters, submissionMethodDetails)})
@@ -317,6 +333,9 @@ def prepare_test_tender_data(procedure_intervals,
             tender_parameters,
             submissionMethodDetails=submissionMethodDetails,
             accelerator=accelerator)})
+    elif mode == 'planning':
+        return munchify({'data': test_tender_data_planning(
+            tender_parameters)})
         # The previous line needs an explicit keyword argument because,
         # unlike previous functions, this one has three arguments.
     raise ValueError("Invalid mode for prepare_test_tender_data")
@@ -500,10 +519,18 @@ def get_object_by_id(data, given_object_id, slice_element, object_id):
 
 
 def generate_test_bid_data(tender_data):
-    bid = test_bid_data()
-    if tender_data.get('procurementMethodType', '')[:-2] in ('aboveThreshold', 'competitiveDialogue'):
+    if tender_data.get('procurementMethodType', '') in (
+            'aboveThresholdUA',
+            'aboveThresholdUA.defense',
+            'aboveThresholdEU',
+            'competitiveDialogueUA',
+            'competitiveDialogueEU'
+        ):
+        bid = test_bid_competitive_data()
         bid.data.selfEligible = True
         bid.data.selfQualified = True
+    else:
+        bid = test_bid_data()
     if 'lots' in tender_data:
         bid.data.lotValues = []
         for lot in tender_data['lots']:
@@ -533,8 +560,8 @@ def generate_test_bid_data_second_stage(tender_data, index='0'):
     bid['data']['tenderers'][0]['identifier']['id'] = tender_data['shortlistedFirms'][index]['identifier']['id']
     bid['data']['tenderers'][0]['identifier']['scheme'] = tender_data['shortlistedFirms'][index]['identifier']['scheme']
     bid['data']['tenderers'][0]['identifier']['legalName'] = tender_data['shortlistedFirms'][index]['identifier']['legalName']
-
-    if tender_data.get('procurementMethodType', '')[:-2] in ('aboveThreshold', 'competitiveDialogue'):
+    bid['data']['tenderers'][0]['name'] = tender_data['shortlistedFirms'][index]['name']
+    if tender_data.get('procurementMethodType', '') in ('competitiveDialogueEU.stage2', 'competitiveDialogueUA.stage2'):
         bid.data.selfEligible = True
         bid.data.selfQualified = True
     if 'lots' in tender_data:
@@ -551,3 +578,12 @@ def generate_test_bid_data_second_stage(tender_data, index='0'):
             parameter = {"value": fake.random_element(elements=(0.05, 0.01, 0)), "code": feature.get('code', '')}
             bid.data.parameters.append(parameter)
     return bid
+
+
+def convert_amount_string_to_float(amount_string):
+    return float(amount_string.replace(' ', '').replace(',', '.'))
+
+
+def compare_rationale_types(type1, type2):
+    return set(type1) == set(type2)
+

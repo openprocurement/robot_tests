@@ -99,7 +99,7 @@ ${award_index}      ${0}
   ...  answer_award_claim
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість відповісти на вимогу про виправлення визначення ${award_index} переможця
+  Можливість відповісти resolved на вимогу про виправлення визначення ${award_index} переможця
 
 
 Відображення статусу 'answered' вимоги про виправлення визначення переможця
@@ -211,6 +211,15 @@ ${award_index}      ${0}
 #             QUALIFICATION
 ##############################################################################################
 
+Можливість дочекатися перевірки переможців по ЄДРПОУ
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Перевірка користувача по ЄДРПОУ
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      qualifications_check_by_edrpou
+  [Setup]  Дочекатись дати початку періоду кваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
+  Дочекатися перевірки кваліфікацій  ${tender_owner}  ${TENDER['TENDER_UAID']}
+
+
 Можливість завантажити документ рішення кваліфікаційної комісії для підтвердження постачальника
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
@@ -252,4 +261,4 @@ ${award_index}      ${0}
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_approve_second_award  level1
-  Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  -1
+  Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  1
