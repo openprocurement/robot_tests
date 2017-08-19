@@ -379,13 +379,17 @@ pzo:
     timeout_on_wait: 1
 aladdin:
     intervals:
+        default:
+            enquiry: [0, 20]
+            tender:  [0, 20]
+            accelerator: 900
         belowThreshold:
             enquiry: [0, 60]
             tender:  [0, 15]
-            accelerator: 1440
+            accelerator: 400
         openua:
             accelerator: 1440
-            tender:  [0, 30]
+            tender:  [0, 30] 
         openeu:
             tender:  [0, 30]
             accelerator: 1440
