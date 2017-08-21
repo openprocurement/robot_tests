@@ -1188,6 +1188,77 @@
             }
         }
     ],
+    "procuringEntities_insider": [
+        {
+            "contactPoint": {
+                "url": "http://kpbl.org.ua",
+                "telephone": "044-563-99-42---------097-641-99-01",
+                "email": "kpbl@bigmir.net",
+                "name": "Хильченко Інна Григорівна",
+                "faxNumber": "044-563-99-05"
+            },
+            "identifier": {
+                "scheme": "UA-EDR",
+                "id": "02544394",
+                "legalName": "Київський професійний будівельний ліцей"
+            },
+            "name": "Київський професійний будівельний ліцей",
+            "address": {
+                "postalCode": "02121",
+                "countryName": "Україна",
+                "streetAddress": "вулиця Чернігівська, 220, 8",
+                "region": "місто Київ",
+                "locality": "Київ"
+            },
+            "kind":"general"
+        },
+        {
+            "contactPoint": {
+                "url": "http://skinmedic.com.ua",
+                "telephone": "426-07-12",
+                "email": "kmkshvl@ukr.net",
+                "name": "Чередниченко Олена Юріївна",
+                "faxNumber": "413-41-40"
+            },
+            "identifier": {
+                "scheme": "UA-EDR",
+                "id": "01994008",
+                "legalName": "Київська міська клінічна шкірно-венерологічна лікарня"
+            },
+            "name": "Київська міська клінічна шкірно-венерологічна лікарня",
+            "address": {
+                "postalCode": "04655",
+                "countryName": "Україна",
+                "streetAddress": "вулиця Богатирська, 32",
+                "region": "місто Київ",
+                "locality": "Київ"
+            },
+            "kind":"special"
+        },
+        {
+            "contactPoint": {
+                "url": "http://www.shev.gov.ua/",
+                "telephone": "2341170",
+                "email": "buh510@ukr.net",
+                "name": "Ліповець Євген Іванович",
+                "faxNumber": "2343591"
+            },
+            "identifier": {
+                "scheme": "UA-EDR",
+                "id": "37405111",
+                "legalName": "Шевченківська районна в місті Києві державна адміністрація"
+            },
+            "name": "Шевченківська районна в місті Києві державна адміністрація",
+            "address": {
+                "postalCode": "01030",
+                "countryName": "Україна",
+                "streetAddress": "Богдана Хмельницького вулиця, 21-29",
+                "region": "Київська область",
+                "locality": "Переяслав-Хмельницький"
+            },
+            "kind":"other"
+        }
+    ],
     "additionalIdentifiers": [
         {
             "scheme": "UA-FIN",
