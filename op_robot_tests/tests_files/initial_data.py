@@ -173,7 +173,7 @@ def test_tender_data(params, periods=("enquiry", "tender")):
 
     data["procuringEntity"]["kind"] = "other"
 
-    cav_group = fake.cav_other()[:4]
+    cav_group = fake.cav_other()[:3]
     for i in range(params['number_of_items']):
         new_item = test_item_data(cav_group)
         data['items'].append(new_item)
@@ -293,35 +293,7 @@ def test_item_data_financial(cav):
     data["deliveryDate"] = {"endDate": (get_now() + timedelta(days=days)).isoformat()}
     data["deliveryAddress"]["countryName_en"] = translate_country_en(data["deliveryAddress"]["countryName"])
     data["deliveryAddress"]["countryName_ru"] = translate_country_ru(data["deliveryAddress"]["countryName"])
-    schema_properties = fake_schema_properties(cav)
-    data.update(schema_properties)
     return munchify(data)
-
-
-def fake_schema_properties(cav):
-    data = {
-        "schema_properties" : {
-                "code": "06",
-                "version": "001",
-                "properties": {
-                    "region": u"Київська область",
-                    "district": u"м.Київ",
-                    "cadastral_number": str (random.randint(10, 1000)),
-                    "area": random.randint(10, 1000),
-                    "forms_of_land_ownership": [random.choice([u"державна", u"приватна", u"комунальна"])],
-                    "co_owners": random.choice([True, False]),
-                    "availability_of_utilities": random.choice([True, False]),
-                    "current_use": random.choice([True, False])
-                    }
-                }
-            }
-    if "0611" in cav:
-        data["schema_properties"]["code"] = "0611"
-        data["schema_properties"]["properties"]["city"] = u"Київ"
-    if "0612" in cav:
-        data["schema_properties"]["code"] = "0612"
-        data["schema_properties"]["properties"]["land_ownership"] = fake.description()
-    return data
 
 
 def test_tender_data_dgf_other(params):
@@ -350,13 +322,13 @@ def test_tender_data_dgf_other(params):
     data['procurementMethodType'] = 'dgfOtherAssets'
     data["procuringEntity"] = fake.procuringEntity_other()
 
-    cav_group_other = fake.cav_other()[:4]
+    cav_group_other = fake.cav_other()[:3]
     used_cavs = [cav_group_other]
     for i in range(params['number_of_items']):
         new_item = test_item_data(cav_group_other)
         data['items'].append(new_item)
         while (cav_group_other in used_cavs) and (i != (params['number_of_items'] - 1)):
-            cav_group_other = fake.cav_other()[:4]
+            cav_group_other = fake.cav_other()[:3]
         used_cavs.append(cav_group_other)
     return data
 
@@ -391,7 +363,7 @@ def test_tender_data_dgf_financial(params):
     data["procuringEntity"] = fake.procuringEntity()
 
     for i in range(params['number_of_items']):
-        cav_group_financial = fake.cav_financial()[:4]
+        cav_group_financial = fake.cav_financial()[:3]
         new_item = test_item_data_financial(cav_group_financial)
         data['items'].append(new_item)
 
@@ -428,7 +400,7 @@ def test_tender_data_dgf_insider(params):
     data["procuringEntity"] = fake.procuringEntity_insider()
 
     for i in range(params['number_of_items']):
-        cav_group_financial = fake.cav_financial()[:4]
+        cav_group_financial = fake.cav_financial()[:3]
         new_item = test_item_data_financial(cav_group_financial)
         data['items'].append(new_item)
 
