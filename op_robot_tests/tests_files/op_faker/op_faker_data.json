@@ -3028,6 +3028,41 @@
                "id": "06060000-0",
                "description": "Землі рекреаційного призначення"
             }
+        },
+        {
+           "classification": {
+               "scheme": "CAV",
+               "id": "06010000-5",
+               "description": "Землі сільськогосподарського призначення"
+            }
+        },
+        {
+           "classification": {
+               "scheme": "CAV",
+               "id": "06040000-4",
+               "description": "Землі природно-заповідного фонду та іншого природоохоронного призначення"
+            }
+        },
+        {
+           "classification": {
+               "scheme": "CAV",
+               "id": "06050000-7",
+               "description": "Землі оздоровчого призначення"
+            }
+        },
+        {
+           "classification": {
+               "scheme": "CAV",
+               "id": "06070000-3",
+               "description": "Землі історико-культурного призначення"
+            }
+        },
+        {
+           "classification": {
+               "scheme": "CAV",
+               "id": "06080000-6",
+               "description": "Землі лісогосподарського призначення"
+            }
         }
     ],
     "classifications_financial":[
@@ -3050,6 +3085,41 @@
                "scheme": "CAV",
                "id": "06060000-0",
                "description": "Землі рекреаційного призначення"
+            }
+        },
+        {
+           "classification": {
+               "scheme": "CAV",
+               "id": "06010000-5",
+               "description": "Землі сільськогосподарського призначення"
+            }
+        },
+        {
+           "classification": {
+               "scheme": "CAV",
+               "id": "06040000-4",
+               "description": "Землі природно-заповідного фонду та іншого природоохоронного призначення"
+            }
+        },
+        {
+           "classification": {
+               "scheme": "CAV",
+               "id": "06050000-7",
+               "description": "Землі оздоровчого призначення"
+            }
+        },
+        {
+           "classification": {
+               "scheme": "CAV",
+               "id": "06070000-3",
+               "description": "Землі історико-культурного призначення"
+            }
+        },
+        {
+           "classification": {
+               "scheme": "CAV",
+               "id": "06080000-6",
+               "description": "Землі лісогосподарського призначення"
             }
         }
     ],
@@ -3138,12 +3208,22 @@
     "cavs_other": [
         "06000000-2",
         "06091000-6",
-        "06060000-0"
+        "06060000-0",
+        "06010000-5",
+        "06040000-4",
+        "06050000-7",
+        "06070000-3",
+        "06080000-6"
     ],
     "cavs_financial": [
         "06000000-2",
         "06091000-6",
-        "06060000-0"
+        "06060000-0",
+        "06010000-5",
+        "06040000-4",
+        "06050000-7",
+        "06070000-3",
+        "06080000-6"
     ],
     "items_base_data_other": [
         {
@@ -3174,6 +3254,61 @@
             "description_ru": "Земли рекреационного назначения",
             "description_en": "Lands for recreational purposes",
             "quantity": 22,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "cav_id": "06010000-5",
+            "description": "Землі сільськогосподарського призначення",
+            "description_ru": "Земли сельскохозяйственного назначения",
+            "description_en": "Agricultural lands",
+            "quantity": 12,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "cav_id": "06040000-4",
+            "description": "Землі природно-заповідного фонду та іншого природоохоронного призначення",
+            "description_ru": "Земли природно-заповедного фонда и другого природоохранного назначения",
+            "description_en": "Lands of natural reserve fund and other nature conservation purposes",
+            "quantity": 22,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "cav_id": "06050000-7",
+            "description": "Землі оздоровчого призначення",
+            "description_ru": "Земли оздоровительного назначения",
+            "description_en": "Lands for health purposes",
+            "quantity": 7,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "cav_id": "06070000-3",
+            "description": "Землі історико-культурного призначення",
+            "description_ru": "Земли историко-культурного назначения",
+            "description_en": "Lands of historical and cultural destination",
+            "quantity": 18,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "cav_id": "06080000-6",
+            "description": "Землі лісогосподарського призначення",
+            "description_ru": "Земли лесного фонда",
+            "description_en": "Land for forestry",
+            "quantity": 8,
             "unit": {
                 "code": "HAR",
                 "name": "гектар"
@@ -3209,6 +3344,61 @@
             "description_ru": "Земли рекреационного назначения",
             "description_en": "Lands for recreational purposes",
             "quantity": 12,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "cav_id": "06010000-5",
+            "description": "Землі сільськогосподарського призначення",
+            "description_ru": "Земли сельскохозяйственного назначения",
+            "description_en": "Agricultural lands",
+            "quantity": 12,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "cav_id": "06040000-4",
+            "description": "Землі природно-заповідного фонду та іншого природоохоронного призначення",
+            "description_ru": "Земли природно-заповедного фонда и другого природоохранного назначения",
+            "description_en": "Lands of natural reserve fund and other nature conservation purposes",
+            "quantity": 22,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "cav_id": "06050000-7",
+            "description": "Землі оздоровчого призначення",
+            "description_ru": "Земли оздоровительного назначения",
+            "description_en": "Lands for health purposes",
+            "quantity": 7,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "cav_id": "06070000-3",
+            "description": "Землі історико-культурного призначення",
+            "description_ru": "Земли историко-культурного назначения",
+            "description_en": "Lands of historical and cultural destination",
+            "quantity": 18,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "cav_id": "06080000-6",
+            "description": "Землі лісогосподарського призначення",
+            "description_ru": "Земли лесного фонда",
+            "description_en": "Land for forestry",
+            "quantity": 8,
             "unit": {
                 "code": "HAR",
                 "name": "гектар"
