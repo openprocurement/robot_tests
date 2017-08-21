@@ -653,6 +653,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      add_tender_meat  level2
   ...      non-critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля title у новоствореному неціновому показнику для усіх користувачів
 
 
