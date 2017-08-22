@@ -268,10 +268,6 @@ Resource           resource.robot
   ${bid}=  Підготувати дані для подання пропозиції  ${username}
   ${bidresponses}=  Create Dictionary  bid=${bid}
   Set To Dictionary  ${USERS.users['${username}']}  bidresponses=${bidresponses}
-  ${features}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.features}  ${None}
-  ${features_ids}=  Run Keyword IF  ${features}
-  ...     Отримати ідентифікатори об’єктів  ${username}  features
-  ...     ELSE  Set Variable  ${None}
   ${resp}=  Run As  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}
   Set To Dictionary  ${USERS.users['${username}'].bidresponses}  resp=${resp}
   Run Keyword If  '${MODE}'=='dgfFinancialAssets'
