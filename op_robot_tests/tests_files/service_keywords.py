@@ -491,14 +491,9 @@ def generate_test_bid_data(tender_data):
             bid.data.lotValues.append(value)
     else:
         bid.data.update(test_bid_value(tender_data['value']['amount'], tender_data['minimalStep']['amount']))
-    if 'features' in tender_data:
-        bid.data.parameters = []
-        for feature in tender_data['features']:
-            parameter = {"value": fake.random_element(elements=(0.05, 0.01, 0)), "code": feature.get('code', '')}
-            bid.data.parameters.append(parameter)
     if 'dgfOtherAssets' in tender_data.get('procurementMethodType', ''):
         bid.data.qualified = True
-    if 'dgfFinancialAssets' or 'dgfInsider' in tender_data.get('procurementMethodType', ''):
+    if 'dgfFinancialAssets' in tender_data.get('procurementMethodType', ''):
         bid.data.eligible = True
         bid.data.qualified = True
         bid.data.tenderers[0]["additionalIdentifiers"] = [fake.additionalIdentifier()]
