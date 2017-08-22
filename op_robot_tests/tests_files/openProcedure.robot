@@ -256,7 +256,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      tender_view_schema
   Звірити відображення поля schema_properties.code усіх предметів для користувача ${viewer}
 
 
@@ -264,7 +264,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      tender_view_schema
   Звірити відображення поля schema_properties.version усіх предметів для користувача ${viewer}
 
 
@@ -272,7 +272,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      tender_view_schema
   Звірити відображення поля schema_properties.properties.region усіх предметів для користувача ${viewer}
 
 
@@ -280,7 +280,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      tender_view_schema
   Звірити відображення поля schema_properties.properties.district усіх предметів для користувача ${viewer}
 
 
@@ -288,7 +288,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      tender_view_schema
   Звірити відображення поля schema_properties.properties.cadastral_number усіх предметів для користувача ${viewer}
 
 
@@ -296,7 +296,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      tender_view_schema
   Звірити відображення поля schema_properties.properties.area усіх предметів для користувача ${viewer}
 
 
@@ -304,7 +304,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      tender_view_schema
   Звірити відображення поля schema_properties.properties.forms_of_land_ownership усіх предметів для користувача ${viewer}
 
 
@@ -312,7 +312,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      tender_view_schema
   Звірити відображення поля schema_properties.properties.co_owners усіх предметів для користувача ${viewer}
 
 
@@ -320,7 +320,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      tender_view_schema
   Звірити відображення поля schema_properties.properties.availability_of_utilities усіх предметів для користувача ${viewer}
 
 ##############################################################################################
