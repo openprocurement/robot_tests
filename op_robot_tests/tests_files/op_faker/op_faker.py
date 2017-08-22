@@ -21,6 +21,7 @@ class OP_Provider(BaseProvider):
     word_list = __fake_data.words
     procuringEntities = __fake_data.procuringEntities
     procuringEntities_other = __fake_data.procuringEntities_other
+    procuringEntities_insider = __fake_data.procuringEntities_insider
     addresses = __fake_data.addresses
     classifications_other = __fake_data.classifications_other
     cavs_other = __fake_data.cavs_other
@@ -106,6 +107,10 @@ class OP_Provider(BaseProvider):
         procuringEntities = deepcopy(self.procuringEntities)
         procuringEntities.extend(self.procuringEntities_other)
         return deepcopy(self.random_element(procuringEntities))
+
+    @classmethod
+    def procuringEntity_insider(self):
+        return deepcopy(self.random_element(self.procuringEntities_insider))
 
     @classmethod
     def cav_other(self):

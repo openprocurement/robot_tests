@@ -32,13 +32,7 @@ from .initial_data import (
     fake,
     test_bid_data,
     test_bid_value,
-    test_claim_answer_data,
-    test_claim_data,
-    test_complaint_data,
-    test_complaint_reply_data,
     test_confirm_data,
-    test_feature_data,
-    test_invalid_features_data,
     test_item_data,
     test_item_data_financial,
     test_related_question,
@@ -46,12 +40,9 @@ from .initial_data import (
     test_question_data,
     test_supplier_data,
     test_tender_data,
-    test_tender_data_competitive_dialogue,
     test_tender_data_dgf_financial,
     test_tender_data_dgf_other,
-    test_tender_data_limited,
-    test_tender_data_openeu,
-    test_tender_data_openua,
+    test_tender_data_dgf_insider,
     create_fake_dgfID,
     create_fake_dgfDecisionID,
     create_fake_dgfDecisionDate,
@@ -337,18 +328,8 @@ def prepare_test_tender_data(procedure_intervals, tender_parameters):
         return munchify({'data': test_tender_data_dgf_financial(tender_parameters)})
     elif mode == 'dgfOtherAssets':
         return munchify({'data': test_tender_data_dgf_other(tender_parameters)})
-    elif mode == 'negotiation':
-        return munchify({'data': test_tender_data_limited(tender_parameters)})
-    elif mode == 'negotiation.quick':
-        return munchify({'data': test_tender_data_limited(tender_parameters)})
-    elif mode == 'openeu':
-        return munchify({'data': test_tender_data_openeu(tender_parameters)})
-    elif mode == 'openua':
-        return munchify({'data': test_tender_data_openua(tender_parameters)})
-    elif mode == 'open_competitive_dialogue':
-        return munchify({'data': test_tender_data_competitive_dialogue(tender_parameters)})
-    elif mode == 'reporting':
-        return munchify({'data': test_tender_data_limited(tender_parameters)})
+    elif mode == 'dgfInsider':
+        return munchify({'data': test_tender_data_dgf_insider(tender_parameters)})
     raise ValueError("Invalid mode for prepare_test_tender_data")
 
 
@@ -501,22 +482,8 @@ def get_object_index_by_id(data, object_id):
     return index
 
 
-def get_complaint_index_by_complaintID(data, complaintID):
-    if not data:
-        return 0
-    for index, element in enumerate(data):
-        if element['complaintID'] == complaintID:
-            break
-    else:
-        index += 1
-    return index
-
-
 def generate_test_bid_data(tender_data):
     bid = test_bid_data()
-    if 'aboveThreshold' in tender_data.get('procurementMethodType', '') or 'competitiveDialogue' in tender_data.get('procurementMethodType', ''):
-        bid.data.selfEligible = True
-        bid.data.selfQualified = True
     if 'lots' in tender_data:
         bid.data.lotValues = []
         for lot in tender_data['lots']:
@@ -525,11 +492,6 @@ def generate_test_bid_data(tender_data):
             bid.data.lotValues.append(value)
     else:
         bid.data.update(test_bid_value(tender_data['value']['amount'], tender_data['minimalStep']['amount']))
-    if 'features' in tender_data:
-        bid.data.parameters = []
-        for feature in tender_data['features']:
-            parameter = {"value": fake.random_element(elements=(0.05, 0.01, 0)), "code": feature.get('code', '')}
-            bid.data.parameters.append(parameter)
     if 'dgfOtherAssets' in tender_data.get('procurementMethodType', ''):
         bid.data.qualified = True
     if 'dgfFinancialAssets' in tender_data.get('procurementMethodType', ''):

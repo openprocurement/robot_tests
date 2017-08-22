@@ -213,26 +213,6 @@ Get Broker Property By Username
   [Return]  ${item}
 
 
-Підготувати дані для створення нецінового показника
-  ${reply}=  test_feature_data
-  [Return]  ${reply}
-
-Підготувати дані для подання вимоги
-  ${claim}=  test_claim_data
-  [Return]  ${claim}
-
-
-Підготувати дані для подання скарги
-  [Arguments]  ${lot}=${False}
-  ${complaint}=  test_complaint_data  ${lot}
-  [Return]  ${complaint}
-
-
-Підготувати дані для відповіді на скаргу
-  ${reply}=  test_complaint_reply_data
-  [Return]  ${reply}
-
-
 Підготувати дані для запитання
   ${question}=  test_question_data
   [Return]  ${question}
@@ -578,12 +558,6 @@ Log differences between dicts
   [return]  ${objects_ids}
 
 
-Звірити поле скарги із значенням
-  [Arguments]  ${username}  ${tender_uaid}  ${given_value}  ${field_name}  ${complaintID}  ${award_index}=${None}
-  ${received_value}=  Run as  ${username}  Отримати інформацію із скарги  ${tender_uaid}  ${complaintID}  ${field_name}  ${award_index}
-  Порівняти об'єкти  ${given_value}  ${received_value}
-
-
 Можливість скасувати тендер
   ${cancellation_data}=  Підготувати дані про скасування  ${tender_owner}
   Run As  ${tender_owner}
@@ -678,12 +652,6 @@ Require Failure
 Звірити статус тендера
   [Arguments]  ${username}  ${tender_uaid}  ${left}
   ${right}=  Run as  ${username}  Отримати інформацію із тендера  ${tender_uaid}  status
-  Порівняти об'єкти  ${left}  ${right}
-
-
-Звірити статус вимоги/скарги
-  [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${left}  ${award_index}=${None}
-  ${right}=  Run as  ${username}  Отримати інформацію із скарги  ${tender_uaid}  ${complaintID}  status  ${award_index}
   Порівняти об'єкти  ${left}  ${right}
 
 
@@ -888,13 +856,6 @@ Require Failure
   ...      ${username}
   ...      ${tender_uaid}
   ...      active.qualification
-
-
-Дочекатись дати закінчення періоду подання скарг
-  [Arguments]  ${username}
-  wait_and_write_to_console  ${USERS.users['${username}'].tender_data.data.complaintPeriod.endDate}
-  Оновити LAST_MODIFICATION_DATE
-  Дочекатись синхронізації з майданчиком  ${username}
 
 
 Оновити LAST_MODIFICATION_DATE

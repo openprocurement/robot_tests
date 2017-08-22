@@ -1,14 +1,12 @@
 *** Settings ***
 Resource        base_keywords.robot
-Resource        aboveThreshold_keywords.robot
 Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
 
 *** Variables ***
-${MODE}             openeu
 @{USED_ROLES}       tender_owner  provider  provider1  provider2  viewer
-${DIALOGUE_TYPE}    EU
+
 
 ${NUMBER_OF_ITEMS}  ${1}
 ${TENDER_MEAT}      ${True}
@@ -258,7 +256,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      tender_view_schema
   Звірити відображення поля schema_properties.code усіх предметів для користувача ${viewer}
 
 
@@ -266,7 +264,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      tender_view_schema
   Звірити відображення поля schema_properties.version усіх предметів для користувача ${viewer}
 
 
@@ -274,7 +272,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      tender_view_schema
   Звірити відображення поля schema_properties.properties.region усіх предметів для користувача ${viewer}
 
 
@@ -282,7 +280,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      tender_view_schema
   Звірити відображення поля schema_properties.properties.district усіх предметів для користувача ${viewer}
 
 
@@ -290,7 +288,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      tender_view_schema
   Звірити відображення поля schema_properties.properties.cadastral_number усіх предметів для користувача ${viewer}
 
 
@@ -298,7 +296,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      tender_view_schema
   Звірити відображення поля schema_properties.properties.area усіх предметів для користувача ${viewer}
 
 
@@ -306,7 +304,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      tender_view_schema
   Звірити відображення поля schema_properties.properties.forms_of_land_ownership усіх предметів для користувача ${viewer}
 
 
@@ -314,7 +312,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      tender_view_schema
   Звірити відображення поля schema_properties.properties.co_owners усіх предметів для користувача ${viewer}
 
 
@@ -322,7 +320,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      tender_view_schema
   Звірити відображення поля schema_properties.properties.availability_of_utilities усіх предметів для користувача ${viewer}
 
 ##############################################################################################
@@ -1172,156 +1170,4 @@ ${ITEM_MEAT}        ${True}
   ...      auction_url
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider1}
   Можливість вичитати посилання на аукціон для учасника ${provider1}
-
-##############################################################################################
-#             OPENEU  Pre-Qualification
-##############################################################################################
-
-Неможливість додати документацію до тендера під час кваліфікації
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      pre-qualification_add_doc_to_tender
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Run Keyword And Expect Error  *  Можливість додати документацію до тендера
-
-
-Відображення статусу першої пропозиції кваліфікації
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      pre-qualification_view
-  [Setup]  Дочекатись дати початку періоду прекваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
-  Звірити відображення поля qualifications[0].status тендера із pending для користувача ${tender_owner}
-
-
-Відображення статусу другої пропозиції кваліфікації
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      pre-qualification_view
-  [Setup]  Дочекатись дати початку періоду прекваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
-  Звірити відображення поля qualifications[1].status тендера із pending для користувача ${tender_owner}
-
-
-Можливість завантажити документ у кваліфікацію пропозиції першого учасника
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      pre-qualification_add_doc_to_first_bid
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість завантажити документ у кваліфікацію 0 пропозиції
-
-
-Можливість підтвердити першу пропозицію кваліфікації
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      pre-qualification_approve_first_bid  level1
-  [Setup]  Дочекатись дати початку періоду прекваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість підтвердити 0 пропозицію кваліфікації
-
-
-Можливість завантажити документ у кваліфікацію пропозиції другого учасника
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      pre-qualification_add_doc_to_second_bid
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість завантажити документ у кваліфікацію 1 пропозиції
-
-
-Можливість відхилити другу пропозицію кваліфікації
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      pre-qualification_reject_second_bid
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість відхилити 1 пропозиції кваліфікації
-
-
-Можливість скасувати рішення кваліфікації для другої пропопозиції
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      pre-qualification_cancel_second_bid_qualification
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість скасувати рішення кваліфікації для 1 пропопозиції
-
-
-Можливість підтвердити другу пропозицію кваліфікації
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      pre-qualification_approve_second_bid  level1
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість підтвердити -1 пропозицію кваліфікації
-
-
-Можливість підтвердити третю пропозицію кваліфікації
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      pre-qualification_approve_third_bid  level1
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість підтвердити -2 пропозицію кваліфікації
-
-
-Можливість затвердити остаточне рішення кваліфікації
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      pre-qualification_approve_qualifications  level1
-  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість затвердити остаточне рішення кваліфікації
-
-
-Відображення статусу блокування перед початком аукціону
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      pre-qualification_view
-  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  Звірити статус тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  active.pre-qualification.stand-still
-
-
-Відображення дати закінчення періоду блокування перед початком аукціону
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      pre-qualification_view
-  [Teardown]  Дочекатись дати закінчення періоду прекваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
-  Отримати дані із поля qualificationPeriod.endDate тендера для усіх користувачів
-
-
-Можливість дочекатися початку періоду очікування
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Процес очікування оскаржень
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      stage2_pending_status_view
-  Отримати дані із поля qualificationPeriod.endDate тендера для усіх користувачів
-  Дочекатись дати закінчення періоду прекваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
-  Звірити статус тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  active.stage2.pending
-
-
-Можливість перевести статус очікування обробки мостом
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Процес переведення статусу у active.stage2.waiting.
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      stage2_pending_status_view
-  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість перевести тендер на статус очікування обробки мостом
-  Звірити статус тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  active.stage2.waiting
-
-
-Можливість дочекатися завершення роботи мосту
-  [Tags]   ${USERS.users['${viewer}'].broker}: Процес очікування обробки мостом
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      wait_bridge_for_work
-  Дочекатися створення нового етапу мостом  ${tender_owner}  ${TENDER['TENDER_UAID']}
-  Звірити статус тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  complete
 

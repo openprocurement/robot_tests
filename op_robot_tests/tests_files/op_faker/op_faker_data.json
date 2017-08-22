@@ -1188,6 +1188,77 @@
             }
         }
     ],
+    "procuringEntities_insider": [
+        {
+            "contactPoint": {
+                "url": "http://kpbl.org.ua",
+                "telephone": "044-563-99-42---------097-641-99-01",
+                "email": "kpbl@bigmir.net",
+                "name": "Хильченко Інна Григорівна",
+                "faxNumber": "044-563-99-05"
+            },
+            "identifier": {
+                "scheme": "UA-EDR",
+                "id": "02544394",
+                "legalName": "Київський професійний будівельний ліцей"
+            },
+            "name": "Київський професійний будівельний ліцей",
+            "address": {
+                "postalCode": "02121",
+                "countryName": "Україна",
+                "streetAddress": "вулиця Чернігівська, 220, 8",
+                "region": "місто Київ",
+                "locality": "Київ"
+            },
+            "kind":"general"
+        },
+        {
+            "contactPoint": {
+                "url": "http://skinmedic.com.ua",
+                "telephone": "426-07-12",
+                "email": "kmkshvl@ukr.net",
+                "name": "Чередниченко Олена Юріївна",
+                "faxNumber": "413-41-40"
+            },
+            "identifier": {
+                "scheme": "UA-EDR",
+                "id": "01994008",
+                "legalName": "Київська міська клінічна шкірно-венерологічна лікарня"
+            },
+            "name": "Київська міська клінічна шкірно-венерологічна лікарня",
+            "address": {
+                "postalCode": "04655",
+                "countryName": "Україна",
+                "streetAddress": "вулиця Богатирська, 32",
+                "region": "місто Київ",
+                "locality": "Київ"
+            },
+            "kind":"special"
+        },
+        {
+            "contactPoint": {
+                "url": "http://www.shev.gov.ua/",
+                "telephone": "2341170",
+                "email": "buh510@ukr.net",
+                "name": "Ліповець Євген Іванович",
+                "faxNumber": "2343591"
+            },
+            "identifier": {
+                "scheme": "UA-EDR",
+                "id": "37405111",
+                "legalName": "Шевченківська районна в місті Києві державна адміністрація"
+            },
+            "name": "Шевченківська районна в місті Києві державна адміністрація",
+            "address": {
+                "postalCode": "01030",
+                "countryName": "Україна",
+                "streetAddress": "Богдана Хмельницького вулиця, 21-29",
+                "region": "Київська область",
+                "locality": "Переяслав-Хмельницький"
+            },
+            "kind":"other"
+        }
+    ],
     "additionalIdentifiers": [
         {
             "scheme": "UA-FIN",
@@ -2957,6 +3028,41 @@
                "id": "06060000-0",
                "description": "Землі рекреаційного призначення"
             }
+        },
+        {
+           "classification": {
+               "scheme": "CAV",
+               "id": "06010000-5",
+               "description": "Землі сільськогосподарського призначення"
+            }
+        },
+        {
+           "classification": {
+               "scheme": "CAV",
+               "id": "06040000-4",
+               "description": "Землі природно-заповідного фонду та іншого природоохоронного призначення"
+            }
+        },
+        {
+           "classification": {
+               "scheme": "CAV",
+               "id": "06050000-7",
+               "description": "Землі оздоровчого призначення"
+            }
+        },
+        {
+           "classification": {
+               "scheme": "CAV",
+               "id": "06070000-3",
+               "description": "Землі історико-культурного призначення"
+            }
+        },
+        {
+           "classification": {
+               "scheme": "CAV",
+               "id": "06080000-6",
+               "description": "Землі лісогосподарського призначення"
+            }
         }
     ],
     "classifications_financial":[
@@ -2979,6 +3085,41 @@
                "scheme": "CAV",
                "id": "06060000-0",
                "description": "Землі рекреаційного призначення"
+            }
+        },
+        {
+           "classification": {
+               "scheme": "CAV",
+               "id": "06010000-5",
+               "description": "Землі сільськогосподарського призначення"
+            }
+        },
+        {
+           "classification": {
+               "scheme": "CAV",
+               "id": "06040000-4",
+               "description": "Землі природно-заповідного фонду та іншого природоохоронного призначення"
+            }
+        },
+        {
+           "classification": {
+               "scheme": "CAV",
+               "id": "06050000-7",
+               "description": "Землі оздоровчого призначення"
+            }
+        },
+        {
+           "classification": {
+               "scheme": "CAV",
+               "id": "06070000-3",
+               "description": "Землі історико-культурного призначення"
+            }
+        },
+        {
+           "classification": {
+               "scheme": "CAV",
+               "id": "06080000-6",
+               "description": "Землі лісогосподарського призначення"
             }
         }
     ],
@@ -3067,12 +3208,22 @@
     "cavs_other": [
         "06000000-2",
         "06091000-6",
-        "06060000-0"
+        "06060000-0",
+        "06010000-5",
+        "06040000-4",
+        "06050000-7",
+        "06070000-3",
+        "06080000-6"
     ],
     "cavs_financial": [
         "06000000-2",
         "06091000-6",
-        "06060000-0"
+        "06060000-0",
+        "06010000-5",
+        "06040000-4",
+        "06050000-7",
+        "06070000-3",
+        "06080000-6"
     ],
     "items_base_data_other": [
         {
@@ -3103,6 +3254,61 @@
             "description_ru": "Земли рекреационного назначения",
             "description_en": "Lands for recreational purposes",
             "quantity": 22,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "cav_id": "06010000-5",
+            "description": "Землі сільськогосподарського призначення",
+            "description_ru": "Земли сельскохозяйственного назначения",
+            "description_en": "Agricultural lands",
+            "quantity": 12,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "cav_id": "06040000-4",
+            "description": "Землі природно-заповідного фонду та іншого природоохоронного призначення",
+            "description_ru": "Земли природно-заповедного фонда и другого природоохранного назначения",
+            "description_en": "Lands of natural reserve fund and other nature conservation purposes",
+            "quantity": 22,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "cav_id": "06050000-7",
+            "description": "Землі оздоровчого призначення",
+            "description_ru": "Земли оздоровительного назначения",
+            "description_en": "Lands for health purposes",
+            "quantity": 7,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "cav_id": "06070000-3",
+            "description": "Землі історико-культурного призначення",
+            "description_ru": "Земли историко-культурного назначения",
+            "description_en": "Lands of historical and cultural destination",
+            "quantity": 18,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "cav_id": "06080000-6",
+            "description": "Землі лісогосподарського призначення",
+            "description_ru": "Земли лесного фонда",
+            "description_en": "Land for forestry",
+            "quantity": 8,
             "unit": {
                 "code": "HAR",
                 "name": "гектар"
@@ -3138,6 +3344,61 @@
             "description_ru": "Земли рекреационного назначения",
             "description_en": "Lands for recreational purposes",
             "quantity": 12,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "cav_id": "06010000-5",
+            "description": "Землі сільськогосподарського призначення",
+            "description_ru": "Земли сельскохозяйственного назначения",
+            "description_en": "Agricultural lands",
+            "quantity": 12,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "cav_id": "06040000-4",
+            "description": "Землі природно-заповідного фонду та іншого природоохоронного призначення",
+            "description_ru": "Земли природно-заповедного фонда и другого природоохранного назначения",
+            "description_en": "Lands of natural reserve fund and other nature conservation purposes",
+            "quantity": 22,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "cav_id": "06050000-7",
+            "description": "Землі оздоровчого призначення",
+            "description_ru": "Земли оздоровительного назначения",
+            "description_en": "Lands for health purposes",
+            "quantity": 7,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "cav_id": "06070000-3",
+            "description": "Землі історико-культурного призначення",
+            "description_ru": "Земли историко-культурного назначения",
+            "description_en": "Lands of historical and cultural destination",
+            "quantity": 18,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "cav_id": "06080000-6",
+            "description": "Землі лісогосподарського призначення",
+            "description_ru": "Земли лесного фонда",
+            "description_en": "Land for forestry",
+            "quantity": 8,
             "unit": {
                 "code": "HAR",
                 "name": "гектар"

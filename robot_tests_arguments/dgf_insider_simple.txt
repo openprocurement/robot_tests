@@ -1,0 +1,20 @@
+-v MODE:dgfInsider
+
+-v NUMBER_OF_ITEMS:3
+
+-i create_tender
+-i find_tender
+-i tender_view
+-i tender_view_tenderPeriod
+-i tender_view_unit_code
+
+
+-i make_bid_by_provider
+
+-i auction
+-i auction_end_date
+
+-i qualification
+-i qualification_approve_first_award
+
+-i contract_sign
