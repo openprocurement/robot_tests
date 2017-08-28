@@ -5,7 +5,7 @@ Suite Teardown  Test Suite Teardown
 
 
 *** Variables ***
-@{USED_ROLES}       tender_owner  provider  provider1  provider2  viewer
+@{USED_ROLES}       tender_owner  provider  provider1  viewer
 
 
 ${NUMBER_OF_ITEMS}  ${1}
@@ -953,15 +953,6 @@ ${ITEM_MEAT}        ${True}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider1}
 
-
-Можливість подати пропозицію третім учасником
-  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
-  ...      provider2
-  ...      ${USERS.users['${provider1}'].broker}
-  ...      make_bid_by_provider2  level1
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість подати цінову пропозицію користувачем ${provider2}
-
 ##############################################################################################
 #             ABOVETRHESHOLD  BIDDING
 ##############################################################################################
@@ -1047,15 +1038,6 @@ ${ITEM_MEAT}        ${True}
   ...      open_confirm_second_bid
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість підтвердити цінову пропозицію учасником ${provider1}
-
-
-Можливість підтвердити цінову пропозицію після зміни умов третьому учаснику
-  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
-  ...      provider2
-  ...      ${USERS.users['${provider1}'].broker}
-  ...      open_confirm_third_bid
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість підтвердити цінову пропозицію учасником ${provider2}
 
 ##############################################################################################
 
