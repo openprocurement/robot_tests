@@ -10,7 +10,7 @@
 -i tender_view_decisionDate
 -i tender_view_decisionID
 -i tender_view_tenderAttempts
--i tender_view_schema
+-i tender_view_min_step
 
 -i modify_auction_value
 -i modify_auction_step
