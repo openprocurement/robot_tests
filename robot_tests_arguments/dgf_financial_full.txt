@@ -66,6 +66,7 @@
 
 -i auction
 -i auction_url
+-i auction_url_provider
 -i auction_end_date
 
 -i awarding
