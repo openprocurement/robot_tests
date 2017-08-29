@@ -498,6 +498,9 @@ def generate_test_bid_data(tender_data):
         bid.data.eligible = True
         bid.data.qualified = True
         bid.data.tenderers[0]["additionalIdentifiers"] = [fake.additionalIdentifier()]
+    if 'dgfInsider' in tender_data.get('procurementMethodType', ''):
+        bid.data.eligible = True
+        bid.data.qualified = True
 
     return bid
 
