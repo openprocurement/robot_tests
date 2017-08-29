@@ -396,7 +396,7 @@ def test_tender_data_dgf_insider(params):
     period_dict["auctionPeriod"]["startDate"] = inc_dt.isoformat()
     data.update(period_dict)
 
-    data['procurementMethodType'] = params['mode']
+    data['procurementMethodType'] = 'dgfInsider'
     data["procuringEntity"] = fake.procuringEntity_insider()
 
     for i in range(params['number_of_items']):
