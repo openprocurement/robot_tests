@@ -501,6 +501,7 @@ def generate_test_bid_data(tender_data):
     if 'dgfInsider' in tender_data.get('procurementMethodType', ''):
         bid.data.eligible = True
         bid.data.qualified = True
+        del bid.data['value']
 
     return bid
 
