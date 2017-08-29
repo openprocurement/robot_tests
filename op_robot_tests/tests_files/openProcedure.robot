@@ -1149,7 +1149,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      auction_url
+  ...      auction_url_viewer
   [Setup]  Дочекатись дати початку періоду аукціону  ${viewer}  ${TENDER['TENDER_UAID']}
   Можливість вичитати посилання на аукціон для глядача
 
@@ -1158,7 +1158,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${provider}'].broker}: Процес аукціону
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      auction_url
+  ...      auction_url_provider
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   Можливість вичитати посилання на аукціон для учасника ${provider}
 
@@ -1167,7 +1167,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${provider1}'].broker}: Процес аукціону
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
-  ...      auction_url
+  ...      auction_url_provider1
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider1}
   Можливість вичитати посилання на аукціон для учасника ${provider1}
 
