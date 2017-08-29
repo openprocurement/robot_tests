@@ -430,6 +430,7 @@ def test_tender_data_dgf_insider(params):
     for i in range(params['number_of_items']):
         cav_group_financial = fake.cav_financial()[:4]
         new_item = test_item_data_financial(cav_group_financial)
+        del new_item["schema_properties"]
         data['items'].append(new_item)
 
     return data
