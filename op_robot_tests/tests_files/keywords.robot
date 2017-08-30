@@ -845,6 +845,16 @@ Require Failure
   ...      active.auction
 
 
+Можливість отримати дату початку аукціону
+  [Arguments]  ${username}  ${tender_uaid}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      15 min 15 sec
+  ...      15 sec
+  ...      Отримати дані із тендера   ${username}  ${TENDER['TENDER_UAID']}   auctionPeriod.startDate
+
+
 Дочекатись дати початку періоду кваліфікації
   [Arguments]  ${username}  ${tender_uaid}
   Оновити LAST_MODIFICATION_DATE

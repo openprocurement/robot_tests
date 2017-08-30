@@ -1099,3 +1099,10 @@ ${ITEM_MEAT}        ${True}
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider1}
   Можливість вичитати посилання на аукціон для учасника ${provider1}
 
+
+Відображення дати початку аукціону
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних аукціону
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_auctionPeriod_StartDate  level1
+  Можливість отримати дату початку аукціону  ${viewer}  ${TENDER['TENDER_UAID']}
