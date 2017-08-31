@@ -598,6 +598,13 @@ Log differences between dicts
   Log  URL аукціону для учасника: ${url}
 
 
+Можливість вичитати дату початку аукціону для користувача ${username}
+  Wait until keyword succeeds
+  ...      15 min
+  ...      15 sec
+  ...      Отримати дані із поля auctionPeriod.startDate тендера для користувача ${username}
+
+
 Run As
   [Arguments]  ${username}  ${command}  @{arguments}
   [Documentation]
