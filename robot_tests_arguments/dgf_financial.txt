@@ -5,6 +5,7 @@
 -i create_tender
 -i find_tender
 -i tender_view
+-i tender_view_minimalStep
 -i tender_view_tenderPeriod
 -i tender_view_unit_code
 -i tender_view_decisionDate

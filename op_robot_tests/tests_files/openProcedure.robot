@@ -168,7 +168,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer tender_owner provider provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
-  ...      tender_view  level2
+  ...      tender_view_minimalStep  level2
   Звірити відображення поля minimalStep.amount тендера для усіх користувачів
 
 
