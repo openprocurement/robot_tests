@@ -356,6 +356,8 @@ Library  openprocurement_client.utils
   Set To Dictionary   ${USERS.users['${username}'].bidresponses['bid'].data}  id=${reply['data']['id']}
   Log  ${reply_active}
   Set To Dictionary  ${USERS.users['${username}']}  bid_id=${reply['data']['id']}
+  Run Keyword If  '${MODE}' == 'dgfInsider'
+  ...          Remove From Dictionary  ${bid}  minimalStep  value
   Log  ${reply}
   [return]  ${reply}
 
