@@ -240,7 +240,7 @@ def test_bid_data():
     return bid
 
 
-def test_bid_value(max_value_amount, minimalStep):
+def test_bid_value(max_value_amount, minimalStep=0):
     return munchify({
         "value": {
             "currency": "UAH",
