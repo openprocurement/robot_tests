@@ -891,7 +891,7 @@ ${award_index}      ${0}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      award_complaint
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
-  \  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  awards[-1].complaintPeriod.endDate
+  \  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  awards[${award_index}].complaintPeriod.endDate
 
 
 Дочекатися закічення stand still періоду
@@ -899,7 +899,7 @@ ${award_index}      ${0}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      award_complaint
-  ${standstillEnd}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data.awards[-1].complaintPeriod.endDate}
+  ${standstillEnd}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data.awards[${award_index}].complaintPeriod.endDate}
   Дочекатись дати  ${standstillEnd}
 
 
@@ -909,7 +909,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  award_complaint
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Run As  ${tender_owner}  Підтвердити підписання контракту  ${TENDER['TENDER_UAID']}  -1
+  Run As  ${tender_owner}  Підтвердити підписання контракту  ${TENDER['TENDER_UAID']}  ${award_index}
 
 
 Відображення статусу 'ignored' вимоги про виправлення визначення переможця
