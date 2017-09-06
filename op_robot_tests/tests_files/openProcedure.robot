@@ -960,101 +960,6 @@ ${ITEM_MEAT}        ${True}
   Можливість подати цінову пропозицію користувачем ${provider2}
 
 ##############################################################################################
-#             ABOVETRHESHOLD  BIDDING
-##############################################################################################
-
-Можливість змінити документацію цінової пропозиції з публічної на приватну
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
-  ...      provider
-  ...      ${USERS.users['${provider}'].broker}
-  ...      openeu_make_bid_doc_private_by_provider
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість змінити документацію цінової пропозиції з публічної на приватну учасником ${provider}
-
-
-Можливість завантажити фінансовий документ до пропозиції першим учасником
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
-  ...      provider
-  ...      ${USERS.users['${provider}'].broker}
-  ...      openeu_add_financial_bid_doc_by_provider
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість завантажити financial_documents документ до пропозиції учасником ${provider}
-
-
-Можливість завантажити кваліфікаційний документ до пропозиції першим учасником
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
-  ...      provider
-  ...      ${USERS.users['${provider}'].broker}
-  ...      openeu_add_qualification_bid_doc_by_provider
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість завантажити qualification_documents документ до пропозиції учасником ${provider}
-
-
-Можливість завантажити документ для критеріїв прийнятності до пропозиції першим учасником
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
-  ...      provider
-  ...      ${USERS.users['${provider}'].broker}
-  ...      openeu_add_eligibility_bid_doc_by_provider
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість завантажити eligibility_documents документ до пропозиції учасником ${provider}
-
-
-Можливість редагувати однопредметний тендер більше ніж за 7 днів до завершення періоду подання пропозицій
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      open_modify_tender_in_tendering_period
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${new_description}=  create_fake_sentence
-  Можливість змінити поле description тендера на ${new_description}
-  Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data}  description
-
-
-Відображення зміни статусу першої пропозиції після редагування інформації про тендер
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
-  ...      provider
-  ...      ${USERS.users['${provider}'].broker}
-  ...      open_confirm_first_bid
-  [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
-  Відображення зміни статусу пропозицій на invalid для учасника ${provider}
-
-
-Відображення зміни статусу другої пропозиції після редагування інформації про тендер
-  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
-  ...      provider1
-  ...      ${USERS.users['${provider1}'].broker}
-  ...      open_confirm_second_bid
-  [Setup]  Дочекатись синхронізації з майданчиком  ${provider1}
-  Відображення зміни статусу пропозицій на invalid для учасника ${provider1}
-
-
-Можливість підтвердити цінову пропозицію після зміни умов тендера першим учасником
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
-  ...      provider
-  ...      ${USERS.users['${provider}'].broker}
-  ...      open_confirm_first_bid
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість підтвердити цінову пропозицію учасником ${provider}
-
-
-Можливість підтвердити цінову пропозицію після зміни умов тендера другим учасником
-  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
-  ...      provider1
-  ...      ${USERS.users['${provider1}'].broker}
-  ...      open_confirm_second_bid
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість підтвердити цінову пропозицію учасником ${provider1}
-
-
-Можливість підтвердити цінову пропозицію після зміни умов третьому учаснику
-  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
-  ...      provider2
-  ...      ${USERS.users['${provider1}'].broker}
-  ...      open_confirm_third_bid
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість підтвердити цінову пропозицію учасником ${provider2}
-
-##############################################################################################
 
 Можливість скасувати пропозицію першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
@@ -1085,15 +990,6 @@ ${ITEM_MEAT}        ${True}
 ##############################################################################################
 #             AFTER BIDDING
 ##############################################################################################
-
-Відображення статусу лоту у випадку наявності лише однієї пропозиції
-  [Tags]   ${USERS.users['${viewer}'].broker}: Подання пропозиції
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      absence_bid
-  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}  ${TENDER['TENDER_UAID']}
-  Звірити cтатус неуспішного тендера  ${viewer}  ${TENDER['TENDER_UAID']}
-
 
 Неможливість завантажити документ першим учасником після закінчення прийому пропозицій
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
@@ -1188,3 +1084,12 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view_auctionPeriod_StartDate  level1
   Можливість отримати дату початку аукціону  ${viewer}  ${TENDER['TENDER_UAID']}
+
+
+Відображення неуспішного статусу лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Подання пропозиції
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      absence_bid
+  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}  ${TENDER['TENDER_UAID']}
+  Звірити cтатус неуспішного тендера  ${viewer}  ${TENDER['TENDER_UAID']}
