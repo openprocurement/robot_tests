@@ -270,7 +270,7 @@ Resource           resource.robot
   Set To Dictionary  ${USERS.users['${username}']}  bidresponses=${bidresponses}
   ${resp}=  Run As  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}
   Set To Dictionary  ${USERS.users['${username}'].bidresponses}  resp=${resp}
-  Run Keyword If  '${MODE}'=='dgfFinancialAssets' or '${MODE}'=='dgfInsider'
+  Run Keyword If  '${MODE}'=='dgfFinancialAssets'
   ...             Можливість завантажити фінансову ліцензію в пропозицію користувачем ${username}
 
 
