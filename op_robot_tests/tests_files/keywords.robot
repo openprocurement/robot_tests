@@ -571,8 +571,8 @@ Log differences between dicts
 Можливість вичитати посилання на аукціон для глядача
   ${timeout_on_wait}=  Get Broker Property By Username  ${viewer}  timeout_on_wait
   ${timeout_on_wait}=  Set Variable If
-  ...                  ${timeout_on_wait} < ${600}
-  ...                  ${600}
+  ...                  ${timeout_on_wait} < ${3000}
+  ...                  ${3000}
   ...                  ${timeout_on_wait}
   ${url}=  Wait Until Keyword Succeeds
   ...      ${timeout_on_wait}
@@ -698,7 +698,7 @@ Require Failure
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
-  ...      5 min 15 sec
+  ...      15 min 15 sec
   ...      15 sec
   ...      Звірити статус тендера
   ...      ${username}
