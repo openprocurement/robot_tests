@@ -379,6 +379,7 @@ def test_tender_data_dgf_insider(params):
     data['tenderAttempts'] = fake.random_int(min=1, max=8)
 
     del data["procuringEntity"]
+    del data['minimalStep']
 
     for i in range(params['number_of_items']):
         data['items'].pop()
