@@ -162,7 +162,7 @@ def compare_tender_attempts(left, right):
 def convert_tender_attempts(attempts):
     if attempts == 1:
         return u"Лот виставляється вперше"
-    elif attempts in [2, 3, 4, ]:
+    elif attempts in [2, 3, 4, 5, 6, 7, 8 ]:
         return u"Лот виставляється повторно"
     raise ValueError(u"Cannot convert attempts")
 
