@@ -162,7 +162,7 @@ def compare_tender_attempts(left, right):
 def convert_tender_attempts(attempts):
     if attempts == 1:
         return u"Лот виставляється вперше"
-    elif attempts in [2, 3, 4, ]:
+    elif attempts in [2, 3, 4, 5, 6, 7, 8 ]:
         return u"Лот виставляється повторно"
     raise ValueError(u"Cannot convert attempts")
 
@@ -489,16 +489,19 @@ def generate_test_bid_data(tender_data):
             value = test_bid_value(lot['value']['amount'], lot['minimalStep']['amount'])
             value['relatedLot'] = lot.get('id', '')
             bid.data.lotValues.append(value)
+    elif 'dgfInsider' in tender_data.get('procurementMethodType', ''):
+        bid.data.update(test_bid_value(tender_data['value']['amount']))
+        bid.data.eligible = True
+        bid.data.qualified = True
+        del bid.data['value']
     else:
         bid.data.update(test_bid_value(tender_data['value']['amount'], tender_data['minimalStep']['amount']))
     if 'dgfOtherAssets' in tender_data.get('procurementMethodType', ''):
         bid.data.qualified = True
-    if 'dgfFinancialAssets' or 'dgfInsider' in tender_data.get('procurementMethodType', ''):
+    if 'dgfFinancialAssets' in tender_data.get('procurementMethodType', ''):
         bid.data.eligible = True
         bid.data.qualified = True
         bid.data.tenderers[0]["additionalIdentifiers"] = [fake.additionalIdentifier()]
-    if 'dgfInsider' in tender_data.get('procurementMethodType', ''):
-        del bid.data['value']
     return bid
 
 
