@@ -10,6 +10,7 @@
 -i tender_view_decisionDate
 -i tender_view_decisionID
 -i tender_view_tenderAttempts
+-i tender_view_min_step
 
 -i modify_auction_value
 -i modify_auction_step
@@ -65,7 +66,9 @@
 -i ask_question_to_item_after_tendering_period
 
 -i auction
--i auction_url
+-i auction_url_viewer
+-i auction_url_provider
+-i auction_url_provider1
 -i auction_end_date
 
 -i awarding

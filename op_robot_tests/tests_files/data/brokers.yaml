@@ -29,22 +29,13 @@ Default:
             # This is not a name of period
             # Please refer to API documentation to find out what's this
             accelerator: 1440
-        openua:
-            accelerator: 1440
-            tender:  [0, 15]
-            # Please remember that openUA and openEU procedures
-            # forbid anyone to set or modify enquiryPeriod
-            # (it is set automatically)
-        openeu:
-            accelerator: 1440
-            tender:  [0, 30]
-        open_competitive_dialogue:
-            accelerator: 1440
-            tender:  [0, 30]
         dgfFinancialAssets:
            accelerator: 1440
            auction:  [25, 30]
         dgfOtherAssets:
+            accelerator: 1440
+            auction:  [25, 30]
+        dgfInsider:
             accelerator: 1440
             auction:  [25, 30]
     # Synchronization delay, in seconds

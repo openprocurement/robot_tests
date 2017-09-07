@@ -42,39 +42,14 @@ def prepare_ds_api_wrapper(ds_host_url, auth_ds):
     return StableDsClient(ds_host_url, auth_ds)
 
 
-def get_complaint_internal_id(tender, complaintID):
-    try:
-        for complaint in tender.data.complaints:
-            if complaint.complaintID == complaintID:
-                return complaint.id
-    except AttributeError:
-        pass
-    try:
-        for award in tender.data.awards:
-            for complaint in award.complaints:
-                if complaint.complaintID == complaintID:
-                    return complaint.id
-    except AttributeError:
-        pass
-    raise IdNotFound
-
-
 def get_document_by_id(data, doc_id):
     for document in data.get('documents', []):
         if doc_id in document.get('title', ''):
             return document
-    for complaint in data.get('complaints', []):
-        for document in complaint.get('documents', []):
-            if doc_id in document.get('title', ''):
-                return document
     for award in data.get('awards', []):
         for document in award.get('documents', []):
             if doc_id in document.get('title', ''):
                 return document
-        for complaint in award.get('complaints', []):
-            for document in complaint.get('documents', []):
-                if doc_id in document.get('title', ''):
-                    return document
     for cancellation in data.get('cancellations', []):
         for document in cancellation.get('documents', []):
             if doc_id in document.get('title', ''):

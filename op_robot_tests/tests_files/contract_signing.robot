@@ -22,24 +22,6 @@ Suite Teardown  Test Suite Teardown
 #             CONTRACT
 ##############################################################################################
 
-Відображення закінчення періоду подачі скарг на пропозицію
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних лоту
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      complaint_period
-  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
-  \  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  awards[-1].complaintPeriod.endDate
-
-
-Дочекатися закічення stand still періоду
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Процес укладання угоди
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      stand_still
-  ${standstillEnd}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data.awards[-1].complaintPeriod.endDate}
-  wait_and_write_to_console  ${standstillEnd}
-
-
 Можливість завантажити угоду до лоту
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Завантаження документів щодо угоди
   ...  tender_owner
