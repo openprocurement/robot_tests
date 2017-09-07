@@ -493,11 +493,13 @@ def generate_test_bid_data(tender_data):
         bid.data.update(test_bid_value(tender_data['value']['amount'], tender_data['minimalStep']['amount']))
     if 'dgfOtherAssets' in tender_data.get('procurementMethodType', ''):
         bid.data.qualified = True
-    if 'dgfFinancialAssets' or 'dgfInsider' in tender_data.get('procurementMethodType', ''):
+    if 'dgfFinancialAssets' in tender_data.get('procurementMethodType', ''):
         bid.data.eligible = True
         bid.data.qualified = True
         bid.data.tenderers[0]["additionalIdentifiers"] = [fake.additionalIdentifier()]
     if 'dgfInsider' in tender_data.get('procurementMethodType', ''):
+        bid.data.eligible = True
+        bid.data.qualified = True
         del bid.data['value']
     return bid
 
