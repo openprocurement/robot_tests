@@ -389,9 +389,9 @@ aladdin:
             accelerator: 1440
         openua:
             accelerator: 1440
-            tender:  [0, 30] 
+            tender:  [0, 45] 
         openeu:
-            tender:  [0, 30]
+            tender:  [0, 45]
             accelerator: 1440
     keywords_file: aladdin
     roles:
