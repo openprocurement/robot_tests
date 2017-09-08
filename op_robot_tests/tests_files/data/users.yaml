@@ -560,7 +560,7 @@ users:
         homepage: "http://devs.zakupki.com.ua"
         login:    dex.maks@mail.ru
         password: 111111
-        browser:  firefox
+        browser:  chrome
         position: [750, 0]
         size:     [1280, 800]
     uatenders_Provider:
@@ -568,7 +568,7 @@ users:
         homepage: "http://devs.zakupki.com.ua"
         login:    test3@example.com
         password: 111111
-        browser:  firefox
+        browser:  chrome
         position: [750, 0]
         size:     [1280, 800]
     uatenders_Viewer:
@@ -576,7 +576,7 @@ users:
         homepage: "http://devs.zakupki.com.ua"
         login:    dex.maks@mail.ru
         password: 111111
-        browser:  firefox
+        browser:  chrome
         position: [750, 0]
         size:     [1280, 800]
     uatenders_Provider1:
@@ -584,7 +584,7 @@ users:
         homepage: "http://devs.zakupki.com.ua"
         login:    test4@example.com
         password: 111111
-        browser:  firefox
+        browser:  chrome
         position: [750, 0]
         size:     [1280, 800]
     ubiz_Owner:
