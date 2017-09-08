@@ -757,6 +757,7 @@ utsb:
     timeout_on_wait: 10
 uisce:
     keywords_file: uisce
+    accelerator: 144
     roles:
         tender_owner:   uisce_Owner
         provider:       uisce_Provider
@@ -764,15 +765,10 @@ uisce:
         viewer:         uisce_Viewer
     intervals:
         default:
-            enquiry: [0, 17]
-            tender:  [0, 19]
-        dgfFinancialAssets:
-            accelerator: 144
-            auction:  [55, 60]
-        dgfOtherAssets:
-            accelerator: 144
-            auction:  [55, 60]
-    timeout_on_wait: 180
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
 zupb:
     keywords_file: zupb
     roles:
