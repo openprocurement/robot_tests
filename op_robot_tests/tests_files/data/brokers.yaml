@@ -384,8 +384,8 @@ aladdin:
             tender:  [0, 20]
             accelerator: 900
         belowThreshold:
-            enquiry: [0, 60]
-            tender:  [0, 15]
+            enquiry: [0, 3]
+            tender:  [0, 8]
             accelerator: 1440
         openua:
             accelerator: 1440
