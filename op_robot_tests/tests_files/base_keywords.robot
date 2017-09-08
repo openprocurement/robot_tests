@@ -811,9 +811,9 @@ Resource           resource.robot
   ...      cancelled
 
 
-Можливість скасувати вимогу про виправлення визначення ${award_index} переможця
+Можливість скасувати вимогу в статусі ${claim_status} про виправлення визначення ${award_index} переможця
   ${cancellation_reason}=  create_fake_sentence
-  ${status}=  Set variable if  "${USERS.users['${provider}'].tender_data.data.awards[${award_index}].complaints[-1].status}" == 'pending' and 'open' in '${MODE}'  stopping  cancelled
+  ${status}=  Set variable if  "${claim_status}" == 'pending' and 'open' in '${MODE}'  stopping  cancelled
   ${data}=  Create Dictionary
   ...      status=${status}
   ...      cancellationReason=${cancellation_reason}
