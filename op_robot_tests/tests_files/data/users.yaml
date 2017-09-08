@@ -422,13 +422,13 @@ users:
         size:     [800, 700]
     PrivatMarket_Viewer:
         broker:   PrivatMarket
-        homepage: "https://sell.pb.ua"
+        homepage: "http://auction.privatbank.ua"
         browser:  firefox
         position: [0, 0]
         size:     [1920, 1080]
     PrivatMarket_Provider:
         broker:   PrivatMarket
-        homepage: "https://sell.pb.ua"
+        homepage: "http://auction.privatbank.ua"
         email:    pbecommercetest2@ukr.net
         login:    uchasnuk.nomer1@yopmail.com
         password: uchasnuk.nomer1@yopmail.com
@@ -437,7 +437,7 @@ users:
         size:     [1920, 1080]
     PrivatMarket_Provider1:
         broker:   PrivatMarket
-        homepage: "https://sell.pb.ua"
+        homepage: "http://auction.privatbank.ua"
         email:    pbecommercetest2@ukr.net
         login:    uchasnuk.nomer1@yopmail.com
         password: uchasnuk.nomer1@yopmail.com
@@ -446,7 +446,7 @@ users:
         size:     [1920, 1080]
     PrivatMarket_Owner:
         broker:   PrivatMarket
-        homepage: "https://sell.pb.ua"
+        homepage: "http://auction.privatbank.ua"
         email:    pbecommercetest2@ukr.net
         login:    +380102030405
         password: value
