@@ -1216,32 +1216,32 @@ users:
         size:     [1366, 800]
     vidrodzhennia_Owner:
         broker:   vidrodzhennia
-        homepage: "https://e.tbv.com.ua/login/"
-        default_page: "https://e.tbv.com.ua/"
+        homepage: "http://e-test.tbv.com.ua/login/"
+        default_page: "http://e-test.tbv.com.ua/"
         login:    tbo@1.ua
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
     vidrodzhennia_Provider:
         broker:   vidrodzhennia
-        homepage: "https://e.tbv.com.ua/login/"
-        default_page: "https://e.tbv.com.ua/"
+        homepage: "http://e-test.tbv.com.ua/login/"
+        default_page: "http://e-test.tbv.com.ua/"
         login:    tbp@1.ua
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
     vidrodzhennia_Provider1:
         broker:   vidrodzhennia
-        homepage: "https://e.tbv.com.ua/login/"
-        default_page: "https://e.tbv.com.ua/"
+        homepage: "http://e-test.tbv.com.ua/login/"
+        default_page: "http://e-test.tbv.com.ua/"
         login:    tbp1@1.ua
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
     vidrodzhennia_Viewer:
         broker:   vidrodzhennia
-        homepage: "https://e.tbv.com.ua/login/"
-        default_page: "https://e.tbv.com.ua/"
+        homepage: "http://e-test.tbv.com.ua/login/"
+        default_page: "http://e-test.tbv.com.ua/"
         login:    tbv@1.ua
         browser:  firefox
         position: [0, 0]
