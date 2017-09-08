@@ -1,17 +1,32 @@
 users:
     Tender_Owner:
+        auth_ds:
+            tenders:  [test.quintagroup.com, test.quintagroup.com]
+            auctions: [test.quintagroup.com, bc698baa8b814908bc75405ed3d63548]
         api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
         broker:   Quinta
     Tender_User:
+        auth_ds:
+            tenders:  [test.quintagroup.com, test.quintagroup.com]
+            auctions: [test.quintagroup.com, bc698baa8b814908bc75405ed3d63548]
         api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
         broker:   Quinta
     Tender_User1:
+        auth_ds:
+            tenders:  [test.quintagroup.com, test.quintagroup.com]
+            auctions: [test.quintagroup.com, bc698baa8b814908bc75405ed3d63548]
         api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
         broker:   Quinta
     Tender_User2:
+        auth_ds:
+            tenders:  [test.quintagroup.com, test.quintagroup.com]
+            auctions: [test.quintagroup.com, bc698baa8b814908bc75405ed3d63548]
         api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
         broker:   Quinta
     Tender_Viewer:
+        auth_ds:
+            tenders:  [test.quintagroup.com, test.quintagroup.com]
+            auctions: [test.quintagroup.com, bc698baa8b814908bc75405ed3d63548]
         api_key:  ""
         broker:   Quinta
         browser:  firefox
@@ -35,7 +50,7 @@ users:
         broker:   Etender
         homepage: "http://e-auction.pro/#/"
         login:    auto18
-        password: Qa123456
+        password: Qq123456
         browser:  PhantomJS
         position: [0, 0]
         size:     [1366, 800]
@@ -86,16 +101,16 @@ users:
     DZO_Provider_auction:
         broker:   DZOauctions
         homepage: "http://dz3.byustudio.in.ua"
-        login:    dzoprovider1@gmail.com
-        password: mux85BMrH
+        login:    dzoprovider2@gmail.com
+        password: Z5FeM44kK
         browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     DZO_Provider1_auction:
         broker:   DZOauctions
         homepage: "http://dz3.byustudio.in.ua"
-        login:    dzoprovider2@gmail.com
-        password: Z5FeM44kK
+        login:    dzoprovider1@gmail.com
+        password: mux85BMrH
         browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
@@ -167,7 +182,7 @@ users:
         size:     [1366, 800]
     brizol_Owner:
         broker:   brizol
-        homepage: "https://eauction.brizol.net"
+        homepage: "http://test-eauction.brizol.net/login"
         login:    prozorroytenderowner@gmail.com
         password: 123456
         browser:  Firefox
@@ -175,23 +190,23 @@ users:
         size:     [1366, 800]
     brizol_Provider:
         broker:   brizol
-        homepage: "https://eauction.brizol.net"
-        login:    prozorroyprovider1@gmail.com
+        homepage: "http://test-eauction.brizol.net/login"
+        login:    prozorroyprovider2@gmail.com
         password: 123456
         browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     brizol_Provider1:
         broker:   brizol
-        homepage: "https://eauction.brizol.net"
-        login:    prozorroyprovider2@gmail.com
+        homepage: "http://test-eauction.brizol.net/login"
+        login:    prozorroyprovider1@gmail.com
         password: 123456
         browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     brizol_Viewer:
         broker:   brizol
-        homepage: "https://eauction.brizol.net"
+        homepage: "http://test-eauction.brizol.net"
         browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
@@ -407,13 +422,22 @@ users:
         size:     [800, 700]
     PrivatMarket_Viewer:
         broker:   PrivatMarket
-        homepage: "https://sell.pb.ua"
+        homepage: "http://auction.privatbank.ua"
         browser:  firefox
         position: [0, 0]
         size:     [1920, 1080]
     PrivatMarket_Provider:
         broker:   PrivatMarket
-        homepage: "https://sell.pb.ua"
+        homepage: "http://auction.privatbank.ua"
+        email:    pbecommercetest2@ukr.net
+        login:    uchasnuk.nomer1@yopmail.com
+        password: uchasnuk.nomer1@yopmail.com
+        browser:  firefox
+        position: [0, 0]
+        size:     [1920, 1080]
+    PrivatMarket_Provider1:
+        broker:   PrivatMarket
+        homepage: "http://auction.privatbank.ua"
         email:    pbecommercetest2@ukr.net
         login:    uchasnuk.nomer1@yopmail.com
         password: uchasnuk.nomer1@yopmail.com
@@ -422,7 +446,7 @@ users:
         size:     [1920, 1080]
     PrivatMarket_Owner:
         broker:   PrivatMarket
-        homepage: "https://sell.pb.ua"
+        homepage: "http://auction.privatbank.ua"
         email:    pbecommercetest2@ukr.net
         login:    +380102030405
         password: value
@@ -456,24 +480,41 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1280, 1024]
+    Prom_Provider1:
+       broker:   Promauctions
+       homepage: "http://zakupki.dz-test.net/auctions"
+       default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_auction/list?mode=all"
+       login:    test@test15.com
+       password: autotest
+       browser:  chrome
+       position: [0, 0]
+       size:     [1280, 1024]
     Publicbid_Owner:
         broker:   Publicbid
-        homepage: "https://10.255.200.224:8100/"
-        login:    test_eauction@yopmail.com
+        homepage: "https://10.255.200.224:8099/"
+        login:    leksoz84@gmail.com
         password: P@ssw0rd
         browser:  chrome
         position: [0, 0]
         size:     [1600, 1200]
     Publicbid_Viewer:
         broker:   Publicbid
-        homepage: "https://10.255.200.224:8100/"
+        homepage: "https://10.255.200.224:8099/"
         browser:  chrome
         position: [0, 450]
         size:     [1600, 720]
     Publicbid_Provider1:
         broker:   Publicbid
-        homepage: "https://10.255.200.224:8100/"
-        login:    test_eauction@yopmail.com
+        homepage: "https://10.255.200.224:8099/"
+        login:    prozorro2@bigmir.net
+        password: P@ssw0rd
+        browser:  chrome
+        position: [450, 0]
+        size:     [1600, 1200]
+    Publicbid_Provider2:
+        broker:   Publicbid
+        homepage: "https://10.255.200.224:8099/"
+        login:    prozorro5@bigmir.net
         password: P@ssw0rd
         browser:  chrome
         position: [450, 0]
@@ -519,7 +560,7 @@ users:
         homepage: "http://devs.zakupki.com.ua"
         login:    dex.maks@mail.ru
         password: 111111
-        browser:  chrome
+        browser:  firefox
         position: [750, 0]
         size:     [1280, 800]
     uatenders_Provider:
@@ -527,7 +568,7 @@ users:
         homepage: "http://devs.zakupki.com.ua"
         login:    test3@example.com
         password: 111111
-        browser:  chrome
+        browser:  firefox
         position: [750, 0]
         size:     [1280, 800]
     uatenders_Viewer:
@@ -535,7 +576,7 @@ users:
         homepage: "http://devs.zakupki.com.ua"
         login:    dex.maks@mail.ru
         password: 111111
-        browser:  chrome
+        browser:  firefox
         position: [750, 0]
         size:     [1280, 800]
     uatenders_Provider1:
@@ -543,7 +584,7 @@ users:
         homepage: "http://devs.zakupki.com.ua"
         login:    test4@example.com
         password: 111111
-        browser:  chrome
+        browser:  firefox
         position: [750, 0]
         size:     [1280, 800]
     ubiz_Owner:
@@ -640,32 +681,32 @@ users:
         size:     [1000, 500]
     uub_Owner:
         broker:   uub
-        homepage: "https://prozorro.uub.com.ua/Registration.aspx?CN=-1"
-        default_page: "https://prozorro.uub.com.ua/PositionList.aspx?CN=-1"
+        homepage: "https://sale.uub.com.ua/Registration.aspx"
+        default_page: "https://sale.uub.com.ua/PositionList.aspx"
         login:    UUB_Owner@1.ua
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
     uub_Provider:
         broker:   uub
-        homepage: "https://prozorro.uub.com.ua/Registration.aspx?CN=-2"
-        default_page: "https://prozorro.uub.com.ua/PositionList.aspx?CN=-2"
+        homepage: "https://sale.uub.com.ua/Registration.aspx"
+        default_page: "https://sale.uub.com.ua/PositionList.aspx"
         login:    UUB_Provider@1.ua
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
     uub_Provider1:
         broker:   uub
-        homepage: "https://prozorro.uub.com.ua/Registration.aspx?CN=-3"
-        default_page: "https://prozorro.uub.com.ua/PositionList.aspx?CN=-3"
+        homepage: "https://sale.uub.com.ua/Registration.aspx"
+        default_page: "https://sale.uub.com.ua/PositionList.aspx"
         login:    UUB_Provider1@1.ua
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
     uub_Viewer:
         broker:   uub
-        homepage: "https://prozorro.uub.com.ua/Registration.aspx?CN=-4"
-        default_page: "https://prozorro.uub.com.ua/PositionList.aspx?CN=-4"
+        homepage: "https://sale.uub.com.ua/Registration.aspx"
+        default_page: "https://sale.uub.com.ua/PositionList.aspx"
         login:    UUB_Viewer@1.ua
         browser:  firefox
         position: [0, 0]
@@ -702,15 +743,15 @@ users:
         size:     [1400, 900]
     polonex_viewer:
         broker:   polonex
-        homepage: "http://test.polonex.in.ua/proauctions/public"
-        syncpage: "http://test.polonex.in.ua/proauctions/sync-all"
+        homepage: "http://test.polonex.in.ua/prozorrosale/auctions/public"
+        syncpage: "http://test.polonex.in.ua/prozorrosale/auctions/sync-all"
         browser:  ff
         position: [0, 0]
         size:     [1366, 800]
     polonex_provider:
         broker:   polonex
-        homepage: "http://test.polonex.in.ua/proauctions/public"
-        syncpage: "http://test.polonex.in.ua/proauctions/sync-all"
+        homepage: "http://test.polonex.in.ua/prozorrosale/auctions/public"
+        syncpage: "http://test.polonex.in.ua/prozorrosale/auctions/sync-all"
         login:    testmemb1@test.t
         password: testpass
         browser:  ff
@@ -718,8 +759,8 @@ users:
         size:     [1366, 800]
     polonex_provider1:
         broker:   polonex
-        homepage: "http://test.polonex.in.ua/proauctions/public"
-        syncpage: "http://test.polonex.in.ua/proauctions/sync-all"
+        homepage: "http://test.polonex.in.ua/prozorrosale/auctions/public"
+        syncpage: "http://test.polonex.in.ua/prozorrosale/auctions/sync-all"
         login:    testmemb2@test.t
         password: testpass
         browser:  ff
@@ -727,8 +768,8 @@ users:
         size:     [1366, 800]
     polonex_owner:
         broker:   polonex
-        homepage: "http://test.polonex.in.ua/proauctions/public"
-        syncpage: "http://test.polonex.in.ua/proauctions/sync-all"
+        homepage: "http://test.polonex.in.ua/prozorrosale/auctions/public"
+        syncpage: "http://test.polonex.in.ua/prozorrosale/auctions/sync-all"
         login:    testadmin@test.t
         password: testpass
         browser:  ff
@@ -799,14 +840,14 @@ users:
         size:     [1366, 1024]
     etc_viewer:
         broker:   etc
-        homepage: "http://test.etc-torgi.com"
+        homepage: "http://test.etc-torgi.com/prozorrosale/auctions/public"
         syncpage: "http://test.etc-torgi.com/prozorrosale/auctions/sync-all"
         browser:  ff
         position: [0, 0]
         size:     [1366, 800]
     etc_provider:
         broker:   etc
-        homepage: "http://test.etc-torgi.com"
+        homepage: "http://test.etc-torgi.com/prozorrosale/auctions/public"
         syncpage: "http://test.etc-torgi.com/prozorrosale/auctions/sync-all"
         login:    testmemb1@test.t
         password: testpass
@@ -815,7 +856,7 @@ users:
         size:     [1366, 800]
     etc_provider1:
         broker:   etc
-        homepage: "http://test.etc-torgi.com"
+        homepage: "http://test.etc-torgi.com/prozorrosale/auctions/public"
         syncpage: "http://test.etc-torgi.com/prozorrosale/auctions/sync-all"
         login:    testmemb2@test.t
         password: testpass
@@ -824,7 +865,7 @@ users:
         size:     [1366, 800]
     etc_owner:
         broker:   etc
-        homepage: "http://test.etc-torgi.com"
+        homepage: "http://test.etc-torgi.com/prozorrosale/auctions/public"
         syncpage: "http://test.etc-torgi.com/prozorrosale/auctions/sync-all"
         login:    testadmin@test.t
         password: testpass
@@ -833,14 +874,14 @@ users:
         size:     [1366, 800]
     etrading_viewer:
         broker:   etrading
-        homepage: "http://test.e-trading.kiev.ua"
+        homepage: "http://test.e-trading.kiev.ua/prozorrosale/auctions/public"
         syncpage: "http://test.e-trading.kiev.ua/prozorrosale/auctions/sync-all"
         browser:  ff
         position: [0, 0]
         size:     [1366, 800]
     etrading_provider:
         broker:   etrading
-        homepage: "http://test.e-trading.kiev.ua"
+        homepage: "http://test.e-trading.kiev.ua/prozorrosale/auctions/public"
         syncpage: "http://test.e-trading.kiev.ua/prozorrosale/auctions/sync-all"
         login:    testmemb1@test.t
         password: testpass
@@ -849,7 +890,7 @@ users:
         size:     [1366, 800]
     etrading_provider1:
         broker:   etrading
-        homepage: "http://test.e-trading.kiev.ua"
+        homepage: "http://test.e-trading.kiev.ua/prozorrosale/auctions/public"
         syncpage: "http://test.e-trading.kiev.ua/prozorrosale/auctions/sync-all"
         login:    testmemb2@test.t
         password: testpass
@@ -858,7 +899,7 @@ users:
         size:     [1366, 800]
     etrading_owner:
         broker:   etrading
-        homepage: "http://test.e-trading.kiev.ua"
+        homepage: "http://test.e-trading.kiev.ua/prozorrosale/auctions/public"
         syncpage: "http://test.e-trading.kiev.ua/prozorrosale/auctions/sync-all"
         login:    testadmin@test.t
         password: testpass
@@ -1143,32 +1184,32 @@ users:
         size:     [1366, 800]
     agrex_Owner:
         broker:   agrex
-        homepage: "https://etp.agrex.gov.ua/test/Registration.aspx"
-        default_page: "https://etp.agrex.gov.ua/test/TenderList.aspx"
+        homepage: "https://sale.agrex.gov.ua/test/Registration.aspx"
+        default_page: "https://sale.agrex.gov.ua/test/AuctionList.aspx"
         login:    ae_owner@a.ua
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
     agrex_Provider:
         broker:   agrex
-        homepage: "https://etp.agrex.gov.ua/test/Registration.aspx"
-        default_page: "https://etp.agrex.gov.ua/test/TenderList.aspx"
+        homepage: "https://sale.agrex.gov.ua/test/Registration.aspx"
+        default_page: "https://sale.agrex.gov.ua/test/AuctionList.aspx"
         login:    ae_provider@a.ua
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
     agrex_Provider1:
         broker:   agrex
-        homepage: "https://etp.agrex.gov.ua/test/Registration.aspx"
-        default_page: "https://etp.agrex.gov.ua/test/TenderList.aspx"
+        homepage: "https://sale.agrex.gov.ua/test/Registration.aspx"
+        default_page: "https://sale.agrex.gov.ua/test/AuctionList.aspx"
         login:    ae_provider1@a.ua
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
     agrex_Viewer:
         broker:   agrex
-        homepage: "https://etp.agrex.gov.ua/test/Registration.aspx"
-        default_page: "https://etp.agrex.gov.ua/test/TenderList.aspx"
+        homepage: "https://sale.agrex.gov.ua/test/Registration.aspx"
+        default_page: "https://sale.agrex.gov.ua/test/AuctionList.aspx"
         login:    ae_viewer@a.ua
         browser:  firefox
         position: [0, 0]
@@ -1337,7 +1378,7 @@ users:
         size:     [1024, 768]
     zupb_Owner:
         broker:   zupb
-        homepage: "https://etm.zub.com.ua/user/login"
+        homepage: "https://etm.zub.com.ua"
         default_page: "https://etm.zub.com.ua/public"
         login:    organizator
         password: 123456
@@ -1346,7 +1387,7 @@ users:
         size:     [1024, 768]
     zupb_Provider:
         broker:   zupb
-        homepage: "https://etm.zub.com.ua/user/login"
+        homepage: "https://etm.zub.com.ua"
         default_page: "https://etm.zub.com.ua/public"
         login:    member
         password: 123456
@@ -1355,7 +1396,7 @@ users:
         size:     [1024, 768]
     zupb_Provider1:
         broker:   zupb
-        homepage: "https://etm.zub.com.ua/user/login"
+        homepage: "https://etm.zub.com.ua"
         default_page: "https://etm.zub.com.ua/public"
         login:    member1
         password: 123456
@@ -1364,42 +1405,330 @@ users:
         size:     [1024, 768]
     zupb_Viewer:
         broker:   zupb
-        homepage: "https://etm.zub.com.ua/user/login"
+        homepage: "https://etm.zub.com.ua"
         default_page: "https://etm.zub.com.ua/public"
         browser:  firefox
         position: [0, 0]
         size:     [1024, 768]
-    epsilon_Owner:
+    epsilon_Owner_auction:
         broker:   epsilon
-        homepage: "https://tbepsilon.com/user/login"
-        default_page: "https://tbepsilon.com/public"
+        homepage: "https://tbepsilon.com"
+        login:    prozorroytenderowner@gmail.com
+        password: 123456
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    epsilon_Provider_auction:
+        broker:   epsilon
+        homepage: "https://tbepsilon.com"
+        login:    prozorroyprovider1@gmail.com
+        password: 123456
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    epsilon_Provider1_auction:
+        broker:   epsilon
+        homepage: "https://tbepsilon.com"
+        login:    prozorroyprovider2@gmail.com
+        password: 123456
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    epsilon_Viewer_auction:
+        broker:   epsilon
+        homepage: "https://tbepsilon.com"
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    palata_Owner:
+        broker:   palata
+        homepage: "http://testing.palata.com.ua"
+        login:    palataliquidator@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1280, 800]
+    palata_Provider1:
+        broker:   palata
+        homepage: "http://testing.palata.com.ua"
+        login:    part1@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [0, 800]
+        size:     [1280, 800]
+    palata_Provider2:
+        broker:   palata
+        homepage: "http://testing.palata.com.ua"
+        login:    part2@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [800, 0]
+        size:     [1280, 800]
+    palata_Viewer:
+        broker:   palata
+        homepage: "http://testing.palata.com.ua"
+        browser:  chrome
+        position: [0, 500]
+        size:     [1280, 800]
+    tirex_Owner_auction:
+        broker:   tirex
+        homepage: "http://test.eauction-tendersale.com.ua"
+        login:    prozorroytenderowner@gmail.com
+        password: 123456
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    tirex_Provider_auction:
+        broker:   tirex
+        homepage: "http://test.eauction-tendersale.com.ua"
+        login:    prozorroyprovider1@gmail.com
+        password: 123456
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    tirex_Provider1_auction:
+        broker:   tirex
+        homepage: "http://test.eauction-tendersale.com.ua"
+        login:    prozorroyprovider2@gmail.com
+        password: 123456
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    tirex_Viewer_auction:
+        broker:   tirex
+        homepage: "http://test.eauction-tendersale.com.ua"
+        browser:  Firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    tovprof_Owner:
+        broker:   tovprof
+        homepage: "http://proz-test.aykcion.com.ua/auctions"
+        default_page: "http://proz-test.aykcion.com.ua/auctions"
+        login:    liquidatro1@aykcion.cm.ua
+        password: 1
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    tovprof_Provider:
+        broker:   tovprof
+        homepage: "http://proz-test.aykcion.com.ua/auctions"
+        default_page: "http://proz-test.aykcion.com.ua/auctions"
+        login:    l341938@mvrht.com
+        password: 1
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    tovprof_Provider1:
+        broker:   tovprof
+        homepage: "http://proz-test.aykcion.com.ua/auctions"
+        default_page: "http://proz-test.aykcion.com.ua/auctions"
+        login:    provider2@aykcion.com.ua
+        password: 1
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    tovprof_Viewer:
+        broker:   tovprof
+        homepage: "http://proz-test.aykcion.com.ua/auctions"
+        default_page: "http://proz-test.aykcion.com.ua/auctions"
+        login:    liquidatro1@aykcion.cm.ua
+        password: 1
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    prozora_Owner:
+        broker:   prozora
+        homepage: "http://proz-test.tbetb.com.ua/auctions"
+        default_page: "http://proz-test.tbetb.com.ua/auctions"
+        login:    liquidatro1@aykcion.cm.ua
+        password: 1
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    prozora_Provider:
+        broker:   prozora
+        homepage: "http://proz-test.tbetb.com.ua/auctions"
+        default_page: "http://proz-test.tbetb.com.ua/auctions"
+        login:    l341938@mvrht.com
+        password: 1
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    prozora_Provider1:
+        broker:   prozora
+        homepage: "http://proz-test.tbetb.com.ua/auctions"
+        default_page: "http://proz-test.tbetb.com.ua/auctions"
+        login:    provider2@aykcion.com.ua
+        password: 1
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    prozora_Viewer:
+        broker:   prozora
+        homepage: "http://proz-test.tbetb.com.ua/auctions"
+        default_page: "http://proz-test.tbetb.com.ua/auctions"
+        login:    liquidatro1@aykcion.cm.ua
+        password: 1
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    ukin_Owner:
+        broker:   ukin
+        homepage: "https://ukin.com.ua/user/login"
+        default_page: "https://ukin.com.ua/public"
         login:    organizator
         password: 123456
         browser:  firefox
         position: [0, 0]
         size:     [1024, 768]
-    epsilon_Provider:
-        broker:   epsilon
-        homepage: "https://tbepsilon.com/user/login"
-        default_page: "https://tbepsilon.com/public"
+    ukin_Provider:
+        broker:   ukin
+        homepage: "https://ukin.com.ua/user/login"
+        default_page: "https://ukin.com.ua/public"
         login:    member
         password: 123456
         browser:  firefox
         position: [0, 0]
         size:     [1024, 768]
-    epsilon_Provider1:
-        broker:   epsilon
-        homepage: "https://tbepsilon.com/user/login"
-        default_page: "https://tbepsilon.com/public"
+    ukin_Provider1:
+        broker:   ukin
+        homepage: "https://ukin.com.ua/user/login"
+        default_page: "https://ukin.com.ua/public"
         login:    member1
         password: 123456
         browser:  firefox
         position: [0, 0]
         size:     [1024, 768]
-    epsilon_Viewer:
-        broker:   epsilon
-        homepage: "https://tbepsilon.com/user/login"
-        default_page: "https://tbepsilon.com/public"
+    ukin_Viewer:
+        broker:   ukin
+        homepage: "https://ukin.com.ua/user/login"
+        default_page: "https://ukin.com.ua/public"
         browser:  firefox
         position: [0, 0]
         size:     [1024, 768]
+    vertas_Owner:
+        broker:   vertas
+        homepage: "https://sale.vertas.com.ua/test/Registration.aspx"
+        default_page: "https://sale.vertas.com.ua/test/AuctionList.aspx"
+        login:    vertas_owner@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    vertas_Provider:
+        broker:   vertas
+        homepage: "https://sale.vertas.com.ua/test/Registration.aspx"
+        default_page: "https://sale.vertas.com.ua/test/AuctionList.aspx"
+        login:    vertas_provider@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    vertas_Provider1:
+        broker:   vertas
+        homepage: "https://sale.vertas.com.ua/test/Registration.aspx"
+        default_page: "https://sale.vertas.com.ua/test/AuctionList.aspx"
+        login:    vertas_provider1@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    vertas_Viewer:
+        broker:   vertas
+        homepage: "https://sale.vertas.com.ua/test/Registration.aspx"
+        default_page: "https://sale.vertas.com.ua/test/AuctionList.aspx"
+        login:    vertas_viewer@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    podilska_Owner:
+        broker:   podilska
+        homepage: "https://sale.birzha.km.ua/Registration.aspx"
+        default_page: "https://sale.birzha.km.ua/PositionList.aspx"
+        login:    km_Owner@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    podilska_Provider:
+        broker:   podilska
+        homepage: "https://sale.birzha.km.ua/Registration.aspx"
+        default_page: "https://sale.birzha.km.ua/PositionList.aspx"
+        login:    km_Provider@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    podilska_Provider1:
+        broker:   podilska
+        homepage: "https://sale.birzha.km.ua/Registration.aspx"
+        default_page: "https://sale.birzha.km.ua/PositionList.aspx"
+        login:    km_Provider1@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    podilska_Viewer:
+        broker:   podilska
+        homepage: "https://sale.birzha.km.ua/Registration.aspx"
+        default_page: "https://sale.birzha.km.ua/PositionList.aspx"
+        login:    km_Viewer@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    stolitsa_Owner:
+        broker:   stolitsa
+        homepage: "https://sale.ce-stolitsa.com.ua/test/Registration.aspx"
+        default_page: "https://sale.ce-stolitsa.com.ua/test/AuctionList.aspx"
+        login:    st_owner@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    stolitsa_Provider:
+        broker:   stolitsa
+        homepage: "https://sale.ce-stolitsa.com.ua/test/Registration.aspx"
+        default_page: "https://sale.ce-stolitsa.com.ua/test/AuctionList.aspx"
+        login:    st_provider@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    stolitsa_Provider1:
+        broker:   stolitsa
+        homepage: "https://sale.ce-stolitsa.com.ua/test/Registration.aspx"
+        default_page: "https://sale.ce-stolitsa.com.ua/test/AuctionList.aspx"
+        login:    st_provider1@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    stolitsa_Viewer:
+        broker:   stolitsa
+        homepage: "https://sale.ce-stolitsa.com.ua/test/Registration.aspx"
+        default_page: "https://sale.ce-stolitsa.com.ua/test/AuctionList.aspx"
+        login:    st_viewer@1.ua
+        browser:  firefox
+        position: [0, 0]
+        size:     [1366, 800]
+    tabua_Owner:
+        broker:   tabua
+        homepage: "http://sale_user:sale_password@staging_sale.tab.com.ua/login"
+        login:    test_bank@test.com
+        password: 123456
+        browser:  firefox
+        position: [0, 0]
+        size:     [1200, 1200]
+    tabua_Provider1:
+        broker:   tabua
+        homepage: "http://sale_user:sale_password@staging_sale.tab.com.ua/login"
+        login:    test_participant@test.com
+        password: 123456
+        browser:  firefox
+        position: [700, 0]
+        size:     [800, 700]
+    tabua_Provider:
+        broker:   tabua
+        homepage: "http://sale_user:sale_password@staging_sale.tab.com.ua/login"
+        login:    test_finance@test.com
+        password: 123456
+        browser:  firefox
+        position: [700, 0]
+        size:     [800, 700]
+    tabua_Viewer:
+        broker:   tabua
+        homepage: "http://sale_user:sale_password@staging_sale.tab.com.ua/login"
+        browser:  firefox
+        position: [800, 400]
+        size:     [800, 700]

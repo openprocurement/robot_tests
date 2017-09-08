@@ -1,10 +1,11 @@
--v MODE:dgfFinancialAssets
+-v MODE:dgfOtherAssets
 
 -v NUMBER_OF_ITEMS:3
 
 -i create_tender
 -i find_tender
 -i tender_view
+-i tender_view_cav_groups
 -i tender_view_tenderPeriod
 -i tender_view_unit_code
 -i tender_view_decisionDate
@@ -15,26 +16,26 @@
 -i modify_auction_value
 -i modify_auction_step
 -i modify_auction_title_ua
--i modify_auction_title_ru
--i modify_auction_title_en
+-i tender_view_modify_auction_title_ua
 -i modify_auction_guarantee
 -i modify_auction_periods
--i tender_view_criteria
--i modify_auction_criteria_ua
 -i modify_auction_procuringEntity
--i modify_auction_description
+-i modify_auction_description_ua
+-i tender_view_modify_auction_description_ua
 -i modify_dgfID
+-i tender_view_modify_dgfID
 -i modify_decisionDate
+-i tender_view_modify_decisionDate
 -i modify_decisionID
+-i tender_view_modify_dgfDecisionID
 -i modify_tenderAttempts
+-i tender_view_modify_tenderAttempts
 -i modify_tender
 -i add_tender_doc
 -i add_tender_doc_content
 -i add_tender_illustration
 -i add_tender_public_asset_certificate
 -i add_tender_tech_specifications
--i add_tender_vdr
--i add_tender_nda
 -i add_tender_notice
 -i add_tender_presentation
 -i add_tender_asset_familiarization
@@ -42,8 +43,6 @@
   -i answer_question_to_tender
 -i ask_question_to_item
   -i answer_question_to_item
--i add_item
-  -i delete_item
 
 
 -i make_bid_by_provider_without_qualification
@@ -53,6 +52,7 @@
 -i make_bid_by_provider1
 -i bid_view_in_tendering_period
 
+
 -i add_bid_doc_after_tendering_period_by_provider
 -i make_bid_after_tendering_period
 -i modify_bid_doc_after_tendering_period_by_provider
@@ -61,20 +61,31 @@
 -i ask_question_to_tender_after_tendering_period
 -i ask_question_to_item_after_tendering_period
 
+
 -i auction
 -i auction_url_viewer
 -i auction_url_provider
 -i auction_url_provider1
 -i auction_end_date
 
--i qualification
--i qualification_add_auction_protocol_to_bid
--i qualification_approve_doc_to_first_award
--i qualification_approve_first_award
--i qualification_cancel_first_award_qualification
--i qualification_add_auction_protocol_to_second_bid
--i qualification_approve_doc_to_second_award
--i qualification_approve_second_award
+
+-i awarding
+-i first_award_verification_status
+-i second_award_waiting_status
+-i change_first_award_payment_status
+-i add_protocol_to_first_award
+-i approve_first_award_protocol
+-i first_award_payment_status
+-i confirm_first_award
+-i first_award_active_status
+-i disqualified_first_award
+-i first_award_status_unsuccessful
+-i second_award_verification_status
+-i change_second_award_payment_status
+-i add_protocol_to_second_award
+-i approve_second_award_protocol
+-i confirm_second_award
+-i second_award_active_status
 
 
 -i contract_sign
