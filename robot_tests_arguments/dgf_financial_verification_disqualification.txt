@@ -1,0 +1,24 @@
+-v MODE:dgfFinancialAssets
+
+-v NUMBER_OF_ITEMS:1
+
+-i create_tender
+-i find_tender
+-i tender_view
+-i tender_view_tenderPeriod
+-i tender_view_unit_code
+-i tender_view_min_step
+
+-i make_bid_by_provider
+-i make_bid_by_provider1
+-i modify_bid_by_provider
+
+
+-i auction
+-i auction_end_date
+
+
+-i awarding
+-i disqualified_first_award
+-i disqualified_second_award
+-i tender_status_unsuccessful

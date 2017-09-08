@@ -7,41 +7,47 @@ from dateutil.parser import parse
 from dpath.util import new as xpathnew
 from haversine import haversine
 from iso8601 import parse_date
-from json import load
+from json import load, loads
 from jsonpath_rw import parse as parse_path
-from munch import fromYAML, Munch, munchify
+from munch import Munch, munchify
 from robot.errors import ExecutionFailed
 from robot.libraries.BuiltIn import BuiltIn
 from robot.output import LOGGER
 from robot.output.loggerhelper import Message
+from time import sleep
 # These imports are not pointless. Robot's resource and testsuite files
 # can access them by simply importing library "service_keywords".
 # Please ignore the warning given by Flake8 or other linter.
 from .initial_data import (
+    create_fake_amount,
+    create_fake_cancellation_reason,
     create_fake_doc,
+    create_fake_guarantee,
+    create_fake_image,
+    create_fake_minimal_step,
     create_fake_sentence,
+    create_fake_title,
+    create_fake_description,
+    create_fake_url,
     fake,
     test_bid_data,
     test_bid_value,
-    test_claim_answer_data,
-    test_claim_data,
-    test_complaint_data,
-    test_complaint_reply_data,
     test_confirm_data,
-    test_feature_data,
-    test_invalid_features_data,
     test_item_data,
-    test_lot_data,
-    test_lot_document_data,
+    test_item_data_financial,
     test_related_question,
     test_question_answer_data,
     test_question_data,
     test_supplier_data,
     test_tender_data,
-    test_tender_data_competitive_dialogue,
-    test_tender_data_limited,
-    test_tender_data_openeu,
-    test_tender_data_openua,
+    test_tender_data_dgf_financial,
+    test_tender_data_dgf_other,
+    test_tender_data_dgf_insider,
+    create_fake_dgfID,
+    create_fake_dgfDecisionID,
+    create_fake_dgfDecisionDate,
+    create_fake_tenderAttempts,
+
 )
 from barbecue import chef
 from restkit import request
@@ -140,6 +146,27 @@ def compare_coordinates(left_lat, left_lon, right_lat, right_lon, accuracy=0.1):
     return True
 
 
+def compare_tender_attempts(left, right):
+    if isinstance(right, int):
+        if left == right:
+            return True
+        raise ValueError(u"Objects are not equal")
+    elif isinstance(right, basestring):
+        left = convert_tender_attempts(left)
+        if left == right:
+            return True
+        raise ValueError(u"Objects are not equal")
+    raise ValueError(u"Incorrect object types")
+
+
+def convert_tender_attempts(attempts):
+    if attempts == 1:
+        return u"Лот виставляється вперше"
+    elif attempts in [2, 3, 4, 5, 6, 7, 8 ]:
+        return u"Лот виставляється повторно"
+    raise ValueError(u"Cannot convert attempts")
+
+
 def log_object_data(data, file_name=None, format="yaml", update=False, artifact=False):
     """Log object data in pretty format (JSON or YAML)
 
@@ -199,22 +226,38 @@ def munch_to_object(data, format="yaml"):
         return data.toYAML(allow_unicode=True, default_flow_style=False)
 
 
-def load_data_from(file_name, mode=None):
+def load_data_from(file_name, mode=None, external_params_name=None):
+    """We assume that 'external_params' is a a valid json if passed
+    """
+
+    external_params = BuiltIn().\
+        get_variable_value('${{{name}}}'.format(name=external_params_name))
+
     if not os.path.exists(file_name):
         file_name = os.path.join(os.path.dirname(__file__), 'data', file_name)
     with open(file_name) as file_obj:
-        if file_name.endswith(".json"):
+        if file_name.endswith('.json'):
             file_data = Munch.fromDict(load(file_obj))
-        elif file_name.endswith(".yaml"):
-            file_data = fromYAML(file_obj)
-    if mode == "brokers":
+        elif file_name.endswith('.yaml'):
+            file_data = Munch.fromYAML(file_obj)
+    if mode == 'brokers':
         default = file_data.pop('Default')
         brokers = {}
         for k, v in file_data.iteritems():
             brokers[k] = merge_dicts(default, v)
-        return brokers
-    else:
-        return file_data
+        file_data = brokers
+
+    try:
+        ext_params_munch \
+            = Munch.fromDict(loads(external_params)) \
+            if external_params else Munch()
+    except ValueError:
+        raise ValueError(
+            'Value {param} of command line parameter {name} is invalid'.
+            format(name=external_params_name, param=str(external_params))
+        )
+
+    return merge_dicts(file_data, ext_params_munch)
 
 
 def compute_intrs(brokers_data, used_brokers):
@@ -224,7 +267,9 @@ def compute_intrs(brokers_data, used_brokers):
     does not contain ``Default`` entry.
     Using `load_data_from` with ``mode='brokers'`` is recommended.
     """
-    def recur(l, r):
+    keys_to_prefer_lesser = ('accelerator',)
+
+    def recur(l, r, prefer_greater_numbers=True):
         l, r = deepcopy(l), deepcopy(r)
         if isinstance(l, list) and isinstance(r, list) and len(l) == len(r):
             lst = []
@@ -235,13 +280,15 @@ def compute_intrs(brokers_data, used_brokers):
             if l == r:
                 return l
             if l > r:
-                return l
+                return l if prefer_greater_numbers else r
             if l < r:
-                return r
+                return r if prefer_greater_numbers else l
         elif isinstance(l, dict) and isinstance(r, dict):
             for k, v in r.iteritems():
                 if k not in l.keys():
                     l[k] = v
+                elif k in keys_to_prefer_lesser:
+                    l[k] = recur(l[k], v, prefer_greater_numbers=False)
                 else:
                     l[k] = recur(l[k], v)
             return l
@@ -274,20 +321,14 @@ def prepare_test_tender_data(procedure_intervals, tender_parameters):
         "not '{}'".format(type(intervals['accelerator']).__name__)
     assert intervals['accelerator'] >= 0, \
         "Accelerator should not be less than 0"
-    if mode == 'negotiation':
-        return munchify({'data': test_tender_data_limited(tender_parameters)})
-    elif mode == 'negotiation.quick':
-        return munchify({'data': test_tender_data_limited(tender_parameters)})
-    elif mode == 'openeu':
-        return munchify({'data': test_tender_data_openeu(tender_parameters)})
-    elif mode == 'openua':
-        return munchify({'data': test_tender_data_openua(tender_parameters)})
-    elif mode == 'open_competitive_dialogue':
-        return munchify({'data': test_tender_data_competitive_dialogue(tender_parameters)})
-    elif mode == 'reporting':
-        return munchify({'data': test_tender_data_limited(tender_parameters)})
-    elif mode == 'belowThreshold':
+    if mode == 'belowThreshold':
         return munchify({'data': test_tender_data(tender_parameters)})
+    elif mode == 'dgfFinancialAssets':
+        return munchify({'data': test_tender_data_dgf_financial(tender_parameters)})
+    elif mode == 'dgfOtherAssets':
+        return munchify({'data': test_tender_data_dgf_other(tender_parameters)})
+    elif mode == 'dgfInsider':
+        return munchify({'data': test_tender_data_dgf_insider(tender_parameters)})
     raise ValueError("Invalid mode for prepare_test_tender_data")
 
 
@@ -362,6 +403,16 @@ def wait_to_date(date_stamp):
     return wait_seconds
 
 
+def wait_and_write_to_console(date):
+    time = wait_to_date(date)
+    if time > 0:
+        minutes, seconds = divmod(time, 60)
+        for number in xrange(int(minutes)):
+            sleep(60)
+            print('.')
+        sleep(seconds)
+
+
 def merge_dicts(a, b):
     """Merge dicts recursively.
 
@@ -430,35 +481,27 @@ def get_object_index_by_id(data, object_id):
     return index
 
 
-def get_complaint_index_by_complaintID(data, complaintID):
-    if not data:
-        return 0
-    for index, element in enumerate(data):
-        if element['complaintID'] == complaintID:
-            break
-    else:
-        index += 1
-    return index
-
-
 def generate_test_bid_data(tender_data):
     bid = test_bid_data()
-    if 'aboveThreshold' in tender_data.get('procurementMethodType', '') or 'competitiveDialogue' in tender_data.get('procurementMethodType', ''):
-        bid.data.selfEligible = True
-        bid.data.selfQualified = True
     if 'lots' in tender_data:
         bid.data.lotValues = []
         for lot in tender_data['lots']:
-            value = test_bid_value(lot['value']['amount'])
+            value = test_bid_value(lot['value']['amount'], lot['minimalStep']['amount'])
             value['relatedLot'] = lot.get('id', '')
             bid.data.lotValues.append(value)
-    else:
+    elif 'dgfInsider' in tender_data.get('procurementMethodType', ''):
         bid.data.update(test_bid_value(tender_data['value']['amount']))
-    if 'features' in tender_data:
-        bid.data.parameters = []
-        for feature in tender_data['features']:
-            parameter = {"value": fake.random_element(elements=(0.05, 0.01, 0)), "code": feature.get('code', '')}
-            bid.data.parameters.append(parameter)
+        bid.data.eligible = True
+        bid.data.qualified = True
+        del bid.data['value']
+    else:
+        bid.data.update(test_bid_value(tender_data['value']['amount'], tender_data['minimalStep']['amount']))
+    if 'dgfOtherAssets' in tender_data.get('procurementMethodType', ''):
+        bid.data.qualified = True
+    if 'dgfFinancialAssets' in tender_data.get('procurementMethodType', ''):
+        bid.data.eligible = True
+        bid.data.qualified = True
+        bid.data.tenderers[0]["additionalIdentifiers"] = [fake.additionalIdentifier()]
     return bid
 
 
@@ -490,3 +533,20 @@ def convert_datetime_to_dot_format(isodate):
 
 def local_path_to_file(file_name):
     return os.path.join(os.path.dirname(__file__), 'documents', file_name)
+
+
+def compare_CAV_groups(length, *items):
+    # Checks CAV groups of *items
+    # Arguments: length - number of items
+    #            *items - list of items
+    # Return True, if all items have different CAV groups, and
+    # return False, if at least two items have same CAV group.
+    for i in range(length):
+        i_classification = items[i].get('classification', '')
+        i_cav_group = i_classification.get('id', '')
+        for j in range(length):
+            j_classification = items[j].get('classification', '')
+            j_cav_group = j_classification.get('id', '')
+            if(i_cav_group == j_cav_group and i != j):
+                return False
+    return True

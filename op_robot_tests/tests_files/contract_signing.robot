@@ -9,8 +9,8 @@ Suite Teardown  Test Suite Teardown
 
 
 *** Test Cases ***
-Можливість знайти закупівлю по ідентифікатору
-  [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера
+Можливість знайти лот по ідентифікатору
+  [Tags]   ${USERS.users['${viewer}'].broker}: Пошук лоту
   ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      find_tender  level1
@@ -22,25 +22,18 @@ Suite Teardown  Test Suite Teardown
 #             CONTRACT
 ##############################################################################################
 
-Відображення закінчення періоду подачі скарг на пропозицію
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних тендера
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      tender_view
-  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
-  \  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  awards[-1].complaintPeriod.endDate
+Можливість завантажити угоду до лоту
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Завантаження документів щодо угоди
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  contract_sign_upload
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
+  ${file_path}  ${file_title}  ${file_content}=  create_fake_doc
+  Run As  ${tender_owner}  Завантажити угоду до тендера  ${TENDER['TENDER_UAID']}  -1  ${file_path}
+  Remove File  ${file_path}
 
 
-Дочекатися закічення stand still періоду
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Процес укладання угоди
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      contract_sign
-  ${standstillEnd}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data.awards[-1].complaintPeriod.endDate}
-  Дочекатись дати  ${standstillEnd}
-
-
-Можливість укласти угоду для закупівлі
+Можливість укласти угоду для лоту
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес укладання угоди
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
@@ -49,11 +42,19 @@ Suite Teardown  Test Suite Teardown
   Run As  ${tender_owner}  Підтвердити підписання контракту  ${TENDER['TENDER_UAID']}  -1
 
 
-Відображення статусу підписаної угоди з постачальником закупівлі
+Відображення статусу підписаної угоди
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних угоди
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  contract_sign
-  [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
+  ...  contract_sign_view
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Run As  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
   Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}  active  contracts[-1].status
+
+
+Відображення статусу завершення лоту
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...  viewer
+  ...  ${USERS.users['${viewer}'].broker}
+  ...  tender_view
+  Звірити статус завершення тендера  ${viewer}  ${TENDER['TENDER_UAID']}

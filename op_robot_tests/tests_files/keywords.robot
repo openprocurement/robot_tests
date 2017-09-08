@@ -49,7 +49,7 @@ Set Suite Variable With Default Value
   ${repo}=    Run  git remote -v
   ${branch}=  Run  git branch -vva
   ${status}=  Run  git status
-  ${diff}=  Run  git diff
+  ${diff}=    Run  git diff
   ${reflog}=  Run  git reflog
   Log  ${commit}
   Log  ${repo}
@@ -68,7 +68,8 @@ Set Suite Variable With Default Value
 
   # Load brokers data
   ${file_path}=  Get Variable Value  ${BROKERS_FILE}  brokers.yaml
-  ${BROKERS}=  load_data_from  ${file_path}  mode=brokers
+  ${BROKERS_PARAMS}=  Get Variable Value  ${BROKERS_PARAMS}
+  ${BROKERS}=  load_data_from  ${file_path}  mode=brokers  external_params_name=BROKERS_PARAMS
   Log  ${BROKERS}
   Set Suite Variable  ${BROKERS}
   # List of currently used brokers
@@ -76,7 +77,8 @@ Set Suite Variable With Default Value
 
   # Load users data
   ${file_path}=  Get Variable Value  ${USERS_FILE}  users.yaml
-  ${USERS}=  load_data_from  ${file_path}
+  ${USERS_PARAMS}=  Get Variable Value  ${USERS_PARAMS}
+  ${USERS}=  load_data_from  ${file_path}  users.yaml  external_params_name=USERS_PARAMS
   Log  ${USERS.users}
   Set Suite Variable  ${USERS}
   # List of currently used users
@@ -172,9 +174,8 @@ Get Broker Property By Username
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  tender_owner_access_token=${USERS.users['${tender_owner}'].access_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider_access_token=${USERS.users['${provider}'].access_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider1_access_token=${USERS.users['${provider1}'].access_token}
-  ${status}  ${lots_ids}=  Run Keyword And Ignore Error  Отримати ідентифікатори об’єктів  ${viewer}  lots
-  Run Keyword If  '${status}'=='PASS'
-  ...      Set To Dictionary   ${artifact}   lots=${lots_ids}
+  Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider_bid_id=${USERS.users['${provider}'].bid_id}
+  Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider1_bid_id=${USERS.users['${provider1}'].bid_id}
   Log   ${artifact}
   log_object_data  ${artifact}  file_name=artifact  update=${True}  artifact=${True}
 
@@ -183,15 +184,14 @@ Get Broker Property By Username
   ${file_path}=  Get Variable Value  ${ARTIFACT_FILE}  artifact.yaml
   ${ARTIFACT}=  load_data_from  ${file_path}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token=${ARTIFACT.access_token}
-  ${TENDER}=  Create Dictionary   TENDER_UAID=${ARTIFACT.tender_uaid}   LAST_MODIFICATION_DATE=${ARTIFACT.last_modification_date}   LOT_ID=${Empty}
-  ${lot_index}=  Get Variable Value  ${lot_index}  0
-  Run Keyword And Ignore Error  Set To Dictionary  ${TENDER}  LOT_ID=${ARTIFACT.lots[${lot_index}]}
+  ${TENDER}=  Create Dictionary  TENDER_UAID=${ARTIFACT.tender_uaid}  LAST_MODIFICATION_DATE=${ARTIFACT.last_modification_date}  LOT_ID=${Empty}
   ${MODE}=  Get Variable Value  ${MODE}  ${ARTIFACT.mode}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token=${ARTIFACT.tender_owner_access_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider}']}  access_token=${ARTIFACT.provider_access_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider1}']}  access_token=${ARTIFACT.provider1_access_token}
   Set Suite Variable  ${MODE}
-  Set Suite Variable  ${lot_index}
+  Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider}']}  bid_id=${ARTIFACT.provider_bid_id}
+  Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider1}']}  bid_id=${ARTIFACT.provider1_bid_id}
   Set Suite Variable  ${TENDER}
   log_object_data  ${ARTIFACT}  file_name=artifact  update=${True}  artifact=${True}
 
@@ -207,35 +207,10 @@ Get Broker Property By Username
 
 
 Підготувати дані для створення предмету закупівлі
-  [Arguments]  ${cpv}
-  ${item}=  test_item_data  ${cpv[0:3]}
+  [Arguments]  ${cav}
+  ${item} =  Run Keyword If  '${MODE}'=='dgfFinancialAssets'  test_item_data_financial  ${cav[0:3]}
+  ...        ELSE  test_item_data  ${cav[0:3]}
   [Return]  ${item}
-
-
-Підготувати дані для створення лоту
-  [Arguments]  ${max_lot_value_amount}
-  ${lot}=  test_lot_data  ${max_lot_value_amount}
-  ${reply}=  Create Dictionary  data=${lot}
-  [Return]  ${reply}
-
-Підготувати дані для створення нецінового показника
-  ${reply}=  test_feature_data
-  [Return]  ${reply}
-
-Підготувати дані для подання вимоги
-  ${claim}=  test_claim_data
-  [Return]  ${claim}
-
-
-Підготувати дані для подання скарги
-  [Arguments]  ${lot}=${False}
-  ${complaint}=  test_complaint_data  ${lot}
-  [Return]  ${complaint}
-
-
-Підготувати дані для відповіді на скаргу
-  ${reply}=  test_complaint_reply_data
-  [Return]  ${reply}
 
 
 Підготувати дані для запитання
@@ -264,7 +239,7 @@ Get Broker Property By Username
 
 Підготувати дані про скасування
   [Arguments]  ${username}
-  ${cancellation_reason}=  create_fake_sentence
+  ${cancellation_reason}=  create_fake_cancellation_reason
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   ${doc_id}=  get_id_from_doc_name  ${file_name}
   ${document}=  Create Dictionary
@@ -392,6 +367,12 @@ Log differences between dicts
   ...      Set To Dictionary  ${USERS.users['${username}']}  LAST_REFRESH_DATE=${LAST_REFRESH_DATE}
 
 
+Оновити LMD і дочекатись синхронізації
+  [Arguments]  ${username}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+
+
 Звірити поле тендера
   [Arguments]  ${username}  ${tender_uaid}  ${tender_data}  ${field}
   ${left}=  get_from_object  ${tender_data.data}  ${field}
@@ -404,6 +385,34 @@ Log differences between dicts
   Порівняти об'єкти  ${left}  ${right}
 
 
+Звірити значення поля серед усіх документів тендера
+  [Arguments]  ${username}  ${tender_uaid}  ${field}  ${value}
+  ${number_of_documents}=  Run As  ${username}  Отримати кількість документів в тендері  ${tender_uaid}
+  Run Keyword If  '${number_of_documents}' == '0'  FAIL  До лоту ${tender_uaid} не завантажено документів
+  ${match_in_document}=  Set Variable  ${False}
+  :FOR  ${document_index}  IN RANGE  ${number_of_documents}
+  \  ${field_value}=  Run As  ${username}  Отримати інформацію із документа по індексу  ${tender_uaid}  ${document_index}  ${field}
+  \  ${match_in_document}=  Set Variable If  '${field_value}'=='${value}'  ${True}  ${match_in_document}
+  Порівняти об'єкти  ${match_in_document}  ${True}
+
+
+Звірити значення поля серед усіх документів ставки
+  [Arguments]  ${username}  ${tender_uaid}  ${field}  ${value}  ${bid_index}
+  ${number_of_documents}=  Run As  ${username}  Отримати кількість документів в ставці  ${tender_uaid}  ${bid_index}
+  Run Keyword If  '${number_of_documents}' == '0'  FAIL  До ставки bid_index = ${bid_index} не завантажено документів
+  ${match_in_document}=  Set Variable  ${False}
+  :FOR  ${document_index}  IN RANGE  ${number_of_documents}
+  \  ${field_value}=  Run As  ${username}  Отримати дані із документу пропозиції  ${tender_uaid}  ${bid_index}  ${document_index}  ${field}
+  \  ${match_in_document}=  Set Variable If  '${field_value}'=='${value}'  ${True}  ${match_in_document}
+  Порівняти об'єкти  ${match_in_document}  ${True}
+
+
+Звірити поле ${field} тендера для користувача ${username}
+  ${left}=  Set Variable  ${USERS.users['${tender_owner}'].initial_data.data.${field}}
+  ${right}=  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}  ${Empty}
+  compare_tender_attempts  ${left}  ${right}
+
+
 Порівняти об'єкти
   [Arguments]  ${left}  ${right}
   Log  ${left}
@@ -411,6 +420,10 @@ Log differences between dicts
   Should Not Be Equal  ${left}  ${None}
   Should Not Be Equal  ${right}  ${None}
   Should Be Equal  ${left}  ${right}  msg=Objects are not equal
+
+
+Перевірити неможливість зміни поля ${field} тендера на значення ${new_value} для користувача ${username}
+  Require Failure  ${username}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  ${field}  ${new_value}
 
 
 Звірити дату тендера
@@ -525,8 +538,6 @@ Log differences between dicts
   ${object_type}=  get_object_type_by_id  ${object_id}
   ${status}  ${value}=  Run Keyword If  '${object_type}'=='questions'
   ...      Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із запитання  ${tender_uaid}  ${object_id}  ${field_name}
-  ...      ELSE IF  '${object_type}'=='lots'
-  ...      Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із лоту  ${tender_uaid}  ${object_id}  ${field_name}
   ...      ELSE IF  '${object_type}'=='items'
   ...      Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із предмету  ${tender_uaid}  ${object_id}  ${field_name}
   ...      ELSE IF  '${object_type}'=='features'
@@ -547,10 +558,44 @@ Log differences between dicts
   [return]  ${objects_ids}
 
 
-Звірити поле скарги із значенням
-  [Arguments]  ${username}  ${tender_uaid}  ${given_value}  ${field_name}  ${complaintID}  ${award_index}=${None}
-  ${received_value}=  Run as  ${username}  Отримати інформацію із скарги  ${tender_uaid}  ${complaintID}  ${field_name}  ${award_index}
-  Порівняти об'єкти  ${given_value}  ${received_value}
+Можливість скасувати тендер
+  ${cancellation_data}=  Підготувати дані про скасування  ${tender_owner}
+  Run As  ${tender_owner}
+  ...      Скасувати закупівлю
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${cancellation_data['cancellation_reason']}
+  ...      ${cancellation_data['document']['doc_path']}
+  ...      ${cancellation_data['description']}
+
+
+Можливість вичитати посилання на аукціон для глядача
+  ${timeout_on_wait}=  Get Broker Property By Username  ${viewer}  timeout_on_wait
+  ${timeout_on_wait}=  Set Variable If
+  ...                  ${timeout_on_wait} < ${3000}
+  ...                  ${3000}
+  ...                  ${timeout_on_wait}
+  ${url}=  Wait Until Keyword Succeeds
+  ...      ${timeout_on_wait}
+  ...      15 s
+  ...      Run As  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
+  Should Be True  '${url}'
+  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.ea\.openprocurement\.org\/auctions\/([0-9A-Fa-f]{32})
+  Log  URL аукціону для глядача: ${url}
+
+
+Можливість вичитати посилання на аукціон для учасника ${username}
+  ${timeout_on_wait}=  Get Broker Property By Username  ${username}  timeout_on_wait
+  ${timeout_on_wait}=  Set Variable If
+  ...                  ${timeout_on_wait} < ${1000}
+  ...                  ${1000}
+  ...                  ${timeout_on_wait}
+  ${url}=  Wait Until Keyword Succeeds
+  ...      ${timeout_on_wait}
+  ...      15 s
+  ...      Run As  ${username}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
+  Should Be True  '${url}'
+  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.ea\.openprocurement\.org\/auctions\/([0-9A-Fa-f]{32})
+  Log  URL аукціону для учасника: ${url}
 
 
 Run As
@@ -581,12 +626,6 @@ Require Failure
   [return]  ${value}
 
 
-Дочекатись дати
-  [Arguments]  ${date}
-  ${sleep}=  wait_to_date  ${date}
-  Run Keyword If  ${sleep} > 0  Sleep  ${sleep}
-
-
 Дочекатись дати початку періоду уточнень
   [Arguments]  ${username}  ${tender_uaid}
   # XXX: HACK: Same as below
@@ -597,7 +636,7 @@ Require Failure
   ...      '${status}' == 'FAIL'
   ...      ${USERS.users['${tender_owner}'].initial_data.data.enquiryPeriod.startDate}
   ...      ${date}
-  Дочекатись дати  ${date}
+  wait_and_write_to_console  ${date}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   ${next_status}=  Set variable if  'open' in '${MODE}'  active.tendering  active.enquiries
@@ -616,10 +655,55 @@ Require Failure
   Порівняти об'єкти  ${left}  ${right}
 
 
-Звірити статус вимоги/скарги
-  [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${left}  ${award_index}=${None}
-  ${right}=  Run as  ${username}  Отримати інформацію із скарги  ${tender_uaid}  ${complaintID}  status  ${award_index}
-  Порівняти об'єкти  ${left}  ${right}
+Звірити статус скасування тендера
+  [Arguments]  ${username}  ${tender_uaid}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити поле тендера із значенням  ${username}  ${tender_uaid}
+  ...      active
+  ...      cancellations[0].status
+
+
+Звірити статус скасованого лоту
+  [Arguments]  ${username}  ${tender_uaid}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      cancelled
+
+
+Звірити статус завершення тендера
+  [Arguments]  ${username}  ${tender_uaid}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      complete
+
+
+Звірити cтатус неуспішного тендера
+  [Arguments]  ${username}  ${tender_uaid}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      15 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      unsuccessful
 
 
 Дочекатись дати початку прийому пропозицій
@@ -641,11 +725,11 @@ Require Failure
   ...      '${status}' == 'FAIL'
   ...      ${USERS.users['${tender_owner}'].initial_data.data.tenderPeriod.startDate}
   ...      ${date}
-  Дочекатись дати  ${date}
+  wait_and_write_to_console  ${date}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
-  ...      5 min 15 sec
+  ...      240 sec
   ...      15 sec
   ...      Звірити статус тендера
   ...      ${username}
@@ -663,7 +747,7 @@ Require Failure
   ...      '${status}' == 'FAIL'
   ...      ${USERS.users['${tender_owner}'].initial_data.data.tenderPeriod.endDate}
   ...      ${date}
-  Дочекатись дати  ${date}
+  wait_and_write_to_console  ${date}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
@@ -686,7 +770,7 @@ Require Failure
   ...      '${status}' == 'FAIL'
   ...      ${USERS.users['${tender_owner}'].initial_data.data.tenderPeriod.endDate}
   ...      ${date}
-  Дочекатись дати  ${date}
+  wait_and_write_to_console  ${date}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
@@ -708,7 +792,7 @@ Require Failure
   ...      '${status}' == 'FAIL'
   ...      ${USERS.users['${tender_owner}'].initial_data.data.tenderPeriod.endDate}
   ...      ${date}
-  Дочекатись дати  ${date}
+  wait_and_write_to_console  ${date}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
@@ -722,7 +806,7 @@ Require Failure
 
 Дочекатись дати закінчення періоду прекваліфікації
   [Arguments]  ${username}  ${tender_uaid}
-  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.qualificationPeriod.endDate}
+  wait_and_write_to_console  ${USERS.users['${username}'].tender_data.data.qualificationPeriod.endDate}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
@@ -753,20 +837,35 @@ Require Failure
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
-  ...      10 min 15 sec
+  ...      12 min 15 sec
   ...      15 sec
   ...      Звірити статус тендера
   ...      ${username}
   ...      ${tender_uaid}
   ...      active.auction
-  Sleep  120  # Auction sync
 
 
-Дочекатись дати закінчення періоду подання скарг
-  [Arguments]  ${username}
-  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.complaintPeriod.endDate}
+Можливість отримати дату початку аукціону
+  [Arguments]  ${username}  ${tender_uaid}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      15 min 15 sec
+  ...      15 sec
+  ...      Отримати дані із тендера   ${username}  ${TENDER['TENDER_UAID']}   auctionPeriod.startDate
+
+
+Дочекатись дати початку періоду кваліфікації
+  [Arguments]  ${username}  ${tender_uaid}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      active.qualification
 
 
 Оновити LAST_MODIFICATION_DATE

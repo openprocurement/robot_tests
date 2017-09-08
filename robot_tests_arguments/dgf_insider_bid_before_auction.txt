@@ -1,0 +1,18 @@
+-v MODE:dgfInsider
+
+-v NUMBER_OF_ITEMS:3
+
+-i create_tender
+-i find_tender
+-i tender_view
+-i tender_view_tenderPeriod
+-i tender_view_tenderPeriod_startDate
+-i tender_view_auctionPeriod_StartDate
+-i tender_view_unit_code
+
+
+-i make_bid_by_provider
+-i add_financial_license_to_bid_by_provider
+-i auction_url_provider
+
+-i absence_bid

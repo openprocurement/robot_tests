@@ -1,0 +1,73 @@
+-v MODE:dgfOtherAssets
+
+-v NUMBER_OF_ITEMS:3
+
+-i create_tender
+-i find_tender
+-i tender_view
+-i tender_view_cav_groups
+-i tender_view_tenderPeriod
+-i tender_view_unit_code
+-i tender_view_decisionDate
+-i tender_view_decisionID
+-i tender_view_tenderAttempts
+-i tender_view_min_step
+
+-i modify_auction_value
+-i modify_auction_step
+-i modify_auction_title_ua
+-i modify_auction_guarantee
+-i modify_auction_periods
+-i modify_auction_procuringEntity
+-i modify_auction_description
+-i modify_decisionDate
+-i modify_decisionID
+-i modify_tenderAttempts
+-i modify_tender
+-i add_tender_doc
+-i add_tender_doc_content
+-i add_tender_illustration
+-i add_tender_public_asset_certificate
+-i add_tender_tech_specifications
+-i add_tender_notice
+-i add_tender_presentation
+-i add_tender_asset_familiarization
+-i ask_question_to_tender
+  -i answer_question_to_tender
+-i ask_question_to_item
+  -i answer_question_to_item
+
+
+-i make_bid_by_provider_without_qualification
+-i make_bid_without_parameters
+-i make_bid_by_provider
+  -i modify_bid_by_provider
+-i make_bid_by_provider1
+-i bid_view_in_tendering_period
+
+
+-i add_bid_doc_after_tendering_period_by_provider
+-i make_bid_after_tendering_period
+-i modify_bid_doc_after_tendering_period_by_provider
+-i modify_bid_after_tendering_period_by_provider1
+-i cancel_bid_after_tendering_period_by_provider1
+-i ask_question_to_tender_after_tendering_period
+-i ask_question_to_item_after_tendering_period
+
+-i auction
+-i auction_url_viewer
+-i auction_url_provider
+-i auction_url_provider1
+-i auction_end_date
+
+-i qualification
+-i qualification_add_auction_protocol_to_bid
+-i qualification_approve_doc_to_first_award
+-i qualification_approve_first_award
+-i qualification_cancel_first_award_qualification
+-i qualification_add_auction_protocol_to_second_bid
+-i qualification_approve_doc_to_second_award
+-i qualification_approve_second_award
+
+-i contract_sign
+-i contract_sign_upload
