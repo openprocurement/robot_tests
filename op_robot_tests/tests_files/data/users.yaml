@@ -392,31 +392,31 @@ users:
         size:     [1366, 800]
     Newtend_Owner:
         broker:   Newtend
-        homepage: "http://ea-trunk.newtend.com/provider/#/profile/login"
-        login:    auc_fin001@newtend.com
+        homepage: "http://ea-trunk2.newtend.com/provider/#/profile/login"
+        login:    newttest78+001@gmail.com      #  auc_fin001@newtend.com
         password: 123123
         browser:  chrome
         position: [0, 0]
         size:     [1200, 1200]
     Newtend_Provider1:
         broker:   Newtend
-        homepage: "http://ea-trunk.newtend.com/provider/#/profile/login"
-        login:    fin_bid001@newtend.com
+        homepage: "http://ea-trunk2.newtend.com/provider/#/profile/login"
+        login:    newttest78+002@gmail.com      # fin_bid001@newtend.com
         password: 123123
         browser:  chrome
         position: [700, 0]
-        size:     [800, 700]
+        size:     [1200, 1200]
     Newtend_Provider:
         broker:   Newtend
-        homepage: "http://ea-trunk.newtend.com/provider/#/profile/login"
-        login:    fin_bid002@newtend.com
+        homepage: "http://ea-trunk2.newtend.com/provider/#/profile/login"
+        login:    newttest78+002@gmail.com      #  fin_bid002@newtend.com
         password: 123123
         browser:  chrome
         position: [700, 0]
-        size:     [800, 700]
+        size:     [1200, 1200]
     Newtend_Viewer:
         broker:   Newtend
-        homepage: "http://ea-trunk.newtend.com/provider"
+        homepage: "http://ea-trunk2.newtend.com/provider"
         browser:  chrome
         position: [800, 400]
         size:     [800, 700]
