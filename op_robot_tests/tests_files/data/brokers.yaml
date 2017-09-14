@@ -110,6 +110,9 @@ DZOauctions:
         dgfOtherAssets:
             accelerator: 144
             auction:  [15, 20]
+        dgfInsider:
+            accelerator: 1440
+            auction:  [25, 30]
     keywords_file: dzo
     roles:
         tender_owner:   DZO_Owner_auction
