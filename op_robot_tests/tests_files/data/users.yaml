@@ -191,7 +191,7 @@ users:
     brizol_Provider:
         broker:   brizol
         homepage: "http://test-eauction.brizol.net/login"
-        login:    prozorroyprovider2@gmail.com
+        login:    prozorroyprovider1@gmail.com
         password: 123456
         browser:  Firefox
         position: [0, 0]
@@ -199,7 +199,7 @@ users:
     brizol_Provider1:
         broker:   brizol
         homepage: "http://test-eauction.brizol.net/login"
-        login:    prozorroyprovider1@gmail.com
+        login:    prozorroyprovider2@gmail.com
         password: 123456
         browser:  Firefox
         position: [0, 0]
@@ -212,7 +212,7 @@ users:
         size:     [1366, 800]
     aukzionua_Owner:
         broker:   aukzionua
-        homepage: "http://torgi.aukzion.com.ua"
+        homepage: "http://test.neb.org.ua"
         login:    prozorroytenderowner@gmail.com
         password: 123456
         browser:  Firefox
@@ -220,7 +220,7 @@ users:
         size:     [1366, 800]
     aukzionua_Provider:
         broker:   aukzionua
-        homepage: "http://torgi.aukzion.com.ua"
+        homepage: "http://test.neb.org.ua"
         login:    prozorroyprovider1@gmail.com
         password: 123456
         browser:  Firefox
@@ -228,7 +228,7 @@ users:
         size:     [1366, 800]
     aukzionua_Provider1:
         broker:   aukzionua
-        homepage: "http://torgi.aukzion.com.ua"
+        homepage: "http://test.neb.org.ua"
         login:    prozorroyprovider2@gmail.com
         password: 123456
         browser:  Firefox
@@ -236,7 +236,7 @@ users:
         size:     [1366, 800]
     aukzionua_Viewer:
         broker:   aukzionua
-        homepage: "http://torgi.aukzion.com.ua"
+        homepage: "http://test.neb.org.ua"
         browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
@@ -302,7 +302,7 @@ users:
         size:     [1366, 800]
     expagency_Owner:
         broker:   expagency
-        homepage: "http://torgi.exp-agency.com.ua"
+        homepage: "http://test-torgi.exp-agency.com.ua"
         login:    prozorroytenderowner@gmail.com
         password: 123456
         browser:  Firefox
@@ -310,7 +310,7 @@ users:
         size:     [1366, 800]
     expagency_Provider:
         broker:   expagency
-        homepage: "http://torgi.exp-agency.com.ua"
+        homepage: "http://test-torgi.exp-agency.com.ua"
         login:    prozorroyprovider1@gmail.com
         password: 123456
         browser:  Firefox
@@ -318,7 +318,7 @@ users:
         size:     [1366, 800]
     expagency_Provider1:
         broker:   expagency
-        homepage: "http://torgi.exp-agency.com.ua"
+        homepage: "http://test-torgi.exp-agency.com.ua"
         login:    prozorroyprovider2@gmail.com
         password: 123456
         browser:  Firefox
@@ -326,7 +326,7 @@ users:
         size:     [1366, 800]
     expagency_Viewer:
         broker:   expagency
-        homepage: "http://torgi.exp-agency.com.ua"
+        homepage: "http://test-torgi.exp-agency.com.ua"
         browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]

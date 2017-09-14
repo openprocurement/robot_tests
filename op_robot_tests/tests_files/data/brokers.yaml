@@ -167,6 +167,9 @@ brizol:
         dgfOtherAssets:
             accelerator: 144
             auction:  [8, 12]
+        dgfInsider:
+            accelerator: 1440
+            auction:  [25, 30]
     keywords_file: brizol
     roles:
         tender_owner:   brizol_Owner
@@ -185,6 +188,9 @@ aukzionua:
         dgfOtherAssets:
             accelerator: 1440
             auction:  [45, 50]
+        dgfInsider:
+            accelerator: 1440
+            auction:  [25, 30]
     keywords_file: aukzionua
     roles:
         tender_owner:   aukzionua_Owner
@@ -239,6 +245,9 @@ expagency:
         dgfOtherAssets:
             accelerator: 1440
             auction:  [45, 50]
+        dgfInsider:
+            accelerator: 1440
+            auction:  [25, 30]
     keywords_file: expagency
     roles:
         tender_owner:   expagency_Owner
