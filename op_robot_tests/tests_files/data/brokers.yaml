@@ -131,6 +131,9 @@ uaceauction:
         dgfOtherAssets:
             accelerator: 1440
             auction:  [45, 50]
+        dgfInsider:
+            accelerator: 1440
+            auction:  [25, 30]
     keywords_file: uace
     roles:
         tender_owner:   uace_Owner_auction
@@ -149,6 +152,9 @@ opentenderauction:
         dgfOtherAssets:
             accelerator: 1440
             auction:  [45, 50]
+        dgfInsider:
+            accelerator: 1440
+            auction:  [25, 30]
     keywords_file: opentender
     roles:
         tender_owner:   opentender_Owner_auction
@@ -227,6 +233,9 @@ centrex:
         dgfOtherAssets:
             accelerator: 1440
             auction:  [45, 50]
+        dgfInsider:
+            accelerator: 1440
+            auction:  [25, 30]
     keywords_file: centrex
     roles:
         tender_owner:   centrex_Owner
@@ -266,6 +275,9 @@ govfound:
         dgfOtherAssets:
             accelerator: 1440
             auction:  [45, 50]
+        dgfInsider:
+            accelerator: 1440
+            auction:  [25, 30]
     keywords_file: govfound
     roles:
         tender_owner:   govfound_Owner
@@ -810,6 +822,9 @@ epsilon:
         dgfOtherAssets:
             accelerator: 144
             auction:  [75, 80]
+        dgfInsider:
+            accelerator: 1440
+            auction:  [25, 30]
     keywords_file: epsilon
     roles:
         tender_owner:   epsilon_Owner_auction
@@ -849,6 +864,9 @@ tirex:
         dgfOtherAssets:
             accelerator: 144
             auction:  [75, 80]
+        dgfInsider:
+            accelerator: 1440
+            auction:  [25, 30]
     keywords_file: tirex
     roles:
         tender_owner:   tirex_Owner_auction

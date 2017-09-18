@@ -272,7 +272,7 @@ users:
         size:     [1366, 800]
     centrex_Owner:
         broker:   centrex
-        homepage: "http://eauction.centrex.com.ua"
+        homepage: "http://test-eauction.centrex.com.ua"
         login:    prozorroytenderowner@gmail.com
         password: 123456
         browser:  Firefox
@@ -280,7 +280,7 @@ users:
         size:     [1366, 800]
     centrex_Provider:
         broker:   centrex
-        homepage: "http://eauction.centrex.com.ua"
+        homepage: "http://test-eauction.centrex.com.ua"
         login:    prozorroyprovider1@gmail.com
         password: 123456
         browser:  Firefox
@@ -288,7 +288,7 @@ users:
         size:     [1366, 800]
     centrex_Provider1:
         broker:   centrex
-        homepage: "http://eauction.centrex.com.ua"
+        homepage: "http://test-eauction.centrex.com.ua"
         login:    prozorroyprovider2@gmail.com
         password: 123456
         browser:  Firefox
@@ -296,7 +296,7 @@ users:
         size:     [1366, 800]
     centrex_Viewer:
         broker:   centrex
-        homepage: "http://eauction.centrex.com.ua"
+        homepage: "http://test-eauction.centrex.com.ua"
         browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
@@ -332,7 +332,7 @@ users:
         size:     [1366, 800]
     govfound_Owner:
         broker:   govfound
-        homepage: "http://www.gov.auction"
+        homepage: "http://test.gov.auction"
         login:    prozorroytenderowner@gmail.com
         password: 123456
         browser:  Firefox
@@ -340,7 +340,7 @@ users:
         size:     [1366, 800]
     govfound_Provider:
         broker:   govfound
-        homepage: "http://www.gov.auction"
+        homepage: "http://test.gov.auction"
         login:    prozorroyprovider1@gmail.com
         password: 123456
         browser:  Firefox
@@ -348,7 +348,7 @@ users:
         size:     [1366, 800]
     govfound_Provider1:
         broker:   govfound
-        homepage: "http://www.gov.auction"
+        homepage: "http://test.gov.auction"
         login:    prozorroyprovider2@gmail.com
         password: 123456
         browser:  Firefox
@@ -356,7 +356,7 @@ users:
         size:     [1366, 800]
     govfound_Viewer:
         broker:   govfound
-        homepage: "http://www.gov.auction"
+        homepage: "http://test.gov.auction"
         browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
@@ -1412,7 +1412,7 @@ users:
         size:     [1024, 768]
     epsilon_Owner_auction:
         broker:   epsilon
-        homepage: "https://tbepsilon.com"
+        homepage: "http://test.tbepsilon.com/"
         login:    prozorroytenderowner@gmail.com
         password: 123456
         browser:  Firefox
@@ -1420,7 +1420,7 @@ users:
         size:     [1366, 800]
     epsilon_Provider_auction:
         broker:   epsilon
-        homepage: "https://tbepsilon.com"
+        homepage: "http://test.tbepsilon.com/"
         login:    prozorroyprovider1@gmail.com
         password: 123456
         browser:  Firefox
@@ -1428,7 +1428,7 @@ users:
         size:     [1366, 800]
     epsilon_Provider1_auction:
         broker:   epsilon
-        homepage: "https://tbepsilon.com"
+        homepage: "http://test.tbepsilon.com/"
         login:    prozorroyprovider2@gmail.com
         password: 123456
         browser:  Firefox
@@ -1436,7 +1436,7 @@ users:
         size:     [1366, 800]
     epsilon_Viewer_auction:
         broker:   epsilon
-        homepage: "https://tbepsilon.com"
+        homepage: "http://test.tbepsilon.com/"
         browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
