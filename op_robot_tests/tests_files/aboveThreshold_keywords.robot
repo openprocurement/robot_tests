@@ -33,8 +33,7 @@ Resource           base_keywords.robot
 
 
 Можливість підтвердити цінову пропозицію учасником ${username}
-  ${status}=  Run Keyword IF  '${MODE}'=='openeu'  Set Variable  pending
-  ...                     ELSE IF  '${MODE}'=='openua' or '${MODE}'=='openua_defense'  Set Variable  active
+  ${status}=  Run Keyword IF  '${MODE}'=='esco'  Set Variable  pending
   Run As  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  status  ${status}
 
 ##############################################################################################
