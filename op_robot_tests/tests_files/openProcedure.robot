@@ -60,31 +60,40 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля description тендера для користувача ${viewer}
 
 
-Відображення бюджету тендера
+Відображення мінімального кроку підвищення показника ефективності енергосервісного договору
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level1
+  ...      tender_view  level2
   ...      critical
-  Звірити відображення поля value.amount тендера для усіх користувачів
+  Звірити відображення поля minimalStepPercentage тендера для користувача ${viewer}
 
 
-Відображення валюти тендера
+Відображення облікової ставки НБУ
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
-  ...      non-critical
-  Звірити відображення поля value.currency тендера для користувача ${viewer}
+  ...      critical
+  Звірити відображення поля NBUdiscountRate тендера для користувача ${viewer}
 
 
-Відображення ПДВ в бюджеті тендера
+Відображення джерела фінансування закупівлі
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
-  ...      non-critical
-  Звірити відображення поля value.valueAddedTaxIncluded тендера для користувача ${viewer}
+  ...      critical
+  Звірити відображення поля fundingKind тендера для користувача ${viewer}
+
+
+Відображення фіксованого відсотка суми скорочення витрат замовника
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view  level2
+  ...      critical
+  Звірити відображення поля yearlyPaymentsPercentageRange тендера для користувача ${viewer}
 
 
 Відображення ідентифікатора тендера
@@ -111,7 +120,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
   ...      non-critical
-  Run Keyword IF  'open' in '${MODE}'
+  Run Keyword IF  'esco' in '${MODE}'
   ...      Отримати дані із поля enquiryPeriod.startDate тендера для усіх користувачів
   ...      ELSE
   ...      Звірити відображення дати enquiryPeriod.startDate тендера для усіх користувачів
@@ -123,7 +132,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
   ...      critical
-  Run Keyword IF  'open' in '${MODE}'
+  Run Keyword IF  'esco' in '${MODE}'
   ...      Отримати дані із поля enquiryPeriod.endDate тендера для усіх користувачів
   ...      ELSE
   ...      Звірити відображення дати enquiryPeriod.endDate тендера для усіх користувачів
@@ -145,15 +154,6 @@ ${ITEM_MEAT}        ${True}
   ...      tender_view  level2
   ...      critical
   Звірити відображення дати tenderPeriod.endDate тендера для усіх користувачів
-
-
-Відображення мінімального кроку тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level2
-  ...      critical
-  Звірити відображення поля minimalStep.amount тендера для користувача ${viewer}
 
 
 Відображення типу оголошеного тендера
@@ -184,23 +184,6 @@ ${ITEM_MEAT}        ${True}
   ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля description усіх предметів для усіх користувачів
-
-Відображення дати початку доставки номенклатур тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level2
-  ...      non-critical
-  Звірити відображення дати deliveryDate.startDate усіх предметів для користувача ${viewer}
-
-
-Відображення дати кінця доставки номенклатур тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level2
-  ...      non-critical
-  Звірити відображення дати deliveryDate.endDate усіх предметів для користувача ${viewer}
 
 
 Відображення координати доставки номенклатур тендера
@@ -304,15 +287,6 @@ ${ITEM_MEAT}        ${True}
   ...      non-critical
   Звірити відображення поля unit.code усіх предметів для користувача ${viewer}
 
-
-Відображення кількості номенклатур тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level2
-  ...      non-critical
-  Звірити відображення поля quantity усіх предметів для користувача ${viewer}
-
 ##############################################################################################
 #             Відображення основних даних лоту
 ##############################################################################################
@@ -336,58 +310,31 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля description усіх лотів для користувача ${viewer}
 
 
-Відображення бюджету лотів
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      lot_view  level2
-  ...      critical
-  Звірити відображення поля value.amount усіх лотів для усіх користувачів
+# Відображення мінімального кроку підвищення показника ефективності енергосервісного договору
+#   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
+#   ...      viewer
+#   ...      ${USERS.users['${viewer}'].broker}
+#   ...      lot_view  level2
+#   ...      critical
+#   Звірити відображення поля minimalStepPercentage усіх лотів для користувача ${viewer}
 
 
-Відображення валюти лотів
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      lot_view  level2
-  ...      non-critical
-  Звірити відображення поля value.currency усіх лотів для користувача ${viewer}
+# Відображення джерело фінансування лота
+#   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
+#   ...      viewer
+#   ...      ${USERS.users['${viewer}'].broker}
+#   ...      lot_view  level2
+#   ...      critical
+#   Звірити відображення поля fundingKind усіх лотів для користувача ${viewer}
 
 
-Відображення ПДВ в бюджеті лотів
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      lot_view  level2
-  ...      non-critical
-  Звірити відображення поля value.valueAddedTaxIncluded усіх лотів для користувача ${viewer}
-
-
-Відображення мінімального кроку лотів
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      lot_view  level2
-  ...      non-critical
-  Звірити відображення поля minimalStep.amount усіх лотів для усіх користувачів
-
-
-Відображення валюти мінімального кроку лотів
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      lot_view  level2
-  ...      non-critical
-  Звірити відображення поля minimalStep.currency усіх лотів для користувача ${viewer}
-
-
-Відображення ПДВ в мінімальному кроці лотів
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      lot_view  level2
-  ...      non-critical
-  Звірити відображення поля minimalStep.valueAddedTaxIncluded усіх лотів для користувача ${viewer}
+# Відображення фіксованого відсотка суми скорочення витрат замовника
+#   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
+#   ...      viewer
+#   ...      ${USERS.users['${viewer}'].broker}
+#   ...      lot_view  level2
+#   ...      critical
+#   Звірити відображення поля yearlyPaymentsPercentageRange усіх лотів для користувача ${viewer}
 
 ##############################################################################################
 #             Відображення основних даних предмету
@@ -537,26 +484,6 @@ ${ITEM_MEAT}        ${True}
   ...      add_lot_doc  level2
   ...      critical
   Звірити відображення вмісту документації до всіх лотів для користувача ${viewer}
-
-
-Можливість зменшити бюджет лоту
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_lot_value_amount  level2
-  ...      non-critical
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість змінити на 99 відсотки бюджет 0 лоту
-
-
-Можливість збільшити бюджет лоту
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_lot_value_amount  level3
-  ...      non-critical
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість змінити на 101 відсотки бюджет 0 лоту
 
 
 Можливість створення лоту із прив’язаним предметом закупівлі

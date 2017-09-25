@@ -144,6 +144,8 @@ Library  openprocurement_client.utils
   ${access_token}=  Get Variable Value  ${tender.access.token}
   ${status}=  Set Variable If  'open' in '${MODE}'  active.tendering  ${EMPTY}
   ${status}=  Set Variable If  'below' in '${MODE}'  active.enquiries  ${status}
+  ${status}=  Set Variable If  'esco' in '${MODE}'  active.tendering  ${status}
+  ${status}=  Set Variable If  '${status}'=='${EMPTY}'  active.tendering   ${status}
   ${status}=  Set Variable If  '${status}'=='${EMPTY}'  active   ${status}
   Set To Dictionary  ${tender['data']}  status=${status}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
@@ -621,7 +623,8 @@ Library  openprocurement_client.utils
   ...      ${award_index}
   ...      ${document}
 
-  ${status}=  Set variable if  'open' in '${MODE}'  pending  claim
+  # ${status}=  Set variable if  'open' in '${MODE}'  pending  claim
+  ${status}=  Set variable if  'esco' in '${MODE}'  pending  claim
   ${data}=  Create Dictionary  status=${status}
   ${confirmation_data}=  Create Dictionary  data=${data}
   openprocurement_client.Подати вимогу про виправлення визначення переможця
@@ -855,7 +858,8 @@ Library  openprocurement_client.utils
   Set To Dictionary  ${USERS.users['${username}']}  bid_access_token=${reply.access.token}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bid_access_token}
   ${procurementMethodType}=  Get variable value  ${USERS.users['${username}'].tender_data.data.procurementMethodType}
-  ${status}=  Set Variable If  'EU' in '${procurementMethodType}' or '${procurementMethodType}'=='competitiveDialogueUA'  pending  active
+  ${status}=  Set Variable If  'eu' in '${procurementMethodType}' or '${procurementMethodType}'=='competitiveDialogueUA'  pending  active
+  ${status}=  Set Variable If  'esco' in '${procurementMethodType}' or '${procurementMethodType}'=='competitiveDialogueUA'  pending  active
   Set To Dictionary  ${reply['data']}  status=${status}
   ${reply_active}=  Call Method  ${USERS.users['${username}'].client}  patch_bid  ${tender}  ${reply}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${reply['access']['token']}
@@ -1014,7 +1018,7 @@ Library  openprocurement_client.utils
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${award}=  create_data_dict  data.status  active
   Set To Dictionary  ${award.data}  id=${tender.data.awards[${award_num}].id}
-  Run Keyword IF  'open' in '${MODE}'
+  Run Keyword IF  'esco' in '${MODE}'
   ...      Set To Dictionary  ${award.data}
   ...      qualified=${True}
   ...      eligible=${True}

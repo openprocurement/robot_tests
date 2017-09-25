@@ -171,7 +171,7 @@ def test_tender_data(params,
         data['features'].append(new_feature)
     if not data['features']:
         del data['features']
-    data['status'] = 'draft'
+    data['status'] = 'active.tendering'
     return munchify(data)
 
 
@@ -377,7 +377,7 @@ def test_bid_competitive_data():
     used_identifier_id.append(id)
     bid.data.tenderers[0].address.countryName_en = translate_country_en(bid.data.tenderers[0].address.countryName)
     bid.data.tenderers[0].address.countryName_ru = translate_country_ru(bid.data.tenderers[0].address.countryName)
-    bid.data['status'] = 'draft'
+    bid.data['status'] = 'pending'
     return bid
 
 
@@ -391,18 +391,28 @@ def test_bid_data():
     })
     bid.data.tenderers[0].address.countryName_en = translate_country_en(bid.data.tenderers[0].address.countryName)
     bid.data.tenderers[0].address.countryName_ru = translate_country_ru(bid.data.tenderers[0].address.countryName)
-    bid.data['status'] = 'draft'
+    bid.data['status'] = 'pending'
     return bid
 
 
-def test_bid_value(max_value_amount):
-    return munchify({
+def test_bid_value():
+    annual_cost = []
+    for i in range(0, 21):
+        cost=float(round(random.uniform(1, 100), 2))
+        annual_cost.append(cost)
+    bid = munchify({
         "value": {
             "currency": "UAH",
-            "amount": round(random.uniform((0.95 * max_value_amount), max_value_amount), 2),
-            "valueAddedTaxIncluded": True
+            "valueAddedTaxIncluded": True,
+            "yearlyPaymentsPercentage": float(round(random.uniform(0.8, 1), 3)),
+            "annualCostsReduction": annual_cost,
+            "contractDuration": {
+                "years": int(random.uniform(1, 15)),
+                "days": int(random.uniform(1, 364))
+            }
         }
     })
+    return bid           
 
 
 def test_supplier_data():
@@ -542,6 +552,43 @@ def test_tender_data_competitive_dialogue(params, submissionMethodDetails):
     data['procuringEntity']['contactPoint']['name_en'] = fake_en.name()
     data['procuringEntity']['identifier']['legalName_en'] = fake_en.sentence(nb_words=10, variable_nb_words=True)
     data['procuringEntity']['kind'] = 'general'
+    return data
+
+
+def test_tender_data_esco(params):
+    data = test_tender_data(params, ('tender',))
+    data['procurementMethodType'] = 'esco'
+    data['title_en'] = "[TESTING]"
+    for item_number, item in enumerate(data['items']):
+        item['description_en'] = "Test item #{}".format(item_number)
+    data.update({"procurementMethodType": params['mode'], "procurementMethod": "open"})
+    data['procuringEntity']['name_en'] = fake_en.name()
+    data['procuringEntity']['contactPoint']['name_en'] = fake_en.name()
+    data['procuringEntity']['contactPoint']['availableLanguage'] = "en"
+    data['procuringEntity']['identifier']['legalName_en'] = u"Institution \"Vinnytsia City Council primary and secondary general school № 10\""
+    data['procuringEntity']['kind'] = 'general'
+    data['minimalStepPercentage'] = float(round(random.uniform(0.005, 0.03), 3))
+    funding_variants = (
+        "budget",
+        "other"
+        )
+    data['fundingKind'] = fake.random_element(funding_variants)
+    data['NBUdiscountRate'] = float(round(random.uniform(0, 0.99), 3))
+    if 'fundingKind' == "budget":
+        data['yearlyPaymentsPercentageRange'] = float(round(random.uniform(0.001, 0.8), 3))
+    else:
+        data['yearlyPaymentsPercentageRange'] = 0.8
+    del data["value"]
+    del data['submissionMethodDetails']
+    del data["minimalStep"]
+    for index in range(params['number_of_lots']):
+        data['lots'][index]['minimalStepPercentage'] = data['minimalStepPercentage']
+        data['lots'][index]['fundingKind'] = data['fundingKind']
+        data['lots'][index]['yearlyPaymentsPercentageRange'] = data['yearlyPaymentsPercentageRange']
+        del data['lots'][index]['value']
+        del data['lots'][index]['minimalStep']
+    for index in range(params['number_of_items']):
+        del data['items'][index]['deliveryDate']
     return data
 
 

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -
 import operator
+import random
 from .local_time import get_now, TZ
 from copy import deepcopy
 from datetime import timedelta
@@ -48,6 +49,7 @@ from .initial_data import (
     test_tender_data_openua,
     test_tender_data_planning,
     test_tender_data_openua_defense,
+    test_tender_data_esco,
     test_bid_competitive_data,
     create_fake_title,
     create_fake_value_amount,
@@ -338,6 +340,8 @@ def prepare_test_tender_data(procedure_intervals,
             tender_parameters)})
         # The previous line needs an explicit keyword argument because,
         # unlike previous functions, this one has three arguments.
+    elif mode == 'esco':
+        return munchify({'data': test_tender_data_esco(tender_parameters)})
     raise ValueError("Invalid mode for prepare_test_tender_data")
 
 
@@ -524,21 +528,28 @@ def generate_test_bid_data(tender_data):
             'aboveThresholdUA.defense',
             'aboveThresholdEU',
             'competitiveDialogueUA',
-            'competitiveDialogueEU'
+            'competitiveDialogueEU',
+            'esco'
         ):
         bid = test_bid_competitive_data()
         bid.data.selfEligible = True
         bid.data.selfQualified = True
+        bid.data.status = 'pending'
     else:
         bid = test_bid_data()
     if 'lots' in tender_data:
         bid.data.lotValues = []
         for lot in tender_data['lots']:
-            value = test_bid_value(lot['value']['amount'])
+            value = test_bid_value()
             value['relatedLot'] = lot.get('id', '')
+            if tender_data['fundingKind'] == "budget":
+                value["value"]["yearlyPaymentsPercentage"] = float(round(random.uniform(0.01, 0.8), 3))
             bid.data.lotValues.append(value)
     else:
-        bid.data.update(test_bid_value(tender_data['value']['amount']))
+        value = test_bid_value()
+        if tender_data['fundingKind'] == "budget":
+            value["value"]["yearlyPaymentsPercentage"] = float(round(random.uniform(0.01, 0.8), 3))
+        bid.data.update(value)
     if 'features' in tender_data:
         bid.data.parameters = []
         for feature in tender_data['features']:

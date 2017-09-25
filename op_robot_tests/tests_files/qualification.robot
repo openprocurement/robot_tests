@@ -88,7 +88,7 @@ ${award_index}      ${0}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  create_award_claim
-  ${status}=  Set variable if  'open' in '${MODE}'  pending  claim
+  ${status}=  Set variable if  'esco' in '${MODE}'  pending  claim
   Звірити відображення поля status вимоги про виправлення визначення ${award_index} переможця із ${status} для користувача ${viewer}
 
 
@@ -196,7 +196,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${viewer}'].broker}
   ...  cancel_award_claim
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  ${status}=  Set variable if  'open' in '${MODE}'  stopping  cancelled
+  ${status}=  Set variable if  'esco' in '${MODE}'  stopping  cancelled
   Звірити відображення поля status вимоги про виправлення визначення ${award_index} переможця із ${status} для користувача ${viewer}
 
 
