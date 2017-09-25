@@ -1086,7 +1086,7 @@ Resource           resource.robot
 ##############################################################################################
 
 Можливість подати цінову пропозицію користувачем ${username}
-  ${bid}=  Підготувати дані для подання пропозиції
+  ${bid}=  Підготувати дані для подання пропозиції  ${username}
   ${bidresponses}=  Create Dictionary  bid=${bid}
   Set To Dictionary  ${USERS.users['${username}']}  bidresponses=${bidresponses}
   ${lots}=  Get Variable Value  ${USERS.users['${tender_owner}'].initial_data.data.lots}  ${None}
@@ -1116,7 +1116,7 @@ Resource           resource.robot
 
 
 Неможливість подати цінову пропозицію без прив’язки до лоту користувачем ${username}
-  ${bid}=  Підготувати дані для подання пропозиції
+  ${bid}=  Підготувати дані для подання пропозиції  ${username}
   ${values}=  Get Variable Value  ${bid.data.lotValues[0]}
   Remove From Dictionary  ${bid.data}  lotValues
   Set_To_Object  ${bid}  data  ${values}
@@ -1124,7 +1124,7 @@ Resource           resource.robot
 
 
 Неможливість подати цінову пропозицію без нецінових показників користувачем ${username}
-  ${bid}=  Підготувати дані для подання пропозиції
+  ${bid}=  Підготувати дані для подання пропозиції  ${username}
   Remove From Dictionary  ${bid.data}  parameters
   Require Failure  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}
 
@@ -1204,6 +1204,15 @@ Resource           resource.robot
   ...      ${TENDER['TENDER_UAID']}
   ...      ${0}
   Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.contracts[0]}  status
+
+
+Неможливість змінити поле ${field_name} договору на значення ${new_value}
+  ${award_index}=  Отримати останній індекс  awards  ${viewer}
+  ${contract_index}=  Отримати останній індекс  contracts  ${viewer}
+  ${field_value}=  get_from_object  ${USERS.users['${viewer}'].tender_data.data.awards[${award_index}]}  ${field_name}
+  Run As  ${tender_owner}  Редагувати угоду  ${TENDER['TENDER_UAID']}  ${contract_index}  ${field_name}  ${new_value}
+  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.contracts[${contract_index}]}  ${field_name}
+  Run Keyword And Expect Error  *  Звірити відображення поля contracts[${contract_index}].${field_name} тендера із ${new_value} для користувача ${viewer}
 
 ##############################################################################################
 #             Pre-Qualifications

@@ -1,0 +1,33 @@
+-v MODE:esco
+
+-v NUMBER_OF_ITEMS:1
+-v NUMBER_OF_LOTS:1
+
+-v TENDER_MEAT:False
+-v ITEM_MEAT:False
+-v LOT_MEAT:False
+
+
+-i create_tender
+-i find_tender
+-i tender_view
+-i lot_view
+
+-i make_bid_by_provider
+-i make_bid_by_provider1
+
+-i open_tender_view
+
+#-i pre-qualifications_check_by_edrpou
+
+-i pre-qualification_approve_first_bid
+-i pre-qualification_approve_second_bid
+-i pre-qualification_approve_qualifications
+-i pre-qualification_view
+
+-i auction
+
+#-i qualifications_check_by_edrpou
+-i qualification_approve_first_award
+
+-i contract_sign

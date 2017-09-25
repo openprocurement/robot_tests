@@ -274,8 +274,10 @@ Get Broker Property By Username
 
 
 Підготувати дані для подання пропозиції
-  [Arguments]
-  ${bid}=  generate_test_bid_data  ${USERS.users['${tender_owner}'].initial_data.data}
+  [Arguments]  ${username}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${TENDER['TENDER_UAID']}
+  Log  ${tender}
+  ${bid}=  generate_test_bid_data  ${tender.data}
   [Return]  ${bid}
 
 
@@ -439,8 +441,7 @@ Log differences between dicts
 
 Оновити сторінку
   [Arguments]  ${username}
-  Run Keyword If  '${MODE}' == 'planning'  Run As  ${username}  Оновити сторінку з планом  ${TENDER['TENDER_UAID']}
-  ...      ELSE  Run As  ${username}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  Run As  ${username}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
 
 
 Звірити поле тендера
@@ -757,7 +758,7 @@ Require Failure
   Дочекатись дати  ${date}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
-  ${next_status}=  Set variable if  'open' in '${MODE}'  active.tendering  active.enquiries
+  ${next_status}=  Set variable if  'esco' in '${MODE}'  active.tendering  active.enquiries
   Wait until keyword succeeds
   ...      5 min 15 sec
   ...      15 sec

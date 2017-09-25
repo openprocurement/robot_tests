@@ -30,7 +30,7 @@ def create_fake_sentence():
 
 
 def create_fake_amount(award_amount):
-    return round(random.uniform(1, award_amount), 2)
+    return round(random.uniform(1, int(award_amount)), 2)
 
 
 def create_fake_title():
@@ -171,57 +171,7 @@ def test_tender_data(params,
         data['features'].append(new_feature)
     if not data['features']:
         del data['features']
-    data['status'] = 'draft'
-    return munchify(data)
-
-
-def test_tender_data_planning(params):
-    data = {
-        "budget": {
-            "amountNet": round(random.uniform(3000, 999999999.99), 2),
-            "description": fake.description(),
-            "project": {
-                "id": str(fake.random_int(min=1, max=999)),
-                "name": fake.description(),
-            },
-            "currency": "UAH",
-            "amount": round(random.uniform(3000, 99999999999.99), 2),
-            "id": str(fake.random_int(min=1, max=99999999999)) + "-" + str(fake.random_int(min=1, max=9)),
-        },
-        "procuringEntity": {
-            "identifier": {
-                "scheme": "UA-EDR",
-                "id": str(fake.random_int(min=1, max=999)),
-                "legalName": fake.description(),
-            },
-            "name": fake.description(),
-        },
-        "tender": {
-            "procurementMethod": "open",
-            "procurementMethodType": "belowThreshold",
-            "tenderPeriod": {
-                "startDate": (get_now().isoformat())
-            }
-        },
-        "items": []
-        }
-    id_cpv=fake.cpv()[:4]
-    cpv_data=test_item_data(id_cpv)
-    data.update(cpv_data)
-    del data['deliveryDate']
-    del data['description']
-    del data['description_en']
-    del data['description_ru']
-    del data['deliveryAddress']
-    del data['deliveryLocation']
-    del data['quantity']
-    del data['unit']
-    for i in range(params['number_of_items']):
-        item_data=test_item_data(id_cpv)
-        del item_data['deliveryAddress']
-        del item_data['deliveryLocation']
-        del item_data['deliveryDate']['startDate']
-        data['items'].append(item_data)
+    data['status'] = 'active.tendering'
     return munchify(data)
 
 
@@ -377,7 +327,7 @@ def test_bid_competitive_data():
     used_identifier_id.append(id)
     bid.data.tenderers[0].address.countryName_en = translate_country_en(bid.data.tenderers[0].address.countryName)
     bid.data.tenderers[0].address.countryName_ru = translate_country_ru(bid.data.tenderers[0].address.countryName)
-    bid.data['status'] = 'draft'
+    bid.data['status'] = 'pending'
     return bid
 
 
@@ -391,18 +341,32 @@ def test_bid_data():
     })
     bid.data.tenderers[0].address.countryName_en = translate_country_en(bid.data.tenderers[0].address.countryName)
     bid.data.tenderers[0].address.countryName_ru = translate_country_ru(bid.data.tenderers[0].address.countryName)
-    bid.data['status'] = 'draft'
+    bid.data['status'] = 'pending'
     return bid
 
 
-def test_bid_value(max_value_amount):
-    return munchify({
+def test_bid_value(tender_data):
+    annual_cost = []
+    for i in range(0, 21):
+        cost=float(round(random.uniform(1, 100), 2))
+        annual_cost.append(cost)
+    if tender_data['fundingKind'] == "budget":
+        yearly_percentage=float(round(random.uniform(0.01, float(tender_data['yearlyPaymentsPercentageRange'])), 3))
+    else:
+        yearly_percentage= 0.8
+    bid = munchify({
         "value": {
             "currency": "UAH",
-            "amount": round(random.uniform((0.95 * max_value_amount), max_value_amount), 2),
-            "valueAddedTaxIncluded": True
+            "valueAddedTaxIncluded": True,
+            "yearlyPaymentsPercentage": yearly_percentage,
+            "annualCostsReduction": annual_cost,
+            "contractDuration": {
+                "years": int(random.uniform(1, 15)),
+                "days": int(random.uniform(1, 364))
+            }
         }
     })
+    return bid
 
 
 def test_supplier_data():
@@ -488,60 +452,43 @@ def test_change_document_data(document, change_id):
     return munchify(document)
 
 
-def test_tender_data_openua(params, submissionMethodDetails):
-    # We should not provide any values for `enquiryPeriod` when creating
-    # an openUA or openEU procedure. That field should not be present at all.
-    # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
+def test_tender_data_esco(params, submissionMethodDetails):
     data = test_tender_data(params, ('tender',), submissionMethodDetails)
-    data['procurementMethodType'] = 'aboveThresholdUA'
-    data['procuringEntity']['kind'] = 'general'
-    return data
-
-
-def test_tender_data_openua_defense(params, submissionMethodDetails):
-    """We should not provide any values for `enquiryPeriod` when creating
-    an openUA, openEU or openUA_defense procedure. That field should not be present at all.
-    Therefore, we pass a nondefault list of periods to `test_tender_data()`."""
-    data = test_tender_data(params, ('tender',), submissionMethodDetails)
-    data['procurementMethodType'] = 'aboveThresholdUA.defense'
-    data['procuringEntity']['kind'] = 'defense'
-    return data
-
-
-def test_tender_data_openeu(params, submissionMethodDetails):
-    # We should not provide any values for `enquiryPeriod` when creating
-    # an openUA or openEU procedure. That field should not be present at all.
-    # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
-    data = test_tender_data(params, ('tender',), submissionMethodDetails)
-    data['procurementMethodType'] = 'aboveThresholdEU'
+    data['procurementMethodType'] = 'esco'
     data['title_en'] = "[TESTING]"
     for item_number, item in enumerate(data['items']):
         item['description_en'] = "Test item #{}".format(item_number)
     data['procuringEntity']['name_en'] = fake_en.name()
     data['procuringEntity']['contactPoint']['name_en'] = fake_en.name()
     data['procuringEntity']['contactPoint']['availableLanguage'] = "en"
-    data['procuringEntity']['identifier']['legalName_en'] = u"Institution \"Vinnytsia City Council primary and secondary general school № 10\""
-    data['procuringEntity']['kind'] = 'general'
-    return data
-
-
-def test_tender_data_competitive_dialogue(params, submissionMethodDetails):
-    # We should not provide any values for `enquiryPeriod` when creating
-    # an openUA or openEU procedure. That field should not be present at all.
-    # Therefore, we pass a nondefault list of periods to `test_tender_data()`.
-    data = test_tender_data(params, ('tender',), submissionMethodDetails)
-    if params.get('dialogue_type') == 'UA':
-        data['procurementMethodType'] = 'competitiveDialogueUA'
-    else:
-        data['procurementMethodType'] = 'competitiveDialogueEU'
-        data['procuringEntity']['contactPoint']['availableLanguage'] = "en"
-    data['title_en'] = "[TESTING] {}".format(fake_en.sentence(nb_words=3, variable_nb_words=True))
-    for item in data['items']:
-        item['description_en'] = fake_en.sentence(nb_words=3, variable_nb_words=True)
-    data['procuringEntity']['name_en'] = fake_en.name()
-    data['procuringEntity']['contactPoint']['name_en'] = fake_en.name()
     data['procuringEntity']['identifier']['legalName_en'] = fake_en.sentence(nb_words=10, variable_nb_words=True)
     data['procuringEntity']['kind'] = 'general'
+    data['minimalStepPercentage'] = float(round(random.uniform(0.015, 0.03), 3))
+    funding_variants = (
+        "budget",
+        "other"
+        )
+    data['fundingKind'] = fake.random_element(funding_variants)
+    data['NBUdiscountRate'] = float(round(random.uniform(0, 0.99), 3))
+    del data["value"]
+    del data['submissionMethodDetails']
+    del data["minimalStep"]
+    if params['number_of_lots'] == 0:
+        if data['fundingKind'] == "budget":
+            data['yearlyPaymentsPercentageRange'] = float(round(random.uniform(0.01, 0.8), 3))
+        else:
+            data['yearlyPaymentsPercentageRange'] = 0.8
+    for index in range(params['number_of_lots']):
+        data['lots'][index]['fundingKind'] = data['fundingKind']
+        data['lots'][index]['minimalStepPercentage'] = round((float(data['minimalStepPercentage'])/(index+1)), 3)
+        if data['fundingKind'] == "budget":
+            data['lots'][index]['yearlyPaymentsPercentageRange'] = float(round(random.uniform(0.01, 0.8), 3))
+        else:
+            data['lots'][index]['yearlyPaymentsPercentageRange'] = 0.8
+        del data['lots'][index]['value']
+        del data['lots'][index]['minimalStep']
+    for index in range(params['number_of_items']):
+        del data['items'][index]['deliveryDate']
     return data
 
 

@@ -51,30 +51,61 @@ Suite Teardown  Test Suite Teardown
   Отримати дані із поля awards[${award_index}].value.amount тендера для користувача ${viewer}
 
 
-Можливість редагувати вартість угоди
+Неможливість редагувати вартість угоди
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування угоди
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_contract
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${award_index}=  Отримати останній індекс  awards  ${viewer}
-  ${contract_index}=  Отримати останній індекс  contracts  ${viewer}
-  ${award_amount}=  Get From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[${award_index}].value}  amount
-  ${amount}=  create_fake_amount  ${award_amount}
-  Set to dictionary  ${USERS.users['${tender_owner}']}  new_amount=${amount}
-  Run As  ${tender_owner}  Редагувати угоду  ${TENDER['TENDER_UAID']}  ${contract_index}  value.amount  ${amount}
+  ${new_amount}=  create_fake_value_amount
+  Неможливість змінити поле value.amount договору на значення ${new_amount}
 
 
-Відображення відредагованої вартості угоди
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних угоди
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      contract_view
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  ${contract_index}=  Отримати останній індекс  contracts  ${viewer}
-  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.contracts[${contract_index}].value}  amount
-  Звірити відображення поля contracts[${contract_index}].value.amount тендера із ${USERS.users['${tender_owner}'].new_amount} для користувача ${viewer}
+Неможливість редагувати показник ефективності енергосервісного договору
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування угоди
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_contract
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${new_amountPerformance}=  create_fake_value_amount
+  Неможливість змінити поле value.amountPerformance договору на значення ${new_amountPerformance}
+
+
+Неможливість редагувати щорічне скорочення витрат Замовника
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування угоди
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_contract
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${new_annualCostsReduction}=  create_fake_21_amount
+  Неможливість змінити поле value.annualCostsReduction договору на значення ${new_annualCostsReduction}
+
+
+Неможливість редагувати дні строку дії договору
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування угоди
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_contract
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${new_contractDuration_days}=  create_fake_amount  364
+  ${new_contractDuration_days}=  Convert To Integer  ${new_contractDuration_days}
+  Неможливість змінити поле value.contractDuration.days договору на значення ${new_contractDuration_days}
+
+
+Неможливість редагувати роки строку дії договору
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування угоди
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_contract
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${new_contractDuration_years}=  create_fake_amount  20
+  ${new_contractDuration_years}=  Convert To Integer  ${new_contractDuration_years}=
+  Неможливість змінити поле value.contractDuration.years договору на значення ${new_contractDuration_years}
 
 
 Можливість встановити дату підписання угоди
