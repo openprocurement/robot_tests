@@ -38,6 +38,9 @@ Default:
         openeu:
             accelerator: 1440
             tender:  [0, 30]
+        esco:
+            accelerator: 1440
+            tender:  [0, 15]
         openua_defense:
             accelerator: 1440
             tender:  [0, 6]
@@ -56,6 +59,9 @@ Quinta:
         openeu:
             tender:  [1, 35]
         openua_defense:
+            tender:  [0, 30]
+        esco:
+            accelerator: 1440
             tender:  [0, 30]
         open_competitive_dialogue:
             accelerator: 1440
