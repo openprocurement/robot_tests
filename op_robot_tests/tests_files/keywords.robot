@@ -874,6 +874,26 @@ Require Failure
   ...      active.qualification
 
 
+Дочекатись закінчення періоду верифікації
+  [Arguments]  ${username}  ${tender_uaid}
+  wait_and_write_to_console  ${USERS.users['${username}'].tender_data.data.awards[0].verificationPeriod.endDate}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      unsuccessful
+
+
+Дочекатись дати
+  [Arguments]  ${date}
+  ${sleep}=  wait_to_date  ${date}
+  Run Keyword If  ${sleep} > 0  Sleep  ${sleep}
+
+
 Оновити LAST_MODIFICATION_DATE
   [Documentation]
   ...      Variable ``${TEST_STATUS}`` is only available in test case teardown.
