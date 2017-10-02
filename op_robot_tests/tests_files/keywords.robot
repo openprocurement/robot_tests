@@ -840,10 +840,9 @@ Require Failure
 
 Дочекатись дати початку періоду аукціону
   [Arguments]  ${username}  ${tender_uaid}
-  Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
-  ...      12 min 15 sec
+  ...      30 min 15 sec
   ...      15 sec
   ...      Звірити статус тендера
   ...      ${username}
@@ -880,18 +879,12 @@ Require Failure
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
-  ...      5 min 15 sec
+  ...      30 min 15 sec
   ...      15 sec
   ...      Звірити статус тендера
   ...      ${username}
   ...      ${tender_uaid}
   ...      unsuccessful
-
-
-Дочекатись дати
-  [Arguments]  ${date}
-  ${sleep}=  wait_to_date  ${date}
-  Run Keyword If  ${sleep} > 0  Sleep  ${sleep}
 
 
 Оновити LAST_MODIFICATION_DATE
