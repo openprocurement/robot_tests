@@ -11,25 +11,36 @@ users:
             auctions: [test.quintagroup.com, bc698baa8b814908bc75405ed3d63548]
         api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
         broker:   Quinta
+        browser:  chrome
+        position: [400, 0]
+        size: [400, 1200]
     Tender_User1:
         auth_ds:
             tenders:  [test.quintagroup.com, test.quintagroup.com]
             auctions: [test.quintagroup.com, bc698baa8b814908bc75405ed3d63548]
         api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
         broker:   Quinta
+        browser:  chrome
+        position: [800, 0]
+        size: [400, 1200]
     Tender_User2:
         auth_ds:
             tenders:  [test.quintagroup.com, test.quintagroup.com]
             auctions: [test.quintagroup.com, bc698baa8b814908bc75405ed3d63548]
         api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
         broker:   Quinta
+        browser:  chrome
+        position: [0, 0]
+        size: [400, 1200]
     Tender_Viewer:
         auth_ds:
             tenders:  [test.quintagroup.com, test.quintagroup.com]
             auctions: [test.quintagroup.com, bc698baa8b814908bc75405ed3d63548]
         api_key:  ""
         broker:   Quinta
-        browser:  firefox
+        browser:  chrome
+        position: [0, 0]
+        size: [400, 1200]
     Etender_Owner:
         broker:   Etender
         homepage: "http://e-auction.pro/#/"
