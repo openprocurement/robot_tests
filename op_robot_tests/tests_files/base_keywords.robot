@@ -24,7 +24,7 @@ Resource           resource.robot
 
 
 Можливість знайти тендер по ідентифікатору для усіх користувачів
-  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${provider1}  ${viewer}
+  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${provider1}  ${provider2}  ${viewer}
   \  Можливість знайти тендер по ідентифікатору для користувача ${username}
 
 

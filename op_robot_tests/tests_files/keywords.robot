@@ -840,10 +840,9 @@ Require Failure
 
 Дочекатись дати початку періоду аукціону
   [Arguments]  ${username}  ${tender_uaid}
-  Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
-  ...      12 min 15 sec
+  ...      30 min 15 sec
   ...      15 sec
   ...      Звірити статус тендера
   ...      ${username}
@@ -872,6 +871,20 @@ Require Failure
   ...      ${username}
   ...      ${tender_uaid}
   ...      active.qualification
+
+
+Дочекатись закінчення періоду верифікації
+  [Arguments]  ${username}  ${tender_uaid}
+  wait_and_write_to_console  ${USERS.users['${username}'].tender_data.data.awards[0].verificationPeriod.endDate}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      30 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      unsuccessful
 
 
 Оновити LAST_MODIFICATION_DATE
