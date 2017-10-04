@@ -536,7 +536,9 @@ Log differences between dicts
   ${left_lat}=  get_from_object  ${tender_data.data}  items[${item_index}].deliveryLocation.latitude
   ${left_lon}=  get_from_object  ${tender_data.data}  items[${item_index}].deliveryLocation.longitude
   ${right_lat}=  Отримати дані із тендера  ${username}  ${tender_uaid}  deliveryLocation.latitude  ${item_id}
+  ${right_lat}=  Convert To Number  ${right_lat}
   ${right_lon}=  Отримати дані із тендера  ${username}  ${tender_uaid}  deliveryLocation.longitude  ${item_id}
+  ${right_lon}=  Convert To Number  ${right_lon}
   Порівняти координати  ${left_lat}  ${left_lon}  ${right_lat}  ${right_lon}
 
 
