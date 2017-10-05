@@ -26,5 +26,6 @@
 -i first_award_verification_status
 -i second_award_waiting_status
 -i cancel_second_award
+-i second_award_cancelled_status
 -i wait_for_verificationEndDate
 -i first_award_status_unsuccessful
