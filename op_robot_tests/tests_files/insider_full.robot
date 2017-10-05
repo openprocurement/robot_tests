@@ -43,7 +43,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      auction
-  [Setup]  Дочекатись синхронізації з майданчиком ${viewer}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Дочекатись дати початку аукціону  ${viewer}
 
 
