@@ -31,7 +31,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля value.amount тендера для усіх користувачів
+  Отримати дані із поля value.amount тендера для усіх користувачів
 
 
 Відображення типу оголошеного лоту
@@ -39,7 +39,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
-  Звірити відображення поля procurementMethodType тендера для усіх користувачів
+  Отримати дані із поля procurementMethodType тендера для усіх користувачів
 
 ##############################################################################################
 #             AUCTION
