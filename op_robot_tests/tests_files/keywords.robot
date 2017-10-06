@@ -579,7 +579,10 @@ Log differences between dicts
   ...      15 s
   ...      Run As  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
   Should Be True  '${url}'
-  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.ea\.openprocurement\.org\/auctions\/([0-9A-Fa-f]{32})
+  Run Keyword If  '${MODE}'=='dgfInsider'
+  ...     Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.ea\.openprocurement\.org\/insider-auctions\/([0-9A-Fa-f]{32})
+  ...     ELSE
+  ...     Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.ea\.openprocurement\.org\/auctions\/([0-9A-Fa-f]{32})
   Log  URL аукціону для глядача: ${url}
 
 
@@ -594,7 +597,10 @@ Log differences between dicts
   ...      15 s
   ...      Run As  ${username}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
   Should Be True  '${url}'
-  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.ea\.openprocurement\.org\/auctions\/([0-9A-Fa-f]{32})
+  Run Keyword If  '${MODE}'=='dgfInsider'
+  ...     Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.ea\.openprocurement\.org\/insider-auctions\/([0-9A-Fa-f]{32})
+  ...     ELSE
+  ...     Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.ea\.openprocurement\.org\/auctions\/([0-9A-Fa-f]{32})
   Log  URL аукціону для учасника: ${url}
 
 
@@ -834,10 +840,9 @@ Require Failure
 
 Дочекатись дати початку періоду аукціону
   [Arguments]  ${username}  ${tender_uaid}
-  Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
-  ...      12 min 15 sec
+  ...      30 min 15 sec
   ...      15 sec
   ...      Звірити статус тендера
   ...      ${username}
@@ -866,6 +871,20 @@ Require Failure
   ...      ${username}
   ...      ${tender_uaid}
   ...      active.qualification
+
+
+Дочекатись закінчення періоду верифікації
+  [Arguments]  ${username}  ${tender_uaid}
+  wait_and_write_to_console  ${USERS.users['${username}'].tender_data.data.awards[0].verificationPeriod.endDate}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      30 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      unsuccessful
 
 
 Оновити LAST_MODIFICATION_DATE
