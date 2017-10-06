@@ -230,6 +230,7 @@ def test_confirm_data(id):
 def test_bid_data():
     bid = munchify({
         "data": {
+            "status": "draft",
             "tenderers": [
                 fake.procuringEntity()
             ]

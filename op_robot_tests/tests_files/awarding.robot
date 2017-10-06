@@ -142,6 +142,7 @@ Suite Teardown  Test Suite Teardown
   ...     ${USERS.users['${viewer}'].broker}
   ...     first_award_status_unsuccessful
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити cтатус неуспішного тендера  ${viewer}  ${TENDER['TENDER_UAID']}
   Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[0]}  status
   Звірити відображення поля awards[0].status тендера із unsuccessful для користувача ${viewer}
 

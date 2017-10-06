@@ -550,3 +550,7 @@ def compare_CAV_groups(length, *items):
             if(i_cav_group == j_cav_group and i != j):
                 return False
     return True
+
+
+def convert_amount_string_to_float(amount_string):
+    return float(amount_string.replace(' ', '').replace(',', '.').replace("'",''))
