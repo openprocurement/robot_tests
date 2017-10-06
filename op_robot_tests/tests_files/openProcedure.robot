@@ -213,10 +213,10 @@ ${ITEM_MEAT}        ${True}
 
 
 Відображення активів лоту з різних CAV груп
-   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
-   ...      viewer
-   ...      ${USERS.users['${viewer}'].broker}
-   ...      tender_view_cav_groups  level1
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_cav_groups  level1
   Звірити належність усіх предметів до різних груп для користувача ${viewer}
 
 
