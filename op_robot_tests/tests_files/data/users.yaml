@@ -821,7 +821,7 @@ users:
     ecommodity_viewer:
         broker:   ecommodity
         homepage: "https://zakupki.e-commodity.fbp.com.ua"
-        browser:  ff
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 1024]
     ecommodity_provider:
@@ -829,7 +829,7 @@ users:
         homepage: "https://zakupki.e-commodity.fbp.com.ua"
         login:    v.shevchenko@buroit.com.ua
         password: Sv123456
-        browser:  ff
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 1024]
     ecommodity_provider1:
@@ -837,7 +837,7 @@ users:
         homepage: "https://zakupki.e-commodity.fbp.com.ua"
         login:    bndov@yandex.ua
         password: Kiadiesel77
-        browser:  ff
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 1024]
     ecommodity_owner:
