@@ -47,7 +47,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view_tenderPeriod  level2
-  Звірити відображення поля tenderPeriod.endDate тендера для усіх користувачів
+  Отримати дані із поля tenderPeriod.endDate тендера для усіх користувачів
 
 ##############################################################################################
 #             AUCTION
