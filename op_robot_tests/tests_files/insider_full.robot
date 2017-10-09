@@ -41,6 +41,14 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   ...      tender_view
   Отримати дані із поля procurementMethodType тендера для усіх користувачів
 
+
+Відображення закінчення періоду прийому пропозицій лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_tenderPeriod  level2
+  Звірити відображення поля tenderPeriod.endDate тендера для усіх користувачів
+
 ##############################################################################################
 #             AUCTION
 ##############################################################################################
