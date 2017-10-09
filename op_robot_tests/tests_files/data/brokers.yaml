@@ -407,6 +407,9 @@ ubiz:
         dgfOtherAssets:
             accelerator: 180
             auction: [50,55]
+        dgfInsider:
+            accelerator: 360
+            auction:  [25,30]
     keywords_file: ubiz
     homepage: 'http://test.ubiz.com.ua'
     syncpage: 'http://test.ubiz.com.ua/site/sync'
@@ -416,7 +419,7 @@ ubiz:
         provider1:      ubiz_Provider2
         tender_owner:   ubiz_Owner
         viewer:         ubiz_Viewer
-    timeout_on_wait: 200
+    timeout_on_wait: 180
 zakpro:
     intervals:
         default:
@@ -567,6 +570,9 @@ comminnex:
         dgfOtherAssets:
             accelerator: 180
             auction: [50,55]
+        dgfInsider:
+            accelerator: 360
+            auction:  [25,30]
     keywords_file: comminnex
     homepage: 'http://test.market.comminnex.com'
     syncpage: 'http://test.market.comminnex.com/site/sync'
@@ -576,7 +582,7 @@ comminnex:
         provider1:      comminnex_Provider2
         tender_owner:   comminnex_Owner
         viewer:         comminnex_Viewer
-    timeout_on_wait: 200
+    timeout_on_wait: 180
 torgibirgaukraine:
     intervals:
         default:
@@ -588,6 +594,9 @@ torgibirgaukraine:
         dgfOtherAssets:
             accelerator: 180
             auction: [45,50]
+        dgfInsider:
+            accelerator: 360
+            auction:  [25,30]
     keywords_file: torgibirgaukraine
     homepage: 'http://test.torgi.birga-ukraine.com.ua'
     syncpage: 'http://test.torgi.birga-ukraine.com.ua/site/sync'
@@ -597,7 +606,7 @@ torgibirgaukraine:
         provider1:      torgibirgaukraine_Provider2
         tender_owner:   torgibirgaukraine_Owner
         viewer:         torgibirgaukraine_Viewer
-    timeout_on_wait: 200
+    timeout_on_wait: 180
 statusexpert:
     intervals:
         default:
@@ -609,6 +618,9 @@ statusexpert:
         dgfOtherAssets:
             accelerator: 180
             auction: [50,55]
+        dgfInsider:
+            accelerator: 360
+            auction:  [25,30]
     keywords_file: statusexpert
     homepage: 'http://test.torgi.status-expert.com.ua'
     syncpage: 'http://test.torgi.status-expert.com.ua/site/sync'
@@ -618,7 +630,7 @@ statusexpert:
         provider1:      statusexpert_Provider2
         tender_owner:   statusexpert_Owner
         viewer:         statusexpert_Viewer
-    timeout_on_wait: 200
+    timeout_on_wait: 180
 vidol:
     intervals:
         default:
@@ -630,6 +642,9 @@ vidol:
         dgfOtherAssets:
             accelerator: 180
             auction: [50,55]
+        dgfInsider:
+            accelerator: 360
+            auction:  [25,30]
     keywords_file: vidol
     homepage: 'http://test.torgi.vidol.com.ua'
     syncpage: 'http://test.torgi.vidol.com.ua/site/sync'
@@ -639,7 +654,7 @@ vidol:
         provider1:      vidol_Provider2
         tender_owner:   vidol_Owner
         viewer:         vidol_Viewer
-    timeout_on_wait: 200
+    timeout_on_wait: 180
 uutb:
     intervals:
         default:
@@ -672,6 +687,9 @@ cuex:
         dgfOtherAssets:
             accelerator: 180
             auction: [50,55]
+        dgfInsider:
+            accelerator: 360
+            auction:  [25,30]
     keywords_file: cuex
     homepage: 'http://testing.torgy.com.ua'
     syncpage: 'http://testing.torgy.com.ua/site/sync'
@@ -681,7 +699,7 @@ cuex:
         provider1:      cuex_Provider2
         tender_owner:   cuex_Owner
         viewer:         cuex_Viewer
-    timeout_on_wait: 200
+    timeout_on_wait: 180
 nkcentr:
     keywords_file: nkcentr
     accelerator: 360
@@ -843,6 +861,9 @@ palata:
         dgfOtherAssets:
             accelerator: 180
             auction: [65,70]
+        dgfInsider:
+            accelerator: 360
+            auction:  [25,30]
     keywords_file: palata
     homepage: 'http://testing.palata.com.ua'
     syncpage: 'http://testing.palata.com.ua/site/sync'
@@ -852,7 +873,7 @@ palata:
         provider1:      palata_Provider2
         tender_owner:   palata_Owner
         viewer:         palata_Viewer
-    timeout_on_wait: 90
+    timeout_on_wait: 180
 tirex:
     intervals:
         default:
