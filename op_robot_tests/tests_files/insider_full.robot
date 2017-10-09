@@ -254,7 +254,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   ...      Run Keywords
   ...      Дочекатись дати початку аукціону  ${viewer}
   ...      AND
-  ...      Wait Until Keyword Succeeds  15 times  10 s  Page should contain  до початку раунду
+  ...      Wait Until Keyword Succeeds  15 times  10 s  Page should contain  до початку етапу
 
 
 Дочекатись паузи перед ${stage_name} етапом
