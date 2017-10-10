@@ -262,7 +262,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   Wait Until Page Contains  → ${stage_name}  15 min
   :FOR    ${username}    IN    ${provider}  ${provider1}
   \   Переключитись на учасника   ${username}
-  \   Page should contain  → ${stage_name}
+  \   Wait Until Page Contains  → ${stage_name}  30 s
 
 
 Дочекатись завершення паузи перед ${stage_name} етапом
@@ -270,7 +270,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   Wait Until Page Does Not Contain  → ${stage_name}  15 min
   :FOR    ${username}    IN    ${provider}  ${provider1}
   \   Переключитись на учасника   ${username}
-  \   Page Should Not Contain  → ${stage_name}
+  \   Wait Until Page Does Not Contain  → ${stage_name}  30 s
 
 
 Дочекатись завершення паузи перед першим раундом для користувачів
@@ -278,7 +278,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   Переключитись на учасника  ${viewer}
   Wait Until Page Does Not Contain  → Голландського  2 min
   Переключитись на учасника  ${provider}
-  Page should not contain  → Голландського
+  Wait Until Page Does Not Contain  → Голландського  30 s
 
 
 Переключитись на учасника
