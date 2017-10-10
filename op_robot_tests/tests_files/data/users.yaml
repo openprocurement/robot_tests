@@ -12,8 +12,8 @@ users:
         api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
         broker:   Quinta
         browser:  chrome
-        position: [400, 0]
-        size: [400, 1200]
+        position: [700, 0]
+        size: [1366, 1200]
     Tender_User1:
         auth_ds:
             tenders:  [test.quintagroup.com, test.quintagroup.com]
@@ -21,8 +21,8 @@ users:
         api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
         broker:   Quinta
         browser:  chrome
-        position: [800, 0]
-        size: [400, 1200]
+        position: [0, 0]
+        size: [1366, 1200]
     Tender_User2:
         auth_ds:
             tenders:  [test.quintagroup.com, test.quintagroup.com]
@@ -30,8 +30,8 @@ users:
         api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
         broker:   Quinta
         browser:  chrome
-        position: [0, 0]
-        size: [400, 1200]
+        position: [1400, 0]
+        size: [1366, 1200]
     Tender_Viewer:
         auth_ds:
             tenders:  [test.quintagroup.com, test.quintagroup.com]
@@ -40,7 +40,7 @@ users:
         broker:   Quinta
         browser:  chrome
         position: [0, 0]
-        size: [400, 1200]
+        size: [1366, 1200]
     Etender_Owner:
         broker:   Etender
         homepage: "http://e-auction.pro/#/"
