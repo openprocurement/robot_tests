@@ -231,7 +231,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   Capture Page Screenshot
   Run Keyword Unless  '${username}' == '${viewer}'
   ...      Run Keywords
-  ...      Wait Until Page Contains       Дякуємо за використання нашої системи електронних закупівель
+  ...      Wait Until Page Contains       Дякуємо за використання
   ...      AND
   ...      Click Element                  confirm
   Capture Page Screenshot
@@ -239,7 +239,6 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
 
 Дочекатись завершення паузи перед першим раундом
   Відкрити сторінку аукціону для ${viewer}
-  Дочекатись паузи перед першим раундом глядачем
   Дочекатись завершення паузи перед першим раундом для користувачів
 
 
@@ -248,21 +247,12 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   Wait Until Keyword Succeeds  61 times  30 s  Page should contain  Аукціон завершився
 
 
-Дочекатись паузи перед першим раундом глядачем
-  ${status}  ${_}=  Run Keyword And Ignore Error  Page should contain  Очікування
-  Run Keyword If  '${status}' == 'PASS'
-  ...      Run Keywords
-  ...      Дочекатись дати початку аукціону  ${viewer}
-  ...      AND
-  ...      Wait Until Keyword Succeeds  15 times  10 s  Page should contain  до початку етапу
-
-
 Дочекатись паузи перед ${stage_name} етапом
   Переключитись на учасника  ${viewer}
   Wait Until Page Contains  → ${stage_name}  15 min
   :FOR    ${username}    IN    ${provider}  ${provider1}
   \   Переключитись на учасника   ${username}
-  \   Page should contain  → ${stage_name}
+  \   Wait Until Page Contains  → ${stage_name}  30 s
 
 
 Дочекатись завершення паузи перед ${stage_name} етапом
@@ -270,7 +260,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   Wait Until Page Does Not Contain  → ${stage_name}  15 min
   :FOR    ${username}    IN    ${provider}  ${provider1}
   \   Переключитись на учасника   ${username}
-  \   Page Should Not Contain  → ${stage_name}
+  \   Wait Until Page Does Not Contain  → ${stage_name}  30 s
 
 
 Дочекатись завершення паузи перед першим раундом для користувачів
@@ -278,7 +268,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   Переключитись на учасника  ${viewer}
   Wait Until Page Does Not Contain  → Голландського  2 min
   Переключитись на учасника  ${provider}
-  Page should not contain  → Голландського
+  Wait Until Page Does Not Contain  → Голландського  30 s
 
 
 Переключитись на учасника
