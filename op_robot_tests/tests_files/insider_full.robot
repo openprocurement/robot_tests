@@ -41,6 +41,14 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   ...      tender_view
   Отримати дані із поля procurementMethodType тендера для усіх користувачів
 
+
+Відображення закінчення періоду прийому пропозицій лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_tenderPeriod  level2
+  Отримати дані із поля tenderPeriod.endDate тендера для усіх користувачів
+
 ##############################################################################################
 #             AUCTION
 ##############################################################################################
@@ -246,7 +254,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   ...      Run Keywords
   ...      Дочекатись дати початку аукціону  ${viewer}
   ...      AND
-  ...      Wait Until Keyword Succeeds  15 times  10 s  Page should contain  до початку раунду
+  ...      Wait Until Keyword Succeeds  15 times  10 s  Page should contain  до початку етапу
 
 
 Дочекатись паузи перед ${stage_name} етапом
