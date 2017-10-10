@@ -231,7 +231,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   Capture Page Screenshot
   Run Keyword Unless  '${username}' == '${viewer}'
   ...      Run Keywords
-  ...      Wait Until Page Contains       Дякуємо за використання нашої системи електронних закупівель
+  ...      Wait Until Page Contains       Дякуємо за використання
   ...      AND
   ...      Click Element                  confirm
   Capture Page Screenshot
@@ -239,22 +239,12 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
 
 Дочекатись завершення паузи перед першим раундом
   Відкрити сторінку аукціону для ${viewer}
-  Дочекатись паузи перед першим раундом глядачем
   Дочекатись завершення паузи перед першим раундом для користувачів
 
 
 Дочекатись дати закінчення аукціону
   Переключитись на учасника  ${viewer}
   Wait Until Keyword Succeeds  61 times  30 s  Page should contain  Аукціон завершився
-
-
-Дочекатись паузи перед першим раундом глядачем
-  ${status}  ${_}=  Run Keyword And Ignore Error  Page should contain  Очікування
-  Run Keyword If  '${status}' == 'PASS'
-  ...      Run Keywords
-  ...      Дочекатись дати початку аукціону  ${viewer}
-  ...      AND
-  ...      Wait Until Keyword Succeeds  15 times  10 s  Page should contain  до початку етапу
 
 
 Дочекатись паузи перед ${stage_name} етапом
