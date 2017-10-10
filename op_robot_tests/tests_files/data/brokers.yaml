@@ -389,6 +389,8 @@ uatenders:
         dgfOtherAssets:
             accelerator: 360
             auction:  [45, 50]
+        dgfInsider:
+            accelerator: 720
     keywords_file: uatenders
     roles:
         provider:       uatenders_Provider
