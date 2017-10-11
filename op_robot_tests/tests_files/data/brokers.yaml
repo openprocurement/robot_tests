@@ -410,7 +410,7 @@ ubiz:
             accelerator: 180
             auction: [50,55]
         dgfInsider:
-            accelerator: 360
+            accelerator: 180
             auction:  [25,30]
     keywords_file: ubiz
     homepage: 'http://test.ubiz.com.ua'
@@ -573,7 +573,7 @@ comminnex:
             accelerator: 180
             auction: [50,55]
         dgfInsider:
-            accelerator: 360
+            accelerator: 180
             auction:  [25,30]
     keywords_file: comminnex
     homepage: 'http://test.market.comminnex.com'
@@ -597,7 +597,7 @@ torgibirgaukraine:
             accelerator: 180
             auction: [45,50]
         dgfInsider:
-            accelerator: 360
+            accelerator: 180
             auction:  [25,30]
     keywords_file: torgibirgaukraine
     homepage: 'http://test.torgi.birga-ukraine.com.ua'
@@ -621,7 +621,7 @@ statusexpert:
             accelerator: 180
             auction: [50,55]
         dgfInsider:
-            accelerator: 360
+            accelerator: 180
             auction:  [25,30]
     keywords_file: statusexpert
     homepage: 'http://test.torgi.status-expert.com.ua'
@@ -645,7 +645,7 @@ vidol:
             accelerator: 180
             auction: [50,55]
         dgfInsider:
-            accelerator: 360
+            accelerator: 180
             auction:  [25,30]
     keywords_file: vidol
     homepage: 'http://test.torgi.vidol.com.ua'
@@ -690,7 +690,7 @@ cuex:
             accelerator: 180
             auction: [50,55]
         dgfInsider:
-            accelerator: 360
+            accelerator: 180
             auction:  [25,30]
     keywords_file: cuex
     homepage: 'http://testing.torgy.com.ua'
@@ -864,7 +864,7 @@ palata:
             accelerator: 180
             auction: [65,70]
         dgfInsider:
-            accelerator: 360
+            accelerator: 180
             auction:  [25,30]
     keywords_file: palata
     homepage: 'http://testing.palata.com.ua'
