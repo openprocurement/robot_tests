@@ -19,13 +19,14 @@
 -i auction
 -i make_bid_by_provider1_after_dutch
 -i make_bid_by_provider1_during_sealedbid
+-i wait_for_bestbid
 -i make_bid_by_dutch_winner
 
 
 -i awarding
 -i first_award_verification_status
 -i second_award_waiting_status
--i cancel_second_award
+-i cancel_second_award_provider1
 -i second_award_cancelled_status
 -i wait_for_verificationEndDate
 -i first_award_status_unsuccessful

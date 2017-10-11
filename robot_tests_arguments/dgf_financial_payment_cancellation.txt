@@ -24,6 +24,6 @@
 -i add_protocol_to_first_award
 -i approve_first_award_protocol
 -i first_award_payment_status
--i cancel_second_award
+-i cancel_second_award_provider1
 -i disqualified_first_award
 -i tender_status_unsuccessful

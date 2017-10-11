@@ -21,7 +21,7 @@
 -i awarding
 -i first_award_verification_status
 -i second_award_waiting_status
--i cancel_second_award
+-i cancel_second_award_provider1
 -i second_award_cancelled_status
 -i disqualified_first_award
 -i tender_status_unsuccessful
