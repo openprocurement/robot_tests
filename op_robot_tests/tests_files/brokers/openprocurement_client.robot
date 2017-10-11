@@ -481,6 +481,18 @@ Library  openprocurement_client.utils
   [Return]  ${doc}
 
 
+Завантажити документ рішення кваліфікаційної комісії в контракт
+  [Documentation]
+  ...      [Arguments] Username, tender uaid, qualification number and document to upload
+  ...      [Description] Find tender using uaid,  and call upload_qualification_document
+  ...      [Return] Reply of API
+  [Arguments]  ${username}  ${document}  ${tender_uaid}  ${contract_num}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${doc}=  Call Method  ${USERS.users['${username}'].client}  upload_contract_document  ${document}  ${tender}  ${tender.data.contracts[${contract_num}].id}
+  Log  ${doc}
+  [Return]  ${doc}
+
+
 Підтвердити постачальника
   [Documentation]
   ...      [Arguments] Username, tender uaid and number of the award to confirm
