@@ -791,7 +791,7 @@ users:
         homepage: "https://sale.ueex.com.ua/test/Registration.aspx"
         default_page: "https://sale.ueex.com.ua/test/PositionList.aspx"
         login:    ueex_Owner@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     ueex_Provider:
@@ -799,7 +799,7 @@ users:
         homepage: "https://sale.ueex.com.ua/test/Registration.aspx"
         default_page: "https://sale.ueex.com.ua/test/PositionList.aspx"
         login:    ueex_Provider@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     ueex_Provider1:
@@ -807,7 +807,7 @@ users:
         homepage: "https://sale.ueex.com.ua/test/Registration.aspx"
         default_page: "https://sale.ueex.com.ua/test/PositionList.aspx"
         login:    ueex_Provider1@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     ueex_Viewer:
@@ -815,7 +815,7 @@ users:
         homepage: "https://sale.ueex.com.ua/test/Registration.aspx"
         default_page: "https://sale.ueex.com.ua/test/PositionList.aspx"
         login:    ueex_Viewer@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     ecommodity_viewer:
@@ -922,7 +922,7 @@ users:
         homepage: "https://sale-tbe.com.ua/test/Registration.aspx"
         default_page: "https://sale-tbe.com.ua/test/PositionList.aspx"
         login:    tbe_Owner@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     katerynoslav_Provider:
@@ -930,7 +930,7 @@ users:
         homepage: "https://sale-tbe.com.ua/test/Registration.aspx"
         default_page: "https://sale-tbe.com.ua/test/PositionList.aspx"
         login:    tbe_Provider@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     katerynoslav_Provider1:
@@ -938,7 +938,7 @@ users:
         homepage: "https://sale-tbe.com.ua/test/Registration.aspx"
         default_page: "https://sale-tbe.com.ua/test/PositionList.aspx"
         login:    tbe_Provider1@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     katerynoslav_Viewer:
@@ -946,7 +946,7 @@ users:
         homepage: "https://sale-tbe.com.ua/test/Registration.aspx"
         default_page: "https://sale-tbe.com.ua/test/PositionList.aspx"
         login:    tbe_Viewer@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     comminnex_Owner:
@@ -1134,7 +1134,7 @@ users:
         homepage: "https://sale.nkc.biz.ua/test/Registration.aspx"
         default_page: "https://sale.nkc.biz.ua/test/PositionList.aspx"
         login:    nkc_Owner@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     nkcentr_Provider:
@@ -1142,7 +1142,7 @@ users:
         homepage: "https://sale.nkc.biz.ua/test/Registration.aspx"
         default_page: "https://sale.nkc.biz.ua/test/PositionList.aspx"
         login:    nkc_Provider@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     nkcentr_Provider1:
@@ -1150,7 +1150,7 @@ users:
         homepage: "https://sale.nkc.biz.ua/test/Registration.aspx"
         default_page: "https://sale.nkc.biz.ua/test/PositionList.aspx"
         login:    nkc_Provider1@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     nkcentr_Viewer:
@@ -1158,7 +1158,7 @@ users:
         homepage: "https://sale.nkc.biz.ua/test/Registration.aspx"
         default_page: "https://sale.nkc.biz.ua/test/PositionList.aspx"
         login:    nkc_Viewer@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     kif_Owner:
@@ -1166,7 +1166,7 @@ users:
         homepage: "https://sale.kif.in.ua/test/Registration.aspx"
         default_page: "https://sale.kif.in.ua/test/PositionList.aspx"
         login:    kif_Owner@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     kif_Provider:
@@ -1174,7 +1174,7 @@ users:
         homepage: "https://sale.kif.in.ua/test/Registration.aspx"
         default_page: "https://sale.kif.in.ua/test/PositionList.aspx"
         login:    kif_Provider@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     kif_Provider1:
@@ -1182,7 +1182,7 @@ users:
         homepage: "https://sale.kif.in.ua/test/Registration.aspx"
         default_page: "https://sale.kif.in.ua/test/PositionList.aspx"
         login:    kif_Provider1@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     kif_Viewer:
@@ -1190,7 +1190,7 @@ users:
         homepage: "https://sale.kif.in.ua/test/Registration.aspx"
         default_page: "https://sale.kif.in.ua/test/PositionList.aspx"
         login:    kif_Viewer@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     agrex_Owner:
@@ -1230,7 +1230,7 @@ users:
         homepage: "http://e-test.tbv.com.ua/login/"
         default_page: "http://e-test.tbv.com.ua/"
         login:    tbo@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     vidrodzhennia_Provider:
@@ -1238,7 +1238,7 @@ users:
         homepage: "http://e-test.tbv.com.ua/login/"
         default_page: "http://e-test.tbv.com.ua/"
         login:    tbp@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     vidrodzhennia_Provider1:
@@ -1246,7 +1246,7 @@ users:
         homepage: "http://e-test.tbv.com.ua/login/"
         default_page: "http://e-test.tbv.com.ua/"
         login:    tbp1@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     vidrodzhennia_Viewer:
@@ -1254,7 +1254,7 @@ users:
         homepage: "http://e-test.tbv.com.ua/login/"
         default_page: "http://e-test.tbv.com.ua/"
         login:    tbv@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     bestbid_Owner:
@@ -1294,7 +1294,7 @@ users:
         homepage: "https://ti.tbkmfb.com.ua/test/Registration.aspx"
         default_page: "https://ti.tbkmfb.com.ua/test/PositionList.aspx"
         login:    kmfb_Owner@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     tbkmfb_Provider:
@@ -1302,7 +1302,7 @@ users:
         homepage: "https://ti.tbkmfb.com.ua/test/Registration.aspx"
         default_page: "https://ti.tbkmfb.com.ua/test/PositionList.aspx"
         login:    kmfb_Provider@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     tbkmfb_Provider1:
@@ -1310,7 +1310,7 @@ users:
         homepage: "https://ti.tbkmfb.com.ua/test/Registration.aspx"
         default_page: "https://ti.tbkmfb.com.ua/test/PositionList.aspx"
         login:    kmfb_Provider1@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     tbkmfb_Viewer:
@@ -1318,7 +1318,7 @@ users:
         homepage: "https://ti.tbkmfb.com.ua/test/Registration.aspx"
         default_page: "https://ti.tbkmfb.com.ua/test/PositionList.aspx"
         login:    kmfb_Viewer@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     utsb_Owner:
@@ -1326,7 +1326,7 @@ users:
         homepage: "https://tb.kiev.ua/test/Registration.aspx"
         default_page: "https://tb.kiev.ua/test/PositionList.aspx"
         login:    utsb_Owner@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     utsb_Provider:
@@ -1334,7 +1334,7 @@ users:
         homepage: "https://tb.kiev.ua/test/Registration.aspx"
         default_page: "https://tb.kiev.ua/test/PositionList.aspx"
         login:    utsb_Provider@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     utsb_Provider1:
@@ -1342,7 +1342,7 @@ users:
         homepage: "https://tb.kiev.ua/test/Registration.aspx"
         default_page: "https://tb.kiev.ua/test/PositionList.aspx"
         login:    utsb_Provider1@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     utsb_Viewer:
@@ -1350,7 +1350,7 @@ users:
         homepage: "https://tb.kiev.ua/test/Registration.aspx"
         default_page: "https://tb.kiev.ua/test/PositionList.aspx"
         login:    utsb_Viewer@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     uisce_Owner:
@@ -1622,7 +1622,7 @@ users:
         homepage: "https://sale.vertas.com.ua/test/Registration.aspx"
         default_page: "https://sale.vertas.com.ua/test/AuctionList.aspx"
         login:    vertas_owner@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     vertas_Provider:
@@ -1630,7 +1630,7 @@ users:
         homepage: "https://sale.vertas.com.ua/test/Registration.aspx"
         default_page: "https://sale.vertas.com.ua/test/AuctionList.aspx"
         login:    vertas_provider@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     vertas_Provider1:
@@ -1638,7 +1638,7 @@ users:
         homepage: "https://sale.vertas.com.ua/test/Registration.aspx"
         default_page: "https://sale.vertas.com.ua/test/AuctionList.aspx"
         login:    vertas_provider1@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     vertas_Viewer:
@@ -1646,7 +1646,7 @@ users:
         homepage: "https://sale.vertas.com.ua/test/Registration.aspx"
         default_page: "https://sale.vertas.com.ua/test/AuctionList.aspx"
         login:    vertas_viewer@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     podilska_Owner:
