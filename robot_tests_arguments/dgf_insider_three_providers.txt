@@ -1,0 +1,48 @@
+-v MODE:dgfInsider
+
+-v NUMBER_OF_ITEMS:3
+
+-i create_tender
+-i find_tender
+-i tender_view
+-i tender_view_tenderPeriod
+-i tender_view_tenderPeriod_startDate
+-i tender_view_auctionPeriod_StartDate
+-i tender_view_unit_code
+
+
+-i make_bid_by_provider
+-i add_financial_license_to_bid_by_provider
+-i auction_url_provider
+
+
+-i auction
+-i make_bid_by_provider1_before_dutch
+-i make_bid_by_provider2_after_dutch
+-i make_bid_by_provider1_during_sealedbid
+-i make_bid_by_provider2_during_sealedbid
+-i wait_for_bestbid
+-i make_bid_by_dutch_winner
+
+
+-i awarding
+-i first_award_verification_status
+-i second_award_waiting_status
+-i change_first_award_payment_status
+-i add_protocol_to_first_award
+-i approve_first_award_protocol
+-i first_award_payment_status
+-i confirm_first_award
+-i first_award_active_status
+-i disqualified_first_active_award
+-i first_award_status_unsuccessful
+-i second_award_verification_status
+-i change_second_award_payment_status
+-i add_protocol_to_second_award
+-i approve_second_award_protocol
+-i confirm_second_award
+-i second_award_active_status
+
+
+-i contract_sign
+-i contract_sign_upload
