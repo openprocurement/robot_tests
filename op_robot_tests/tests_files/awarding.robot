@@ -107,11 +107,20 @@ Suite Teardown  Test Suite Teardown
   Звірити відображення поля awards[0].status тендера із active для користувача ${viewer}
 
 
+Можливість скасувати рішення кваліфікації першим учасником
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес кваліфікації
+  ...     provider
+  ...     ${USERS.users['${provider}'].broker}
+  ...     cancel_second_award_provider
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider}
+  Run As  ${provider}  Скасування рішення кваліфікаційної комісії  ${TENDER['TENDER_UAID']}  1
+
+
 Можливість скасувати рішення кваліфікації другим кандидатом
   [Tags]  ${USERS.users['${provider1}'].broker}: Процес кваліфікації
   ...     provider1
   ...     ${USERS.users['${provider1}'].broker}
-  ...     cancel_second_award
+  ...     cancel_second_award_provider1
   [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider1}
   Run As  ${provider1}  Скасування рішення кваліфікаційної комісії  ${TENDER['TENDER_UAID']}  1
 
@@ -126,14 +135,39 @@ Suite Teardown  Test Suite Teardown
   Звірити відображення поля awards[1].status тендера із cancelled для користувача ${viewer}
 
 
+Можливість дискваліфікувати першого кандидата після підтвердження оплати
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
+  ...     tender_owner
+  ...     ${USERS.users['${tender_owner}'].broker}
+  ...     disqualified_first_active_award
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
+  ${description}=  create_fake_sentence
+  Run As  ${tender_owner}  Завантажити документ рішення кваліфікаційної комісії в контракт  ${file_path}  ${TENDER['TENDER_UAID']}  -1
+  Run As  ${tender_owner}  Дискваліфікувати постачальника  ${TENDER['TENDER_UAID']}  0  ${description}
+  Remove File  ${file_path}
+
+
 Можливість дискваліфікувати першого кандидата
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...     tender_owner
   ...     ${USERS.users['${tender_owner}'].broker}
   ...     disqualified_first_award
   [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   ${description}=  create_fake_sentence
+  Run As  ${tender_owner}  Завантажити документ рішення кваліфікаційної комісії  ${file_path}  ${TENDER['TENDER_UAID']}  0
   Run As  ${tender_owner}  Дискваліфікувати постачальника  ${TENDER['TENDER_UAID']}  0  ${description}
+  Remove File  ${file_path}
+
+
+Відображення статусу неуспішного лоту через відсутность завантаженого протоколу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Подання пропозиції
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      wait_for_verificationEndDate
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити cтатус неуспішного тендера  ${viewer}  ${TENDER['TENDER_UAID']}
 
 
 Відображення статусу 'unsuccessful' для першого кандидата
@@ -142,7 +176,6 @@ Suite Teardown  Test Suite Teardown
   ...     ${USERS.users['${viewer}'].broker}
   ...     first_award_status_unsuccessful
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити cтатус неуспішного тендера  ${viewer}  ${TENDER['TENDER_UAID']}
   Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[0]}  status
   Звірити відображення поля awards[0].status тендера із unsuccessful для користувача ${viewer}
 
@@ -153,8 +186,11 @@ Suite Teardown  Test Suite Teardown
   ...     ${USERS.users['${tender_owner}'].broker}
   ...     disqualified_second_award
   [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   ${description}=  create_fake_sentence
+  Run As  ${tender_owner}  Завантажити документ рішення кваліфікаційної комісії  ${file_path}  ${TENDER['TENDER_UAID']}  1
   Run As  ${tender_owner}  Дискваліфікувати постачальника  ${TENDER['TENDER_UAID']}  1  ${description}
+  Remove File  ${file_path}
 
 
 Відображення статусу 'unsuccessful' для другого кандидата
