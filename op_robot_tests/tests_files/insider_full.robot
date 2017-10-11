@@ -85,7 +85,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
-  ...      make_bid_by_provider1_before_dutch  level1
+  ...      make_bid_by_provider1_before_dutch
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider1}
 
@@ -146,16 +146,41 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   Відкрити сторінку аукціону для ${provider1}
 
 
+Можливість подати пропозицію третім учасником
+  [Tags]   ${USERS.users['${provider2}'].broker}: Подання пропозиції
+  ...      provider2
+  ...      ${USERS.users['${provider2}'].broker}
+  ...      make_bid_by_provider2_after_dutch
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість подати цінову пропозицію користувачем ${provider2}
+
+
+Можливість завантажити фінансову ліцензію до пропозиції третім учасником
+  [Tags]   ${USERS.users['${provider2}'].broker}: Подання пропозиції
+  ...      provider2
+  ...      ${USERS.users['${provider2}'].broker}
+  ...      make_bid_by_provider2_after_dutch
+  [Setup]  Дочекатись синхронізації з майданчиком  ${provider2}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити фінансову ліцензію в пропозицію користувачем ${provider2}
+
+
+Можливість долучитись до аукціону третім учасником після визначення переможця голландської частини
+  [Tags]   ${USERS.users['${provider2}'].broker}: Процес аукціону
+  ...      provider2
+  ...      ${USERS.users['${provider2}'].broker}
+  ...      make_bid_by_provider2_after_dutch
+  Можливість вичитати посилання на аукціон для ${provider2}
+  Відкрити сторінку аукціону для ${provider2}
+
+
 Можливість дочекатись Sealed Bid частини аукціону
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
-  ...      viewer  provider  provider1
+  ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      ${USERS.users['${provider}'].broker}
-  ...      ${USERS.users['${provider1}'].broker}
   ...      auction
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Дочекатись дати закінчення прийому пропозицій  ${provider1}  ${TENDER['TENDER_UAID']}
-  Дочекатись завершення паузи перед Sealed Bid етапом
+  Дочекатись дати закінчення прийому пропозицій  ${viewer}  ${TENDER['TENDER_UAID']}
 
 
 Можливість зробити ставку другим учасником
@@ -163,7 +188,17 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      make_bid_by_provider1_during_sealedbid
+  Дочекатись завершення паузи перед Sealed Bid етапом
   Переключитись на учасника  ${provider1}
+  Подати більшу ставку, ніж переможець голландської частини
+
+
+Можливість зробити ставку третім учасником
+  [Tags]   ${USERS.users['${provider2}'].broker}: Процес аукціону
+  ...      provider2
+  ...      ${USERS.users['${provider2}'].broker}
+  ...      make_bid_by_provider2_during_sealedbid
+  Переключитись на учасника  ${provider2}
   Подати більшу ставку, ніж переможець голландської частини
 
 
@@ -173,7 +208,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   ...      ${USERS.users['${viewer}'].broker}
   ...      ${USERS.users['${provider}'].broker}
   ...      ${USERS.users['${provider1}'].broker}
-  ...      make_bid_by_dutch_winner
+  ...      wait_for_bestbid
   Дочекатись паузи перед Best Bid етапом
   Дочекатись завершення паузи перед Best Bid етапом
 
