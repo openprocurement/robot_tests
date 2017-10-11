@@ -756,7 +756,7 @@ users:
         broker:   polonex
         homepage: "http://test.polonex.in.ua/prozorrosale/auctions/public"
         syncpage: "http://test.polonex.in.ua/prozorrosale/auctions/sync-all"
-        browser:  ff
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     polonex_provider:
@@ -765,7 +765,7 @@ users:
         syncpage: "http://test.polonex.in.ua/prozorrosale/auctions/sync-all"
         login:    testmemb1@test.t
         password: testpass
-        browser:  ff
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     polonex_provider1:
@@ -774,7 +774,7 @@ users:
         syncpage: "http://test.polonex.in.ua/prozorrosale/auctions/sync-all"
         login:    testmemb2@test.t
         password: testpass
-        browser:  ff
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     polonex_owner:
@@ -783,7 +783,7 @@ users:
         syncpage: "http://test.polonex.in.ua/prozorrosale/auctions/sync-all"
         login:    testadmin@test.t
         password: testpass
-        browser:  ff
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     ueex_Owner:
@@ -853,7 +853,7 @@ users:
         broker:   etc
         homepage: "http://test.etc-torgi.com/prozorrosale/auctions/public"
         syncpage: "http://test.etc-torgi.com/prozorrosale/auctions/sync-all"
-        browser:  ff
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     etc_provider:
@@ -862,7 +862,7 @@ users:
         syncpage: "http://test.etc-torgi.com/prozorrosale/auctions/sync-all"
         login:    testmemb1@test.t
         password: testpass
-        browser:  ff
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     etc_provider1:
@@ -871,7 +871,7 @@ users:
         syncpage: "http://test.etc-torgi.com/prozorrosale/auctions/sync-all"
         login:    testmemb2@test.t
         password: testpass
-        browser:  ff
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     etc_owner:
@@ -880,14 +880,14 @@ users:
         syncpage: "http://test.etc-torgi.com/prozorrosale/auctions/sync-all"
         login:    testadmin@test.t
         password: testpass
-        browser:  ff
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     etrading_viewer:
         broker:   etrading
         homepage: "http://test.e-trading.kiev.ua/prozorrosale/auctions/public"
         syncpage: "http://test.e-trading.kiev.ua/prozorrosale/auctions/sync-all"
-        browser:  ff
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     etrading_provider:
@@ -896,7 +896,7 @@ users:
         syncpage: "http://test.e-trading.kiev.ua/prozorrosale/auctions/sync-all"
         login:    testmemb1@test.t
         password: testpass
-        browser:  ff
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     etrading_provider1:
@@ -905,7 +905,7 @@ users:
         syncpage: "http://test.e-trading.kiev.ua/prozorrosale/auctions/sync-all"
         login:    testmemb2@test.t
         password: testpass
-        browser:  ff
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     etrading_owner:
@@ -914,7 +914,7 @@ users:
         syncpage: "http://test.e-trading.kiev.ua/prozorrosale/auctions/sync-all"
         login:    testadmin@test.t
         password: testpass
-        browser:  ff
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     katerynoslav_Owner:
