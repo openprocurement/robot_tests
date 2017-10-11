@@ -17,6 +17,7 @@
 -i auction
 -i make_bid_by_provider1_after_dutch
 -i make_bid_by_provider1_during_sealedbid
+-i wait_for_bestbid
 -i make_bid_by_dutch_winner
 -i auction_end
 

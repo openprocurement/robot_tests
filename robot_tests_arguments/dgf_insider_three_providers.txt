@@ -34,7 +34,7 @@
 -i first_award_payment_status
 -i confirm_first_award
 -i first_award_active_status
--i disqualified_first_active_award
+-i disqualified_first_award
 -i first_award_status_unsuccessful
 -i second_award_verification_status
 -i change_second_award_payment_status
@@ -45,4 +45,3 @@
 
 
 -i contract_sign
--i contract_sign_upload

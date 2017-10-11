@@ -27,4 +27,3 @@
 -i first_award_active_status
 
 -i contract_sign
--i contract_sign_upload
