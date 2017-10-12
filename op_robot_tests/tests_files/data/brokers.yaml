@@ -313,6 +313,9 @@ PrivatMarket:
         default:
             enquiry: [0, 15]
             tender:  [0, 15]
+        dgfInsider:
+            accelerator: 720
+            auction:  [25, 30]
     keywords_file: privatmarket
     roles:
         tender_owner:   PrivatMarket_Owner

@@ -434,7 +434,7 @@ users:
     PrivatMarket_Viewer:
         broker:   PrivatMarket
         homepage: "http://auction.privatbank.ua"
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1920, 1080]
     PrivatMarket_Provider:
@@ -443,7 +443,7 @@ users:
         email:    pbecommercetest2@ukr.net
         login:    uchasnuk.nomer1@yopmail.com
         password: uchasnuk.nomer1@yopmail.com
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1920, 1080]
     PrivatMarket_Provider1:
@@ -452,7 +452,7 @@ users:
         email:    pbecommercetest2@ukr.net
         login:    uchasnuk.nomer1@yopmail.com
         password: uchasnuk.nomer1@yopmail.com
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1920, 1080]
     PrivatMarket_Owner:
@@ -461,7 +461,7 @@ users:
         email:    pbecommercetest2@ukr.net
         login:    +380102030405
         password: value
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1920, 1080]
     Prom_Owner:
