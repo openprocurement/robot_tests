@@ -361,7 +361,7 @@ pzo:
         belowThreshold:
             enquiry: [0, 25]
             tender:  [0, 25]
-            accelerator: 180
+            accelerator: 1440
         openua:
             tender:  [0, 25]
             accelerator: 1440
