@@ -806,7 +806,7 @@ utsb:
     timeout_on_wait: 60
 uisce:
     keywords_file: uisce
-    accelerator: 144
+    accelerator: 360
     roles:
         tender_owner:   uisce_Owner
         provider:       uisce_Provider
@@ -817,7 +817,7 @@ uisce:
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
-    timeout_on_wait: 10
+    timeout_on_wait: 60
 zupb:
     keywords_file: zupb
     roles:

@@ -1359,7 +1359,7 @@ users:
         default_page: "http://test.proumstrade.com.ua/public"
         login:    organizator
         password: 123456
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1024, 768]
     uisce_Provider:
@@ -1368,7 +1368,7 @@ users:
         default_page: "http://test.proumstrade.com.ua/public"
         login:    member
         password: 123456
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1024, 768]
     uisce_Provider1:
@@ -1377,14 +1377,14 @@ users:
         default_page: "http://test.proumstrade.com.ua/public"
         login:    member1
         password: 123456
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1024, 768]
     uisce_Viewer:
         broker:   uisce
         homepage: "http://test.proumstrade.com.ua/"
         default_page: "http://test.proumstrade.com.ua/public"
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1024, 768]
     zupb_Owner:
