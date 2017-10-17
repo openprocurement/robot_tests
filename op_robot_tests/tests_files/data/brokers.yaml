@@ -331,6 +331,9 @@ Promauctions:
         dgfOtherAssets:
             accelerator: 96
             auction:  [55, 60]
+        dgfInsider:
+            accelerator: 160
+            auction:  [25, 30]
     keywords_file: prom
     roles:
         tender_owner:   Prom_Owner
