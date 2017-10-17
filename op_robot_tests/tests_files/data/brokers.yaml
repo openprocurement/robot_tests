@@ -111,7 +111,7 @@ DZOauctions:
             accelerator: 144
             auction:  [15, 20]
         dgfInsider:
-            accelerator: 1440
+            accelerator: 720
             auction:  [25, 30]
     keywords_file: dzo
     roles:
@@ -132,7 +132,7 @@ uaceauction:
             accelerator: 1440
             auction:  [45, 50]
         dgfInsider:
-            accelerator: 1440
+            accelerator: 720
             auction:  [25, 30]
     keywords_file: uace
     roles:
@@ -153,7 +153,7 @@ opentenderauction:
             accelerator: 1440
             auction:  [45, 50]
         dgfInsider:
-            accelerator: 1440
+            accelerator: 720
             auction:  [25, 30]
     keywords_file: opentender
     roles:
@@ -174,7 +174,7 @@ brizol:
             accelerator: 144
             auction:  [8, 12]
         dgfInsider:
-            accelerator: 1440
+            accelerator: 720
             auction:  [25, 30]
     keywords_file: brizol
     roles:
@@ -195,7 +195,7 @@ aukzionua:
             accelerator: 1440
             auction:  [45, 50]
         dgfInsider:
-            accelerator: 1440
+            accelerator: 720
             auction:  [25, 30]
     keywords_file: aukzionua
     roles:
@@ -234,7 +234,7 @@ centrex:
             accelerator: 1440
             auction:  [45, 50]
         dgfInsider:
-            accelerator: 1440
+            accelerator: 720
             auction:  [25, 30]
     keywords_file: centrex
     roles:
@@ -255,7 +255,7 @@ expagency:
             accelerator: 1440
             auction:  [45, 50]
         dgfInsider:
-            accelerator: 1440
+            accelerator: 720
             auction:  [25, 30]
     keywords_file: expagency
     roles:
@@ -276,7 +276,7 @@ govfound:
             accelerator: 1440
             auction:  [45, 50]
         dgfInsider:
-            accelerator: 1440
+            accelerator: 720
             auction:  [25, 30]
     keywords_file: govfound
     roles:
@@ -848,7 +848,7 @@ epsilon:
             accelerator: 144
             auction:  [75, 80]
         dgfInsider:
-            accelerator: 1440
+            accelerator: 720
             auction:  [25, 30]
     keywords_file: epsilon
     roles:
@@ -893,7 +893,7 @@ tirex:
             accelerator: 144
             auction:  [75, 80]
         dgfInsider:
-            accelerator: 1440
+            accelerator: 720
             auction:  [25, 30]
     keywords_file: tirex
     roles:
