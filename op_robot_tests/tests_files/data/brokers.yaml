@@ -389,7 +389,7 @@ aladdin:
             accelerator: 1440
         openua:
             accelerator: 1440
-            tender:  [0, 45]
+            tender:  [0, 45] 
         openeu:
             tender:  [0, 60]
             accelerator: 1440
