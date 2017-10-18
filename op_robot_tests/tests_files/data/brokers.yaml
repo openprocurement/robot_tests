@@ -111,7 +111,7 @@ DZOauctions:
             accelerator: 144
             auction:  [15, 20]
         dgfInsider:
-            accelerator: 320
+            accelerator: 160
             auction:  [25, 30]
     keywords_file: dzo
     roles:
