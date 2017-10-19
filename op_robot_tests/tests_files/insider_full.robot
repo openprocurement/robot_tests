@@ -277,7 +277,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
 
 
 Зробити заявку
-  Wait Until Page Contains Element  id=place-bid-button
+  Wait Until Element Is Visible  id=place-bid-button  2 min
   Click Element  id=place-bid-button
   Wait Until Page Contains  Ви
 
