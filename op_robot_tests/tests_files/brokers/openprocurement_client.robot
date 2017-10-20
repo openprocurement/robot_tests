@@ -638,21 +638,13 @@ Library  openprocurement_client.utils
   [return]  ${filename}
 
 
-Підтвердити підписання контракту
+Завантажити угоду та підтвердити підписання контракту
   [Documentation]
   ...      [Arguments] Username, tender uaid, contract number
-  ...      Find tender using uaid, get contract test_confirmation data and call patch_contract
+  ...      Find tender using uaid, upload contract document, get contract test_confirmation data and call patch_contract
   ...      [Return] Nothing
   [Arguments]  ${username}  ${tender_uaid}  ${contract_num}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${data}=  test_confirm_data  ${tender['data']['contracts'][${contract_num}]['id']}
-  Log  ${data}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract  ${tender}  ${data}
-  Log  ${reply}
-
-
-Завантажити угоду до тендера
-  [Arguments]  ${username}  ${tender_uaid}  ${contract_num}  ${filepath}
+  ${file_path}  ${file_title}  ${file_content}=  create_fake_doc
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${contract_id}=  Get Variable Value  ${tender['data']['contracts'][${contract_num}]['id']}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
@@ -661,7 +653,11 @@ Library  openprocurement_client.utils
   Set To Dictionary  ${response['data']}  documentType=contractSigned
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract_document  ${tender}  ${response}  ${contract_id}  ${response['data'].id}
   Log  ${reply}
-  [return]  ${reply}
+  Remove File  ${file_path}
+  ${data}=  test_confirm_data  ${contract_id}
+  Log  ${data}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract  ${tender}  ${data}
+  Log  ${reply}
 
 
 ##############################################################################

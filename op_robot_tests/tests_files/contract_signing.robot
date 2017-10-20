@@ -22,24 +22,13 @@ Suite Teardown  Test Suite Teardown
 #             CONTRACT
 ##############################################################################################
 
-Можливість завантажити угоду до лоту
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Завантаження документів щодо угоди
-  ...  tender_owner
-  ...  ${USERS.users['${tender_owner}'].broker}
-  ...  contract_sign_upload
-  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
-  ${file_path}  ${file_title}  ${file_content}=  create_fake_doc
-  Run As  ${tender_owner}  Завантажити угоду до тендера  ${TENDER['TENDER_UAID']}  -1  ${file_path}
-  Remove File  ${file_path}
-
-
 Можливість укласти угоду для лоту
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес укладання угоди
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  contract_sign  level1
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Run As  ${tender_owner}  Підтвердити підписання контракту  ${TENDER['TENDER_UAID']}  -1
+  Run As  ${tender_owner}  Завантажити угоду та підтвердити підписання контракту  ${TENDER['TENDER_UAID']}  -1
 
 
 Відображення статусу підписаної угоди
