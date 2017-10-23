@@ -75,7 +75,7 @@ Etender:
             accelerator: 1440
             auction:  [110, 25]
         dgfInsider:
-            accelerator: 720
+            accelerator: 144
             auction:  [25, 30]
     keywords_file: etender
     roles:
