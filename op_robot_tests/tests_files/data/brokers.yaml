@@ -355,6 +355,9 @@ Publicbid:
         dgfOtherAssets:
             accelerator: 288
             auction:  [15, 25]
+        dgfInsider:
+            accelerator: 288
+            auction:  [15, 25]
     keywords_file: publicbid
     roles:
         provider:       Publicbid_Provider1
