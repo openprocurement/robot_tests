@@ -367,7 +367,7 @@ Publicbid:
         provider1:      Publicbid_Provider2
         tender_owner:   Publicbid_Owner
         viewer:         Publicbid_Viewer
-    timeout_on_wait: 80
+    timeout_on_wait: 120
 PublicPortal:
     keywords_file: publicportal
     roles:
