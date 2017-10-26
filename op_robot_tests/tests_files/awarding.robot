@@ -136,13 +136,21 @@ Suite Teardown  Test Suite Teardown
   Run As  ${tender_owner}  Дискваліфікувати постачальника  ${TENDER['TENDER_UAID']}  0  ${description}
 
 
+Відображення статусу неуспішного лоту через відсутність завантаженого протоколу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення статусу лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      wait_for_verificationEndDate
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити cтатус неуспішного тендера  ${viewer}  ${TENDER['TENDER_UAID']}
+
+
 Відображення статусу 'unsuccessful' для першого кандидата
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
   ...     first_award_status_unsuccessful
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити cтатус неуспішного тендера  ${viewer}  ${TENDER['TENDER_UAID']}
   Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[0]}  status
   Звірити відображення поля awards[0].status тендера із unsuccessful для користувача ${viewer}
 
