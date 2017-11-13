@@ -4,7 +4,8 @@ Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
 *** Variables ***
-${MODE}         planning
+${RESOURCE}     plans
+${MODE}         belowThreshold
 @{USED_ROLES}   tender_owner  viewer
 
 ${NUMBER_OF_ITEMS}  ${2}

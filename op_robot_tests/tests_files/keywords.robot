@@ -222,6 +222,16 @@ Get Broker Property By Username
   [return]  ${tender_data}
 
 
+Підготувати дані для створення плану
+  [Arguments]  ${tender_parameters}
+  ${data}=  test_tender_data_planning  ${tender_parameters}
+  ${tender_data}=  Create Dictionary  data=${data}
+  ${TENDER}=  Create Dictionary
+  Set Global Variable  ${TENDER}
+  Log  ${tender_data}
+  [return]  ${tender_data}
+
+
 Підготувати дані для створення предмету закупівлі
   [Arguments]  ${cpv}
   ${item}=  test_item_data  ${cpv[0:4]}
@@ -439,7 +449,7 @@ Log differences between dicts
 
 Оновити сторінку
   [Arguments]  ${username}
-  Run Keyword If  '${MODE}' == 'planning'  Run As  ${username}  Оновити сторінку з планом  ${TENDER['TENDER_UAID']}
+  Run Keyword If  '${RESOURCE}' == 'plans'  Run As  ${username}  Оновити сторінку з планом  ${TENDER['TENDER_UAID']}
   ...      ELSE  Run As  ${username}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
 
 

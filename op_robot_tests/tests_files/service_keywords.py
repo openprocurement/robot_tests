@@ -333,9 +333,6 @@ def prepare_test_tender_data(procedure_intervals,
             tender_parameters,
             submissionMethodDetails=submissionMethodDetails,
             accelerator=accelerator)})
-    elif mode == 'planning':
-        return munchify({'data': test_tender_data_planning(
-            tender_parameters)})
         # The previous line needs an explicit keyword argument because,
         # unlike previous functions, this one has three arguments.
     raise ValueError("Invalid mode for prepare_test_tender_data")

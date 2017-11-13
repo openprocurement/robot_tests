@@ -19,6 +19,10 @@ fake_uk = Factory.create(locale='uk_UA')
 fake_uk.add_provider(OP_Provider)
 fake = fake_uk
 used_identifier_id = []
+mode_open = ["belowThreshold", "aboveThresholdUA", "aboveThresholdEU",
+            "aboveThresholdUA.defense", "competitiveDialogueUA", "competitiveDialogueEU", "esco"]
+mode_limited = ["reporting", "negotiation.quick", "negotiation"]
+
 # This workaround fixes an error caused by missing "catch_phrase" class method
 # for the "ru_RU" locale in Faker >= 0.7.4
 fake_ru.add_provider(CompanyProviderEnUs)
@@ -197,8 +201,8 @@ def test_tender_data_planning(params):
             "name": fake.description(),
         },
         "tender": {
-            "procurementMethod": "open",
-            "procurementMethodType": "belowThreshold",
+            "procurementMethod": "",
+            "procurementMethodType": params['mode'],
             "tenderPeriod": {
                 "startDate": (get_now().isoformat())
             }
@@ -222,6 +226,10 @@ def test_tender_data_planning(params):
         del item_data['deliveryLocation']
         del item_data['deliveryDate']['startDate']
         data['items'].append(item_data)
+    if params['mode'] in mode_open:
+        data["tender"]["procurementMethod"] = "open"
+    if params['mode'] in mode_limited:
+        data["tender"]["procurementMethod"] = "limited"
     return munchify(data)
 
 
