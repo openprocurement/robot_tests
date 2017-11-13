@@ -502,6 +502,12 @@ Log differences between dicts
   Порівняти об'єкти  ${left}  ${right}
 
 
+Звірити відображення типу запланованого тендера для ${username}
+  ${type}=  Отримати дані із плану  ${username}  ${TENDER['TENDER_UAID']}  tender.procurementMethodType
+  Звірити відображення поля tender.procurementMethodType плану для користувача ${username}
+  Run Keyword If  '${type}' == ''  Run As  ${username}  Перевірити наявність повідомлення  "без застосування електронної системи"
+
+
 Порівняти об'єкти
   [Arguments]  ${left}  ${right}
   Log  ${left}

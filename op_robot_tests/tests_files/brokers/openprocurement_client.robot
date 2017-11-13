@@ -137,6 +137,11 @@ Library  openprocurement_client.utils
   [return]  ${tender_data}
 
 
+Перевірити наявність повідомлення
+  [Arguments]  ${username}  ${msg}
+  Log  ${\n}${msg}${\n}  WARN
+
+
 Створити тендер
   [Arguments]  ${username}  ${tender_data}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  create_tender  ${tender_data}
