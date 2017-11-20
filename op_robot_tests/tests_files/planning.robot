@@ -4,7 +4,8 @@ Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
 *** Variables ***
-${MODE}         planning
+${RESOURCE}     plans
+${MODE}         belowThreshold
 @{USED_ROLES}   tender_owner  viewer
 
 ${NUMBER_OF_ITEMS}  ${2}
@@ -27,6 +28,15 @@ ${ITEM_MEAT}        ${False}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      find_plan
   Можливість знайти план по ідентифікатору
+
+
+Відображення типу запланованого тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних плану
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      plan_view
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення типу запланованого тендера для ${viewer}
 
 
 Відображення суми бюджету

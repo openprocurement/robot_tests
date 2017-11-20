@@ -45,7 +45,7 @@ Library  openprocurement_client.utils
 #  Uncomment this line if there is need to process files operations without DS.
 #  ${ds_api_wraper}=  set variable  ${None}
   ${ds_api_wraper}=  prepare_ds_api_wrapper  ${DS_HOST_URL}  ${auth_ds}
-  ${api_wrapper}=  Run Keyword If  '${MODE}' == 'planning'
+  ${api_wrapper}=  Run Keyword If  '${RESOURCE}' == 'plans'
   ...     prepare_plan_api_wrapper  ${USERS.users['${username}'].api_key}  ${API_HOST_URL}  ${API_VERSION}
   ...                     ELSE  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${RESOURCE}  ${API_HOST_URL}  ${API_VERSION}  ${ds_api_wraper}
   Set To Dictionary  ${USERS.users['${username}']}  client=${api_wrapper}
@@ -135,6 +135,11 @@ Library  openprocurement_client.utils
   [Documentation]  Це слово використовується в майданчиків, тому потрібно, щоб воно було і тут
   [Arguments]  ${username}  ${tender_data}  ${role_name}
   [return]  ${tender_data}
+
+
+Перевірити наявність повідомлення
+  [Arguments]  ${username}  ${msg}
+  Log  ${\n}${msg}${\n}  WARN
 
 
 Створити тендер

@@ -222,6 +222,16 @@ Get Broker Property By Username
   [return]  ${tender_data}
 
 
+Підготувати дані для створення плану
+  [Arguments]  ${tender_parameters}
+  ${data}=  test_tender_data_planning  ${tender_parameters}
+  ${tender_data}=  Create Dictionary  data=${data}
+  ${TENDER}=  Create Dictionary
+  Set Global Variable  ${TENDER}
+  Log  ${tender_data}
+  [return]  ${tender_data}
+
+
 Підготувати дані для створення предмету закупівлі
   [Arguments]  ${cpv}
   ${item}=  test_item_data  ${cpv[0:4]}
@@ -439,7 +449,7 @@ Log differences between dicts
 
 Оновити сторінку
   [Arguments]  ${username}
-  Run Keyword If  '${MODE}' == 'planning'  Run As  ${username}  Оновити сторінку з планом  ${TENDER['TENDER_UAID']}
+  Run Keyword If  '${RESOURCE}' == 'plans'  Run As  ${username}  Оновити сторінку з планом  ${TENDER['TENDER_UAID']}
   ...      ELSE  Run As  ${username}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
 
 
@@ -490,6 +500,12 @@ Log differences between dicts
   ${field}=  Evaluate  "{}{}".format('changes[0].', '${field}')
   ${right}=  Отримати дані із договору  ${username}  ${contract_uaid}  ${field}
   Порівняти об'єкти  ${left}  ${right}
+
+
+Звірити відображення типу запланованого тендера для ${username}
+  ${type}=  Отримати дані із плану  ${username}  ${TENDER['TENDER_UAID']}  tender.procurementMethodType
+  Звірити відображення поля tender.procurementMethodType плану для користувача ${username}
+  Run Keyword If  '${type}' == ''  Run As  ${username}  Перевірити наявність повідомлення  "без застосування електронної системи"
 
 
 Порівняти об'єкти
