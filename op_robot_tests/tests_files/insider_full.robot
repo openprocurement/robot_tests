@@ -187,6 +187,14 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   Підвищити ставку переможцем голландської частини
 
 
+Можливість скасувати ставку переможцем голландської частини
+  [Tags]   ${USERS.users['${provider}'].broker}: Процес аукціону
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      cancel_bid_by_dutch_winner
+  Відмінити ставку
+
+
 Можливість дочекатися завершення аукціону
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
   ...      viewer
@@ -301,4 +309,10 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   Capture Page Screenshot
   Click Element  id=place-bid-button
   Wait Until Page Contains  ${msg}  10s
+  Capture Page Screenshot
+
+
+Відмінити ставку
+  Click Element  id=cancel-bid-button
+  Wait Until Page Contains  Ставку відмінено  10s
   Capture Page Screenshot
