@@ -167,6 +167,23 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   Подати більшу ставку, ніж переможець голландської частини
 
 
+Можливість відмінити ставку другим учасником
+  [Tags]   ${USERS.users['${provider1}'].broker}: Процес аукціону
+  ...      provider1
+  ...      ${USERS.users['${provider1}'].broker}
+  ...      cancel_bid_by_provider1_during_sealedbid
+  Відмінити ставку
+
+
+Можливість дочекатись заврешення аукціону без bestbid етапу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      cancel_bid_by_provider1_during_sealedbid
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Run Keyword And Expect Error  *  Дочекатись паузи перед Best Bid етапом
+
+
 Можливість дочекатись Best Bid частини
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
   ...      viewer  provider  provider1
@@ -199,7 +216,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      auction
+  ...      auction_end
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати закінчення аукціону
 
@@ -261,6 +278,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   :FOR    ${username}    IN    ${provider}  ${provider1}
   \   Переключитись на учасника   ${username}
   \   Wait Until Page Contains  → ${stage_name}  30 s
+  \   Capture Page Screenshot
 
 
 Дочекатись завершення паузи перед ${stage_name} етапом
