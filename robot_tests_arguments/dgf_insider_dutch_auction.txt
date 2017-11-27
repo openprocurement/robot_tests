@@ -18,6 +18,7 @@
 
 -i auction
 -i make_bid_by_provider1_before_dutch
+-i auction_end
 
 -i awarding
 -i first_award_verification_status
