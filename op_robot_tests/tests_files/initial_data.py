@@ -93,6 +93,7 @@ def create_fake_doc():
 def test_tender_data(params,
                      periods=("enquiry", "tender"),
                      submissionMethodDetails=None,
+                     funders=None,
                      accelerator=None):
     submissionMethodDetails = submissionMethodDetails \
         if submissionMethodDetails else "quick"
@@ -175,6 +176,11 @@ def test_tender_data(params,
         data['features'].append(new_feature)
     if not data['features']:
         del data['features']
+    if funders is not None:
+        data['funders'] = []
+        for funder_number in range(int (funders)):
+            new_funder = fake.funders_data()
+            data['funders'].append(new_funder)
     data['status'] = 'draft'
     return munchify(data)
 

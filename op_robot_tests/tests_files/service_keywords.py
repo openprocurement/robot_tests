@@ -294,7 +294,8 @@ def compute_intrs(brokers_data, used_brokers):
 def prepare_test_tender_data(procedure_intervals,
                              tender_parameters,
                              submissionMethodDetails,
-                             accelerator):
+                             accelerator,
+                             funders):
     # Get actual intervals by mode name
     mode = tender_parameters['mode']
     if mode in procedure_intervals:
@@ -332,6 +333,7 @@ def prepare_test_tender_data(procedure_intervals,
         return munchify({'data': test_tender_data(
             tender_parameters,
             submissionMethodDetails=submissionMethodDetails,
+            funders=funders,
             accelerator=accelerator)})
         # The previous line needs an explicit keyword argument because,
         # unlike previous functions, this one has three arguments.
