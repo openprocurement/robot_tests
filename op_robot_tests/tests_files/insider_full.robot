@@ -175,7 +175,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   Відмінити ставку
 
 
-Можливість дочекатись заврешення аукціону без bestbid етапу
+Можливість дочекатись завершення аукціону без Best bid етапу
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -184,7 +184,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   Run Keyword And Expect Error  *  Дочекатись паузи перед Best Bid етапом
 
 
-Можливість дочекатись Best Bid частини
+Можливість дочекатись Best Bid етапу
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
   ...      viewer  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}
@@ -193,6 +193,15 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   ...      make_bid_by_dutch_winner
   Дочекатись паузи перед Best Bid етапом
   Дочекатись завершення паузи перед Best Bid етапом
+
+
+Неможливість зробити невалідну ставку переможцем голландської частини
+  [Tags]   ${USERS.users['${provider}'].broker}: Процес аукціону
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      make_bid_by_dutch_winner
+  Переключитись на учасника   ${provider}
+  Спробувати подати невалідну ставку переможцем голландської частини
 
 
 Можливість збільшити ставку переможцем голландської частини
@@ -314,6 +323,10 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
 
 Підвищити ставку переможцем голландської частини
   Поставити ставку  1  Ставку прийнято  ${sealedbid_amount}
+
+
+Спробувати подати невалідну ставку переможцем голландської частини
+  Поставити ставку  -1  Ваша ставка повинна перевищувати ставку переможця етапу закритих цінових пропозицій  ${sealedbid_amount}
 
 
 Поставити ставку
