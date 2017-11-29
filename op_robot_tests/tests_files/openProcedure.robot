@@ -44,6 +44,15 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля title тендера для користувача ${viewer}
 
 
+Відображення мінімальної кількості учасників ацкуіону
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view  level1
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля minNumberOfQualifiedBids тендера для користувача ${viewer}
+
+
 Відображення номера лоту ФГВ
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer

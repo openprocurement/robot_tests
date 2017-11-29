@@ -14,6 +14,7 @@ Resource           resource.robot
   ...      tender_meat=${${TENDER_MEAT}}
   ...      item_meat=${${ITEM_MEAT}}
   ...      api_host_url=${API_HOST_URL}
+  ...      minNumberOfQualifiedBids=${minNumberOfQualifiedBids}
   ${DIALOGUE_TYPE}=  Get Variable Value  ${DIALOGUE_TYPE}
   Run keyword if  '${DIALOGUE_TYPE}' != '${None}'  Set to dictionary  ${tender_parameters}  dialogue_type=${DIALOGUE_TYPE}
   ${tender_data}=  Підготувати дані для створення тендера  ${tender_parameters}
