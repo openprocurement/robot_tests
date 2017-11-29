@@ -1,5 +1,7 @@
 -v MODE:dgfOtherAssets
 
+-v minNumberOfQualifiedBids:2
+
 -v NUMBER_OF_ITEMS:3
 
 -i create_tender
@@ -12,10 +14,8 @@
 
 -i modify_auction_value
 -i modify_auction_step
--i modify_auction_title_ua
 -i modify_auction_guarantee
--i modify_auction_periods
--i modify_tenderAttempts
+-i modify_auction_periods		
 -i modify_tender
 -i add_tender_doc
 -i add_tender_doc_content
@@ -28,6 +28,7 @@
   -i answer_question_to_tender
 -i ask_question_to_item
   -i answer_question_to_item
+
 
 -i make_bid_by_provider_without_qualification
 -i make_bid_without_parameters
@@ -49,14 +50,17 @@
 -i auction_url
 -i auction_end_date
 
--i qualification
--i qualification_add_auction_protocol_to_bid
--i qualification_approve_doc_to_first_award
--i qualification_approve_first_award
--i qualification_cancel_first_award_qualification
--i qualification_add_auction_protocol_to_second_bid
--i qualification_approve_doc_to_second_award
--i qualification_approve_second_award
+-i awarding
+-i first_award_verification_status
+-i second_award_waiting_status
+-i change_first_award_payment_status
+-i add_protocol_to_first_award
+-i approve_first_award_protocol
+-i first_award_payment_status
+-i cancel_second_award
+-i second_award_cancelled_status
+-i confirm_first_award
+-i first_award_active_status
 
 -i contract_sign
 -i contract_sign_upload

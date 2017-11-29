@@ -1,0 +1,20 @@
+-v MODE:dgfOtherAssets
+
+-v minNumberOfQualifiedBids:1
+
+-v NUMBER_OF_ITEMS:1
+
+-i create_tender
+-i find_tender
+-i tender_view
+-i tender_view_tenderPeriod
+-i tender_view_unit_code
+-i tender_view_min_step
+
+-i make_bid_by_provider
+-i modify_bid_by_provider
+
+-i awarding
+-i first_award_verification_status
+-i disqualified_first_award
+-i tender_status_unsuccessful
