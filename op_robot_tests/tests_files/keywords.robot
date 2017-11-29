@@ -705,12 +705,12 @@ Require Failure
   ...      complete
 
 
-Звірити cтатус тендера у випадку наявності лише однієї пропозиції
+Звірити cтатус неуспішного тендера
   [Arguments]  ${username}  ${tender_uaid}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
-  ...      5 min 15 sec
+  ...      40 min 15 sec
   ...      15 sec
   ...      Звірити статус тендера
   ...      ${username}
@@ -790,7 +790,7 @@ Require Failure
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
-  ...      20 min 15 sec
+  ...      30 min 15 sec
   ...      15 sec
   ...      Звірити статус тендера
   ...      ${username}
