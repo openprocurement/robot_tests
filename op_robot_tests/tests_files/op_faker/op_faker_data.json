@@ -507,6 +507,30 @@
         "спускати",
         "весілчанин"
     ],
+    "funders": [
+        {
+            "contactPoint": {
+                "telephone": "+380444906671",
+                "url": "http://www.worldbank.org/uk/country/ukraine",
+                "faxNumber": "+380444906670",
+                "name": "Darya Gulei",
+                "email": "ukraine@worldbank.org"
+            },
+            "identifier": {
+                "scheme": "XM-DAC",
+                "id": "44000",
+                "legalName": "International Bank for Reconstruction and Development (IBRD)"
+            },
+            "name": "World Bank",
+            "address": {
+                "postalCode": "20433",
+                "countryName": "USA",
+                "streetAddress": "1818 H Street, NW",
+                "region": "DC",
+                "locality": "Washington"
+            }
+        }
+    ],
     "procuringEntities": [
         {
             "contactPoint": {

@@ -215,7 +215,8 @@ Get Broker Property By Username
   ${period_intervals}=  compute_intrs  ${BROKERS}  ${used_brokers}
   ${submissionMethodDetails}=  Get Variable Value  ${submissionMethodDetails}
   ${accelerator}=  Get Variable Value  ${accelerator}
-  ${tender_data}=  prepare_test_tender_data  ${period_intervals}  ${tender_parameters}  ${submissionMethodDetails}  ${accelerator}
+  ${funders}=  Get Variable Value  ${funders}
+  ${tender_data}=  prepare_test_tender_data  ${period_intervals}  ${tender_parameters}  ${submissionMethodDetails}  ${accelerator}  ${funders}
   ${TENDER}=  Create Dictionary
   Set Global Variable  ${TENDER}
   Log  ${tender_data}
@@ -499,6 +500,19 @@ Log differences between dicts
   [Arguments]  ${username}  ${contract_uaid}  ${left}  ${field}
   ${field}=  Evaluate  "{}{}".format('changes[0].', '${field}')
   ${right}=  Отримати дані із договору  ${username}  ${contract_uaid}  ${field}
+  Порівняти об'єкти  ${left}  ${right}
+
+
+Звірити поле донора
+  [Arguments]  ${username}  ${tender_uaid}  ${tender_data}  ${field}  ${funders_index}
+  ${left}=  get_from_object  ${tender_data.data.funders[${funders_index}]}  ${field}
+  Log  ${left}
+  Звірити поле донора із значенням  ${username}  ${tender_uaid}  ${left}  ${field}  ${funders_index}
+
+
+Звірити поле донора із значенням
+  [Arguments]  ${username}  ${tender_uaid}  ${left}  ${field}  ${funders_index}  ${object_id}=${Empty}
+  ${right}=  Отримати дані із тендера  ${username}  ${tender_uaid}  funders[${funders_index}].${field}  ${object_id}
   Порівняти об'єкти  ${left}  ${right}
 
 
@@ -786,10 +800,17 @@ Require Failure
 
 
 Дочекатись дати закінчення періоду уточнень
-  [Arguments]  ${username}
+  [Arguments]  ${username}  ${tender_uaid}
   Дочекатись дати  ${USERS.users['${username}'].tender_data.data.enquiryPeriod.endDate}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      10 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      active.tendering
 
 
 Дочекатись дати закінчення періоду відповідей на запитання
