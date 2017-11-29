@@ -253,6 +253,7 @@ def test_item_data(scheme):
                 "startDate": (get_now() + timedelta(minutes=70)).isoformat(),
                 "endDate": (get_now() + timedelta(minutes=100)).isoformat()
     }
+    data["quantity"] = round(random.uniform(1, 10), 3)
     return munchify(data)
 
 
