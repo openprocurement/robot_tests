@@ -2942,11 +2942,11 @@
                 {
                     "scheme": "CPVS",
                     "id": "PA01-7",
-                    "description": "Найм"
+                    "description": "Оренда"
                 }
             ],
             "classification": {
-                "scheme": "CAV-PS",
+                "scheme": "CAV",
                 "id": "05110000-9",
                 "description": "Молокозаводи"
             }
@@ -2956,11 +2956,11 @@
                 {
                     "scheme": "CPVS",
                     "id": "PA01-7",
-                    "description": "Найм"
+                    "description": "Оренда"
                 }
             ],
             "classification": {
-                "scheme": "CAV-PS",
+                "scheme": "CAV",
                 "id": "06110000-6",
                 "description": "Земельні ділянки призначені для забудови"
             }
@@ -2970,11 +2970,11 @@
                 {
                     "scheme": "CPVS",
                     "id": "PA01-7",
-                    "description": "Найм"
+                    "description": "Оренда"
                 }
             ],
             "classification": {
-                "scheme": "CAV-PS",
+                "scheme": "CAV",
                 "id": "04211000-0",
                 "description": "Промислова заводська, фабрична будівля та їх частини"
             }
@@ -2984,11 +2984,11 @@
                 {
                     "scheme": "CPVS",
                     "id": "PA01-7",
-                    "description": "Найм"
+                    "description": "Оренда"
                 }
             ],
             "classification": {
-                "scheme": "CAV-PS",
+                "scheme": "CAV",
                 "id": "04111000-9",
                 "description": "Квартира"
             }
@@ -2998,7 +2998,7 @@
                 {
                     "scheme": "CPVS",
                     "id": "PA01-7",
-                    "description": "Найм"
+                    "description": "Оренда"
                 }
             ],
             "classification": {
@@ -3012,7 +3012,7 @@
                 {
                     "scheme": "CPVS",
                     "id": "PA01-7",
-                    "description": "Найм"
+                    "description": "Оренда"
                 }
             ],
             "classification": {
@@ -3026,7 +3026,7 @@
                 {
                     "scheme": "CPVS",
                     "id": "PA01-7",
-                    "description": "Найм"
+                    "description": "Оренда"
                 }
             ],
             "classification": {
@@ -3040,7 +3040,7 @@
                 {
                     "scheme": "CPVS",
                     "id": "PA01-7",
-                    "description": "Найм"
+                    "description": "Оренда"
                 }
             ],
             "classification": {
