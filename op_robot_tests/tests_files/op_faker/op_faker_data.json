@@ -2946,7 +2946,7 @@
                 }
             ],
             "classification": {
-                "scheme": "CAV",
+                "scheme": "CAV-PS",
                 "id": "05110000-9",
                 "description": "Молокозаводи"
             }
@@ -2960,7 +2960,7 @@
                 }
             ],
             "classification": {
-                "scheme": "CAV",
+                "scheme": "CAV-PS",
                 "id": "06110000-6",
                 "description": "Земельні ділянки призначені для забудови"
             }
@@ -2974,7 +2974,7 @@
                 }
             ],
             "classification": {
-                "scheme": "CAV",
+                "scheme": "CAV-PS",
                 "id": "04211000-0",
                 "description": "Промислова заводська, фабрична будівля та їх частини"
             }
@@ -2988,7 +2988,7 @@
                 }
             ],
             "classification": {
-                "scheme": "CAV",
+                "scheme": "CAV-PS",
                 "id": "04111000-9",
                 "description": "Квартира"
             }
