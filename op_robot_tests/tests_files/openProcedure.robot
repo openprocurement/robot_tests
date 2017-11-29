@@ -323,6 +323,26 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля minimalStep.amount тендера із ${USERS.users['${tender_owner}'].new_minimal_step} для користувача ${viewer}
 
 
+Неможливість змінити опис лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_description  level2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_description}=  create_fake_sentence
+  Перевірити неможливість зміни поля description тендера на значення ${new_description} для користувача ${tender_owner}
+
+
+Неможливість змінити дані про організатора лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_procuringEntity  level2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_procuringEntity_name}=  create_fake_sentence
+  Перевірити неможливість зміни поля procuringEntity.name тендера на значення ${new_procuringEntity_name} для користувача ${tender_owner}
+
+
 Неможливість змінити назву лоту українською мовою
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
   ...      tender_owner
@@ -507,6 +527,15 @@ ${ITEM_MEAT}        ${True}
   Можливість задати запитання на тендер користувачем ${provider}
 
 
+Неможливість додати актив лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування лота
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_item  level3
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Неможливість додати предмет закупівлі в тендер
+
+
 Відображення заголовку анонімного запитання на лот без відповіді
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення запитання
   ...      viewer  tender_owner  provider  provider1
@@ -514,6 +543,15 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      ask_question_to_tender
   Звірити відображення поля title запитання на тендер для усіх користувачів
+
+
+Неможливість видалити актив лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування лота
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      delete_item  level3
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Неможливість видалити предмет закупівлі з тендера
 
 
 Відображення опису анонімного запитання на лот без відповіді
@@ -674,7 +712,8 @@ ${ITEM_MEAT}        ${True}
 
 ##############################################################################################
 
-Можливість скасувати пропозицію
+
+Можливість скасувати пропозицію першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
@@ -682,6 +721,14 @@ ${ITEM_MEAT}        ${True}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість скасувати цінову пропозицію користувачем ${provider}
 
+
+Можливість скасувати пропозицію другим учасником
+  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
+  ...      provider1
+  ...      ${USERS.users['${provider1}'].broker}
+  ...      cancel_bid_by_provider1
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість скасувати цінову пропозицію користувачем ${provider1}
 
 Неможливість побачити цінові пропозиції учасників під час прийому пропозицій
   [Tags]   ${USERS.users['${viewer}'].broker}: Подання пропозиції
