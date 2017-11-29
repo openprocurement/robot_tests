@@ -178,6 +178,7 @@ Library  openprocurement_client.utils
   ${access_token}=  Get Variable Value  ${tender.access.token}
   Set To Dictionary  ${USERS.users['${username}']}   access_token=${access_token}
   Set To Dictionary  ${USERS.users['${username}']}   tender_data=${tender}
+  Log  ${\n}${API_HOST_URL}/api/${API_VERSION}/auctions/${tender.data.id}${\n}  WARN
   Log   ${USERS.users['${username}'].tender_data}
   [return]  ${tender.data.auctionID}
 
