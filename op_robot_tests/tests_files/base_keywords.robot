@@ -82,6 +82,9 @@ Resource           resource.robot
   Run As  ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  ${field_name}  ${field_value}
 
 
+Перевірити неможливість зміни поля ${field} тендера на значення ${new_value} для користувача ${username}
+  Require Failure  ${username}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  ${field}  ${new_value}
+
 Можливість змінити поле ${field_name} плану на ${field_value}
   Run As  ${tender_owner}  Внести зміни в план  ${TENDER['TENDER_UAID']}  ${field_name}  ${field_value}
 
@@ -248,6 +251,20 @@ Resource           resource.robot
 Звірити відображення координат ${item_index} предмету для користувача ${username}
   ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}]}
   Звірити координати доставки тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${item_id}
+
+
+Звірити відображення поля ${field} усіх донорів для усіх користувачів
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  \  Звірити відображення поля ${field} усіх донорів для користувача ${username}
+
+
+Звірити відображення поля ${field} усіх донорів для користувача ${username}
+  :FOR  ${funders_index}  IN RANGE  ${FUNDERS}
+  \  Звірити відображення поля ${field} ${funders_index} донора для користувача ${username}
+
+
+Звірити відображення поля ${field} ${funders_index} донора для користувача ${username}
+  Звірити поле донора  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${field}  ${funders_index}
 
 
 Отримати дані із поля ${field} тендера для усіх користувачів

@@ -21,6 +21,7 @@ class OP_Provider(BaseProvider):
     _fake_data = load_data_from_file("op_faker_data.json")
     word_list = _fake_data.words
     procuringEntities = _fake_data.procuringEntities
+    funders = _fake_data.funders
     addresses = _fake_data.addresses
     classifications = _fake_data.classifications
     cpvs = _fake_data.cpvs
@@ -89,6 +90,11 @@ class OP_Provider(BaseProvider):
     @classmethod
     def procuringEntity(self):
         return deepcopy(self.random_element(self.procuringEntities))
+
+    @classmethod
+    def funders_data(self):
+        return self.random_element(self.funders)
+
 
     @classmethod
     def cpv(self):
