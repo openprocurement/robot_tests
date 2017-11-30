@@ -260,7 +260,9 @@ def compute_intrs(brokers_data, used_brokers):
     does not contain ``Default`` entry.
     Using `load_data_from` with ``mode='brokers'`` is recommended.
     """
-    def recur(l, r):
+    keys_to_prefer_lesser = ('accelerator',)
+
+    def recur(l, r, prefer_greater_numbers=True):
         l, r = deepcopy(l), deepcopy(r)
         if isinstance(l, list) and isinstance(r, list) and len(l) == len(r):
             lst = []
@@ -271,13 +273,15 @@ def compute_intrs(brokers_data, used_brokers):
             if l == r:
                 return l
             if l > r:
-                return l
+                return l if prefer_greater_numbers else r
             if l < r:
-                return r
+                return r if prefer_greater_numbers else l
         elif isinstance(l, dict) and isinstance(r, dict):
             for k, v in r.iteritems():
                 if k not in l.keys():
                     l[k] = v
+                elif k in keys_to_prefer_lesser:
+                    l[k] = recur(l[k], v, prefer_greater_numbers=False)
                 else:
                     l[k] = recur(l[k], v)
             return l
@@ -464,17 +468,6 @@ def get_object_index_by_id(data, object_id):
     return index
 
 
-def get_complaint_index_by_complaintID(data, complaintID):
-    if not data:
-        return 0
-    for index, element in enumerate(data):
-        if element['complaintID'] == complaintID:
-            break
-    else:
-        index += 1
-    return index
-
-
 def generate_test_bid_data(tender_data):
     bid = test_bid_data()
     if 'lots' in tender_data:
@@ -485,11 +478,6 @@ def generate_test_bid_data(tender_data):
             bid.data.lotValues.append(value)
     else:
         bid.data.update(test_bid_value(tender_data['value']['amount'], tender_data['minimalStep']['amount']))
-    if 'features' in tender_data:
-        bid.data.parameters = []
-        for feature in tender_data['features']:
-            parameter = {"value": fake.random_element(elements=(0.05, 0.01, 0)), "code": feature.get('code', '')}
-            bid.data.parameters.append(parameter)
     if 'dgfOtherAssets' in tender_data.get('procurementMethodType', ''):
         bid.data.qualified = True
     return bid
@@ -540,3 +528,7 @@ def compare_scheme_groups(length, *items):
             if(i_scheme_group == j_scheme_group and i != j):
                 return False
     return True
+
+
+def convert_amount_string_to_float(amount_string):
+    return float(amount_string.replace(' ', '').replace(',', '.').replace("'",''))

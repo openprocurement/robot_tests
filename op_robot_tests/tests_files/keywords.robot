@@ -558,12 +558,6 @@ Log differences between dicts
   [return]  ${objects_ids}
 
 
-Звірити поле скарги із значенням
-  [Arguments]  ${username}  ${tender_uaid}  ${given_value}  ${field_name}  ${complaintID}  ${award_index}=${None}
-  ${received_value}=  Run as  ${username}  Отримати інформацію із скарги  ${tender_uaid}  ${complaintID}  ${field_name}  ${award_index}
-  Порівняти об'єкти  ${given_value}  ${received_value}
-
-
 Можливість скасувати тендер
   ${cancellation_data}=  Підготувати дані про скасування  ${tender_owner}
   Run As  ${tender_owner}
@@ -577,8 +571,8 @@ Log differences between dicts
 Можливість вичитати посилання на аукціон для глядача
   ${timeout_on_wait}=  Get Broker Property By Username  ${viewer}  timeout_on_wait
   ${timeout_on_wait}=  Set Variable If
-  ...                  ${timeout_on_wait} < ${600}
-  ...                  ${600}
+  ...                  ${timeout_on_wait} < ${3000}
+  ...                  ${3000}
   ...                  ${timeout_on_wait}
   ${url}=  Wait Until Keyword Succeeds
   ...      ${timeout_on_wait}
@@ -592,8 +586,8 @@ Log differences between dicts
 Можливість вичитати посилання на аукціон для учасника ${username}
   ${timeout_on_wait}=  Get Broker Property By Username  ${username}  timeout_on_wait
   ${timeout_on_wait}=  Set Variable If
-  ...                  ${timeout_on_wait} < ${600}
-  ...                  ${600}
+  ...                  ${timeout_on_wait} < ${3000}
+  ...                  ${3000}
   ...                  ${timeout_on_wait}
   ${url}=  Wait Until Keyword Succeeds
   ...      ${timeout_on_wait}
@@ -658,12 +652,6 @@ Require Failure
 Звірити статус тендера
   [Arguments]  ${username}  ${tender_uaid}  ${left}
   ${right}=  Run as  ${username}  Отримати інформацію із тендера  ${tender_uaid}  status
-  Порівняти об'єкти  ${left}  ${right}
-
-
-Звірити статус вимоги/скарги
-  [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${left}  ${award_index}=${None}
-  ${right}=  Run as  ${username}  Отримати інформацію із скарги  ${tender_uaid}  ${complaintID}  status  ${award_index}
   Порівняти об'єкти  ${left}  ${right}
 
 

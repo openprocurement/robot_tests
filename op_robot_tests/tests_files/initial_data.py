@@ -145,7 +145,7 @@ def test_tender_data(params, periods=("enquiry", "tender")):
 
     data["procuringEntity"]["kind"] = "other"
 
-    scheme_group = fake.scheme_other()[:3]
+    scheme_group = fake.scheme_other()[:4]
     for i in range(params['number_of_items']):
         new_item = test_item_data(scheme_group)
         data['items'].append(new_item)
