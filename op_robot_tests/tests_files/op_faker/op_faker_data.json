@@ -2947,8 +2947,8 @@
             ],
             "classification": {
                 "scheme": "CAV-PS",
-                "id": "05110000-9",
-                "description": "Молокозаводи"
+                "id": "04232000-3",
+                "description": "адміністративна будівля, приміщення в адміністративній будівлі"
             }
         },
         {
@@ -2961,8 +2961,8 @@
             ],
             "classification": {
                 "scheme": "CAV-PS",
-                "id": "06110000-6",
-                "description": "Земельні ділянки призначені для забудови"
+                "id": "04114000-0",
+                "description": "садовий (дачний) будинок малоповерхового житлового будівництва"
             }
         },
         {
@@ -2976,7 +2976,7 @@
             "classification": {
                 "scheme": "CAV-PS",
                 "id": "04211000-0",
-                "description": "Промислова заводська, фабрична будівля та їх частини"
+                "description": "промислова заводська, фабрична будівля та їх частини"
             }
         },
         {
@@ -2989,8 +2989,8 @@
             ],
             "classification": {
                 "scheme": "CAV-PS",
-                "id": "04111000-9",
-                "description": "Квартира"
+                "id": "04230000-9",
+                "description": "Адміністративно-офісна нерухомість"
             }
         },
         {
@@ -3133,10 +3133,10 @@
         }
     ],
     "schemes_other": [
-        "05110000-9",
-        "06110000-6",
+        "04232000-3",
+        "04114000-0",
         "04211000-0",
-        "04111000-9",
+        "04230000-9",
         "30111000-0",
         "34110000-1",
         "39710000-2",
@@ -3144,10 +3144,10 @@
     ],
     "items_base_data_other": [
            {
-            "scheme_id": "05110000-9",
-            "description": "Молокозаводи",
-            "description_ru": "Молокозаводы",
-            "description_en": "Dairy factories",
+            "scheme_id": "04232000-3",
+            "description": "адміністративна будівля, приміщення в адміністративній будівлі",
+            "description_ru": "административное здание, помещения в административном здании",
+            "description_en": "administrative building, premises in the administrative building",
             "quantity": 5,
             "unit": {
                 "code": "H87",
@@ -3155,10 +3155,10 @@
             }
         },
         {
-            "scheme_id": "06110000-6",
-            "description": "Земельні ділянки призначені для забудови",
-            "description_ru": "Земельные участки предназначены для застройки",
-            "description_en": "The land is intended for development",
+            "scheme_id": "04114000-0",
+            "description": "садовий (дачний) будинок малоповерхового житлового будівництва",
+            "description_ru": "садовый (дачный) дом малоэтажного жилищного строительства",
+            "description_en": "garden (cottage) house low-rise housing construction",
             "quantity": 7,
             "unit": {
                 "code": "MTK",
@@ -3167,7 +3167,7 @@
         },
         {
             "scheme_id": "04211000-0",
-            "description": "Промислова заводська, фабрична будівля та їх частини",
+            "description": "промислова заводська, фабрична будівля та їх частини",
             "description_ru": "Промышленная заводская, фабричная здание и их части",
             "description_en": "Industrial factory, factory building and their parts",
             "quantity": 12,
@@ -3177,10 +3177,10 @@
             }
         },
         {
-            "scheme_id": "04111000-9",
-            "description": "Квартира",
-            "description_ru": "Квартира",
-            "description_en": "Apartment",
+            "scheme_id": "04230000-9",
+            "description": "Адміністративно-офісна нерухомість",
+            "description_ru": "Административно-офисная недвижимость",
+            "description_en": "Administrative and office real estate",
             "quantity": 10,
             "unit": {
                 "code": "H87",
@@ -3220,7 +3220,7 @@
                 "name": "штуки"
             }
         },
-                   {
+            {
             "scheme_id": "16720000-8",
             "description": "Трактори, що були у використанні",
             "description_ru": "Тракторы бывшие в употреблении",
