@@ -214,7 +214,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level1
+  ...      tender_view_additionalClassifications  level1
   Звірити відображення поля additionalClassifications[0].scheme усіх предметів для користувача ${viewer}
 
 
@@ -222,7 +222,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level2
+  ...      tender_view_additionalClassifications  level2
   Звірити відображення поля additionalClassifications[0].id усіх предметів для користувача ${viewer}
 
 
