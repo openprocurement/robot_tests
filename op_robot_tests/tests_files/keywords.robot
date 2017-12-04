@@ -413,6 +413,14 @@ Log differences between dicts
   compare_tender_attempts  ${left}  ${right}
 
 
+Звірити поле ${field} тендера усіх предметів для користувача ${username}
+  :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
+  \  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}]}
+  \  ${left}=  Set Variable  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}].${field}}
+  \  ${right}=  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}  ${item_id}
+  \  compare_additionalClassifications_description  ${right}
+
+
 Порівняти об'єкти
   [Arguments]  ${left}  ${right}
   Log  ${left}

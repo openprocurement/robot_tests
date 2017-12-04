@@ -231,7 +231,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
-  Звірити відображення поля additionalClassifications[0].description усіх предметів для користувача ${viewer}
+  Звірити поле additionalClassifications[0].description тендера усіх предметів для користувача ${viewer}
 
 
 Відображення назви одиниці активів лоту

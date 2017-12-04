@@ -152,6 +152,12 @@ def compare_tender_attempts(left, right):
     raise ValueError(u"Incorrect object types")
 
 
+def compare_additionalClassifications_description(right):
+    if right in (u"Оренда", u"Найм"):
+        return True
+    raise ValueError(u"Objects are not equal")
+
+
 def convert_tender_attempts(attempts):
     if attempts == 1:
         return u"Лот виставляється вперше"
