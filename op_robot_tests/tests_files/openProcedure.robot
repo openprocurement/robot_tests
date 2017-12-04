@@ -275,6 +275,15 @@ ${ITEM_MEAT}        ${True}
   ...      tender_view_contractPeriod  level2
   Звірити відображення поля contractPeriod.endDate усіх предметів для усіх користувачів
 
+
+Відображення гарантійного внеску
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      tender_view  level2
+  Звірити відображення поля guarantee.amount тендера для усіх користувачів
+
 ##############################################################################################
 #             Редагування лоту
 ##############################################################################################
