@@ -249,8 +249,8 @@ def test_item_data(scheme):
     data["deliveryAddress"]["countryName_en"] = translate_country_en(data["deliveryAddress"]["countryName"])
     data["deliveryAddress"]["countryName_ru"] = translate_country_ru(data["deliveryAddress"]["countryName"])
     data["contractPeriod"] = {
-                "startDate": (get_now() + timedelta(minutes=70)).isoformat(),
-                "endDate": (get_now() + timedelta(minutes=100)).isoformat()
+                "startDate": get_now().strftime('%Y-%m-%d'),
+                "endDate": get_now().strftime('%Y-%m-%d')
     }
     data["quantity"] = round(random.uniform(1, 10), 3)
     return munchify(data)
