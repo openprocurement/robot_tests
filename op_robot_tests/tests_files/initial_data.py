@@ -50,7 +50,7 @@ def create_fake_guarantee(value_amount):
 
 
 def create_fake_cancellation_reason():
-    reasons = [u"Згідно рішення виконавчої дирекції Фонду гарантування вкладів фізичних осіб",
+    reasons = [u"Згідно рішення виконавчої дирекції Замовника",
                u"Порушення порядку публікації оголошення"]
     return random.choice(reasons)
 
