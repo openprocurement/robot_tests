@@ -225,7 +225,8 @@ Get Broker Property By Username
 
 Підготувати дані для подання пропозиції
   [Arguments]  ${username}
-  ${bid}=  generate_test_bid_data  ${USERS.users['${username}'].tender_data.data}
+  # use ${USERS.users['${tender_owner}'].tender_data.data} because only tender_owner has access to the changed amount data
+  ${bid}=  generate_test_bid_data  ${USERS.users['${tender_owner}'].tender_data.data}
   [Return]  ${bid}
 
 
