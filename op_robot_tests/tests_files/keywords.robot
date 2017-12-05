@@ -720,8 +720,9 @@ Require Failure
   ...      15 s
   ...      Run As  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
   Should Be True  '${url}'
-  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.openprocurement\.org\/tenders\/([0-9A-Fa-f]{32})
+  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.prozorro\.openprocurement\.auction\/esco-tenders\/([0-9A-Fa-f]{32})
   Log  URL аукціону для глядача: ${url}
+  Log  ${url}  WARN
 
 
 Можливість отримати посилання на аукціон для учасника ${username}
@@ -735,8 +736,9 @@ Require Failure
   ...      15 s
   ...      Run As  ${username}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
   Should Be True  '${url}'
-  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.openprocurement\.org\/tenders\/([0-9A-Fa-f]{32})
+  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.prozorro\.openprocurement\.auction\/esco-tenders\/([0-9A-Fa-f]{32})
   Log  URL аукціону для учасника: ${url}
+  Log  ${url}  WARN
 
 
 Дочекатись дати
