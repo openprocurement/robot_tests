@@ -1110,7 +1110,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  create_tender_claim
+  ...  create_lot_claim
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля complaintID вимоги про виправлення умов 0 лоту із ${USERS.users['${provider}'].lot_claim_data.complaintID} для користувача ${viewer}
 
@@ -1753,6 +1753,16 @@ ${ITEM_MEAT}        ${True}
   ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість підтвердити -2 пропозицію кваліфікації
+
+
+Можливість підтвердити четверту пропозицію кваліфікації
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      pre-qualification_approve_fourth_bid  level1
+  ...      critical
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість підтвердити -3 пропозицію кваліфікації
 
 
 Можливість затвердити остаточне рішення кваліфікації
