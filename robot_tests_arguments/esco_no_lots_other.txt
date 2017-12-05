@@ -1,18 +1,18 @@
 -v MODE:esco
 
 -v NUMBER_OF_ITEMS:1
--v NUMBER_OF_LOTS:1
+-v NUMBER_OF_LOTS:0
 
--v TENDER_MEAT:True
--v ITEM_MEAT:True
--v LOT_MEAT:True
+-v TENDER_MEAT:False
+-v ITEM_MEAT:False
+-v LOT_MEAT:False
 
+
+-v FUNDING_KIND:other
 
 -i create_tender
 -i find_tender
 -i tender_view
--i meat_view
--i lot_view
 
 -i extend_tendering_period
 -i add_tender_doc
@@ -22,12 +22,6 @@
   #-i delete_lot
 -i add_item
   -i delete_item
--i add_tender_meat
-  -i delete_tender_meat
--i add_lot_meat
-  -i delete_lot_meat
--i add_item_meat
-  -i delete_item_meat
 
 -i ask_question_to_tender
   -i answer_question_to_tender
@@ -36,17 +30,11 @@
 -i ask_question_to_lot
   -i answer_question_to_lot
 -i modify_tender_after_questions
--i modify_lot_after_questions
 
 -i create_tender_claim
   -i answer_tender_claim
   -i resolve_tender_claim
 -i modify_tender_after_claim
-
--i create_lot_claim
-  -i answer_lot_claim
-  -i resolve_lot_claim
--i modify_lot_after_claim
 
 -i make_bid_without_related_lot
 -i make_bid_without_parameters
@@ -70,17 +58,10 @@
   -i open_confirm_first_bid
   -i open_confirm_second_bid
 
--i esco_make_bid_doc_private_by_provider
--i esco_add_financial_bid_doc_by_provider
--i esco_add_qualification_bid_doc_by_provider
--i esco_add_eligibility_bid_doc_by_provider
-
 -i pre-qualification_add_doc_to_tender
 -i pre-qualification_add_doc_to_lot
 
 -i pre-qualification_view
-
-#-i pre-qualifications_check_by_edrpou
 
 -i pre-qualification_add_doc_to_first_bid
 -i pre-qualification_approve_first_bid
@@ -92,30 +73,11 @@
 
 -i pre-qualification_approve_qualifications
 
+-i auction_url
+
 -i auction
 
--i qualification_add_doc_to_first_award
-
 #-i qualifications_check_by_edrpou
-
 -i qualification_approve_first_award
--i qualification_cancel_first_award_qualification
--i qualification_add_doc_to_second_award
--i qualification_approve_second_award
 
--i contract_view
--i modify_contract
--i add_doc_to_contract
 -i contract_sign
-
--i find_contract
--i access_contract
--i submit_change
--i view_change
--i upload_change_document
--i modify_change
--i apply_change
--i add_contract_doc
--i termination_reasons
--i amount_paid
--i contract_termination
