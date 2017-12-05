@@ -464,14 +464,9 @@ def test_tender_data_esco(params, submissionMethodDetails):
     data['procuringEntity']['identifier']['legalName_en'] = fake_en.sentence(nb_words=10, variable_nb_words=True)
     data['procuringEntity']['kind'] = 'general'
     data['minimalStepPercentage'] = float(round(random.uniform(0.015, 0.03), 3))
-    funding_variants = (
-        "budget",
-        "other"
-        )
-    data['fundingKind'] = fake.random_element(funding_variants)
+    data['fundingKind'] = params['fundingKind']
     data['NBUdiscountRate'] = float(round(random.uniform(0, 0.99), 3))
     del data["value"]
-    del data['submissionMethodDetails']
     del data["minimalStep"]
     if params['number_of_lots'] == 0:
         if data['fundingKind'] == "budget":
