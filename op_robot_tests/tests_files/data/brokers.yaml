@@ -40,7 +40,7 @@ Default:
             tender:  [0, 30]
         esco:
             accelerator: 1440
-            tender:  [0, 15]
+            tender:  [0, 30]
         openua_defense:
             accelerator: 1440
             tender:  [0, 6]
