@@ -131,6 +131,19 @@ Resource           resource.robot
   Run As  ${tender_owner}  Видалити предмет закупівлі плану  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].item_data.item_id}
 
 
+Можливість видалити поле ${field} з донора ${funders_index}
+  Run As  ${tender_owner}  Видалити поле з донора  ${TENDER['TENDER_UAID']}  ${funders_index}  ${field}
+
+
+Можливість видалити донора ${funders_index}
+  Run As  ${tender_owner}  Видалити донора  ${TENDER['TENDER_UAID']}  ${funders_index}
+
+
+Можливість додати донора ${funder_index}
+  ${funders_data}=  create_fake_funder
+  Run As  ${tender_owner}  Додати донора  ${TENDER['TENDER_UAID']}  ${funders_data}
+
+
 Звірити відображення поля ${field} документа ${doc_id} із ${left} для користувача ${username}
   ${right}=  Run As  ${username}  Отримати інформацію із документа  ${TENDER['TENDER_UAID']}  ${doc_id}  ${field}
   Порівняти об'єкти  ${left}  ${right}

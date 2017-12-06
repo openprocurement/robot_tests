@@ -21,6 +21,7 @@ from .initial_data import (
     create_fake_sentence,
     create_fake_amount,
     create_fake_date,
+    create_fake_funder,
     fake,
     subtraction,
     field_with_id,

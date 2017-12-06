@@ -298,12 +298,40 @@ Library  openprocurement_client.utils
   Remove From List  ${tender.data['items']}  ${item_index}
   Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
 
+
 Видалити предмет закупівлі плану
   [Arguments]  ${username}  ${tender_uaid}  ${item_id}  ${lot_id}=${Empty}
   ${tender}=  openprocurement_client.Пошук плану по ідентифікатору  ${username}  ${tender_uaid}
   ${item_index}=  get_object_index_by_id  ${tender.data['items']}  ${item_id}
   Remove From List  ${tender.data['items']}  ${item_index}
   Call Method  ${USERS.users['${username}'].client}  patch_plan  ${tender}
+
+
+Видалити поле з донора
+  [Arguments]  ${username}  ${tender_uaid}  ${funders_index}  ${field}  ${field_1}=${Empty}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  Delete From Dictionary  ${tender.data['funders'][${funders_index}]}  ${field}
+  Log  ${tender.data['funders'][${funders_index}]}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+  Dictionary Should Not Contain Path  ${reply.data['funders'][${funders_index}]}  ${field}
+
+
+Видалити донора
+  [Arguments]  ${username}  ${tender_uaid}  ${funders_index}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  Remove From List  ${tender.data.funders}  ${funders_index}
+  Log  ${tender}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+  Log  ${reply}
+
+
+Додати донора
+  [Arguments]  ${username}  ${tender_uaid}  ${funders_data}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  Set To Dictionary  ${tender.data}  funders=@{EMPTY}
+  Append To List  ${tender.data.funders}  ${funders_data}
+  Log  ${tender}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
 
 ##############################################################################
 #             Lot operations
