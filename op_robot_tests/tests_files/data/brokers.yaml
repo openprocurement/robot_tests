@@ -410,14 +410,14 @@ ecommodity:
         provider:       ecommodity_provider
         provider1:      ecommodity_provider1
         tender_owner:   ecommodity_owner
-    homepage: 'https://zakupki.e-commodity.fbp.com.ua'
+    homepage: 'http://testpro.e-commodity.fbp.com.ua'
     intervals:
          default:
              enquiry: [0, 10]
              tender:  [0, 15]
          dgfOtherAssets:
-             accelerator: 360
-             auction: [15, 20]
+             accelerator: 1440
+             auction: [25, 30]
     timeout_on_wait: 60
 etc:
     keywords_file: etc

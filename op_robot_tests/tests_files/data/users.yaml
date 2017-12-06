@@ -817,13 +817,13 @@ users:
         size:     [1366, 800]
     ecommodity_viewer:
         broker:   ecommodity
-        homepage: "https://zakupki.e-commodity.fbp.com.ua"
+        homepage: "http://testpro.e-commodity.fbp.com.ua"
         browser:  chrome
         position: [0, 0]
         size:     [1366, 1024]
     ecommodity_provider:
         broker:   ecommodity
-        homepage: "https://zakupki.e-commodity.fbp.com.ua"
+        homepage: "http://testpro.e-commodity.fbp.com.ua"
         login:    v.shevchenko@buroit.com.ua
         password: Sv123456
         browser:  chrome
@@ -831,7 +831,7 @@ users:
         size:     [1366, 1024]
     ecommodity_provider1:
         broker:   ecommodity
-        homepage: "https://zakupki.e-commodity.fbp.com.ua"
+        homepage: "http://testpro.e-commodity.fbp.com.ua"
         login:    bndov@yandex.ua
         password: Kiadiesel77
         browser:  chrome
@@ -840,10 +840,10 @@ users:
     ecommodity_owner:
         broker:   ecommodity
         name:     'BIT Production Ltd.'
-        homepage: "https://zakupki.e-commodity.fbp.com.ua"
+        homepage: "http://testpro.e-commodity.fbp.com.ua"
         login:    bndov@yandex.ru
         password: Kiadiesel77
-        browser:  ff
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 1024]
     etc_viewer:
