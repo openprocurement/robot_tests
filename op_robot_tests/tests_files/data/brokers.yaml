@@ -215,6 +215,18 @@ Publicbid:
         tender_owner:   Publicbid_Owner
         viewer:         Publicbid_Viewer
     timeout_on_wait: 120
+upetem:
+    intervals:
+        default:
+            enquiry: [1, 10]
+            tender:  [1, 20]
+    keywords_file: upetem
+    roles:
+        provider:       upetem_Provider
+        provider1:      upetem_Provider1
+        tender_owner:   upetem_Owner
+        viewer:         upetem_Viewer
+    timeout_on_wait: 15
 PublicPortal:
     keywords_file: publicportal
     roles:
