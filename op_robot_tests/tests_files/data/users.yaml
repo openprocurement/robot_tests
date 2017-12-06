@@ -689,34 +689,34 @@ users:
         size:     [1000, 500]
     uub_Owner:
         broker:   uub
-        homepage: "https://sale.uub.com.ua/Registration.aspx"
-        default_page: "https://sale.uub.com.ua/PositionList.aspx"
+        homepage: "https://sale.uub.com.ua/test/Registration.aspx"
+        default_page: "https://sale.uub.com.ua/test/PositionList.aspx"
         login:    UUB_Owner@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     uub_Provider:
         broker:   uub
-        homepage: "https://sale.uub.com.ua/Registration.aspx"
-        default_page: "https://sale.uub.com.ua/PositionList.aspx"
+        homepage: "https://sale.uub.com.ua/test/Registration.aspx"
+        default_page: "https://sale.uub.com.ua/test/PositionList.aspx"
         login:    UUB_Provider@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     uub_Provider1:
         broker:   uub
-        homepage: "https://sale.uub.com.ua/Registration.aspx"
-        default_page: "https://sale.uub.com.ua/PositionList.aspx"
+        homepage: "https://sale.uub.com.ua/test/Registration.aspx"
+        default_page: "https://sale.uub.com.ua/test/PositionList.aspx"
         login:    UUB_Provider1@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     uub_Viewer:
         broker:   uub
-        homepage: "https://sale.uub.com.ua/Registration.aspx"
-        default_page: "https://sale.uub.com.ua/PositionList.aspx"
+        homepage: "https://sale.uub.com.ua/test/Registration.aspx"
+        default_page: "https://sale.uub.com.ua/test/PositionList.aspx"
         login:    UUB_Viewer@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     aps_Owner:
