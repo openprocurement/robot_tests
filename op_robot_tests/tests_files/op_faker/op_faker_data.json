@@ -3172,8 +3172,8 @@
             "description_en": "Industrial factory, factory building and their parts",
             "quantity": 12,
             "unit": {
-                "code": "H87",
-                "name": "штуки"
+                "code": "MTK",
+                "name": "метри квадратні"
             }
         },
         {
@@ -3183,8 +3183,8 @@
             "description_en": "Apartment",
             "quantity": 10,
             "unit": {
-                "code": "H87",
-                "name": "штуки"
+                "code": "MTK",
+                "name": "метри квадратні"
             }
         },
         {
