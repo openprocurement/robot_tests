@@ -4,7 +4,7 @@ from .local_time import get_now, TZ
 from copy import deepcopy
 from datetime import timedelta
 from dateutil.parser import parse
-from dpath.util import new as xpathnew
+from dpath.util import delete as xpathdelete, get as xpathget, new as xpathnew
 from haversine import haversine
 from json import load, loads
 from jsonpath_rw import parse as parse_path
@@ -63,7 +63,9 @@ from restkit import request
 import os
 import re
 
+
 NUM_TYPES = (int, long, float)
+STR_TYPES = (str, unicode)
 
 
 def get_current_tzdate():
@@ -587,3 +589,17 @@ def convert_amount_string_to_float(amount_string):
 def compare_rationale_types(type1, type2):
     return set(type1) == set(type2)
 
+
+def delete_from_dictionary(variable, path):
+    if not type(path) in STR_TYPES:
+        raise TypeError('path must be one of: ' +
+            str([x.__name__ for x in STR_TYPES]))
+    return xpathdelete(variable, path, separator='.')
+
+
+def dictionary_should_not_contain_path(dictionary, path):
+    try:
+        xpathget(dictionary, path, separator='.')
+    except KeyError:
+        return
+    raise RuntimeError("Dictionary contains path '%s'." % path)
