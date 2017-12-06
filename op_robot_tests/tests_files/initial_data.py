@@ -33,6 +33,10 @@ def create_fake_sentence():
     return fake.sentence(nb_words=10, variable_nb_words=True)
 
 
+def create_fake_funder():
+    return fake.funders_data()
+
+
 def create_fake_amount(award_amount):
     return round(random.uniform(1, award_amount), 2)
 
