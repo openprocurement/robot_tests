@@ -392,31 +392,31 @@ users:
         size:     [1366, 800]
     Newtend_Owner:
         broker:   Newtend
-        homepage: "http://ea-trunk2.newtend.com/provider/#/profile/login"
-        login:    newttest78+001@gmail.com      #  auc_fin001@newtend.com
+        homepage: "https://cdb2-dev.newtend.com/provider/#/profile/login"
+        login:    newttest78+001@gmail.com
         password: 123123
         browser:  chrome
         position: [0, 0]
         size:     [1200, 1200]
-    Newtend_Provider1:
+    Newtend_Provider:
         broker:   Newtend
-        homepage: "http://ea-trunk2.newtend.com/provider/#/profile/login"
-        login:    newttest78+002@gmail.com      # fin_bid001@newtend.com
+        homepage: "https://cdb2-dev.newtend.com/provider/#/profile/login"
+        login:    newttest78+101@gmail.com
         password: 123123
         browser:  chrome
         position: [700, 0]
         size:     [1200, 1200]
-    Newtend_Provider:
+    Newtend_Provider1:
         broker:   Newtend
-        homepage: "http://ea-trunk2.newtend.com/provider/#/profile/login"
-        login:    newttest78+103@gmail.com      #  fin_bid002@newtend.com
+        homepage: "https://cdb2-dev.newtend.com/provider/#/profile/login"
+        login:    newttest78+102@gmail.com
         password: 123123
         browser:  chrome
         position: [700, 0]
         size:     [1200, 1200]
     Newtend_Viewer:
         broker:   Newtend
-        homepage: "http://ea-trunk2.newtend.com/provider"
+        homepage: "https://cdb2-dev.newtend.com/provider"
         browser:  chrome
         position: [800, 400]
         size:     [800, 700]
@@ -689,34 +689,34 @@ users:
         size:     [1000, 500]
     uub_Owner:
         broker:   uub
-        homepage: "https://sale.uub.com.ua/test/Registration.aspx"
-        default_page: "https://sale.uub.com.ua/test/PositionList.aspx"
+        homepage: "https://sale.uub.com.ua/Registration.aspx"
+        default_page: "https://sale.uub.com.ua/PositionList.aspx"
         login:    UUB_Owner@1.ua
-        browser:  chrome
+        browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
     uub_Provider:
         broker:   uub
-        homepage: "https://sale.uub.com.ua/test/Registration.aspx"
-        default_page: "https://sale.uub.com.ua/test/PositionList.aspx"
+        homepage: "https://sale.uub.com.ua/Registration.aspx"
+        default_page: "https://sale.uub.com.ua/PositionList.aspx"
         login:    UUB_Provider@1.ua
-        browser:  chrome
+        browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
     uub_Provider1:
         broker:   uub
-        homepage: "https://sale.uub.com.ua/test/Registration.aspx"
-        default_page: "https://sale.uub.com.ua/test/PositionList.aspx"
+        homepage: "https://sale.uub.com.ua/Registration.aspx"
+        default_page: "https://sale.uub.com.ua/PositionList.aspx"
         login:    UUB_Provider1@1.ua
-        browser:  chrome
+        browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
     uub_Viewer:
         broker:   uub
-        homepage: "https://sale.uub.com.ua/test/Registration.aspx"
-        default_page: "https://sale.uub.com.ua/test/PositionList.aspx"
+        homepage: "https://sale.uub.com.ua/Registration.aspx"
+        default_page: "https://sale.uub.com.ua/PositionList.aspx"
         login:    UUB_Viewer@1.ua
-        browser:  chrome
+        browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
     aps_Owner:
@@ -817,13 +817,13 @@ users:
         size:     [1366, 800]
     ecommodity_viewer:
         broker:   ecommodity
-        homepage: "http://testpro.e-commodity.fbp.com.ua"
+        homepage: "https://zakupki.e-commodity.fbp.com.ua"
         browser:  chrome
         position: [0, 0]
         size:     [1366, 1024]
     ecommodity_provider:
         broker:   ecommodity
-        homepage: "http://testpro.e-commodity.fbp.com.ua"
+        homepage: "https://zakupki.e-commodity.fbp.com.ua"
         login:    v.shevchenko@buroit.com.ua
         password: Sv123456
         browser:  chrome
@@ -831,7 +831,7 @@ users:
         size:     [1366, 1024]
     ecommodity_provider1:
         broker:   ecommodity
-        homepage: "http://testpro.e-commodity.fbp.com.ua"
+        homepage: "https://zakupki.e-commodity.fbp.com.ua"
         login:    bndov@yandex.ua
         password: Kiadiesel77
         browser:  chrome
@@ -840,10 +840,10 @@ users:
     ecommodity_owner:
         broker:   ecommodity
         name:     'BIT Production Ltd.'
-        homepage: "http://testpro.e-commodity.fbp.com.ua"
+        homepage: "https://zakupki.e-commodity.fbp.com.ua"
         login:    bndov@yandex.ru
         password: Kiadiesel77
-        browser:  chrome
+        browser:  ff
         position: [0, 0]
         size:     [1366, 1024]
     etc_viewer:
