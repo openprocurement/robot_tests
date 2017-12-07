@@ -118,6 +118,34 @@ def get_document_by_id(data, doc_id):
     raise Exception('Document with id {} not found'.format(doc_id))
 
 
+def get_tenders_by_funder_id(client,
+                             funder_id=None,
+                             descending=True,
+                             tender_id_field='tenderID',
+                             opt_fields=('funders',)):
+    params = {'offset': '',
+              'opt_fields': ','.join((tender_id_field,) + opt_fields),
+              'descending': descending}
+    tender_list = True
+    client._update_params(params)
+    tenders_with_funder = {}
+    while tender_list and not tenders_with_funder:
+        tender_list = client.get_tenders()
+        for tender in tender_list:
+            if 'funders' in tender:
+                print(tender)
+                tenders_with_funder[tender[tender_id_field]] = []
+                for index in range(len(tender['funders'])):
+                    tenders_with_funder[tender[tender_id_field]].append(tender['funders'][index]['identifier']['id'])
+                # In case we are looking for a specific funder
+                if funder_id:
+                    tenders_with_funder = {k: v for k, v in tenders_with_funder.items() if funder_id in v}
+    if not tenders_with_funder:
+        raise IdNotFound
+    else:
+        return tenders_with_funder
+
+
 def download_file_from_url(url, path_to_save_file):
     f = open(path_to_save_file, 'wb')
     f.write(urllib.urlopen(url).read())

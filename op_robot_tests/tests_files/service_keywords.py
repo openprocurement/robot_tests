@@ -22,6 +22,7 @@ from .initial_data import (
     create_fake_amount,
     create_fake_date,
     create_fake_funder,
+    get_fake_funder_scheme,
     fake,
     subtraction,
     field_with_id,
