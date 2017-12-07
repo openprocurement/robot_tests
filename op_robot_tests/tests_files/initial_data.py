@@ -37,8 +37,16 @@ def create_fake_funder():
     return fake.funders_data()
 
 
+def get_fake_funder_scheme():
+    return fake.funder_scheme()
+
+
 def create_fake_amount(award_amount):
     return round(random.uniform(1, award_amount), 2)
+
+
+def create_fake_number(min_number, max_number):
+    return random.randint(int(min_number), int(max_number))
 
 
 def create_fake_title():
