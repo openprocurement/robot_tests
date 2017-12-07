@@ -215,7 +215,7 @@ Get Broker Property By Username
   ${period_intervals}=  compute_intrs  ${BROKERS}  ${used_brokers}
   ${submissionMethodDetails}=  Get Variable Value  ${submissionMethodDetails}
   ${accelerator}=  Get Variable Value  ${accelerator}
-  ${funders}=  Get Variable Value  ${funders}
+  ${funders}=  Get Variable Value  ${FUNDERS}
   ${tender_data}=  prepare_test_tender_data  ${period_intervals}  ${tender_parameters}  ${submissionMethodDetails}  ${accelerator}  ${funders}
   ${TENDER}=  Create Dictionary
   Set Global Variable  ${TENDER}
