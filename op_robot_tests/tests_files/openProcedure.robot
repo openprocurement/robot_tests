@@ -37,6 +37,15 @@ ${ITEM_MEAT}        ${True}
   ...      critical
   Можливість знайти тендер по ідентифікатору для усіх користувачів
 
+
+Можливість знайти тендер за кошти донора по ідентифікатору донора
+  [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      find_tender_by_funder_id
+  Можливість знайти тендер за кошти донора для усіх користувачів
+
 ##############################################################################################
 #             Відображення основних даних тендера
 ##############################################################################################
@@ -872,7 +881,7 @@ ${ITEM_MEAT}        ${True}
 
 
 Можливість видалити донора
-   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_funder
@@ -881,16 +890,17 @@ ${ITEM_MEAT}        ${True}
 
 
 Можливість додати донора
-   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      add_funder
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість додати донора 0
+  Можливість додати донора
 
 
 Неможливість видалити ім'я донора
-   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_funder_field
@@ -899,7 +909,7 @@ ${ITEM_MEAT}        ${True}
 
 
 Неможливість видалити ім'я контактної особи донора
-   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_funder_field
@@ -907,31 +917,33 @@ ${ITEM_MEAT}        ${True}
   Run Keyword And Expect Error  *  Можливість видалити поле contactPoint.name з донора 0
 
 
-Неможливість видалити id ідентифікатора донора
-   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      delete_funder_field
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Run Keyword And Expect Error  *  Можливість видалити поле identifier.id з донора 0
-
-
-Неможливість видалити схему ідентифікатора донора
-   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      delete_funder_field
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Run Keyword And Expect Error  *  Можливість видалити поле identifier.scheme з донора 0
-
-
 Неможливість видалити назву країни з адреси донора
-   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_funder_field
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Run Keyword And Expect Error  *  Можливість видалити поле address.countryName з донора 0
+
+
+Неможливість змінити id ідентифікатора донора
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      change_funder_during_enquiry_period
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${new_id}=  create_fake_number  10000  99999
+  Перевірити неможливість зміни поля funders[0].identifier.id тендера на значення ${new_id} для користувача ${tender_owner}
+
+
+Неможливість змінити схему ідентифікатора донора
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      change_funder_during_enquiry_period
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${new_scheme}=  get_fake_funder_scheme
+  Перевірити неможливість зміни поля funders[0].identifier.scheme тендера на значення ${new_scheme} для користувача ${tender_owner}
 
 ##############################################################################################
 #             QUESTIONS

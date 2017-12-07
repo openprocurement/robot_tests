@@ -11,6 +11,7 @@
 
 -i create_tender
 -i find_tender
+-i find_tender_by_funder_id
 -i tender_view
 -i lot_view
 -i funders_view
@@ -18,6 +19,7 @@
 -i delete_funder_field
 -i delete_funder
 -i add_funder
+-i change_funder_during_enquiry_period
 -i change_funder_after_enquiry_period
 
 -i make_bid_by_provider
