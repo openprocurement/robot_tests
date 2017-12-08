@@ -1740,3 +1740,139 @@ users:
         browser:  chrome
         position: [800, 400]
         size:     [800, 700]
+    tbums_Owner:
+        broker:   tbums
+        homepage: "http://test.proumstrade.com.ua/user/login"
+        default_page: "http://test.proumstrade.com.ua/public/index"
+        login:    organizator
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1024, 768]
+    tbums_Provider:
+        broker:   tbums
+        homepage: "http://test.proumstrade.com.ua/user/login"
+        default_page: "http://test.proumstrade.com.ua/public/index"
+        login:    member
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1024, 768]
+    tbums_Provider1:
+        broker:   tbums
+        homepage: "http://test.proumstrade.com.ua/user/login"
+        default_page: "http://test.proumstrade.com.ua/public/index"
+        login:    member1
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1024, 768]
+    tbums_Viewer:
+        broker:   tbums
+        homepage: "http://test.proumstrade.com.ua/user/login"
+        default_page: "http://test.proumstrade.com.ua/public/index"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1024, 768]
+    kme_Owner:
+        broker:   kme
+        homepage: "http://statesale.kme.net.ua/user/login"
+        default_page: "http://statesale.kme.net.ua/public/index"
+        login:    organizator
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1024, 768]
+    kme_Provider:
+        broker:   kme
+        homepage: "http://statesale.kme.net.ua/user/login"
+        default_page: "http://statesale.kme.net.ua/public/index"
+        login:    member
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1024, 768]
+    kme_Provider1:
+        broker:   kme
+        homepage: "http://statesale.kme.net.ua/user/login"
+        default_page: "http://statesale.kme.net.ua/public/index"
+        login:    member1
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1024, 768]
+    kme_Viewer:
+        broker:   kme
+        homepage: "http://statesale.kme.net.ua/user/login"
+        default_page: "http://statesale.kme.net.ua/public/index"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1024, 768]
+    sets_Owner:
+        broker:   sets
+        homepage: "http://sets.org.ua/user/login"
+        default_page: "http://sets.org.ua/public/index"
+        login:    organizator
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1024, 768]
+    sets_Provider:
+        broker:   sets
+        homepage: "http://sets.org.ua/user/login"
+        default_page: "http://sets.org.ua/public/index"
+        login:    member
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1024, 768]
+    sets_Provider1:
+        broker:   sets
+        homepage: "http://sets.org.ua/user/login"
+        default_page: "http://sets.org.ua/public/index"
+        login:    member1
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1024, 768]
+    sets_Viewer:
+        broker:   sets
+        homepage: "http://sets.org.ua/user/login"
+        default_page: "http://sets.org.ua/public/index"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1024, 768]
+    biddingtime_Owner:
+        broker:   biddingtime
+        homepage: "http://etm.biddingtime.com.ua/user/login"
+        default_page: "http://etm.biddingtime.com.ua/public/index"
+        login:    organizator
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1024, 768]
+    biddingtime_Provider:
+        broker:   biddingtime
+        homepage: "http://etm.biddingtime.com.ua/user/login"
+        default_page: "http://etm.biddingtime.com.ua/public/index"
+        login:    member
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1024, 768]
+    biddingtime_Provider1:
+        broker:   biddingtime
+        homepage: "http://etm.biddingtime.com.ua/user/login"
+        default_page: "http://etm.biddingtime.com.ua/public/index"
+        login:    member1
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1024, 768]
+    biddingtime_Viewer:
+        broker:   biddingtime
+        homepage: "http://etm.biddingtime.com.ua/user/login"
+        default_page: "http://etm.biddingtime.com.ua/public/index"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1024, 768]
