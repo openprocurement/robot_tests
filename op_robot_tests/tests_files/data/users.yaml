@@ -302,6 +302,36 @@ users:
         browser:  chrome
         position: [450, 0]
         size:     [1000, 720]
+    upetem_Owner:
+        broker:   upetem
+        homepage: "https://80.92.239.165/"
+        login:    testuser_tender_owner@yopmail.com
+        password: P@ssw0rd
+        browser:  chrome
+        position: [0, 0]
+        size:     [1200, 900]
+    upetem_Provider:
+        broker:   upetem
+        homepage: "https://80.92.239.165/"
+        login:    testuser_provider@yopmail.com
+        password: P@ssw0rd
+        browser:  chrome
+        position: [0, 450]
+        size:     [1000, 800]
+    upetem_Provider1:
+        broker:   upetem
+        homepage: "https://80.92.239.165/"
+        login:    testuser_provider1@yopmail.com
+        password: P@ssw0rd
+        browser:  chrome
+        position: [450, 0]
+        size:     [1000, 800]
+    upetem_Viewer:
+        broker:   upetem
+        homepage: "https://80.92.239.165/"
+        browser:  chrome
+        position: [450, 450]
+        size:     [1000, 800]
     PublicPortal_Viewer:
         broker:   PublicPortal
         homepage: "https://qa23.prozorro.gov.ua/tender/search/"
