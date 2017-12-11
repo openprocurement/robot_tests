@@ -597,31 +597,31 @@ users:
         size:     [1280, 800]
     ubiz_Owner:
         broker:   ubiz
-        homepage: "http://test.ubiz.com.ua"
-        login:    liquidator@mfsa.ru
-        password: 123456
+        homepage: "http://test.ubiz.com.ua/auctions2"
+        login:    test_zamovnyk@mfsa.ru
+        password: test_zamovnyk@mfsa.ru
         browser:  chrome
         position: [0, 0]
         size:     [1280, 800]
     ubiz_Provider1:
         broker:   ubiz
-        homepage: "http://test.ubiz.com.ua"
-        login:    part1@mfsa.ru
-        password: 123456
+        homepage: "http://test.ubiz.com.ua/auctions2"
+        login:    test_provider1@mfsa.ru
+        password: test_provider1@mfsa.ru
         browser:  chrome
         position: [0, 800]
         size:     [1280, 800]
     ubiz_Provider2:
         broker:   ubiz
-        homepage: "http://test.ubiz.com.ua"
-        login:    part2@mfsa.ru
-        password: 123456
+        homepage: "http://test.ubiz.com.ua/auctions2"
+        login:    test_provider2@mfsa.ru
+        password: test_provider2@mfsa.ru
         browser:  chrome
         position: [800, 0]
         size:     [1280, 800]
     ubiz_Viewer:
         broker:   ubiz
-        homepage: "http://test.ubiz.com.ua"
+        homepage: "http://test.ubiz.com.ua/auctions2"
         browser:  chrome
         position: [0, 500]
         size:     [1280, 800]
@@ -948,121 +948,121 @@ users:
         size:     [1366, 800]
     comminnex_Owner:
         broker:   comminnex
-        homepage: "http://test.market.comminnex.com"
-        login:    comnxliquidator@mfsa.ru
-        password: 123456
+        homepage: "http://test.market.comminnex.com/auctions2"
+        login:    test_zamovnyk@mfsa.ru
+        password: test_zamovnyk@mfsa.ru
         browser:  chrome
         position: [0, 0]
         size:     [1280, 800]
     comminnex_Provider1:
         broker:   comminnex
-        homepage: "http://test.market.comminnex.com"
-        login:    part1@mfsa.ru
-        password: 123456
+        homepage: "http://test.market.comminnex.com/auctions2"
+        login:    test_provider1@mfsa.ru
+        password: test_provider1@mfsa.ru
         browser:  chrome
         position: [0, 800]
         size:     [1280, 800]
     comminnex_Provider2:
         broker:   comminnex
-        homepage: "http://test.market.comminnex.com"
-        login:    part2@mfsa.ru
-        password: 123456
+        homepage: "http://test.market.comminnex.com/auctions2"
+        login:    test_provider2@mfsa.ru
+        password: test_provider2@mfsa.ru
         browser:  chrome
         position: [800, 0]
         size:     [1280, 800]
     comminnex_Viewer:
         broker:   comminnex
-        homepage: "http://test.market.comminnex.com"
+        homepage: "http://test.market.comminnex.com/auctions2"
         browser:  chrome
         position: [0, 500]
         size:     [1280, 800]
     torgibirgaukraine_Owner:
         broker:   torgibirgaukraine
-        homepage: "http://test.torgi.birga-ukraine.com.ua"
-        login:    tbuliquidator@mfsa.ru
-        password: 123456
+        homepage: "http://test.torgi.birga-ukraine.com.ua/auctions2"
+        login:    test_zamovnyk@mfsa.ru
+        password: test_zamovnyk@mfsa.ru
         browser:  chrome
         position: [0, 0]
         size:     [1280, 800]
     torgibirgaukraine_Provider1:
         broker:   torgibirgaukraine
-        homepage: "http://test.torgi.birga-ukraine.com.ua"
-        login:    part1@mfsa.ru
-        password: 123456
+        homepage: "http://test.torgi.birga-ukraine.com.ua/auctions2"
+        login:    test_provider1@mfsa.ru
+        password: test_provider1@mfsa.ru
         browser:  chrome
         position: [0, 800]
         size:     [1280, 800]
     torgibirgaukraine_Provider2:
         broker:   torgibirgaukraine
-        homepage: "http://test.torgi.birga-ukraine.com.ua"
-        login:    part2@mfsa.ru
-        password: 123456
+        homepage: "http://test.torgi.birga-ukraine.com.ua/auctions2"
+        login:    test_provider2@mfsa.ru
+        password: test_provider2@mfsa.ru
         browser:  chrome
         position: [800, 0]
         size:     [1280, 800]
     torgibirgaukraine_Viewer:
         broker:   torgibirgaukraine
-        homepage: "http://test.torgi.birga-ukraine.com.ua"
+        homepage: "http://test.torgi.birga-ukraine.com.ua/auctions2"
         browser:  chrome
         position: [0, 500]
         size:     [1280, 800]
     statusexpert_Owner:
         broker:   statusexpert
-        homepage: "http://test.torgi.status-expert.com.ua"
-        login:    expliquidator@mfsa.ru
-        password: 123456
+        homepage: "http://test.torgi.status-expert.com.ua/auctions2"
+        login:    test_zamovnyk@mfsa.ru
+        password: test_zamovnyk@mfsa.ru
         browser:  chrome
         position: [0, 0]
         size:     [1280, 800]
     statusexpert_Provider1:
         broker:   statusexpert
-        homepage: "http://test.torgi.status-expert.com.ua"
-        login:    part1@mfsa.ru
-        password: 123456
+        homepage: "http://test.torgi.status-expert.com.ua/auctions2"
+        login:    test_provider1@mfsa.ru
+        password: test_provider1@mfsa.ru
         browser:  chrome
         position: [0, 800]
         size:     [1280, 800]
     statusexpert_Provider2:
         broker:   statusexpert
-        homepage: "http://test.torgi.status-expert.com.ua"
-        login:    part2@mfsa.ru
-        password: 123456
+        homepage: "http://test.torgi.status-expert.com.ua/auctions2"
+        login:    test_provider2@mfsa.ru
+        password: test_provider2@mfsa.ru
         browser:  chrome
         position: [800, 0]
         size:     [1280, 800]
     statusexpert_Viewer:
         broker:   statusexpert
-        homepage: "http://test.torgi.status-expert.com.ua"
+        homepage: "http://test.torgi.status-expert.com.ua/auctions2"
         browser:  chrome
         position: [0, 500]
         size:     [1280, 800]
     vidol_Owner:
         broker:   vidol
-        homepage: "http://test.torgi.vidol.com.ua"
-        login:    vidolliquidator@mfsa.ru
-        password: 123456
+        homepage: "http://test.torgi.vidol.com.ua/auctions2"
+        login:    test_zamovnyk@mfsa.ru
+        password: test_zamovnyk@mfsa.ru
         browser:  chrome
         position: [0, 0]
         size:     [1280, 800]
     vidol_Provider1:
         broker:   vidol
-        homepage: "http://test.torgi.vidol.com.ua"
-        login:    part1@mfsa.ru
-        password: 123456
+        homepage: "http://test.torgi.vidol.com.ua/auctions2"
+        login:    test_provider1@mfsa.ru
+        password: test_provider1@mfsa.ru
         browser:  chrome
         position: [0, 800]
         size:     [1280, 800]
     vidol_Provider2:
         broker:   vidol
-        homepage: "http://test.torgi.vidol.com.ua"
-        login:    part2@mfsa.ru
-        password: 123456
+        homepage: "http://test.torgi.vidol.com.ua/auctions2"
+        login:    test_provider2@mfsa.ru
+        password: test_provider2@mfsa.ru
         browser:  chrome
         position: [800, 0]
         size:     [1280, 800]
     vidol_Viewer:
         broker:   vidol
-        homepage: "http://test.torgi.vidol.com.ua"
+        homepage: "http://test.torgi.vidol.com.ua/auctions2"
         browser:  chrome
         position: [0, 500]
         size:     [1280, 800]
@@ -1098,31 +1098,31 @@ users:
         size:     [1280, 800]
     cuex_Owner:
         broker:   cuex
-        homepage: "http://testing.torgy.com.ua"
-        login:    cuexliquidator@mfsa.ru
-        password: 123456
+        homepage: "http://testing2.torgy.com.ua/auctions2"
+        login:    test_zamovnyk@mfsa.ru
+        password: test_zamovnyk@mfsa.ru
         browser:  chrome
         position: [0, 0]
         size:     [1280, 800]
     cuex_Provider1:
         broker:   cuex
-        homepage: "http://testing.torgy.com.ua"
-        login:    part1@mfsa.ru
-        password: 123456
+        homepage: "http://testing2.torgy.com.ua/auctions2"
+        login:    test_provider1@mfsa.ru
+        password: test_provider1@mfsa.ru
         browser:  chrome
         position: [0, 800]
         size:     [1280, 800]
     cuex_Provider2:
         broker:   cuex
-        homepage: "http://testing.torgy.com.ua"
-        login:    part2@mfsa.ru
-        password: 123456
+        homepage: "http://testing2.torgy.com.ua/auctions2"
+        login:    test_provider2@mfsa.ru
+        password: test_provider2@mfsa.ru
         browser:  chrome
         position: [800, 0]
         size:     [1280, 800]
     cuex_Viewer:
         broker:   cuex
-        homepage: "http://testing.torgy.com.ua"
+        homepage: "http://testing2.torgy.com.ua/auctions2"
         browser:  chrome
         position: [0, 500]
         size:     [1280, 800]
@@ -1450,31 +1450,31 @@ users:
         size:     [1366, 800]
     palata_Owner:
         broker:   palata
-        homepage: "http://testing.palata.com.ua"
-        login:    palataliquidator@mfsa.ru
-        password: 123456
+        homepage: "http://testing2.palata.com.ua/auctions2"
+        login:    test_zamovnyk@mfsa.ru
+        password: test_zamovnyk@mfsa.ru
         browser:  chrome
         position: [0, 0]
         size:     [1280, 800]
     palata_Provider1:
         broker:   palata
-        homepage: "http://testing.palata.com.ua"
-        login:    part1@mfsa.ru
-        password: 123456
+        homepage: "http://testing2.palata.com.ua/auctions2"
+        login:    test_provider1@mfsa.ru
+        password: test_provider1@mfsa.ru
         browser:  chrome
         position: [0, 800]
         size:     [1280, 800]
     palata_Provider2:
         broker:   palata
-        homepage: "http://testing.palata.com.ua"
-        login:    part2@mfsa.ru
-        password: 123456
+        homepage: "http://testing2.palata.com.ua/auctions2"
+        login:    test_provider2@mfsa.ru
+        password: test_provider2@mfsa.ru
         browser:  chrome
         position: [800, 0]
         size:     [1280, 800]
     palata_Viewer:
         broker:   palata
-        homepage: "http://testing.palata.com.ua"
+        homepage: "http://testing2.palata.com.ua/auctions2"
         browser:  chrome
         position: [0, 500]
         size:     [1280, 800]

@@ -313,12 +313,10 @@ ubiz:
             enquiry: [0, 20]
             tender:  [0, 30]
         dgfOtherAssets:
-            accelerator: 180
+            accelerator: 480
             auction: [50,55]
     keywords_file: ubiz
-    homepage: 'http://test.ubiz.com.ua'
-    syncpage: 'http://test.ubiz.com.ua/site/sync'
-    syncdocs: 'http://test.ubiz.com.ua/site/syncdocs'
+    homepage: 'http://test.ubiz.com.ua/auctions2'
     roles:
         provider:       ubiz_Provider1
         provider1:      ubiz_Provider2
@@ -467,12 +465,10 @@ comminnex:
             enquiry: [0, 20]
             tender:  [0, 30]
         dgfOtherAssets:
-            accelerator: 180
+            accelerator: 480
             auction: [50,55]
     keywords_file: comminnex
-    homepage: 'http://test.market.comminnex.com'
-    syncpage: 'http://test.market.comminnex.com/site/sync'
-    syncdocs: 'http://test.market.comminnex.com/site/syncdocs'
+    homepage: 'http://test.market.comminnex.com/auctions2'
     roles:
         provider:       comminnex_Provider1
         provider1:      comminnex_Provider2
@@ -485,12 +481,10 @@ torgibirgaukraine:
             enquiry: [0, 20]
             tender:  [0, 30]
         dgfOtherAssets:
-            accelerator: 180
-            auction: [45,50]
+            accelerator: 480
+            auction: [50,55]
     keywords_file: torgibirgaukraine
-    homepage: 'http://test.torgi.birga-ukraine.com.ua'
-    syncpage: 'http://test.torgi.birga-ukraine.com.ua/site/sync'
-    syncdocs: 'http://test.torgi.birga-ukraine.com.ua/site/syncdocs'
+    homepage: 'http://test.torgi.birga-ukraine.com.ua/auctions2'
     roles:
         provider:       torgibirgaukraine_Provider1
         provider1:      torgibirgaukraine_Provider2
@@ -503,12 +497,10 @@ statusexpert:
             enquiry: [0, 20]
             tender:  [0, 30]
         dgfOtherAssets:
-            accelerator: 180
+            accelerator: 480
             auction: [50,55]
     keywords_file: statusexpert
-    homepage: 'http://test.torgi.status-expert.com.ua'
-    syncpage: 'http://test.torgi.status-expert.com.ua/site/sync'
-    syncdocs: 'http://test.torgi.status-expert.com.ua/site/syncdocs'
+    homepage: 'http://test.torgi.status-expert.com.ua/auctions2'
     roles:
         provider:       statusexpert_Provider1
         provider1:      statusexpert_Provider2
@@ -521,12 +513,10 @@ vidol:
             enquiry: [0, 20]
             tender:  [0, 30]
         dgfOtherAssets:
-            accelerator: 180
+            accelerator: 480
             auction: [50,55]
     keywords_file: vidol
-    homepage: 'http://test.torgi.vidol.com.ua'
-    syncpage: 'http://test.torgi.vidol.com.ua/site/sync'
-    syncdocs: 'http://test.torgi.vidol.com.ua/site/syncdocs'
+    homepage: 'http://test.torgi.vidol.com.ua/auctions2'
     roles:
         provider:       vidol_Provider1
         provider1:      vidol_Provider2
@@ -557,12 +547,10 @@ cuex:
             enquiry: [0, 20]
             tender:  [0, 30]
         dgfOtherAssets:
-            accelerator: 180
+            accelerator: 480
             auction: [50,55]
     keywords_file: cuex
-    homepage: 'http://testing.torgy.com.ua'
-    syncpage: 'http://testing.torgy.com.ua/site/sync'
-    syncdocs: 'http://testing.torgy.com.ua/site/syncdocs'
+    homepage: 'http://testing2.torgy.com.ua/auctions2'
     roles:
         provider:       cuex_Provider1
         provider1:      cuex_Provider2
@@ -716,12 +704,10 @@ palata:
             enquiry: [0, 20]
             tender:  [0, 30]
         dgfOtherAssets:
-            accelerator: 180
-            auction: [65,70]
+            accelerator: 480
+            auction: [50,55]
     keywords_file: palata
-    homepage: 'http://testing.palata.com.ua'
-    syncpage: 'http://testing.palata.com.ua/site/sync'
-    syncdocs: 'http://testing.palata.com.ua/site/syncdocs'
+    homepage: 'http://testing2.palata.com.ua/auctions2'
     roles:
         provider:       palata_Provider1
         provider1:      palata_Provider2
