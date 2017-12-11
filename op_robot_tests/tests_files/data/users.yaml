@@ -32,7 +32,7 @@ users:
         browser:  firefox
     Etender_Owner:
         broker:   Etender
-        homepage: "http://e-auction.pro/#/"
+        homepage: "http://uatasset.e-auction.ua/#/"
         login:    case31
         password: Qq123456
         browser:  chrome
@@ -40,7 +40,7 @@ users:
         size:     [1366, 800]
     Etender_Provider1:
         broker:   Etender
-        homepage: "http://e-auction.pro/#/"
+        homepage: "http://uatasset.e-auction.ua/#/"
         login:    auto4
         password: Qq123456
         browser:  chrome
@@ -48,15 +48,15 @@ users:
         size:     [1366, 800]
     Etender_Provider2:
         broker:   Etender
-        homepage: "http://e-auction.pro/#/"
-        login:    auto18
+        homepage: "http://uatasset.e-auction.ua/#/"
+        login:    auto26
         password: Qq123456
         browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     Etender_Viewer:
         broker:   Etender
-        homepage: "http://e-auction.pro/#/"
+        homepage: "http://uatasset.e-auction.ua/#/"
         browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
