@@ -457,7 +457,7 @@ users:
         broker:   Promauctions
         homepage: "http://zakupki.dz-test.net/auctions"
         default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_auction/list?mode=all"
-        login:    test@test12.com
+        login:    test@test17.com
         password: autotest
         browser:  chrome
         position: [0, 0]
@@ -475,7 +475,7 @@ users:
         broker:   Promauctions
         homepage: "http://zakupki.dz-test.net/auctions"
         default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_auction/list?mode=all"
-        login:    test@test14.com
+        login:    test@test18.com
         password: autotest
         browser:  chrome
         position: [0, 0]
@@ -484,7 +484,7 @@ users:
         broker:   Promauctions
         homepage: "http://zakupki.dz-test.net/auctions"
         default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_auction/list?mode=all"
-        login:    test@test15.com
+        login:    test@test19.com
         password: autotest
         browser:  chrome
         position: [0, 0]
