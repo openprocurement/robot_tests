@@ -890,3 +890,31 @@ biddingtime:
             tender:  [0, 25]
             auction: [25, 30]
     timeout_on_wait: 60
+tenderonline:
+    keywords_file: tenderonline
+    accelerator: 720
+    roles:
+        tender_owner:   tenderonline_Owner
+        provider:       tenderonline_Provider
+        provider1:      tenderonline_Provider1
+        viewer:         tenderonline_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
+tsbgalcontract:
+    keywords_file: tsbgalcontract
+    accelerator: 720
+    roles:
+        tender_owner:   tsbgalcontract_Owner
+        provider:       tsbgalcontract_Provider
+        provider1:      tsbgalcontract_Provider1
+        viewer:         tsbgalcontract_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
