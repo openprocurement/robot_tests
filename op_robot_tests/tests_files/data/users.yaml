@@ -1740,3 +1740,67 @@ users:
         browser:  chrome
         position: [800, 400]
         size:     [800, 700]
+    tenderonline_Owner:
+        broker:   tenderonline
+        homepage: "https://tender-online.biz/Registration.aspx"
+        default_page: "https://tender-online.biz/PositionList.aspx"
+        login:    to_Owner@1.ua
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    tenderonline_Provider:
+        broker:   tenderonline
+        homepage: "https://tender-online.biz/Registration.aspx"
+        default_page: "https://tender-online.biz/PositionList.aspx"
+        login:    to_Provider@1.ua
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    tenderonline_Provider1:
+        broker:   tenderonline
+        homepage: "https://tender-online.biz/Registration.aspx"
+        default_page: "https://tender-online.biz/PositionList.aspx"
+        login:    to_Provider1@1.ua
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    tenderonline_Viewer:
+        broker:   tenderonline
+        homepage: "https://tender-online.biz/Registration.aspx"
+        default_page: "https://tender-online.biz/PositionList.aspx"
+        login:    to_Viewer@1.ua
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    tsbgalcontr_Owner:
+        broker:   tsbgalcontr
+        homepage: "https://sales.tsbgalcontract.org.ua/Registration.aspx"
+        default_page: "https://sales.tsbgalcontract.org.ua/PositionList.aspx"
+        login:    gc_Owner@1.ua
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    tsbgalcontr_Provider:
+        broker:   tsbgalcontr
+        homepage: "https://sales.tsbgalcontract.org.ua/Registration.aspx"
+        default_page: "https://sales.tsbgalcontract.org.ua/PositionList.aspx"
+        login:    gc_Provider@1.ua
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    tsbgalcontr_Provider1:
+        broker:   tsbgalcontr
+        homepage: "https://sales.tsbgalcontract.org.ua/Registration.aspx"
+        default_page: "https://sales.tsbgalcontract.org.ua/PositionList.aspx"
+        login:    gc_Provider1@1.ua
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    tsbgalcontr_Viewer:
+        broker:   tsbgalcontr
+        homepage: "https://sales.tsbgalcontract.org.ua/Registration.aspx"
+        default_page: "https://sales.tsbgalcontract.org.ua/PositionList.aspx"
+        login:    gc_Viewer@1.ua
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
