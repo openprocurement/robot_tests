@@ -280,18 +280,18 @@ Publicbid:
 SmartTender:
     intervals:
         default:
-            enquiry: [0, 10]
+            enquiry: [0, 20]
             tender:  [0, 20]
         dgfOtherAssets:
-            accelerator: 144
-            auction:  [45, 50]
+            accelerator: 720
+            auction:  [55, 60]
     keywords_file: smarttender
     roles:
         provider:       SmartTender_Provider1
         provider1:      SmartTender_Provider2
         tender_owner:   SmartTender_Owner
         viewer:         SmartTender_Viewer
-    timeout_on_wait: 50
+    timeout_on_wait: 30
 uatenders:
     intervals:
         default:
