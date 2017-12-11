@@ -848,3 +848,31 @@ tabua:
         tender_owner:   tabua_Owner
         viewer:         tabua_Viewer
     timeout_on_wait: 30
+tenderonline:
+    keywords_file: tenderonline
+    accelerator: 720
+    roles:
+        tender_owner:   tenderonline_Owner
+        provider:       tenderonline_Provider
+        provider1:      tenderonline_Provider1
+        viewer:         tenderonline_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
+tsbgalcontr:
+    keywords_file: tsbgalcontr
+    accelerator: 720
+    roles:
+        tender_owner:   tsbgalcontr_Owner
+        provider:       tsbgalcontr_Provider
+        provider1:      tsbgalcontr_Provider1
+        viewer:         tsbgalcontr_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
