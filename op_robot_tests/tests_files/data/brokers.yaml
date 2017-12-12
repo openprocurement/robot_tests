@@ -83,8 +83,8 @@ DZOauctions:
             enquiry: [0, 20]
             tender:  [0, 20]
         dgfOtherAssets:
-            accelerator: 144
-            auction:  [15, 20]
+            accelerator: 720
+            auction:  [85, 90]
     keywords_file: dzo
     roles:
         tender_owner:   DZO_Owner_auction
