@@ -253,15 +253,15 @@ Promauctions:
             enquiry: [0, 15]
             tender:  [0, 25]
         dgfOtherAssets:
-            accelerator: 96
-            auction:  [55, 60]
+            accelerator: 1440
+            auction:  [70, 60]
     keywords_file: prom
     roles:
         tender_owner:   Prom_Owner
         viewer:         Prom_Viewer
         provider:       Prom_Provider
         provider1:      Prom_Provider1
-    timeout_on_wait: 300
+    timeout_on_wait: 330
 Publicbid:
     intervals:
         default:
