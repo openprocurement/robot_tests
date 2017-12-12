@@ -314,7 +314,7 @@ ubiz:
             tender:  [0, 30]
         dgfOtherAssets:
             accelerator: 480
-            auction: [50,55]
+            auction: [30,35]
     keywords_file: ubiz
     homepage: 'http://test.ubiz.com.ua/auctions2'
     roles:
@@ -322,7 +322,7 @@ ubiz:
         provider1:      ubiz_Provider2
         tender_owner:   ubiz_Owner
         viewer:         ubiz_Viewer
-    timeout_on_wait: 180
+    timeout_on_wait: 90
 zakpro:
     intervals:
         default:
@@ -466,7 +466,7 @@ comminnex:
             tender:  [0, 30]
         dgfOtherAssets:
             accelerator: 480
-            auction: [50,55]
+            auction: [30,35]
     keywords_file: comminnex
     homepage: 'http://test.market.comminnex.com/auctions2'
     roles:
@@ -474,7 +474,7 @@ comminnex:
         provider1:      comminnex_Provider2
         tender_owner:   comminnex_Owner
         viewer:         comminnex_Viewer
-    timeout_on_wait: 180
+    timeout_on_wait: 90
 torgibirgaukraine:
     intervals:
         default:
@@ -482,7 +482,7 @@ torgibirgaukraine:
             tender:  [0, 30]
         dgfOtherAssets:
             accelerator: 480
-            auction: [50,55]
+            auction: [30,35]
     keywords_file: torgibirgaukraine
     homepage: 'http://test.torgi.birga-ukraine.com.ua/auctions2'
     roles:
@@ -490,7 +490,7 @@ torgibirgaukraine:
         provider1:      torgibirgaukraine_Provider2
         tender_owner:   torgibirgaukraine_Owner
         viewer:         torgibirgaukraine_Viewer
-    timeout_on_wait: 180
+    timeout_on_wait: 90
 statusexpert:
     intervals:
         default:
@@ -498,7 +498,7 @@ statusexpert:
             tender:  [0, 30]
         dgfOtherAssets:
             accelerator: 480
-            auction: [50,55]
+            auction: [30,35]
     keywords_file: statusexpert
     homepage: 'http://test.torgi.status-expert.com.ua/auctions2'
     roles:
@@ -506,7 +506,7 @@ statusexpert:
         provider1:      statusexpert_Provider2
         tender_owner:   statusexpert_Owner
         viewer:         statusexpert_Viewer
-    timeout_on_wait: 180
+    timeout_on_wait: 90
 vidol:
     intervals:
         default:
@@ -514,7 +514,7 @@ vidol:
             tender:  [0, 30]
         dgfOtherAssets:
             accelerator: 480
-            auction: [50,55]
+            auction: [30,35]
     keywords_file: vidol
     homepage: 'http://test.torgi.vidol.com.ua/auctions2'
     roles:
@@ -522,7 +522,7 @@ vidol:
         provider1:      vidol_Provider2
         tender_owner:   vidol_Owner
         viewer:         vidol_Viewer
-    timeout_on_wait: 180
+    timeout_on_wait: 90
 uutb:
     intervals:
         default:
@@ -548,7 +548,7 @@ cuex:
             tender:  [0, 30]
         dgfOtherAssets:
             accelerator: 480
-            auction: [50,55]
+            auction: [30,35]
     keywords_file: cuex
     homepage: 'http://testing2.torgy.com.ua/auctions2'
     roles:
@@ -556,7 +556,7 @@ cuex:
         provider1:      cuex_Provider2
         tender_owner:   cuex_Owner
         viewer:         cuex_Viewer
-    timeout_on_wait: 180
+    timeout_on_wait: 90
 nkcentr:
     keywords_file: nkcentr
     accelerator: 360
@@ -705,7 +705,7 @@ palata:
             tender:  [0, 30]
         dgfOtherAssets:
             accelerator: 480
-            auction: [50,55]
+            auction: [30,35]
     keywords_file: palata
     homepage: 'http://testing2.palata.com.ua/auctions2'
     roles:
@@ -713,7 +713,7 @@ palata:
         provider1:      palata_Provider2
         tender_owner:   palata_Owner
         viewer:         palata_Viewer
-    timeout_on_wait: 180
+    timeout_on_wait: 90
 tirex:
     intervals:
         default:
