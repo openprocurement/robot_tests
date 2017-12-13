@@ -33,8 +33,20 @@ def create_fake_sentence():
     return fake.sentence(nb_words=10, variable_nb_words=True)
 
 
+def create_fake_funder():
+    return fake.funders_data()
+
+
+def get_fake_funder_scheme():
+    return fake.funder_scheme()
+
+
 def create_fake_amount(award_amount):
     return round(random.uniform(1, award_amount), 2)
+
+
+def create_fake_number(min_number, max_number):
+    return random.randint(int(min_number), int(max_number))
 
 
 def create_fake_title():
@@ -93,6 +105,7 @@ def create_fake_doc():
 def test_tender_data(params,
                      periods=("enquiry", "tender"),
                      submissionMethodDetails=None,
+                     funders=None,
                      accelerator=None):
     submissionMethodDetails = submissionMethodDetails \
         if submissionMethodDetails else "quick"
@@ -175,6 +188,8 @@ def test_tender_data(params,
         data['features'].append(new_feature)
     if not data['features']:
         del data['features']
+    if funders is not None:
+        data['funders'] = [fake.funders_data() for _ in range(int(funders))]
     data['status'] = 'draft'
     return munchify(data)
 

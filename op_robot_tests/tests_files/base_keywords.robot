@@ -73,6 +73,17 @@ Resource           resource.robot
   Run as  ${username}  Пошук плану по ідентифікатору  ${TENDER['TENDER_UAID']}
 
 
+Можливість знайти тендер за кошти донора для усіх користувачів
+  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${provider1}  ${viewer}
+  \  Можливість знайти тендер за кошти донора для користувача ${username}
+
+
+Можливість знайти тендер за кошти донора для користувача ${username}
+  Дочекатись синхронізації з майданчиком  ${username}
+  ${funder_id}=  Set Variable  ${USERS.users['${tender_owner}'].initial_data.data['funders'][0]['identifier']['id']}
+  Run as  ${username}  Пошук тендера за кошти донора  ${funder_id}
+
+
 Можливість знайти тендер по ідентифікатору ${tender_id} та зберегти його в ${save_location} для користувача ${username}
   Дочекатись синхронізації з майданчиком  ${username}
   Run as  ${username}  Пошук тендера по ідентифікатору  ${tender_id}  ${save_location}
@@ -81,6 +92,9 @@ Resource           resource.robot
 Можливість змінити поле ${field_name} тендера на ${field_value}
   Run As  ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  ${field_name}  ${field_value}
 
+
+Перевірити неможливість зміни поля ${field_name} тендера на значення ${field_value} для користувача ${username}
+  Require Failure  ${username}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  ${field_name}  ${field_value}
 
 Можливість змінити поле ${field_name} плану на ${field_value}
   Run As  ${tender_owner}  Внести зміни в план  ${TENDER['TENDER_UAID']}  ${field_name}  ${field_value}
@@ -126,6 +140,19 @@ Resource           resource.robot
 
 Можливість видалити предмет закупівлі з плану
   Run As  ${tender_owner}  Видалити предмет закупівлі плану  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].item_data.item_id}
+
+
+Можливість видалити поле ${field_name} з донора ${funders_index}
+  Run As  ${tender_owner}  Видалити поле з донора  ${TENDER['TENDER_UAID']}  ${funders_index}  ${field_name}
+
+
+Можливість видалити донора ${funders_index}
+  Run As  ${tender_owner}  Видалити донора  ${TENDER['TENDER_UAID']}  ${funders_index}
+
+
+Можливість додати донора
+  ${funders_data}=  create_fake_funder
+  Run As  ${tender_owner}  Додати донора  ${TENDER['TENDER_UAID']}  ${funders_data}
 
 
 Звірити відображення поля ${field} документа ${doc_id} із ${left} для користувача ${username}
@@ -248,6 +275,20 @@ Resource           resource.robot
 Звірити відображення координат ${item_index} предмету для користувача ${username}
   ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}]}
   Звірити координати доставки тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${item_id}
+
+
+Звірити відображення поля ${field} усіх донорів для усіх користувачів
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  \  Звірити відображення поля ${field} усіх донорів для користувача ${username}
+
+
+Звірити відображення поля ${field} усіх донорів для користувача ${username}
+  :FOR  ${funders_index}  IN RANGE  ${FUNDERS}
+  \  Звірити відображення поля ${field} ${funders_index} донора для користувача ${username}
+
+
+Звірити відображення поля ${field} ${funders_index} донора для користувача ${username}
+  Звірити поле донора  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${field}  ${funders_index}
 
 
 Отримати дані із поля ${field} тендера для усіх користувачів

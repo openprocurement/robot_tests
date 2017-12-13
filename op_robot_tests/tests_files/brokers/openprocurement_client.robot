@@ -196,6 +196,14 @@ Library  openprocurement_client.utils
   [return]   ${tender}
 
 
+Пошук тендера за кошти донора
+  [Arguments]  ${username}  ${funder_id}=${None}  ${save_key}=tenders_with_funder
+  ${tenders}=  get_tenders_by_funder_id  ${USERS.users['${username}'].client}  ${funder_id}
+  Set To Dictionary  ${USERS.users['${username}']}  ${save_key}=${tender}
+  Log  ${tenders}
+  [return]  ${tenders.keys()}
+
+
 Отримати тендер другого етапу та зберегти його
   [Arguments]  ${username}  ${tender_id}
   ${response}=  Call Method  ${USERS.users['${username}'].client}  patch_credentials  ${tender_id}  ${USERS.users['${username}'].access_token}
@@ -248,12 +256,14 @@ Library  openprocurement_client.utils
 Внести зміни в тендер
   [Arguments]  ${username}  ${tender_uaid}  ${fieldname}  ${fieldvalue}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${prev_value}=  Отримати дані із тендера  ${username}  ${tender_uaid}  ${fieldname}
   Set_To_Object  ${tender.data}   ${fieldname}   ${fieldvalue}
   ${procurementMethodType}=  Get From Object  ${tender.data}  procurementMethodType
   Run Keyword If  '${procurementMethodType}' == 'aboveThresholdUA' or '${procurementMethodType}' == 'aboveThresholdEU'
   ...      Remove From Dictionary  ${tender.data}  enquiryPeriod
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+  Run Keyword And Expect Error  *  Порівняти об'єкти  ${prev_value}  ${tender.data.${fieldname}}
   Set_To_Object   ${USERS.users['${username}'].tender_data}   ${fieldname}   ${fieldvalue}
 
 
@@ -264,7 +274,6 @@ Library  openprocurement_client.utils
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_plan  ${tender}
   Set_To_Object   ${USERS.users['${username}'].tender_data}   ${fieldname}   ${fieldvalue}
-
 
 ##############################################################################
 #             Item operations
@@ -297,12 +306,40 @@ Library  openprocurement_client.utils
   Remove From List  ${tender.data['items']}  ${item_index}
   Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
 
+
 Видалити предмет закупівлі плану
   [Arguments]  ${username}  ${tender_uaid}  ${item_id}  ${lot_id}=${Empty}
   ${tender}=  openprocurement_client.Пошук плану по ідентифікатору  ${username}  ${tender_uaid}
   ${item_index}=  get_object_index_by_id  ${tender.data['items']}  ${item_id}
   Remove From List  ${tender.data['items']}  ${item_index}
   Call Method  ${USERS.users['${username}'].client}  patch_plan  ${tender}
+
+
+Видалити поле з донора
+  [Arguments]  ${username}  ${tender_uaid}  ${funders_index}  ${field_name}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  Delete From Dictionary  ${tender.data['funders'][${funders_index}]}  ${field_name}
+  Log  ${tender.data['funders'][${funders_index}]}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+  Dictionary Should Not Contain Path  ${reply.data['funders'][${funders_index}]}  ${field_name}
+
+
+Видалити донора
+  [Arguments]  ${username}  ${tender_uaid}  ${funders_index}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  Remove From List  ${tender.data.funders}  ${funders_index}
+  Log  ${tender}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+  Log  ${reply}
+
+
+Додати донора
+  [Arguments]  ${username}  ${tender_uaid}  ${funders_data}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  Set To Dictionary  ${tender.data}  funders=@{EMPTY}
+  Append To List  ${tender.data.funders}  ${funders_data}
+  Log  ${tender}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
 
 ##############################################################################
 #             Lot operations

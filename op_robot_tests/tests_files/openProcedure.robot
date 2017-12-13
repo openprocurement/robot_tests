@@ -37,6 +37,15 @@ ${ITEM_MEAT}        ${True}
   ...      critical
   Можливість знайти тендер по ідентифікатору для усіх користувачів
 
+
+Можливість знайти тендер за кошти донора по ідентифікатору донора
+  [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      find_tender_by_funder_id
+  Можливість знайти тендер за кошти донора для усіх користувачів
+
 ##############################################################################################
 #             Відображення основних даних тендера
 ##############################################################################################
@@ -421,6 +430,99 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля featureOf усіх нецінових показників для користувача ${viewer}
 
 ##############################################################################################
+#             Відображення основних даних донора
+##############################################################################################
+
+Відображення назви донора
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення донора тендера
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      funders_view
+  Звірити відображення поля name усіх донорів для усіх користувачів
+
+
+Відображення назви країни донора
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення донора тендера
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      funders_view
+  Звірити відображення поля address.countryName усіх донорів для усіх користувачів
+
+
+Відображення назви міста донора
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення донора тендера
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      funders_view
+  Звірити відображення поля address.locality усіх донорів для усіх користувачів
+
+
+Відображення поштового коду адреси донора
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення донора тендера
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      funders_view
+  Звірити відображення поля address.postalCode усіх донорів для усіх користувачів
+
+
+Відображення регіону адреси донора
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення донора тендера
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      funders_view
+  Звірити відображення поля address.region усіх донорів для усіх користувачів
+
+
+Відображення вулиці адреси донора
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення донора тендера
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      funders_view
+  Звірити відображення поля address.streetAddress усіх донорів для усіх користувачів
+
+
+Відображення url веб-сторінки контактної особи
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення донора тендера
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      funders_view
+  Звірити відображення поля contactPoint.url усіх донорів для усіх користувачів
+
+
+Відображення id ідентифікатора
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення донора тендера
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      funders_view
+  Звірити відображення поля identifier.id усіх донорів для усіх користувачів
+
+
+Відображення юридичної назви ідентифікатора
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення донора тендера
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      funders_view
+  Звірити відображення поля identifier.legalName усіх донорів для усіх користувачів
+
+
+Відображення схеми ідентифікатора
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення донора тендера
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      funders_view
+  Звірити відображення поля identifier.scheme усіх донорів для усіх користувачів
+
+##############################################################################################
 #             Редагування тендера
 ##############################################################################################
 
@@ -777,6 +879,72 @@ ${ITEM_MEAT}        ${True}
   ...      critical
   Можливість видалити -1 неціновий показник
 
+
+Можливість видалити донора
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      delete_funder
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість видалити донора 0
+
+
+Можливість додати донора
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_funder
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість додати донора
+
+
+Неможливість видалити ім'я донора
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      delete_funder_field
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Run Keyword And Expect Error  *  Можливість видалити поле name з донора 0
+
+
+Неможливість видалити ім'я контактної особи донора
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      delete_funder_field
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Run Keyword And Expect Error  *  Можливість видалити поле contactPoint.name з донора 0
+
+
+Неможливість видалити назву країни з адреси донора
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      delete_funder_field
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Run Keyword And Expect Error  *  Можливість видалити поле address.countryName з донора 0
+
+
+Неможливість змінити id ідентифікатора донора
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      change_funder_during_enquiry_period
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${new_id}=  create_fake_number  10000  99999
+  Перевірити неможливість зміни поля funders[0].identifier.id тендера на значення ${new_id} для користувача ${tender_owner}
+
+
+Неможливість змінити схему ідентифікатора донора
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      change_funder_during_enquiry_period
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${new_scheme}=  get_fake_funder_scheme
+  Перевірити неможливість зміни поля funders[0].identifier.scheme тендера на значення ${new_scheme} для користувача ${tender_owner}
+
 ##############################################################################################
 #             QUESTIONS
 ##############################################################################################
@@ -968,6 +1136,17 @@ ${ITEM_MEAT}        ${True}
   ${new_description}=  create_fake_sentence
   Можливість змінити поле description 0 лоту на ${new_description}
   Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data.lots[0]}  description
+
+
+Неможливість змінити дані про донора після завершення періоду уточнень
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Редагування тендера
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      change_funder_after_enquiry_period
+  [Setup]  Дочекатись дати закінчення періоду уточнень  ${tender_owner}  ${TENDER['TENDER_UAID']}
+  ${new_legalName}=  create_fake_title
+  Перевірити неможливість зміни поля funders[0].identifier.legalName тендера на значення ${new_legalName} для користувача ${tender_owner}
+  Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data.funders[0].identifier}  legalName
 
 ##############################################################################################
 #             TENDER COMPLAINTS
