@@ -535,29 +535,29 @@ users:
         size:     [640, 480]
     SmartTender_Viewer:
         broker:   SmartTender
-        homepage: "http://test.smarttender.biz/test-tenders?allcat=1"
+        homepage: "http://test.smarttender.biz/test-tenders/"
         browser:  chrome
         position: [0, 450]
         size:     [640, 450]
     SmartTender_Provider1:
         broker:   SmartTender
-        homepage: "http://test.smarttender.biz/test-tenders?allcat=1"
-        login:    bened@it.ua
-        password: 111111
+        homepage: "http://test.smarttender.biz/test-tenders/"
+        login:    SmartTenderProvider1@gmail.com
+        password: nowihs
         browser:  chrome
         position: [0, 450]
         size:     [640, 450]
     SmartTender_Provider2:
         broker:   SmartTender
-        homepage: "http://test.smarttender.biz/test-tenders?allcat=1"
-        login:    my.mail.rudenko@gmail.com
-        password: qwerty123
+        homepage: "http://test.smarttender.biz/test-tenders/"
+        login:    SmartTenderProvider2@gmail.com
+        password: np3ozi
         browser:  chrome
         position: [0, 450]
         size:     [640, 450]
     SmartTender_Owner:
         broker:   SmartTender
-        homepage: "http://test.smarttender.biz/test-tenders?allcat=1"
+        homepage: "http://test.smarttender.biz/test-tenders/"
         login:    PPR_BV
         password: 123321
         browser:  chrome
