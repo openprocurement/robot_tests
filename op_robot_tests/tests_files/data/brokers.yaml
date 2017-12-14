@@ -284,7 +284,7 @@ SmartTender:
             tender:  [0, 20]
         dgfOtherAssets:
             accelerator: 720
-            auction:  [55, 60]
+            auction:  [40, 45]
     keywords_file: smarttender
     roles:
         provider:       SmartTender_Provider1
