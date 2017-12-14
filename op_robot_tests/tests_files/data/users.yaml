@@ -447,9 +447,9 @@ users:
     PrivatMarket_Owner:
         broker:   PrivatMarket
         homepage: "http://auction.privatbank.ua"
-        email:    pbecommercetest2@ukr.net
-        login:    +380102030405
-        password: value
+        email:    tadud@p33.org
+        login:    tadud@p33.org
+        password: password_value
         browser:  chrome
         position: [0, 0]
         size:     [1920, 1080]
