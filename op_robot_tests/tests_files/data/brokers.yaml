@@ -128,8 +128,8 @@ brizol:
             enquiry: [0, 17]
             tender:  [0, 19]
         dgfOtherAssets:
-            accelerator: 144
-            auction:  [8, 12]
+            accelerator: 1440
+            auction:  [45, 50]
     keywords_file: brizol
     roles:
         tender_owner:   brizol_Owner

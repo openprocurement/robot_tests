@@ -123,7 +123,7 @@ users:
     uace_Owner_auction:
         broker:   uaceauction
         homepage: "http://test-eauction.uace.com.ua"
-        login:    prozorroytenderowner@gmail.com
+        login:    dzotenderowner@gmail.com
         password: 123456
         browser:  Chrome
         position: [0, 0]
@@ -153,7 +153,7 @@ users:
     opentender_Owner_auction:
         broker:   opentenderauction
         homepage: "http://test-eauction.open-tender.com.ua"
-        login:    prozorroytenderowner@gmail.com
+        login:    dzotenderowner@gmail.com
         password: 123456
         browser:  Chrome
         position: [0, 0]
@@ -183,7 +183,7 @@ users:
     brizol_Owner:
         broker:   brizol
         homepage: "http://test-eauction.brizol.net/login"
-        login:    prozorroytenderowner@gmail.com
+        login:    dzotenderowner@gmail.com
         password: 123456
         browser:  Chrome
         position: [0, 0]
@@ -213,7 +213,7 @@ users:
     aukzionua_Owner:
         broker:   aukzionua
         homepage: "http://test.neb.org.ua"
-        login:    prozorroytenderowner@gmail.com
+        login:    dzotenderowner@gmail.com
         password: 123456
         browser:  Chrome
         position: [0, 0]
@@ -243,7 +243,7 @@ users:
     capitalua_Owner:
         broker:   capitalua
         homepage: "https://eauction-capital.com.ua"
-        login:    prozorroytenderowner@gmail.com
+        login:    dzotenderowner@gmail.com
         password: 123456
         browser:  Chrome
         position: [0, 0]
@@ -273,7 +273,7 @@ users:
     centrex_Owner:
         broker:   centrex
         homepage: "http://centrex.byustudio.in.ua"
-        login:    prozorroytenderowner@gmail.com
+        login:    dzotenderowner@gmail.com
         password: 123456
         browser:  Chrome
         position: [0, 0]
@@ -303,7 +303,7 @@ users:
     expagency_Owner:
         broker:   expagency
         homepage: "http://test-torgi.exp-agency.com.ua"
-        login:    prozorroytenderowner@gmail.com
+        login:    dzotenderowner@gmail.com
         password: 123456
         browser:  Chrome
         position: [0, 0]
@@ -333,7 +333,7 @@ users:
     govfound_Owner:
         broker:   govfound
         homepage: "http://test.gov.auction"
-        login:    prozorroytenderowner@gmail.com
+        login:    dzotenderowner@gmail.com
         password: 123456
         browser:  Chrome
         position: [0, 0]
@@ -1421,7 +1421,7 @@ users:
     epsilon_Owner_auction:
         broker:   epsilon
         homepage: "http://test.tbepsilon.com/"
-        login:    prozorroytenderowner@gmail.com
+        login:    dzotenderowner@gmail.com
         password: 123456
         browser:  Chrome
         position: [0, 0]
@@ -1481,7 +1481,7 @@ users:
     tirex_Owner_auction:
         broker:   tirex
         homepage: "http://test.eauction-tendersale.com.ua"
-        login:    prozorroytenderowner@gmail.com
+        login:    dzotenderowner@gmail.com
         password: 123456
         browser:  Chrome
         position: [0, 0]
