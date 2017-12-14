@@ -333,7 +333,7 @@ users:
     govfound_Owner:
         broker:   govfound
         homepage: "http://test.gov.auction"
-        login:    dzotenderowner@gmail.com
+        login:    prozorroytenderowner@gmail.com 
         password: 123456
         browser:  Chrome
         position: [0, 0]
@@ -357,6 +357,36 @@ users:
     govfound_Viewer:
         broker:   govfound
         homepage: "http://test.gov.auction"
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    b25h8_Owner_auction:
+        broker:   25h8
+        homepage: "http://test.25h8.auction"
+        login:    dzotenderowner@gmail.com
+        password: 123456
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    b25h8_Provider_auction:
+        broker:   25h8
+        homepage: "http://test.25h8.auction"
+        login:    prozorroyprovider1@gmail.com
+        password: 123456
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    b25h8_Provider1_auction:
+        broker:   25h8
+        homepage: "http://test.25h8.auction"
+        login:    prozorroyprovider2@gmail.com
+        password: 123456
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    b25h8_Viewer_auction:
+        broker:   25h8
+        homepage: "http://test.25h8.auction"
         browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
