@@ -212,6 +212,21 @@ govfound:
         provider1:   govfound_Provider1
         viewer:   govfound_Viewer
     timeout_on_wait: 180
+25h8:
+    intervals:
+        default:
+            enquiry: [0, 17]
+            tender:  [0, 19]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction:  [45, 50]
+    keywords_file: 25h8
+    roles:
+        tender_owner:   b25h8_Owner_auction
+        provider:       b25h8_Provider_auction
+        provider1:      b25h8_Provider1_auction
+        viewer:         b25h8_Viewer_auction
+    timeout_on_wait: 180
 ztv:
     intervals:
         default:
