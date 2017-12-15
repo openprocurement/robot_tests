@@ -595,32 +595,32 @@ users:
         size:     [1400, 900]
     uatenders_Owner:
         broker:   uatenders
-        homepage: "http://devs.zakupki.com.ua"
-        login:    dex.maks@mail.ru
+        homepage: "http://cdb2dev.zakupki.com.ua/"
+        login:    test_owner_arm@ukr.net
         password: 111111
         browser:  chrome
         position: [750, 0]
         size:     [1280, 800]
     uatenders_Provider:
         broker:   uatenders
-        homepage: "http://devs.zakupki.com.ua"
-        login:    test3@example.com
+        homepage: "http://cdb2dev.zakupki.com.ua/"
+        login:    testautoprovider@ukr.net
         password: 111111
         browser:  chrome
         position: [750, 0]
         size:     [1280, 800]
     uatenders_Viewer:
         broker:   uatenders
-        homepage: "http://devs.zakupki.com.ua"
-        login:    dex.maks@mail.ru
+        homepage: "http://cdb2dev.zakupki.com.ua/"
+        login:    test_owner_arm@ukr.net
         password: 111111
         browser:  chrome
         position: [750, 0]
         size:     [1280, 800]
     uatenders_Provider1:
         broker:   uatenders
-        homepage: "http://devs.zakupki.com.ua"
-        login:    test4@example.com
+        homepage: "http://cdb2dev.zakupki.com.ua/"
+        login:    testautoprovider1@ukr.net
         password: 111111
         browser:  chrome
         position: [750, 0]
