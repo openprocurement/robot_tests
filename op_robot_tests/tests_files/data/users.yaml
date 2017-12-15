@@ -125,7 +125,7 @@ users:
         homepage: "http://test-eauction.uace.com.ua"
         login:    dzotenderowner@gmail.com
         password: 123456
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     uace_Provider_auction:
@@ -133,7 +133,7 @@ users:
         homepage: "http://test-eauction.uace.com.ua"
         login:    prozorroyprovider1@gmail.com
         password: 123456
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     uace_Provider1_auction:
@@ -141,13 +141,13 @@ users:
         homepage: "http://test-eauction.uace.com.ua"
         login:    prozorroyprovider2@gmail.com
         password: 123456
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     uace_Viewer_auction:
         broker:   uaceauction
         homepage: "http://test-eauction.uace.com.ua"
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     opentender_Owner_auction:
@@ -155,7 +155,7 @@ users:
         homepage: "http://test-eauction.open-tender.com.ua"
         login:    dzotenderowner@gmail.com
         password: 123456
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     opentender_Provider_auction:
@@ -163,7 +163,7 @@ users:
         homepage: "http://test-eauction.open-tender.com.ua"
         login:    prozorroyprovider1@gmail.com
         password: 123456
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     opentender_Provider1_auction:
@@ -171,13 +171,13 @@ users:
         homepage: "http://test-eauction.open-tender.com.ua"
         login:    prozorroyprovider2@gmail.com
         password: 123456
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     opentender_Viewer_auction:
         broker:   opentenderauction
         homepage: "http://test-eauction.open-tender.com.ua"
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     brizol_Owner:
@@ -185,7 +185,7 @@ users:
         homepage: "http://test-eauction.brizol.net/login"
         login:    dzotenderowner@gmail.com
         password: 123456
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     brizol_Provider:
@@ -193,7 +193,7 @@ users:
         homepage: "http://test-eauction.brizol.net/login"
         login:    prozorroyprovider1@gmail.com
         password: 123456
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     brizol_Provider1:
@@ -201,13 +201,13 @@ users:
         homepage: "http://test-eauction.brizol.net/login"
         login:    prozorroyprovider2@gmail.com
         password: 123456
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     brizol_Viewer:
         broker:   brizol
         homepage: "http://test-eauction.brizol.net"
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     aukzionua_Owner:
@@ -215,7 +215,7 @@ users:
         homepage: "http://test.neb.org.ua"
         login:    dzotenderowner@gmail.com
         password: 123456
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     aukzionua_Provider:
@@ -223,7 +223,7 @@ users:
         homepage: "http://test.neb.org.ua"
         login:    prozorroyprovider1@gmail.com
         password: 123456
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     aukzionua_Provider1:
@@ -231,13 +231,13 @@ users:
         homepage: "http://test.neb.org.ua"
         login:    prozorroyprovider2@gmail.com
         password: 123456
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     aukzionua_Viewer:
         broker:   aukzionua
         homepage: "http://test.neb.org.ua"
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     capitalua_Owner:
@@ -275,7 +275,7 @@ users:
         homepage: "http://centrex.byustudio.in.ua"
         login:    dzotenderowner@gmail.com
         password: 123456
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     centrex_Provider:
@@ -283,7 +283,7 @@ users:
         homepage: "http://centrex.byustudio.in.ua"
         login:    prozorroyprovider1@gmail.com
         password: 123456
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     centrex_Provider1:
@@ -291,13 +291,13 @@ users:
         homepage: "http://centrex.byustudio.in.ua"
         login:    prozorroyprovider2@gmail.com
         password: 123456
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     centrex_Viewer:
         broker:   centrex
         homepage: "http://centrex.byustudio.in.ua"
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     expagency_Owner:
@@ -305,7 +305,7 @@ users:
         homepage: "http://test-torgi.exp-agency.com.ua"
         login:    dzotenderowner@gmail.com
         password: 123456
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     expagency_Provider:
@@ -313,7 +313,7 @@ users:
         homepage: "http://test-torgi.exp-agency.com.ua"
         login:    prozorroyprovider1@gmail.com
         password: 123456
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     expagency_Provider1:
@@ -321,13 +321,13 @@ users:
         homepage: "http://test-torgi.exp-agency.com.ua"
         login:    prozorroyprovider2@gmail.com
         password: 123456
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     expagency_Viewer:
         broker:   expagency
         homepage: "http://test-torgi.exp-agency.com.ua"
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     govfound_Owner:
@@ -335,7 +335,7 @@ users:
         homepage: "http://test.gov.auction"
         login:    prozorroytenderowner@gmail.com 
         password: 123456
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     govfound_Provider:
@@ -343,7 +343,7 @@ users:
         homepage: "http://test.gov.auction"
         login:    prozorroyprovider1@gmail.com
         password: 123456
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     govfound_Provider1:
@@ -351,13 +351,13 @@ users:
         homepage: "http://test.gov.auction"
         login:    prozorroyprovider2@gmail.com
         password: 123456
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     govfound_Viewer:
         broker:   govfound
         homepage: "http://test.gov.auction"
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     b25h8_Owner_auction:
@@ -365,7 +365,7 @@ users:
         homepage: "http://test.25h8.auction"
         login:    dzotenderowner@gmail.com
         password: 123456
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     b25h8_Provider_auction:
@@ -373,7 +373,7 @@ users:
         homepage: "http://test.25h8.auction"
         login:    prozorroyprovider1@gmail.com
         password: 123456
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     b25h8_Provider1_auction:
@@ -381,13 +381,13 @@ users:
         homepage: "http://test.25h8.auction"
         login:    prozorroyprovider2@gmail.com
         password: 123456
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     b25h8_Viewer_auction:
         broker:   25h8
         homepage: "http://test.25h8.auction"
-        browser:  Chrome
+        browser:  Firefox
         position: [0, 0]
         size:     [1366, 800]
     ztv_Owner:
