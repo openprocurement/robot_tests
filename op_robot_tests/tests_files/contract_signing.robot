@@ -103,8 +103,8 @@ Suite Teardown  Test Suite Teardown
   ...      modify_contract
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${new_contractDuration_years}=  create_fake_amount  20
-  ${new_contractDuration_years}=  Convert To Integer  ${new_contractDuration_years}=
+  ${new_contractDuration_years}=  create_fake_amount  15
+  ${new_contractDuration_years}=  Convert To Integer  ${new_contractDuration_years}
   Неможливість змінити поле value.contractDuration.years договору на значення ${new_contractDuration_years}
 
 

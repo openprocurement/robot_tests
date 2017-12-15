@@ -997,6 +997,7 @@ Library  openprocurement_client.utils
   ...      [Return] Reply of API
   [Arguments]  ${username}  ${document}  ${tender_uaid}  ${award_num}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  Wait Until Keyword Succeeds  15 min  30 sec  List Should Contain Value  ${USERS.users['${username}'].tender_data.data}  awards
   ${doc}=  Call Method  ${USERS.users['${username}'].client}  upload_award_document  ${document}  ${tender}  ${tender.data.awards[${award_num}].id}
   Log  ${doc}
 
