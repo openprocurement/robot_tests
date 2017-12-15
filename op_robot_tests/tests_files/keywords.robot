@@ -987,4 +987,5 @@ Require Failure
   Run Keyword If  '${status}' == 'False'  Fail  ${object} not found in \${USERS.users['${username}'].tender_data.data}
   ${len_of_object}=  Get Length  ${USERS.users['${username}'].tender_data.data.${object}}
   ${index}=  subtraction  ${len_of_object}  1
+  ${index}=  Set variable if  '${object}' == 'awards' and ${len_of_object} > 2  ${index - 2}  ${index}
   [Return]  ${index}
