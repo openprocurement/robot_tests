@@ -80,4 +80,7 @@
 #-i qualifications_check_by_edrpou
 -i qualification_approve_first_award
 
+-i contract_view
+-i modify_contract
+-i add_doc_to_contract
 -i contract_sign
