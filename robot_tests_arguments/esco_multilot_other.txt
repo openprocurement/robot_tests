@@ -101,11 +101,10 @@
 
 -i qualification_approve_first_award
 -i qualification_cancel_first_award_qualification
+-i qualification_reject_third_award_qualification
+-i qualification_reject_fourth_award_qualification
 -i qualification_add_doc_to_second_award
 -i qualification_approve_second_award
--i qualification_add_doc_to_third_award
--i qualification_approve_third_award
--i qualification_cancel_third_award_qualification
 
 -i contract_view
 -i modify_contract

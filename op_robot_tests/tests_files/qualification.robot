@@ -246,7 +246,23 @@ Possibility to cancel the qualification desicion
   Run As  ${tender_owner}  Скасування рішення кваліфікаційної комісії  ${TENDER['TENDER_UAID']}  0
 
 
-Possibility to upload a document on the qualification committee decision to approve a new provider
+Possibility to disqualify the first bidder
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Qualification process
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  qualification_reject_third_award_qualification  level1
+  Run As  ${tender_owner}  Дискваліфікувати постачальника  ${TENDER['TENDER_UAID']}  2
+
+
+Possibility to disqualify the second bidder for the first lot
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Qualification process
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  qualification_reject_fourth_award_qualification  level1
+  Run As  ${tender_owner}  Дискваліфікувати постачальника  ${TENDER['TENDER_UAID']}  3
+
+
+Possibility to upload a document on the qualification committee decision to approve a new bidder
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Qualification process
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
@@ -256,35 +272,9 @@ Possibility to upload a document on the qualification committee decision to appr
   Remove File  ${file_path}
 
 
-Possibility to approve a new provider
+Possibility to approve a new bidder
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Qualification process
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_approve_second_award  level1
   Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  1
-
-
-Possibility to upload a document on the qualification committee decision to approve a provider for the first lot
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Qualification process
-  ...  tender_owner
-  ...  ${USERS.users['${tender_owner}'].broker}
-  ...  qualification_add_doc_to_third_award  level3
-  ${file_path}  ${file_name}  ${file_content}=   create_fake_doc
-  Run As   ${tender_owner}   Завантажити документ рішення кваліфікаційної комісії   ${file_path}   ${TENDER['TENDER_UAID']}   2
-  Remove File  ${file_path}
-
-
-Possibility to approve a new bidder
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Qualification process
-  ...  tender_owner
-  ...  ${USERS.users['${tender_owner}'].broker}
-  ...  qualification_approve_third_award  level1
-  Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  2
-
-
-Possibility to cancel the qualification desicion for the first lot
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Qualification process
-  ...  tender_owner
-  ...  ${USERS.users['${tender_owner}'].broker}
-  ...  qualification_cancel_third_award_qualification  level1
-  Run As  ${tender_owner}  Скасування рішення кваліфікаційної комісії  ${TENDER['TENDER_UAID']}  2
