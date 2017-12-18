@@ -6,7 +6,7 @@ Suite Teardown  Test Suite Teardown
 
 
 *** Variables ***
-${MODE}             openeu
+${MODE}             esco
 @{USED_ROLES}       tender_owner  provider  provider1  provider2  viewer
 ${DIALOGUE_TYPE}    EU
 
@@ -18,8 +18,8 @@ ${ITEM_MEAT}        ${True}
 
 
 *** Test Cases ***
-Можливість оголосити тендер
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Оголошення тендера
+Possibility to announce a lot
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Tender announcement
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      create_tender  level1
@@ -28,8 +28,8 @@ ${ITEM_MEAT}        ${True}
   Можливість оголосити тендер
 
 
-Можливість знайти тендер по ідентифікатору
-  [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера
+Possibility to find a procurement by identificator
+  [Tags]   ${USERS.users['${viewer}'].broker}: Tender search
   ...      viewer  tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
@@ -41,8 +41,8 @@ ${ITEM_MEAT}        ${True}
 #             Відображення основних даних тендера
 ##############################################################################################
 
-Відображення заголовку тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+Displaying of tender name
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender main data
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level1
@@ -51,8 +51,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля title тендера для користувача ${viewer}
 
 
-Відображення опису тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+Displaying of tender description
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender main data
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
@@ -60,35 +60,44 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля description тендера для користувача ${viewer}
 
 
-Відображення бюджету тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+Displaying of minimal step percentage value of a tender
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender main data
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level1
+  ...      tender_view  level2
   ...      critical
-  Звірити відображення поля value.amount тендера для усіх користувачів
+  Отримати дані із поля minimalStepPercentage тендера для усіх користувачів
 
 
-Відображення валюти тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+Displaying of NBU discount rate
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender main data
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
-  ...      non-critical
-  Звірити відображення поля value.currency тендера для користувача ${viewer}
+  ...      critical
+  Звірити відображення поля NBUdiscountRate тендера для користувача ${viewer}
 
 
-Відображення ПДВ в бюджеті тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+Displaying of the procurement funding kind
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender main data
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
-  ...      non-critical
-  Звірити відображення поля value.valueAddedTaxIncluded тендера для користувача ${viewer}
+  ...      critical
+  Звірити відображення поля fundingKind тендера для користувача ${viewer}
 
 
-Відображення ідентифікатора тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+Displaying of yearly payments percentage range of a tender
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender main data
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view  level2
+  ...      critical
+  Отримати дані із поля yearlyPaymentsPercentageRange тендера для усіх користувачів
+
+
+Displaying of tender identificator
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender main data
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
@@ -96,8 +105,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля tenderID тендера із ${TENDER['TENDER_UAID']} для користувача ${viewer}
 
 
-Відображення імені замовника тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+Displaying of procurement entity name
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender main data
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
@@ -105,32 +114,32 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля procuringEntity.name тендера для користувача ${viewer}
 
 
-Відображення початку періоду уточнення тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+Displaying of enquiry period start date
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender main data
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
   ...      non-critical
-  Run Keyword IF  'open' in '${MODE}'
+  Run Keyword IF  'esco' in '${MODE}'
   ...      Отримати дані із поля enquiryPeriod.startDate тендера для усіх користувачів
   ...      ELSE
   ...      Звірити відображення дати enquiryPeriod.startDate тендера для усіх користувачів
 
 
-Відображення закінчення періоду уточнення тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+Displaying of enquiry period end date
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender main data
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
   ...      critical
-  Run Keyword IF  'open' in '${MODE}'
+  Run Keyword IF  'esco' in '${MODE}'
   ...      Отримати дані із поля enquiryPeriod.endDate тендера для усіх користувачів
   ...      ELSE
   ...      Звірити відображення дати enquiryPeriod.endDate тендера для усіх користувачів
 
 
-Відображення початку періоду прийому пропозицій тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+Displaying of tendering period start date
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender main data
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
@@ -138,8 +147,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення дати tenderPeriod.startDate тендера для усіх користувачів
 
 
-Відображення закінчення періоду прийому пропозицій тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+Displaying of tendering period end date
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender main data
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
@@ -147,17 +156,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення дати tenderPeriod.endDate тендера для усіх користувачів
 
 
-Відображення мінімального кроку тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level2
-  ...      critical
-  Звірити відображення поля minimalStep.amount тендера для користувача ${viewer}
-
-
-Відображення типу оголошеного тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+Displaying of the created tender type
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender main data
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      open_tender_view  level2
@@ -165,8 +165,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля procurementMethodType тендера для усіх користувачів
 
 
-Відображення закінчення періоду подання скарг на оголошений тендер
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+Displaying of complaint period end date
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender main data
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      open_tender_view
@@ -176,8 +176,8 @@ ${ITEM_MEAT}        ${True}
 #             Відображення основних даних предмету
 ##############################################################################################
 
-Відображення опису номенклатур тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
+Displaying of tender item description
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender items
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
@@ -185,26 +185,9 @@ ${ITEM_MEAT}        ${True}
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля description усіх предметів для усіх користувачів
 
-Відображення дати початку доставки номенклатур тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level2
-  ...      non-critical
-  Звірити відображення дати deliveryDate.startDate усіх предметів для користувача ${viewer}
 
-
-Відображення дати кінця доставки номенклатур тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level2
-  ...      non-critical
-  Звірити відображення дати deliveryDate.endDate усіх предметів для користувача ${viewer}
-
-
-Відображення координати доставки номенклатур тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
+Displaying of delivery location of a tender item
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender items
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
@@ -212,8 +195,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення координат усіх предметів для користувача ${viewer}
 
 
-Відображення назви нас. пункту доставки номенклатур тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
+Displaying of delivery locality of a tender item
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender items
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
@@ -221,8 +204,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля deliveryAddress.countryName усіх предметів для користувача ${viewer}
 
 
-Відображення пошт. коду доставки номенклатур тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
+Displaying of a delivery postal code of a tender item
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender items
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
@@ -230,8 +213,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля deliveryAddress.postalCode усіх предметів для користувача ${viewer}
 
 
-Відображення регіону доставки номенклатур тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
+Displaying of a delivery region of a tender item
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender items
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
@@ -239,8 +222,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля deliveryAddress.region усіх предметів для користувача ${viewer}
 
 
-Відображення locality адреси доставки номенклатур тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
+Displaying of delivery locality address of a tender item
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender items
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
@@ -248,8 +231,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля deliveryAddress.locality усіх предметів для користувача ${viewer}
 
 
-Відображення вулиці доставки номенклатур тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
+Displaying of a delivery street of a tender item
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender items
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
@@ -257,8 +240,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля deliveryAddress.streetAddress усіх предметів для користувача ${viewer}
 
 
-Відображення схеми основної/додаткової класифікації номенклатур тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
+Displaying of the main/additional classification of a tender item
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender items
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
@@ -267,8 +250,8 @@ ${ITEM_MEAT}        ${True}
   ...      Звірити відображення поля additionalClassifications[0].scheme усіх предметів для користувача ${viewer}
 
 
-Відображення ідентифікатора основної/додаткової класифікації номенклатур тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
+Displaying of an identificator of the main/additional classification of a tender item
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender items
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
@@ -277,8 +260,8 @@ ${ITEM_MEAT}        ${True}
   ...      Звірити відображення поля additionalClassifications[0].id усіх предметів для користувача ${viewer}
 
 
-Відображення опису основної/додаткової класифікації номенклатур тенедра
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
+Displaying of desciption of the main/additional classification of a tender item
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender items
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
@@ -287,8 +270,8 @@ ${ITEM_MEAT}        ${True}
   ...      Звірити відображення поля additionalClassifications[0].description усіх предметів для користувача ${viewer}
 
 
-Відображення назви одиниці номенклатур тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
+Displaying of a unit name of a tender item
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender items
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
@@ -296,29 +279,20 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля unit.name усіх предметів для користувача ${viewer}
 
 
-Відображення коду одиниці номенклатур тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
+Displaying of a unit code of a tender item
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender items
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
   ...      non-critical
   Звірити відображення поля unit.code усіх предметів для користувача ${viewer}
 
-
-Відображення кількості номенклатур тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level2
-  ...      non-critical
-  Звірити відображення поля quantity усіх предметів для користувача ${viewer}
-
 ##############################################################################################
 #             Відображення основних даних лоту
 ##############################################################################################
 
-Відображення заголовку лотів
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
+Displaying of lot name
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender lots
   ...      viewer  tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
@@ -327,8 +301,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля title усіх лотів для усіх користувачів
 
 
-Відображення опису лотів
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
+Displaying of lot description
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender lots
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      lot_view  level2
@@ -336,65 +310,38 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля description усіх лотів для користувача ${viewer}
 
 
-Відображення бюджету лотів
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
+Displaying of minimal step percentage value of a lot
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender lots
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      lot_view  level2
   ...      critical
-  Звірити відображення поля value.amount усіх лотів для усіх користувачів
+  Звірити відображення поля minimalStepPercentage усіх лотів для користувача ${viewer}
 
 
-Відображення валюти лотів
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
+Displaying of the lot funding kind
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender lots
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      lot_view  level2
-  ...      non-critical
-  Звірити відображення поля value.currency усіх лотів для користувача ${viewer}
+  ...      critical
+  Звірити відображення поля fundingKind усіх лотів для користувача ${viewer}
 
 
-Відображення ПДВ в бюджеті лотів
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
+Displaying of yearly payments percentage range of a lot
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender lots
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      lot_view  level2
-  ...      non-critical
-  Звірити відображення поля value.valueAddedTaxIncluded усіх лотів для користувача ${viewer}
-
-
-Відображення мінімального кроку лотів
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      lot_view  level2
-  ...      non-critical
-  Звірити відображення поля minimalStep.amount усіх лотів для усіх користувачів
-
-
-Відображення валюти мінімального кроку лотів
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      lot_view  level2
-  ...      non-critical
-  Звірити відображення поля minimalStep.currency усіх лотів для користувача ${viewer}
-
-
-Відображення ПДВ в мінімальному кроці лотів
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      lot_view  level2
-  ...      non-critical
-  Звірити відображення поля minimalStep.valueAddedTaxIncluded усіх лотів для користувача ${viewer}
+  ...      critical
+  Звірити відображення поля yearlyPaymentsPercentageRange усіх лотів для користувача ${viewer}
 
 ##############################################################################################
 #             Відображення основних даних предмету
 ##############################################################################################
 
-Відображення заголовку нецінових показників
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
+Displaying of tender non-price criteria name
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of non-price criteria
   ...      viewer  tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
@@ -403,8 +350,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля title усіх нецінових показників для усіх користувачів
 
 
-Відображення опису нецінових показників
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
+Displaying of non-price criteria description
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of non-price criteria
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      meat_view  level2
@@ -412,8 +359,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля description усіх нецінових показників для користувача ${viewer}
 
 
-Відображення відношення нецінових показників
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
+Displaying of non-price criteria relation
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of non-price criteria
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      meat_view  level2
@@ -424,8 +371,8 @@ ${ITEM_MEAT}        ${True}
 #             Редагування тендера
 ##############################################################################################
 
-Можливість змінити дату закінчення періоду подання пропозиції на 1 день
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+Possibility to change tendering period end date by one day
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Possibility to edit a tender
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      extend_tendering_period  level3
@@ -436,8 +383,8 @@ ${ITEM_MEAT}        ${True}
   Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data.tenderPeriod}  endDate
 
 
-Відображення зміни закінчення періоду прийому пропозицій тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+Displaying the changes of tendering period end date
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of main tender data
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      extend_tendering_period  level2
@@ -446,8 +393,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення дати tenderPeriod.endDate тендера для усіх користувачів
 
 
-Можливість додати документацію до тендера
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+Possibility to add documentation to a tender
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Documents addition
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      add_tender_doc  level3
@@ -456,8 +403,8 @@ ${ITEM_MEAT}        ${True}
   Можливість додати документацію до тендера
 
 
-Можливість додати документацію до всіх лотів
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+Possibility to add documentation to all lots
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Documents addition
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      add_lot_doc  level3
@@ -466,8 +413,8 @@ ${ITEM_MEAT}        ${True}
   Можливість додати документацію до всіх лотів
 
 
-Відображення заголовку документації до тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
+Displaying of tender documentation title
+  [Tags]   ${USERS.users['${viewer}'].broker}: Documents displaying
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_tender_doc  level2
@@ -512,8 +459,8 @@ ${ITEM_MEAT}        ${True}
   Звірити інформацію про документацію ${USERS.users['${viewer}'].lot_file_properties} ${viewer}
 
 
-Відображення заголовку документації до всіх лотів
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
+Displaying of lots documentation title
+  [Tags]   ${USERS.users['${viewer}'].broker}: Documents displaying
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_lot_doc  level2
@@ -521,8 +468,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення заголовку документації до всіх лотів для користувача ${viewer}
 
 
-Відображення вмісту документації до тендера
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
+Displaying of tender documentation content
+  [Tags]   ${USERS.users['${viewer}'].broker}: Documents displaying
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_tender_doc  level2
@@ -530,33 +477,13 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення вмісту документа ${USERS.users['${tender_owner}'].tender_document.doc_id} із ${USERS.users['${tender_owner}'].tender_document.doc_content} для користувача ${viewer}
 
 
-Відображення вмісту документації до всіх лотів
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
+Displaying of lots documentation content
+  [Tags]   ${USERS.users['${viewer}'].broker}: Documents displaying
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_lot_doc  level2
   ...      critical
   Звірити відображення вмісту документації до всіх лотів для користувача ${viewer}
-
-
-Можливість зменшити бюджет лоту
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_lot_value_amount  level2
-  ...      non-critical
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість змінити на 99 відсотки бюджет 0 лоту
-
-
-Можливість збільшити бюджет лоту
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_lot_value_amount  level3
-  ...      non-critical
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість змінити на 101 відсотки бюджет 0 лоту
 
 
 Можливість створення лоту із прив’язаним предметом закупівлі
@@ -590,8 +517,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля title у новоствореному лоті для усіх користувачів
 
 
-Можливість додати предмет закупівлі
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
+Possibility to add an item to a procurement
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Tender editing
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      add_item  level3
@@ -603,8 +530,8 @@ ${ITEM_MEAT}        ${True}
   ...      Можливість додати предмет закупівлі в -1 лот
 
 
-Відображення опису нової номенклатури
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
+Displaying of new items description
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of tender items
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_item  level2
@@ -613,8 +540,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля description у новоствореному предметі для усіх користувачів
 
 
-Можливість видалити предмет закупівлі
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
+Possibility to delete an item
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Tender editing
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_item  level3
@@ -636,8 +563,8 @@ ${ITEM_MEAT}        ${True}
   Можливість видалення -1 лоту
 
 
-Можливість додати неціновий показник на тендер
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
+Possibility to add tender non-price criteria
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Add tender non-price criteria
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      add_tender_meat  level3
@@ -646,8 +573,8 @@ ${ITEM_MEAT}        ${True}
   Можливість додати неціновий показник на тендер
 
 
-Відображення заголовку нецінового показника на тендер
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
+Displaying of a title of a tender non-price criteria
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of non-price criteria
   ...      viewer  tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
@@ -657,8 +584,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля title у новоствореному неціновому показнику для усіх користувачів
 
 
-Відображення опису нецінового показника на тендер
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
+Displaying of a discription of a tender non-price criteria
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of non-price criteria
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_tender_meat
@@ -666,8 +593,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля description у новоствореному неціновому показнику для користувача ${viewer}
 
 
-Відображення відношення нецінового показника на тендер
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
+Displaying of a tender non-price criteria relation
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of non-price criteria
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_tender_meat
@@ -675,8 +602,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля featureOf у новоствореному неціновому показнику для користувача ${viewer}
 
 
-Можливість видалити неціновий показник на тендер
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
+Possibility to delete a tender non-price criteria
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Delete non-price criteria
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_tender_meat  level3
@@ -684,8 +611,8 @@ ${ITEM_MEAT}        ${True}
   Можливість видалити -1 неціновий показник
 
 
-Можливість додати неціновий показник на перший лот
-  [Tags]   ${USERS.users['${tender_owner}'].broker}:  Редагування тендера
+Possibility to add the first lot non-price criteria
+  [Tags]   ${USERS.users['${tender_owner}'].broker}:  Add a lot non-price criteria
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      add_lot_meat  level3
@@ -694,8 +621,8 @@ ${ITEM_MEAT}        ${True}
   Можливість додати неціновий показник на 0 лот
 
 
-Відображення заголовку нецінового показника на лот
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
+Displaying of a title of a lot non-price criteria
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of non-price criteria
   ...      viewer  tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
@@ -704,8 +631,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля title у новоствореному неціновому показнику для усіх користувачів
 
 
-Відображення опису нецінового показника на лот
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
+Displaying of a discription of a lot non-price criteria
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of non-price criteria
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_lot_meat
@@ -713,8 +640,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля description у новоствореному неціновому показнику для користувача ${viewer}
 
 
-Відображення відношення нецінового показника на лот
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
+Displaying of a lot non-price criteria relation
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of non-price criteria
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_lot_meat
@@ -722,8 +649,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля featureOf у новоствореному неціновому показнику для користувача ${viewer}
 
 
-Можливість видалити неціновий показник на лот
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
+Possibility to delete a lot non-price criteria
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Delete non-price criteria
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_lot_meat  level3
@@ -731,8 +658,8 @@ ${ITEM_MEAT}        ${True}
   Можливість видалити -1 неціновий показник
 
 
-Можливість додати неціновий показник на перший предмет
-  [Tags]   ${USERS.users['${tender_owner}'].broker}:  Редагування тендера
+Possibility to add the first item non-price criteria
+  [Tags]   ${USERS.users['${tender_owner}'].broker}:  Add a lot non-price criteria
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      add_item_meat  level3
@@ -741,8 +668,8 @@ ${ITEM_MEAT}        ${True}
   Можливість додати неціновий показник на 0 предмет
 
 
-Відображення заголовку нецінового показника на предмет
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
+Displaying of a title of an item non-price criteria
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of non-price criteria
   ...      viewer  tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
@@ -751,8 +678,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля title у новоствореному неціновому показнику для усіх користувачів
 
 
-Відображення опису нецінового показника на предмет
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
+Displaying of a discription of an item non-price criteria
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of non-price criteria
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_item_meat
@@ -760,8 +687,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля description у новоствореному неціновому показнику для користувача ${viewer}
 
 
-Відображення відношення нецінового показника на предмет
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення нецінових показників
+Displaying of an item non-price criteria relation
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of non-price criteria
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_item_meat
@@ -769,8 +696,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля featureOf у новоствореному неціновому показнику для користувача ${viewer}
 
 
-Можливість видалити неціновий показник на предмет
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
+Possibility to delete an item non-price criteria
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Delete non-price criteria
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_item_meat  level3
@@ -781,8 +708,8 @@ ${ITEM_MEAT}        ${True}
 #             QUESTIONS
 ##############################################################################################
 
-Можливість задати запитання на тендер
-  [Tags]   ${USERS.users['${provider}'].broker}: Задання запитання
+Possibility to ask a question about tender
+  [Tags]   ${USERS.users['${provider}'].broker}: Asking questions
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_to_tender
@@ -792,8 +719,8 @@ ${ITEM_MEAT}        ${True}
   Можливість задати запитання на тендер користувачем ${provider}
 
 
-Відображення заголовку анонімного запитання на тендер без відповіді
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення запитання
+Displaying of a title of an anonymous tender question without answers
+  [Tags]   ${USERS.users['${viewer}'].broker}: Question displaying
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      ask_question_to_tender
@@ -802,8 +729,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля title запитання на тендер для усіх користувачів
 
 
-Відображення опису анонімного запитання на тендер без відповіді
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення запитання
+Displaying of description of an anonymous tender question without answers
+  [Tags]   ${USERS.users['${viewer}'].broker}: Question displaying
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      ask_question_to_tender
@@ -811,8 +738,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля description запитання на тендер для користувача ${viewer}
 
 
-Можливість відповісти на запитання на тендер
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відповідь на запитання
+Possibility to answer a tender question
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Answers to questions
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      answer_question_to_tender
@@ -822,8 +749,8 @@ ${ITEM_MEAT}        ${True}
   Можливість відповісти на запитання на тендер
 
 
-Відображення відповіді на запитання на тендер
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення відповіді на запитання
+Displaying of an answer to a tender question
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of answers to questions
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      answer_question_to_tender
@@ -832,8 +759,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля answer запитання на тендер для користувача ${viewer}
 
 
-Можливість задати запитання на всі предмети
-  [Tags]   ${USERS.users['${provider}'].broker}: Задання запитання
+Possibility to ask a question about all items
+  [Tags]   ${USERS.users['${provider}'].broker}: Asking questions
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_to_item
@@ -844,8 +771,8 @@ ${ITEM_MEAT}        ${True}
   \  Можливість задати запитання на ${item_index} предмет користувачем ${provider}
 
 
-Відображення заголовку анонімного запитання на всі предмети без відповіді
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення запитання
+Displaying of a title of an anonymous question about items without answers
+  [Tags]   ${USERS.users['${viewer}'].broker}: Question displaying
   ...      viewer tender_owner provider provider1
   ...      ${USERS.users['${viewer}'].broker}
   ...      ask_question_to_item
@@ -855,8 +782,8 @@ ${ITEM_MEAT}        ${True}
   \  Звірити відображення поля title запитання на ${item_index} предмет для усіх користувачів
 
 
-Відображення опису анонімного запитання на всі предмети без відповіді
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення запитання
+Displaying of description of an anonymous question about items without answers
+  [Tags]   ${USERS.users['${viewer}'].broker}: Question displaying
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      ask_question_to_item
@@ -865,8 +792,8 @@ ${ITEM_MEAT}        ${True}
   \  Звірити відображення поля description запитання на ${item_index} предмет для користувача ${viewer}
 
 
-Можливість відповісти на запитання на всі предмети
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відповідь на запитання
+Possibility to answer all questions about all items
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Answers to questions
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      answer_question_to_item
@@ -877,8 +804,8 @@ ${ITEM_MEAT}        ${True}
   \  Можливість відповісти на запитання на ${item_index} предмет
 
 
-Відображення відповіді на запитання на всі предмети
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення відповіді на запитання
+Displaying of answers to all questions about all items
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of answers to questions
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      answer_question_to_item
@@ -888,8 +815,8 @@ ${ITEM_MEAT}        ${True}
   \  Звірити відображення поля answer запитання на ${item_index} предмет для користувача ${viewer}
 
 
-Можливість задати запитання на всі лоти
-  [Tags]   ${USERS.users['${provider}'].broker}: Задання запитання
+Possibility to ask a question about all lots
+  [Tags]   ${USERS.users['${provider}'].broker}: Asking questions
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_to_lot
@@ -900,8 +827,8 @@ ${ITEM_MEAT}        ${True}
   \  Можливість задати запитання на ${lot_index} лот користувачем ${provider}
 
 
-Відображення заголовку анонімного запитання на всі лоти без відповіді
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення запитання
+Displaying of a title of an anonymous question about lots without answers
+  [Tags]   ${USERS.users['${viewer}'].broker}: Question displaying
   ...      viewer tender_owner provider provider1
   ...      ${USERS.users['${viewer}'].broker}
   ...      ask_question_to_lot
@@ -911,8 +838,8 @@ ${ITEM_MEAT}        ${True}
   \  Звірити відображення поля title запитання на ${lot_index} лот для усіх користувачів
 
 
-Відображення опису анонімного запитання на всі лоти без відповіді
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення запитання
+Displaying of desciption of an anonymous question about lots without answers
+  [Tags]   ${USERS.users['${viewer}'].broker}: Question displaying
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      ask_question_to_lot
@@ -921,8 +848,8 @@ ${ITEM_MEAT}        ${True}
   \  Звірити відображення поля description запитання на ${lot_index} лот для користувача ${viewer}
 
 
-Можливість відповісти на запитання на всі лоти
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відповідь на запитання
+Possibility to answer questions about all lots
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Answers to questions
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      answer_question_to_lot
@@ -933,8 +860,8 @@ ${ITEM_MEAT}        ${True}
   \  Можливість відповісти на запитання на ${lot_index} лот
 
 
-Відображення відповіді на запитання на всі лоти
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення відповіді на запитання
+Displaying of answers to questions about all lots
+  [Tags]   ${USERS.users['${viewer}'].broker}: Displaying of answers to questions
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      answer_question_to_lot
@@ -944,8 +871,8 @@ ${ITEM_MEAT}        ${True}
   \  Звірити відображення поля answer запитання на ${lot_index} лот для користувача ${viewer}
 
 
-Можливість внести зміни у тендер після запитання
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
+Possibility to introduce changes into a tender after a question
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Tender editing
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_tender_after_questions
@@ -957,8 +884,8 @@ ${ITEM_MEAT}        ${True}
   Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data}  description
 
 
-Можливість внести зміни у лот після запитання
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
+Possibility to introduce changes into a lot after question
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Tender editing
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_lot_after_questions
@@ -973,8 +900,8 @@ ${ITEM_MEAT}        ${True}
 #             TENDER COMPLAINTS
 ##############################################################################################
 
-Можливість створити вимогу про виправлення умов закупівлі, додати до неї документацію і подати її користувачем
-  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
+Possibility to create a claim for procurement terms correction, add documentation to it and file it by user
+  [Tags]  ${USERS.users['${provider}'].broker}: Complaint procedure
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  create_tender_claim
@@ -983,8 +910,8 @@ ${ITEM_MEAT}        ${True}
   Можливість створити вимогу про виправлення умов закупівлі із документацією
 
 
-Відображення опису вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+Displaying of description of a claim for procurement terms correction
+  [Tags]  ${USERS.users['${viewer}'].broker}: Complaint displaying
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  create_tender_claim
@@ -992,8 +919,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля description вимоги із ${USERS.users['${provider}'].tender_claim_data.claim.data.description} для користувача ${viewer}
 
 
-Відображення ідентифікатора вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+Displaying of an identificator of a claim for procurement terms correction
+  [Tags]  ${USERS.users['${viewer}'].broker}: Complaint displaying
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  create_tender_claim
@@ -1001,40 +928,40 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля complaintID вимоги із ${USERS.users['${provider}'].tender_claim_data.complaintID} для користувача ${viewer}
 
 
-Відображення заголовку вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+Displaying of a title of a claim for procurement terms correction
+  [Tags]  ${USERS.users['${viewer}'].broker}: Complaint displaying
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  create_tender_claim
   Звірити відображення поля title вимоги із ${USERS.users['${provider}'].tender_claim_data.claim.data.title} для користувача ${viewer}
 
 
-Відображення заголовку документа до вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+Displaying of a document title of a claim for procurement terms correction
+  [Tags]  ${USERS.users['${viewer}'].broker}: Complaint displaying
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  create_tender_claim
   Звірити відображення поля title документа ${USERS.users['${provider}'].tender_claim_data.doc_id} до скарги ${USERS.users['${provider}'].tender_claim_data.complaintID} з ${USERS.users['${provider}'].tender_claim_data.doc_name} для користувача ${viewer}
 
 
-Відображення вмісту документа до вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+Displaying of document content of a claim for procurement terms correction
+  [Tags]  ${USERS.users['${viewer}'].broker}: Complaint displaying
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  create_tender_claim
   Звірити відображення вмісту документа ${USERS['${provider}'].tender_claim_data.doc_id} до скарги ${USERS.users['${provider}'].tender_claim_data.complaintID} з ${USERS['${provider}'].tender_claim_data.doc_content} для користувача ${viewer}
 
 
-Відображення поданого статусу вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+Displaying of the status of a claim for procurement terms correction
+  [Tags]  ${USERS.users['${viewer}'].broker}: Complaint displaying
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  create_tender_claim
   Звірити відображення поля status вимоги із claim для користувача ${viewer}
 
 
-Можливість відповісти на вимогу про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес оскарження
+Possibility to answer a claim for procurement terms correction
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Complaint procedure
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  answer_tender_claim
@@ -1042,8 +969,8 @@ ${ITEM_MEAT}        ${True}
   Можливість відповісти resolved на вимогу про виправлення умов tender
 
 
-Відображення статусу 'answered' вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+Displaying of the 'answered' status of a claim for procurement terms correction
+  [Tags]  ${USERS.users['${viewer}'].broker}: Complaint displaying
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  answer_tender_claim
@@ -1051,24 +978,24 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля status вимоги із answered для користувача ${viewer}
 
 
-Відображення типу вирішення вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+Displaying of a solution kind of a claim for procurement terms correction
+  [Tags]  ${USERS.users['${viewer}'].broker}: Complaint displaying
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  answer_tender_claim
   Звірити відображення поля resolutionType вимоги із ${USERS.users['${tender_owner}'].tender_claim_data.claim_answer.data.resolutionType} для користувача ${viewer}
 
 
-Відображення вирішення вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+Displaying of a solution of a claim for procurement terms correction
+  [Tags]  ${USERS.users['${viewer}'].broker}: Complaint displaying
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  answer_tender_claim
   Звірити відображення поля resolution вимоги із ${USERS.users['${tender_owner}'].tender_claim_data.claim_answer.data.resolution} для користувача ${viewer}
 
 
-Можливість підтвердити задоволення вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
+Possibility to confirm the satisfaction of a claim for procurement terms correction
+  [Tags]  ${USERS.users['${provider}'].broker}: Complaint procedure
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  resolve_tender_claim
@@ -1076,8 +1003,8 @@ ${ITEM_MEAT}        ${True}
   Можливість підтвердити задоволення вимоги про виправлення умов закупівлі
 
 
-Відображення статусу 'resolved' вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+Displaying of the 'resolved' status of a claim for procurement terms correction
+  [Tags]  ${USERS.users['${viewer}'].broker}: Complaint displaying
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  resolve_tender_claim
@@ -1085,8 +1012,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля status вимоги із resolved для користувача ${viewer}
 
 
-Відображення задоволення вимоги про виправлення умов закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+Displaying of satisfaction of a claim for procurement terms correction
+  [Tags]  ${USERS.users['${viewer}'].broker}: Complaint displaying
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  resolve_tender_claim
@@ -1094,7 +1021,7 @@ ${ITEM_MEAT}        ${True}
 
 
 Можливість перетворити вимогу про виправлення умов закупівлі в скаргу
-  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
+  [Tags]  ${USERS.users['${provider}'].broker}: Complaint procedure
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  escalate_tender_claim
@@ -1145,8 +1072,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля cancellationReason вимоги із ${USERS.users['${provider}'].tender_claim_data.cancellation.data.cancellationReason} для користувача ${viewer}
 
 
-Можливість внести зміни у тендер після оскарження умов закупівлі
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
+Possibility to introduce changes into a tender after complaining about procurement terms
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Tender editing
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_tender_after_claim
@@ -1160,8 +1087,8 @@ ${ITEM_MEAT}        ${True}
 #             LOT COMPLAINTS
 ##############################################################################################
 
-Можливість створити і подати вимогу про виправлення умов лоту
-  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
+Possibility to create and file a claim for lot terms correction
+  [Tags]  ${USERS.users['${provider}'].broker}: Complaint procedure
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  create_lot_claim
@@ -1170,8 +1097,8 @@ ${ITEM_MEAT}        ${True}
   Можливість створити вимогу про виправлення умов 0 лоту із документацією
 
 
-Відображення опису вимоги про виправлення умов лоту
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+Displaying of description of a claim for lot terms correction
+  [Tags]  ${USERS.users['${viewer}'].broker}: Complaint displaying
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  create_lot_claim
@@ -1179,49 +1106,49 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля description вимоги про виправлення умов 0 лоту із ${USERS.users['${provider}'].lot_claim_data.claim.data.description} для користувача ${viewer}
 
 
-Відображення ідентифікатора вимоги про виправлення умов лоту
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+Displaying of identificator of a claim for lot terms correction
+  [Tags]  ${USERS.users['${viewer}'].broker}: Complaint displaying
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  create_tender_claim
+  ...  create_lot_claim
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля complaintID вимоги про виправлення умов 0 лоту із ${USERS.users['${provider}'].lot_claim_data.complaintID} для користувача ${viewer}
 
 
-Відображення заголовку вимоги про виправлення умов лоту
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+Displaying of a title of a claim for lot terms correction
+  [Tags]  ${USERS.users['${viewer}'].broker}: Complaint displaying
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  create_lot_claim
   Звірити відображення поля title вимоги про виправлення умов 0 лоту із ${USERS.users['${provider}'].lot_claim_data.claim.data.title} для користувача ${viewer}
 
 
-Відображення заголовку документа до вимоги про виправлення умов лоту
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+Displaying of a document title of a claim for lot terms correction
+  [Tags]  ${USERS.users['${viewer}'].broker}: Complaint displaying
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  create_lot_claim
   Звірити відображення поля title документа ${USERS.users['${provider}'].lot_claim_data.doc_id} до скарги ${USERS.users['${provider}'].lot_claim_data.complaintID} з ${USERS.users['${provider}'].lot_claim_data.doc_name} для користувача ${viewer}
 
 
-Відображення вмісту документа до вимоги про виправлення умов лоту
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+Displaying of document content of a claim for lot terms correction
+  [Tags]  ${USERS.users['${viewer}'].broker}: Complaint displaying
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  create_lot_claim
   Звірити відображення вмісту документа ${USERS['${provider}'].lot_claim_data.doc_id} до скарги ${USERS.users['${provider}'].lot_claim_data.complaintID} з ${USERS['${provider}'].lot_claim_data.doc_content} для користувача ${viewer}
 
 
-Відображення поданого статусу вимоги про виправлення умов лоту
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+Displaying of the status of a claim for lot terms correction
+  [Tags]  ${USERS.users['${viewer}'].broker}: Complaint displaying
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  create_lot_claim
   Звірити відображення поля status вимоги про виправлення умов 0 лоту із claim для користувача ${viewer}
 
 
-Можливість відповісти на вимогу про виправлення умов лоту
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес оскарження
+Possibility to answer a claim for lot terms correction
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Complaint procedure
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  answer_lot_claim
@@ -1229,8 +1156,8 @@ ${ITEM_MEAT}        ${True}
   Можливість відповісти resolved на вимогу про виправлення умов lot
 
 
-Відображення статусу 'answered' вимоги про виправлення умов лоту
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+Displaying of the 'answered' status of a claim for lot terms correction
+  [Tags]  ${USERS.users['${viewer}'].broker}: Complaint displaying
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  answer_lot_claim
@@ -1238,24 +1165,24 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля status вимоги про виправлення умов 0 лоту із answered для користувача ${viewer}
 
 
-Відображення типу вирішення вимоги про виправлення умов лоту
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+Displaying of a solution kind of a claim for lot terms correction
+  [Tags]  ${USERS.users['${viewer}'].broker}: Complaint displaying
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  answer_lot_claim
   Звірити відображення поля resolutionType вимоги про виправлення умов 0 лоту із ${USERS.users['${tender_owner}'].lot_claim_data.claim_answer.data.resolutionType} для користувача ${viewer}
 
 
-Відображення вирішення вимоги про виправлення умов лоту
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+Displaying of a solution of a claim for lot terms correction
+  [Tags]  ${USERS.users['${viewer}'].broker}: Complaint displaying
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  answer_lot_claim
   Звірити відображення поля resolution вимоги про виправлення умов 0 лоту із ${USERS.users['${tender_owner}'].lot_claim_data.claim_answer.data.resolution} для користувача ${viewer}
 
 
-Можливість підтвердити задоволення вимоги про виправлення умов лоту
-  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
+Possibility to confirm the satisfaction of a claim for lot terms correction
+  [Tags]  ${USERS.users['${provider}'].broker}: Complaint procedure
   ...  provider
   ...  ${USERS.users['${provider}'].broker}
   ...  resolve_lot_claim
@@ -1263,8 +1190,8 @@ ${ITEM_MEAT}        ${True}
   Можливість підтвердити задоволення вимоги про виправлення умов лоту
 
 
-Відображення статусу 'resolved' вимоги про виправлення умов лоту
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+Displaying of the 'resolved' status of a claim for lot terms correction
+  [Tags]  ${USERS.users['${viewer}'].broker}: Complaint displaying
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  resolve_lot_claim
@@ -1272,8 +1199,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля status вимоги про виправлення умов 0 лоту із resolved для користувача ${viewer}
 
 
-Відображення задоволення вимоги про виправлення умов лоту
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+Displaying of the satisfaction of a claim for lot terms correction
+  [Tags]  ${USERS.users['${viewer}'].broker}: Complaint displaying
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  resolve_lot_claim
@@ -1332,8 +1259,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля cancellationReason вимоги про виправлення умов 0 лоту із ${USERS.users['${provider}'].lot_claim_data.cancellation.data.cancellationReason} для користувача ${viewer}
 
 
-Можливість внести зміни у лот після оскарження умов лоту
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
+Possibility to introduce changes into a lot after complaining about procurement terms
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Tender editing
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_lot_after_claim
@@ -1356,8 +1283,8 @@ ${ITEM_MEAT}        ${True}
   Run Keyword And Expect Error  *  Можливість подати цінову пропозицію користувачем ${provider}
 
 
-Неможливість подати цінову пропозицію без прив’язки до лоту
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+Impossibility to make a bid with no lot relation
+  [Tags]   ${USERS.users['${provider}'].broker}: Bid submission
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      make_bid_without_related_lot
@@ -1366,8 +1293,8 @@ ${ITEM_MEAT}        ${True}
   Неможливість подати цінову пропозицію без прив’язки до лоту користувачем ${provider}
 
 
-Неможливість подати цінову пропозицію без нецінових показників
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+Impossibility to make a bid without non-price criteria
+  [Tags]   ${USERS.users['${provider}'].broker}: Bid submission
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      make_bid_without_parameters
@@ -1376,8 +1303,8 @@ ${ITEM_MEAT}        ${True}
   Неможливість подати цінову пропозицію без нецінових показників користувачем ${provider}
 
 
-Можливість подати пропозицію першим учасником
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+Possibility to make a bid by the first provider
+  [Tags]   ${USERS.users['${provider}'].broker}: Bid submission
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      make_bid_by_provider  level1
@@ -1387,8 +1314,8 @@ ${ITEM_MEAT}        ${True}
   Можливість подати цінову пропозицію користувачем ${provider}
 
 
-Можливість зменшити пропозицію на 5% першим учасником
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+Possibility to reduce a bid by 5% by the first provider
+  [Tags]   ${USERS.users['${provider}'].broker}: Bid submission
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      modify_bid_by_provider
@@ -1397,8 +1324,8 @@ ${ITEM_MEAT}        ${True}
   Можливість зменшити пропозицію до 95 відсотків користувачем ${provider}
 
 
-Можливість завантажити документ в пропозицію першим учасником
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+Possibility to upload a document to a bid by the first provider
+  [Tags]   ${USERS.users['${provider}'].broker}: Bid submission
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      add_doc_to_bid_by_provider
@@ -1407,8 +1334,8 @@ ${ITEM_MEAT}        ${True}
   Можливість завантажити документ в пропозицію користувачем ${provider}
 
 
-Можливість змінити документацію цінової пропозиції першим учасником
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+Possibility to change documentation by the first provider
+  [Tags]   ${USERS.users['${provider}'].broker}: Bid submission
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      add_doc_to_bid_by_provider
@@ -1417,8 +1344,8 @@ ${ITEM_MEAT}        ${True}
   Можливість змінити документацію цінової пропозиції користувачем ${provider}
 
 
-Можливість подати пропозицію другим учасником
-  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
+Possibility to make a bid by the second provider
+  [Tags]   ${USERS.users['${provider1}'].broker}: Bid submission
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      make_bid_by_provider1  level1
@@ -1451,41 +1378,41 @@ ${ITEM_MEAT}        ${True}
 #             ABOVETRHESHOLD  BIDDING
 ##############################################################################################
 
-Можливість змінити документацію цінової пропозиції з публічної на приватну
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+Possibility to change the public bid documentation into private
+  [Tags]   ${USERS.users['${provider}'].broker}: Bid submission
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      openeu_make_bid_doc_private_by_provider
+  ...      esco_make_bid_doc_private_by_provider
   ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість змінити документацію цінової пропозиції з публічної на приватну учасником ${provider}
 
 
-Можливість завантажити фінансовий документ до пропозиції першим учасником
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+Possibility to upload a financial document to a bid by the first provider
+  [Tags]   ${USERS.users['${provider}'].broker}: Bid submission
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      openeu_add_financial_bid_doc_by_provider
+  ...      esco_add_financial_bid_doc_by_provider
   ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість завантажити financial_documents документ до пропозиції учасником ${provider}
 
 
-Можливість завантажити кваліфікаційний документ до пропозиції першим учасником
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+Possibility to upload a qualification document to a bid by the first provider
+  [Tags]   ${USERS.users['${provider}'].broker}: Bid submission
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      openeu_add_qualification_bid_doc_by_provider
+  ...      esco_add_qualification_bid_doc_by_provider
   ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість завантажити qualification_documents документ до пропозиції учасником ${provider}
 
 
-Можливість завантажити документ для критеріїв прийнятності до пропозиції першим учасником
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+Possibility to upload a document to eligibility criteria by the first provider
+  [Tags]   ${USERS.users['${provider}'].broker}: Bid submission
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
-  ...      openeu_add_eligibility_bid_doc_by_provider
+  ...      esco_add_eligibility_bid_doc_by_provider
   ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість завантажити eligibility_documents документ до пропозиції учасником ${provider}
@@ -1551,8 +1478,8 @@ ${ITEM_MEAT}        ${True}
   Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data}  description
 
 
-Можливість редагувати однопредметний тендер більше ніж за 7 днів до завершення періоду подання пропозицій
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+Possibility to edit a one-item tender in more than 7 days before the tendering period end date
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Possibility to edit a tender
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      open_modify_tender_in_tendering_period
@@ -1563,8 +1490,8 @@ ${ITEM_MEAT}        ${True}
   Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data}  description
 
 
-Відображення зміни статусу першої пропозиції після редагування інформації про тендер
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+Displaying of the change of first bid status after tender data editing
+  [Tags]   ${USERS.users['${provider}'].broker}: Bid submission
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      open_confirm_first_bid
@@ -1573,8 +1500,8 @@ ${ITEM_MEAT}        ${True}
   Відображення зміни статусу пропозицій на invalid для учасника ${provider}
 
 
-Відображення зміни статусу другої пропозиції після редагування інформації про тендер
-  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
+Displaying of the change of second bid status after tender data editing
+  [Tags]   ${USERS.users['${provider1}'].broker}: Bid submission
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      open_confirm_second_bid
@@ -1583,8 +1510,8 @@ ${ITEM_MEAT}        ${True}
   Відображення зміни статусу пропозицій на invalid для учасника ${provider1}
 
 
-Можливість підтвердити цінову пропозицію після зміни умов тендера першим учасником
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+Possibility to confirm a bid after tender terms changes by the first provider
+  [Tags]   ${USERS.users['${provider}'].broker}: Bid submission
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      open_confirm_first_bid
@@ -1593,8 +1520,8 @@ ${ITEM_MEAT}        ${True}
   Можливість підтвердити цінову пропозицію учасником ${provider}
 
 
-Можливість підтвердити цінову пропозицію після зміни умов тендера другим учасником
-  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
+Possibility to confirm a bid after tender terms changes by the second provider
+  [Tags]   ${USERS.users['${provider1}'].broker}: Bid submission
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      open_confirm_second_bid
@@ -1623,8 +1550,8 @@ ${ITEM_MEAT}        ${True}
   Можливість скасувати цінову пропозицію користувачем ${provider}
 
 
-Неможливість побачити цінові пропозиції учасників під час прийому пропозицій
-  [Tags]   ${USERS.users['${viewer}'].broker}: Подання пропозиції
+Impossibility to view providers’ bids during tendering period
+  [Tags]   ${USERS.users['${viewer}'].broker}: Bid submission
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      bid_view_in_tendering_period
@@ -1636,8 +1563,8 @@ ${ITEM_MEAT}        ${True}
 #             AFTER BIDDING
 ##############################################################################################
 
-Неможливість завантажити документ першим учасником після закінчення прийому пропозицій
-  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+Impossibility to upload a document by the first provider after tendering period end date
+  [Tags]   ${USERS.users['${provider}'].broker}: Bid submission
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      add_bid_doc_after_tendering_period_by_provider
@@ -1646,8 +1573,8 @@ ${ITEM_MEAT}        ${True}
   Run Keyword And Expect Error  *  Можливість завантажити документ в пропозицію користувачем ${provider}
 
 
-Неможливість змінити існуючу документацію пропозиції першим учасником після закінчення прийому пропозицій
-  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
+Impossibility to change the existing bid documentation by the first provider after tendering period end date
+  [Tags]   ${USERS.users['${provider1}'].broker}: Bid submission
   ...      provider
   ...      ${USERS.users['${provider1}'].broker}
   ...      modify_bid_doc_after_tendering_period_by_provider
@@ -1655,8 +1582,8 @@ ${ITEM_MEAT}        ${True}
   Run Keyword And Expect Error  *  Можливість змінити документацію цінової пропозиції користувачем ${provider}
 
 
-Неможливість задати запитання на тендер після закінчення періоду уточнень
-  [Tags]   ${USERS.users['${provider}'].broker}: Задання запитання
+Impossibility to ask a question about tender after tendering period end date
+  [Tags]   ${USERS.users['${provider}'].broker}: Asking questions
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_to_tender_after_tendering_period
@@ -1665,8 +1592,8 @@ ${ITEM_MEAT}        ${True}
   Run Keyword And Expect Error  *  Можливість задати запитання на тендер користувачем ${provider}
 
 
-Неможливість задати запитання на перший предмет після закінчення періоду уточнень
-  [Tags]   ${USERS.users['${provider}'].broker}: Задання запитання
+Impossibility to ask a question about the first item after enquiry period end date
+  [Tags]   ${USERS.users['${provider}'].broker}: Asking questions
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_to_item_after_tendering_period
@@ -1675,8 +1602,8 @@ ${ITEM_MEAT}        ${True}
   Run Keyword And Expect Error  *  Можливість задати запитання на 0 предмет користувачем ${provider}
 
 
-Неможливість задати запитання на перший лот після закінчення періоду уточнень
-  [Tags]   ${USERS.users['${provider}'].broker}: Задання запитання
+Impossibility to ask a question about the first lot after enquiry period end date
+  [Tags]   ${USERS.users['${provider}'].broker}: Asking questions
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_to_lot_after_tendering_period
@@ -1685,8 +1612,8 @@ ${ITEM_MEAT}        ${True}
   Run Keyword And Expect Error  *  Можливість задати запитання на 0 лот користувачем ${provider}
 
 
-Неможливість зменшити цінову пропозицію на 5% другим учасником після закінчення прийому пропозицій
-  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
+Impossibility to reduce a bid by 5% by the second provider after tendering period end date
+  [Tags]   ${USERS.users['${provider1}'].broker}: Bid submission
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      modify_bid_after_tendering_period_by_provider1
@@ -1695,8 +1622,8 @@ ${ITEM_MEAT}        ${True}
   Run Keyword And Expect Error  *  Можливість зменшити пропозицію до 95 відсотків користувачем ${provider1}
 
 
-Неможливість скасувати пропозицію другим учасником після закінчення прийому пропозицій
-  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
+Impossibility to cancel a bid by the second provider after tendering period end date
+  [Tags]   ${USERS.users['${provider1}'].broker}: Bid submission
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      cancel_bid_after_tendering_period_by_provider1
@@ -1705,11 +1632,11 @@ ${ITEM_MEAT}        ${True}
 
 
 ##############################################################################################
-#             OPENEU  Pre-Qualification
+#             ESCO  Pre-Qualification
 ##############################################################################################
 
-Неможливість додати документацію до тендера під час кваліфікації
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+Impossibility to add a documenent to a tender during qualification
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Documents addition
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_add_doc_to_tender
@@ -1718,8 +1645,8 @@ ${ITEM_MEAT}        ${True}
   Run Keyword And Expect Error  *  Можливість додати документацію до тендера
 
 
-Неможливість додати документацію до лоту під час кваліфікації
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+Impossibility to add documentation to a lot during qualification
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Documents addition
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_add_doc_to_lot
@@ -1728,8 +1655,8 @@ ${ITEM_MEAT}        ${True}
   Run Keyword And Expect Error  *  Можливість додати документацію до 0 лоту
 
 
-Відображення статусу першої пропозиції кваліфікації
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
+Displaying of the first bid status in qualification
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Qualification
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_view
@@ -1738,8 +1665,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля qualifications[0].status тендера із pending для користувача ${tender_owner}
 
 
-Відображення статусу другої пропозиції кваліфікації
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
+Displaying of the second bid status in qualification
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Qualification
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_view
@@ -1748,8 +1675,8 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля qualifications[1].status тендера із pending для користувача ${tender_owner}
 
 
-Можливість завантажити документ у кваліфікацію пропозиції першого учасника
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
+Possibility to upload a document to bid qualification of the first provider
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Qualification
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_add_doc_to_first_bid
@@ -1767,8 +1694,8 @@ ${ITEM_MEAT}        ${True}
   Дочекатися перевірки прекваліфікацій  ${tender_owner}  ${TENDER['TENDER_UAID']}
 
 
-Можливість підтвердити першу пропозицію кваліфікації
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
+Possibility to approve the first qualification bid
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Qualification
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_approve_first_bid  level1
@@ -1778,8 +1705,8 @@ ${ITEM_MEAT}        ${True}
   Можливість підтвердити 0 пропозицію кваліфікації
 
 
-Можливість завантажити документ у кваліфікацію пропозиції другого учасника
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
+Possibility to upload a document to bid qualification of the second provider
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Qualification
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_add_doc_to_second_bid
@@ -1788,8 +1715,8 @@ ${ITEM_MEAT}        ${True}
   Можливість завантажити документ у кваліфікацію 1 пропозиції
 
 
-Можливість відхилити другу пропозицію кваліфікації
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
+Possibility to reject the second bid qualification
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Qualification
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_reject_second_bid
@@ -1798,8 +1725,8 @@ ${ITEM_MEAT}        ${True}
   Можливість відхилити 1 пропозиції кваліфікації
 
 
-Можливість скасувати рішення кваліфікації для другої пропопозиції
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
+Possibility to cancel the qualification desicion for the second bid
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Qualification
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_cancel_second_bid_qualification
@@ -1808,8 +1735,8 @@ ${ITEM_MEAT}        ${True}
   Можливість скасувати рішення кваліфікації для 1 пропопозиції
 
 
-Можливість підтвердити другу пропозицію кваліфікації
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
+Possibility to approve the second qualification bid
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Qualification
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_approve_second_bid  level1
@@ -1818,8 +1745,8 @@ ${ITEM_MEAT}        ${True}
   Можливість підтвердити -1 пропозицію кваліфікації
 
 
-Можливість підтвердити третю пропозицію кваліфікації
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
+Possibility to approve the third qualification bid
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Qualification
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_approve_third_bid  level1
@@ -1828,8 +1755,18 @@ ${ITEM_MEAT}        ${True}
   Можливість підтвердити -2 пропозицію кваліфікації
 
 
-Можливість затвердити остаточне рішення кваліфікації
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
+Possibility to approve the fourth qualification bid
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Qualification
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      pre-qualification_approve_fourth_bid  level1
+  ...      critical
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість підтвердити -3 пропозицію кваліфікації
+
+
+Possibility to approve the final qualification decision
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Qualification
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_approve_qualifications  level1
@@ -1839,8 +1776,8 @@ ${ITEM_MEAT}        ${True}
   Можливість затвердити остаточне рішення кваліфікації
 
 
-Відображення статусу блокування перед початком аукціону
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
+Displaying of the stand-still status before auction period start date
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Qualification
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_view
@@ -1849,8 +1786,8 @@ ${ITEM_MEAT}        ${True}
   Звірити статус тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  active.pre-qualification.stand-still
 
 
-Відображення дати закінчення періоду блокування перед початком аукціону
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
+Displaying of the blocked stand-still end date before auction period start date
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Qualification
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      pre-qualification_view

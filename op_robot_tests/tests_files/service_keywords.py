@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -
 import operator
+import random
 from .local_time import get_now, TZ
 from copy import deepcopy
 from datetime import timedelta
@@ -42,12 +43,7 @@ from .initial_data import (
     test_question_data,
     test_supplier_data,
     test_tender_data,
-    test_tender_data_competitive_dialogue,
-    test_tender_data_limited,
-    test_tender_data_openeu,
-    test_tender_data_openua,
-    test_tender_data_planning,
-    test_tender_data_openua_defense,
+    test_tender_data_esco,
     test_bid_competitive_data,
     create_fake_title,
     create_fake_value_amount,
@@ -314,30 +310,8 @@ def prepare_test_tender_data(procedure_intervals,
         return munchify({'data': test_tender_data_limited(tender_parameters)})
     elif mode == 'negotiation.quick':
         return munchify({'data': test_tender_data_limited(tender_parameters)})
-    elif mode == 'openeu':
-        return munchify({'data': test_tender_data_openeu(
-            tender_parameters, submissionMethodDetails)})
-    elif mode == 'openua':
-        return munchify({'data': test_tender_data_openua(
-            tender_parameters, submissionMethodDetails)})
-    elif mode == 'openua_defense':
-        return munchify({'data': test_tender_data_openua_defense(
-            tender_parameters, submissionMethodDetails)})
-    elif mode == 'open_competitive_dialogue':
-        return munchify({'data': test_tender_data_competitive_dialogue(
-            tender_parameters, submissionMethodDetails)})
-    elif mode == 'reporting':
-        return munchify({'data': test_tender_data_limited(tender_parameters)})
-    elif mode == 'belowThreshold':
-        return munchify({'data': test_tender_data(
-            tender_parameters,
-            submissionMethodDetails=submissionMethodDetails,
-            accelerator=accelerator)})
-    elif mode == 'planning':
-        return munchify({'data': test_tender_data_planning(
-            tender_parameters)})
-        # The previous line needs an explicit keyword argument because,
-        # unlike previous functions, this one has three arguments.
+    elif mode == 'esco':
+        return munchify({'data': test_tender_data_esco(tender_parameters, submissionMethodDetails)})
     raise ValueError("Invalid mode for prepare_test_tender_data")
 
 
@@ -520,25 +494,23 @@ def get_object_by_id(data, given_object_id, slice_element, object_id):
 
 def generate_test_bid_data(tender_data):
     if tender_data.get('procurementMethodType', '') in (
-            'aboveThresholdUA',
-            'aboveThresholdUA.defense',
-            'aboveThresholdEU',
-            'competitiveDialogueUA',
-            'competitiveDialogueEU'
+            'esco'
         ):
         bid = test_bid_competitive_data()
         bid.data.selfEligible = True
         bid.data.selfQualified = True
+        bid.data.status = 'pending'
     else:
         bid = test_bid_data()
     if 'lots' in tender_data:
         bid.data.lotValues = []
         for lot in tender_data['lots']:
-            value = test_bid_value(lot['value']['amount'])
+            value = test_bid_value(tender_data)
             value['relatedLot'] = lot.get('id', '')
             bid.data.lotValues.append(value)
     else:
-        bid.data.update(test_bid_value(tender_data['value']['amount']))
+        value = test_bid_value(tender_data)
+        bid.data.update(value)
     if 'features' in tender_data:
         bid.data.parameters = []
         for feature in tender_data['features']:
@@ -587,3 +559,10 @@ def convert_amount_string_to_float(amount_string):
 def compare_rationale_types(type1, type2):
     return set(type1) == set(type2)
 
+
+def create_fake_21_amount():
+    annual_cost = []
+    for i in range(0, 21):
+        cost=str(float(round(random.uniform(1, 100), 2)))
+        annual_cost.append(cost)
+    return annual_cost

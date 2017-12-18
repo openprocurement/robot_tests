@@ -14,8 +14,8 @@ ${award_index}      ${0}
 #             FIND TENDER
 ##############################################################################################
 
-Можливість знайти закупівлю по ідентифікатору
-  [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера
+Possibility to find a procurement by identificator
+  [Tags]   ${USERS.users['${viewer}'].broker}: Tender search
   ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      find_tender  level1
@@ -88,7 +88,7 @@ ${award_index}      ${0}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  create_award_claim
-  ${status}=  Set variable if  'open' in '${MODE}'  pending  claim
+  ${status}=  Set variable if  'esco' in '${MODE}'  pending  claim
   Звірити відображення поля status вимоги про виправлення визначення ${award_index} переможця із ${status} для користувача ${viewer}
 
 
@@ -196,7 +196,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${viewer}'].broker}
   ...  cancel_award_claim
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  ${status}=  Set variable if  'open' in '${MODE}'  stopping  cancelled
+  ${status}=  Set variable if  'esco' in '${MODE}'  stopping  cancelled
   Звірити відображення поля status вимоги про виправлення визначення ${award_index} переможця із ${status} для користувача ${viewer}
 
 
@@ -220,8 +220,8 @@ ${award_index}      ${0}
   Дочекатися перевірки кваліфікацій  ${tender_owner}  ${TENDER['TENDER_UAID']}
 
 
-Можливість завантажити документ рішення кваліфікаційної комісії для підтвердження постачальника
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
+Possibility to upload a document on the qualification committee decision to approve the first bidder
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Qualification process
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_add_doc_to_first_award  level3
@@ -230,24 +230,40 @@ ${award_index}      ${0}
   Remove File  ${file_path}
 
 
-Можливість підтвердити постачальника
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
+Possibility to approve the first bidder
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Qualification process
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_approve_first_award  level1
   Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  0
 
 
-Можливість скасувати рішення кваліфікації
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
+Possibility to cancel the qualification desicion
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Qualification process
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_cancel_first_award_qualification  level1
   Run As  ${tender_owner}  Скасування рішення кваліфікаційної комісії  ${TENDER['TENDER_UAID']}  0
 
 
-Можливість завантажити документ рішення кваліфікаційної комісії для підтвердження нового постачальника
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
+Possibility to disqualify the first bidder
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Qualification process
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  qualification_reject_third_award_qualification  level1
+  Run As  ${tender_owner}  Дискваліфікувати постачальника  ${TENDER['TENDER_UAID']}  2
+
+
+Possibility to disqualify the second bidder for the first lot
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Qualification process
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  qualification_reject_fourth_award_qualification  level1
+  Run As  ${tender_owner}  Дискваліфікувати постачальника  ${TENDER['TENDER_UAID']}  3
+
+
+Possibility to upload a document on the qualification committee decision to approve a new bidder
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Qualification process
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_add_doc_to_second_award  level3
@@ -256,8 +272,8 @@ ${award_index}      ${0}
   Remove File  ${file_path}
 
 
-Можливість підтвердити нового постачальника
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
+Possibility to approve a new bidder
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Qualification process
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_approve_second_award  level1
