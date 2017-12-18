@@ -18,7 +18,7 @@ ${ITEM_MEAT}        ${True}
 
 
 *** Test Cases ***
-Possibility to announce a lot
+Possibility to announce a tender
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Tender announcement
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
