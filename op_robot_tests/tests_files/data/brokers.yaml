@@ -144,7 +144,7 @@ aukzionua:
             tender:  [0, 19]
         dgfOtherAssets:
             accelerator: 1440
-            auction:  [45, 50]
+            auction:  [65, 70]
     keywords_file: aukzionua
     roles:
         tender_owner:   aukzionua_Owner
