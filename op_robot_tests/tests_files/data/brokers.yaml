@@ -350,7 +350,7 @@ alltenders:
         provider1:      alltenders_Provider2
         tender_owner:   alltenders_Owner
         viewer:         alltenders_Viewer
-    timeout_on_wait: 65
+    timeout_on_wait: 35
 Kapitalist:
     intervals:
         default:
