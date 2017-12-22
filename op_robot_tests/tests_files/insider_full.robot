@@ -12,7 +12,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
 
 
 *** Test Cases ***
-Можливість знайти закупівлю по ідентифікатору
+Можливість знайти аукціон по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук тендера
   ...      tender_owner  viewer  provider  provider1  provider2
   ...      ${USERS.users['${viewer}'].broker}
