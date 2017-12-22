@@ -120,6 +120,7 @@ class OP_Provider(BaseProvider):
             from a specific cpv group. Cpv group is three digits
             in the beginning of each cpv id.
         """
+        item_base_data = None
         if cpv_group is None:
             item_base_data = self.random_element(self.items_base_data)
         else:
@@ -133,12 +134,16 @@ class OP_Provider(BaseProvider):
                 if entity["cpv_id"] == cpv:
                     item_base_data = entity
                     break
+            if not item_base_data:
+                raise ValueError('unable to find an item with CPV ' + cpv)
 
         # choose appropriate additional classification for item_base_data's cpv
         additional_class = []
         for entity in self.classifications:
             if entity["classification"]["id"] == item_base_data["cpv_id"]:
                 additional_class.append(entity)
+        if not additional_class:
+            raise ValueError('unable to find a matching additional classification for CPV ' + cpv)
         classification = self.random_element(additional_class)
 
         dk_descriptions = {
@@ -148,6 +153,7 @@ class OP_Provider(BaseProvider):
         }
         address = self.random_element(self.addresses)
         item = {
+            "additionalClassifications": classification["additionalClassifications"],
             "classification": classification["classification"],
             "deliveryAddress": address["deliveryAddress"],
             "deliveryLocation": address["deliveryLocation"],
@@ -157,7 +163,6 @@ class OP_Provider(BaseProvider):
         if item_base_data["cpv_id"] == "99999999-9":
             scheme = classification["additionalClassifications"][0]["scheme"]
             item.update({
-                "additionalClassifications": classification["additionalClassifications"],
                 "description": dk_descriptions[scheme][0],
                 "description_ru": dk_descriptions[scheme][1],
                 "description_en": dk_descriptions[scheme][2]
