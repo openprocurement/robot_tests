@@ -7557,6 +7557,146 @@
                 "id": "22993000-7",
                 "description": "Фоточутливі, термочутливі та термографічні папір та картон"
             }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "INN",
+                    "description": "Ibuprofen",
+                    "id": "ibuprofen"
+                },
+                                {
+                    "scheme": "ATC",
+                    "description": "ibuprofen",
+                    "id": "M01AE01"
+                }
+
+            ],
+            "classification": {
+                "scheme": "ДК021",
+                "id": "33632100-0",
+                "description": "Протизапальні та протиревматичні засоби"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "INN",
+                    "description": "Clonidine",
+                    "id": "clonidine"
+                },
+                                {
+                    "scheme": "ATC",
+                    "description": "clonidine",
+                    "id": "C02AC01"
+                }
+
+            ],
+            "classification": {
+                "scheme": "ДК021",
+                "id": "33622200-8",
+                "description": "Протигіпертонічні засоби"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "INN",
+                    "description": "Insulin (human)",
+                    "id": "insulin (human)"
+                },
+                                {
+                    "scheme": "ATC",
+                    "description": "insulin (human)",
+                    "id": "A10AB01"
+                }
+
+            ],
+            "classification": {
+                "scheme": "ДК021",
+                "id": "33615100-5",
+                "description": "Інсулін"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "INN",
+                    "description": "Lactulose",
+                    "id": "lactulose"
+                },
+                                {
+                    "scheme": "ATC",
+                    "description": "lactulose",
+                    "id": "A06AD11"
+                }
+
+            ],
+            "classification": {
+                "scheme": "ДК021",
+                "id": "33612000-3",
+                "description": "Лікарські засоби для лікування функціональних розладів шлунково-кишкового тракту"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "INN",
+                    "description": "Piracetam",
+                    "id": "piracetam"
+                },
+                                {
+                    "scheme": "ATC",
+                    "description": "piracetam",
+                    "id": "N06BX03"
+                }
+
+            ],
+            "classification": {
+                "scheme": "ДК021",
+                "id": "33692500-2",
+                "description": "Розчини для ін’єкцій"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "INN",
+                    "description": "Atracurium",
+                    "id": "atracurium"
+                },
+                                {
+                    "scheme": "ATC",
+                    "description": "atracurium",
+                    "id": "M03AC04"
+                }
+
+            ],
+            "classification": {
+                "scheme": "ДК021",
+                "id": "33692500-2",
+                "description": "Розчини для ін’єкцій"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "INN",
+                    "description": "Moxifloxacin",
+                    "id": "moxifloxacin"
+                },
+                                {
+                    "scheme": "ATC",
+                    "description": "moxifloxacin",
+                    "id": "S01AE07"
+                }
+
+            ],
+            "classification": {
+                "scheme": "ДК021",
+                "id": "33692100-8",
+                "description": "Інфузійні розчини"
+            }
         }
     ],
     "units": [
@@ -7639,18 +7779,28 @@
         {
             "code": "D64",
             "name": "блок"
+        },
+        {
+            "code": "VI",
+            "name": "флакон"
         }
     ],
     "cpvs": [
-        "30199000-0",
-        "24910000-6",
-        "22990000-6",
+        "22200000-2",
+        "22212000-9",
         "22800000-8",
+        "22990000-6",
+        "24910000-6",
         "30192121-5",
         "30192130-1",
         "30197600-2",
-        "22200000-2",
-        "22212000-9",
+        "30199000-0",
+        "33615100-5",
+        "33622200-8",
+        "33632100-0",
+        "33612000-3",
+        "33692500-2",
+        "33692100-8",
         "99999999-9"
     ],
     "items_base_data": [
@@ -7762,6 +7912,72 @@
             "unit": {
                 "code": "SET",
                 "name": "набір"
+            }
+        },
+        {
+            "cpv_id": "33632100-0",
+            "description": "Протизапальний та протиревматичний засіб Ібупрофен",
+            "description_ru": "Противовоспалительное и противоревматическое средство Ибупрофен",
+            "description_en": "Anti-inflammatory and antirheumatic agent Ibuprofen",
+            "quantity": 15,
+            "unit": {
+                "code": "PK",
+                "name": "упаковка"
+            }
+        },
+        {
+            "cpv_id": "33622200-8",
+            "description": "Протигіпертонічний засіб Клонідін",
+            "description_ru": "Противогипертонические средство Клонидин",
+            "description_en": "Antihypertensive agent Clonidine",
+            "quantity": 15,
+            "unit": {
+                "code": "PK",
+                "name": "упаковка"
+            }
+        },
+        {
+            "cpv_id": "33615100-5",
+            "description": "Інсулін людський генно-інженерний короткої дії у флаконах 5 мл (500 Од у флаконі) № 5",
+            "description_ru": "Инсулин человеческий генно-инженерный краткосрочного действия у флаконах 5 мл (500 Од в флаконе) № 5",
+            "description_en": "Insulin human genetically-engineered short-acting in vials of 5 ml (500 IU vial) No. 5",
+            "quantity": 15,
+            "unit": {
+                "code": "VI",
+                "name": "флакон"
+            }
+        },
+        {
+            "cpv_id": "33612000-3",
+            "description": "Засіб для лікування функціональних розладів шлунково-кишкового тракту Лактулоза",
+            "description_ru": "Средство для лечения функциональных расстройств желудочно-кишечного тракта Лактулоза",
+            "description_en": "Agent for functional gastrointestinal disorders treatment Lactulose",
+            "quantity": 15,
+            "unit": {
+                "code": "PK",
+                "name": "упаковка"
+            }
+        },
+        {
+            "cpv_id": "33692500-2",
+            "description": "Розчин для ін’єкцій",
+            "description_ru": "Раствор для инъекций",
+            "description_en": "Injectable solution",
+            "quantity": 15,
+            "unit": {
+                "code": "VI",
+                "name": "флакон"
+            }
+        },
+        {
+            "cpv_id": "33692100-8",
+            "description": "АВЕЛОКС розчин для інфузій 400 мг/250 мл 250 мл флакони № 1",
+            "description_ru": "Авелокс раствор для инфузий 400 мг / 250 мл 250 мл флаконы № 1",
+            "description_en": "AVELLOX solution for infusion 400 mg / 250 ml 250 ml bottle № 1",
+            "quantity": 15,
+            "unit": {
+                "code": "VI",
+                "name": "флакон"
             }
         }
     ],
