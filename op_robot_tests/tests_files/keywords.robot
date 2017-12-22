@@ -235,7 +235,8 @@ Get Broker Property By Username
 
 Підготувати дані для створення предмету закупівлі
   [Arguments]  ${cpv}
-  ${item}=  test_item_data  ${cpv[0:4]}
+  ${index}=  Set variable if  ${moz_integration}  3  4
+  ${item}=  test_item_data  ${cpv[:${index}]}
   [Return]  ${item}
 
 

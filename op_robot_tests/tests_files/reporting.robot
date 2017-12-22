@@ -11,8 +11,9 @@ ${MODE}         reporting
 ${NUMBER_OF_ITEMS}  ${2}
 ${NUMBER_OF_LOTS}   ${0}
 ${TENDER_MEAT}      ${False}
-${LOT_MEAT}      ${False}
-${ITEM_MEAT}      ${False}
+${LOT_MEAT}         ${False}
+${ITEM_MEAT}        ${False}
+${MOZ_INTEGRATION}  ${False}
 
 *** Test Cases ***
 ##############################################################################################
