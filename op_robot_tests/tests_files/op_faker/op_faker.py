@@ -101,8 +101,15 @@ class OP_Provider(BaseProvider):
         return self.random_element(self.funders_scheme_list)
 
     @classmethod
-    def cpv(self):
-        return self.random_element(self.cpvs)
+    def cpv(self, cpv_id=None):
+        if cpv_id:
+            cpvs_moz = []
+            for cpv_element in self.cpvs:
+                if cpv_element.startswith(cpv_id):
+                    cpvs_moz.append(cpv_element)
+            return self.random_element(cpvs_moz)
+        else:
+            return self.random_element(self.cpvs)
 
     @classmethod
     def fake_item(self, cpv_group=None):

@@ -11,8 +11,9 @@ ${MODE}         negotiation
 ${NUMBER_OF_ITEMS}  ${2}
 ${NUMBER_OF_LOTS}   ${0}
 ${TENDER_MEAT}      ${False}
-${LOT_MEAT}      ${False}
-${ITEM_MEAT}      ${False}
+${LOT_MEAT}         ${False}
+${ITEM_MEAT}        ${False}
+${moz_integration}  ${False}
 
 *** Test Cases ***
 ##############################################################################################

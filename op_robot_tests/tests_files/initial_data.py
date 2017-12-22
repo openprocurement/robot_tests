@@ -150,7 +150,10 @@ def test_tender_data(params,
             inc_dt += timedelta(minutes=params['intervals'][period_name][i])
             period_dict[period_name + "Period"][j + "Date"] = inc_dt.astimezone(TZ).isoformat()
     data.update(period_dict)
-    cpv_group = fake.cpv()[:4]
+    if params.get('moz_integration'):
+        cpv_group = fake.cpv('336')[:3]
+    else:
+        cpv_group = fake.cpv()[:4]
     if params.get('number_of_lots'):
         data['lots'] = []
         for lot_number in range(params['number_of_lots']):

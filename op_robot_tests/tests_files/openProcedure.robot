@@ -15,7 +15,7 @@ ${NUMBER_OF_LOTS}   ${1}
 ${TENDER_MEAT}      ${True}
 ${LOT_MEAT}         ${True}
 ${ITEM_MEAT}        ${True}
-
+${moz_integration}  ${False}
 
 *** Test Cases ***
 Можливість оголосити тендер
