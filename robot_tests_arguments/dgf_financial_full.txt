@@ -6,7 +6,6 @@
 -i find_tender
 -i tender_view
 -i tender_view_tenderPeriod
--i tender_view_unit_code
 -i tender_view_decisionDate
 -i tender_view_decisionID
 -i tender_view_tenderAttempts
@@ -18,8 +17,6 @@
 -i tender_view_modify_auction_title_ua
 -i modify_auction_guarantee
 -i modify_auction_periods
--i tender_view_criteria
--i modify_auction_criteria_ua
 -i modify_auction_procuringEntity
 -i modify_auction_description_ua
 -i tender_view_modify_auction_description_ua
