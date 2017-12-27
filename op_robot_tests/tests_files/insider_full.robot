@@ -321,12 +321,16 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   Поставити ставку  1  Ставку прийнято  ${dutch_amount}
 
 
-Підвищити ставку переможцем голландської частини
-  Поставити ставку  1  Ставку прийнято  ${sealedbid_amount}
-
-
 Спробувати подати невалідну ставку переможцем голландської частини
-  Поставити ставку  -1  Ваша ставка повинна перевищувати ставку переможця етапу закритих цінових пропозицій  ${sealedbid_amount}
+  ${value_amount}=  Get From Dictionary  ${USERS.users['${viewer}'].tender_data.data.value}  amount
+  ${step_amount}=  calculate_step_amount  ${value_amount}
+  Set Global Variable  ${step_amount}
+  ${invalid_amount}=  Evaluate  ${step_amount}-0.01
+  Поставити ставку  ${invalid_amount}  Ваша ставка повинна перевищувати ставку переможця попередньої стадії як мінімум на 1 крок (1% від початкової вартості)  ${sealedbid_amount}
+
+
+Підвищити ставку переможцем голландської частини
+  Поставити ставку  ${step_amount}  Ставку прийнято  ${sealedbid_amount}
 
 
 Поставити ставку
