@@ -554,3 +554,6 @@ def compare_CAV_groups(length, *items):
 
 def convert_amount_string_to_float(amount_string):
     return float(amount_string.replace(' ', '').replace(',', '.').replace("'",''))
+
+def calculate_step_amount(value_amount):
+    return value_amount*0.01

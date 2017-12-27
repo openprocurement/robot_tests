@@ -167,7 +167,24 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   Подати більшу ставку, ніж переможець голландської частини
 
 
-Можливість дочекатись Best Bid частини
+Можливість відмінити ставку другим учасником
+  [Tags]   ${USERS.users['${provider1}'].broker}: Процес аукціону
+  ...      provider1
+  ...      ${USERS.users['${provider1}'].broker}
+  ...      cancel_bid_by_provider1_during_sealedbid
+  Відмінити ставку
+
+
+Можливість дочекатись завершення аукціону без Best bid етапу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      cancel_bid_by_provider1_during_sealedbid
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Run Keyword And Expect Error  *  Дочекатись паузи перед Best Bid етапом
+
+
+Можливість дочекатись Best Bid етапу
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
   ...      viewer  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}
@@ -176,6 +193,15 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   ...      make_bid_by_dutch_winner
   Дочекатись паузи перед Best Bid етапом
   Дочекатись завершення паузи перед Best Bid етапом
+
+
+Неможливість зробити невалідну ставку переможцем голландської частини
+  [Tags]   ${USERS.users['${provider}'].broker}: Процес аукціону
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      make_bid_by_dutch_winner
+  Переключитись на учасника   ${provider}
+  Спробувати подати невалідну ставку переможцем голландської частини
 
 
 Можливість збільшити ставку переможцем голландської частини
@@ -187,11 +213,19 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   Підвищити ставку переможцем голландської частини
 
 
+Можливість скасувати ставку переможцем голландської частини
+  [Tags]   ${USERS.users['${provider}'].broker}: Процес аукціону
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      cancel_bid_by_dutch_winner
+  Відмінити ставку
+
+
 Можливість дочекатися завершення аукціону
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      auction
+  ...      auction_end
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати закінчення аукціону
 
@@ -253,6 +287,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   :FOR    ${username}    IN    ${provider}  ${provider1}
   \   Переключитись на учасника   ${username}
   \   Wait Until Page Contains  → ${stage_name}  30 s
+  \   Capture Page Screenshot
 
 
 Дочекатись завершення паузи перед ${stage_name} етапом
@@ -283,11 +318,19 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
 
 
 Подати більшу ставку, ніж переможець голландської частини
-  Поставити ставку  1  Заявку прийнято  ${dutch_amount}
+  Поставити ставку  1  Ставку прийнято  ${dutch_amount}
+
+
+Спробувати подати невалідну ставку переможцем голландської частини
+  ${value_amount}=  Get From Dictionary  ${USERS.users['${viewer}'].tender_data.data.value}  amount
+  ${step_amount}=  calculate_step_amount  ${value_amount}
+  Set Global Variable  ${step_amount}
+  ${invalid_amount}=  Evaluate  ${step_amount}-0.01
+  Поставити ставку  ${invalid_amount}  Ваша ставка повинна перевищувати ставку переможця попередньої стадії як мінімум на 1 крок (1% від початкової вартості)  ${sealedbid_amount}
 
 
 Підвищити ставку переможцем голландської частини
-  Поставити ставку  1  Заявку прийнято  ${sealedbid_amount}
+  Поставити ставку  ${step_amount}  Ставку прийнято  ${sealedbid_amount}
 
 
 Поставити ставку
@@ -301,4 +344,10 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   Capture Page Screenshot
   Click Element  id=place-bid-button
   Wait Until Page Contains  ${msg}  10s
+  Capture Page Screenshot
+
+
+Відмінити ставку
+  Click Element  id=cancel-bid-button
+  Wait Until Page Contains  Ставку відмінено  10s
   Capture Page Screenshot
