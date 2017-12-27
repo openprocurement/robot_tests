@@ -16,7 +16,13 @@
 -i auction
 -i auction_end_date
 
--i qualification
--i qualification_approve_first_award
+-i awarding
+-i first_award_verification_status
+-i add_protocol_to_first_award
+-i approve_first_award_protocol
+-i first_award_payment_status
+-i confirm_first_award
+-i first_award_active_status
 
 -i contract_sign
+-i contract_sign_upload
