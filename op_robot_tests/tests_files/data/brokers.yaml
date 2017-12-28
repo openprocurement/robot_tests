@@ -839,10 +839,64 @@ zupb:
             enquiry: [0, 17]
             tender:  [0, 19]
         dgfFinancialAssets:
-            accelerator: 144
+            accelerator: 1440
             auction:  [55, 60]
         dgfOtherAssets:
-            accelerator: 144
+            accelerator: 1440
+            auction:  [55, 60]
+    timeout_on_wait: 180
+kme:
+    keywords_file: kme
+    roles:
+        tender_owner:   kme_Owner
+        provider:       kme_Provider
+        provider1:      kme_Provider1
+        viewer:         kme_Viewer
+    intervals:
+        default:
+            enquiry: [0, 17]
+            tender:  [0, 19]
+        dgfFinancialAssets:
+            accelerator: 1440
+            auction:  [55, 60]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction:  [55, 60]
+    timeout_on_wait: 180
+sets:
+    keywords_file: sets
+    roles:
+        tender_owner:   sets_Owner
+        provider:       sets_Provider
+        provider1:      sets_Provider1
+        viewer:         sets_Viewer
+    intervals:
+        default:
+            enquiry: [0, 17]
+            tender:  [0, 19]
+        dgfFinancialAssets:
+            accelerator: 1440
+            auction:  [55, 60]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction:  [55, 60]
+    timeout_on_wait: 180
+biddingtime:
+    keywords_file: biddingtime
+    roles:
+        tender_owner:   biddingtime_Owner
+        provider:       biddingtime_Provider
+        provider1:      biddingtime_Provider1
+        viewer:         biddingtime_Viewer
+    intervals:
+        default:
+            enquiry: [0, 17]
+            tender:  [0, 19]
+        dgfFinancialAssets:
+            accelerator: 1440
+            auction:  [55, 60]
+        dgfOtherAssets:
+            accelerator: 1440
             auction:  [55, 60]
     timeout_on_wait: 180
 epsilon:
