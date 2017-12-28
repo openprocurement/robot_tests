@@ -88,7 +88,7 @@ ${award_index}      ${0}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  create_award_claim
-  ${status}=  Set variable if  'open' in '${MODE}'  pending  claim
+  ${status}=  Set variable if  'esco' in '${MODE}'  pending  claim
   Звірити відображення поля status вимоги про виправлення визначення ${award_index} переможця із ${status} для користувача ${viewer}
 
 
@@ -196,7 +196,7 @@ ${award_index}      ${0}
   ...  ${USERS.users['${viewer}'].broker}
   ...  cancel_award_claim
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  ${status}=  Set variable if  'open' in '${MODE}'  stopping  cancelled
+  ${status}=  Set variable if  'esco' in '${MODE}'  stopping  cancelled
   Звірити відображення поля status вимоги про виправлення визначення ${award_index} переможця із ${status} для користувача ${viewer}
 
 
@@ -219,6 +219,7 @@ ${award_index}      ${0}
   [Setup]  Дочекатись дати початку періоду кваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
   Дочекатися перевірки кваліфікацій  ${tender_owner}  ${TENDER['TENDER_UAID']}
 
+# The following test cases are used in one-lot procedures.
 
 Можливість завантажити документ рішення кваліфікаційної комісії для підтвердження постачальника
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
@@ -242,11 +243,38 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ...  qualification_cancel_first_award_qualification  level1
+  ...  qualification_cancel_first_award  level1
   Run As  ${tender_owner}  Скасування рішення кваліфікаційної комісії  ${TENDER['TENDER_UAID']}  0
 
 
+Можливість відхилити постачальника
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  qualification_reject_second_award  level1
+  Run As  ${tender_owner}  Дискваліфікувати постачальника  ${TENDER['TENDER_UAID']}  1
+
+
 Можливість завантажити документ рішення кваліфікаційної комісії для підтвердження нового постачальника
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  qualification_add_doc_to_third_award  level3
+  ${file_path}  ${file_name}  ${file_content}=   create_fake_doc
+  Run As   ${tender_owner}   Завантажити документ рішення кваліфікаційної комісії   ${file_path}   ${TENDER['TENDER_UAID']}   2
+  Remove File  ${file_path}
+
+
+Можливість підтвердити нового постачальника
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  qualification_approve_third_award  level1
+  Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  2
+
+# The following test cases are used in multi-lot procedures.
+
+Можливість завантажити документ рішення кваліфікаційної комісії для підтвердження другого постачальника
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
@@ -256,9 +284,34 @@ ${award_index}      ${0}
   Remove File  ${file_path}
 
 
-Можливість підтвердити нового постачальника
+Можливість підтвердити другого постачальника
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_approve_second_award  level1
   Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  1
+
+
+Можливість скасувати рішення кваліфікації для другого постачальника
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  qualification_cancel_second_award  level1
+  Run As  ${tender_owner}  Скасування рішення кваліфікаційної комісії  ${TENDER['TENDER_UAID']}  1
+
+
+Можливість відхилити решту постачальників
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  qualification_reject_other_awards  level1
+  Можливість дискваліфікувати решту постачальників  ${tender_owner}  ${TENDER['TENDER_UAID']}
+
+
+*** Keywords ***
+Можливість дискваліфікувати решту постачальників
+  [Arguments]  ${username}  ${tender_uaid}
+  Run as  ${username}  Пошук тендера по ідентифікатору  ${TENDER['TENDER_UAID']}
+  ${awards_to_rejects}=  Run As  ${username}  Отримати кількість об'єктів  awards
+  :FOR  ${award_index}  IN RANGE  2  ${awards_to_rejects*2-2}
+  \  Run As  ${username}  Дискваліфікувати постачальника  ${TENDER['TENDER_UAID']}  ${award_index}
