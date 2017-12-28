@@ -274,8 +274,10 @@ Get Broker Property By Username
 
 
 Підготувати дані для подання пропозиції
-  [Arguments]
-  ${bid}=  generate_test_bid_data  ${USERS.users['${tender_owner}'].initial_data.data}
+  [Arguments]  ${username}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${TENDER['TENDER_UAID']}
+  Log  ${tender}
+  ${bid}=  generate_test_bid_data  ${tender.data}
   [Return]  ${bid}
 
 
@@ -439,8 +441,7 @@ Log differences between dicts
 
 Оновити сторінку
   [Arguments]  ${username}
-  Run Keyword If  '${MODE}' == 'planning'  Run As  ${username}  Оновити сторінку з планом  ${TENDER['TENDER_UAID']}
-  ...      ELSE  Run As  ${username}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  Run As  ${username}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
 
 
 Звірити поле тендера
@@ -719,8 +720,9 @@ Require Failure
   ...      15 s
   ...      Run As  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
   Should Be True  '${url}'
-  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.openprocurement\.org\/tenders\/([0-9A-Fa-f]{32})
+  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.prozorro\.openprocurement\.auction\/esco-tenders\/([0-9A-Fa-f]{32})
   Log  URL аукціону для глядача: ${url}
+  Log  ${url}  WARN
 
 
 Можливість отримати посилання на аукціон для учасника ${username}
@@ -734,8 +736,9 @@ Require Failure
   ...      15 s
   ...      Run As  ${username}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
   Should Be True  '${url}'
-  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.openprocurement\.org\/tenders\/([0-9A-Fa-f]{32})
+  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.prozorro\.openprocurement\.auction\/esco-tenders\/([0-9A-Fa-f]{32})
   Log  URL аукціону для учасника: ${url}
+  Log  ${url}  WARN
 
 
 Дочекатись дати
@@ -757,7 +760,7 @@ Require Failure
   Дочекатись дати  ${date}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
-  ${next_status}=  Set variable if  'open' in '${MODE}'  active.tendering  active.enquiries
+  ${next_status}=  Set variable if  'esco' in '${MODE}'  active.tendering  active.enquiries
   Wait until keyword succeeds
   ...      5 min 15 sec
   ...      15 sec
@@ -985,3 +988,12 @@ Require Failure
   ${len_of_object}=  Get Length  ${USERS.users['${username}'].tender_data.data.${object}}
   ${index}=  subtraction  ${len_of_object}  1
   [Return]  ${index}
+
+
+Отримати індекс поля ${field_name} зі статусом ${status} ${username} ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  :FOR  ${index}  ${_}  IN ENUMERATE  @{tender.data.${field_name}}
+  \  ${field_status}=  Get From Dictionary  ${USERS.users['${username}'].tender_data.data.${field_name}[${index}]}  status
+  \  ${field_index}=  Set Variable If  '${field_status}' == '${status}'  ${index}
+  \  Exit For Loop If  '${field_status}' == '${status}'
+  [Return]  ${field_index}

@@ -45,9 +45,7 @@ Library  openprocurement_client.utils
 #  Uncomment this line if there is need to process files operations without DS.
 #  ${ds_api_wraper}=  set variable  ${None}
   ${ds_api_wraper}=  prepare_ds_api_wrapper  ${DS_HOST_URL}  ${auth_ds}
-  ${api_wrapper}=  Run Keyword If  '${MODE}' == 'planning'
-  ...     prepare_plan_api_wrapper  ${USERS.users['${username}'].api_key}  ${API_HOST_URL}  ${API_VERSION}
-  ...                     ELSE  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${RESOURCE}  ${API_HOST_URL}  ${API_VERSION}  ${ds_api_wraper}
+  ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${RESOURCE}  ${API_HOST_URL}  ${API_VERSION}  ${ds_api_wraper}
   Set To Dictionary  ${USERS.users['${username}']}  client=${api_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${EMPTY}
   ${id_map}=  Create Dictionary
@@ -142,9 +140,7 @@ Library  openprocurement_client.utils
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  create_tender  ${tender_data}
   Log  ${tender}
   ${access_token}=  Get Variable Value  ${tender.access.token}
-  ${status}=  Set Variable If  'open' in '${MODE}'  active.tendering  ${EMPTY}
-  ${status}=  Set Variable If  'below' in '${MODE}'  active.enquiries  ${status}
-  ${status}=  Set Variable If  '${status}'=='${EMPTY}'  active   ${status}
+  ${status}=  Set Variable If  'esco' in '${MODE}'  active.tendering
   Set To Dictionary  ${tender['data']}  status=${status}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
   Log  ${tender}
@@ -621,7 +617,7 @@ Library  openprocurement_client.utils
   ...      ${award_index}
   ...      ${document}
 
-  ${status}=  Set variable if  'open' in '${MODE}'  pending  claim
+  ${status}=  Set variable if  'esco' in '${MODE}'  pending  claim
   ${data}=  Create Dictionary  status=${status}
   ${confirmation_data}=  Create Dictionary  data=${data}
   openprocurement_client.Подати вимогу про виправлення визначення переможця
@@ -855,7 +851,7 @@ Library  openprocurement_client.utils
   Set To Dictionary  ${USERS.users['${username}']}  bid_access_token=${reply.access.token}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bid_access_token}
   ${procurementMethodType}=  Get variable value  ${USERS.users['${username}'].tender_data.data.procurementMethodType}
-  ${status}=  Set Variable If  'EU' in '${procurementMethodType}' or '${procurementMethodType}'=='competitiveDialogueUA'  pending  active
+  ${status}=  Set Variable If  'esco' in '${procurementMethodType}'  pending  active
   Set To Dictionary  ${reply['data']}  status=${status}
   ${reply_active}=  Call Method  ${USERS.users['${username}'].client}  patch_bid  ${tender}  ${reply}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${reply['access']['token']}
@@ -1001,6 +997,7 @@ Library  openprocurement_client.utils
   ...      [Return] Reply of API
   [Arguments]  ${username}  ${document}  ${tender_uaid}  ${award_num}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  Wait Until Keyword Succeeds  20 min  30 sec  List Should Contain Value  ${USERS.users['${username}'].tender_data.data}  awards
   ${doc}=  Call Method  ${USERS.users['${username}'].client}  upload_award_document  ${document}  ${tender}  ${tender.data.awards[${award_num}].id}
   Log  ${doc}
 
@@ -1014,7 +1011,7 @@ Library  openprocurement_client.utils
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${award}=  create_data_dict  data.status  active
   Set To Dictionary  ${award.data}  id=${tender.data.awards[${award_num}].id}
-  Run Keyword IF  'open' in '${MODE}'
+  Run Keyword IF  'esco' in '${MODE}'
   ...      Set To Dictionary  ${award.data}
   ...      qualified=${True}
   ...      eligible=${True}
@@ -1145,7 +1142,7 @@ Library  openprocurement_client.utils
   [return]  ${filename}
 
 ##############################################################################
-#             OpenUA procedure
+#             ESCO procedure
 ##############################################################################
 
 Підтвердити кваліфікацію
@@ -1458,3 +1455,8 @@ Library  openprocurement_client.utils
   ${document}=  get_document_by_id  ${tender.data}  ${doc_id}
   ${filename}=  download_file_from_url  ${document.url}  ${OUTPUT_DIR}${/}${document.title}
   [return]  ${filename}
+
+
+Отримати кількість об'єктів
+  [Arguments]  ${username}  ${field}
+  Run Keyword And Return  Get Length  ${USERS.users['${username}'].tender_data.data.${field}}
