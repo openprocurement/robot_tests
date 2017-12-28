@@ -44,7 +44,7 @@ def create_fake_date():
 def create_fake_annual_cost():
     annual_cost = []
     for i in range(0, 21):
-        cost=str(float(round(random.uniform(1, 100), 2)))
+        cost=str(round(random.uniform(1, 100), 2))
         annual_cost.append(cost)
     return annual_cost
 
@@ -356,25 +356,26 @@ def test_bid_data():
 def test_bid_value(tender_data):
     annual_cost = []
     for i in range(0, 21):
-        cost=float(round(random.uniform(1, 100), 2))
+        cost=round(random.uniform(1, 100), 2)
         annual_cost.append(cost)
     if tender_data['fundingKind'] == "budget":
-        yearly_percentage=float(round(random.uniform(0.01, float(tender_data['yearlyPaymentsPercentageRange'])), 3))
+        yearly_percentage=round(random.uniform(0.01, float(tender_data['yearlyPaymentsPercentageRange'])), 5)
     else:
         yearly_percentage= 0.8
-    bid = munchify({
+    # when tender fundingKind is budget, yearlyPaymentsPercentageRange should be less or equal 0.8, and more or equal 0
+    # when tender fundingKind is other, yearlyPaymentsPercentageRange should be equal 0.8
+    return munchify({
         "value": {
             "currency": "UAH",
             "valueAddedTaxIncluded": True,
             "yearlyPaymentsPercentage": yearly_percentage,
             "annualCostsReduction": annual_cost,
             "contractDuration": {
-                "years": int(random.uniform(1, 15)),
-                "days": int(random.uniform(1, 364))
+                "years": random.randint(0, 15),
+                "days": random.randint(1, 364)
             }
         }
     })
-    return bid
 
 
 def test_supplier_data():
@@ -471,14 +472,14 @@ def test_tender_data_esco(params, submissionMethodDetails):
     data['procuringEntity']['contactPoint']['availableLanguage'] = "en"
     data['procuringEntity']['identifier']['legalName_en'] = fake_en.sentence(nb_words=10, variable_nb_words=True)
     data['procuringEntity']['kind'] = 'general'
-    data['minimalStepPercentage'] = float(round(random.uniform(0.015, 0.03), 5))
+    data['minimalStepPercentage'] = round(random.uniform(0.015, 0.03), 5)
     data['fundingKind'] = params['fundingKind']
-    data['NBUdiscountRate'] = float(round(random.uniform(0, 0.99), 5))
+    data['NBUdiscountRate'] = round(random.uniform(0, 0.99), 5)
     del data["value"]
     del data["minimalStep"]
     if params['number_of_lots'] == 0:
         if data['fundingKind'] == "budget":
-            data['yearlyPaymentsPercentageRange'] = float(round(random.uniform(0.01, 0.8), 3))
+            data['yearlyPaymentsPercentageRange'] = round(random.uniform(0.01, 0.8), 5)
         else:
             data['yearlyPaymentsPercentageRange'] = 0.8
     for index in range(params['number_of_lots']):
@@ -486,9 +487,9 @@ def test_tender_data_esco(params, submissionMethodDetails):
         if index == 0:
             data['lots'][index]['minimalStepPercentage'] = data['minimalStepPercentage']
         else:
-            data['lots'][index]['minimalStepPercentage'] = round((float(data['minimalStepPercentage'])-0.0002), 5)
+            data['lots'][index]['minimalStepPercentage'] = round(data['minimalStepPercentage'] - 0.0002, 5)
         if data['fundingKind'] == "budget":
-            data['lots'][index]['yearlyPaymentsPercentageRange'] = float(round(random.uniform(0.01, 0.8), 5))
+            data['lots'][index]['yearlyPaymentsPercentageRange'] = round(random.uniform(0.01, 0.8), 5)
         else:
             data['lots'][index]['yearlyPaymentsPercentageRange'] = 0.8
         del data['lots'][index]['value']

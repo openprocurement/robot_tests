@@ -72,7 +72,7 @@ Resource           base_keywords.robot
 
 
 Можливість підтвердити решту пропозицій кваліфікації
-  ${number_of_qualifications}=  Get Length  ${USERS.users['${tender_owner}'].tender_data.data.qualifications}
+  ${number_of_qualifications}=  Run As  ${tender_owner}  Отримати кількість об'єктів  qualifications
   :FOR  ${bid_index}  IN RANGE  2  ${number_of_qualifications}+1
   \  Можливість підтвердити ${bid_index} пропозицію кваліфікації
 
