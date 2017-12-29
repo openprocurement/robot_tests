@@ -1751,3 +1751,61 @@ users:
         browser:  chrome
         position: [800, 400]
         size:     [800, 700]
+    kpmgdealroom_Owner:
+        disclaimer: "These credentials are provided by KPMG to ProZorro for the purpose of carrying out automated tests
+        on the KPMG Deal Room testing system, in accordance with the rules of compliance for participating in the
+        ProZorro.Sale process, as set out by the Ministry of Economic Development and Trade of Ukraine,
+        Transparency International Ukraine, the Deposit Guarantee Fund and the National Bank of Ukraine -
+        https://prozorro.sale/en/aim. For more information on the transparent public testing procedures
+        visit https://github.com/openprocurement/"
+        broker:   kpmgdealroom
+        homepage: "https://test.kpmgdealroom.com/login"
+        default_page: "https://test.kpmgdealroom.com/dashboard"
+        login:    kdruser10@kpmg.co.uk
+        password: Not_A_Secret01
+        browser:  chrome
+        position: [0, 0]
+        size:     [1024, 768]
+    kpmgdealroom_Provider1:
+        disclaimer: "These credentials are provided by KPMG to ProZorro for the purpose of carrying out automated tests
+        on the KPMG Deal Room testing system, in accordance with the rules of compliance for participating in the
+        ProZorro.Sale process, as set out by the Ministry of Economic Development and Trade of Ukraine,
+        Transparency International Ukraine, the Deposit Guarantee Fund and the National Bank of Ukraine -
+        https://prozorro.sale/en/aim. For more information on the transparent public testing procedures
+        visit https://github.com/openprocurement/"
+        broker:   kpmgdealroom
+        homepage: "https://test.kpmgdealroom.com/login"
+        default_page: "https://test.kpmgdealroom.com/dashboard"
+        login:    prozorro.test.user01@gmail.com
+        password: Not_A_Secret01
+        browser:  chrome
+        position: [0, 0]
+        size:     [1024, 768]
+    kpmgdealroom_Provider:
+        disclaimer: "These credentials are provided by KPMG to ProZorro for the purpose of carrying out automated tests
+        on the KPMG Deal Room testing system, in accordance with the rules of compliance for participating in the
+        ProZorro.Sale process, as set out by the Ministry of Economic Development and Trade of Ukraine,
+        Transparency International Ukraine, the Deposit Guarantee Fund and the National Bank of Ukraine -
+        https://prozorro.sale/en/aim. For more information on the transparent public testing procedures
+        visit https://github.com/openprocurement/"
+        broker:   kpmgdealroom
+        homepage: "https://test.kpmgdealroom.com/login"
+        default_page: "https://test.kpmgdealroom.com/dashboard"
+        login:    prozorro.test.user02@gmail.com
+        password: Not_A_Secret01
+        browser:  chrome
+        position: [0, 0]
+        size:     [1024, 768]
+    kpmgdealroom_Viewer:
+        disclaimer: "These credentials are provided by KPMG to ProZorro for the purpose of carrying out automated tests
+        on the KPMG Deal Room testing system, in accordance with the rules of compliance for participating in the
+        ProZorro.Sale process, as set out by the Ministry of Economic Development and Trade of Ukraine,
+        Transparency International Ukraine, the Deposit Guarantee Fund and the National Bank of Ukraine -
+        https://prozorro.sale/en/aim. For more information on the transparent public testing procedures
+        visit https://github.com/openprocurement/"
+        broker:   kpmgdealroom
+        homepage: "https://test.kpmgdealroom.com/public/prozorro"
+        default_page: "https://test.kpmgdealroom.com/public/prozorro"
+        browser:  chrome
+        position: [0, 0]
+        size: [1024, 768]

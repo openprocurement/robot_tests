@@ -1028,3 +1028,27 @@ tabua:
         tender_owner:   tabua_Owner
         viewer:         tabua_Viewer
     timeout_on_wait: 30
+kpmgdealroom:
+    intervals:
+        default:
+            enquiry: [0, 20]
+            tender:  [0, 20]
+        openua:
+            accelerator: 720
+            tender:  [0, 20]
+        dgfFinancialAssets:
+           accelerator: 360
+           auction:  [60, 65]
+        dgfOtherAssets:
+            accelerator: 360
+            auction:  [60, 65]
+        dgfInsider:
+            accelerator: 720
+            auction:  [25, 30]
+    keywords_file: kpmgdealroom
+    roles:
+        tender_owner:   kpmgdealroom_Owner
+        provider:       kpmgdealroom_Provider
+        provider1:      kpmgdealroom_Provider1
+        viewer:         kpmgdealroom_Viewer
+    timeout_on_wait: 60
