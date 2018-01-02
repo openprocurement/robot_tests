@@ -1809,3 +1809,63 @@ users:
         browser:  chrome
         position: [0, 0]
         size: [1024, 768]
+    pag_Owner:
+        broker:   pag
+        homepage: "http://test.pag.kiev.ua"
+        login:    comnxliquidator@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1280, 800]
+    pag_Provider1:
+        broker:   pag
+        homepage: "http://test.pag.kiev.ua"
+        login:    part1@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [0, 800]
+        size:     [1280, 800]
+    pag_Provider2:
+        broker:   pag
+        homepage: "http://test.pag.kiev.ua"
+        login:    part2@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [800, 0]
+        size:     [1280, 800]
+    pag_Viewer:
+        broker:   pag
+        homepage: "http://test.pag.kiev.ua"
+        browser:  chrome
+        position: [0, 500]
+        size:     [1280, 800]
+    ctb_Owner:
+        broker:   ctb
+        homepage: "http://test.ctb.net.ua"
+        login:    comnxliquidator@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1280, 800]
+    ctb_Provider1:
+        broker:   ctb
+        homepage: "http://test.ctb.net.ua"
+        login:    part1@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [0, 800]
+        size:     [1280, 800]
+    ctb_Provider2:
+        broker:   ctb
+        homepage: "http://test.ctb.net.ua"
+        login:    part2@mfsa.ru
+        password: 123456
+        browser:  chrome
+        position: [800, 0]
+        size:     [1280, 800]
+    ctb_Viewer:
+        broker:   ctb
+        homepage: "http://test.ctb.net.ua"
+        browser:  chrome
+        position: [0, 500]
+        size:     [1280, 800]
