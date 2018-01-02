@@ -462,7 +462,7 @@ proztorg:
     timeout_on_wait: 50
 uub:
     keywords_file: uub
-    accelerator: 360
+    accelerator: 720
     roles:
         tender_owner:   uub_Owner
         provider:       uub_Provider
@@ -473,7 +473,7 @@ uub:
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
-    timeout_on_wait: 10
+    timeout_on_wait: 20
 APStender:
     keywords_file: aps
     roles:
@@ -1052,3 +1052,31 @@ kpmgdealroom:
         provider1:      kpmgdealroom_Provider1
         viewer:         kpmgdealroom_Viewer
     timeout_on_wait: 60
+akc:
+    keywords_file: akc
+    accelerator: 720
+    roles:
+        tender_owner:   akc_Owner
+        provider:       akc_Provider
+        provider1:      akc_Provider1
+        viewer:         akc_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 20
+tsbgalcontract:
+    keywords_file: tsbgalcontract
+    accelerator: 720
+    roles:
+        tender_owner:   tsbgalcontract_Owner
+        provider:       tsbgalcontract_Provider
+        provider1:      tsbgalcontract_Provider1
+        viewer:         tsbgalcontract_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 20
