@@ -1095,8 +1095,8 @@ ctb:
     syncpage: 'http://test.ctb.net.ua/site/sync'
     syncdocs: 'http://test.ctb.net.ua/site/syncdocs'
     roles:
-        provider:       pag_Provider1
-        provider1:      pag_Provider2
-        tender_owner:   pag_Owner
-        viewer:         pag_Viewer
+        provider:       ctb_Provider1
+        provider1:      ctb_Provider2
+        tender_owner:   ctb_Owner
+        viewer:         ctb_Viewer
     timeout_on_wait: 180
