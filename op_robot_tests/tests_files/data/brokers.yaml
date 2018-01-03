@@ -1106,3 +1106,51 @@ kpmgdealroom:
         provider1:      kpmgdealroom_Provider1
         viewer:         kpmgdealroom_Viewer
     timeout_on_wait: 60
+pag:
+    intervals:
+        default:
+            enquiry: [0, 20]
+            tender:  [0, 30]
+        dgfFinancialAssets:
+            accelerator: 180
+            auction: [45,50]
+        dgfOtherAssets:
+            accelerator: 180
+            auction: [50,55]
+        dgfInsider:
+            accelerator: 180
+            auction:  [25,30]
+    keywords_file: pag
+    homepage: 'http://test.pag.kiev.ua'
+    syncpage: 'http://test.pag.kiev.ua/site/sync'
+    syncdocs: 'http://test.pag.kiev.ua/site/syncdocs'
+    roles:
+        provider:       pag_Provider1
+        provider1:      pag_Provider2
+        tender_owner:   pag_Owner
+        viewer:         pag_Viewer
+    timeout_on_wait: 180
+ctb:
+    intervals:
+        default:
+            enquiry: [0, 20]
+            tender:  [0, 30]
+        dgfFinancialAssets:
+            accelerator: 180
+            auction: [45,50]
+        dgfOtherAssets:
+            accelerator: 180
+            auction: [50,55]
+        dgfInsider:
+            accelerator: 180
+            auction:  [25,30]
+    keywords_file: ctb
+    homepage: 'http://test.ctb.net.ua'
+    syncpage: 'http://test.ctb.net.ua/site/sync'
+    syncdocs: 'http://test.ctb.net.ua/site/syncdocs'
+    roles:
+        provider:       ctb_Provider1
+        provider1:      ctb_Provider2
+        tender_owner:   ctb_Owner
+        viewer:         ctb_Viewer
+    timeout_on_wait: 180
