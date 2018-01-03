@@ -6,7 +6,6 @@
 -i find_tender
 -i tender_view
 -i tender_view_tenderPeriod
--i tender_view_unit_code
 -i tender_view_min_step
 
 -i make_bid_by_provider
@@ -38,3 +37,4 @@
 
 
 -i contract_sign
+-i contract_sign_upload

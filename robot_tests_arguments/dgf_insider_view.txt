@@ -8,6 +8,5 @@
 -i tender_view_tenderPeriod
 -i tender_view_tenderPeriod_startDate
 -i tender_view_auctionPeriod_StartDate
--i tender_view_unit_code
 
 -i absence_bid

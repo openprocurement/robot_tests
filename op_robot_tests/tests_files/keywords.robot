@@ -746,13 +746,8 @@ Require Failure
 Дочекатись дати закінчення прийому пропозицій
   [Arguments]  ${username}  ${tender_uaid}
   # XXX: HACK: Same as above
-  ${status}  ${date}=  Run Keyword And Ignore Error
-  ...      Set Variable
-  ...      ${USERS.users['${username}'].tender_data.data.tenderPeriod.endDate}
-  ${date}=  Set Variable If
-  ...      '${status}' == 'FAIL'
-  ...      ${USERS.users['${tender_owner}'].initial_data.data.tenderPeriod.endDate}
-  ...      ${date}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${username}'].tender_data.data.tenderPeriod}  endDate
+  ${date}=  Отримати дані із тендера  ${username}  ${tender_uaid}  tenderPeriod.endDate
   wait_and_write_to_console  ${date}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
@@ -865,7 +860,7 @@ Require Failure
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
-  ...      5 min 15 sec
+  ...      90 min 15 sec
   ...      15 sec
   ...      Звірити статус тендера
   ...      ${username}
