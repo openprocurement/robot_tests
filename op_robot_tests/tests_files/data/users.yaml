@@ -1743,3 +1743,105 @@ users:
         browser:  firefox
         position: [800, 400]
         size:     [800, 700]
+    skyline_viewer:
+        broker:   skyline
+        homepage: "http://test.skyline.auction/prozorrosale/auctions/public"
+        syncpage: "http://test.skyline.auction/prozorrosale/auctions/sync-all"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    skyline_provider:
+        broker:   skyline
+        homepage: "http://test.skyline.auction/prozorrosale/auctions/public"
+        syncpage: "http://test.skyline.auction/prozorrosale/auctions/sync-all"
+        login:    testmemb1@test.t
+        password: testpass
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    skyline_provider1:
+        broker:   skyline
+        homepage: "http://test.skyline.auction/prozorrosale/auctions/public"
+        syncpage: "http://test.skyline.auction/prozorrosale/auctions/sync-all"
+        login:    testmemb2@test.t
+        password: testpass
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    skyline_owner:
+        broker:   skyline
+        homepage: "http://test.skyline.auction/prozorrosale/auctions/public"
+        syncpage: "http://test.skyline.auction/prozorrosale/auctions/sync-all"
+        login:    testadmin@test.t
+        password: testpass
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    dzherelo_viewer:
+        broker:   dzherelo
+        homepage: "http://test.tmdzherelo.com.ua/prozorrosale/auctions/public"
+        syncpage: "http://test.tmdzherelo.com.ua/prozorrosale/auctions/sync-all"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    dzherelo_provider:
+        broker:   dzherelo
+        homepage: "http://test.tmdzherelo.com.ua/prozorrosale/auctions/public"
+        syncpage: "http://test.tmdzherelo.com.ua/prozorrosale/auctions/sync-all"
+        login:    testmemb1@test.t
+        password: testpass
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    dzherelo_provider1:
+        broker:   dzherelo
+        homepage: "http://test.tmdzherelo.com.ua/prozorrosale/auctions/public"
+        syncpage: "http://test.tmdzherelo.com.ua/prozorrosale/auctions/sync-all"
+        login:    testmemb2@test.t
+        password: testpass
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    dzherelo_owner:
+        broker:   dzherelo
+        homepage: "http://test.tmdzherelo.com.ua/prozorrosale/auctions/public"
+        syncpage: "http://test.tmdzherelo.com.ua/prozorrosale/auctions/sync-all"
+        login:    testadmin@test.t
+        password: testpass
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    vapol_viewer:
+        broker:   vapol
+        homepage: "http://test.vapol.com.ua/prozorrosale/auctions/public"
+        syncpage: "http://test.vapol.com.ua/prozorrosale/auctions/sync-all"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    vapol_provider:
+        broker:   vapol
+        homepage: "http://test.vapol.com.ua/prozorrosale/auctions/public"
+        syncpage: "http://test.vapol.com.ua/prozorrosale/auctions/sync-all"
+        login:    testmemb1@test.t
+        password: testpass
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    vapol_provider1:
+        broker:   vapol
+        homepage: "http://test.vapol.com.ua/prozorrosale/auctions/public"
+        syncpage: "http://test.vapol.com.ua/prozorrosale/auctions/sync-all"
+        login:    testmemb2@test.t
+        password: testpass
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    vapol_owner:
+        broker:   vapol
+        homepage: "http://test.vapol.com.ua/prozorrosale/auctions/public"
+        syncpage: "http://test.vapol.com.ua/prozorrosale/auctions/sync-all"
+        login:    testadmin@test.t
+        password: testpass
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
