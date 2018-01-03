@@ -4,7 +4,8 @@ Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
 *** Variables ***
-@{USED_ROLES}  tender_owner  viewer
+@{USED_ROLES}       tender_owner  viewer
+${MOZ_INTEGRATION}  ${False}
 
 
 *** Test Cases ***
