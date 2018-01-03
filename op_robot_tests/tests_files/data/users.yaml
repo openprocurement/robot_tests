@@ -700,34 +700,34 @@ users:
         size:     [1000, 500]
     uub_Owner:
         broker:   uub
-        homepage: "https://sale.uub.com.ua/Registration.aspx"
-        default_page: "https://sale.uub.com.ua/PositionList.aspx"
+        homepage: "https://sale.uub.com.ua/test/Registration.aspx"
+        default_page: "https://sale.uub.com.ua/test/PositionList.aspx"
         login:    UUB_Owner@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     uub_Provider:
         broker:   uub
-        homepage: "https://sale.uub.com.ua/Registration.aspx"
-        default_page: "https://sale.uub.com.ua/PositionList.aspx"
+        homepage: "https://sale.uub.com.ua/test/Registration.aspx"
+        default_page: "https://sale.uub.com.ua/test/PositionList.aspx"
         login:    UUB_Provider@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     uub_Provider1:
         broker:   uub
-        homepage: "https://sale.uub.com.ua/Registration.aspx"
-        default_page: "https://sale.uub.com.ua/PositionList.aspx"
+        homepage: "https://sale.uub.com.ua/test/Registration.aspx"
+        default_page: "https://sale.uub.com.ua/test/PositionList.aspx"
         login:    UUB_Provider1@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     uub_Viewer:
         broker:   uub
-        homepage: "https://sale.uub.com.ua/Registration.aspx"
-        default_page: "https://sale.uub.com.ua/PositionList.aspx"
+        homepage: "https://sale.uub.com.ua/test/Registration.aspx"
+        default_page: "https://sale.uub.com.ua/test/PositionList.aspx"
         login:    UUB_Viewer@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     aps_Owner:
@@ -1971,3 +1971,67 @@ users:
         browser:  chrome
         position: [0, 500]
         size:     [1280, 800]
+    akc_Owner:
+        broker:   akc
+        homepage: "https://sale.akc.biz.ua/test/Registration.aspx"
+        default_page: "https://sale.akc.biz.ua/test/PositionList.aspx"
+        login:    akc_Owner@1.ua
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    akc_Provider:
+        broker:   akc
+        homepage: "https://sale.akc.biz.ua/test/Registration.aspx"
+        default_page: "https://sale.akc.biz.ua/test/PositionList.aspx"
+        login:    akc_Provider@1.ua
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    akc_Provider1:
+        broker:   akc
+        homepage: "https://sale.akc.biz.ua/test/Registration.aspx"
+        default_page: "https://sale.akc.biz.ua/test/PositionList.aspx"
+        login:    akc_Provider1@1.ua
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    akc_Viewer:
+        broker:   akc
+        homepage: "https://sale.akc.biz.ua/test/Registration.aspx"
+        default_page: "https://sale.akc.biz.ua/test/PositionList.aspx"
+        login:    akc_Viewer@1.ua
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    tsbgalcontract_Owner:
+        broker:   tsbgalcontract
+        homepage: "https://sales.tsbgalcontract.org.ua/test/Registration.aspx"
+        default_page: "https://sales.tsbgalcontract.org.ua/test/PositionList.aspx"
+        login:    gc_Owner@1.ua
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    tsbgalcontract_Provider:
+        broker:   tsbgalcontract
+        homepage: "https://sales.tsbgalcontract.org.ua/test/Registration.aspx"
+        default_page: "https://sales.tsbgalcontract.org.ua/test/PositionList.aspx"
+        login:    gc_Provider@1.ua
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    tsbgalcontract_Provider1:
+        broker:   tsbgalcontract
+        homepage: "https://sales.tsbgalcontract.org.ua/test/Registration.aspx"
+        default_page: "https://sales.tsbgalcontract.org.ua/test/PositionList.aspx"
+        login:    gc_Provider1@1.ua
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    tsbgalcontract_Viewer:
+        broker:   tsbgalcontract
+        homepage: "https://sales.tsbgalcontract.org.ua/test/Registration.aspx"
+        default_page: "https://sales.tsbgalcontract.org.ua/test/PositionList.aspx"
+        login:    gc_Viewer@1.ua
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
