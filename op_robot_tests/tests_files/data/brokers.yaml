@@ -1182,3 +1182,45 @@ tsbgalcontract:
             tender:  [0, 25]
             auction: [25, 30]
     timeout_on_wait: 20
+skyline:
+    keywords_file: skyline
+    roles:
+        viewer:         skyline_viewer
+        provider:       skyline_provider
+        provider1:      skyline_provider1
+        tender_owner:   skyline_owner
+    homepage: 'http://test.skyline.auction/prozorrosale/auctions/public'
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
+dzherelo:
+    keywords_file: dzherelo
+    roles:
+        viewer:         dzherelo_viewer
+        provider:       dzherelo_provider
+        provider1:      dzherelo_provider1
+        tender_owner:   dzherelo_owner
+    homepage: 'http://test.tmdzherelo.com.ua/prozorrosale/auctions/public'
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
+vapol:
+    keywords_file: vapol
+    roles:
+        viewer:         vapol_viewer
+        provider:       vapol_provider
+        provider1:      vapol_provider1
+        tender_owner:   vapol_owner
+    homepage: 'http://test.vapol.com.ua/prozorrosale/auctions/public'
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
