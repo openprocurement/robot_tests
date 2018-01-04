@@ -1675,7 +1675,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_after_enquiry_period
-  [Setup]  Дочекатись дати закінчення періоду уточнень  ${provider}
+  [Setup]  Дочекатись дати закінчення періоду уточнень  ${provider}  ${TENDER['TENDER_UAID']}
   Run Keyword And Expect Error  *  Можливість задати запитання на тендер користувачем ${provider}
 
 
