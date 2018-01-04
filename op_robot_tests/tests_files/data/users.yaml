@@ -131,6 +131,96 @@ users:
         browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
+    aukzionist_Owner:
+        broker:   aukzionist
+        homepage: "http://auctionist.byustudio.in.ua/"
+        login:    prozorroytenderowner@gmail.com
+        password: 123456
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    aukzionist_Provider:
+        broker:   aukzionist
+        homepage: "http://auctionist.byustudio.in.ua/"
+        login:    prozorroyprovider1@gmail.com
+        password: 123456
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    aukzionist_Provider1:
+        broker:   aukzionist
+        homepage: "http://auctionist.byustudio.in.ua/"
+        login:    prozorroyprovider2@gmail.com
+        password: 123456
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    aukzionist_Viewer:
+        broker:   aukzionist
+        homepage: "http://auctionist.byustudio.in.ua/"
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    silvertrade_Owner:
+        broker:   silvertrade
+        homepage: "http://silvertrade.byustudio.in.ua/"
+        login:    prozorroytenderowner@gmail.com
+        password: 123456
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    silvertrade_Provider:
+        broker:   silvertrade
+        homepage: "http://silvertrade.byustudio.in.ua/"
+        login:    prozorroyprovider1@gmail.com
+        password: 123456
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    silvertrade_Provider1:
+        broker:   silvertrade
+        homepage: "http://silvertrade.byustudio.in.ua/"
+        login:    prozorroyprovider2@gmail.com
+        password: 123456
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    silvertrade_Viewer:
+        broker:   silvertrade
+        homepage: "http://silvertrade.byustudio.in.ua/"
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    b25h8_Owner:
+        broker:   25h8
+        homepage: "http://test.25h8.auction"
+        login:    prozorroytenderowner@gmail.com
+        password: 123456
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    b25h8_Provider:
+        broker:   25h8
+        homepage: "http://test.25h8.auction"
+        login:    prozorroyprovider1@gmail.com
+        password: 123456
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    b25h8_Provider1:
+        broker:   25h8
+        homepage: "http://test.25h8.auction"
+        login:    prozorroyprovider2@gmail.com
+        password: 123456
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    b25h8_Viewer:
+        broker:   25h8
+        homepage: "http://test.25h8.auction"
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
     uace_Owner_auction:
         broker:   uaceauction
         homepage: "http://test-eauction.uace.com.ua"
