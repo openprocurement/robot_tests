@@ -892,6 +892,7 @@ uisce:
     timeout_on_wait: 60
 zupb:
     keywords_file: zupb
+    accelerator: 1440
     roles:
         tender_owner:   zupb_Owner
         provider:       zupb_Provider
@@ -899,17 +900,13 @@ zupb:
         viewer:         zupb_Viewer
     intervals:
         default:
-            enquiry: [0, 17]
-            tender:  [0, 19]
-        dgfFinancialAssets:
-            accelerator: 1440
-            auction:  [55, 60]
-        dgfOtherAssets:
-            accelerator: 1440
-            auction:  [55, 60]
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
     timeout_on_wait: 10
 kme:
     keywords_file: kme
+    accelerator: 1440
     roles:
         tender_owner:   kme_Owner
         provider:       kme_Provider
@@ -917,17 +914,13 @@ kme:
         viewer:         kme_Viewer
     intervals:
         default:
-            enquiry: [0, 17]
-            tender:  [0, 19]
-        dgfFinancialAssets:
-            accelerator: 1440
-            auction:  [55, 60]
-        dgfOtherAssets:
-            accelerator: 1440
-            auction:  [55, 60]
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
     timeout_on_wait: 10
 sets:
     keywords_file: sets
+    accelerator: 1440
     roles:
         tender_owner:   sets_Owner
         provider:       sets_Provider
@@ -935,17 +928,13 @@ sets:
         viewer:         sets_Viewer
     intervals:
         default:
-            enquiry: [0, 17]
-            tender:  [0, 19]
-        dgfFinancialAssets:
-            accelerator: 1440
-            auction:  [55, 60]
-        dgfOtherAssets:
-            accelerator: 1440
-            auction:  [55, 60]
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
     timeout_on_wait: 10
 biddingtime:
     keywords_file: biddingtime
+    accelerator: 1440
     roles:
         tender_owner:   biddingtime_Owner
         provider:       biddingtime_Provider
@@ -953,14 +942,9 @@ biddingtime:
         viewer:         biddingtime_Viewer
     intervals:
         default:
-            enquiry: [0, 17]
-            tender:  [0, 19]
-        dgfFinancialAssets:
-            accelerator: 1440
-            auction:  [55, 60]
-        dgfOtherAssets:
-            accelerator: 1440
-            auction:  [55, 60]
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
     timeout_on_wait: 10
 epsilon:
     intervals:
