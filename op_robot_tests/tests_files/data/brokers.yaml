@@ -903,7 +903,7 @@ zupb:
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
-    timeout_on_wait: 10
+    timeout_on_wait: 30
 kme:
     keywords_file: kme
     accelerator: 1440
@@ -917,7 +917,7 @@ kme:
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
-    timeout_on_wait: 10
+    timeout_on_wait: 30
 sets:
     keywords_file: sets
     accelerator: 1440
@@ -931,7 +931,7 @@ sets:
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
-    timeout_on_wait: 10
+    timeout_on_wait: 30
 biddingtime:
     keywords_file: biddingtime
     accelerator: 1440
@@ -945,7 +945,7 @@ biddingtime:
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
-    timeout_on_wait: 10
+    timeout_on_wait: 30
 epsilon:
     intervals:
         default:
