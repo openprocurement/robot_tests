@@ -907,7 +907,7 @@ zupb:
         dgfOtherAssets:
             accelerator: 1440
             auction:  [55, 60]
-    timeout_on_wait: 180
+    timeout_on_wait: 10
 kme:
     keywords_file: kme
     roles:
@@ -925,7 +925,7 @@ kme:
         dgfOtherAssets:
             accelerator: 1440
             auction:  [55, 60]
-    timeout_on_wait: 180
+    timeout_on_wait: 10
 sets:
     keywords_file: sets
     roles:
@@ -943,7 +943,7 @@ sets:
         dgfOtherAssets:
             accelerator: 1440
             auction:  [55, 60]
-    timeout_on_wait: 180
+    timeout_on_wait: 10
 biddingtime:
     keywords_file: biddingtime
     roles:
@@ -961,7 +961,7 @@ biddingtime:
         dgfOtherAssets:
             accelerator: 1440
             auction:  [55, 60]
-    timeout_on_wait: 180
+    timeout_on_wait: 10
 epsilon:
     intervals:
         default:
