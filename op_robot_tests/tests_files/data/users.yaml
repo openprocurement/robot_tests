@@ -1487,38 +1487,38 @@ users:
         size:     [1024, 768]
     zupb_Owner:
         broker:   zupb
-        homepage: "https://etm.zub.com.ua/user/login"
-        default_page: "https://etm.zub.com.ua/public"
+        homepage: "http://etm.zub.com.ua/user/login"
+        default_page: "http://etm.zub.com.ua/public"
         login:    organizator
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     zupb_Provider:
         broker:   zupb
-        homepage: "https://etm.zub.com.ua/user/login"
-        default_page: "https://etm.zub.com.ua/public"
+        homepage: "http://etm.zub.com.ua/user/login"
+        default_page: "http://etm.zub.com.ua/public"
         login:    member
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     zupb_Provider1:
         broker:   zupb
-        homepage: "https://etm.zub.com.ua/user/login"
-        default_page: "https://etm.zub.com.ua/public"
+        homepage: "http://etm.zub.com.ua/user/login"
+        default_page: "http://etm.zub.com.ua/public"
         login:    member1
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     zupb_Viewer:
         broker:   zupb
-        homepage: "https://etm.zub.com.ua"
-        default_page: "https://etm.zub.com.ua/public"
+        homepage: "http://etm.zub.com.ua"
+        default_page: "http://etm.zub.com.ua/public"
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     kme_Owner:
         broker:   kme
         homepage: "http://sale.kme.net.ua/user/login"
@@ -1527,7 +1527,7 @@ users:
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     kme_Provider:
         broker:   kme
         homepage: "http://sale.kme.net.ua/user/login"
@@ -1536,7 +1536,7 @@ users:
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     kme_Provider1:
         broker:   kme
         homepage: "http://sale.kme.net.ua/user/login"
@@ -1545,14 +1545,14 @@ users:
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     kme_Viewer:
         broker:   kme
         homepage: "http://sale.kme.net.ua"
         default_page: "http://sale.kme.net.ua/public"
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     sets_Owner:
         broker:   sets
         homepage: "http://sale.sets.org.ua/user/login"
@@ -1561,7 +1561,7 @@ users:
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     sets_Provider:
         broker:   sets
         homepage: "http://sale.sets.org.ua/user/login"
@@ -1570,7 +1570,7 @@ users:
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     sets_Provider1:
         broker:   sets
         homepage: "http://sale.sets.org.ua/user/login"
@@ -1579,14 +1579,14 @@ users:
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     sets_Viewer:
         broker:   sets
         homepage: "http://sale.sets.org.ua"
         default_page: "http://sale.sets.org.ua/public"
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     biddingtime_Owner:
         broker:   biddingtime
         homepage: "http://biddingtime.com.ua/user/login"
@@ -1595,7 +1595,7 @@ users:
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     biddingtime_Provider:
         broker:   biddingtime
         homepage: "http://biddingtime.com.ua/user/login"
@@ -1604,7 +1604,7 @@ users:
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     biddingtime_Provider1:
         broker:   biddingtime
         homepage: "http://biddingtime.com.ua/user/login"
@@ -1613,14 +1613,14 @@ users:
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     biddingtime_Viewer:
         broker:   biddingtime
         homepage: "http://biddingtime.com.ua"
         default_page: "http://biddingtime.com.ua/public"
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     epsilon_Owner_auction:
         broker:   epsilon
         homepage: "http://test.tbepsilon.com/"
