@@ -1161,13 +1161,13 @@ pag:
             enquiry: [0, 20]
             tender:  [0, 30]
         dgfFinancialAssets:
-            accelerator: 180
+            accelerator: 360
             auction: [45,50]
         dgfOtherAssets:
-            accelerator: 180
+            accelerator: 360
             auction: [50,55]
         dgfInsider:
-            accelerator: 180
+            accelerator: 720
             auction:  [25,30]
     keywords_file: pag
     homepage: 'http://test.pag.kiev.ua'
@@ -1185,13 +1185,13 @@ ctb:
             enquiry: [0, 20]
             tender:  [0, 30]
         dgfFinancialAssets:
-            accelerator: 180
+            accelerator: 360
             auction: [45,50]
         dgfOtherAssets:
-            accelerator: 180
+            accelerator: 360
             auction: [50,55]
         dgfInsider:
-            accelerator: 180
+            accelerator: 720
             auction:  [25,30]
     keywords_file: ctb
     homepage: 'http://test.ctb.net.ua'
