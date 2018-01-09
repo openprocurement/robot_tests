@@ -1020,7 +1020,7 @@ Require Failure
 
 Отримати останній індекс
   [Arguments]  ${object}  ${username}
-  ${status}=  Run Keyword And Return Status  List Should Contain Value  ${USERS.users['${username}'].tender_data.data}  ${object}
+  ${status}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${USERS.users['${username}'].tender_data.data}  ${object}
   Run Keyword If  '${status}' == 'False'  Fail  ${object} not found in \${USERS.users['${username}'].tender_data.data}
   ${len_of_object}=  Get Length  ${USERS.users['${username}'].tender_data.data.${object}}
   ${index}=  subtraction  ${len_of_object}  1
