@@ -536,6 +536,8 @@ uub:
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
+        dgfInsider:
+            accelerator: 360
     timeout_on_wait: 20
 APStender:
     keywords_file: aps
@@ -1214,6 +1216,8 @@ akc:
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
+        dgfInsider:
+            accelerator: 360
     timeout_on_wait: 20
 tsbgalcontract:
     keywords_file: tsbgalcontract
@@ -1228,6 +1232,8 @@ tsbgalcontract:
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
+        dgfInsider:
+            accelerator: 360
     timeout_on_wait: 20
 skyline:
     keywords_file: skyline
