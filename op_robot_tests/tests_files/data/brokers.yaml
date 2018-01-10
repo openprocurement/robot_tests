@@ -135,7 +135,7 @@ aukzionist:
             accelerator: 144
             auction:  [35, 40]
         dgfInsider:
-            accelerator: 320
+            accelerator: 720
             auction:  [25, 30]
     keywords_file: aukzionist
     roles:
@@ -156,7 +156,7 @@ silvertrade:
             accelerator: 144
             auction:  [35, 40]
         dgfInsider:
-            accelerator: 320
+            accelerator: 720
             auction:  [25, 30]
     keywords_file: silvertrade
     roles:
@@ -177,7 +177,7 @@ silvertrade:
             accelerator: 144
             auction:  [35, 40]
         dgfInsider:
-            accelerator: 320
+            accelerator: 720
             auction:  [25, 30]
     keywords_file: 25h8
     roles:
