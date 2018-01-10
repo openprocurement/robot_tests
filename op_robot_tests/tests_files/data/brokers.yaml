@@ -785,3 +785,17 @@ epsilon:
             tender:  [0, 25]
             auction: [25, 30]
     timeout_on_wait: 10
+AversInv:
+    keywords_file: aversinv
+    roles:
+        viewer:         AversInv_Viewer
+        provider:       AversInv_Provider
+        provider1:      AversInv_Provider1
+        tender_owner:   AversInv_Owner
+    homepage: 'http://sales.avi.net.ua/'
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
