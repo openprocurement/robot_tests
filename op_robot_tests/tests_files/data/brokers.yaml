@@ -905,6 +905,8 @@ zupb:
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
+        dgfInsider:
+            accelerator: 360
     timeout_on_wait: 30
 kme:
     keywords_file: kme
@@ -919,6 +921,8 @@ kme:
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
+        dgfInsider:
+            accelerator: 360
     timeout_on_wait: 30
 sets:
     keywords_file: sets
@@ -933,6 +937,8 @@ sets:
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
+        dgfInsider:
+            accelerator: 360
     timeout_on_wait: 30
 biddingtime:
     keywords_file: biddingtime
@@ -947,6 +953,8 @@ biddingtime:
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
+        dgfInsider:
+            accelerator: 360
     timeout_on_wait: 30
 epsilon:
     intervals:
