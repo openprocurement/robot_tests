@@ -1146,7 +1146,7 @@ kpmgdealroom:
             accelerator: 360
             auction:  [60, 65]
         dgfInsider:
-            accelerator: 720
+            accelerator: 320
             auction:  [25, 30]
     keywords_file: kpmgdealroom
     roles:
