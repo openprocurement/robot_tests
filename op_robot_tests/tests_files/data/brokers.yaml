@@ -1277,13 +1277,13 @@ vapol:
             tender:  [0, 25]
             auction: [25, 30]
     timeout_on_wait: 10
-AversInv:
-    keywords_file: aversinv
+avi:
+    keywords_file: avi
     roles:
-        viewer:         AversInv_Viewer
-        provider:       AversInv_Provider
-        provider1:      AversInv_Provider1
-        tender_owner:   AversInv_Owner
+        viewer:         avi_Viewer
+        provider:       avi_Provider
+        provider1:      avi_Provider1
+        tender_owner:   avi_Owner
     homepage: 'http://sales.avi.net.ua/'
     intervals:
         default:
