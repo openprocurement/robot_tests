@@ -346,8 +346,9 @@ alltenders:
     keywords_file: alltenders
     homepage: 'https://prozorro.alltenders.com.ua/?mode=test&notification=off'
     roles:
-        provider:       alltenders_Provider1
-        provider1:      alltenders_Provider2
+        provider:       alltenders_Provider
+        provider1:      alltenders_Provider1
+        provider2:      alltenders_Provider2
         tender_owner:   alltenders_Owner
         viewer:         alltenders_Viewer
     timeout_on_wait: 35
