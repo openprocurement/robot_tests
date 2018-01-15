@@ -46,7 +46,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...  ${USERS.users['${viewer}'].broker}
   ...  lot_cancellation
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  ${cancellation_index}=  Отримати останній індекс  cancellations  ${viewer}
+  ${cancellation_index}=  Отримати останній індекс  cancellations  ${tender_owner}  ${viewer}
   Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}
   ...      active
   ...      cancellations[${cancellation_index}].status
@@ -57,7 +57,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  lot_cancellation
-  ${cancellation_index}=  Отримати останній індекс  cancellations  ${viewer}
+  ${cancellation_index}=  Отримати останній індекс  cancellations  ${tender_owner}  ${viewer}
   Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}']['lot_cancellation_data']['cancellation_reason']}
   ...      cancellations[${cancellation_index}].reason
@@ -105,7 +105,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_cancellation
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  ${cancellation_index}=  Отримати останній індекс  cancellations  ${viewer}
+  ${cancellation_index}=  Отримати останній індекс  cancellations  ${tender_owner}  ${viewer}
   Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}
   ...      active
   ...      cancellations[${cancellation_index}].status
@@ -116,7 +116,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_cancellation
-  ${cancellation_index}=  Отримати останній індекс  cancellations  ${viewer}
+  ${cancellation_index}=  Отримати останній індекс  cancellations  ${tender_owner}  ${viewer}
   Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}
   ...      ${USERS.users['${tender_owner}']['tender_cancellation_data']['cancellation_reason']}
   ...      cancellations[${cancellation_index}].reason
