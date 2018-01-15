@@ -32,6 +32,15 @@ Suite Teardown  Test Suite Teardown
   Отримати дані із тендера  ${viewer}  ${TENDER['TENDER_UAID']}  auctionPeriod.startDate  ${TENDER['LOT_ID']}
 
 
+Відображення заголовку лотів
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      lot_view
+  ...      critical
+  Звірити відображення поля title усіх лотів для користувача ${viewer}
+
+
 Можливість дочекатися початку аукціону
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
   ...      viewer
