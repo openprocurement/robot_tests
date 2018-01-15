@@ -44,6 +44,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      find_tender_by_funder_id
+  ...      critical
   Можливість знайти тендер за кошти донора для усіх користувачів
 
 ##############################################################################################
@@ -443,6 +444,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      funders_view
+  ...      critical
   Звірити відображення поля name усіх донорів для усіх користувачів
 
 
@@ -452,6 +454,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      funders_view
+  ...      critical
   Звірити відображення поля address.countryName усіх донорів для усіх користувачів
 
 
@@ -461,6 +464,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      funders_view
+  ...      critical
   Звірити відображення поля address.locality усіх донорів для усіх користувачів
 
 
@@ -470,6 +474,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      funders_view
+  ...      critical
   Звірити відображення поля address.postalCode усіх донорів для усіх користувачів
 
 
@@ -479,6 +484,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      funders_view
+  ...      critical
   Звірити відображення поля address.region усіх донорів для усіх користувачів
 
 
@@ -488,6 +494,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      funders_view
+  ...      critical
   Звірити відображення поля address.streetAddress усіх донорів для усіх користувачів
 
 
@@ -497,6 +504,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      funders_view
+  ...      critical
   Звірити відображення поля contactPoint.url усіх донорів для усіх користувачів
 
 
@@ -506,6 +514,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      funders_view
+  ...      critical
   Звірити відображення поля identifier.id усіх донорів для усіх користувачів
 
 
@@ -515,6 +524,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      funders_view
+  ...      critical
   Звірити відображення поля identifier.legalName усіх донорів для усіх користувачів
 
 
@@ -524,6 +534,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      funders_view
+  ...      critical
   Звірити відображення поля identifier.scheme усіх донорів для усіх користувачів
 
 ##############################################################################################
@@ -577,7 +588,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_tender_doc  level2
-  ...      critical
+  ...      non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля title документа ${USERS.users['${tender_owner}']['tender_document']['doc_id']} із ${USERS.users['${tender_owner}'].tender_document.doc_name} для користувача ${viewer}
 
@@ -632,7 +643,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_tender_doc  level2
-  ...      critical
+  ...      non-critical
   Звірити відображення вмісту документа ${USERS.users['${tender_owner}'].tender_document.doc_id} із ${USERS.users['${tender_owner}'].tender_document.doc_content} для користувача ${viewer}
 
 
@@ -889,6 +900,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_funder
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість видалити донора 0
 
@@ -898,6 +910,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      add_funder
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість додати донора
@@ -908,6 +921,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_funder_field
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Run Keyword And Expect Error  *  Можливість видалити поле name з донора 0
 
@@ -917,6 +931,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_funder_field
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Run Keyword And Expect Error  *  Можливість видалити поле contactPoint.name з донора 0
 
@@ -926,6 +941,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_funder_field
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Run Keyword And Expect Error  *  Можливість видалити поле address.countryName з донора 0
 
@@ -935,6 +951,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      change_funder_during_enquiry_period
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_id}=  create_fake_number  10000  99999
   Перевірити неможливість зміни поля funders[0].identifier.id тендера на значення ${new_id} для користувача ${tender_owner}
@@ -945,6 +962,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      change_funder_during_enquiry_period
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_scheme}=  get_fake_funder_scheme
   Перевірити неможливість зміни поля funders[0].identifier.scheme тендера на значення ${new_scheme} для користувача ${tender_owner}
@@ -1147,6 +1165,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      change_funder_after_enquiry_period
+  ...      critical
   [Setup]  Дочекатись дати закінчення періоду уточнень  ${tender_owner}  ${TENDER['TENDER_UAID']}
   ${new_legalName}=  create_fake_title
   Перевірити неможливість зміни поля funders[0].identifier.legalName тендера на значення ${new_legalName} для користувача ${tender_owner}

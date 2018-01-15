@@ -13,6 +13,7 @@ Suite Teardown  Test Suite Teardown
   ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      find_tender  level1
+  ...      critical
   Завантажити дані про тендер
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \   Run As  ${username}  Пошук тендера по ідентифікатору  ${TENDER['TENDER_UAID']}
