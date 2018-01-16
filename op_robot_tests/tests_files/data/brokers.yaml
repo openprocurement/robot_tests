@@ -1278,7 +1278,7 @@ vapol:
             auction: [25, 30]
     timeout_on_wait: 10
 avi:
-    keywords_file: avi
+    keywords_file: aversinv
     roles:
         viewer:         avi_Viewer
         provider:       avi_Provider
