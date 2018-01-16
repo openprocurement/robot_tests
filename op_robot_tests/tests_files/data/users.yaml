@@ -2227,3 +2227,33 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
+    avi_Viewer:
+        broker:   avi
+        homepage: "http://sales.avi.net.ua/aversinv/auctions/public"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1400, 900]
+    avi_Provider:
+        broker:   avi
+        homepage: "http://sales.avi.net.ua/aversinv/auctions/public"
+        login:    testprovider1@test.t
+        password: C9c7WlUNiv
+        browser:  chrome
+        position: [0, 0]
+        size:     [1400, 900]
+    avi_Provider1:
+        broker:   avi
+        homepage: "http://sales.avi.net.ua/aversinv/auctions/public"
+        login:    testprovider2@test.t
+        password: KF7hZ7ThDf
+        browser:  chrome
+        position: [0, 0]
+        size:     [1400, 900]
+    avi_Owner:
+        broker:   avi
+        homepage: "http://sales.avi.net.ua/aversinv/auctions/public"
+        login:    testowner@test.t
+        password: 0UoMercPD0
+        browser:  chrome
+        position: [0, 0]
+        size:     [1400, 900]
