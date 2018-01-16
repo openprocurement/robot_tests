@@ -1,5 +1,5 @@
 *** Settings ***
-Resource        keywords.robot
+Resource        base_keywords.robot
 Resource        resource.robot
 Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
@@ -21,6 +21,15 @@ Suite Teardown  Test Suite Teardown
 #             AUCTION
 ##############################################################################################
 
+Відображення заголовку лотів
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      lot_view
+  ...      critical
+  Отримати дані із тендера  ${viewer}  ${TENDER['TENDER_UAID']}  title  ${TENDER['LOT_ID']}
+
+
 Відображення дати початку аукціону
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних аукціону
   ...      viewer
@@ -30,15 +39,6 @@ Suite Teardown  Test Suite Teardown
   Дочекатись дати закінчення прийому пропозицій  ${viewer}  ${TENDER['TENDER_UAID']}
   Дочекатись дати початку періоду аукціону  ${viewer}  ${TENDER['TENDER_UAID']}
   Отримати дані із тендера  ${viewer}  ${TENDER['TENDER_UAID']}  auctionPeriod.startDate  ${TENDER['LOT_ID']}
-
-
-Відображення заголовку лотів
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      lot_view
-  ...      critical
-  Звірити відображення поля title усіх лотів для користувача ${viewer}
 
 
 Можливість дочекатися початку аукціону
