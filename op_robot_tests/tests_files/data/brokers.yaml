@@ -1285,3 +1285,17 @@ vapol:
             tender:  [0, 25]
             auction: [25, 30]
     timeout_on_wait: 10
+avi:
+    keywords_file: aversinv
+    roles:
+        viewer:         avi_Viewer
+        provider:       avi_Provider
+        provider1:      avi_Provider1
+        tender_owner:   avi_Owner
+    homepage: 'http://sales.avi.net.ua/'
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
