@@ -1284,7 +1284,7 @@ avi:
         provider:       avi_Provider
         provider1:      avi_Provider1
         tender_owner:   avi_Owner
-    homepage: 'http://sales.avi.net.ua/'
+    homepage: 'http://sales.avi.net.ua/aversinv/auctions/public'
     intervals:
         default:
             enquiry: [0, 10]
