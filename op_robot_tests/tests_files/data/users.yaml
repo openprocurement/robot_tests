@@ -2229,31 +2229,35 @@ users:
         size:     [1366, 800]
     avi_Viewer:
         broker:   avi
-        homepage: "http://sales.avi.net.ua/aversinv/auctions/public"
-        browser:  chrome
+        homepage: "http://sales.avi.net.ua"
+        syncpage: "http://sales.avi.net.ua/aversinv/auctions/public/sync-all"
+        browser:  ff
         position: [0, 0]
-        size:     [1400, 900]
+        size:     [1366, 800]
     avi_Provider:
         broker:   avi
-        homepage: "http://sales.avi.net.ua/aversinv/auctions/public"
+        homepage: "http://sales.avi.net.ua"
+        syncpage: "http://sales.avi.net.ua/aversinv/auctions/public/sync-all"
         login:    testprovider1@test.t
         password: C9c7WlUNiv
-        browser:  chrome
+        browser:  ff
         position: [0, 0]
-        size:     [1400, 900]
+        size:     [1366, 800]
     avi_Provider1:
         broker:   avi
-        homepage: "http://sales.avi.net.ua/aversinv/auctions/public"
+        homepage: "http://sales.avi.net.ua"
+        syncpage: "http://sales.avi.net.ua/aversinv/auctions/public/sync-all"
         login:    testprovider2@test.t
         password: KF7hZ7ThDf
-        browser:  chrome
+        browser:  ff
         position: [0, 0]
-        size:     [1400, 900]
+        size:     [1366, 800]
     avi_Owner:
         broker:   avi
-        homepage: "http://sales.avi.net.ua/aversinv/auctions/public"
+        homepage: "http://sales.avi.net.ua"
+        syncpage: "http://sales.avi.net.ua/aversinv/auctions/public/sync-all"
         login:    testowner@test.t
         password: 0UoMercPD0
-        browser:  chrome
+        browser:  ff
         position: [0, 0]
-        size:     [1400, 900]
+        size:     [1366, 800]
