@@ -605,6 +605,7 @@ ${award_index}      ${0}
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  award_complaint
+  ...  critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${file_path}  ${file_name}  ${file_content}=   create_fake_doc
@@ -891,6 +892,7 @@ ${award_index}      ${0}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      award_complaint
+  ...      non-critical
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  awards[${award_index}].complaintPeriod.endDate
 
@@ -900,6 +902,7 @@ ${award_index}      ${0}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      award_complaint
+  ...      non-critical
   ${standstillEnd}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data.awards[${award_index}].complaintPeriod.endDate}
   Дочекатись дати  ${standstillEnd}
 
@@ -909,6 +912,7 @@ ${award_index}      ${0}
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  award_complaint
+  ...  non-critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Run As  ${tender_owner}  Підтвердити підписання контракту  ${TENDER['TENDER_UAID']}  ${award_index}
 

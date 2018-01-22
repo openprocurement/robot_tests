@@ -680,6 +680,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_owner  viewer
   ...      ${USERS.users['${tender_owner}'].broker}  ${USERS.users['${viewer}'].broker}
   ...      tender_view
+  ...      non-critical
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  awards[0].complaintPeriod.endDate
 
