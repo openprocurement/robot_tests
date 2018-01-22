@@ -408,7 +408,7 @@ ${MOZ_INTEGRATION}  ${False}
   Звірити відображення поля deliveryAddress.countryName усіх предметів для користувача ${viewer}
 
 
-Відображення назви країни російською мовою доставки номенклатури переговорної процедури
+Відображення назви країни доставки номенклатури переговорної процедури російською мовою
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
@@ -417,7 +417,7 @@ ${MOZ_INTEGRATION}  ${False}
   Звірити відображення поля deliveryAddress.countryName_ru усіх предметів для користувача ${viewer}
 
 
-Відображення назви країни англійською мовою доставки номенклатури переговорної процедури
+Відображення назви країни доставки номенклатури переговорної процедури англійською мовою
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
@@ -680,6 +680,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_owner  viewer
   ...      ${USERS.users['${tender_owner}'].broker}  ${USERS.users['${viewer}'].broker}
   ...      tender_view
+  ...      non-critical
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  awards[0].complaintPeriod.endDate
 
