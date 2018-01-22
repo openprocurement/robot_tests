@@ -1026,7 +1026,6 @@ Resource           resource.robot
 
 Можливість підтвердити задоволення вимоги про виправлення умов закупівлі
   ${data}=  Create Dictionary
-  ...      status=resolved
   ...      satisfied=${True}
   ${confirmation_data}=  Create Dictionary  data=${data}
   ${confirmation_data}=  munch_dict  arg=${confirmation_data}
@@ -1069,7 +1068,6 @@ Resource           resource.robot
 
 Можливість підтвердити задоволення вимоги про виправлення умов лоту
   ${data}=  Create Dictionary
-  ...      status=resolved
   ...      satisfied=${True}
   ${confirmation_data}=  Create Dictionary  data=${data}
   ${confirmation_data}=  munch_dict  arg=${confirmation_data}
@@ -1091,7 +1089,6 @@ Resource           resource.robot
 
 Можливість підтвердити задоволення вимоги про виправлення визначення ${award_index} переможця
   ${data}=  Create Dictionary
-  ...       status=resolved
   ...       satisfied=${True}
   ${confirmation_data}=  Create Dictionary  data=${data}
   ${confirmation_data}=  munch_dict  arg=${confirmation_data}
