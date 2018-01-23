@@ -11,6 +11,7 @@
 -i add_tender_doc
 -i find_tender
 -i tender_view
+-i tender_view_unit_code
 -i extend_tendering_period
 -i ask_question_to_tender
 -i answer_question_to_tender
