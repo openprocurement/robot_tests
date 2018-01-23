@@ -13,6 +13,7 @@
 -i find_tender
 -i find_tender_by_funder_id
 -i tender_view
+-i tender_view_unit_code
 -i lot_view
 -i funders_view
 

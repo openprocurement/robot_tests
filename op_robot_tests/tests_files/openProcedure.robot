@@ -313,7 +313,7 @@ ${MOZ_INTEGRATION}  ${False}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      tender_view_unit_code
   ...      non-critical
   Звірити відображення поля unit.code усіх предметів для користувача ${viewer}
 

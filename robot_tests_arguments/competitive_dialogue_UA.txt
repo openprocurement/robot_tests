@@ -13,6 +13,7 @@
 -i create_tender
 -i find_tender
 -i tender_view
+-i tender_view_unit_code
 -i lot_view
 
 -i make_bid_by_provider
