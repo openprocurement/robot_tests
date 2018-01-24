@@ -2461,8 +2461,8 @@
             "additionalClassifications": [
                 {
                     "scheme": "ДК003",
-                    "id": "7242.1",
-                    "description": "Монтажники електронного устаткування (на роботах високої кваліфікації)"
+                    "id": "7242",
+                    "description": "Монтажники електронного устаткування"
                 }
             ],
             "classification": {
@@ -2475,8 +2475,8 @@
             "additionalClassifications": [
                 {
                     "scheme": "ДК003",
-                    "id": "7212.1",
-                    "description": "Зварники та газорізальники (на роботах високої кваліфікації)"
+                    "id": "7212",
+                    "description": "Зварники та газорізальники"
                 }
             ],
             "classification": {
@@ -2559,8 +2559,8 @@
             "additionalClassifications": [
                 {
                     "scheme": "ДК003",
-                    "id": "7112.1",
-                    "description": "Вибуховики (на роботах високої кваліфікації)"
+                    "id": "7112",
+                    "description": "Вибуховики"
                 }
             ],
             "classification": {
