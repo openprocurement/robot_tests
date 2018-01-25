@@ -393,7 +393,7 @@ ${MOZ_INTEGRATION}  ${False}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  tender_view
+  ...  tender_view_coordinates
   ...  non-critical
   Звірити відображення координат усіх предметів для користувача ${viewer}
 
