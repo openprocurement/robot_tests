@@ -222,7 +222,7 @@ def test_tender_data_planning(params):
             "procurementMethod": "",
             "procurementMethodType": params['mode'],
             "tenderPeriod": {
-                "startDate": (get_now().isoformat())
+                "startDate": get_now().replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
             }
         },
         "items": []
@@ -242,6 +242,7 @@ def test_tender_data_planning(params):
         item_data=test_item_data(id_cpv)
         del item_data['deliveryAddress']
         del item_data['deliveryLocation']
+        item_data['deliveryDate']['endDate'] = (get_now() + timedelta(days=10)).replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
         del item_data['deliveryDate']['startDate']
         data['items'].append(item_data)
     if params['mode'] in mode_open:
