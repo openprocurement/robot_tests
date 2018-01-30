@@ -297,7 +297,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
   Звірити відображення поля classification.scheme усіх предметів для користувача ${viewer}
-  Run Keyword If  "${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['description']}" == "Не визначено"
+  Run Keyword If  "${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['description']}" == "Не відображене в інших розділах"
   ...      Звірити відображення поля additionalClassifications[0].scheme усіх предметів для користувача ${viewer}
 
 
@@ -307,7 +307,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
   Звірити відображення поля classification.id усіх предметів для користувача ${viewer}
-  Run Keyword If  "${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['description']}" == "Не визначено"
+  Run Keyword If  "${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['description']}" == "Не відображене в інших розділах"
   ...      Звірити відображення поля additionalClassifications[0].id усіх предметів для користувача ${viewer}
 
 
@@ -317,7 +317,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
   Звірити відображення поля classification.description усіх предметів для користувача ${viewer}
-  Run Keyword If  "${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['description']}" == "Не визначено"
+  Run Keyword If  "${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['description']}" == "Не відображене в інших розділах"
   ...      Звірити відображення поля additionalClassifications[0].description усіх предметів для користувача ${viewer}
 
 
