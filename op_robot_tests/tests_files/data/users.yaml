@@ -144,6 +144,36 @@ users:
         browser:  firefox
         position: [0, 0]
         size:     [1366, 800]
+    allbiz_Owner:
+        broker:   tendersallbiz
+        homepage: "https://tenders.all.biz"
+        login:    prozorroytenderowner@gmail.com
+        password: 123456
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    allbiz_Provider:
+        broker:   tendersallbiz
+        homepage: "https://tenders.all.biz"
+        login:    prozorroyprovider1@gmail.com
+        password: 123456
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    allbiz_Provider1:
+        broker:   tendersallbiz
+        homepage: "https://tenders.all.biz"
+        login:    prozorroyprovider2@gmail.com
+        password: 123456
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    allbiz_Viewer:
+        broker:   tendersallbiz
+        homepage: "https://tenders.all.biz"
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
     tenderonline_Owner:
         broker:   tenderonline
         homepage: "http://tender-online.com.ua"

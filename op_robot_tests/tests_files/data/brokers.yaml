@@ -121,6 +121,36 @@ b25h8:
         provider1:      u25h8_Provider1
         viewer:         u25h8_Viewer
     timeout_on_wait: 180
+tendersallbiz:
+    intervals:
+        default:
+            accelerator: 720
+            enquiry: [0, 50]
+            tender:  [0, 15]
+        belowThreshold:
+            accelerator: 720
+            enquiry: [0, 20]
+            tender:  [0, 20]
+        openua:
+            accelerator: 720
+            tender:  [0, 60]
+        openeu:
+            accelerator: 720
+            tender:  [0, 71]
+        openua_defense:
+            accelerator: 720
+            tender:  [0, 71]
+        negotiation:
+            accelerator: 720
+            enquiry: [0, 20]
+            tender:  [0, 20]
+    keywords_file: allbiz
+    roles:
+        tender_owner:   allbiz_Owner
+        provider:       allbiz_Provider
+        provider1:      allbiz_Provider1
+        viewer:         allbiz_Viewer
+    timeout_on_wait: 180
 tenderonline:
     intervals:
         default:
