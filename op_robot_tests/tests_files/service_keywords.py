@@ -305,7 +305,9 @@ def compute_intrs(brokers_data, used_brokers):
     return result
 
 
-def prepare_test_tender_data(procedure_intervals, tender_parameters):
+def prepare_test_tender_data(procedure_intervals,
+                            tender_parameters,
+                            submissionMethodDetails):
     # Get actual intervals by mode name
     mode = tender_parameters['mode']
     if mode in procedure_intervals:
@@ -322,13 +324,13 @@ def prepare_test_tender_data(procedure_intervals, tender_parameters):
     assert intervals['accelerator'] >= 0, \
         "Accelerator should not be less than 0"
     if mode == 'belowThreshold':
-        return munchify({'data': test_tender_data(tender_parameters)})
+        return munchify({'data': test_tender_data(tender_parameters, submissionMethodDetails=submissionMethodDetails)})
     elif mode == 'dgfFinancialAssets':
-        return munchify({'data': test_tender_data_dgf_financial(tender_parameters)})
+        return munchify({'data': test_tender_data_dgf_financial(tender_parameters, submissionMethodDetails)})
     elif mode == 'dgfOtherAssets':
-        return munchify({'data': test_tender_data_dgf_other(tender_parameters)})
+        return munchify({'data': test_tender_data_dgf_other(tender_parameters, submissionMethodDetails)})
     elif mode == 'dgfInsider':
-        return munchify({'data': test_tender_data_dgf_insider(tender_parameters)})
+        return munchify({'data': test_tender_data_dgf_insider(tender_parameters, submissionMethodDetails)})
     raise ValueError("Invalid mode for prepare_test_tender_data")
 
 

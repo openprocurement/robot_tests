@@ -137,13 +137,17 @@ def create_fake_url():
     return '{0}/{1}x{2}/{3}/{4}.png'.format(base, size_x, size_y, background_color, font_color)
 
 
-def test_tender_data(params, periods=("enquiry", "tender")):
+def test_tender_data(params,
+                    periods=("enquiry", "tender"),
+                    submissionMethodDetails=None):
+    submissionMethodDetails = submissionMethodDetails \
+        if submissionMethodDetails else "quick"
     now = get_now()
     value_amount = create_fake_amount()  # max value equals to budget of Ukraine in hryvnias
 
     data = {
         "mode": "test",
-        "submissionMethodDetails": "quick",
+        "submissionMethodDetails": submissionMethodDetails,
         "description": fake.description(),
         "description_en": fake_en.sentence(nb_words=10, variable_nb_words=True),
         "description_ru": fake_ru.sentence(nb_words=10, variable_nb_words=True),
@@ -297,8 +301,8 @@ def test_item_data_financial(cav):
     return munchify(data)
 
 
-def test_tender_data_dgf_other(params):
-    data = test_tender_data(params, [])
+def test_tender_data_dgf_other(params, submissionMethodDetails):
+    data = test_tender_data(params, [], submissionMethodDetails)
 
     data['dgfID'] = fake.dgfID()
     data['dgfDecisionID'] = fake.dgfDecisionID()
@@ -334,8 +338,8 @@ def test_tender_data_dgf_other(params):
     return data
 
 
-def test_tender_data_dgf_financial(params):
-    data = test_tender_data(params, [])
+def test_tender_data_dgf_financial(params, submissionMethodDetails):
+    data = test_tender_data(params, [], submissionMethodDetails)
 
     data['dgfID'] = fake.dgfID()
     data['dgfDecisionID'] = fake.dgfDecisionID()
@@ -371,8 +375,8 @@ def test_tender_data_dgf_financial(params):
     return data
 
 
-def test_tender_data_dgf_insider(params):
-    data = test_tender_data(params, [])
+def test_tender_data_dgf_insider(params, submissionMethodDetails):
+    data = test_tender_data(params, [], submissionMethodDetails)
 
     data['dgfID'] = fake.dgfID()
     data['dgfDecisionID'] = fake.dgfDecisionID()
