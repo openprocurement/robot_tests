@@ -189,7 +189,7 @@ Resource           resource.robot
 
 
 Отримати дані із поля ${field} тендера для усіх користувачів
-  :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}  ${tender_owner}
+  :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}  ${provider2}  ${tender_owner}
   \  Отримати дані із поля ${field} тендера для користувача ${username}
 
 
