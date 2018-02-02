@@ -691,7 +691,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  add_contract
   ...  level1
-  ...  non-critical
+  ...  critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати  ${USERS.users['${tender_owner}'].tender_data.data.awards[0].complaintPeriod.endDate}
