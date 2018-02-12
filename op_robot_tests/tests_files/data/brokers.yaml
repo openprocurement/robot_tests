@@ -210,16 +210,19 @@ PrivatMarket:
             accelerator: 1440
             tender:  [0, 65]
         belowThreshold:
-            accelerator: 240
-            enquiry: [0, 65]
+            accelerator: 1440
+            enquiry: [0, 75]
             tender:  [0, 65]
         negotiation:
-            accelerator: 720
+            accelerator: 360
             enquiry: [0, 20]
             tender:  [0, 20]
+        openua_defense:
+            tender:  [0, 110]
     keywords_file: privatmarket
     roles:
         provider:       PrivatMarket_Provider
+        provider1:      PrivatMarket_Provider1
         tender_owner:   PrivatMarket_Owner
         viewer:         PrivatMarket_Viewer
     timeout_on_wait: 30
