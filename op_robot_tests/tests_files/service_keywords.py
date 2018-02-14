@@ -166,6 +166,13 @@ def convert_tender_attempts(attempts):
     raise ValueError(u"Cannot convert attempts")
 
 
+def compare_periods_duration(left, right, seconds):
+    left = parse(left)
+    right = parse(right)
+    delta = (right - left).total_seconds()
+    return delta >= seconds
+
+
 def log_object_data(data, file_name=None, format="yaml", update=False, artifact=False):
     """Log object data in pretty format (JSON or YAML)
 

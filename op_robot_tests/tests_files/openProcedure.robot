@@ -324,6 +324,23 @@ ${ITEM_MEAT}        ${True}
   ...      tender_view  level2
   Звірити відображення поля guarantee.amount тендера для усіх користувачів
 
+
+Відображення дати завершення періоду редагування лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view
+  Звірити відображення дати rectificationPeriod.endDate тендера для користувача ${viewer}
+
+Можливість перевірити тривалість періоду редагування лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних лоту
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      check_rectification_period
+  ${rectificationPeriod_endDate}=  Отримати дані із тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  rectificationPeriod.endDate
+  ${tenderPeriod_endDate}=  Отримати дані із тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  tenderPeriod.endDate
+  Перевірити, чи тривалість між ${rectificationPeriod_endDate} і ${tenderPeriod_endDate} становить не менше 5 днів
+
 ##############################################################################################
 #             Редагування лоту
 ##############################################################################################
