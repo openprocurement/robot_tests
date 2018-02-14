@@ -86,15 +86,15 @@ Resource           resource.robot
 Неможливість додати предмет закупівлі в тендер
   ${len_of_items_before_patch}=  Run As  ${tender_owner}  Отримати кількість предметів в тендері  ${TENDER['TENDER_UAID']}
   ${item}=  Підготувати дані для створення предмету закупівлі  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['id']}
-  Run As  ${tender_owner}  Додати предмет закупівлі  ${TENDER['TENDER_UAID']}  ${item}
+  Require Failure  ${tender_owner}  Додати предмет закупівлі  ${TENDER['TENDER_UAID']}  ${item}
   ${len_of_items_after_patch}=  Run As  ${tender_owner}  Отримати кількість предметів в тендері  ${TENDER['TENDER_UAID']}
   Порівняти об'єкти  ${len_of_items_before_patch}  ${len_of_items_after_patch}
 
 
 Неможливість видалити предмет закупівлі з тендера
   ${len_of_items_before_patch}=  Run As  ${tender_owner}  Отримати кількість предметів в тендері  ${TENDER['TENDER_UAID']}
-  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]}
-  Run As  ${tender_owner}  Видалити предмет закупівлі  ${TENDER['TENDER_UAID']}  ${item_id}
+  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data['items'][-1]}
+  Require Failure  ${tender_owner}  Видалити предмет закупівлі  ${TENDER['TENDER_UAID']}  ${item_id}
   ${len_of_items_after_patch}=  Run As  ${tender_owner}  Отримати кількість предметів в тендері  ${TENDER['TENDER_UAID']}
   Порівняти об'єкти  ${len_of_items_before_patch}  ${len_of_items_after_patch}
 
