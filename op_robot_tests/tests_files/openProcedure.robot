@@ -186,6 +186,46 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля description усіх предметів для усіх користувачів
 
 
+Відображення назви країни доставки активів лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view  level2
+  Звірити відображення поля address.countryName усіх предметів для користувача ${viewer}
+
+
+Відображення пошт. коду доставки активів лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view
+  Звірити відображення поля address.postalCode усіх предметів для користувача ${viewer}
+
+
+Відображення регіону доставки активів лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view  level2
+  Звірити відображення поля address.region усіх предметів для користувача ${viewer}
+
+
+Відображення нас. пункту доставки активів лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view
+  Звірити відображення поля address.locality усіх предметів для користувача ${viewer}
+
+
+Відображення вулиці доставки активів лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view
+  Звірити відображення поля address.streetAddress усіх предметів для користувача ${viewer}
+
+
 Відображення схеми класифікації активів лоту
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
   ...      viewer
