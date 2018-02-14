@@ -28,8 +28,12 @@ def create_fake_sentence():
     return fake.sentence(nb_words=10, variable_nb_words=True)
 
 
-def create_fake_tenderAttempts():
-   return fake.random_int(min=1, max=4)
+def create_fake_tenderAttempts(attempt):
+    number = [1,2,3,4]
+    number.remove(attempt)
+    return  random.choice(number)
+
+
 
 
 def create_fake_amount():
