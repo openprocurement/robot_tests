@@ -719,6 +719,33 @@ ${ITEM_MEAT}        ${True}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider2}
 
+Можливість підтвердити цінову пропозицію після зміни умов тендера першим учасником
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      confirm_first_bid
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість підтвердити цінову пропозицію учасником ${provider}
+
+
+Можливість підтвердити цінову пропозицію після зміни умов тендера другим учасником
+  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
+  ...      provider1
+  ...      ${USERS.users['${provider1}'].broker}
+  ...      confirm_second_bid
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість підтвердити цінову пропозицію учасником ${provider1}
+
+
+Можливість підтвердити цінову пропозицію після зміни умов третьому учаснику
+  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
+  ...      provider2
+  ...      ${USERS.users['${provider1}'].broker}
+  ...      confirm_third_bid
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість підтвердити цінову пропозицію учасником ${provider2}
+
+
 ##############################################################################################
 
 Можливість скасувати пропозицію першим учасником
