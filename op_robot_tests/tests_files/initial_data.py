@@ -28,8 +28,13 @@ def create_fake_sentence():
     return fake.sentence(nb_words=10, variable_nb_words=True)
 
 
-def create_fake_tenderAttempts():
-   return fake.random_int(min=1, max=4)
+def create_fake_tenderAttempts(attempt):
+    if attempt == 1:
+        return random.choice([2, 3, 4])
+    else:
+        return 1
+
+
 
 
 def create_fake_amount():
@@ -260,7 +265,7 @@ def test_tender_data_dgf_other(params):
     data = test_tender_data(params, [])
 
     data['dgfID'] = fake.dgfID()
-    data['tenderAttempts'] =  fake.random_int(min=1, max=4)
+    data['tenderAttempts'] = fake.random_int(min=1, max=4)
     data['minNumberOfQualifiedBids'] = int(params['minNumberOfQualifiedBids'])
     del data["procuringEntity"]
 
