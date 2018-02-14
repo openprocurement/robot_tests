@@ -481,14 +481,22 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля guarantee.amount тендера із ${USERS.users['${tender_owner}'].new_guarantee_value} для користувача ${viewer}
 
 
-Неможливість змінити поле "Лоти виставляються"
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних лоту
+Можливість додати актив лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування лота
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_tenderAttempts
-  ${new_attempt}=  create_fake_tenderAttempts
-  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  Перевірити неможливість зміни поля tenderAttempts тендера на значення ${new_attempt} для користувача ${tender_owner}
+  ...      add_item  level3
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість додати предмет закупівлі в тендер
+
+
+Можливість видалити актив лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування лота
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      delete_item  level3
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість видалити предмет закупівлі з тендера
 
 
 Можливість додати документацію до лоту
@@ -709,6 +717,25 @@ ${ITEM_MEAT}        ${True}
   ${new_description}=  create_fake_sentence
   Можливість змінити поле description тендера на ${new_description}
   Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data}  description
+
+
+Можливість додати актив лоту після запитання
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування лота
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_item  level3
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість додати предмет закупівлі в тендер
+
+
+Відображення опису нової номенклатури
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури лота
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      add_item  level2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля description у новоствореному предметі для усіх користувачів
 
 ##############################################################################################
 #             BIDDING
