@@ -859,6 +859,23 @@ ${ITEM_MEAT}        ${True}
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Require Failure  ${viewer}  Отримати інформацію із тендера  ${TENDER['TENDER_UAID']}  bids
 
+Неможливість додати актив лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування лота
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_item  level3
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Неможливість додати предмет закупівлі в тендер
+
+
+Неможливість видалити актив лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування лота
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      delete_item  level3
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Неможливість видалити предмет закупівлі з тендера
+
 ##############################################################################################
 #             AFTER BIDDING
 ##############################################################################################
