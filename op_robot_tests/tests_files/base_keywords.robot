@@ -305,6 +305,9 @@ Resource           resource.robot
   Run As  ${username}  Завантажити протокол аукціону в авард  ${TENDER['TENDER_UAID']}  ${auction_protocol_path}  ${award_index}
   Remove File  ${auction_protocol_path}
 
+Можливість підтвердити цінову пропозицію учасником ${username}
+  Run As  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  status  active
+
 ##############################################################################################
 #             Cancellations
 ##############################################################################################
