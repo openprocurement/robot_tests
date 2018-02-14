@@ -59,6 +59,15 @@ def add_minutes_to_date(date, minutes):
     return (parse(date) + timedelta(minutes=float(minutes))).isoformat()
 
 
+def compare_dates(left, right, seconds):
+    left = parse(left)
+    right = parse(right)
+    delta = (right -left).total_seconds()
+    if delta < seconds:
+        return False
+    return True
+
+
 def compare_date(left, right, accuracy="minute", absolute_delta=True):
     '''Compares dates with specified accuracy
 

@@ -148,6 +148,10 @@ def test_tender_data(params, periods=("enquiry", "tender")):
 
     data["procuringEntity"]["kind"] = "other"
 
+    data['rectificationPeriod'] = {
+            "endDate": (get_now() + timedelta(minutes=(random.randint(5,19)*1440)/accelerator)).isoformat()
+    }
+
     scheme_group = fake.scheme_other()[:4]
     for i in range(params['number_of_items']):
         new_item = test_item_data(scheme_group)
