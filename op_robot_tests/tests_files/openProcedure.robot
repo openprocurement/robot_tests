@@ -830,6 +830,14 @@ ${ITEM_MEAT}        ${True}
   Можливість підтвердити цінову пропозицію учасником ${provider2}
 
 
+Відображення дати внесення останніх змін
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      tender_view_invalidationDate  level2
+  Отримати дані із поля rectificationPeriod.invalidationDate тендера для усіх користувачів
+
 ##############################################################################################
 
 Можливість скасувати пропозицію першим учасником
