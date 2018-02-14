@@ -34,6 +34,30 @@ def create_fake_tenderAttempts(attempt):
     return  random.choice(number)
 
 
+def create_fake_title(language):
+    title = {
+            u'UKR': u"[ТЕСТУВАННЯ] {}".format(fake.title()),
+            u'RUS': u"[ТЕСТИРОВАНИЕ] {}".format(fake_ru.sentence(nb_words=2)),
+            u'ENG': u"[TESTING] {}".format(fake_en.sentence())
+    }
+    return title[language]
+
+
+def create_fake_description(language):
+    description = {
+            u'ua': fake.sentence(nb_words=10, variable_nb_words=True),
+            u'en': fake_en.sentence(nb_words=10, variable_nb_words=True),
+            u'ru': fake_ru.sentence(nb_words=10, variable_nb_words=True)
+    }
+    return description[language]
+
+
+def create_fake_dgfID():
+    return fake.dgfID()
+
+
+def convert_days_to_seconds(days, accelerator):
+   return int (days)*86400/ accelerator
 
 
 def create_fake_amount():
@@ -129,7 +153,7 @@ def test_tender_data(params, periods=("enquiry", "tender")):
         "value": {
             "amount": value_amount,
             "currency": u"UAH",
-            "valueAddedTaxIncluded": True
+            "valueAddedTaxIncluded": False
         },
         "guarantee": {
             "amount": create_fake_guarantee(value_amount),
@@ -137,7 +161,8 @@ def test_tender_data(params, periods=("enquiry", "tender")):
         },
         "minimalStep": {
             "amount": create_fake_minimal_step(value_amount),
-            "currency": u"UAH"
+            "currency": u"UAH",
+            "valueAddedTaxIncluded": False
         },
         "items": [],
     }

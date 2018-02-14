@@ -245,6 +245,15 @@ Library  openprocurement_client.utils
   Set_To_Object   ${USERS.users['${username}'].tender_data}   ${fieldname}   ${fieldvalue}
 
 
+Редагувати ПДВ
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  Set_to_object  ${tender.data.value}  valueAddedTaxIncluded  True
+  Set_to_object  ${tender.data.minimalStep}  valueAddedTaxIncluded  True
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+  Log  ${reply}
+
+
 Отримати кількість документів в тендері
   [Arguments]  ${username}  ${tender_uaid}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
