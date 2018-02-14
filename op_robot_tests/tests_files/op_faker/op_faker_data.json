@@ -3048,6 +3048,20 @@
                 "id": "16720000-8",
                 "description": "Трактори, що були у використанні"
             }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "CPVS",
+                    "id": "PA01-7",
+                    "description": "Оренда"
+                }
+            ],
+            "classification": {
+                "scheme": "CPV",
+                "id": "98910000-5",
+                "description": "Послуги міжнародних організацій та органів"
+            }
         }
     ],
     "units": [
@@ -3140,7 +3154,8 @@
         "30111000-0",
         "34110000-1",
         "39710000-2",
-        "16720000-8"
+        "16720000-8",
+        "98910000-5"
     ],
     "items_base_data_other": [
            {
@@ -3163,6 +3178,17 @@
             "unit": {
                 "code": "MTK",
                 "name": "метри квадратні"
+            }
+        },
+        {
+            "scheme_id": "98910000-5",
+            "description": "Послуги міжнародних організацій та органів",
+            "description_ru": "Услуги международных организаций и органов",
+            "description_en": "Services of international organizations and bodies",
+            "quantity": 5,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
             }
         },
         {
