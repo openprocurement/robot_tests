@@ -549,3 +549,7 @@ def compare_scheme_groups(length, *items):
 
 def convert_amount_string_to_float(amount_string):
     return float(amount_string.replace(' ', '').replace(',', '.').replace("'",''))
+
+
+def get_length_of_item(data, key):
+    return len(data.get(key, []))

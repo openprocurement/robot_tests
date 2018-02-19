@@ -341,3 +341,9 @@ Resource           resource.robot
   ...      ${TENDER['TENDER_UAID']}
   ...      ${0}
   Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.contracts[0]}  status
+
+
+Звірити кількість сформованих авардів лоту із ${number_of_awards} для користувача ${username}
+  ${left}=  Convert To Integer  ${number_of_awards}
+  ${right}=  Run As  ${username}  Отримати кількість авардів в тендері  ${TENDER['TENDER_UAID']}
+  Порівняти об'єкти  ${left}  ${right}
