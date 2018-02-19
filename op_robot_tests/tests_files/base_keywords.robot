@@ -282,6 +282,14 @@ Resource           resource.robot
   Run as  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  ${field}  ${value}
 
 
+Можливість зменшити пропозицію до невалідної користувачем ${username}
+  ${starting_price}=  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  value.amount
+  ${minimalStep}=  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  minimalStep.amount
+  ${max_amount}=  Evaluate  ${starting_price}+${minimalStep}
+  ${value}=  create_fake_amount  ${starting_price}  ${max_amount}
+  Run As  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  value.amount  ${value}
+
+
 Можливість завантажити документ в пропозицію користувачем ${username}
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   ${bid_doc_upload}=  Run As  ${username}  Завантажити документ в ставку  ${file_path}  ${TENDER['TENDER_UAID']}
