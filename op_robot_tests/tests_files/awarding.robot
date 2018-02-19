@@ -44,7 +44,7 @@ ${NUMBER_OF_AWARDS}  ${1}
 ##############################################################################################
 
 Відображення статусу 'очікується протокол' для першого кандидата
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
   ...     first_award_verification_status
@@ -53,7 +53,7 @@ ${NUMBER_OF_AWARDS}  ${1}
 
 
 Відображення статусу 'очікується кінець кваліфікації' для другого кандидата
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
   ...     second_award_waiting_status
@@ -88,7 +88,7 @@ ${NUMBER_OF_AWARDS}  ${1}
 
 
 Відображення статусу 'очікується підписання договору' для першого кандидата
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
   ...     first_award_payment_status
@@ -107,13 +107,14 @@ ${NUMBER_OF_AWARDS}  ${1}
 
 
 Відображення статусу 'cancelled' для другого кандидата
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
   ...     second_award_cancelled_status
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[1]}  status
   Звірити відображення поля awards[1].status тендера із cancelled для користувача ${viewer}
+
 
 Можливість підтвердити оплату першого кандидата
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
@@ -125,7 +126,7 @@ ${NUMBER_OF_AWARDS}  ${1}
 
 
 Відображення статусу 'оплачено, очікується підписання договору' для першого кандидата
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
   ...     first_award_active_status
@@ -154,7 +155,7 @@ ${NUMBER_OF_AWARDS}  ${1}
 
 
 Відображення статусу 'unsuccessful' для першого кандидата
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
   ...     first_award_status_unsuccessful
@@ -174,7 +175,7 @@ ${NUMBER_OF_AWARDS}  ${1}
 
 
 Відображення статусу 'unsuccessful' для другого кандидата
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
   ...     second_award_status_unsuccessful
