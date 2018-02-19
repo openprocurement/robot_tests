@@ -5,6 +5,7 @@ Suite Teardown  Test Suite Teardown
 
 *** Variables ***
 @{USED_ROLES}   tender_owner  viewer  provider  provider1
+${NUMBER_OF_AWARDS}  ${1}
 
 
 *** Test Cases ***
@@ -22,12 +23,13 @@ Suite Teardown  Test Suite Teardown
   \   ${resp}=  Run As  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
 
 
-Можливість дочекатись дати початку кваліфікації
+Можливість звірити кількість сформованих авардів лоту
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес кваліфікації
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      awarding
-  Дочекатись дати початку періоду кваліфікації  ${viewer}  ${TENDER['TENDER_UAID']}
+  ...      number_of_awards
+  [Setup]  Дочекатись закінчення періоду аукціону  ${viewer}  ${TENDER['TENDER_UAID']}
+  Звірити кількість сформованих авардів лоту із ${NUMBER_OF_AWARDS}
 
 
 ##############################################################################################
