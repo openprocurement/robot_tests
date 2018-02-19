@@ -675,6 +675,15 @@ ${ITEM_MEAT}        ${True}
   Можливість подати цінову пропозицію користувачем ${provider}
 
 
+Можливість зменшити пропозицію до невалідної для кваліфікації першим учасником
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      bid_lower_by_provider
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість зменшити пропозицію до невалідної користувачем ${provider}
+
+
 Можливість збільшити пропозицію на 10% першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
@@ -711,13 +720,31 @@ ${ITEM_MEAT}        ${True}
   Можливість подати цінову пропозицію користувачем ${provider1}
 
 
-Можливість подати пропозицію третім учасником
+Можливість зменшити пропозицію до невалідної для кваліфікації другим учасником
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
-  ...      provider2
+  ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
+  ...      modify_bid_by_provider1
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість зменшити пропозицію до невалідної користувачем ${provider1}
+
+
+Можливість подати пропозицію третім учасником
+  [Tags]   ${USERS.users['${provider2}'].broker}: Подання пропозиції
+  ...      provider2
+  ...      ${USERS.users['${provider2}'].broker}
   ...      make_bid_by_provider2  level1
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider2}
+
+
+Можливість зменшити пропозицію до невалідної для кваліфікації третім учасником
+  [Tags]   ${USERS.users['${provider2}'].broker}: Подання пропозиції
+  ...      provider2
+  ...      ${USERS.users['${provider2}'].broker}
+  ...      modify_bid_by_provider2
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість зменшити пропозицію до невалідної користувачем ${provider2}
 
 ##############################################################################################
 
