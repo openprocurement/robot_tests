@@ -449,6 +449,14 @@ Library  openprocurement_client.utils
   Log  ${number_of_documents}
   [return]  ${number_of_documents}
 
+
+Отримати кількість авардів в тендері
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${number_of_awards}=  get_length_of_item  ${tender.data}  awards
+  Log  ${number_of_awards}
+  [Return]  ${number_of_awards}
+
 ##############################################################################
 #             Qualification operations
 ##############################################################################
