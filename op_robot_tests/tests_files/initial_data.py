@@ -221,6 +221,12 @@ def test_bid_value(max_value_amount, minimalStep):
     })
 
 
+def invalid_award_value(tender_data):
+    max_value_amount = tender_data['value']['amount']
+    minimalStep = tender_data['minimalStep']['amount']
+    return round(random.uniform((max_value_amount),(max_value_amount + minimalStep)), 2)
+
+
 def test_supplier_data():
     return munchify({
         "data": {

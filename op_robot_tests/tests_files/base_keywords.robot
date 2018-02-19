@@ -279,6 +279,11 @@ Resource           resource.robot
   Run as  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  ${field}  ${value}
 
 
+Можливість зменшити пропозицію до невалідної користувачем ${username}
+  ${value}=  invalid_award_value  ${USERS.users['${username}'].tender_data.data}
+  Run as  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  value.amount  ${value}
+
+
 Можливість завантажити документ в пропозицію користувачем ${username}
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   ${bid_doc_upload}=  Run As  ${username}  Завантажити документ в ставку  ${file_path}  ${TENDER['TENDER_UAID']}
