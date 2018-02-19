@@ -31,6 +31,7 @@ from .initial_data import (
     fake,
     test_bid_data,
     test_bid_value,
+    invalid_award_value,
     test_confirm_data,
     test_item_data,
     test_related_question,
