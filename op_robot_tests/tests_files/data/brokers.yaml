@@ -294,15 +294,29 @@ uatenders:
 ubiz:
     intervals:
         default:
-            enquiry: [0, 5]
+            accelerator: 1440
+            enquiry: [0, 12]
+            tender:  [0, 20]
+        openeu:
+            accelerator: 1440
+            tender:  [0, 50]
+        openua:
+            accelerator: 2880
+            tender:  [0, 45]
+        belowThreshold:
+            accelerator: 550
+            enquiry: [0, 60]
+            tender:  [0, 15]
     keywords_file: ubiz
-    homepage: 'http://fgvfo.com.ua/'
+    homepage: 'http://test.ubiz.com.ua/prozorro'
+    buy:      'http://test.ubiz.com.ua/prozorro/tender/buy'
+    plans:    'http://test.ubiz.com.ua/prozorro/plan-view/index'
     roles:
         provider:       ubiz_Provider1
         provider1:      ubiz_Provider2
         tender_owner:   ubiz_Owner
         viewer:         ubiz_Viewer
-    timeout_on_wait: 50
+    timeout_on_wait: 10
 zakpro:
     intervals:
         default:
