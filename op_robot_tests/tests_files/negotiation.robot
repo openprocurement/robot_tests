@@ -262,7 +262,7 @@ ${MOZ_INTEGRATION}  ${False}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення замовника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  tender_view
+  ...  tender_view_contactPoint_url
   ...  level3
   ...  non-critical
   Звірити відображення поля procuringEntity.contactPoint.url тендера для користувача ${viewer}
