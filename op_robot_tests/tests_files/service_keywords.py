@@ -40,6 +40,10 @@ from .initial_data import (
     test_tender_data,
     test_tender_data_dgf_other,
     create_fake_tenderAttempts,
+    create_fake_dgfID,
+    convert_days_to_seconds,
+    create_fake_title,
+    create_fake_description
 
 )
 from barbecue import chef
