@@ -866,6 +866,159 @@ ${ITEM_MEAT}        ${True}
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Require Failure  ${viewer}  Отримати інформацію із тендера  ${TENDER['TENDER_UAID']}  bids
 
+##############################################################################################
+
+Неможливість змінити опис лоту після завершення періоду редагування лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_description  level2
+  [Setup]  Дочекатись дати закінчення періоду редагування лоту  ${tender_owner}
+  ${new_description}=  create_fake_description  ua
+  Перевірити неможливість зміни поля description тендера на значення ${new_description} для користувача ${tender_owner}
+
+
+Неможливість змінити опис лоту російською мовою після завершення періоду редагування лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_description  level2
+  [Setup]  Дочекатись дати закінчення періоду редагування лоту  ${tender_owner}
+  ${new_description}=  create_fake_description  ru
+  Перевірити неможливість зміни поля description_ru тендера на значення ${new_description} для користувача ${tender_owner}
+
+
+Неможливість змінити опис лоту англійською мовою після завершення періоду редагування лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_description  level2
+  [Setup]  Дочекатись дати закінчення періоду редагування лоту  ${tender_owner}
+  ${new_description}=  create_fake_description  en
+  Перевірити неможливість зміни поля description_en тендера на значення ${new_description} для користувача ${tender_owner}
+
+
+Неможливість змінити дані про організатора лоту після завершення періоду редагування лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_procuringEntity  level2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_procuringEntity_name}=  create_fake_sentence
+  Перевірити неможливість зміни поля procuringEntity.name тендера на значення ${new_procuringEntity_name} для користувача ${tender_owner}
+
+
+Неможливість змінити назву лоту українською мовою після завершення періоду редагування лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_title_ua  level2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_title}=  create_fake_title  ua
+  Перевірити неможливість зміни поля title тендера на значення ${new_title} для користувача ${tender_owner}
+
+
+Неможливість змінити назву лоту російською мовою після завершення періоду редагування лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_title  level3
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_title}=  create_fake_title  ru
+  Перевірити неможливість зміни поля title_ru тендера на значення ${new_title} для користувача ${tender_owner}
+
+
+Неможливість змінити назву лоту англійською мовою після завершення періоду редагування лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_title  level3
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_title}=  create_fake_title  en
+  Перевірити неможливість зміни поля title_en тендера на значення ${new_title} для користувача ${tender_owner}
+
+
+Неможливість змінити початок періоду подання пропозицій лоту після завершення періоду редагування лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_periods  level2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_value}=  Get Current Date
+  Перевірити неможливість зміни поля tenderPeriod.startDate тендера на значення ${new_value} для користувача ${tender_owner}
+
+
+Неможливість змінити кінець періоду уточнення лоту після завершення періоду редагування лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_enquiryPeriod  level2
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_value}=  Set Variable  ${USERS.users['${tender_owner}'].tender_data.data.auctionPeriod.shouldStartAfter}
+  Перевірити неможливість зміни поля enquiryPeriod.endDate тендера на значення ${new_value} для користувача ${tender_owner}
+
+
+Неможливість змінити поле "Лоти виставляються" після завершення періоду редагування лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних лоту
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_tenderAttempts
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_attempt}=  create_fake_tenderAttempts  ${USERS.users['${viewer}'].tender_data.data.tenderAttempts}
+  Перевірити неможливість зміни поля tenderAttempts тендера на значення ${new_attempt} для користувача ${tender_owner}
+
+
+Неможливість змінити номер лоту ФГВ після завершення періоду редагування лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних лоту
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_dgfID
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_dgfID}=  create_fake_dgfID
+  Перевірити неможливість зміни поля dgfID тендера на значення ${new_dgfID} для користувача ${tender_owner}
+
+
+Неможливість змінити початкову вартість лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних лоту
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_tenderAttempts
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_amount}=  create_fake_value  ${USERS.users['${tender_owner}'].tender_data.data.value.amount}
+  Перевірити неможливість зміни поля value.amount тендера на значення ${new_amount} для користувача ${tender_owner}
+
+
+Неможливість змінити ПДВ в бюджеті лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних лоту
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_tenderAttempts
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  Require Failure  ${tender_owner}  Редагувати ПДВ  ${TENDER['TENDER_UAID']}
+
+
+Неможливість змінити мінімальний крок лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_step
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${new_minimal_step}=  create_fake_value  ${USERS.users['${tender_owner}'].tender_data.data.minimalStep.amount}
+  Перевірити неможливість зміни поля minimalStep.amount тендера на значення ${new_minimal_step} для користувача ${tender_owner}
+
+
+Неможливість змінити гарантування лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_guarantee
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${new_guarantee_amount}=  create_fake_value  ${USERS.users['${tender_owner}'].tender_data.data.guarantee.amount}
+  Перевірити неможливість зміни поля guarantee.amount тендера на значення ${new_guarantee_amount} для користувача ${tender_owner}
+
+
 Неможливість додати актив лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування лота
   ...      tender_owner
