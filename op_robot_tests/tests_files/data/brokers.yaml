@@ -305,7 +305,7 @@ ubiz:
             tender:  [0, 45]
         belowThreshold:
             accelerator: 550
-            enquiry: [0, 60]
+            enquiry: [0, 80]
             tender:  [0, 15]
     keywords_file: ubiz
     homepage: 'http://test.ubiz.com.ua/prozorro'
