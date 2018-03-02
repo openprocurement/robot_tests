@@ -315,3 +315,7 @@ ${award_index}      ${0}
   ${awards_to_rejects}=  Run As  ${username}  Отримати кількість об'єктів  awards
   :FOR  ${award_index}  IN RANGE  2  ${awards_to_rejects*2-2}
   \  Run As  ${username}  Дискваліфікувати постачальника  ${TENDER['TENDER_UAID']}  ${award_index}
+
+# Award[0] and award[1] are activated. Then the latter is cancelled and reappears in 'pending' status.
+# After each 'pending' award is cancelled, another award of the same lot, but another bidder appears.
+# Thus, cancelling 'pending' awards, the number of awards to cancel is doubled. Award [2] is already cancelled.

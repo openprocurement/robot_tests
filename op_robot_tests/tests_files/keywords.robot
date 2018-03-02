@@ -988,14 +988,4 @@ Require Failure
   ${status}=  Run Keyword And Return Status  List Should Contain Value  ${USERS.users['${username}'].tender_data.data}  ${object}
   Run Keyword If  '${status}' == 'False'  Fail  ${object} not found in \${USERS.users['${username}'].tender_data.data}
   ${len_of_object}=  Get Length  ${USERS.users['${username}'].tender_data.data.${object}}
-  ${index}=  subtraction  ${len_of_object}  1
-  [Return]  ${index}
-
-
-Отримати індекс поля ${field_name} зі статусом ${status} ${username} ${tender_uaid}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  :FOR  ${index}  ${_}  IN ENUMERATE  @{tender.data.${field_name}}
-  \  ${field_status}=  Get From Dictionary  ${USERS.users['${username}'].tender_data.data.${field_name}[${index}]}  status
-  \  ${field_index}=  Set Variable If  '${field_status}' == '${status}'  ${index}
-  \  Exit For Loop If  '${field_status}' == '${status}'
-  [Return]  ${field_index}
+  [Return]  ${len_of_object-1}

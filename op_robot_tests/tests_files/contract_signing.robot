@@ -26,7 +26,7 @@ Suite Teardown  Test Suite Teardown
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      tender_view
-  ${award_index}=  Отримати індекс поля awards зі статусом active ${viewer} ${TENDER['TENDER_UAID']}
+  ${award_index}=  Run As  ${viewer}  Отримати індекс елементу поля зі статусом  ${TENDER['TENDER_UAID']}  awards  active
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  awards[${award_index}].complaintPeriod.endDate
 
@@ -36,7 +36,7 @@ Suite Teardown  Test Suite Teardown
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      contract_sign
-  ${award_index}=  Отримати індекс поля awards зі статусом active ${viewer} ${TENDER['TENDER_UAID']}
+  ${award_index}=  Run As  ${viewer}  Отримати індекс елементу поля зі статусом  ${TENDER['TENDER_UAID']}  awards  active
   ${standstillEnd}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data.awards[${award_index}].complaintPeriod.endDate}
   Дочекатись дати  ${standstillEnd}
 
@@ -47,7 +47,7 @@ Suite Teardown  Test Suite Teardown
   ...      ${USERS.users['${viewer}'].broker}
   ...      contract_view
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  ${award_index}=  Отримати індекс поля awards зі статусом active ${viewer} ${TENDER['TENDER_UAID']}
+  ${award_index}=  Run As  ${viewer}  Отримати індекс елементу поля зі статусом  ${TENDER['TENDER_UAID']}  awards  active
   Отримати дані із поля awards[${award_index}].value.amount тендера для користувача ${viewer}
 
 
@@ -113,7 +113,7 @@ Suite Teardown  Test Suite Teardown
   ...      modify_contract
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${contract_index}=  Отримати індекс поля contracts зі статусом pending ${viewer} ${TENDER['TENDER_UAID']}
+  ${contract_index}=  Run As  ${viewer}  Отримати індекс елементу поля зі статусом  ${TENDER['TENDER_UAID']}  contracts  pending
   ${dateSigned}=  create_fake_date
   Set to dictionary  ${USERS.users['${tender_owner}']}  dateSigned=${dateSigned}
   Run As  ${tender_owner}  Встановити дату підписання угоди  ${TENDER['TENDER_UAID']}  ${contract_index}  ${dateSigned}
@@ -125,7 +125,7 @@ Suite Teardown  Test Suite Teardown
   ...      ${USERS.users['${viewer}'].broker}
   ...      contract_view
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  ${contract_index}=  Отримати індекс поля contracts зі статусом pending ${viewer} ${TENDER['TENDER_UAID']}
+  ${contract_index}=  Run As  ${viewer}  Отримати індекс елементу поля зі статусом  ${TENDER['TENDER_UAID']}  contracts  pending
   Звірити відображення поля contracts[${contract_index}].dateSigned тендера із ${USERS.users['${tender_owner}'].dateSigned} для користувача ${viewer}
 
 
@@ -136,7 +136,7 @@ Suite Teardown  Test Suite Teardown
   ...      modify_contract
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${contract_index}=  Отримати індекс поля contracts зі статусом pending ${viewer} ${TENDER['TENDER_UAID']}
+  ${contract_index}=  Run As  ${viewer}  Отримати індекс елементу поля зі статусом  ${TENDER['TENDER_UAID']}  contracts  pending
   ${startDate}=  create_fake_date
   ${endDate}=  add_minutes_to_date  ${startDate}  10
   Set to dictionary  ${USERS.users['${tender_owner}']}  contract_startDate=${startDate}  contract_endDate=${endDate}
@@ -149,7 +149,7 @@ Suite Teardown  Test Suite Teardown
   ...      ${USERS.users['${viewer}'].broker}
   ...      contract_view
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  ${contract_index}=  Отримати індекс поля contracts зі статусом pending ${viewer} ${TENDER['TENDER_UAID']}
+  ${contract_index}=  Run As  ${viewer}  Отримати індекс елементу поля зі статусом  ${TENDER['TENDER_UAID']}  contracts  pending
   Звірити відображення поля contracts[${contract_index}].period.startDate тендера із ${USERS.users['${tender_owner}'].contract_startDate} для користувача ${viewer}
 
 
@@ -159,7 +159,7 @@ Suite Teardown  Test Suite Teardown
   ...      ${USERS.users['${viewer}'].broker}
   ...      contract_view
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  ${contract_index}=  Отримати індекс поля contracts зі статусом pending ${viewer} ${TENDER['TENDER_UAID']}
+  ${contract_index}=  Run As  ${viewer}  Отримати індекс елементу поля зі статусом  ${TENDER['TENDER_UAID']}  contracts  pending
   Звірити відображення поля contracts[${contract_index}].period.endDate тендера із ${USERS.users['${tender_owner}'].contract_endDate} для користувача ${viewer}
 
 
@@ -170,7 +170,7 @@ Suite Teardown  Test Suite Teardown
   ...      add_doc_to_contract
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${contract_index}=  Отримати індекс поля contracts зі статусом pending ${viewer} ${TENDER['TENDER_UAID']}
+  ${contract_index}=  Run As  ${viewer}  Отримати індекс елементу поля зі статусом  ${TENDER['TENDER_UAID']}  contracts  pending
   Можливість завантажити документ в ${contract_index} угоду користувачем ${tender_owner}
 
 
@@ -206,7 +206,7 @@ Suite Teardown  Test Suite Teardown
   ...      contract_sign  level1
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${contract_index}=  Отримати індекс поля contracts зі статусом pending ${viewer} ${TENDER['TENDER_UAID']}
+  ${contract_index}=  Run As  ${viewer}  Отримати індекс елементу поля зі статусом  ${TENDER['TENDER_UAID']}  contracts  pending
   Run As  ${tender_owner}  Підтвердити підписання контракту  ${TENDER['TENDER_UAID']}  ${contract_index}
 
 
@@ -216,6 +216,6 @@ Suite Teardown  Test Suite Teardown
   ...      ${USERS.users['${viewer}'].broker}
   ...      contract_sign
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  ${contract_index}=  Отримати індекс поля contracts зі статусом active ${viewer} ${TENDER['TENDER_UAID']}
+  ${contract_index}=  Run As  ${viewer}  Отримати індекс елементу поля зі статусом  ${TENDER['TENDER_UAID']}  contracts  active
   Run As  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
   Звірити відображення поля contracts[${contract_index}].status тендера із active для користувача ${viewer}

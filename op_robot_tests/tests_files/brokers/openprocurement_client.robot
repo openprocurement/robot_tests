@@ -1460,3 +1460,13 @@ Library  openprocurement_client.utils
 Отримати кількість об'єктів
   [Arguments]  ${username}  ${field}
   Run Keyword And Return  Get Length  ${USERS.users['${username}'].tender_data.data.${field}}
+
+
+Отримати індекс елементу поля зі статусом
+  [Arguments]  ${username}  ${tender_uaid}  ${field_name}  ${status}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  :FOR  ${index}  ${_}  IN ENUMERATE  @{tender.data.${field_name}}
+  \  ${field_status}=  Get From Dictionary  ${USERS.users['${username}'].tender_data.data.${field_name}[${index}]}  status
+  \  ${field_index}=  Set Variable If  '${field_status}' == '${status}'  ${index}
+  \  Exit For Loop If  '${field_status}' == '${status}'
+  [Return]  ${field_index}

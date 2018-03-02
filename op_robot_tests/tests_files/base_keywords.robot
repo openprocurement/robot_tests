@@ -1208,8 +1208,8 @@ Resource           resource.robot
 
 
 Неможливість змінити поле ${field_name} договору на значення ${new_value}
-  ${award_index}=  Отримати індекс поля awards зі статусом active ${viewer} ${TENDER['TENDER_UAID']}
-  ${contract_index}=  Отримати індекс поля contracts зі статусом pending ${viewer} ${TENDER['TENDER_UAID']}
+  ${award_index}=  Run As  ${viewer}  Отримати індекс елементу поля зі статусом  ${TENDER['TENDER_UAID']}  awards  active
+  ${contract_index}=  Run As  ${viewer}  Отримати індекс елементу поля зі статусом  ${TENDER['TENDER_UAID']}  contracts  pending
   ${new_value}=  Run Keyword If  '${field_name}' == 'value.contractDuration.days' or '${field_name}' == 'value.contractDuration.years'  Convert To Integer  ${new_value}
   ...  ELSE  Set Variable  ${new_value}
   Run As  ${tender_owner}  Редагувати угоду  ${TENDER['TENDER_UAID']}  ${contract_index}  ${field_name}  ${new_value}
