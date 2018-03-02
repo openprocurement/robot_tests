@@ -746,6 +746,13 @@ Require Failure
   ...      active.tendering
 
 
+Дочекатись дати закінчення періоду редагування лоту
+  [Arguments]  ${username}
+  wait_and_write_to_console  ${USERS.users['${username}'].tender_data.data.rectificationPeriod.endDate}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+
+
 Дочекатись дати закінчення прийому пропозицій
   [Arguments]  ${username}  ${tender_uaid}
   # XXX: HACK: Same as above
