@@ -225,7 +225,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ...  qualification_add_doc_to_first_award  level3
+  ...  qualification_add_doc_to_first_award
   ${file_path}  ${file_name}  ${file_content}=   create_fake_doc
   Run As   ${tender_owner}   Завантажити документ рішення кваліфікаційної комісії   ${file_path}   ${TENDER['TENDER_UAID']}   0
   Remove File  ${file_path}
@@ -235,7 +235,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ...  qualification_approve_first_award  level1
+  ...  qualification_approve_first_award
   Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  0
 
 
@@ -243,7 +243,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ...  qualification_cancel_first_award  level1
+  ...  qualification_cancel_first_award
   Run As  ${tender_owner}  Скасування рішення кваліфікаційної комісії  ${TENDER['TENDER_UAID']}  0
 
 
@@ -251,7 +251,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ...  qualification_reject_second_award  level1
+  ...  qualification_reject_second_award
   Run As  ${tender_owner}  Дискваліфікувати постачальника  ${TENDER['TENDER_UAID']}  1
 
 
@@ -259,7 +259,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ...  qualification_add_doc_to_third_award  level3
+  ...  qualification_add_doc_to_third_award
   ${file_path}  ${file_name}  ${file_content}=   create_fake_doc
   Run As   ${tender_owner}   Завантажити документ рішення кваліфікаційної комісії   ${file_path}   ${TENDER['TENDER_UAID']}   2
   Remove File  ${file_path}
@@ -269,7 +269,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ...  qualification_approve_third_award  level1
+  ...  qualification_approve_third_award
   Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  2
 
 # The following test cases are used in multi-lot procedures.
@@ -278,7 +278,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ...  qualification_add_doc_to_second_award  level3
+  ...  qualification_add_doc_to_second_award
   ${file_path}  ${file_name}  ${file_content}=   create_fake_doc
   Run As   ${tender_owner}   Завантажити документ рішення кваліфікаційної комісії   ${file_path}   ${TENDER['TENDER_UAID']}   1
   Remove File  ${file_path}
@@ -288,7 +288,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ...  qualification_approve_second_award  level1
+  ...  qualification_approve_second_award
   Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  1
 
 
@@ -296,7 +296,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ...  qualification_cancel_second_award  level1
+  ...  qualification_cancel_second_award
   Run As  ${tender_owner}  Скасування рішення кваліфікаційної комісії  ${TENDER['TENDER_UAID']}  1
 
 
@@ -304,7 +304,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
-  ...  qualification_reject_other_awards  level1
+  ...  qualification_reject_other_awards
   Можливість дискваліфікувати решту постачальників  ${tender_owner}  ${TENDER['TENDER_UAID']}
 
 

@@ -203,7 +203,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Процес укладання угоди
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      contract_sign  level1
+  ...      contract_sign
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${contract_index}=  Run As  ${viewer}  Отримати індекс елементу поля зі статусом  ${TENDER['TENDER_UAID']}  contracts  pending
