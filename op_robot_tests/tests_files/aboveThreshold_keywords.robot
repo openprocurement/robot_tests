@@ -33,12 +33,11 @@ Resource           base_keywords.robot
 
 
 Можливість підтвердити цінову пропозицію учасником ${username}
-  ${status}=  Run Keyword IF  '${MODE}'=='openeu'  Set Variable  pending
-  ...                     ELSE IF  '${MODE}'=='openua' or '${MODE}'=='openua_defense'  Set Variable  active
+  ${status}=  Run Keyword IF  '${MODE}'=='esco'  Set Variable  pending
   Run As  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  status  ${status}
 
 ##############################################################################################
-#             OPENEU  Bid documentation
+#             ESCO  Bid documentation
 ##############################################################################################
 
 Можливість змінити документацію цінової пропозиції з публічної на приватну учасником ${username}
@@ -55,7 +54,7 @@ Resource           base_keywords.robot
   Remove File  ${file_path}
 
 ##############################################################################################
-#             OPENEU  Pre-Qualification
+#             ESCO  Pre-Qualification
 ##############################################################################################
 
 Можливість завантажити документ у кваліфікацію ${bid_index} пропозиції
@@ -70,6 +69,12 @@ Resource           base_keywords.robot
 
 Можливість скасувати рішення кваліфікації для ${bid_index} пропопозиції
   Run As  ${tender_owner}  Скасувати кваліфікацію  ${TENDER['TENDER_UAID']}  ${bid_index}
+
+
+Можливість підтвердити решту пропозицій кваліфікації
+  ${number_of_qualifications}=  Run As  ${tender_owner}  Отримати кількість об'єктів  qualifications
+  :FOR  ${bid_index}  IN RANGE  2  ${number_of_qualifications}+1
+  \  Можливість підтвердити ${bid_index} пропозицію кваліфікації
 
 
 Можливість підтвердити ${bid_index} пропозицію кваліфікації
