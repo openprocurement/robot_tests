@@ -53,6 +53,7 @@
 
 -i auction
 -i auction_url
+-i auction_url_provider2
 -i auction_end_date
 
 -i number_of_awards
