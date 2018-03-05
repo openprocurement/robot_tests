@@ -15,6 +15,7 @@
 -i make_bid_by_provider
 -i modify_bid_by_provider
 
+-i number_of_awards
 -i awarding
 -i first_award_verification_status
 -i add_protocol_to_first_award

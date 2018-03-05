@@ -1,10 +1,8 @@
 -v MODE:dgfOtherAssets
 
--v minNumberOfQualifiedBids:2
+-v minNumberOfQualifiedBids:1
 
 -v NUMBER_OF_ITEMS:3
-
--v NUMBER_OF_AWARDS:2
 
 -i create_tender
 -i find_tender
@@ -14,16 +12,9 @@
 -i tender_view_unit_code
 -i tender_view_tenderAttempts
 
--i modify_auction_title
--i modify_auction_description
--i modify_tenderAttempts
--i modify_dgfID
 -i modify_auction_value
 -i modify_auction_step
 -i modify_auction_guarantee
--i add_item
--i delete_item
--i check_rectification_period
 -i modify_auction_periods		
 -i modify_tender
 -i add_tender_doc
@@ -43,37 +34,28 @@
 -i make_bid_without_parameters
 -i make_bid_by_provider
   -i modify_bid_by_provider
- -i make_bid_by_provider1
- -i make_bid_by_provider2
 -i bid_view_in_tendering_period
--i confirm_first_bid
--i confirm_second_bid
--i tender_view_invalidationDate
 
 
 -i add_bid_doc_after_tendering_period_by_provider
 -i make_bid_after_tendering_period
 -i modify_bid_doc_after_tendering_period_by_provider
--i modify_bid_after_tendering_period_by_provider1
--i cancel_bid_after_tendering_period_by_provider1
+-i modify_bid_after_tendering_period_by_provider
+-i cancel_bid_after_tendering_period_by_provider
 -i ask_question_to_tender_after_tendering_period
 -i ask_question_to_item_after_tendering_period
 
 -i auction
 -i auction_url
--i auction_url_provider2
 -i auction_end_date
 
 -i number_of_awards
 -i awarding
 -i first_award_verification_status
--i second_award_waiting_status
 -i change_first_award_payment_status
 -i add_protocol_to_first_award
 -i approve_first_award_protocol
 -i first_award_payment_status
--i cancel_second_award
--i second_award_cancelled_status
 -i confirm_first_award
 -i first_award_active_status
 

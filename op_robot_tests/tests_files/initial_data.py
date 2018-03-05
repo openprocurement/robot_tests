@@ -62,8 +62,8 @@ def convert_days_to_seconds(days, accelerator):
     return seconds / accelerator
 
 
-def create_fake_amount():
-    return round(random.uniform(3000, 999999999.99), 2)
+def create_fake_amount(min_value, max_value):
+    return round(random.uniform(min_value, max_value), 2)
 
 
 def create_fake_value(value_amount):
@@ -140,7 +140,7 @@ def create_fake_url():
 
 def test_tender_data(params, periods=("enquiry", "tender")):
     now = get_now()
-    value_amount = create_fake_amount()  # max value equals to budget of Ukraine in hryvnias
+    value_amount = create_fake_amount(3000, 999999999.99)  # max value equals to budget of Ukraine in hryvnias
 
     data = {
         "mode": "test",

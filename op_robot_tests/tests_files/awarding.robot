@@ -5,6 +5,7 @@ Suite Teardown  Test Suite Teardown
 
 *** Variables ***
 @{USED_ROLES}   tender_owner  viewer  provider  provider1
+${NUMBER_OF_AWARDS}  ${1}
 
 
 *** Test Cases ***
@@ -22,20 +23,28 @@ Suite Teardown  Test Suite Teardown
   \   ${resp}=  Run As  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
 
 
-Можливість дочекатись дати початку кваліфікації
+Можливість звірити кількість сформованих авардів лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Процес кваліфікації
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      number_of_awards
+  [Setup]  Дочекатись закінчення періоду аукціону  ${viewer}  ${TENDER['TENDER_UAID']}
+  Звірити кількість сформованих авардів лоту із ${NUMBER_OF_AWARDS} для користувача ${viewer}
+
+
+Відображення статусу тендера в період кваліфікації
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес кваліфікації
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      awarding
-  Дочекатись дати початку періоду кваліфікації  ${viewer}  ${TENDER['TENDER_UAID']}
-
+  Звірити статус тендера  ${viewer}  ${TENDER['TENDER_UAID']}  active.qualification
 
 ##############################################################################################
 #             AWARDING
 ##############################################################################################
 
 Відображення статусу 'очікується протокол' для першого кандидата
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
   ...     first_award_verification_status
@@ -44,7 +53,7 @@ Suite Teardown  Test Suite Teardown
 
 
 Відображення статусу 'очікується кінець кваліфікації' для другого кандидата
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
   ...     second_award_waiting_status
@@ -79,7 +88,7 @@ Suite Teardown  Test Suite Teardown
 
 
 Відображення статусу 'очікується підписання договору' для першого кандидата
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
   ...     first_award_payment_status
@@ -98,13 +107,14 @@ Suite Teardown  Test Suite Teardown
 
 
 Відображення статусу 'cancelled' для другого кандидата
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
   ...     second_award_cancelled_status
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[1]}  status
   Звірити відображення поля awards[1].status тендера із cancelled для користувача ${viewer}
+
 
 Можливість підтвердити оплату першого кандидата
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
@@ -116,7 +126,7 @@ Suite Teardown  Test Suite Teardown
 
 
 Відображення статусу 'оплачено, очікується підписання договору' для першого кандидата
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
   ...     first_award_active_status
@@ -145,7 +155,7 @@ Suite Teardown  Test Suite Teardown
 
 
 Відображення статусу 'unsuccessful' для першого кандидата
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
   ...     first_award_status_unsuccessful
@@ -165,7 +175,7 @@ Suite Teardown  Test Suite Teardown
 
 
 Відображення статусу 'unsuccessful' для другого кандидата
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
   ...     second_award_status_unsuccessful
