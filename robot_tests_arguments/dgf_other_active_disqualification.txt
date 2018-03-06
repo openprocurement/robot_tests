@@ -11,6 +11,7 @@
 -i tender_view_tenderPeriod
 -i tender_view_unit_code
 -i tender_view_min_step
+-i modify_auction_value_tax
 
 -i make_bid_by_provider
 -i modify_bid_by_provider

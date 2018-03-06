@@ -19,6 +19,7 @@
 -i modify_tenderAttempts
 -i modify_dgfID
 -i modify_auction_value
+-i modify_auction_value_tax
 -i modify_auction_step
 -i modify_auction_guarantee
 -i add_item
