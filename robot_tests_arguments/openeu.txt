@@ -42,12 +42,10 @@
 
 -i create_tender_claim
   -i answer_tender_claim
-  -i resolve_tender_claim
 -i modify_tender_after_claim
 
 -i create_lot_claim
   -i answer_lot_claim
-  -i resolve_lot_claim
 -i modify_lot_after_claim
 
 -i make_bid_without_related_lot
