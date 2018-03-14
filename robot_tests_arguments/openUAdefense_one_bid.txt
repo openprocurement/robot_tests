@@ -58,7 +58,7 @@
   -i open_confirm_first_bid
 -i bid_view_in_tendering_period
 
--i add_bid_doc_after_tendering_period_by_provider
+-i ask_question_to_tender_after_tendering_period
 
 -i qualification_add_doc_to_first_award
 -i qualification_approve_first_award
