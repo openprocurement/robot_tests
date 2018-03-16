@@ -222,7 +222,7 @@ ${MOZ_INTEGRATION}  ${False}
   Звірити відображення координат усіх предметів для користувача ${viewer}
 
 
-Відображення назви нас. пункту доставки номенклатур тендера
+Відображення країни доставки номенклатур тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -249,7 +249,7 @@ ${MOZ_INTEGRATION}  ${False}
   Звірити відображення поля deliveryAddress.region усіх предметів для користувача ${viewer}
 
 
-Відображення locality адреси доставки номенклатур тендера
+Відображення назви нас. пункту доставки номенклатур тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -455,7 +455,7 @@ ${MOZ_INTEGRATION}  ${False}
   Звірити відображення поля address.countryName усіх донорів для усіх користувачів
 
 
-Відображення назви міста донора
+Відображення назви нас. пункту донора
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення донора тендера
   ...      viewer  tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}

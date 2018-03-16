@@ -511,7 +511,7 @@ ${MOZ_INTEGRATION}  ${False}
   Звірити відображення поля awards[0].suppliers[0].address.countryName тендера із ${USERS.users['${tender_owner}']['supplier_data']['data']['suppliers'][0]['address']['countryName']} для користувача ${viewer}
 
 
-Відображення міста постачальника переговорної процедури
+Відображення назви нас. пункту постачальника переговорної процедури
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення постачальника процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
