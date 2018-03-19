@@ -453,10 +453,11 @@ def test_item_data(cpv=None):
     data["description"] = field_with_id("i", data["description"])
     data["description_en"] = field_with_id("i", data["description_en"])
     data["description_ru"] = field_with_id("i", data["description_ru"])
-    days = fake.random_int(min=1, max=30)
+    startDate = fake.random_int(min=1, max=30)
+    endDate = startDate + fake.random_int(min=1, max=7)
     data["deliveryDate"] = {
-        "startDate": (get_now() + timedelta(days=days)).astimezone(TZ).isoformat(),
-        "endDate": (get_now() + timedelta(days=days)).astimezone(TZ).isoformat()
+        "startDate": (get_now() + timedelta(days=startDate)).replace(hour=0, minute=0, second=0, microsecond=0).isoformat(),
+        "endDate": (get_now() + timedelta(days=endDate)).replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
     }
     data["deliveryAddress"]["countryName_en"] = translate_country_en(data["deliveryAddress"]["countryName"])
     data["deliveryAddress"]["countryName_ru"] = translate_country_ru(data["deliveryAddress"]["countryName"])
