@@ -107,7 +107,7 @@ ${MOZ_INTEGRATION}  ${False}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  tender_view
+  ...  tender_view_title_en
   ...  non-critical
   Звірити відображення поля title_en тендера для користувача ${viewer}
 
@@ -116,7 +116,7 @@ ${MOZ_INTEGRATION}  ${False}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  tender_view
+  ...  tender_view_title_ru
   ...  non-critical
   Звірити відображення поля title_ru тендера для користувача ${viewer}
 
@@ -127,7 +127,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
   ...  level2
-  ...  non-critical
+  ...  critical
   Звірити відображення поля tenderID тендера із ${TENDER['TENDER_UAID']} для користувача ${viewer}
 
 
@@ -136,8 +136,8 @@ ${MOZ_INTEGRATION}  ${False}
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
-  ...  level3
-  ...  non-critical
+  ...  level2
+  ...  critical
   Звірити відображення поля description тендера для користувача ${viewer}
 
 
@@ -145,7 +145,7 @@ ${MOZ_INTEGRATION}  ${False}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  tender_view
+  ...  tender_view_description_en
   ...  non-critical
   Звірити відображення поля description_en тендера для користувача ${viewer}
 
@@ -154,7 +154,7 @@ ${MOZ_INTEGRATION}  ${False}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  tender_view
+  ...  tender_view_description_ru
   ...  non-critical
   Звірити відображення поля description_ru тендера для користувача ${viewer}
 
@@ -421,7 +421,7 @@ ${MOZ_INTEGRATION}  ${False}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  tender_view
+  ...  tender_view_countryName_ru
   ...  non-critical
   Звірити відображення поля deliveryAddress.countryName_ru усіх предметів для користувача ${viewer}
 
@@ -430,7 +430,7 @@ ${MOZ_INTEGRATION}  ${False}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...  viewer
   ...  ${USERS.users['${viewer}'].broker}
-  ...  tender_view
+  ...  tender_view_countryName_en
   ...  non-critical
   Звірити відображення поля deliveryAddress.countryName_en усіх предметів для користувача ${viewer}
 

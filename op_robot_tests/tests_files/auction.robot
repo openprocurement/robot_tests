@@ -38,8 +38,10 @@ Suite Teardown  Test Suite Teardown
   [Setup]  Отримати дані із тендера   ${viewer}  ${TENDER['TENDER_UAID']}   tenderPeriod.endDate
   Дочекатись дати закінчення прийому пропозицій  ${viewer}  ${TENDER['TENDER_UAID']}
   Дочекатись дати початку періоду аукціону  ${viewer}  ${TENDER['TENDER_UAID']}
-  Отримати дані із тендера  ${viewer}  ${TENDER['TENDER_UAID']}  auctionPeriod.startDate  ${TENDER['LOT_ID']}
-
+  Run Keyword If  ${NUMBER_OF_LOTS} == 0
+  ...      Отримати дані із тендера  ${viewer}  ${TENDER['TENDER_UAID']}  auctionPeriod.startDate
+  ...      ELSE
+  ...      Отримати дані із тендера  ${viewer}  ${TENDER['TENDER_UAID']}  auctionPeriod.startDate  ${TENDER['LOT_ID']}
 
 Можливість дочекатися початку аукціону
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
@@ -72,7 +74,10 @@ Suite Teardown  Test Suite Teardown
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Отримати дані із тендера  ${viewer}  ${TENDER['TENDER_UAID']}  auctionPeriod.endDate  ${TENDER['LOT_ID']}
+  Run Keyword If  ${NUMBER_OF_LOTS} == 0
+  ...      Отримати дані із тендера  ${viewer}  ${TENDER['TENDER_UAID']}  auctionPeriod.endDate
+  ...      ELSE
+  ...      Отримати дані із тендера  ${viewer}  ${TENDER['TENDER_UAID']}  auctionPeriod.endDate  ${TENDER['LOT_ID']}
 
 
 *** Keywords ***
@@ -80,7 +85,10 @@ Suite Teardown  Test Suite Teardown
   [Arguments]  ${username}
   # Can't use that dirty hack here since we don't know
   # the date of auction when creating the procurement :)
-  ${auctionStart}=  Отримати дані із тендера   ${username}  ${TENDER['TENDER_UAID']}   auctionPeriod.startDate  ${TENDER['LOT_ID']}
+  ${auctionStart}=  Run Keyword If  ${NUMBER_OF_LOTS} == 0
+  ...     Отримати дані із тендера   ${username}  ${TENDER['TENDER_UAID']}   auctionPeriod.startDate
+  ...     ELSE
+  ...     Отримати дані із тендера   ${username}  ${TENDER['TENDER_UAID']}   auctionPeriod.startDate  ${TENDER['LOT_ID']}
   Дочекатись дати  ${auctionStart}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}

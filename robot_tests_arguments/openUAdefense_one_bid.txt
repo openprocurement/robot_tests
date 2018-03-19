@@ -57,3 +57,5 @@
 -i qualification_approve_first_award
 
 -i contract_sign
+-i modify_contract
+-i contract_view

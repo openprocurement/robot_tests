@@ -49,6 +49,7 @@ Suite Teardown  Test Suite Teardown
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      contract_view
+  ...      non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   ${award_index}=  Отримати останній індекс  awards  ${tender_owner}  ${viewer}
   Отримати дані із поля awards[${award_index}].value.amount тендера для користувача ${viewer}
@@ -59,6 +60,7 @@ Suite Teardown  Test Suite Teardown
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_contract
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${award_index}=  Отримати останній індекс  awards  ${tender_owner}  ${viewer}
@@ -74,6 +76,7 @@ Suite Teardown  Test Suite Teardown
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      contract_view
+  ...      non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   ${contract_index}=  Отримати останній індекс  contracts  ${tender_owner}  ${viewer}
   Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.contracts[${contract_index}].value}  amount
@@ -85,6 +88,7 @@ Suite Teardown  Test Suite Teardown
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_contract
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${contract_index}=  Отримати останній індекс  contracts  ${tender_owner}  ${viewer}
@@ -98,6 +102,7 @@ Suite Teardown  Test Suite Teardown
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      contract_view
+  ...      non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   ${contract_index}=  Отримати останній індекс  contracts  ${tender_owner}  ${viewer}
   Звірити відображення поля contracts[${contract_index}].dateSigned тендера із ${USERS.users['${tender_owner}'].dateSigned} для користувача ${viewer}
@@ -108,6 +113,7 @@ Suite Teardown  Test Suite Teardown
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_contract
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${contract_index}=  Отримати останній індекс  contracts  ${tender_owner}  ${viewer}
@@ -122,6 +128,7 @@ Suite Teardown  Test Suite Teardown
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      contract_view
+  ...      non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   ${contract_index}=  Отримати останній індекс  contracts  ${tender_owner}  ${viewer}
   Звірити відображення поля contracts[${contract_index}].period.startDate тендера із ${USERS.users['${tender_owner}'].contract_startDate} для користувача ${viewer}
@@ -132,6 +139,7 @@ Suite Teardown  Test Suite Teardown
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      contract_view
+  ...      non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   ${contract_index}=  Отримати останній індекс  contracts  ${tender_owner}  ${viewer}
   Звірити відображення поля contracts[${contract_index}].period.endDate тендера із ${USERS.users['${tender_owner}'].contract_endDate} для користувача ${viewer}

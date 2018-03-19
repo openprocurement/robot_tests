@@ -115,8 +115,7 @@ Library  openprocurement_client.utils
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${object_with_url}=  get_object_by_id  ${tender.data}  ${lot_id}  lots  id
   Log  ${object_with_url}
-  ${auctionUrl}=  Run Keyword IF  '${lot_id}'  Get Variable Value  ${object_with_url['auctionUrl']}
-  ...             ELSE  Set Variable  ${tender.data.auctionUrl}
+  ${auctionUrl}=  Get Variable Value  ${object_with_url['auctionUrl']}
   [Return]  ${auctionUrl}
 
 
