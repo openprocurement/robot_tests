@@ -283,7 +283,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
 
 Дочекатись паузи перед ${stage_name} етапом
   Переключитись на учасника  ${viewer}
-  Wait Until Page Contains  → ${stage_name}  15 min
+  Wait Until Page Contains  → ${stage_name}  10 min
   :FOR    ${username}    IN    ${provider}  ${provider1}
   \   Переключитись на учасника   ${username}
   \   Wait Until Page Contains  → ${stage_name}  30 s
