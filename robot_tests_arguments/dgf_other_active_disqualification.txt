@@ -16,7 +16,6 @@
 -i auction
 -i auction_end_date
 
--i number_of_awards
 -i awarding
 -i first_award_pending_status
 -i second_award_waiting_status

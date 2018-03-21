@@ -321,9 +321,10 @@ Resource           resource.robot
   Run As  ${username}  Завантажити протокол аукціону  ${TENDER['TENDER_UAID']}  ${auction_protocol_path}  ${bid_index}
   Remove File  ${auction_protocol_path}
 
+
 Можливість завантажити протокол аукціону в авард ${award_index} користувачем ${username}
   ${auction_protocol_path}  ${file_title}  ${file_content}=  create_fake_doc
-  Run As  ${username}  Завантажити протокол аукціону в авард  ${TENDER['TENDER_UAID']}  ${auction_protocol_path}  ${award_index}
+  Run As  ${username}  Завантажити протокол аукціону  ${TENDER['TENDER_UAID']}  ${auction_protocol_path}  ${award_index}
   Remove File  ${auction_protocol_path}
 
 ##############################################################################################

@@ -22,5 +22,6 @@
 -i second_award_waiting_status
 -i add_protocol_to_first_award
 -i cancel_second_award
+-i second_award_cancelled_status
 -i disqualified_first_award
 -i tender_status_unsuccessful
