@@ -1,5 +1,5 @@
 *** Settings ***
-Resource        keywords.robot
+Resource        base_keywords.robot
 Resource        resource.robot
 Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
@@ -21,6 +21,26 @@ Suite Teardown  Test Suite Teardown
 ##############################################################################################
 #             CONTRACT
 ##############################################################################################
+
+Можливість вказати дату отримання оплати
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес укладання угоди
+  ...     tender_owner
+  ...     ${USERS.users['${tender_owner}'].broker}
+  ...     datePaid
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${datePaid}=  create_fake_date
+  Set to dictionary  ${USERS.users['${tender_owner}']}  datePaid=${datePaid}
+  Run As  ${tender_owner}  Вказати дату отримання оплати  ${TENDER['TENDER_UAID']}  -1  ${datePaid}
+
+
+Відображення дати отримання оплати
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних угоди
+  ...     viewer
+  ...     ${USERS.users['${viewer}'].broker}
+  ...     datePaid
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля contracts[-1].datePaid тендера із ${USERS.users['${tender_owner}'].datePaid} для користувача ${viewer}
+
 
 Можливість завантажити угоду до лоту
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Завантаження документів щодо угоди

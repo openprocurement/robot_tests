@@ -45,8 +45,8 @@ from .initial_data import (
     test_tender_data_dgf_insider,
     create_fake_dgfID,
     create_fake_dgfDecisionID,
-    create_fake_dgfDecisionDate,
     create_fake_tenderAttempts,
+    create_fake_date,
 
 )
 from barbecue import chef

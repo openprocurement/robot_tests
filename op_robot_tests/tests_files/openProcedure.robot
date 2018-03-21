@@ -510,7 +510,7 @@ ${ITEM_MEAT}        ${True}
   ...      modify_decisionDate  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${new_date}=  create_fake_dgfDecisionDate
+  ${new_date}=  create_fake_date
   Set To Dictionary  ${USERS.users['${tender_owner}']}  new_decisionDate=${new_date}
   Можливість змінити поле dgfDecisionDate тендера на ${new_date}
 

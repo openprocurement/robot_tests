@@ -50,7 +50,7 @@ def create_fake_dgfID():
     return fake.dgfID()
 
 
-def create_fake_dgfDecisionDate():
+def create_fake_date():
     return get_now().strftime('%Y-%m-%d')
 
 
