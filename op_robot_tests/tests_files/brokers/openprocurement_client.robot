@@ -625,6 +625,15 @@ Library  openprocurement_client.utils
   [return]  ${filename}
 
 
+Вказати дату отримання оплати
+  [Arguments]  ${username}  ${tender_uaid}  ${contract_index}  ${fieldvalue}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${contract}=  Create Dictionary  data=${tender.data.contracts[${contract_index}]}
+  Set To Dictionary  ${contract.data}  datePaid=${fieldvalue}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract  ${tender}  ${contract}
+  Log  ${reply}
+
+
 Підтвердити підписання контракту
   [Documentation]
   ...      [Arguments] Username, tender uaid, contract number
