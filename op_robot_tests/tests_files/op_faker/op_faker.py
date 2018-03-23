@@ -153,7 +153,6 @@ class OP_Provider(BaseProvider):
         }
         address = self.random_element(self.addresses)
         item = {
-            "additionalClassifications": classification["additionalClassifications"],
             "classification": classification["classification"],
             "deliveryAddress": address["deliveryAddress"],
             "deliveryLocation": address["deliveryLocation"],
@@ -169,6 +168,7 @@ class OP_Provider(BaseProvider):
             })
         else:
             item.update({
+                "additionalClassifications": classification["additionalClassifications"],
                 "description": item_base_data["description"],
                 "description_ru": item_base_data["description_ru"],
                 "description_en": item_base_data["description_en"]
