@@ -7,6 +7,7 @@ Library         Selenium2Library
 
 *** Variables ***
 @{USED_ROLES}  tender_owner  viewer  provider  provider1  provider2
+${bid_input}  xpath=(//*[contains(@id,'bid-amount-input')])
 ${dutch_amount}  xpath=(//div[@id='stage-sealedbid-dutch-winner']//span[@class='label-price ng-binding'])
 ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), ' '), ' sealedbid-winner ')]//span[@class='label-price ng-binding'])
 
@@ -283,7 +284,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
 
 Дочекатись паузи перед ${stage_name} етапом
   Переключитись на учасника  ${viewer}
-  Wait Until Page Contains  → ${stage_name}  15 min
+  Wait Until Page Contains  → ${stage_name}  10 min
   :FOR    ${username}    IN    ${provider}  ${provider1}
   \   Переключитись на учасника   ${username}
   \   Wait Until Page Contains  → ${stage_name}  30 s
@@ -340,7 +341,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   ${last_amount}=  convert_amount_string_to_float  ${last_amount}
   ${amount}=  Evaluate  ${last_amount}+${step}
   ${input_amount}=  Convert To String  ${amount}
-  Input Text  id=bid-amount-input  ${input_amount}
+  Input Text  ${bid_input}  ${input_amount}
   Capture Page Screenshot
   Click Element  id=place-bid-button
   Wait Until Page Contains  ${msg}  10s

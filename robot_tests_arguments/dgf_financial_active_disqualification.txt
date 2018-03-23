@@ -19,15 +19,14 @@
 
 
 -i awarding
--i first_award_verification_status
+-i first_award_pending_status
 -i second_award_waiting_status
 -i add_protocol_to_first_award
--i approve_first_award_protocol
--i first_award_payment_status
 -i confirm_first_award
 -i first_award_active_status
--i disqualified_second_award
--i second_award_status_unsuccessful
 -i disqualified_first_award
 -i first_award_status_unsuccessful
+-i second_award_pending_status
+-i disqualified_second_award
+-i second_award_status_unsuccessful
 -i tender_status_unsuccessful

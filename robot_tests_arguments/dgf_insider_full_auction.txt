@@ -22,7 +22,7 @@
 
 
 -i awarding
--i first_award_verification_status
+-i first_award_pending_status
 -i second_award_waiting_status
 -i cancel_second_award
 -i second_award_cancelled_status

@@ -112,6 +112,6 @@ Suite Teardown  Test Suite Teardown
   ...      Дочекатись дати закінчення аукціону користувачем ${username}
   ...      ELSE
   ...      Run Keywords
-  ...      Wait Until Keyword Succeeds  5 times  30 s  Page should not contain  очікуємо розкриття учасників
+  ...      Wait Until Keyword Succeeds  5 times  30 s  Page should not contain  Очікуємо на розкриття імен учасників
   ...      AND
   ...      Close browser
