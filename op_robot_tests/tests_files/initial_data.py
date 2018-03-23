@@ -456,8 +456,8 @@ def test_item_data(cpv=None):
     startDate = fake.random_int(min=1, max=30)
     endDate = startDate + fake.random_int(min=1, max=7)
     data["deliveryDate"] = {
-        "startDate": (get_now() + timedelta(days=startDate)).replace(hour=0, minute=0, second=0, microsecond=0).isoformat(),
-        "endDate": (get_now() + timedelta(days=endDate)).replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
+        "startDate": (get_now() + timedelta(days=startDate)).astimezone(TZ).replace(hour=0, minute=0, second=0, microsecond=0).isoformat(),
+        "endDate": (get_now() + timedelta(days=endDate)).astimezone(TZ).replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
     }
     data["deliveryAddress"]["countryName_en"] = translate_country_en(data["deliveryAddress"]["countryName"])
     data["deliveryAddress"]["countryName_ru"] = translate_country_ru(data["deliveryAddress"]["countryName"])
