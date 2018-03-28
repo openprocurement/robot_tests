@@ -460,3 +460,17 @@ aladdin:
         provider1:      aladdin_Provider1
         viewer:         aladdin_Viewer
     timeout_on_wait: 1
+livtrade:
+    keywords_file: livtrade
+    roles:
+        viewer:         livtrade_viewer
+        provider:       livtrade_provider
+        provider1:      livtrade_provider1
+        tender_owner:   livtrade_owner
+    homepage: 'http://sale.livtrade.com.ua/prozorrosale/auctions/public'
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10

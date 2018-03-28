@@ -713,3 +713,37 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1100, 5000]
+    livtrade_viewer:
+        broker:   livtrade
+        homepage: "http://sale.livtrade.com.ua/prozorrosale/auctions/public"
+        syncpage: "http://sale.livtrade.com.ua/prozorrosale/auctions/sync-all"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    livtrade_provider:
+        broker:   livtrade
+        homepage: "http://sale.livtrade.com.ua/prozorrosale/auctions/public"
+        syncpage: "http://sale.livtrade.com.ua/prozorrosale/auctions/sync-all"
+        login:    livmemb1@test.t
+        password: livpass
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    livtrade_provider1:
+        broker:   livtrade
+        homepage: "http://sale.livtrade.com.ua/prozorrosale/auctions/public"
+        syncpage: "http://sale.livtrade.com.ua/prozorrosale/auctions/sync-all"
+        login:    livmemb2@test.t
+        password: livpass
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    livtrade_owner:
+        broker:   livtrade
+        homepage: "http://sale.livtrade.com.ua/prozorrosale/auctions/public"
+        syncpage: "http://sale.livtrade.com.ua/prozorrosale/auctions/sync-all"
+        login:    livadmin@test.t
+        password: livpass
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
