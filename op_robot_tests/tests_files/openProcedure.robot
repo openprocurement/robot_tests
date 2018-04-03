@@ -1176,6 +1176,24 @@ ${ITEM_MEAT}        ${True}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Неможливість видалити предмет закупівлі з тендера
 
+
+Неможливість додати документацію до лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування лота
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_doc
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Неможливість додати документацію до лоту
+
+
+Неможливість редагувати документ
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування лота
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      edit_document
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Неможливість редагувати документ  ${tender_owner}  ${TENDER['TENDER_UAID']}
+
 ##############################################################################################
 #             AFTER BIDDING
 ##############################################################################################

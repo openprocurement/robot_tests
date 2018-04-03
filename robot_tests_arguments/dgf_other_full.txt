@@ -34,6 +34,7 @@
 -i add_tender_notice
 -i add_tender_presentation
 -i add_tender_asset_familiarization
+-i edit_document
 -i ask_question_to_tender
   -i answer_question_to_tender
 -i ask_question_to_item
