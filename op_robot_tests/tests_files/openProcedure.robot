@@ -617,15 +617,6 @@ ${ITEM_MEAT}        ${True}
   Можливість додати документацію до тендера
 
 
-Можливість додати ілюстрацію до лоту
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      add_tender_illustration
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість додати ілюстрацію до тендера
-
-
 Можливість завантажити договір про нерозголошення до лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
   ...      tender_owner
@@ -874,6 +865,24 @@ ${ITEM_MEAT}        ${True}
   ...      modify_doc_to_bid_by_provider
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість змінити документацію цінової пропозиції користувачем ${provider}
+
+
+Можливість додати ілюстрацію до лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_illustration
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість додати ілюстрацію до тендера
+
+
+Можливість підтвердити цінову пропозицію після завантаження ілюстрації до лоту першим учасником
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      confirm_first_bid
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість підтвердити цінову пропозицію учасником ${provider}
 
 
 Можливість подати пропозицію другим учасником
