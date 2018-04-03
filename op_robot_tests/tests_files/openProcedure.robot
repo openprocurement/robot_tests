@@ -332,6 +332,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_view
   Звірити відображення дати rectificationPeriod.endDate тендера для користувача ${viewer}
 
+
 Можливість перевірити тривалість періоду редагування лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних лоту
   ...      tender_owner
