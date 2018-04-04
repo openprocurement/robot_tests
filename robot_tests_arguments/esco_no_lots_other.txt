@@ -69,7 +69,7 @@
 -i pre-qualification_add_doc_to_second_bid
 -i pre-qualification_reject_second_bid
   -i pre-qualification_cancel_second_bid_qualification
--i pre-qualification_approve_second_bid
+-i pre-qualification_approve_other_bids
 
 -i pre-qualification_approve_qualifications
 
