@@ -109,6 +109,7 @@
 -i modify_contract
 -i modify_contract_esco
 -i add_doc_to_contract
+  -i doc_view
 -i contract_sign
 
 -i find_contract

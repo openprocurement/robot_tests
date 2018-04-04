@@ -178,7 +178,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      add_doc_to_contract
+  ...      doc_view
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля title документа ${USERS.users['${tender_owner}']['contract_doc']['id']} із ${USERS.users['${tender_owner}']['contract_doc']['name']} для користувача ${viewer}
 
@@ -187,7 +187,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      add_doc_to_contract
+  ...      doc_view
   Звірити відображення вмісту документа ${USERS.users['${tender_owner}']['contract_doc']['id']} із ${USERS.users['${tender_owner}']['contract_doc']['content']} для користувача ${viewer}
 
 
@@ -195,7 +195,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      add_doc_to_contract
+  ...      doc_view
   Звірити відображення поля documentOf документа ${USERS.users['${tender_owner}']['contract_doc']['id']} із tender для користувача ${viewer}
 
 
