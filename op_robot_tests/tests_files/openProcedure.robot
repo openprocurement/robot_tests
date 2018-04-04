@@ -1694,6 +1694,17 @@ ${ITEM_MEAT}        ${True}
   Можливість завантажити документ у кваліфікацію 1 пропозиції
 
 
+Можливість підтвердити другу пропозицію кваліфікації
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      pre-qualification_approve_second_bid
+  ...      critical
+  [Setup]  Дочекатись дати початку періоду прекваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість підтвердити 1 пропозицію кваліфікації
+
+
 Можливість відхилити другу пропозицію кваліфікації
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
   ...      tender_owner
