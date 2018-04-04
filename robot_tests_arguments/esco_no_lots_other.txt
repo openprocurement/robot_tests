@@ -82,5 +82,6 @@
 
 -i contract_view
 -i modify_contract
+-i modify_contract_esco
 -i add_doc_to_contract
 -i contract_sign
