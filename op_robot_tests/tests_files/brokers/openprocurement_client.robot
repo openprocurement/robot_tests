@@ -634,6 +634,20 @@ Library  openprocurement_client.utils
   Log  ${reply}
 
 
+Підтвердити пролонгацію
+  [Arguments]  ${username}  ${tender_uaid}  ${contract_index}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${contract_id}=  Get Variable Value  ${tender.data.contracts[${contract_index}].id}
+  ${data}=  Create Dictionary  status=applied
+  ${data}=  Create Dictionary  data=${data}
+  ${prolongations}=  Get variable value  ${USERS.users['${username}'].prolongations}
+  ${prolongation}=  munchify  ${prolongations[-1]}
+  Log  ${prolongation}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_prolongation  ${tender}  ${contract_id}  ${USERS.users['${username}'].prolongations[-1].data.id}  ${data}
+  Log  ${data}
+  Log  ${reply}
+
+
 Підтвердити підписання контракту
   [Documentation]
   ...      [Arguments] Username, tender uaid, contract number

@@ -22,6 +22,28 @@ Suite Teardown  Test Suite Teardown
 #             CONTRACT
 ##############################################################################################
 
+Можливість підтвердити пролонгацію підписання договору
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Продовження періоду підписання договору
+  ...     tender_owner
+  ...     ${USERS.users['${tender_owner}'].broker}
+  ...     prolongation
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
+  Run As  ${tender_owner}  Підтвердити пролонгацію  ${TENDER['TENDER_UAID']}  -1
+
+
+Відображення підтвердженого статусу пролонгації
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних пролонгації
+  ...     viewer
+  ...     ${USERS.users['${viewer}'].broker}
+  ...     prolongation_view
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити поле пролонганції підписання угоди із значенням
+  ...     ${viewer}
+  ...     ${TENDER['TENDER_UAID']}
+  ...     applied
+  ...     status
+
+
 Можливість вказати дату отримання оплати
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес укладання угоди
   ...     tender_owner
