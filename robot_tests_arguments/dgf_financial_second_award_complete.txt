@@ -31,6 +31,8 @@
 -i confirm_second_award
 -i second_award_active_status
 
+-i prolongation
+-i prolongation_view
 -i datePaid
 -i contract_sign
 -i contract_sign_upload
