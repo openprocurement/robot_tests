@@ -99,6 +99,25 @@ Resource           resource.robot
   Порівняти об'єкти  ${len_of_items_before_patch}  ${len_of_items_after_patch}
 
 
+Неможливість додати документацію до лоту
+  ${len_of_documents_before_patch}=  Run As  ${tender_owner}  Отримати кількість документів в тендері  ${TENDER['TENDER_UAID']}
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
+  Require Failure  ${tender_owner}  Завантажити документ  ${file_path}  ${TENDER['TENDER_UAID']}
+  ${len_of_documents_after_patch}=  Run As  ${tender_owner}  Отримати кількість документів в тендері  ${TENDER['TENDER_UAID']}
+  Порівняти об'єкти  ${len_of_documents_before_patch}  ${len_of_documents_after_patch}
+  Remove File  ${file_path}
+
+
+Неможливість редагувати документ
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
+  ${document}=  get_document_by_id  ${tender.data}  ${USERS.users['${tender_owner}'].tender_document.doc_id}
+  ${patch_data}=  Create Dictionary  data=${document}
+  Set To Dictionary  ${patch_data.data}  documentType=illustration
+  Run keyword and expect error  *  Call Method  ${USERS.users['${username}'].client}  patch_document  ${tender}  ${patch_data}
+
+
 Звірити відображення поля ${field} документа ${doc_id} із ${left} для користувача ${username}
   ${right}=  Run As  ${username}  Отримати інформацію із документа  ${TENDER['TENDER_UAID']}  ${doc_id}  ${field}
   Порівняти об'єкти  ${left}  ${right}
@@ -186,6 +205,13 @@ Resource           resource.robot
 
 Отримати дані із поля ${field} тендера для користувача ${username}
   Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}
+
+
+Перевірити, чи тривалість між ${rectificationPeriod_endDate} і ${tenderPeriod_endDate} становить не менше ${days} днів
+  ${period_intervals}=  compute_intrs  ${BROKERS}  ${used_brokers}
+  ${seconds}=  convert_days_to_seconds  ${days}  ${period_intervals.${MODE}.accelerator}
+  ${status}=  compare_periods_duration  ${rectificationPeriod_endDate}  ${tenderPeriod_endDate}  ${seconds}
+  Should Be True  ${status}  msg=Період редагування лоту завершується менш ніж за 5 днів до закінчення періоду подачі пропозицій
 
 ##############################################################################################
 #             QUESTIONS

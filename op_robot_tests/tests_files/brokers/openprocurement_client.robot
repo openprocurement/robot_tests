@@ -175,12 +175,6 @@ Library  openprocurement_client.utils
   [return]  ${auctionUrl}
 
 
-Перевірити, чи тривалість між ${rectificationPeriod_endDate} і ${tenderPeriod_endDate} становить не менше ${days} днів
-  ${period_intervals}=  compute_intrs  ${BROKERS}  ${used_brokers}
-  ${seconds}=  convert_days_to_seconds  ${days}  ${period_intervals.${MODE}.accelerator}
-  ${status}=  compare_periods_duration  ${rectificationPeriod_endDate}  ${tenderPeriod_endDate}  ${seconds}
-  Should Be True  ${status}  msg=Період редагування лоту завершується менш ніж за 5 днів до закінчення періоду подачі пропозицій
-
 ##############################################################################
 #             Tender operations
 ##############################################################################

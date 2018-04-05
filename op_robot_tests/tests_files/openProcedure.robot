@@ -332,6 +332,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_view
   Звірити відображення дати rectificationPeriod.endDate тендера для користувача ${viewer}
 
+
 Можливість перевірити тривалість періоду редагування лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних лоту
   ...      tender_owner
@@ -616,15 +617,6 @@ ${ITEM_MEAT}        ${True}
   Можливість додати документацію до тендера
 
 
-Можливість додати ілюстрацію до лоту
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      add_tender_illustration
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість додати ілюстрацію до тендера
-
-
 Можливість завантажити договір про нерозголошення до лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
   ...      tender_owner
@@ -873,6 +865,24 @@ ${ITEM_MEAT}        ${True}
   ...      modify_doc_to_bid_by_provider
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість змінити документацію цінової пропозиції користувачем ${provider}
+
+
+Можливість додати ілюстрацію до лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_illustration
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість додати ілюстрацію до тендера
+
+
+Можливість підтвердити цінову пропозицію після завантаження ілюстрації до лоту першим учасником
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      confirm_first_bid
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість підтвердити цінову пропозицію учасником ${provider}
 
 
 Можливість подати пропозицію другим учасником
@@ -1165,6 +1175,24 @@ ${ITEM_MEAT}        ${True}
   ...      delete_item
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Неможливість видалити предмет закупівлі з тендера
+
+
+Неможливість додати документацію до лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування лота
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_doc
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Неможливість додати документацію до лоту
+
+
+Неможливість редагувати документ
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування лота
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      edit_document
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Неможливість редагувати документ  ${tender_owner}  ${TENDER['TENDER_UAID']}
 
 ##############################################################################################
 #             AFTER BIDDING
