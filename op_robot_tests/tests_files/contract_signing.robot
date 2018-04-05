@@ -22,6 +22,15 @@ Suite Teardown  Test Suite Teardown
 #             CONTRACT
 ##############################################################################################
 
+Можливість продовжити період підписання договору
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Продовження періоду підписання договору
+  ...     tender_owner
+  ...     ${USERS.users['${tender_owner}'].broker}
+  ...     prolongation
+  ${prolongation_data}=  Підготувати дані для пролонгації  ${tender_owner}
+  Run As  ${tender_owner}  Продовжити період підписання договору  ${TENDER['TENDER_UAID']}  ${prolongation_data}  -1
+
+
 Можливість завантажити протокол, що санкціонує пролонгацію
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Продовження періоду підписання договору
   ...     tender_owner
@@ -29,6 +38,42 @@ Suite Teardown  Test Suite Teardown
   ...     prolongation
   [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
   Можливість завантажити протокол пролонгації в контракт -1 користувачем ${tender_owner}
+
+
+Відображення номера рішення пролонгації
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних пролонгації
+  ...     viewer
+  ...     ${USERS.users['${viewer}'].broker}
+  ...     prolongation_view
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля decisionID пролонгації для користувача ${viewer}
+
+
+Відображення опису пояснення причини пролонгації
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних пролонгації
+  ...     viewer
+  ...     ${USERS.users['${viewer}'].broker}
+  ...     prolongation_view
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля description пролонгації для користувача ${viewer}
+
+
+Відображення дати рішення ФГВФО стосовно пролонгації
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних пролонгації
+  ...     viewer
+  ...     ${USERS.users['${viewer}'].broker}
+  ...     prolongation_view
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля datePublished пролонгації для користувача ${viewer}
+
+
+Відображення причини пролонгації підписання договору
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних пролонгації
+  ...     viewer
+  ...     ${USERS.users['${viewer}'].broker}
+  ...     prolongation_view
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля reason пролонгації для користувача ${viewer}
 
 
 Можливість підтвердити пролонгацію підписання договору
@@ -71,6 +116,28 @@ Suite Teardown  Test Suite Teardown
   ...     datePaid
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля contracts[-1].datePaid тендера із ${USERS.users['${tender_owner}'].datePaid} для користувача ${viewer}
+
+
+Можливість повторно продовжити період підписання договору
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Продовження періоду підписання договору
+  ...     tender_owner
+  ...     ${USERS.users['${tender_owner}'].broker}
+  ...     prolongation
+  ${prolongation_data}=  Підготувати дані для пролонгації  ${tender_owner}
+  Run As  ${tender_owner}  Продовжити період підписання договору  ${TENDER['TENDER_UAID']}  ${prolongation_data}  -1
+  Можливість завантажити протокол пролонгації в контракт -1 користувачем ${tender_owner}
+  Run As  ${tender_owner}  Підтвердити пролонгацію  ${TENDER['TENDER_UAID']}  -1
+
+
+Неможливість втретє продовжити період підписання договору
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Продовження періоду підписання договору
+  ...     tender_owner
+  ...     ${USERS.users['${tender_owner}'].broker}
+  ...     prolongation
+  ${prolongation_data}=  Підготувати дані для пролонгації  ${tender_owner}
+  Run As  ${tender_owner}  Продовжити період підписання договору  ${TENDER['TENDER_UAID']}  ${prolongation_data}  -1
+  Можливість завантажити протокол пролонгації в контракт -1 користувачем ${tender_owner}
+  Require Failure  ${tender_owner}  Підтвердити пролонгацію  ${TENDER['TENDER_UAID']}  -1
 
 
 Можливість завантажити угоду до лоту

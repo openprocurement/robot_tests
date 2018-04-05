@@ -263,6 +263,19 @@ Get Broker Property By Username
   [Return]  ${prolongation_data}
 
 
+Звірити поле пролонгації
+  [Arguments]  ${username}  ${tender_uaid}  ${prolongation_data}  ${field}
+  ${left}=  get_from_object  ${prolongation_data.data}  ${field}
+  Звірити поле пролонганції підписання угоди із значенням  ${username}  ${tender_uaid}  ${left}  ${field}
+
+
+Звірити поле пролонганції підписання угоди із значенням
+  [Arguments]  ${username}  ${tender_uaid}  ${left}  ${field}
+  ${field}=  Evaluate  "{}{}{}".format('contracts[-1].', 'prolongations[-1].', '${field}')
+  ${right}=  Отримати дані із тендера  ${username}  ${tender_uaid}  ${field}
+  Порівняти об'єкти  ${left}  ${right}
+
+
 Адаптувати дані для оголошення тендера
   [Arguments]  ${tender_data}
   # munchify is used to make deep copy of ${tender_data}

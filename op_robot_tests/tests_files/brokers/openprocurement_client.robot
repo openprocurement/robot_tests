@@ -634,6 +634,21 @@ Library  openprocurement_client.utils
   Log  ${reply}
 
 
+Продовжити період підписання договору
+  [Arguments]  ${username}  ${tender_uaid}  ${prolongation_data}  ${contract_index}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${contract_id}=  Get Variable Value  ${tender['data']['contracts'][${contract_index}]['id']}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_prolongation  ${tender}  ${contract_id}  ${prolongation_data}
+  # we need this to have prlongation id in `Завантажити протокол пролонгації в контракт` and `Підтвердити пролонгацію` keywords
+  ${empty_list}=  Create List
+  ${prolongations}=  Get variable value  ${USERS.users['${username}'].prolongations}  ${empty_list}
+  Append to list  ${prolongations}  ${reply}
+  Set to dictionary  ${USERS.users['${username}']}  prolongations=${prolongations}
+  Log  ${prolongations}
+  Log  ${reply}
+
+
 Завантажити протокол пролонгації в контракт
   [Arguments]  ${username}  ${tender_uaid}  ${document}  ${contract_index}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
