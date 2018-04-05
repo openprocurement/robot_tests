@@ -43,6 +43,7 @@ from .initial_data import (
     test_tender_data_dgf_financial,
     test_tender_data_dgf_other,
     test_tender_data_dgf_insider,
+    test_prolongation_data,
     create_fake_dgfID,
     create_fake_dgfDecisionID,
     create_fake_tenderAttempts,

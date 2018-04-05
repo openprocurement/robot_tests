@@ -301,6 +301,20 @@ def test_item_data_financial(cav):
     return munchify(data)
 
 
+def test_prolongation_data():
+    return munchify(
+    {
+        "data":
+        {
+            "description": fake.description(),
+            "decisionID": fake.dgfDecisionID(),
+            "datePublished": create_fake_date(),
+            "reason": random.choice(["dgfPaymentImpossibility", "dgfLackOfDocuments", "dgfLegalObstacles", "other"]),
+            "status": "draft"
+        }
+    })
+
+
 def test_tender_data_dgf_other(params, submissionMethodDetails):
     data = test_tender_data(params, [], submissionMethodDetails)
 

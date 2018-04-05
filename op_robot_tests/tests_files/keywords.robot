@@ -255,6 +255,14 @@ Get Broker Property By Username
   [Return]  ${cancellation_data}
 
 
+Підготувати дані для пролонгації
+  [Arguments]  ${username}
+  ${prolongation_data}=  test_prolongation_data
+  Set To Dictionary  ${USERS.users['${username}']}  prolongation_data=${prolongation_data}
+  Log  ${prolongation_data}
+  [Return]  ${prolongation_data}
+
+
 Адаптувати дані для оголошення тендера
   [Arguments]  ${tender_data}
   # munchify is used to make deep copy of ${tender_data}
