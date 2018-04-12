@@ -50,6 +50,7 @@
 -i bid_view_in_tendering_period
 -i confirm_first_bid
 -i confirm_second_bid
+-i confirm_third_bid
 -i tender_view_invalidationDate
 
 

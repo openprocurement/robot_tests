@@ -35,6 +35,7 @@
 -i make_bid_without_parameters
 -i make_bid_by_provider
   -i modify_bid_by_provider
+-i confirm_first_bid
 -i bid_view_in_tendering_period
 
 

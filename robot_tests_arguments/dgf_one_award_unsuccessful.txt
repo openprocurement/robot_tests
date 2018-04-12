@@ -41,6 +41,9 @@
   -i modify_bid_by_provider1
  -i make_bid_by_provider2
   -i modify_bid_by_provider2
+-i confirm_first_bid
+-i confirm_second_bid
+-i confirm_third_bid
 -i bid_view_in_tendering_period
 
 
