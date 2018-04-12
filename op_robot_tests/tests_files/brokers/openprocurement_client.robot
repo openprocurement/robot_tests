@@ -11,8 +11,7 @@ Library  openprocurement_client.utils
   Log Many  ${USERS.users['${username}'].id_map}
   ${status}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${USERS.users['${username}'].id_map}  ${tender_uaid}
   Run Keyword And Return If  ${status}  Get From Dictionary  ${USERS.users['${username}'].id_map}  ${tender_uaid}
-  Call Method  ${USERS.users['${username}'].client}  get_tenders
-  ${tender_id}=  Wait Until Keyword Succeeds  5x  30 sec  get_tender_id_by_uaid  ${tender_uaid}  ${USERS.users['${username}'].client}  id_field=auctionID
+  ${tender_id}=  Wait Until Keyword Succeeds  5x  30 sec  get_tender_id_by_uaid  ${tender_uaid}  ${USERS.users['${username}'].public_client}  id_field=auctionID
   Set To Dictionary  ${USERS.users['${username}'].id_map}  ${tender_uaid}  ${tender_id}
   [return]  ${tender_id}
 
@@ -34,7 +33,9 @@ Library  openprocurement_client.utils
   ${ds_api_wraper}=  prepare_ds_api_wrapper  ${ds_host_url}  ${auth_ds}
 
   ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${resource}  ${api_host_url}  ${api_version}  ${ds_api_wraper}
+  ${api_public_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${resource}  ${api_host_public_url}  ${api_version}  ${ds_api_wraper}
   Set To Dictionary  ${USERS.users['${username}']}  client=${api_wrapper}
+  Set To Dictionary  ${USERS.users['${username}']}  public_client=${api_public_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${EMPTY}
   ${id_map}=  Create Dictionary
   Set To Dictionary  ${USERS.users['${username}']}  id_map=${id_map}
@@ -200,7 +201,7 @@ Library  openprocurement_client.utils
 Пошук тендера по ідентифікатору
   [Arguments]  ${username}  ${tender_uaid}
   ${internalid}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
-  ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
+  ${tender}=  Call Method  ${USERS.users['${username}'].public_client}  get_tender  ${internalid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   Set To Dictionary  ${USERS.users['${username}']}  tender_data=${tender}
   ${tender}=  munch_dict  arg=${tender}
