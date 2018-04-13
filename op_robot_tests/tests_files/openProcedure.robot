@@ -11,6 +11,7 @@ ${NUMBER_OF_ITEMS}  ${1}
 ${TENDER_MEAT}      ${True}
 ${LOT_MEAT}         ${True}
 ${ITEM_MEAT}        ${True}
+${ITEM_ADDRESS}     ${True}
 
 
 *** Test Cases ***

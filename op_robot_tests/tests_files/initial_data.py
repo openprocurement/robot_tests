@@ -315,7 +315,10 @@ def test_tender_data_dgf_other(params):
     data["procuringEntity"] = fake.procuringEntity_other()
 
     for i in range(params['number_of_items']):
-        scheme_group_other = fake.scheme_other()[:4]
-        new_item = test_item_data(scheme_group_other)
+        if params.get('item_address'):
+            scheme_group = fake.scheme_other()[:4]
+        else:
+            scheme_group = fake.scheme_no_validation()[:4]
+        new_item = test_item_data(scheme_group)
         data['items'].append(new_item)
     return data

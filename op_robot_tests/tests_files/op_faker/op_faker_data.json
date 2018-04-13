@@ -3053,14 +3053,84 @@
             "additionalClassifications": [
                 {
                     "scheme": "CPVS",
-                    "id": "PA01-7",
-                    "description": "Оренда"
+                    "id": "RB07-8",
+                    "description": "У сфері міжнародної економіки"
                 }
             ],
             "classification": {
                 "scheme": "CPV",
                 "id": "98910000-5",
                 "description": "Послуги міжнародних організацій та органів"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "CPVS",
+                    "id": "FG22-5",
+                    "description": "Для косметичних цілей"
+                }
+            ],
+            "classification": {
+                "scheme": "CPV",
+                "id": "98322110-0",
+                "description": "Косметичні послуги"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "CPVS",
+                    "id": "SB01-1",
+                    "description": "Для страхування"
+                }
+            ],
+            "classification": {
+                "scheme": "CPV",
+                "id": "66512220-0",
+                "description": "Послуги з медичного страхування"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "CPVS",
+                    "id": "SA01-0",
+                    "description": "Для банківської діяльності"
+                }
+            ],
+            "classification": {
+                "scheme": "CPV",
+                "id": "66112000-8",
+                "description": "Депозитні послуги"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "CPVS",
+                    "id": "SA01-0",
+                    "description": "Для банківської діяльності"
+                }
+            ],
+            "classification": {
+                "scheme": "CAV-PS",
+                "id": "07120000-6",
+                "description": "Кредити Юридичних осіб заставні"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "CPVS",
+                    "id": "SA01-0",
+                    "description": "Для банківської діяльності"
+                }
+            ],
+            "classification": {
+                "scheme": "CAV-PS",
+                "id": "07220000-7",
+                "description": "Кредити Фізичних осіб заставні"
             }
         }
     ],
@@ -3154,11 +3224,18 @@
         "30111000-0",
         "34110000-1",
         "39710000-2",
-        "16720000-8",
-        "98910000-5"
+        "16720000-8"
+    ],
+    "schemes_no_validation": [
+        "98910000-5",
+        "98322110-0",
+        "66512220-0",
+        "66112000-8",
+        "07120000-6",
+        "07220000-7"
     ],
     "items_base_data_other": [
-           {
+        {
             "scheme_id": "05110000-9",
             "description": "Молокозаводи",
             "description_ru": "Молокозаводы",
@@ -3224,7 +3301,7 @@
                 "name": "штуки"
             }
         },
-                {
+        {
             "scheme_id": "34110000-1",
             "description": "Легкові автомобілі",
             "description_ru": "Легковые автомобили",
@@ -3235,7 +3312,7 @@
                 "name": "штуки"
             }
         },
-            {
+        {
             "scheme_id": "39710000-2",
             "description": "Електричні побутові прилади",
             "description_ru": "Электрические бытовые приборы",
@@ -3246,12 +3323,67 @@
                 "name": "штуки"
             }
         },
-            {
+        {
             "scheme_id": "16720000-8",
             "description": "Трактори, що були у використанні",
             "description_ru": "Тракторы бывшие в употреблении",
             "description_en": "Tractors that were in use",
             "quantity": 22,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+        {
+            "scheme_id": "98322110-0",
+            "description": "Косметичні послуги",
+            "description_ru": "Косметические услуги",
+            "description_en": "Cosmetic services",
+            "quantity": 5,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+        {
+            "scheme_id": "66512220-0",
+            "description": "Послуги з медичного страхування",
+            "description_ru": "Услуги по медицинскому страхованию",
+            "description_en": "Medical insurance services",
+            "quantity": 5,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+        {
+            "scheme_id": "66112000-8",
+            "description": "Депозитні послуги",
+            "description_ru": "Депозитные услуги",
+            "description_en": "Deposit services",
+            "quantity": 5,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+        {
+            "scheme_id": "07120000-6",
+            "description": "Кредити Юридичних осіб заставні",
+            "description_ru": "Кредиты Юридических лиц закладные",
+            "description_en": "Legal entities mortgages",
+            "quantity": 5,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+        {
+            "scheme_id": "07220000-7",
+            "description": "Кредити Фізичних осіб заставні",
+            "description_ru": "Кредиты Физических лиц закладные",
+            "description_en": "Mortgages of private individuals",
+            "quantity": 5,
             "unit": {
                 "code": "H87",
                 "name": "штуки"
