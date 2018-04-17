@@ -12,8 +12,10 @@
 -i create_tender
 -i find_tender
 -i tender_view
+  -i esco_tender_view
 -i meat_view
 -i lot_view
+  -i esco_lot_view
 
 -i extend_tendering_period
 -i add_tender_doc

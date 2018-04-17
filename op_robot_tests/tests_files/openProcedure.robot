@@ -64,7 +64,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      esco_tender_view
   ...      critical
   Отримати дані із поля minimalStepPercentage тендера для усіх користувачів
 
@@ -73,7 +73,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      esco_tender_view
   ...      critical
   Звірити відображення поля NBUdiscountRate тендера для користувача ${viewer}
 
@@ -82,7 +82,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      esco_tender_view
   ...      critical
   Звірити відображення поля fundingKind тендера для користувача ${viewer}
 
@@ -91,7 +91,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      esco_tender_view
   ...      critical
   Отримати дані із поля yearlyPaymentsPercentageRange тендера для усіх користувачів
 
@@ -316,7 +316,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      lot_view
+  ...      esco_lot_view
   ...      critical
   Звірити відображення поля minimalStepPercentage усіх лотів для користувача ${viewer}
 
@@ -325,7 +325,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      lot_view
+  ...      esco_lot_view
   ...      critical
   Звірити відображення поля fundingKind усіх лотів для користувача ${viewer}
 
@@ -334,7 +334,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      lot_view
+  ...      esco_lot_view
   ...      critical
   Звірити відображення поля yearlyPaymentsPercentageRange усіх лотів для користувача ${viewer}
 
