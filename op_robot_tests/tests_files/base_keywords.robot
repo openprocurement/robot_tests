@@ -1090,14 +1090,6 @@ Resource           resource.robot
   ...      ${USERS.users['${provider}']['tender_claim_data']['complaintID']}
   ...      ${confirmation_data}
   Set To Dictionary  ${USERS.users['${provider}']['tender_claim_data']}  claim_answer_confirm  ${confirmation_data}
-  Wait until keyword succeeds
-  ...      40 min 15 sec
-  ...      15 sec
-  ...      Звірити статус вимоги/скарги
-  ...      ${provider}
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['tender_claim_data']['complaintID']}
-  ...      resolved
 
 
 Можливість заперечити незадоволення вимоги про виправлення умов закупівлі для ${status} відповіді
@@ -1111,14 +1103,6 @@ Resource           resource.robot
   ...      ${USERS.users['${provider}']['tender_claim_data']['complaintID']}
   ...      ${confirmation_data}
   Set To Dictionary  ${USERS.users['${provider}']['tender_claim_data']}  claim_answer_confirm  ${confirmation_data}
-  Wait until keyword succeeds
-  ...      40 min 15 sec
-  ...      15 sec
-  ...      Звірити статус вимоги/скарги
-  ...      ${provider}
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['tender_claim_data']['complaintID']}
-  ...      ${status}
 
 
 Можливість підтвердити задоволення вимоги про виправлення умов лоту
@@ -1132,14 +1116,6 @@ Resource           resource.robot
   ...      ${USERS.users['${provider}']['lot_claim_data']['complaintID']}
   ...      ${confirmation_data}
   Set To Dictionary  ${USERS.users['${provider}']['lot_claim_data']}  claim_answer_confirm  ${confirmation_data}
-  Wait until keyword succeeds
-  ...      40 min 15 sec
-  ...      15 sec
-  ...      Звірити статус вимоги/скарги
-  ...      ${provider}
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['lot_claim_data']['complaintID']}
-  ...      resolved
 
 
 Можливість підтвердити задоволення вимоги про виправлення визначення ${award_index} переможця
