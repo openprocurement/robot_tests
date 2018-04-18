@@ -947,13 +947,13 @@ Resource           resource.robot
   ...      ${award_index}
 
 
-Звірити відображення поля ${field} вимоги із ${data} для користувача ${username}
+Звірити відображення поля ${field} для вимоги ${complaintID} із ${data} для користувача ${username}
   Звірити поле скарги із значенням
   ...      ${username}
   ...      ${TENDER['TENDER_UAID']}
   ...      ${data}
   ...      ${field}
-  ...      ${USERS.users['${provider}'].tender_claim_data['complaintID']}
+  ...      ${complaintID}
 
 
 Звірити відображення поля ${field} вимоги про виправлення умов ${lot_index} лоту із ${data} для користувача ${username}
