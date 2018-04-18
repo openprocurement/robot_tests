@@ -6,5 +6,9 @@
 
 -i make_bid_by_provider
 -i make_bid_by_provider1
+-i tenderPeriod_endDate
+-i awardPeriod_startDate
+-i qualification_approve_first_award
 
--i award_complaint_after_resolved
+-i award_complaint
+-i below_award_complaint
