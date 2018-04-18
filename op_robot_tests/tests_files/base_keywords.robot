@@ -853,9 +853,9 @@ Resource           resource.robot
   ...      cancelled
 
 
-Можливість скасувати вимогу в статусі ${claim_status} про виправлення визначення ${award_index} переможця
+Можливість скасувати вимогу/скаргу про виправлення визначення ${award_index} переможця, надавши їй статус ${claim_status}
   ${cancellation_reason}=  create_fake_sentence
-  ${status}=  Set variable if  "${claim_status}" == 'pending' and 'open' in '${MODE}'  stopping  cancelled
+  ${status}=  Set variable  ${claim_status}
   ${data}=  Create Dictionary
   ...      status=${status}
   ...      cancellationReason=${cancellation_reason}
