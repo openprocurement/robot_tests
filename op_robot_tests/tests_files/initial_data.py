@@ -371,7 +371,7 @@ def test_bid_value(tender_data):
             "yearlyPaymentsPercentage": yearly_percentage,
             "annualCostsReduction": annual_cost,
             "contractDuration": {
-                "years": random.randint(0, 15),
+                "years": random.randint(0, 14),
                 "days": random.randint(1, 364)
             }
         }

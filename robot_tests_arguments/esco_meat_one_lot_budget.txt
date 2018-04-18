@@ -13,8 +13,10 @@
 -i create_tender
 -i find_tender
 -i tender_view
+  -i esco_tender_view
 -i meat_view
 -i lot_view
+  -i esco_lot_view
 
 -i extend_tendering_period
 -i add_tender_doc
@@ -90,7 +92,7 @@
 -i pre-qualification_add_doc_to_second_bid
 -i pre-qualification_reject_second_bid
   -i pre-qualification_cancel_second_bid_qualification
--i pre-qualification_approve_second_bid
+-i pre-qualification_approve_other_bids
 
 -i pre-qualification_approve_qualifications
 
@@ -111,6 +113,7 @@
 -i tender_view
 -i contract_view
 -i modify_contract
+-i modify_contract_esco
 -i add_doc_to_contract
 -i contract_sign
 

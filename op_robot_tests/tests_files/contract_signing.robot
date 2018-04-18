@@ -55,7 +55,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування угоди
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_contract
+  ...      modify_contract_esco
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_amount}=  create_fake_value_amount
@@ -66,7 +66,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування угоди
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_contract
+  ...      modify_contract_esco
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_amountPerformance}=  create_fake_value_amount
@@ -77,7 +77,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування угоди
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_contract
+  ...      modify_contract_esco
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_annualCostsReduction}=  create_fake_annual_cost
@@ -88,7 +88,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування угоди
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_contract
+  ...      modify_contract_esco
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_contractDuration_days}=  create_fake_amount  364
@@ -99,7 +99,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування угоди
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_contract
+  ...      modify_contract_esco
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_contractDuration_years}=  create_fake_amount  15
