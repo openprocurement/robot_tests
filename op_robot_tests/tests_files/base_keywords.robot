@@ -853,9 +853,61 @@ Resource           resource.robot
   ...      cancelled
 
 
-Можливість скасувати вимогу в статусі ${claim_status} про виправлення визначення ${award_index} переможця
+Можливість скасувати вимогу про виправлення визначення ${award_index} переможця
   ${cancellation_reason}=  create_fake_sentence
-  ${status}=  Set variable if  "${claim_status}" == 'pending' and 'open' in '${MODE}'  stopping  cancelled
+  ${status}=  Set variable  cancelled
+  ${data}=  Create Dictionary
+  ...      status=${status}
+  ...      cancellationReason=${cancellation_reason}
+  ${cancellation_data}=  Create Dictionary  data=${data}
+  ${cancellation_data}=  munch_dict  arg=${cancellation_data}
+  Run As  ${provider}
+  ...      Скасувати вимогу про виправлення визначення переможця
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${cancellation_data}
+  ...      ${award_index}
+  Set To Dictionary  ${USERS.users['${provider}'].claim_data}  cancellation  ${cancellation_data}
+  Wait until keyword succeeds
+  ...      40 min 15 sec
+  ...      15 sec
+  ...      Звірити статус вимоги/скарги
+  ...      ${provider}
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${status}
+  ...      ${award_index}
+
+
+Можливість скасувати вимогу про виправлення визначення ${award_index} переможця, надавши їй статус ${claim_status}
+  ${cancellation_reason}=  create_fake_sentence
+  ${status}=  Set variable  ${claim_status}
+  ${data}=  Create Dictionary
+  ...      status=${status}
+  ...      cancellationReason=${cancellation_reason}
+  ${cancellation_data}=  Create Dictionary  data=${data}
+  ${cancellation_data}=  munch_dict  arg=${cancellation_data}
+  Run As  ${provider}
+  ...      Скасувати вимогу про виправлення визначення переможця
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${cancellation_data}
+  ...      ${award_index}
+  Set To Dictionary  ${USERS.users['${provider}'].claim_data}  cancellation  ${cancellation_data}
+  Wait until keyword succeeds
+  ...      40 min 15 sec
+  ...      15 sec
+  ...      Звірити статус вимоги/скарги
+  ...      ${provider}
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${provider}']['claim_data']['complaintID']}
+  ...      ${status}
+  ...      ${award_index}
+
+
+Можливість скасувати скаргу про виправлення визначення ${award_index} переможця
+  ${cancellation_reason}=  create_fake_sentence
+  ${status}=  Set variable  stopping
   ${data}=  Create Dictionary
   ...      status=${status}
   ...      cancellationReason=${cancellation_reason}
