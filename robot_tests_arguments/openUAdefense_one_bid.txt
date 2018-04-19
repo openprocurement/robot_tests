@@ -46,15 +46,16 @@
   -i modify_bid_by_provider
   -i add_doc_to_bid_by_provider
 -i ask_question_after_enquiry_period
--i create_tender_complaint_after_complaint_period
 -i answer_question_after_clarifications_period
 -i modify_tender_in_tendering_period
   -i open_confirm_first_bid
 -i bid_view_in_tendering_period
 
--i add_bid_doc_after_tendering_period_by_provider
+-i ask_question_to_tender_after_tendering_period
 
 -i qualification_add_doc_to_first_award
 -i qualification_approve_first_award
 
 -i contract_sign
+-i modify_contract
+-i contract_view

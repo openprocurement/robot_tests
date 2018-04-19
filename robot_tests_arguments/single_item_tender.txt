@@ -34,3 +34,9 @@
 -i document_service
 
 -i auction_url
+
+-i auction
+
+-i qualification_approve_first_award
+
+-i contract_sign

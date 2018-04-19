@@ -44,6 +44,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      find_tender_by_funder_id
+  ...      critical
   Можливість знайти тендер за кошти донора для усіх користувачів
 
 ##############################################################################################
@@ -179,6 +180,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      open_tender_view
+  ...      non-critical
   Отримати дані із поля complaintPeriod.endDate тендера для усіх користувачів
 
 ##############################################################################################
@@ -443,6 +445,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      funders_view
+  ...      critical
   Звірити відображення поля name усіх донорів для усіх користувачів
 
 
@@ -452,6 +455,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      funders_view
+  ...      critical
   Звірити відображення поля address.countryName усіх донорів для усіх користувачів
 
 
@@ -461,6 +465,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      funders_view
+  ...      critical
   Звірити відображення поля address.locality усіх донорів для усіх користувачів
 
 
@@ -470,6 +475,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      funders_view
+  ...      critical
   Звірити відображення поля address.postalCode усіх донорів для усіх користувачів
 
 
@@ -479,6 +485,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      funders_view
+  ...      critical
   Звірити відображення поля address.region усіх донорів для усіх користувачів
 
 
@@ -488,6 +495,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      funders_view
+  ...      critical
   Звірити відображення поля address.streetAddress усіх донорів для усіх користувачів
 
 
@@ -497,33 +505,37 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      funders_view
+  ...      non-critical
   Звірити відображення поля contactPoint.url усіх донорів для усіх користувачів
 
 
-Відображення id ідентифікатора
+Відображення id донора
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення донора тендера
   ...      viewer  tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      funders_view
+  ...      critical
   Звірити відображення поля identifier.id усіх донорів для усіх користувачів
 
 
-Відображення юридичної назви ідентифікатора
+Відображення юридичної назви донора
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення донора тендера
   ...      viewer  tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      funders_view
+  ...      critical
   Звірити відображення поля identifier.legalName усіх донорів для усіх користувачів
 
 
-Відображення схеми ідентифікатора
+Відображення схеми донора
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення донора тендера
   ...      viewer  tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      funders_view
+  ...      critical
   Звірити відображення поля identifier.scheme усіх донорів для усіх користувачів
 
 ##############################################################################################
@@ -577,7 +589,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_tender_doc  level2
-  ...      critical
+  ...      non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля title документа ${USERS.users['${tender_owner}']['tender_document']['doc_id']} із ${USERS.users['${tender_owner}'].tender_document.doc_name} для користувача ${viewer}
 
@@ -632,7 +644,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_tender_doc  level2
-  ...      critical
+  ...      non-critical
   Звірити відображення вмісту документа ${USERS.users['${tender_owner}'].tender_document.doc_id} із ${USERS.users['${tender_owner}'].tender_document.doc_content} для користувача ${viewer}
 
 
@@ -889,6 +901,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_funder
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість видалити донора 0
 
@@ -898,6 +911,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      add_funder
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість додати донора
@@ -908,6 +922,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_funder_field
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Run Keyword And Expect Error  *  Можливість видалити поле name з донора 0
 
@@ -917,6 +932,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_funder_field
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Run Keyword And Expect Error  *  Можливість видалити поле contactPoint.name з донора 0
 
@@ -926,6 +942,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_funder_field
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Run Keyword And Expect Error  *  Можливість видалити поле address.countryName з донора 0
 
@@ -935,6 +952,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      change_funder_during_enquiry_period
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_id}=  create_fake_number  10000  99999
   Перевірити неможливість зміни поля funders[0].identifier.id тендера на значення ${new_id} для користувача ${tender_owner}
@@ -945,6 +963,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      change_funder_during_enquiry_period
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_scheme}=  get_fake_funder_scheme
   Перевірити неможливість зміни поля funders[0].identifier.scheme тендера на значення ${new_scheme} для користувача ${tender_owner}
@@ -1147,6 +1166,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      change_funder_after_enquiry_period
+  ...      critical
   [Setup]  Дочекатись дати закінчення періоду уточнень  ${tender_owner}  ${TENDER['TENDER_UAID']}
   ${new_legalName}=  create_fake_title
   Перевірити неможливість зміни поля funders[0].identifier.legalName тендера на значення ${new_legalName} для користувача ${tender_owner}
@@ -1626,7 +1646,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      provider2
   ...      ${USERS.users['${provider1}'].broker}
   ...      make_bid_by_provider2  level1
-  ...      non-critical
+  ...      critical
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider2}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider2}
@@ -1680,6 +1700,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_after_enquiry_period
+  ...      non-critical
   [Setup]  Дочекатись дати закінчення періоду уточнень  ${provider}  ${TENDER['TENDER_UAID']}
   Run Keyword And Expect Error  *  Можливість задати запитання на тендер користувачем ${provider}
 
@@ -1689,6 +1710,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      create_tender_complaint_after_complaint_period
+  ...      non-critical
   [Setup]  Дочекатись дати закінчення періоду подання скарг  ${provider}
   Run Keyword And Expect Error  *  Можливість створити вимогу про виправлення умов закупівлі із документацією
 
@@ -1698,6 +1720,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      answer_question_after_clarifications_period
+  ...      non-critical
   [Setup]  Дочекатись дати закінчення періоду відповідей на запитання  ${tender_owner}
   Run Keyword And Expect Error  *  Можливість відповісти resolved на вимогу про виправлення умов tender
 
@@ -1707,6 +1730,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_tender_in_tendering_period
+  ...      non-critical
   ${new_description}=  create_fake_sentence
   Run Keyword And Expect Error  *  Можливість змінити поле description тендера на ${new_description}
 
@@ -1717,6 +1741,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      answer_question_after_clarifications_period
   ...      extend_enquiry_period
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість продовжити період подання пропозиції на 3 днів
@@ -1728,6 +1753,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_tender_in_tendering_period
+  ...     critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_description}=  create_fake_sentence
@@ -1839,7 +1865,7 @@ ${MOZ_INTEGRATION}  ${False}
   Run Keyword And Expect Error  *  Можливість змінити документацію цінової пропозиції користувачем ${provider}
 
 
-Неможливість задати запитання на тендер після закінчення періоду уточнень
+Неможливість задати запитання на тендер після закінчення періоду прийому пропозицій
   [Tags]   ${USERS.users['${provider}'].broker}: Задання запитання
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
@@ -1849,7 +1875,7 @@ ${MOZ_INTEGRATION}  ${False}
   Run Keyword And Expect Error  *  Можливість задати запитання на тендер користувачем ${provider}
 
 
-Неможливість задати запитання на перший предмет після закінчення періоду уточнень
+Неможливість задати запитання на перший предмет після закінчення періоду прийому пропозицій
   [Tags]   ${USERS.users['${provider}'].broker}: Задання запитання
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
@@ -1859,7 +1885,7 @@ ${MOZ_INTEGRATION}  ${False}
   Run Keyword And Expect Error  *  Можливість задати запитання на 0 предмет користувачем ${provider}
 
 
-Неможливість задати запитання на перший лот після закінчення періоду уточнень
+Неможливість задати запитання на перший лот після закінчення періоду прийому пропозицій
   [Tags]   ${USERS.users['${provider}'].broker}: Задання запитання
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
@@ -2048,6 +2074,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      stage2_pending_status_view
+  ...      critical
   Отримати дані із поля qualificationPeriod.endDate тендера для усіх користувачів
   Дочекатись дати закінчення періоду прекваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
   Звірити статус тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  active.stage2.pending
@@ -2058,6 +2085,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      stage2_pending_status_view
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість перевести тендер на статус очікування обробки мостом
@@ -2069,6 +2097,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      wait_bridge_for_work
+  ...      critical
   Дочекатися створення нового етапу мостом  ${tender_owner}  ${TENDER['TENDER_UAID']}
   Звірити статус тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  complete
 
@@ -2078,6 +2107,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      get_second_stage
+  ...      critical
   Отримати дані із поля stage2TenderID тендера для усіх користувачів
   ${tender_UAID_second_stage}=  Catenate  SEPARATOR=  ${TENDER['TENDER_UAID']}  .2
   Можливість знайти тендер по ідентифікатору ${tender_UAID_second_stage} та зберегти його в second_stage_data для користувача ${tender_owner}
@@ -2088,6 +2118,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      viewer
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      compare_stages
+  ...      critical
   Звірити відображення поля title тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.title} для користувача ${viewer}
 
 
@@ -2096,6 +2127,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      viewer
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      compare_stages
+  ...      critical
   Звірити відображення поля minimalStep тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.minimalStep} для користувача ${viewer}
 
 
@@ -2104,6 +2136,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      viewer
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      compare_stages
+  ...      critical
   Звірити відображення поля value тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.value} для користувача ${viewer}
 
 
@@ -2112,6 +2145,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      viewer
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      compare_stages
+  ...      non-critical
   Звірити відображення поля description тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.description} для користувача ${viewer}
 
 
@@ -2120,6 +2154,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      viewer
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      compare_stages
+  ...      critical
   Звірити відображення поля procuringEntity.name тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.procuringEntity.name} для користувача ${viewer}
 
 ###################################################################
@@ -2166,6 +2201,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      compare_stages
+  ...      critical
   Звірити відображення поля title усіх лотів другого етапу для усіх користувачів
 
 
@@ -2174,6 +2210,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      compare_stages
+  ...      non-critical
   Звірити відображення поля description усіх лотів другого етапу для користувача ${viewer}
 
 
@@ -2183,6 +2220,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      compare_stages
+  ...      critical
   Звірити відображення поля value.amount усіх лотів другого етапу для усіх користувачів
 
 
@@ -2191,6 +2229,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      compare_stages
+  ...      critical
   Звірити відображення поля value.currency усіх лотів другого етапу для користувача ${viewer}
 
 
@@ -2199,6 +2238,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      compare_stages
+  ...      non-critical
   Звірити відображення поля value.valueAddedTaxIncluded усіх лотів другого етапу для користувача ${viewer}
 
 
@@ -2208,6 +2248,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      compare_stages
+  ...      non-critical
   Звірити відображення поля minimalStep.amount усіх лотів другого етапу для усіх користувачів
 
 
@@ -2216,6 +2257,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      compare_stages
+  ...      non-critical
   Звірити відображення поля minimalStep.currency усіх лотів другого етапу для користувача ${viewer}
 
 
@@ -2224,6 +2266,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      compare_stages
+  ...      non-critical
   Звірити відображення поля minimalStep.valueAddedTaxIncluded усіх лотів другого етапу для користувача ${viewer}
 
 ##############################################################################################
@@ -2235,6 +2278,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      save_tender_second_stage
+  ...      critical
   Отримати доступ до тендера другого етапу та зберегти його
 
 
@@ -2243,6 +2287,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      activate_second_stage
+  ...      critical
   Активувати тендер другого етапу
 
 
@@ -2251,6 +2296,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      make_bid_by_provider_second_stage
+  ...      critical
   [Setup]  Дочекатись дати початку прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію на другий етап 1 користувачем ${provider}
@@ -2261,6 +2307,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      make_bid_by_provider1_second_stage
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію на другий етап 2 користувачем ${provider1}
 

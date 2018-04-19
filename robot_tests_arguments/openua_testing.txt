@@ -20,13 +20,25 @@
 -i add_tender_doc
 -i add_lot_doc
 -i modify_lot_value_amount
+-i add_lot
+-i add_item
+-i delete_item
+-i delete_lot
+-i add_tender_meat
+-i delete_tender_meat
+-i add_lot_meat
+-i delete_lot_meat
 -i add_item_meat
   -i delete_item_meat
 
 -i ask_question_to_tender
   -i answer_question_to_tender
--i modify_tender_after_questions
 
+-i ask_question_to_lot
+  -i answer_question_to_lot
+
+-i modify_tender_after_questions
+-i modify_lot_after_questions
 -i make_bid_without_related_lot
 -i make_bid_without_parameters
 -i make_bid_by_provider
@@ -48,6 +60,19 @@
   -i open_confirm_first_bid
   -i open_confirm_second_bid
 
+-i document_service
+
 -i auction_url
 
--i document_service
+-i auction
+
+-i qualification_add_doc_to_first_award
+-i qualification_approve_first_award
+-i qualification_cancel_first_award_qualification
+-i qualification_add_doc_to_second_award
+-i qualification_approve_second_award
+
+-i contract_sign
+-i modify_contract
+-i contract_view
+-i add_doc_to_contract
