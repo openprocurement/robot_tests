@@ -1,0 +1,12 @@
+-v MODE:openua
+
+-i create_tender
+-i find_tender
+-i tender_view
+
+-i make_bid_by_provider
+-i make_bid_by_provider1
+-i tenderPeriod_endDate
+
+-i tender_complaint
+-i lot_complaint 

@@ -1,4 +1,4 @@
--v MODE:belowThreshold
+-v MODE:openua
 
 -i create_tender
 -i find_tender
@@ -11,5 +11,5 @@
 -i qualification_approve_first_award
 
 -i award_complaint
+-i openua_award_complaint 
 -i award_complaint_before_resolved
--i below_award_complaint_before_resolved
