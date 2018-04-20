@@ -10,6 +10,5 @@
 -i awardPeriod_startDate
 -i qualification_approve_first_award
 
--i award_complaint
 -i award_complaint_before_resolved
 -i below_award_complaint_before_resolved
