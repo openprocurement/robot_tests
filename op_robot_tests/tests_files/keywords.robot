@@ -740,7 +740,6 @@ Require Failure
   [return]  ${value}
 
 
-
 Можливість отримати посилання на аукціон для глядача
   ${timeout_on_wait}=  Get Broker Property By Username  ${viewer}  timeout_on_wait
   ${timeout_on_wait}=  Set Variable If
@@ -1019,9 +1018,13 @@ Require Failure
 
 
 Отримати останній індекс
-  [Arguments]  ${object}  ${username}
-  ${status}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${USERS.users['${username}'].tender_data.data}  ${object}
-  Run Keyword If  '${status}' == 'False'  Fail  ${object} not found in \${USERS.users['${username}'].tender_data.data}
-  ${len_of_object}=  Get Length  ${USERS.users['${username}'].tender_data.data.${object}}
-  ${index}=  subtraction  ${len_of_object}  1
+  [Arguments]  ${object}  @{username}
+  :FOR  ${role}  IN  @{username}
+  \  ${status}  ${field_value}=  Run Keyword And Ignore Error
+  ...      get_from_object
+  ...      ${USERS.users['${role}'].tender_data.data}
+  ...      ${object}
+  \  Run Keyword If  '${status}' == 'PASS'  Exit For Loop
+  ${len_of_object}=  Run Keyword If  '${status}' == 'PASS'  Get Length  ${USERS.users['${role}'].tender_data.data.${object}}
+  ${index}=  Run Keyword If  '${status}' == 'PASS'  subtraction  ${len_of_object}  1
   [Return]  ${index}

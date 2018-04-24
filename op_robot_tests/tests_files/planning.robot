@@ -18,6 +18,7 @@ ${ITEM_MEAT}        ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      create_plan
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість створити план закупівлі
 
@@ -27,6 +28,7 @@ ${ITEM_MEAT}        ${False}
   ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      find_plan
+  ...      critical
   Можливість знайти план по ідентифікатору
 
 
@@ -35,6 +37,7 @@ ${ITEM_MEAT}        ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення типу запланованого тендера для ${viewer}
 
@@ -44,6 +47,7 @@ ${ITEM_MEAT}        ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля budget.amount плану для користувача ${viewer}
 
@@ -53,6 +57,7 @@ ${ITEM_MEAT}        ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view
+  ...      non-critical
   Звірити відображення поля budget.amountNet плану для користувача ${viewer}
 
 
@@ -61,6 +66,7 @@ ${ITEM_MEAT}        ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view
+  ...      non-critical
   Звірити відображення поля budget.description плану для користувача ${viewer}
 
 
@@ -69,6 +75,7 @@ ${ITEM_MEAT}        ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view
+  ...      critical
   Звірити відображення поля budget.currency плану для користувача ${viewer}
 
 
@@ -77,6 +84,7 @@ ${ITEM_MEAT}        ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view
+  ...      non-critical
   Звірити відображення поля budget.id плану для користувача ${viewer}
 
 
@@ -85,6 +93,7 @@ ${ITEM_MEAT}        ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view
+  ...      non-critical
   Звірити відображення поля budget.project.id плану для користувача ${viewer}
 
 
@@ -93,6 +102,7 @@ ${ITEM_MEAT}        ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view
+  ...      critical
   Звірити відображення поля budget.project.name плану для користувача ${viewer}
 
 
@@ -101,6 +111,7 @@ ${ITEM_MEAT}        ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view
+  ...      critical
   Звірити відображення поля procuringEntity.name плану для користувача ${viewer}
 
 
@@ -109,6 +120,7 @@ ${ITEM_MEAT}        ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view
+  ...      critical
   Звірити відображення поля procuringEntity.identifier.scheme плану для користувача ${viewer}
 
 
@@ -117,6 +129,7 @@ ${ITEM_MEAT}        ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view
+  ...      critical
   Звірити відображення поля procuringEntity.identifier.id плану для користувача ${viewer}
 
 
@@ -125,6 +138,7 @@ ${ITEM_MEAT}        ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view
+  ...      non-critical
   Звірити відображення поля procuringEntity.identifier.legalName плану для користувача ${viewer}
 
 
@@ -133,6 +147,7 @@ ${ITEM_MEAT}        ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view
+  ...      non-critical
   Звірити відображення поля classification.description плану для користувача ${viewer}
 
 
@@ -141,6 +156,7 @@ ${ITEM_MEAT}        ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view
+  ...      non-critical
   Звірити відображення поля classification.scheme плану для користувача ${viewer}
 
 
@@ -149,6 +165,7 @@ ${ITEM_MEAT}        ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view
+  ...      non-critical
   Звірити відображення поля classification.id плану для користувача ${viewer}
 
 
@@ -157,6 +174,7 @@ ${ITEM_MEAT}        ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view
+  ...      critical
   Звірити відображення поля tender.tenderPeriod.startDate плану для користувача ${viewer}
 
 
@@ -165,6 +183,7 @@ ${ITEM_MEAT}        ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view  level2
+  ...      critical
   Звірити відображення description усіх предметів плану для користувача ${viewer}
 
 
@@ -173,6 +192,7 @@ ${ITEM_MEAT}        ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view
+  ...      critical
   Звірити відображення quantity усіх предметів плану для користувача ${viewer}
 
 
@@ -181,6 +201,7 @@ ${ITEM_MEAT}        ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view
+  ...      critical
   Звірити відображення deliveryDate.endDate усіх предметів плану для користувача ${viewer}
 
 
@@ -189,6 +210,7 @@ ${ITEM_MEAT}        ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view
+  ...      non-critical
   Звірити відображення unit.code усіх предметів плану для користувача ${viewer}
 
 
@@ -197,6 +219,7 @@ ${ITEM_MEAT}        ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view
+  ...      non-critical
   Звірити відображення unit.name усіх предметів плану для користувача ${viewer}
 
 
@@ -205,6 +228,7 @@ ${ITEM_MEAT}        ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view
+  ...      non-critical
   Звірити відображення classification.description усіх предметів плану для користувача ${viewer}
 
 
@@ -213,6 +237,7 @@ ${ITEM_MEAT}        ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view
+  ...      non-critical
   Звірити відображення classification.scheme усіх предметів плану для користувача ${viewer}
 
 
@@ -221,6 +246,7 @@ ${ITEM_MEAT}        ${False}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      plan_view
+  ...      non-critical
   Звірити відображення classification.id усіх предметів плану для користувача ${viewer}
 
 
@@ -229,6 +255,7 @@ ${ITEM_MEAT}        ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_plan
+  ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_description}=  create_fake_sentence
   Можливість змінити поле budget.description плану на ${new_description}
@@ -239,6 +266,7 @@ ${ITEM_MEAT}        ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_plan
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_amount}=  create_fake_value_amount
@@ -250,6 +278,7 @@ ${ITEM_MEAT}        ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_plan
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_date}=  create_fake_date
@@ -261,6 +290,7 @@ ${ITEM_MEAT}        ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_plan
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_quantity}=  create_fake_value_amount
@@ -272,6 +302,7 @@ ${ITEM_MEAT}        ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      add_item
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість додати предмет закупівлі в план
@@ -282,6 +313,7 @@ ${ITEM_MEAT}        ${False}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      delete_item
+  ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість видалити предмет закупівлі з плану

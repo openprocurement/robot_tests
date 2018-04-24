@@ -18,8 +18,11 @@
 -i lot_view
 -i funders_view
 
+-i delete_funder_field
 -i delete_funder
 -i add_funder
+-i change_funder_during_enquiry_period
+-i change_funder_after_enquiry_period
 
 -i make_bid_by_provider
 -i make_bid_by_provider1
@@ -27,6 +30,10 @@
 
 -i auction
 
+-i qualification_add_doc_to_second_award
 -i qualification_approve_first_award
+-i qualification_cancel_first_award_qualification
+-i qualification_add_doc_to_second_award
+-i qualification_approve_second_award
 
 -i contract_sign
