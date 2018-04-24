@@ -326,37 +326,31 @@ ${MOZ_INTEGRATION}  ${False}
   Звірити відображення поля description усіх предметів для користувача ${viewer}
 
 
-Відображення схеми основної/додаткової класифікації номенклатур звіту про укладений договір
+Відображення схеми класифікації номенклатур звіту про укладений договір
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
   ...      non-critical
   Звірити відображення поля classification.scheme усіх предметів для користувача ${viewer}
-  Run Keyword If  "${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['description']}" == "Не відображене в інших розділах"
-  ...      Звірити відображення поля additionalClassifications[0].scheme усіх предметів для користувача ${viewer}
 
 
-Відображення ідентифікатора основної/додаткової класифікації номенклатур звіту про укладений договір
+Відображення ідентифікатора класифікації номенклатур звіту про укладений договір
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
   ...      non-critical
   Звірити відображення поля classification.id усіх предметів для користувача ${viewer}
-  Run Keyword If  "${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['description']}" == "Не відображене в інших розділах"
-  ...      Звірити відображення поля additionalClassifications[0].id усіх предметів для користувача ${viewer}
 
 
-Відображення опису основної/додаткової класифікації номенклатур звіту про укладений договір
+Відображення опису класифікації номенклатур звіту про укладений договір
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
   ...      non-critical
   Звірити відображення поля classification.description усіх предметів для користувача ${viewer}
-  Run Keyword If  "${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['description']}" == "Не відображене в інших розділах"
-  ...      Звірити відображення поля additionalClassifications[0].description усіх предметів для користувача ${viewer}
 
 
 Відображення кількості номенклатури звіту про укладений договір
