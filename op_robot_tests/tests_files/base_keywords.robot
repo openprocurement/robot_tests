@@ -651,6 +651,8 @@ Resource           resource.robot
   ...      ${answer}
   ...      ${USERS.users['${provider}'].tender_question_data.question_id}
   Set To Dictionary  ${USERS.users['${provider}'].tender_question_data.question.data}  answer=${answer.data.answer}
+  ${now}=  Get Current Date
+  Set To Dictionary  ${USERS.users['${provider}']}  tender_dataAnswered=${now}
 
 
 Можливість відповісти на запитання на ${item_index} предмет
@@ -660,6 +662,8 @@ Resource           resource.robot
   ...      ${answer}
   ...      ${USERS.users['${provider}'].items_${item_index}_question_data.question_id}
   Set To Dictionary  ${USERS.users['${provider}'].items_${item_index}_question_data.question.data}  answer=${answer.data.answer}
+  ${now}=  Get Current Date
+  Set To Dictionary  ${USERS.users['${provider}']}  item_${item_index}_dataAnswered=${now}
 
 
 Можливість відповісти на запитання на ${lot_index} лот
@@ -669,6 +673,8 @@ Resource           resource.robot
   ...      ${answer}
   ...      ${USERS.users['${provider}'].lots_${lot_index}_question_data.question_id}
   Set To Dictionary  ${USERS.users['${provider}'].lots_${lot_index}_question_data.question.data}  answer=${answer.data.answer}
+  ${now}=  Get Current Date
+  Set To Dictionary  ${USERS.users['${provider}']}  lot_${lot_index}_dataAnswered=${now}
 
 
 Звірити відображення поля ${field} запитання на тендер для усіх користувачів

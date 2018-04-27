@@ -1017,6 +1017,16 @@ ${MOZ_INTEGRATION}  ${False}
   Звірити відображення поля answer запитання на тендер для користувача ${viewer}
 
 
+Відображення дати відповіді на запитання на тендер
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення відповіді на запитання
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      answer_question_to_tender
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  ${data}=  Отримати дані із тендера  ${viewer}  ${TENDER['TENDER_UAID']}  dateAnswered  ${USERS.users['${provider}'].tender_question_data.question_id}
+  Порівняти дати  ${data}  ${USERS.users['${provider}'].tender_dataAnswered}
+
+
 Можливість задати запитання на всі предмети
   [Tags]   ${USERS.users['${provider}'].broker}: Задання запитання
   ...      provider
@@ -1073,6 +1083,17 @@ ${MOZ_INTEGRATION}  ${False}
   \  Звірити відображення поля answer запитання на ${item_index} предмет для користувача ${viewer}
 
 
+Відображення дати відповіді на запитання на всі предмети
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення відповіді на запитання
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      answer_question_to_item
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
+  \  ${data}=  Отримати дані із тендера  ${viewer}  ${TENDER['TENDER_UAID']}  dateAnswered  ${USERS.users['${provider}'].items_${item_index}_question_data.question_id}
+  \  Порівняти дати  ${data}  ${USERS.users['${provider}'].item_${item_index}_dataAnswered}
+
+
 Можливість задати запитання на всі лоти
   [Tags]   ${USERS.users['${provider}'].broker}: Задання запитання
   ...      provider
@@ -1127,6 +1148,17 @@ ${MOZ_INTEGRATION}  ${False}
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   :FOR  ${lot_index}  IN RANGE  ${NUMBER_OF_LOTS}
   \  Звірити відображення поля answer запитання на ${lot_index} лот для користувача ${viewer}
+
+
+Відображення дати відповіді на запитання на всі лоти
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення відповіді на запитання
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      answer_question_to_item
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  :FOR  ${lot_index}  IN RANGE  ${NUMBER_OF_LOTS}
+  \  ${data}=  Отримати дані із тендера  ${viewer}  ${TENDER['TENDER_UAID']}  dateAnswered  ${USERS.users['${provider}'].lots_${lot_index}_question_data.question_id}
+  \  Порівняти дати  ${data}  ${USERS.users['${provider}'].lot_${lot_index}_dataAnswered}
 
 
 Можливість внести зміни у тендер після запитання
