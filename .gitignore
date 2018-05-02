@@ -13,7 +13,6 @@ __pycache__/
 /dist/
 /eggs/
 /src/
-/.idea/
 
 # Output of robot_tests
 /test_output/
