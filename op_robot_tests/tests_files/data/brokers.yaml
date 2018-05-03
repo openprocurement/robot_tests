@@ -30,8 +30,8 @@ Default:
             # Please refer to API documentation to find out what's this
             accelerator: 1440
         dgfFinancialAssets:
-           accelerator: 1440
-           auction:  [25, 30]
+            accelerator: 1440
+            auction:  [25, 30]
         dgfOtherAssets:
             accelerator: 1440
             auction:  [25, 30]

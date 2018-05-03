@@ -351,6 +351,18 @@ Resource           resource.robot
   Remove File  ${file_path}
 
 
+Можливість завантажити протокол пролонгації в контракт ${contract_index} користувачем ${username}
+  ${prolongation_protocol_path}  ${file_title}  ${file_content}=  create_fake_doc
+  Run As  ${username}  Завантажити протокол пролонгації в контракт  ${TENDER['TENDER_UAID']}  ${prolongation_protocol_path}  ${contract_index}
+  Remove File  ${prolongation_protocol_path}
+
+
+Звірити відображення поля ${field} пролонгації для користувача ${username}
+  Звірити поле пролонгації  ${username}  ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${tender_owner}'].prolongation_data}
+  ...      ${field}
+
+
 Можливість укласти угоду для закупівлі
   Run as  ${tender_owner}
   ...      Підтвердити підписання контракту

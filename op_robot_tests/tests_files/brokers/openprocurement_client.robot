@@ -635,6 +635,47 @@ Library  openprocurement_client.utils
   Log  ${reply}
 
 
+Продовжити період підписання договору
+  [Arguments]  ${username}  ${tender_uaid}  ${prolongation_data}  ${contract_index}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${contract_id}=  Get Variable Value  ${tender['data']['contracts'][${contract_index}]['id']}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_prolongation  ${tender}  ${contract_id}  ${prolongation_data}
+  # we need this to have prlongation id in `Завантажити протокол пролонгації в контракт` and `Підтвердити пролонгацію` keywords
+  ${empty_list}=  Create List
+  ${prolongations}=  Get variable value  ${USERS.users['${username}'].prolongations}  ${empty_list}
+  Append to list  ${prolongations}  ${reply}
+  Set to dictionary  ${USERS.users['${username}']}  prolongations=${prolongations}
+  Log  ${prolongations}
+  Log  ${reply}
+
+
+Завантажити протокол пролонгації в контракт
+  [Arguments]  ${username}  ${tender_uaid}  ${document}  ${contract_index}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${contract_id}=  Get Variable Value  ${tender.data.contracts[${contract_index}].id}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
+  ${doc_created}=  Call Method  ${USERS.users['${username}'].client}  upload_prolongation_document  ${document}  ${tender}  ${contract_id}  ${USERS.users['${username}'].prolongations[-1].data.id}
+  Set To Dictionary  ${doc_created['data']}  documentType=prolongationProtocol
+  ${reply_doc_patch}=  Call Method  ${USERS.users['${username}'].client}  patch_prolongation_document  ${tender}  ${doc_created}  ${contract_id}  ${USERS.users['${username}'].prolongations[-1].data.id}
+  Log  ${doc_created}
+  Log  ${reply_doc_patch}
+
+
+Підтвердити пролонгацію
+  [Arguments]  ${username}  ${tender_uaid}  ${contract_index}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${contract_id}=  Get Variable Value  ${tender.data.contracts[${contract_index}].id}
+  ${data}=  Create Dictionary  status=applied
+  ${data}=  Create Dictionary  data=${data}
+  ${prolongations}=  Get variable value  ${USERS.users['${username}'].prolongations}
+  ${prolongation}=  munchify  ${prolongations[-1]}
+  Log  ${prolongation}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_prolongation  ${tender}  ${contract_id}  ${USERS.users['${username}'].prolongations[-1].data.id}  ${data}
+  Log  ${data}
+  Log  ${reply}
+
+
 Підтвердити підписання контракту
   [Documentation]
   ...      [Arguments] Username, tender uaid, contract number
