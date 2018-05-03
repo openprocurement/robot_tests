@@ -1,1 +1,21 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
 
+# Distribution / packaging / buildout
+/*.egg-info/
+/.installed.cfg
+/.mr.developer.cfg
+/bin/
+/build/
+/develop-eggs/
+/[bs]dist/
+/dist/
+/eggs/
+/src/
+
+# Output of robot_tests
+/test_output/
+
+# Robot framework artifact
+op_robot_tests/tests_files/data/artifact.yaml
