@@ -40,14 +40,6 @@
 -i modify_tender_after_questions
 -i modify_lot_after_questions
 
--i create_tender_claim
-  -i answer_tender_claim
--i modify_tender_after_claim
-
--i create_lot_claim
-  -i answer_lot_claim
--i modify_lot_after_claim
-
 -i make_bid_without_related_lot
 -i make_bid_without_parameters
 -i make_bid_by_provider
