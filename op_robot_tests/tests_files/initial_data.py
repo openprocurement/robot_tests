@@ -54,6 +54,10 @@ def create_fake_date():
     return get_now().isoformat()
 
 
+def create_fake_DecisionDate():
+    return get_now().strftime('%Y-%m-%d')
+
+
 def create_fake_dgfDecisionID():
     return fake.dgfDecisionID()
 
