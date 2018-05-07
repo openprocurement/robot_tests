@@ -460,3 +460,33 @@ aladdin:
         provider1:      aladdin_Provider1
         viewer:         aladdin_Viewer
     timeout_on_wait: 1
+izi:
+    homepage: "https://test.izi.trade"
+    backendUrl: "https://api-test.izi.trade"
+    intervals:
+        default:
+            enquiry: [0, 20]
+            tender:  [0, 10]
+            accelerator: 1440
+        belowThreshold:
+            enquiry: [0, 20]
+            tender:  [0, 10]
+            accelerator: 300
+        openua:
+            tender:  [0, 20]
+            accelerator: 1440
+        openeu:
+            tender:  [0, 35]
+            accelerator: 1440
+        openua_defense:
+            tender:  [0, 20]
+            accelerator: 1440
+        open_competitive_dialogue:
+            tender:  [0, 35]
+            accelerator: 1440
+    keywords_file: izi
+    roles:
+        provider:       izi_provider
+        provider1:      izi_provider1
+        viewer:         izi_viewer
+    timeout_on_wait: 0
