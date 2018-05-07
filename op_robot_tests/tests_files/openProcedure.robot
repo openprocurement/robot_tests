@@ -1280,7 +1280,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${provider1}'].broker}: Процес аукціону
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
-  ...      auction_url
+  ...      auction_url_provider1
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider1}
   Можливість вичитати посилання на аукціон для учасника ${provider1}
 
