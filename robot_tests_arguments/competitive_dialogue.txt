@@ -1,5 +1,3 @@
--s openProcedure
-
 -v MODE:open_competitive_dialogue
 
 -v NUMBER_OF_ITEMS:1
