@@ -878,3 +878,16 @@ Require Failure
   ${LAST_MODIFICATION_DATE}=  Get Current TZdate
   ${status}=  Get Variable Value  ${TEST_STATUS}  PASS
   Run Keyword If  '${status}' == 'PASS'  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE=${LAST_MODIFICATION_DATE}
+
+
+Отримати останній індекс
+  [Arguments]  ${object}  @{username}
+  :FOR  ${role}  IN  @{username}
+  \  ${status}  ${field_value}=  Run Keyword And Ignore Error
+  ...      get_from_object
+  ...      ${USERS.users['${role}'].tender_data.data}
+  ...      ${object}
+  \  Run Keyword If  '${status}' == 'PASS'  Exit For Loop
+  ${len_of_object}=  Run Keyword If  '${status}' == 'PASS'  Get Length  ${USERS.users['${role}'].tender_data.data.${object}}
+  ${index}=  Run Keyword If  '${status}' == 'PASS'  subtraction  ${len_of_object}  1
+  [Return]  ${index}
