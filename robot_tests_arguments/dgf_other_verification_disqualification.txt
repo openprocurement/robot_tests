@@ -16,6 +16,8 @@
 -i make_bid_by_provider
 -i modify_bid_by_provider
 
+-i make_bid_after_tendering_period
+
 -i number_of_awards
 -i awarding
 -i first_award_verification_status
