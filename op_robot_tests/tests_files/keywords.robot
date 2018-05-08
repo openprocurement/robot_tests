@@ -889,5 +889,5 @@ Require Failure
   ...      ${object}
   \  Run Keyword If  '${status}' == 'PASS'  Exit For Loop
   ${len_of_object}=  Run Keyword If  '${status}' == 'PASS'  Get Length  ${USERS.users['${role}'].tender_data.data.${object}}
-  ${index}=  Run Keyword If  '${status}' == 'PASS'  subtraction  ${len_of_object}  1
+  ${index}=  Run Keyword If  '${status}' == 'PASS'  Evaluate  ${len_of_object}-1
   [Return]  ${index}
