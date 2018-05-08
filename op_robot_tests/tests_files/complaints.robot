@@ -5,7 +5,7 @@ Suite Teardown  Test Suite Teardown
 
 *** Variables ***
 ${MODE}             belowThreshold
-@{USED_ROLES}       tender_owner  provider  provider1  viewer
+@{USED_ROLES}       tender_owner  provider  provider1  provider2  viewer
 ${MOZ_INTEGRATION}  ${False}
 
 ${NUMBER_OF_ITEMS}  ${1}
