@@ -60,10 +60,6 @@
 
 -i auction
 
--i create_award_claim
--i answer_award_claim
--i cancel_award_claim
-
 -i qualification_add_doc_to_first_award
 -i qualification_approve_first_award
 -i qualification_cancel_first_award_qualification
