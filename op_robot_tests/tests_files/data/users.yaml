@@ -713,3 +713,21 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1100, 5000]
+    izi_provider:
+        broker:   izi
+        browser:  chrome
+        size:     [1280, 1024]
+        login: "test@izi.trade"
+        password: "qwerty1!"
+    izi_provider1:
+        broker:   izi
+        browser:  chrome
+        size:     [1280, 1024]
+        login: "test1@izi.trade"
+        password: "qwerty1!"
+    izi_viewer:
+        broker:   izi
+        browser:  chrome
+        size:     [1280, 1024]
+        login: "test@izi.trade"
+        password: "qwerty1!"
