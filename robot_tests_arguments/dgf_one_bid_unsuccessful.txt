@@ -51,9 +51,5 @@
 -i ask_question_to_tender_after_tendering_period
 -i ask_question_to_item_after_tendering_period
 
--i auction
--i auction_url
--i auction_end_date
-
 -i number_of_awards
 -i tender_status_unsuccessful

@@ -346,27 +346,6 @@ ${ITEM_MEAT}        ${True}
 #             Редагування лоту
 ##############################################################################################
 
-Можливість змінити назву лоту українською мовою
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_auction_title
-  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  ${new_title}=  create_fake_title  ua
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_title=${new_title}
-  Можливість змінити поле title тендера на ${new_title}
-
-
-Відображення зміненої назви лоту українською мовою
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      modify_auction_title
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  title
-  Звірити відображення поля title тендера із ${USERS.users['${tender_owner}'].new_title} для користувача ${viewer}
-
-
 Можливість змінити назву лоту російською мовою
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
   ...      tender_owner
@@ -588,6 +567,28 @@ ${ITEM_MEAT}        ${True}
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.guarantee}  amount
   Звірити відображення поля guarantee.amount тендера із ${USERS.users['${tender_owner}'].new_guarantee_value} для користувача ${viewer}
+
+
+Можливість змінити початкову вартість лоту після подачі пропозицій
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_value
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${new_amount}=  create_fake_value  ${USERS.users['${tender_owner}'].tender_data.data.value.amount}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_amount=${new_amount}
+  Можливість змінити поле value.amount тендера на ${new_amount}
+
+
+Відображення зміненої початкової вартості лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_auction_value
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.value}  amount
+  Звірити відображення поля value.amount тендера із ${USERS.users['${tender_owner}'].new_amount} для користувача ${viewer}
 
 
 Можливість додати актив лоту
@@ -921,26 +922,25 @@ ${ITEM_MEAT}        ${True}
   Можливість зменшити пропозицію до невалідної користувачем ${provider2}
 
 
-Можливість змінити початкову вартість лоту після подачі пропозицій
+Можливість змінити назву лоту українською мовою
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_auction_value
+  ...      modify_auction_title
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${new_amount}=  create_fake_value  ${USERS.users['${tender_owner}'].tender_data.data.value.amount}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_amount=${new_amount}
-  Можливість змінити поле value.amount тендера на ${new_amount}
+  ${new_title}=  create_fake_title  ua
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_title=${new_title}
+  Можливість змінити поле title тендера на ${new_title}
 
 
-Відображення зміненої початкової вартості лоту
+Відображення зміненої назви лоту українською мовою
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      modify_auction_value
+  ...      modify_auction_title
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.value}  amount
-  Звірити відображення поля value.amount тендера із ${USERS.users['${tender_owner}'].new_amount} для користувача ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  title
+  Звірити відображення поля title тендера із ${USERS.users['${tender_owner}'].new_title} для користувача ${viewer}
 
 
 Можливість підтвердити цінову пропозицію після зміни умов лоту першим учасником
@@ -1212,6 +1212,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      make_bid_after_tendering_period
+  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}  ${TENDER['TENDER_UAID']}
   Run Keyword And Expect Error  *  Можливість подати цінову пропозицію користувачем ${provider}
 
 
