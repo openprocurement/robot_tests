@@ -52,15 +52,6 @@ ${ITEM_MEAT}        ${False}
   Звірити відображення поля budget.amount плану для користувача ${viewer}
 
 
-Відображення amountNet бюджету
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних плану
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      plan_view
-  ...      non-critical
-  Звірити відображення поля budget.amountNet плану для користувача ${viewer}
-
-
 Відображення опису бюджету
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних плану
   ...      viewer
