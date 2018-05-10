@@ -305,6 +305,8 @@ ${award_index}      ${0}
   ...     ${USERS.users['${viewer}'].broker}
   ...     tender_complaint
   ...     non-critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Звірити відображення поля satisfied для вимоги ${USERS.users['${provider}'].tender_claim_data['complaintID']} із ${USERS.users['${provider}'].tender_claim_data.claim_answer_confirm.data.satisfied} для користувача ${viewer}
 
 
