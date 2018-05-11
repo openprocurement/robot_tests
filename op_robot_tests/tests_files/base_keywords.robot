@@ -1027,6 +1027,7 @@ Resource           resource.robot
 Можливість підтвердити задоволення вимоги про виправлення умов закупівлі
   ${data}=  Create Dictionary
   ...      satisfied=${True}
+  ...      status=resolved
   ${confirmation_data}=  Create Dictionary  data=${data}
   ${confirmation_data}=  munch_dict  arg=${confirmation_data}
   Run As  ${provider}
@@ -1035,32 +1036,6 @@ Resource           resource.robot
   ...      ${USERS.users['${provider}']['tender_claim_data']['complaintID']}
   ...      ${confirmation_data}
   Set To Dictionary  ${USERS.users['${provider}']['tender_claim_data']}  claim_answer_confirm  ${confirmation_data}
-
-
-Можливість заперечити незадоволення вимоги про виправлення умов закупівлі для ${status} відповіді
-  ${data}=  Create Dictionary
-  ...      satisfied=${False}
-  ${confirmation_data}=  Create Dictionary  data=${data}
-  ${confirmation_data}=  munch_dict  arg=${confirmation_data}
-  Run As  ${provider}
-  ...      Підтвердити вирішення вимоги про виправлення умов закупівлі
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['tender_claim_data']['complaintID']}
-  ...      ${confirmation_data}
-  Set To Dictionary  ${USERS.users['${provider}']['tender_claim_data']}  claim_answer_confirm  ${confirmation_data}
-
-
-Можливість підтвердити задоволення вимоги про виправлення умов лоту
-  ${data}=  Create Dictionary
-  ...      satisfied=${True}
-  ${confirmation_data}=  Create Dictionary  data=${data}
-  ${confirmation_data}=  munch_dict  arg=${confirmation_data}
-  Run As  ${provider}
-  ...      Підтвердити вирішення вимоги про виправлення умов лоту
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${provider}']['lot_claim_data']['complaintID']}
-  ...      ${confirmation_data}
-  Set To Dictionary  ${USERS.users['${provider}']['lot_claim_data']}  claim_answer_confirm  ${confirmation_data}
 
 
 Можливість підтвердити задоволення вимоги про виправлення визначення ${award_index} переможця
