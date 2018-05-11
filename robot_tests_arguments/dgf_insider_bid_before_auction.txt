@@ -11,7 +11,6 @@
 
 
 -i make_bid_by_provider
--i add_financial_license_to_bid_by_provider
 -i auction_url_provider
 
 -i absence_bid

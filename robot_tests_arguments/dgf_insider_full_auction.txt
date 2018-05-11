@@ -10,7 +10,6 @@
 -i tender_view_auctionPeriod_StartDate
 
 -i make_bid_by_provider
--i add_financial_license_to_bid_by_provider
 -i auction_url_provider
 
 
