@@ -514,6 +514,28 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля value.valueAddedTaxIncluded тендера із ${tax_value} для користувача ${viewer}
 
 
+Можливість змінити початкову вартість лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_value
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${new_amount}=  create_fake_value  ${USERS.users['${tender_owner}'].tender_data.data.value.amount}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_amount=${new_amount}
+  Можливість змінити поле value.amount тендера на ${new_amount}
+
+
+Відображення зміненої початкової вартості лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_auction_value
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.value}  amount
+  Звірити відображення поля value.amount тендера із ${USERS.users['${tender_owner}'].new_amount} для користувача ${viewer}
+
+
 Можливість змінити мінімальний крок лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
   ...      tender_owner
@@ -521,7 +543,7 @@ ${ITEM_MEAT}        ${True}
   ...      modify_auction_step
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${new_minimal_step}=  create_fake_value  ${USERS.users['${tender_owner}'].tender_data.data.minimalStep.amount}
+  ${new_minimal_step}=  create_fake_minimal_step  ${USERS.users['${tender_owner}'].new_amount}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  new_minimal_step=${new_minimal_step}
   Можливість змінити поле minimalStep.amount тендера на ${new_minimal_step}
 
@@ -554,7 +576,7 @@ ${ITEM_MEAT}        ${True}
   ...      modify_auction_guarantee
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${new_guarantee_amount}=  create_fake_value  ${USERS.users['${tender_owner}'].tender_data.data.guarantee.amount}
+  ${new_guarantee_amount}=  create_fake_guarantee  ${USERS.users['${tender_owner}'].new_amount}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  new_guarantee_value=${new_guarantee_amount}
   Можливість змінити поле guarantee.amount тендера на ${new_guarantee_amount}
 
@@ -567,28 +589,6 @@ ${ITEM_MEAT}        ${True}
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.guarantee}  amount
   Звірити відображення поля guarantee.amount тендера із ${USERS.users['${tender_owner}'].new_guarantee_value} для користувача ${viewer}
-
-
-Можливість змінити початкову вартість лоту після подачі пропозицій
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_auction_value
-  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${new_amount}=  create_fake_value  ${USERS.users['${tender_owner}'].tender_data.data.value.amount}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_amount=${new_amount}
-  Можливість змінити поле value.amount тендера на ${new_amount}
-
-
-Відображення зміненої початкової вартості лоту
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      modify_auction_value
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.value}  amount
-  Звірити відображення поля value.amount тендера із ${USERS.users['${tender_owner}'].new_amount} для користувача ${viewer}
 
 
 Можливість додати актив лоту
@@ -1144,7 +1144,7 @@ ${ITEM_MEAT}        ${True}
   ...      modify_auction_step
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${new_minimal_step}=  create_fake_value  ${USERS.users['${tender_owner}'].tender_data.data.minimalStep.amount}
+  ${new_minimal_step}=  create_fake_minimal_step  ${USERS.users['${tender_owner}'].new_amount}
   Перевірити неможливість зміни поля minimalStep.amount тендера на значення ${new_minimal_step} для користувача ${tender_owner}
 
 
@@ -1155,7 +1155,7 @@ ${ITEM_MEAT}        ${True}
   ...      modify_auction_guarantee
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${new_guarantee_amount}=  create_fake_value  ${USERS.users['${tender_owner}'].tender_data.data.guarantee.amount}
+  ${new_guarantee_amount}=  create_fake_guarantee  ${USERS.users['${tender_owner}'].new_amount}
   Перевірити неможливість зміни поля guarantee.amount тендера на значення ${new_guarantee_amount} для користувача ${tender_owner}
 
 
