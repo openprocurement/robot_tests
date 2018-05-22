@@ -37,6 +37,7 @@
 
 -i auction
 
+-i qualification_add_doc_to_first_award
 -i qualification_approve_first_award
 
 -i contract_sign
