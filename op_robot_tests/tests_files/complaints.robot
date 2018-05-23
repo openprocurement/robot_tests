@@ -78,7 +78,7 @@ ${award_index}      ${0}
 #             CREATE AND CANCEL CLAIM
 ##############################################################################################
 
-Можливість створити чернетку вимоги про виправлення умов закупівлі і скасувати її
+Можливість створити чернетку вимоги про виправлення умов закупівлі
   [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...     provider
   ...     ${USERS.users['${provider}'].broker}
@@ -86,6 +86,25 @@ ${award_index}      ${0}
   ...     critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість створити чернетку вимоги про виправлення умов закупівлі
+
+
+Відображення статусу 'draft' чернетки вимоги
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  ...     viewer
+  ...     ${USERS.users['${viewer}'].broker}
+  ...     tender_complaint
+  ...     non-critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля status для вимоги ${USERS.users['${provider}'].tender_claim_data['complaintID']} із draft для користувача ${viewer}
+
+
+Можливість скасувати чернетку вимоги про виправлення умов закупівлі
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
+  ...     provider
+  ...     ${USERS.users['${provider}'].broker}
+  ...     tender_complaint
+  ...     critical
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість скасувати вимогу про виправлення умов закупівлі
 
 
@@ -108,7 +127,7 @@ ${award_index}      ${0}
   Звірити відображення поля cancellationReason для вимоги ${USERS.users['${provider}'].tender_claim_data['complaintID']} із ${USERS.users['${provider}'].tender_claim_data.cancellation.data.cancellationReason} для користувача ${viewer}
 
 
-Можливість створити чернетку вимоги про виправлення умов лоту і скасувати її
+Можливість створити чернетку вимоги про виправлення умов лоту
   [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...     provider
   ...     ${USERS.users['${provider}'].broker}
@@ -117,7 +136,36 @@ ${award_index}      ${0}
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість створити чернетку вимоги про виправлення умов ${lot_index} лоту
+
+
+Відображення статусу 'draft' чернетки вимоги про виправлення умов лоту
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  ...     viewer
+  ...     ${USERS.users['${viewer}'].broker}
+  ...     lot_complaint
+  ...     non-critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля status вимоги про виправлення умов ${lot_index} лоту із draft для користувача ${viewer}
+
+
+Можливість скасувати чернетку вимоги про виправлення умов лоту
+  [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
+  ...     provider
+  ...     ${USERS.users['${provider}'].broker}
+  ...     lot_complaint
+  ...     critical
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість скасувати вимогу про виправлення умов лоту
+
+
+Відображення статусу 'cancelled' чернетки вимоги про виправлення умов лоту
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  ...     viewer
+  ...     ${USERS.users['${viewer}'].broker}
+  ...     lot_complaint
+  ...     non-critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля status вимоги про виправлення умов ${lot_index} лоту із cancelled для користувача ${viewer}
 
 ##############################################################################################
 #             CREATE, SUBMIT AND CANCEL CLAIM
