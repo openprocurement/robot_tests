@@ -41,9 +41,19 @@ from .initial_data import (
     test_tender_data_dgf_other,
     create_fake_tenderAttempts,
     create_fake_dgfID,
+    create_fake_decisionDate,
+    create_fake_decisionID,
+    create_fake_scheme_id,
+    create_fake_items_quantity,
+    cretate_fake_unit_name,
     convert_days_to_seconds,
     create_fake_title,
-    create_fake_description
+    create_fake_description,
+    create_fake_item_description,
+    test_asset_data,
+    test_lot_data,
+    test_lot_auctions_data,
+    create_fake_date,
 
 )
 from barbecue import chef
@@ -333,6 +343,10 @@ def prepare_test_tender_data(procedure_intervals, tender_parameters):
         "Accelerator should not be less than 0"
     if mode == 'dgfOtherAssets':
         return munchify({'data': test_tender_data_dgf_other(tender_parameters)})
+    if mode == 'assets':
+        return munchify({'data': test_asset_data(tender_parameters)})
+    if mode == 'lots':
+        return munchify({'data': test_lot_data(tender_parameters['assets_id'], tender_parameters)})
     raise ValueError("Invalid mode for prepare_test_tender_data")
 
 
