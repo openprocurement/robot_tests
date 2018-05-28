@@ -1,0 +1,3 @@
+-i create_asset
+-i find_asset
+-i delete_asset
