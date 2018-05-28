@@ -88,6 +88,10 @@ class OP_Provider(BaseProvider):
                                     self.random_int(1000, 99999))
 
     @classmethod
+    def dgfDecisionID(self):
+        return "{}-{}".format(self.random_int(1000, 9999), self.random_int(1, 9))
+
+    @classmethod
     def description(self):
         return self.sentence(nb_words=10)
 
@@ -102,8 +106,10 @@ class OP_Provider(BaseProvider):
         return deepcopy(self.random_element(procuringEntities))
 
     @classmethod
-    def scheme_other(self):
-        return self.random_element(self.schemes_other)
+    def scheme_other(self, scheme_id=None):
+        schemes= self.schemes_other
+        if scheme_id: schemes.remove(scheme_id)
+        return self.random_element(schemes)
 
     @classmethod
     def additionalIdentifier(self):
@@ -143,7 +149,6 @@ class OP_Provider(BaseProvider):
             "classification": classification["classification"],
             "additionalClassifications": classification["additionalClassifications"],
             "address": address["deliveryAddress"],
-            "deliveryLocation": address["deliveryLocation"],
             "unit": item_base_data["unit"],
             "quantity": self.randomize_nb_elements(number=item_base_data["quantity"], le=80, ge=120)
         }
