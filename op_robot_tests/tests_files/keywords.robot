@@ -165,8 +165,16 @@ Get Broker Property By Username
   ${artifact}=  Create Dictionary
   ...      api_version=${api_version}
   ...      tender_uaid=${TENDER['TENDER_UAID']}
-  ...      last_modification_date=${TENDER['LAST_MODIFICATION_DATE']}
   ...      mode=${MODE}
+  Run Keyword If  '${MODE}'=='assets'  Set To Dictionary  ${artifact}
+  ...  assets_id=${USERS.users['${tender_owner}'].tender_data.data.id}
+  ...  asset_access_token=${USERS.users['${tender_owner}'].access_token}
+  ...  asset_uaid=${USERS.users['${tender_owner}'].tender_data.data.assetID}
+  ...  ELSE IF  '${MODE}'=='lots'  Set To Dictionary  ${artifact}
+      ...          lot_uaid=${USERS.users['${tender_owner}'].tender_data.data.lotID}
+      ...          lot_id=${USERS.users['${tender_owner}'].tender_data.data.id}
+      ...          tender_owner_access_token=${USERS.users['${tender_owner}'].access_token}
+  ...  ELSE  Set To Dictionary  ${artifact}  lot_id=''    assets_id=''    last_modification_date=${TENDER['LAST_MODIFICATION_DATE']}
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}
   ...          tender_owner=${USERS.users['${tender_owner}'].broker}
   ...          access_token=${USERS.users['${tender_owner}'].access_token}
@@ -176,6 +184,7 @@ Get Broker Property By Username
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider1_access_token=${USERS.users['${provider1}'].access_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider_bid_id=${USERS.users['${provider}'].bid_id}
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider1_bid_id=${USERS.users['${provider1}'].bid_id}
+  Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  item_id=${USERS.users['${tender_owner}'].item_data.item_id}
   Log   ${artifact}
   log_object_data  ${artifact}  file_name=artifact  update=${True}  artifact=${True}
 
@@ -184,8 +193,11 @@ Get Broker Property By Username
   ${file_path}=  Get Variable Value  ${ARTIFACT_FILE}  artifact.yaml
   ${ARTIFACT}=  load_data_from  ${file_path}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token=${ARTIFACT.access_token}
+  Run Keyword If  '${MODE}'=='lots'  Set To Dictionary  ${USERS.users['${tender_owner}']}  asset_access_token=${ARTIFACT.asset_access_token}
   ${TENDER}=  Create Dictionary  TENDER_UAID=${ARTIFACT.tender_uaid}  LAST_MODIFICATION_DATE=${ARTIFACT.last_modification_date}  LOT_ID=${Empty}
   ${MODE}=  Get Variable Value  ${MODE}  ${ARTIFACT.mode}
+  Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  assets_id=${ARTIFACT.assets_id}
+  Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  item_id=${ARTIFACT.item_id}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token=${ARTIFACT.tender_owner_access_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider}']}  access_token=${ARTIFACT.provider_access_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider1}']}  access_token=${ARTIFACT.provider1_access_token}
@@ -210,7 +222,15 @@ Get Broker Property By Username
   [Arguments]  ${scheme}
   ${item} =  Run Keyword If  '${MODE}'=='dgfFinancialAssets'  test_item_data_financial  ${scheme[0:4]}
   ...        ELSE  test_item_data  ${scheme[0:4]}
+  ${registrationDetails}=  Create Dictionary  status=complete
+  Run Keyword If  '${MODE}'=='assets'  Set to dictionary  ${item}  registrationDetails=${registrationDetails}
   [Return]  ${item}
+
+
+Підготувати дані для заповнення умов проведення аукціону
+  :FOR  ${index}  IN  0  1
+  \  ${auction}=  test_lot_auctions_data  ${USERS.users['${tender_owner}'].tender_data.data.auctions[${index}]}  ${index}
+  \  Run As  ${tender_owner}  Додати умови проведення аукціону  ${auction}
 
 
 Підготувати дані для запитання
@@ -525,7 +545,7 @@ Log differences between dicts
   Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
   # Else call broker to find field
   ${field_value}=  Run Keyword IF  '${object_id}'  Отримати дані із об’єкта тендера  ${username}  ${tender_uaid}  ${object_id}  ${field_name}
-  ...                          ELSE  Run As  ${username}  Отримати інформацію із тендера  ${tender_uaid}  ${field}
+  ...                          ELSE  Отримати інформацію з тендера  ${username}  ${tender_uaid}  ${field}
   # And caching its value before return
   Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${field_value}
   ${data}=  munch_dict  arg=${USERS.users['${username}'].tender_data.data}
@@ -548,12 +568,24 @@ Log differences between dicts
   ${status}  ${value}=  Run Keyword If  '${object_type}'=='questions'
   ...      Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із запитання  ${tender_uaid}  ${object_id}  ${field_name}
   ...      ELSE IF  '${object_type}'=='items'
-  ...      Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із предмету  ${tender_uaid}  ${object_id}  ${field_name}
-  ...      ELSE IF  '${object_type}'=='features'
-  ...      Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із нецінового показника  ${tender_uaid}  ${object_id}  ${field_name}
+  ...      Run Keyword And Ignore Error  Отримати інформацію з предмету  ${username}  ${tender_uaid}  ${object_id}  ${field_name}
   ${field}=  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${object_id}
   ${field_value}=  Run Keyword IF  '${status}'=='PASS'  Set Variable  ${value}
-  ...      ELSE  Run As  ${username}  Отримати інформацію із тендера  ${tender_uaid}  ${field}
+  ...      ELSE  Отримати інформацію з тендера  ${username}  ${tender_uaid}  ${field}
+  [return]  ${field_value}
+
+
+Отримати інформацію з предмету
+  [Arguments]  ${username}  ${tender_uaid}  ${object_id}  ${field_name}
+  ${field_value}=  Run Keyword If  '${MODE}' == 'assets'  Run as  ${username}  Отримати інформацію з активу об'єкта МП  ${tender_uaid}  ${object_id}  ${field_name}
+  ...  ELSE IF  '${MODE}' == 'lots'  Run as  ${username}  Отримати інформацію з активу лоту  ${tender_uaid}  ${object_id}  ${field_name}
+  [return]  ${field_value}
+
+
+Отримати інформацію з тендера
+  [Arguments]  ${username}  ${tender_uaid}  ${field}
+  ${field_value}=  Run Keyword If  '${MODE}' == 'assets'  Run as  ${username}  Отримати інформацію із об'єкта МП  ${tender_uaid}  ${field}
+  ...  ELSE IF  '${MODE}' == 'lots'  Run as  ${username}  Отримати інформацію із лоту  ${tender_uaid}  ${field}
   [return]  ${field_value}
 
 
@@ -660,8 +692,22 @@ Require Failure
 
 Звірити статус тендера
   [Arguments]  ${username}  ${tender_uaid}  ${left}
-  ${right}=  Run as  ${username}  Отримати інформацію із тендера  ${tender_uaid}  status
+  ${right}=  Run Keyword If  '${MODE}' == 'lots'  Run as  ${username}  Отримати інформацію із лоту  ${tender_uaid}  status
+  ...  ELSE  Run as  ${username}  Отримати інформацію з тендера  ${tender_uaid}  status
   Порівняти об'єкти  ${left}  ${right}
+
+
+Звірити статус опублікованого лоту
+  [Arguments]  ${username}  ${tender_uaid}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      pending
 
 
 Звірити статус скасування тендера
