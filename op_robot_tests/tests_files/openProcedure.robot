@@ -8,10 +8,6 @@ Suite Teardown  Test Suite Teardown
 @{USED_ROLES}       tender_owner  provider  provider1  provider2  viewer
 
 ${NUMBER_OF_ITEMS}  ${1}
-${TENDER_MEAT}      ${True}
-${LOT_MEAT}         ${True}
-${ITEM_MEAT}        ${True}
-
 
 *** Test Cases ***
 Можливість оголосити лот
