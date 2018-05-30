@@ -82,7 +82,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...     provider
   ...     ${USERS.users['${provider}'].broker}
-  ...     tender_complaint
+  ...     tender_complaint_draft
   ...     critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість створити чернетку вимоги про виправлення умов закупівлі
@@ -92,7 +92,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
-  ...     tender_complaint
+  ...     tender_complaint_draft
   ...     non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля status для вимоги ${USERS.users['${provider}'].tender_claim_data['complaintID']} із draft для користувача ${viewer}
@@ -102,7 +102,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...     provider
   ...     ${USERS.users['${provider}'].broker}
-  ...     tender_complaint
+  ...     tender_complaint_draft
   ...     critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість скасувати вимогу про виправлення умов закупівлі
@@ -112,7 +112,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
-  ...     tender_complaint
+  ...     tender_complaint_draft
   ...     non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля status для вимоги ${USERS.users['${provider}'].tender_claim_data['complaintID']} із cancelled для користувача ${viewer}
@@ -122,7 +122,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
-  ...     tender_complaint
+  ...     tender_complaint_draft
   ...     non-critical
   Звірити відображення поля cancellationReason для вимоги ${USERS.users['${provider}'].tender_claim_data['complaintID']} із ${USERS.users['${provider}'].tender_claim_data.cancellation.data.cancellationReason} для користувача ${viewer}
 
@@ -131,7 +131,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...     provider
   ...     ${USERS.users['${provider}'].broker}
-  ...     lot_complaint
+  ...     lot_complaint_draft
   ...     critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
@@ -142,7 +142,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
-  ...     lot_complaint
+  ...     lot_complaint_draft
   ...     non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля status вимоги про виправлення умов ${lot_index} лоту із draft для користувача ${viewer}
@@ -152,7 +152,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...     provider
   ...     ${USERS.users['${provider}'].broker}
-  ...     lot_complaint
+  ...     lot_complaint_draft
   ...     critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість скасувати вимогу про виправлення умов лоту
@@ -162,7 +162,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
-  ...     lot_complaint
+  ...     lot_complaint_draft
   ...     non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля status вимоги про виправлення умов ${lot_index} лоту із cancelled для користувача ${viewer}
