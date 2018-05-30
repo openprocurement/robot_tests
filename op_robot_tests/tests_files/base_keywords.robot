@@ -7,35 +7,33 @@ Resource           resource.robot
 
 *** Keywords ***
 Можливість оголосити тендер
-  ${NUMBER_OF_ITEMS}=  Convert To Integer  ${NUMBER_OF_ITEMS}
   ${tender_parameters}=  Create Dictionary
   ...      mode=${MODE}
-  ...      number_of_items=${NUMBER_OF_ITEMS}
-  ...      tender_meat=${${TENDER_MEAT}}
-  ...      item_meat=${${ITEM_MEAT}}
   ...      api_host_url=${API_HOST_URL}
-  ...      minNumberOfQualifiedBids=${minNumberOfQualifiedBids}
-  ${DIALOGUE_TYPE}=  Get Variable Value  ${DIALOGUE_TYPE}
-  Run keyword if  '${DIALOGUE_TYPE}' != '${None}'  Set to dictionary  ${tender_parameters}  dialogue_type=${DIALOGUE_TYPE}
+  ...      number_of_items=${NUMBER_OF_ITEMS}
+  Run keyword if  '${MODE}' == 'lots'  Set to dictionary  ${tender_parameters}  assets_id=${USERS.users['${tender_owner}'].assets_id}
   ${tender_data}=  Підготувати дані для створення тендера  ${tender_parameters}
   ${adapted_data}=  Адаптувати дані для оголошення тендера  ${tender_data}
-  ${TENDER_UAID}=  Run As  ${tender_owner}  Створити тендер  ${adapted_data}
+  ${TENDER_UAID}=  Run Keyword If  '${MODE}' == 'assets'  Run As  ${tender_owner}  Створити об'єкт МП  ${adapted_data}
+  ...  ELSE IF  '${MODE}' == 'lots'  Run As  ${tender_owner}  Створити лот  ${adapted_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data=${adapted_data}
   Set To Dictionary  ${TENDER}  TENDER_UAID=${TENDER_UAID}
 
 
+Можливість додати умови проведення аукціону
+  Підготувати дані для заповнення умов проведення аукціону
+  Run As  ${tender_owner}  Змінити статус лоту  verification
+
+
 Можливість знайти тендер по ідентифікатору для усіх користувачів
-  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${provider1}  ${viewer}
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \  Можливість знайти тендер по ідентифікатору для користувача ${username}
 
 
 Можливість знайти тендер по ідентифікатору для користувача ${username}
   Дочекатись синхронізації з майданчиком  ${username}
-  Run as  ${username}  Пошук тендера по ідентифікатору  ${TENDER['TENDER_UAID']}
-
-
-Можливість змінити поле ${field_name} тендера на ${field_value}
-  Run As  ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  ${field_name}  ${field_value}
+  Run Keyword If  '${MODE}' == 'assets'  Run as  ${username}  Пошук об’єкта МП по ідентифікатору  ${TENDER['TENDER_UAID']}
+  ...  ELSE IF  '${MODE}' == 'lots'  Run as  ${username}  Пошук лоту по ідентифікатору  ${TENDER['TENDER_UAID']}
 
 
 Можливість додати документацію до тендера
@@ -52,6 +50,16 @@ Resource           resource.robot
   Run As  ${tender_owner}  Завантажити ілюстрацію  ${TENDER['TENDER_UAID']}  ${image_path}
 
 
+Можливість додати ілюстрацію до об’єкта МП
+  ${image_path}=  create_fake_image
+  Run As  ${tender_owner}  Завантажити ілюстрацію в об'єкт МП  ${TENDER['TENDER_UAID']}  ${image_path}
+
+
+Можливість додати ілюстрацію до лоту
+  ${image_path}=  create_fake_image
+  Run As  ${tender_owner}  Завантажити ілюстрацію в лот  ${TENDER['TENDER_UAID']}  ${image_path}
+
+
 Можливість додати публічний паспорт активу до тендера
   ${certificate_url}=  create_fake_url
   Run As  ${tender_owner}  Додати публічний паспорт активу  ${TENDER['TENDER_UAID']}  ${certificate_url}
@@ -64,13 +72,27 @@ Resource           resource.robot
 
 Можливість завантажити документ до тендера з типом ${doc_type}
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
-  Run As  ${tender_owner}  Завантажити документ в тендер з типом  ${TENDER['TENDER_UAID']}  ${file_path}  ${doc_type}
+  Run Keyword If  '${MODE}' == 'assets'  Run As  ${tender_owner}  Завантажити документ в об'єкт МП з типом  ${TENDER['TENDER_UAID']}  ${file_path}  ${doc_type}
+  ...  ELSE IF  '${MODE}' == 'lots'  Run As  ${tender_owner}  Завантажити документ в лот з типом  ${TENDER['TENDER_UAID']}  ${file_path}  ${doc_type}
+  ${doc_id}=  get_id_from_doc_name  ${file_name}
+  ${tender_document}=  Create Dictionary  doc_name=${file_name}  doc_id=${doc_id}  doc_content=${file_content}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  tender_document=${tender_document}
+  Remove File  ${file_path}
+
+
+Можливість завантажити документ з типом ${doc_type} до ${auction_index} аукціону
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
+  Run As  ${tender_owner}  Завантажити документ в умови проведення аукціону  ${TENDER['TENDER_UAID']}  ${file_path}  ${doc_type}  ${auction_index}
+  ${doc_id}=  get_id_from_doc_name  ${file_name}
+  ${auction_document}=  Create Dictionary  doc_name=${file_name}  doc_id=${doc_id}  doc_content=${file_content}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  auction_document=${auction_document}
+  Remove File  ${file_path}
 
 
 Можливість додати предмет закупівлі в тендер
   ${len_of_items_before_patch}=  Run As  ${tender_owner}  Отримати кількість предметів в тендері  ${TENDER['TENDER_UAID']}
   ${item}=  Підготувати дані для створення предмету закупівлі  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['id']}
-  Run As  ${tender_owner}  Додати предмет закупівлі  ${TENDER['TENDER_UAID']}  ${item}
+  Run Keyword If  '${MODE}' == 'assets'  Run As  ${tender_owner}  Додати актив до об'єкта МП  ${TENDER['TENDER_UAID']}  ${item}
   ${item_id}=  get_id_from_object  ${item}
   ${item_data}=  Create Dictionary  item=${item}  item_id=${item_id}
   ${item_data}=  munch_dict  arg=${item_data}
@@ -124,8 +146,14 @@ Resource           resource.robot
 
 
 Звірити відображення поля ${field} тендера для усіх користувачів
-  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \  Звірити відображення поля ${field} тендера для користувача ${username}
+
+
+Звірити відображення поля ${field} тендера із ${data} для усіх користувачів
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
+  \  Дочекатись синхронізації з майданчиком  ${username}
+  \  Звірити відображення поля ${field} тендера із ${data} для користувача ${username}
 
 
 Звірити відображення поля ${field} тендера із ${data} для користувача ${username}
@@ -143,8 +171,13 @@ Resource           resource.robot
 
 
 Звірити відображення дати ${date} тендера для усіх користувачів
-  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \  Звірити відображення дати ${date} тендера для користувача ${username}
+
+
+Звірити відображення дати ${date} тендера із ${left} для усіх користувачів
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
+  \   Звірити дату тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${left}  ${date}  accuracy=60  absolute_delta=${False}
 
 
 Звірити відображення дати ${date} тендера для користувача ${username}
@@ -163,8 +196,20 @@ Resource           resource.robot
   ...      object_id=${USERS.users['${tender_owner}'].item_data.item_id}
 
 
+Звірити відображення зміненого поля ${field} предмета із ${data} для усіх користувачів
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
+  \  Дочекатись синхронізації з майданчиком  ${username}
+  \  Звірити відображення поля ${field} зміненого предмета із ${data} для користувача ${username}
+
+
+Звірити відображення зміненого поля ${field} активу лоту із ${data} для усіх користувачів
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
+  \  Дочекатись синхронізації з майданчиком  ${username}
+  \  Звірити відображення поля ${field} зміненого активу лоту із ${data} для користувача ${username}
+
+
 Звірити відображення поля ${field} усіх предметів для усіх користувачів
-  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \  Звірити відображення поля ${field} усіх предметів для користувача ${username}
 
 
@@ -173,9 +218,36 @@ Resource           resource.robot
   \  Звірити відображення поля ${field} ${item_index} предмету для користувача ${username}
 
 
+Звірити відображення поля ${field} усіх новостворених предметів для користувача ${username}
+  :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
+  \  Звірити відображення поля ${field} у новоствореному предметі для користувача ${username}
+
+
+Додати предмети закупівлі в тендер
+  :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
+  \  Можливість додати предмет закупівлі в тендер
+
+
+Можливість змінити поле ${field_name} предмета на ${field_value}
+  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data['items'][0]}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  item_id=${item_id}
+  Run Keyword If  '${MODE}' == 'assets'  Run As  ${tender_owner}  Внести зміни в актив об'єкта МП  ${item_id}  ${TENDER['TENDER_UAID']}  ${field_name}  ${field_value}
+  ...  ELSE IF  '${MODE}' == 'lots'  Run As  ${tender_owner}  Внести зміни в актив лоту  ${item_id}  ${TENDER['TENDER_UAID']}  ${field_name}  ${field_value}
+
+
 Звірити відображення поля ${field} ${item_index} предмету для користувача ${username}
   ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}]}
   Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}].${field}}  ${field}  ${item_id}
+
+
+Звірити відображення поля ${field} зміненого предмета із ${data} для користувача ${username}
+  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]}
+  Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${data}  ${field}  ${item_id}
+
+
+Звірити відображення поля ${field} зміненого активу лоту із ${data} для користувача ${username}
+  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data['items'][0]}
+  Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${data}  ${field}  ${item_id}
 
 
 Звірити відображення дати ${field} усіх предметів для користувача ${username}
@@ -198,13 +270,40 @@ Resource           resource.robot
   Звірити координати доставки тендера  ${viewer}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${item_id}
 
 
+Отримати дані із поля ${field} усіх аукціонів для усіх користувачів
+  :FOR  ${index}  IN RANGE  0  3
+  \  Отримати дані із поля auctions[${index}].${field} тендера для усіх користувачів
+
+
 Отримати дані із поля ${field} тендера для усіх користувачів
-  :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}  ${tender_owner}
-  \  Отримати дані із поля ${field} тендера для користувача ${username}
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
+  \  ${field_value}=  Отримати дані із поля ${field} тендера для користувача ${username}
+  \  Set To Dictionary  ${USERS.users['${username}']}  field=${field_value}
+  Порівняти об'єкти  ${USERS.users['${tender_owner}'].field}  ${USERS.users['${viewer}'].field}
+
+
+Отримати дані із дати ${field} тендера для усіх користувачів
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
+  \  ${field_value}=  Отримати дані із поля ${field} тендера для користувача ${username}
+  \  Set To Dictionary  ${USERS.users['${username}']}  field=${field_value}
+  Порівняти дати  ${USERS.users['${tender_owner}'].field}  ${USERS.users['${viewer}'].field}  accuracy=60  absolute_delta=${False}
+
+
+Отримати дані із поля ${field} предмета для усіх користувачів
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
+  \  ${field_value}=  Отримати дані із поля ${field} предмета для користувача ${username}
+  \  Set To Dictionary  ${USERS.users['${username}']}  field_item=${field_value}
+  Порівняти об'єкти  ${USERS.users['${tender_owner}'].field_item}  ${USERS.users['${viewer}'].field_item}
 
 
 Отримати дані із поля ${field} тендера для користувача ${username}
-  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}
+  ${field_value}=  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}
+  [return]  ${field_value}
+
+
+Отримати дані із поля ${field} предмета для користувача ${username}
+  ${field_value}=  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}  ${USERS.users['${tender_owner}'].item_id}
+  [return]  ${field_value}
 
 
 Перевірити, чи тривалість між ${rectificationPeriod_endDate} і ${tenderPeriod_endDate} становить не менше ${days} днів

@@ -79,6 +79,10 @@ def get_document_by_id(data, doc_id):
         for document in cancellation.get('documents', []):
             if doc_id in document.get('title', ''):
                 return document
+    for auction in data.get('auctions', []):
+        for document in auction.get('documents', []):
+            if doc_id in document.get('title', ''):
+                return document
     raise Exception('Document with id {} not found'.format(doc_id))
 
 

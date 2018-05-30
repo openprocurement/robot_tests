@@ -1,30 +1,40 @@
 users:
     Tender_Owner:
         auth_ds:
+            assets: [test.quintagroup.com, 30852434db2e4574b57d37bda228ed2e]
+            lots: [test.quintagroup.com, 30852434db2e4574b57d37bda228ed2e]
             tenders:  [test.quintagroup.com, test.quintagroup.com]
             auctions: [test.quintagroup.com, 30852434db2e4574b57d37bda228ed2e]
         api_key:  b7cde44f6279430d89a1a40d52af864c
         broker:   Quinta
     Tender_User:
         auth_ds:
+            assets: [test.quintagroup.com, 30852434db2e4574b57d37bda228ed2e]
+            lots: [test.quintagroup.com, 30852434db2e4574b57d37bda228ed2e]
             tenders:  [test.quintagroup.com, test.quintagroup.com]
             auctions: [test.quintagroup.com, 30852434db2e4574b57d37bda228ed2e]
         api_key:  b7cde44f6279430d89a1a40d52af864c
         broker:   Quinta
     Tender_User1:
         auth_ds:
+            assets: [test.quintagroup.com, 30852434db2e4574b57d37bda228ed2e]
+            lots: [test.quintagroup.com, 30852434db2e4574b57d37bda228ed2e]
             tenders:  [test.quintagroup.com, test.quintagroup.com]
             auctions: [test.quintagroup.com, 30852434db2e4574b57d37bda228ed2e]
         api_key:  b7cde44f6279430d89a1a40d52af864c
         broker:   Quinta
     Tender_User2:
         auth_ds:
+            assets: [test.quintagroup.com, 30852434db2e4574b57d37bda228ed2e]
+            lots: [test.quintagroup.com, 30852434db2e4574b57d37bda228ed2e]
             tenders:  [test.quintagroup.com, test.quintagroup.com]
             auctions: [test.quintagroup.com, 30852434db2e4574b57d37bda228ed2e]
         api_key:  b7cde44f6279430d89a1a40d52af864c
         broker:   Quinta
     Tender_Viewer:
         auth_ds:
+            assets: [test.quintagroup.com, 30852434db2e4574b57d37bda228ed2e]
+            lots: [test.quintagroup.com, 30852434db2e4574b57d37bda228ed2e]
             tenders:  [test.quintagroup.com, test.quintagroup.com]
             auctions: [test.quintagroup.com, 30852434db2e4574b57d37bda228ed2e]
         api_key:  ""
