@@ -260,9 +260,8 @@ def test_asset_data(params):
     return munchify(test_asset_data)
 
 
-def test_lot_data(assets_id, params):
+def test_lot_data(params):
     lot_data = {
-        "assets": assets_id,
         "lotType": "yoke",
         "decisions": [{
             "decisionDate": create_fake_decisionDate(),
@@ -270,6 +269,11 @@ def test_lot_data(assets_id, params):
         }],
         "mode": "test"
     }
+    return munchify(lot_data)
+
+
+def update_lot_data(lot_data, asset_id):
+    lot_data["data"].update({"assets": asset_id})
     return munchify(lot_data)
 
 

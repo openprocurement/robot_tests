@@ -54,6 +54,7 @@ from .initial_data import (
     test_lot_data,
     test_lot_auctions_data,
     create_fake_date,
+    update_lot_data,
 
 )
 from barbecue import chef
@@ -346,7 +347,7 @@ def prepare_test_tender_data(procedure_intervals, tender_parameters):
     if mode == 'assets':
         return munchify({'data': test_asset_data(tender_parameters)})
     if mode == 'lots':
-        return munchify({'data': test_lot_data(tender_parameters['assets_id'], tender_parameters)})
+        return munchify({'data': test_lot_data(tender_parameters)})
     raise ValueError("Invalid mode for prepare_test_tender_data")
 
 

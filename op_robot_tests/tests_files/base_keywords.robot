@@ -11,11 +11,10 @@ Resource           resource.robot
   ...      mode=${MODE}
   ...      api_host_url=${API_HOST_URL}
   ...      number_of_items=${NUMBER_OF_ITEMS}
-  Run keyword if  '${MODE}' == 'lots'  Set to dictionary  ${tender_parameters}  assets_id=${USERS.users['${tender_owner}'].assets_id}
   ${tender_data}=  Підготувати дані для створення тендера  ${tender_parameters}
   ${adapted_data}=  Адаптувати дані для оголошення тендера  ${tender_data}
   ${TENDER_UAID}=  Run Keyword If  '${MODE}' == 'assets'  Run As  ${tender_owner}  Створити об'єкт МП  ${adapted_data}
-  ...  ELSE IF  '${MODE}' == 'lots'  Run As  ${tender_owner}  Створити лот  ${adapted_data}
+  ...  ELSE IF  '${MODE}' == 'lots'  Run As  ${tender_owner}  Створити лот  ${adapted_data}  ${ASSET_UAID}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data=${adapted_data}
   Set To Dictionary  ${TENDER}  TENDER_UAID=${TENDER_UAID}
 
@@ -280,6 +279,11 @@ Resource           resource.robot
   \  ${field_value}=  Отримати дані із поля ${field} тендера для користувача ${username}
   \  Set To Dictionary  ${USERS.users['${username}']}  field=${field_value}
   Порівняти об'єкти  ${USERS.users['${tender_owner}'].field}  ${USERS.users['${viewer}'].field}
+
+
+Отримати дані із поля ${field} лоту для усіх користувачів
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
+  \  ${field_value}=  Отримати дані із поля ${field} тендера для користувача ${username}
 
 
 Отримати дані із дати ${field} тендера для усіх користувачів

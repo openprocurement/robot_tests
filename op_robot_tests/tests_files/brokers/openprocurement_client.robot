@@ -722,7 +722,10 @@ Library  openprocurement_client.utils
 ##############################################################################
 
 Створити лот
-  [Arguments]  ${username}  ${tender_data}
+  [Arguments]  ${username}  ${tender_data}  ${ASSET_UAID}
+  Call Method  ${USERS.users['${username}'].asset_client}  get_tenders
+  ${asset_id}=  Wait Until Keyword Succeeds  5x  30 sec  get_tender_id_by_uaid  ${ASSET_UAID}  ${USERS.users['${username}'].asset_client}  id_field=assetID
+  ${tender_data}=  update_lot_data  ${tender_data}  ${asset_id}
   ${ID}=  openprocurement_client.Створити тендер  ${username}  ${tender_data}
   [return]  ${ID}
 
