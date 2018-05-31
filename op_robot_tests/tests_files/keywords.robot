@@ -167,15 +167,6 @@ Get Broker Property By Username
   ...      tender_uaid=${TENDER['TENDER_UAID']}
   ...      last_modification_date=${TENDER['LAST_MODIFICATION_DATE']}
   ...      mode=${MODE}
-  Run Keyword If  '${MODE}'=='assets'  Set To Dictionary  ${artifact}
-  ...  assets_id=${USERS.users['${tender_owner}'].tender_data.data.id}
-  ...  asset_access_token=${USERS.users['${tender_owner}'].access_token}
-  ...  asset_uaid=${USERS.users['${tender_owner}'].tender_data.data.assetID}
-  ...  ELSE IF  '${MODE}'=='lots'  Set To Dictionary  ${artifact}
-      ...          lot_uaid=${USERS.users['${tender_owner}'].tender_data.data.lotID}
-      ...          lot_id=${USERS.users['${tender_owner}'].tender_data.data.id}
-      ...          tender_owner_access_token=${USERS.users['${tender_owner}'].access_token}
-  ...  ELSE  Set To Dictionary  ${artifact}  lot_id=''    assets_id=''    last_modification_date=${TENDER['LAST_MODIFICATION_DATE']}
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}
   ...          tender_owner=${USERS.users['${tender_owner}'].broker}
   ...          access_token=${USERS.users['${tender_owner}'].access_token}
@@ -194,10 +185,9 @@ Get Broker Property By Username
   ${file_path}=  Get Variable Value  ${ARTIFACT_FILE}  artifact.yaml
   ${ARTIFACT}=  load_data_from  ${file_path}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token=${ARTIFACT.access_token}
-  Run Keyword If  '${MODE}'=='lots'  Set To Dictionary  ${USERS.users['${tender_owner}']}  asset_access_token=${ARTIFACT.asset_access_token}
   ${TENDER}=  Create Dictionary  TENDER_UAID=${ARTIFACT.tender_uaid}  LAST_MODIFICATION_DATE=${ARTIFACT.last_modification_date}  LOT_ID=${Empty}
+  Run Keyword If  '${MODE}'=='lots'  Set Suite Variable  ${ASSET_UAID}  ${ARTIFACT.tender_uaid}
   ${MODE}=  Get Variable Value  ${MODE}  ${ARTIFACT.mode}
-  Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  assets_id=${ARTIFACT.assets_id}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  item_id=${ARTIFACT.item_id}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token=${ARTIFACT.tender_owner_access_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider}']}  access_token=${ARTIFACT.provider_access_token}
