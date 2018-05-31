@@ -699,6 +699,12 @@ Library  openprocurement_client.utils
   openprocurement_client.Додати предмет закупівлі  ${username}  ${tender_uaid}  ${item}
 
 
+Отримати кількість активів в об'єкті МП
+  [Arguments]  ${username}  ${tender_uaid}
+  ${number_of_items}=   openprocurement_client.Отримати кількість предметів в тендері  ${username}  ${tender_uaid}
+  [return]  ${number_of_items}
+
+
 Завантажити документ для видалення об'єкта МП
   [Arguments]  ${username}  ${tender_uaid}  ${filepath}
   openprocurement_client.Завантажити документ в тендер з типом  ${username}  ${tender_uaid}  ${filepath}  documentType=cancellationDetails
