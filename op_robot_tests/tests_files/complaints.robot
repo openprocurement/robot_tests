@@ -583,7 +583,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${provider}'].broker}: Процес оскарження
   ...     provider
   ...     ${USERS.users['${provider}'].broker}
-  ...     award_complaint
+  ...     award_complaint_draft
   ...     critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
@@ -595,7 +595,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
-  ...     award_complaint
+  ...     award_complaint_draft
   ...     non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля status вимоги про виправлення визначення ${award_index} переможця із cancelled для користувача ${viewer}
@@ -605,7 +605,7 @@ ${award_index}      ${0}
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
-  ...     award_complaint
+  ...     award_complaint_draft
   ...     non-critical
   Звірити відображення поля cancellationReason вимоги про виправлення визначення ${award_index} переможця із ${USERS.users['${provider}'].claim_data.cancellation.data.cancellationReason} для користувача ${viewer}
 
