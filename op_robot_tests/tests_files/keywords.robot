@@ -218,10 +218,10 @@ Get Broker Property By Username
   [Return]  ${item}
 
 
-Підготувати дані для заповнення умов проведення аукціону
+Можливість додати умови проведення аукціону
   :FOR  ${index}  IN  0  1
-  \  ${auction}=  test_lot_auctions_data  ${USERS.users['${tender_owner}'].tender_data.data.auctions[${index}]}  ${index}
-  \  Run As  ${tender_owner}  Додати умови проведення аукціону  ${auction}
+  \  ${auction}=  test_lot_auctions_data  ${index}
+  \  Run As  ${tender_owner}  Додати умови проведення аукціону  ${auction}  ${index}  ${TENDER['TENDER_UAID']}
 
 
 Підготувати дані для запитання

@@ -277,10 +277,10 @@ def update_lot_data(lot_data, asset_id):
     return munchify(lot_data)
 
 
-def test_lot_auctions_data(lot_data, index):
+def test_lot_auctions_data(index):
     if index == '0':
         value_amount = create_fake_amount(3000, 999999999.99)
-        lot_data.update({
+        lot_data = {
             "value": {
                 "amount": value_amount,
                 "currency": u"UAH",
@@ -302,11 +302,11 @@ def test_lot_auctions_data(lot_data, index):
             "auctionPeriod": {
                 "startDate": create_fake_date()
             }
-        })
+        }
     else:
-        lot_data.update({
+        lot_data = {
             "tenderingDuration": 'P1M'
-        })
+        }
     return munchify(lot_data)
 
 
