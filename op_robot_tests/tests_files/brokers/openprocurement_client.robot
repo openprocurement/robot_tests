@@ -657,6 +657,11 @@ Library  openprocurement_client.utils
   [return]   ${tender}
 
 
+Оновити сторінку з об'єктом МП
+  [Arguments]  ${username}  ${tender_uaid}
+  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+
+
 Отримати інформацію із об'єкта МП
   [Arguments]  ${username}  ${tender_uaid}  ${field_name}
   ${field_value}=  openprocurement_client.Отримати інформацію із тендера  ${username}  ${tender_uaid}  ${field_name}
@@ -731,26 +736,33 @@ Library  openprocurement_client.utils
 
 
 Змінити статус лоту
-  [Arguments]  ${username}  ${status}
-  Set To Dictionary  ${USERS.users['${username}'].tender_data.data}  status=${status}
-  Log  ${USERS.users['${username}'].tender_data}
-  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${USERS.users['${username}'].tender_data}
+  [Arguments]  ${username}  ${tender}  ${status}
+  Set To Dictionary  ${tender.data}  status=${status}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+  Log  ${reply}
 
 
 Додати умови проведення аукціону
-  [Arguments]  ${username}  ${auction}
+  [Arguments]  ${username}  ${auction}  ${index}  ${tender_uaid}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
+  ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
+  ${auction_id}=  Get Variable Value  ${tender.data.auctions[${index}]['id']}
+  Set To Dictionary  ${auction}  id=${auction_id}
   ${auction}=  Create Dictionary  data=${auction}
-  ${auction}=  munch_dict  arg=${auction}
-  Log  ${auction}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_auction  ${USERS.users['${username}'].tender_data}  ${auction}
-  Log  ${reply}
-  [return]  ${reply}
+  Call Method  ${USERS.users['${username}'].client}  patch_auction  ${tender}  ${auction}
+  Run Keyword If  ${index}==1  openprocurement_client.Змінити статус лоту  ${username}  ${tender}  verification
 
 
 Пошук лоту по ідентифікатору
   [Arguments]  ${username}  ${tender_uaid}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   [return]   ${tender}
+
+
+Оновити сторінку з лотом
+  [Arguments]  ${username}  ${tender_uaid}
+  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
 
 
 Отримати інформацію із лоту
