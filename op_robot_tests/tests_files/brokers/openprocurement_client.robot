@@ -657,6 +657,11 @@ Library  openprocurement_client.utils
   [return]   ${tender}
 
 
+Оновити сторінку з об'єктом МП
+  [Arguments]  ${username}  ${tender_uaid}
+  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+
+
 Отримати інформацію із об'єкта МП
   [Arguments]  ${username}  ${tender_uaid}  ${field_name}
   ${field_value}=  openprocurement_client.Отримати інформацію із тендера  ${username}  ${tender_uaid}  ${field_name}
@@ -727,6 +732,10 @@ Library  openprocurement_client.utils
   ${asset_id}=  Wait Until Keyword Succeeds  5x  30 sec  get_tender_id_by_uaid  ${ASSET_UAID}  ${USERS.users['${username}'].asset_client}  id_field=assetID
   ${tender_data}=  update_lot_data  ${tender_data}  ${asset_id}
   ${ID}=  openprocurement_client.Створити тендер  ${username}  ${tender_data}
+  :FOR  ${index}  IN  0  1
+  \  ${auction}=  test_lot_auctions_data  ${USERS.users['${tender_owner}'].tender_data.data.auctions[${index}]}  ${index}
+  \  openprocurement_client.Додати умови проведення аукціону  ${username}  ${auction}
+  openprocurement_client.Змінити статус лоту  ${username}  verification
   [return]  ${ID}
 
 
@@ -751,6 +760,11 @@ Library  openprocurement_client.utils
   [Arguments]  ${username}  ${tender_uaid}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   [return]   ${tender}
+
+
+Оновити сторінку з лотом
+  [Arguments]  ${username}  ${tender_uaid}
+  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
 
 
 Отримати інформацію із лоту

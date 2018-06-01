@@ -19,11 +19,6 @@ Resource           resource.robot
   Set To Dictionary  ${TENDER}  TENDER_UAID=${TENDER_UAID}
 
 
-Можливість додати умови проведення аукціону
-  Підготувати дані для заповнення умов проведення аукціону
-  Run As  ${tender_owner}  Змінити статус лоту  verification
-
-
 Можливість знайти тендер по ідентифікатору для усіх користувачів
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \  Можливість знайти тендер по ідентифікатору для користувача ${username}

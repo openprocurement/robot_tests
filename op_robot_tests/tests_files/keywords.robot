@@ -218,12 +218,6 @@ Get Broker Property By Username
   [Return]  ${item}
 
 
-Підготувати дані для заповнення умов проведення аукціону
-  :FOR  ${index}  IN  0  1
-  \  ${auction}=  test_lot_auctions_data  ${USERS.users['${tender_owner}'].tender_data.data.auctions[${index}]}  ${index}
-  \  Run As  ${tender_owner}  Додати умови проведення аукціону  ${auction}
-
-
 Підготувати дані для запитання
   ${question}=  test_question_data
   [Return]  ${question}
@@ -374,9 +368,16 @@ Log differences between dicts
   ...      ${USERS.users['${username}']['LAST_REFRESH_DATE']}
   ${LAST_REFRESH_DATE}=  Get Current TZdate
   Run Keyword If  ${time_diff} > 0  Run keywords
-  ...      Run As  ${username}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  ...      Оновити сторінку  ${username}  ${TENDER['TENDER_UAID']}
   ...      AND
   ...      Set To Dictionary  ${USERS.users['${username}']}  LAST_REFRESH_DATE=${LAST_REFRESH_DATE}
+
+
+Оновити сторінку
+  [Arguments]  ${username}  ${tender_uaid}
+  Run Keyword If  '${MODE}' == 'assets'  Run As  ${username}  Оновити сторінку з об'єктом МП  ${tender_uaid}
+  ...  ELSE IF  '${MODE}' == 'lots'  Run As  ${username}  Оновити сторінку з лотом  ${tender_uaid}
+  ...  ELSE  Run As  ${username}  Оновити сторінку з тендером  ${tender_uaid}
 
 
 Оновити LMD і дочекатись синхронізації
