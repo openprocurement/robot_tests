@@ -23,15 +23,6 @@ ${NUMBER_OF_ITEMS}   ${1}
   Можливість оголосити тендер
 
 
-Можливість додати умови проведення аукціону
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Реєстрація лоту
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      create_lot
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість додати умови проведення аукціону
-
-
 Можливість дочекатись статусу 'Інформаційне повідомлення опубліковано'
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних лоту
   ...      tender_owner
