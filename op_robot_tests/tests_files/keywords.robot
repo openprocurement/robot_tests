@@ -374,9 +374,16 @@ Log differences between dicts
   ...      ${USERS.users['${username}']['LAST_REFRESH_DATE']}
   ${LAST_REFRESH_DATE}=  Get Current TZdate
   Run Keyword If  ${time_diff} > 0  Run keywords
-  ...      Run As  ${username}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  ...      Оновити сторінку  ${username}  ${TENDER['TENDER_UAID']}
   ...      AND
   ...      Set To Dictionary  ${USERS.users['${username}']}  LAST_REFRESH_DATE=${LAST_REFRESH_DATE}
+
+
+Оновити сторінку
+  [Arguments]  ${username}  ${tender_uaid}
+  Run Keyword If  '${MODE}' == 'assets'  Run As  ${username}  Оновити сторінку з об'єктом МП  ${tender_uaid}
+  ...  ELSE IF  '${MODE}' == 'lots'  Run As  ${username}  Оновити сторінку з лотом  ${tender_uaid}
+  ...  ELSE  Run As  ${username}  Оновити сторінку з тендером  ${tender_uaid}
 
 
 Оновити LMD і дочекатись синхронізації

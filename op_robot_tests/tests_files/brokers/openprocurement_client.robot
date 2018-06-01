@@ -657,6 +657,11 @@ Library  openprocurement_client.utils
   [return]   ${tender}
 
 
+Оновити сторінку з об'єктом МП
+  [Arguments]  ${username}  ${tender_uaid}
+  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+
+
 Отримати інформацію із об'єкта МП
   [Arguments]  ${username}  ${tender_uaid}  ${field_name}
   ${field_value}=  openprocurement_client.Отримати інформацію із тендера  ${username}  ${tender_uaid}  ${field_name}
@@ -751,6 +756,11 @@ Library  openprocurement_client.utils
   [Arguments]  ${username}  ${tender_uaid}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   [return]   ${tender}
+
+
+Оновити сторінку з лотом
+  [Arguments]  ${username}  ${tender_uaid}
+  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
 
 
 Отримати інформацію із лоту
