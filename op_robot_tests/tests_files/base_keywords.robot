@@ -171,6 +171,7 @@ Resource           resource.robot
 
 Звірити відображення дати ${date} тендера із ${left} для усіх користувачів
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
+  \  Дочекатись синхронізації з майданчиком  ${username}
   \   Звірити дату тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${left}  ${date}  accuracy=60  absolute_delta=${False}
 
 
@@ -283,6 +284,7 @@ Resource           resource.robot
 
 Отримати дані із дати ${field} тендера для усіх користувачів
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
+  \  Дочекатись синхронізації з майданчиком  ${username}
   \  ${field_value}=  Отримати дані із поля ${field} тендера для користувача ${username}
   \  Set To Dictionary  ${USERS.users['${username}']}  field=${field_value}
   Порівняти дати  ${USERS.users['${tender_owner}'].field}  ${USERS.users['${viewer}'].field}  accuracy=60  absolute_delta=${False}
