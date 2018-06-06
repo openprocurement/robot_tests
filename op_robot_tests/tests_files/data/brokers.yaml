@@ -431,7 +431,7 @@ ecommodity:
          dgfOtherAssets:
              accelerator: 1440
              auction: [25, 30]
-    timeout_on_wait: 90
+    timeout_on_wait: 150
 etc:
     keywords_file: etc
     roles:
