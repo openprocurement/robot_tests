@@ -1,3 +1,5 @@
+-i create_asset
+-i find_asset
 -i create_lot
 -i lot_status
 -i find_lot
