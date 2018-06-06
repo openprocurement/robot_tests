@@ -827,4 +827,4 @@ ${NUMBER_OF_ITEMS}   ${1}
   Оновити LAST_MODIFICATION_DATE
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${username}'].tender_data.data}  status
-  Звірити відображення поля status тендера із pending.deleted для усіх користувачів
+  \  Звірити статус видаленого лоту  ${username}  ${TENDER['TENDER_UAID']}
