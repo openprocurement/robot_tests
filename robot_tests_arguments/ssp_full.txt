@@ -15,6 +15,7 @@
 -i lot_status
 -i find_lot
 -i lot_view
+-i assetID_view
 -i modify_lot
 -i modify_auction
 -i modify_auction_value

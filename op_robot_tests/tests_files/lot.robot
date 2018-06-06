@@ -80,7 +80,7 @@ ${NUMBER_OF_ITEMS}   ${1}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
-  ...      lot_view
+  ...      assetID_view
   Отримати дані із поля assets[0] лоту для усіх користувачів
 
 
