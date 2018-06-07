@@ -58,7 +58,7 @@ def create_fake_dgfID():
 
 
 def create_fake_decisionDate():
-    return (get_now() - timedelta(days=2)).isoformat()
+    return (get_now() - timedelta(days=2)).strftime('%Y-%m-%d')
 
 
 def create_fake_decisionID():
