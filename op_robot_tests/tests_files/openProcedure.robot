@@ -2122,7 +2122,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      compare_stages
   ...      critical
-  Звірити відображення поля minimalStep тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.minimalStep} для користувача ${viewer}
+  Звірити відображення поля minimalStep.amount тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.minimalStep.amount} для користувача ${viewer}
 
 
 Відображення доступного бюджету закупівлі другого етапу
