@@ -81,7 +81,7 @@ ${NUMBER_OF_ITEMS}   ${1}
   ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      assetID_view
-  Отримати дані із поля assets[0] лоту для усіх користувачів
+  Отримати дані із поля assets лоту для усіх користувачів
 
 
 Відображення заголовку лоту
