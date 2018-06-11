@@ -474,18 +474,23 @@ def merge_dicts(a, b):
 
 
 def create_data_dict(path_to_value=None, value=None):
-    data_dict = munchify({'data': {}})
-    if isinstance(path_to_value, basestring) and value:
-        list_items = re.search('\d+', path_to_value)
-        if list_items:
-            list_items = list_items.group(0)
-            path_to_value = path_to_value.split('[' + list_items + ']')
-            path_to_value.insert(1, '.' + list_items)
-            set_to_object(data_dict, path_to_value[0], [])
-            set_to_object(data_dict, ''.join(path_to_value[:2]), {})
-            set_to_object(data_dict, ''.join(path_to_value), value)
-        else:
-            data_dict = set_to_object(data_dict, path_to_value, value)
+    """Create a dictionary with one key, 'data'.
+
+    If `path_to_value` is not given, set the key's value
+    to an empty dictionary.
+    If `path_to_value` is given, set the key's value to `value`.
+    In case it's the latter and if `value` is not set,
+    the key's value is set to `None`.
+
+    Please note that `path_to_value` is relative to the parent dictionary,
+    thus, you may need to prepend `data.` to your path string.
+
+    To better understand how `path_to_value` is handled,
+    please refer to the `set_to_object()` function.
+    """
+    data_dict = {'data': {}}
+    if path_to_value:
+        data_dict = set_to_object(data_dict, path_to_value, value)
     return data_dict
 
 
