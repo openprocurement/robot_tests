@@ -1890,7 +1890,7 @@ users:
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1366, 768]
+        size:     [1920, 1080]
     biddingtime_Provider:
         broker:   biddingtime
         homepage: "http://test.biddingtime.com.ua/user/login"
@@ -1899,7 +1899,7 @@ users:
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1366, 768]
+        size:     [1920, 1080]
     biddingtime_Provider1:
         broker:   biddingtime
         homepage: "http://test.biddingtime.com.ua/user/login"
@@ -1908,14 +1908,14 @@ users:
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1366, 768]
+        size:     [1920, 1080]
     biddingtime_Viewer:
         broker:   biddingtime
         homepage: "http://test.biddingtime.com.ua/user/login"
         default_page: "http://test.biddingtime.com.ua/public/index"
         browser:  chrome
         position: [0, 0]
-        size:     [1366, 768]
+        size:     [1920, 1080]
     tenderonline_Owner:
         broker:   tenderonline
         homepage: "https://tender-online.biz/Registration.aspx"
