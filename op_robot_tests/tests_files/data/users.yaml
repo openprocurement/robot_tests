@@ -598,8 +598,8 @@ users:
     SmartTender_Owner:
         broker:   SmartTender
         homepage: "http://test.smarttender.biz/test-tenders/"
-        login:    PPR_BV
-        password: 123321
+        login:    USER_SSP
+        password: qwerty123123
         browser:  chrome
         position: [0, 0]
         size:     [1400, 900]
