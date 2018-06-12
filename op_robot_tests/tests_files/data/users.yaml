@@ -133,9 +133,9 @@ users:
     uace_Owner_auction:
         broker:   uaceauction
         homepage: "http://test-eauction.uace.com.ua"
-        login:    dzotenderowner@gmail.com
+        login:    testprozorroyowner@gmail.com
         password: 123456
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     uace_Provider_auction:
@@ -157,15 +157,15 @@ users:
     uace_Viewer_auction:
         broker:   uaceauction
         homepage: "http://test-eauction.uace.com.ua"
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     opentender_Owner_auction:
         broker:   opentenderauction
         homepage: "http://test-eauction.open-tender.com.ua"
-        login:    dzotenderowner@gmail.com
+        login:    testprozorroyowner@gmail.com
         password: 123456
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     opentender_Provider_auction:
@@ -187,15 +187,15 @@ users:
     opentender_Viewer_auction:
         broker:   opentenderauction
         homepage: "http://test-eauction.open-tender.com.ua"
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     brizol_Owner:
         broker:   brizol
         homepage: "http://test-eauction.brizol.net/login"
-        login:    dzotenderowner@gmail.com
+        login:    testprozorroyowner@gmail.com
         password: 123456
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     brizol_Provider:
@@ -217,15 +217,15 @@ users:
     brizol_Viewer:
         broker:   brizol
         homepage: "http://test-eauction.brizol.net"
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     aukzionua_Owner:
         broker:   aukzionua
         homepage: "http://test.neb.org.ua"
-        login:    dzotenderowner@gmail.com
+        login:    testprozorroyowner@gmail.com
         password: 123456
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     aukzionua_Provider:
@@ -247,7 +247,7 @@ users:
     aukzionua_Viewer:
         broker:   aukzionua
         homepage: "http://test.neb.org.ua"
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     capitalua_Owner:
@@ -283,9 +283,9 @@ users:
     centrex_Owner:
         broker:   centrex
         homepage: "http://centrex.byustudio.in.ua"
-        login:    dzotenderowner@gmail.com
+        login:    testprozorroyowner@gmail.com
         password: 123456
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     centrex_Provider:
@@ -307,7 +307,7 @@ users:
     centrex_Viewer:
         broker:   centrex
         homepage: "http://centrex.byustudio.in.ua"
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     expagency_Owner:
