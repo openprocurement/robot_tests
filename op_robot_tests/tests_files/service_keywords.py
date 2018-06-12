@@ -595,7 +595,7 @@ def compare_rationale_types(type1, type2):
 def delete_from_dictionary(variable, path):
     if not type(path) in STR_TYPES:
         raise TypeError('path must be one of: ' +
-            str([x.__name__ for x in STR_TYPES]))
+            str(STR_TYPES))
     return xpathdelete(variable, path, separator='.')
 
 
