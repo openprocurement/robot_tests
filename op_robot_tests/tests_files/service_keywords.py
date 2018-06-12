@@ -369,14 +369,14 @@ def set_access_key(tender, access_token):
     return tender
 
 
-def get_from_object(obj, attribute):
+def get_from_object(obj, path):
     """Gets data from a dictionary using a dotted accessor-string"""
-    jsonpath_expr = parse_path(attribute)
+    jsonpath_expr = parse_path(path)
     return_list = [i.value for i in jsonpath_expr.find(obj)]
     if return_list:
         return return_list[0]
     else:
-        raise AttributeError('Attribute not found: {0}'.format(attribute))
+        raise AttributeError('Attribute not found: {0}'.format(path))
 
 
 def set_to_object(obj, attribute, value):
