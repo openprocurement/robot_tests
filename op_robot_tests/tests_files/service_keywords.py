@@ -379,29 +379,70 @@ def get_from_object(obj, path):
         raise AttributeError('Attribute not found: {0}'.format(path))
 
 
-def set_to_object(obj, attribute, value):
-    # Search the list index in path to value
-    list_index = re.search('\d+', attribute)
-    if list_index and attribute != 'stage2TenderID':
-        list_index = list_index.group(0)
-        parent, child = attribute.split('[' + list_index + '].')[:2]
-        # Split attribute to path to lits (parent) and path to value in list element (child)
-        try:
-            # Get list from parent
-            listing = get_from_object(obj, parent)
-            # Create object with list_index if he don`t exist
-            if len(listing) < int(list_index) + 1:
-                listing.append({})
-        except AttributeError:
-            # Create list if he don`t exist
-            listing = [{}]
-        # Update list in parent
-        xpathnew(obj, parent, listing, separator='.')
-        # Set value in obj
-        xpathnew(obj, '.'.join([parent, list_index,  child]), value, separator='.')
-    else:
-        xpathnew(obj, attribute, value, separator='.')
-    return munchify(obj)
+def set_to_object(obj, path, value):
+    def recur(obj, path, value):
+        if not isinstance(obj, dict):
+            raise TypeError('expected %s, got %s' %
+                            (dict.__name__, type(obj)))
+
+        # Search the list index in path to value
+        groups = re.search(r'^(?P<key>[0-9a-zA-Z_]+)(?:\[(?P<index>-?\d+)\])?'
+                           '(?:\.(?P<suffix>.+))?$', path)
+
+        err = RuntimeError('could not parse the path: ' + path)
+        if not groups:
+            raise err
+
+        gd = {k: v for k, v in groups.groupdict().items() if v is not None}
+        is_list = False
+        suffix = None
+
+        if 'key' not in gd:
+            raise err
+        key = gd['key']
+
+        if 'index' in gd:
+            is_list = True
+            index = int(gd['index'])
+
+        if 'suffix' in gd:
+            suffix = gd['suffix']
+
+        if is_list:
+            if key not in obj:
+                obj[key] = []
+            elif not isinstance(obj[key], list):
+                raise TypeError('expected %s, got %s' %
+                                (list.__name__, type(obj[key])))
+
+            plusone = 1 if index >= 0 else 0
+            if len(obj[key]) < abs(index) + plusone:
+                while not len(obj[key]) == abs(index) + plusone:
+                    extension = [None for _ in
+                                 range(abs(index) + plusone - len(obj[key]))]
+                    if index < 0:
+                        obj[key] = extension + obj[key]
+                    else:
+                        obj[key].extend(extension)
+                if suffix:
+                    obj[key][index] = {}
+            if suffix:
+                obj[key][index] = recur(obj[key][index], suffix, value)
+            else:
+                obj[key][index] = value
+        else:
+            if key not in obj:
+                obj[key] = {}
+            if suffix:
+                obj[key] = recur(obj[key], suffix, value)
+            else:
+                obj[key] = value
+
+        return obj
+
+    if not isinstance(path, STR_TYPES):
+        raise TypeError('Path must be one of %s' % str(STR_TYPES))
+    return munchify(recur(obj, path, value))
 
 
 def wait_to_date(date_stamp):
