@@ -457,10 +457,26 @@ def munch_dict(arg=None, data=False):
 
 
 def get_id_from_object(obj):
-    obj_id = re.match(r'(^[filq]-[0-9a-fA-F]{8}): ', obj.get('title', ''))
-    if not obj_id:
-        obj_id = re.match(r'(^[filq]-[0-9a-fA-F]{8}): ', obj.get('description', ''))
-    return obj_id.group(1)
+    regex = r'(^[filq]-[0-9a-fA-F]{8}): '
+
+    title = obj.get('title', '')
+    if title:
+        if not isinstance(title, STR_TYPES):
+            raise TypeError('title must be one of %s' % str(STR_TYPES))
+        obj_id = re.match(regex, title)
+        if obj_id and len(obj_id.groups()) >= 1:
+            return obj_id.group(1)
+
+    description = obj.get('description', '')
+    if description:
+        if not isinstance(description, STR_TYPES):
+            raise TypeError('description must be one of %s' % str(STR_TYPES))
+        obj_id = re.match(regex, description)
+        if obj_id and len(obj_id.groups()) >= 1:
+            return obj_id.group(1)
+
+    raise VaueError('could not find object ID in "title": "%s", '
+                    '"description": "%s"' % (title, description))
 
 
 def get_id_from_string(string):
