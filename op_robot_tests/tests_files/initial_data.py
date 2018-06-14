@@ -66,7 +66,7 @@ def create_fake_decisionID():
 
 
 def create_fake_date():
-    return (get_now() + timedelta(days=2)).isoformat()
+    return (get_now() + timedelta(days=7)).isoformat()
 
 
 def convert_days_to_seconds(days, accelerator):
@@ -105,6 +105,10 @@ def create_fake_items_quantity():
 
 def cretate_fake_unit_name():
     return random.choice([u'гектар', u'кілометри', u'штуки', u'блок', u'метри кубічні'])
+
+
+def create_fake_bankName():
+    return random.choice([u'PrivatBank', u'Oschadbank', u'Raiffeisen Bank Aval', u'KredoBank', u'ProCredit Bank'])
 
 
 def create_fake_cancellation_reason():
@@ -301,6 +305,15 @@ def test_lot_auctions_data(index):
             },
             "auctionPeriod": {
                 "startDate": create_fake_date()
+            },
+            "bankAccount": {
+                "description": fake.description(),
+                "bankName": create_fake_bankName(),
+                "accountIdentification": [{
+                    "scheme": random.choice([u'UA-EDR', u'UA-MFO', u'accountNumber']),
+                    "id": random.randint(1000000, 99999999),
+                    "description": fake.description()
+                }]
             }
         }
     else:
