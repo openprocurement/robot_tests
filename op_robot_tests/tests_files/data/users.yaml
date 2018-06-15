@@ -103,8 +103,8 @@ users:
     DZO_Owner_auction:
         broker:   DZOauctions
         homepage: "http://dz3.byustudio.in.ua"
-        login:    prozorroytenderowner@gmail.com
-        password: d4EPYXkAQ
+        login:    testprozorroyowner@gmail.com
+        password: 12345678
         browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
