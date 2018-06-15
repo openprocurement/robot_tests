@@ -623,6 +623,13 @@
                 "name": "Хильченко Інна Григорівна",
                 "faxNumber": "044-563-99-05"
             },
+            "additionalContactPoints":[{
+                "url": "http://e-tender.biz",
+                "telephone": "457-98-17",
+                "email": "poliklinika1solom@yandex.ua",
+                "name": "Чепіков Олександр Миколайович",
+                "faxNumber": "408-23-33"
+            }],
             "identifier": {
                 "scheme": "UA-EDR",
                 "id": "02544394",
@@ -646,6 +653,13 @@
                 "name": "Чередниченко Олена Юріївна",
                 "faxNumber": "413-41-40"
             },
+            "additionalContactPoints":[{
+                "url": "http://osvita.kaniv.info",
+                "telephone": "0473632433",
+                "email": "kanvo@ukr.net",
+                "name": "П'яткова Оксана Дмитрівна",
+                "faxNumber": "0473632384"
+            }],
             "identifier": {
                 "scheme": "UA-EDR",
                 "id": "01994008",
@@ -669,6 +683,13 @@
                 "name": "Ліповець Євген Іванович",
                 "faxNumber": "2343591"
             },
+            "additionalContactPoints":[{
+                "url": "http://e-tender.biz",
+                "telephone": "457-98-17",
+                "email": "poliklinika1solom@yandex.ua",
+                "name": "Чепіков Олександр Миколайович",
+                "faxNumber": "408-23-33"
+            }],
             "identifier": {
                 "scheme": "UA-EDR",
                 "id": "37405111",
@@ -692,6 +713,13 @@
                 "name": "Чепіков Олександр Миколайович",
                 "faxNumber": "408-23-33"
             },
+            "additionalContactPoints":[{
+                "url": "http://skinmedic.com.ua",
+                "telephone": "426-07-12",
+                "email": "kmkshvl@ukr.net",
+                "name": "Чередниченко Олена Юріївна",
+                "faxNumber": "413-41-40"
+            }],
             "identifier": {
                 "scheme": "UA-EDR",
                 "id": "04593340",
@@ -715,6 +743,13 @@
                 "name": "П'яткова Оксана Дмитрівна",
                 "faxNumber": "0473632384"
             },
+            "additionalContactPoints":[{
+                "url": "http://www.pcenter.org.ua",
+                "telephone": "5228755",
+                "email": "pcenter_ekonomist@ukr.net",
+                "name": "Пуніна Ірина Пилипівна",
+                "faxNumber": "5228745"
+            }],
             "identifier": {
                 "scheme": "UA-EDR",
                 "id": "02147115",
@@ -737,6 +772,13 @@
                 "name": "Пуніна Ірина Пилипівна",
                 "faxNumber": "5228745"
             },
+            "additionalContactPoints":[{
+                "url": "http://kneu.edu.ua/",
+                "telephone": "456-12-01",
+                "email": "tender01@kneu.kiev.ua",
+                "name": "Узунов Лев Олександрович",
+                "faxNumber": "371-61-72"
+            }],
             "identifier": {
                 "scheme": "UA-EDR",
                 "id": "22964365",
@@ -759,6 +801,13 @@
                 "name": "Узунов Лев Олександрович",
                 "faxNumber": "371-61-72"
             },
+            "additionalContactPoints":[{
+                "url": "http://skinmedic.com.ua",
+                "telephone": "426-07-12",
+                "email": "kmkshvl@ukr.net",
+                "name": "Чередниченко Олена Юріївна",
+                "faxNumber": "413-41-40"
+            }],
             "identifier": {
                 "scheme": "UA-EDR",
                 "id": "02070884",
@@ -781,6 +830,13 @@
                 "name": "Гвідо ван Россум",
                 "faxNumber": "8-800-500-35-35"
             },
+            "additionalContactPoints":[{
+                "url": "http://skinmedic.com.ua",
+                "telephone": "426-07-12",
+                "email": "kmkshvl@ukr.net",
+                "name": "Чередниченко Олена Юріївна",
+                "faxNumber": "413-41-40"
+            }],
             "identifier": {
                 "scheme": "UA-EDR",
                 "id": "02544394",
@@ -803,6 +859,13 @@
                 "name": "Зайченко Марина Григорівна",
                 "faxNumber": "0444580520"
             },
+            "additionalContactPoints":[{
+                "url": "http://vk.com/id1",
+                "telephone": "+380123456789",
+                "email": "me@example.invalid",
+                "name": "Гвідо ван Россум",
+                "faxNumber": "8-800-500-35-35"
+            }],
             "identifier": {
                 "scheme": "UA-EDR",
                 "id": "03360905",
@@ -825,6 +888,13 @@
                 "name": "Литвин Наталія Миколаївна",
                 "faxNumber": "0442346071"
             },
+            "additionalContactPoints":[{
+                "url": "http://gorsvet.kiev.ua",
+                "telephone": "0444580520",
+                "email": "kievgorsvet_z@ukr.net",
+                "name": "Зайченко Марина Григорівна",
+                "faxNumber": "0444580520"
+            }],
             "identifier": {
                 "scheme": "UA-EDR",
                 "id": "02226079",
@@ -847,6 +917,13 @@
                 "name": "Полякова Лариса Михайлівна",
                 "faxNumber": "288-92-68"
             },
+            "additionalContactPoints":[{
+                "url": "http://dk.kievcity.gov.ua",
+                "telephone": "0442346071",
+                "email": "buhkapela@ukr.net",
+                "name": "Литвин Наталія Миколаївна",
+                "faxNumber": "0442346071"
+            }],
             "identifier": {
                 "scheme": "UA-EDR",
                 "id": "21657170",
@@ -869,6 +946,13 @@
                 "name": "Зайченко Марина Григорівна",
                 "faxNumber": "0444580520"
             },
+            "additionalContactPoints":[{
+                "url": "http://honchar.org.ua",
+                "telephone": "280-29-31",
+                "email": "chayka.pl@gmail.com",
+                "name": "Полякова Лариса Михайлівна",
+                "faxNumber": "288-92-68"
+            }],
             "identifier": {
                 "scheme": "UA-EDR",
                 "id": "03360905",
@@ -891,6 +975,13 @@
                 "name": "Бондар Наталія Сергіївна",
                 "faxNumber": "0444082566"
             },
+            "additionalContactPoints":[{
+                "url": "http://skinmedic.com.ua",
+                "telephone": "426-07-12",
+                "email": "kmkshvl@ukr.net",
+                "name": "Чередниченко Олена Юріївна",
+                "faxNumber": "413-41-40"
+            }],
             "identifier": {
                 "scheme": "UA-EDR",
                 "id": "23516367",
@@ -913,6 +1004,13 @@
                 "name": "ГУЛАЙ ОЛЕКСАНДР ВІКТОРОВИЧ",
                 "faxNumber": "0442546580"
             },
+            "additionalContactPoints":[{
+                "url": "http://skinmedic.com.ua",
+                "telephone": "426-07-12",
+                "email": "kmkshvl@ukr.net",
+                "name": "Чередниченко Олена Юріївна",
+                "faxNumber": "413-41-40"
+            }],
             "identifier": {
                 "scheme": "UA-EDR",
                 "id": "31725604",
@@ -935,6 +1033,13 @@
                 "name": "Твердовська Тетяна Нінелівна",
                 "faxNumber": "044-406-56-84"
             },
+            "additionalContactPoints":[{
+                "url": "http://kpt.kiev.ua/",
+                "telephone": "0999826173",
+                "email": "kpt-t@ukr.net",
+                "name": "ГУЛАЙ ОЛЕКСАНДР ВІКТОРОВИЧ",
+                "faxNumber": "0442546580"
+            }],
             "identifier": {
                 "scheme": "UA-EDR",
                 "id": "20055078",
@@ -957,6 +1062,13 @@
                 "name": "Філія \"Дельта-лоцман\" державного підприємства \"Адміністрація морських портів України\"",
                 "faxNumber": "0512501162"
             },
+            "additionalContactPoints":[{
+                "url": "http://www.uspa.gov.ua/",
+                "telephone": "380512508797",
+                "email": "shyrikm@ukr.net",
+                "name": "МФ ДП \"АМПУ\" (адміністрація Миколаївського МП)",
+                "faxNumber": "380512508818"
+            }],
             "identifier": {
                 "scheme": "UA-EDR",
                 "id": "38728507",
@@ -979,6 +1091,13 @@
                 "name": "Сірук Олексій Вікторович",
                 "faxNumber": "0445646186"
             },
+            "additionalContactPoints":[{
+                "url": "http://skinmedic.com.ua",
+                "telephone": "426-07-12",
+                "email": "kmkshvl@ukr.net",
+                "name": "Чередниченко Олена Юріївна",
+                "faxNumber": "413-41-40"
+            }],
             "identifier": {
                 "scheme": "UA-EDR",
                 "id": "16466597",
@@ -1001,6 +1120,13 @@
                 "name": "Несвятипасха Тетяна Іллівна",
                 "faxNumber": "0442420728"
             },
+            "additionalContactPoints":[{
+                "url": "http://plus.google.com/106215980992271934972/about?gl=ua&hl=ru",
+                "telephone": "0445646186",
+                "email": "darnsp@health.kiev.ua",
+                "name": "Сірук Олексій Вікторович",
+                "faxNumber": "0445646186"
+            }],
             "identifier": {
                 "scheme": "UA-EDR",
                 "id": "37485490",
@@ -1023,6 +1149,13 @@
                 "name": "Савенко Наталія Іванівна",
                 "faxNumber": "482-06-85"
             },
+            "additionalContactPoints":[{
+                "url": "http://www.uspa.gov.ua/",
+                "telephone": "380512508797",
+                "email": "shyrikm@ukr.net",
+                "name": "МФ ДП \"АМПУ\" (адміністрація Миколаївського МП)",
+                "faxNumber": "380512508818"
+            }],
             "identifier": {
                 "scheme": "UA-EDR",
                 "id": "38947811",
@@ -1045,6 +1178,13 @@
                 "name": "МФ ДП \"АМПУ\" (адміністрація Миколаївського МП)",
                 "faxNumber": "380512508818"
             },
+            "additionalContactPoints":[{
+                "url": "http://skinmedic.com.ua",
+                "telephone": "426-07-12",
+                "email": "kmkshvl@ukr.net",
+                "name": "Чередниченко Олена Юріївна",
+                "faxNumber": "413-41-40"
+            }],
             "identifier": {
                 "scheme": "UA-EDR",
                 "id": "38728444",
@@ -1067,6 +1207,13 @@
                 "name": "МФ ДП \"АМПУ\" (адміністрація Миколаївського МП)",
                 "faxNumber": "380512508818"
             },
+            "additionalContactPoints":[{
+                "url": "http://skinmedic.com.ua",
+                "telephone": "426-07-12",
+                "email": "kmkshvl@ukr.net",
+                "name": "Чередниченко Олена Юріївна",
+                "faxNumber": "413-41-40"
+            }],
             "identifier": {
                 "scheme": "UA-EDR",
                 "id": "38728444",
@@ -1089,6 +1236,13 @@
                 "name": "Коваленко Леся Аркадіївна",
                 "faxNumber": "489-02-47"
             },
+            "additionalContactPoints":[{
+                "url": "http://www.uspa.gov.ua/",
+                "telephone": "380512508797",
+                "email": "shyrikm@ukr.net",
+                "name": "МФ ДП \"АМПУ\" (адміністрація Миколаївського МП)",
+                "faxNumber": "380512508818"
+            }],
             "identifier": {
                 "scheme": "UA-EDR",
                 "id": "37470086",
@@ -1111,6 +1265,13 @@
                 "name": "Циганок Анджела Михайлівна",
                 "faxNumber": "0444197359"
             },
+            "additionalContactPoints":[{
+                "url": "http://dsmsu.gov.ua",
+                "telephone": "2897782",
+                "email": "anton.gubin@ukr.net",
+                "name": "Губін Антон Борисович",
+                "faxNumber": "2897788"
+            }],
             "identifier": {
                 "scheme": "UA-EDR",
                 "id": "37445442",
@@ -1133,6 +1294,13 @@
                 "name": "Губін Антон Борисович",
                 "faxNumber": "2897788"
             },
+            "additionalContactPoints":[{
+                "url": "http://skinmedic.com.ua",
+                "telephone": "426-07-12",
+                "email": "kmkshvl@ukr.net",
+                "name": "Чередниченко Олена Юріївна",
+                "faxNumber": "413-41-40"
+            }],
             "identifier": {
                 "scheme": "UA-EDR",
                 "id": "03767831",
@@ -1155,6 +1323,13 @@
                 "name": "Ліповець Євген Іванович",
                 "faxNumber": "2343591"
             },
+            "additionalContactPoints":[{
+                "url": "http://don.kievcity.gov.ua",
+                "telephone": "0442798301",
+                "email": "ssrv1970@ukr.net",
+                "name": "Сорокун Рімма Вікторівна",
+                "faxNumber": "0442798301"
+            }],
             "identifier": {
                 "scheme": "UA-EDR",
                 "id": "37405111",
@@ -1177,6 +1352,13 @@
                 "name": "Сорокун Рімма Вікторівна",
                 "faxNumber": "0442798301"
             },
+            "additionalContactPoints":[{
+                "url": "http://skinmedic.com.ua",
+                "telephone": "426-07-12",
+                "email": "kmkshvl@ukr.net",
+                "name": "Чередниченко Олена Юріївна",
+                "faxNumber": "413-41-40"
+            }],
             "identifier": {
                 "scheme": "UA-EDR",
                 "id": "02147629",
