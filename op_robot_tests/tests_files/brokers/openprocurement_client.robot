@@ -4,6 +4,16 @@ Library  openprocurement_client.utils
 
 
 *** Keywords ***
+Активувати процедуру
+  [Arguments]  ${username}  ${tender_uaid}
+  ${internalid}=  openprocurement_client.Змінити власника процедури  ${username}  ${tender_uaid}
+  ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
+  Set To Dictionary  ${tender.data}  status=active.tendering
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
+  ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+  Log  ${tender}
+
+
 Отримати internal id по UAid
   [Arguments]  ${username}  ${tender_uaid}
   Log  ${username}
