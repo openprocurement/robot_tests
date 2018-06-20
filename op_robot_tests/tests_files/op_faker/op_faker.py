@@ -101,9 +101,7 @@ class OP_Provider(BaseProvider):
 
     @classmethod
     def procuringEntity_other(self):
-        procuringEntities = deepcopy(self.procuringEntities)
-        procuringEntities.extend(self.procuringEntities_other)
-        return deepcopy(self.random_element(procuringEntities))
+        return deepcopy(self.random_element(self.procuringEntities_other))
 
     @classmethod
     def scheme_other(self, scheme_id=None):

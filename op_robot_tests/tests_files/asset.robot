@@ -9,7 +9,6 @@ Suite Teardown  Test Suite Teardown
 ${MODE}              assets
 ${RESOURCE}          assets
 @{USED_ROLES}        tender_owner  viewer
-${NUMBER_OF_ITEMS}   ${1}
 
 *** Test Cases ***
 Можливість створити об'єкт МП
