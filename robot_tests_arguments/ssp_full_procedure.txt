@@ -1,0 +1,42 @@
+-v NUMBER_OF_ITEMS:1
+
+#----------asset----------#
+-i create_asset
+
+#-----------lot-----------#
+-i create_lot
+-i lot_status
+-i find_lot
+-i lot_active_status
+-i auctionID
+
+#-----------procedure-----------#
+-i activate_tender
+-i find_tender
+-i tender_view
+-i tender_view_tenderPeriod
+-i modify_auction_procuringEntity
+-i add_tender_doc
+-i add_tender_nda
+-i add_tender_doc_content
+-i add_tender_illustration
+-i add_tender_tech_specifications
+-i add_tender_notice
+-i add_tender_presentation
+-i add_tender_asset_familiarization
+-i ask_question_to_tender
+  -i answer_question_to_tender
+-i ask_question_to_item
+  -i answer_question_to_item
+
+-i make_bid_by_provider_without_qualification
+-i make_bid_by_provider
+-i make_bid_by_provider1
+-i modify_bid_by_provider
+-i add_doc_to_bid_by_provider
+-i modify_doc_to_bid_by_provider
+-i bid_view_in_tendering_period
+
+-i make_bid_after_tendering_period
+-i auction_url
+-i auction_url_provider1

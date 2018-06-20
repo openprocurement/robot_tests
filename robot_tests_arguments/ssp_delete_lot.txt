@@ -1,3 +1,5 @@
+-v NUMBER_OF_ITEMS:1
+
 -i create_asset
 -i find_asset
 -i create_lot

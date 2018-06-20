@@ -4,6 +4,35 @@ Library  openprocurement_client.utils
 
 
 *** Keywords ***
+Активувати процедуру
+  [Arguments]  ${username}  ${tender_uaid}
+  ${internalid}=  openprocurement_client.Змінити власника процедури  ${username}  ${tender_uaid}
+  ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
+  Set To Dictionary  ${tender.data}  status=active.tendering
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
+  ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+  Log  ${tender}
+
+
+Змінити власника процедури
+  [Arguments]  ${username}  ${tender_uaid}
+  ${post_data}=  munch_dict  data=${True}
+  ${transfer}=  Call Method  ${USERS.users['${username}'].relocation_client}  create_tender  ${post_data}
+  Log object data  ${transfer}  created_tender
+  ${access_token}=  Get Variable Value  ${transfer.access.token}
+  ${transfer_token}=  Get Variable Value  ${transfer.access.transfer}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
+  ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
+  ${transfer_data}=  munch_dict  data=${True}
+  Set to dictionary  ${transfer_data.data}  id=${transfer.data.id}
+  Set to dictionary  ${transfer_data.data}  transfer=${USERS.users['${tender_owner}'].transfer_token}
+  ${tender}=  Call Method  ${USERS.users['${username}'].client}  change_ownership  ${tender}  ${transfer_data}
+  Log  ${tender}
+  Set To Dictionary  ${USERS.users['${username}']}   access_token=${access_token}
+  Set To Dictionary  ${USERS.users['${username}']}   transfer_token=${transfer_token}
+  [return]  ${internalid}
+
+
 Отримати internal id по UAid
   [Arguments]  ${username}  ${tender_uaid}
   Log  ${username}
@@ -38,8 +67,10 @@ Library  openprocurement_client.utils
 
   ${asset_api_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  assets  ${api_host_url}  ${api_version}  ${ds_api_wraper}
   ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${resource}  ${api_host_url}  ${api_version}  ${ds_api_wraper}
+  ${relocation_api_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  transfers  ${api_host_url}  ${api_version}
   Set To Dictionary  ${USERS.users['${username}']}  asset_client=${asset_api_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  client=${api_wrapper}
+  Set To Dictionary  ${USERS.users['${username}']}  relocation_client=${relocation_api_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${EMPTY}
   ${id_map}=  Create Dictionary
   Set To Dictionary  ${USERS.users['${username}']}  id_map=${id_map}
@@ -176,8 +207,10 @@ Library  openprocurement_client.utils
   Run Keyword if  '${MODE}' == 'assets'  Set To Dictionary  ${tender.data}  status=pending
   ...  ELSE IF  '${MODE}' == 'lots'  Set To Dictionary  ${tender.data}  status=composing
   ${access_token}=  Get Variable Value  ${tender.access.token}
+  ${transfer_token}=  Get Variable Value  ${tender.access.transfer}
   Set To Dictionary  ${USERS.users['${username}']}   access_token=${access_token}
   Set To Dictionary  ${USERS.users['${username}']}   tender_data=${tender}
+  Set To Dictionary  ${USERS.users['${username}']}   transfer_token=${transfer_token}
   Log   ${USERS.users['${username}'].tender_data}
   Log  ${\n}${API_HOST_URL}/api/${API_VERSION}/${resource}/${tender.data.id}${\n}  WARN
   ${ID}=  Run Keyword if  '${MODE}' == 'assets'  Set Variable  ${tender.data.assetID}
@@ -336,12 +369,12 @@ Library  openprocurement_client.utils
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_bid  ${tender}  ${bid}
   Log  ${reply}
-  ${reply_active}=  Call Method  ${USERS.users['${username}'].client}  patch_bid  ${tender}  ${reply}
+  Set_To_Object  ${reply.data}  status  active
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${reply['access']['token']}
-  Set To Dictionary   ${USERS.users['${username}'].bidresponses['bid'].data}  id=${reply['data']['id']}
-  Log  ${reply_active}
   Set To Dictionary  ${USERS.users['${username}']}  bid_id=${reply['data']['id']}
-  Log  ${reply}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
+  ${reply_active}=  Call Method  ${USERS.users['${username}'].client}  patch_bid  ${tender}  ${reply}
+  Log  ${reply_active}
   [return]  ${reply}
 
 
