@@ -55,6 +55,7 @@ from .initial_data import (
     test_lot_auctions_data,
     create_fake_date,
     update_lot_data,
+    get_intervals,
 
 )
 from barbecue import chef
@@ -187,6 +188,11 @@ def compare_periods_duration(left, right, seconds):
     delta = (right - left).total_seconds()
     return delta >= seconds
 
+
+def compare_values(values):
+    """Check if field values for all roles are equal
+    """
+    return len(set(values)) == 1 and None not in set(values)
 
 def log_object_data(data, file_name=None, format="yaml", update=False, artifact=False):
     """Log object data in pretty format (JSON or YAML)
@@ -327,21 +333,8 @@ def compute_intrs(brokers_data, used_brokers):
 
 
 def prepare_test_tender_data(procedure_intervals, tender_parameters):
-    # Get actual intervals by mode name
     mode = tender_parameters['mode']
-    if mode in procedure_intervals:
-        intervals = procedure_intervals[mode]
-    else:
-        intervals = procedure_intervals['default']
-    LOGGER.log_message(Message(intervals))
-    tender_parameters['intervals'] = intervals
-
-    # Set acceleration value for certain modes
-    assert isinstance(intervals['accelerator'], int), \
-        "Accelerator should be an 'int', " \
-        "not '{}'".format(type(intervals['accelerator']).__name__)
-    assert intervals['accelerator'] >= 0, \
-        "Accelerator should not be less than 0"
+    tender_parameters = get_intervals(procedure_intervals, tender_parameters)
     if mode == 'dgfOtherAssets':
         return munchify({'data': test_tender_data_dgf_other(tender_parameters)})
     if mode == 'assets':
@@ -510,7 +503,7 @@ def generate_test_bid_data(tender_data):
             bid.data.lotValues.append(value)
     else:
         bid.data.update(test_bid_value(tender_data['value']['amount'], tender_data['minimalStep']['amount']))
-    if 'dgfOtherAssets' in tender_data.get('procurementMethodType', ''):
+    if 'sellout.english' in tender_data.get('procurementMethodType', ''):
         bid.data.qualified = True
     return bid
 

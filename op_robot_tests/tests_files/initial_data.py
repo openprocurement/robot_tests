@@ -8,6 +8,8 @@ from uuid import uuid4
 from tempfile import NamedTemporaryFile
 from .local_time import get_now
 from op_faker import OP_Provider
+from robot.output import LOGGER
+from robot.output.loggerhelper import Message
 import os
 import random
 
@@ -273,6 +275,9 @@ def test_lot_data(params):
         }],
         "mode": "test"
     }
+    accelerator = params['intervals']['accelerator']
+    lot_data['sandboxParameters'] = 'quick, ' \
+    'accelerator={}'.format(accelerator)
     return munchify(lot_data)
 
 
@@ -281,14 +286,22 @@ def update_lot_data(lot_data, asset_id):
     return munchify(lot_data)
 
 
-def test_lot_auctions_data(index):
+def test_lot_auctions_data(index, procedure_intervals, params):
+    tender_parameters = get_intervals(procedure_intervals, params)
+    period_dict = {}
+    inc_dt = get_now()
+    period_dict["auctionPeriod"] = {}
+    inc_dt += timedelta(minutes=tender_parameters['intervals']['auction'][0])
+    accelerator = tender_parameters['intervals']['accelerator']
     if index == '0':
         value_amount = create_fake_amount(3000, 999999999.99)
         lot_data = {
+            "procurementMethodDetails": 'quick, ' 'accelerator={}'.format(accelerator),
+            "submissionMethodDetails": "quick",
             "value": {
                 "amount": value_amount,
                 "currency": u"UAH",
-                "valueAddedTaxIncluded": False
+                "valueAddedTaxIncluded": True
             },
             "guarantee": {
                 "amount": create_fake_guarantee(value_amount),
@@ -297,14 +310,14 @@ def test_lot_auctions_data(index):
             "minimalStep": {
                 "amount": create_fake_minimal_step(value_amount),
                 "currency": u"UAH",
-                "valueAddedTaxIncluded": False
+                "valueAddedTaxIncluded": True
             },
             "registrationFee": {
                 "amount": create_fake_guarantee(value_amount),
                 "currency": u"UAH"
             },
             "auctionPeriod": {
-                "startDate": create_fake_date()
+                "startDate": inc_dt.isoformat()
             },
             "bankAccount": {
                 "description": fake.description(),
@@ -318,7 +331,9 @@ def test_lot_auctions_data(index):
         }
     else:
         lot_data = {
-            "tenderingDuration": 'P1M'
+            "tenderingDuration": 'P1M',
+            "procurementMethodDetails": 'quick, ' 'accelerator={}'.format(accelerator),
+            "submissionMethodDetails": "quick"
         }
     return munchify(lot_data)
 
@@ -326,7 +341,7 @@ def test_lot_auctions_data(index):
 def test_question_data():
     return munchify({
         "data": {
-            "author": fake.procuringEntity(),
+            "author": fake.procuringEntity_other(),
             "description": fake.description(),
             "title": field_with_id("q", fake.title())
         }
@@ -359,8 +374,9 @@ def test_bid_data():
     bid = munchify({
         "data": {
             "tenderers": [
-                fake.procuringEntity()
-            ]
+                fake.procuringEntity_other()
+            ],
+            "status": "draft"
         }
     })
     bid.data.tenderers[0].address.countryName_en = translate_country_en(bid.data.tenderers[0].address.countryName)
@@ -436,3 +452,22 @@ def test_tender_data_dgf_other(params):
         new_item = test_item_data(scheme_group_other)
         data['items'].append(new_item)
     return data
+
+
+def get_intervals(procedure_intervals, tender_parameters):
+    # Get actual intervals by mode name
+    mode = tender_parameters['mode']
+    if mode in procedure_intervals:
+        intervals = procedure_intervals[mode]
+    else:
+        intervals = procedure_intervals['default']
+    LOGGER.log_message(Message(intervals))
+    tender_parameters['intervals'] = intervals
+
+    # Set acceleration value for certain modes
+    assert isinstance(intervals['accelerator'], int), \
+        "Accelerator should be an 'int', " \
+        "not '{}'".format(type(intervals['accelerator']).__name__)
+    assert intervals['accelerator'] >= 0, \
+        "Accelerator should not be less than 0"
+    return tender_parameters

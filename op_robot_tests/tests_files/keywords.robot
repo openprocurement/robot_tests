@@ -110,6 +110,7 @@ Set Suite Variable With Default Value
   Set Suite Variable  ${used_brokers}
   # We need to create two lists since Robot Framework doesn't support
   # dicts in `:FOR` loops.
+  Set Suite Variable  @{used_users}
   Log Many  @{used_users}
   Log Many  @{used_brokers}
 
@@ -171,6 +172,7 @@ Get Broker Property By Username
   ...          tender_owner=${USERS.users['${tender_owner}'].broker}
   ...          access_token=${USERS.users['${tender_owner}'].access_token}
   ...          tender_id=${USERS.users['${tender_owner}'].tender_data.data.id}
+  ...          transfer_token=${USERS.users['${tender_owner}'].transfer_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  tender_owner_access_token=${USERS.users['${tender_owner}'].access_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider_access_token=${USERS.users['${provider}'].access_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider1_access_token=${USERS.users['${provider1}'].access_token}
@@ -178,6 +180,7 @@ Get Broker Property By Username
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider1_bid_id=${USERS.users['${provider1}'].bid_id}
   ${status}  ${item_id}=  Run Keyword And Ignore Error  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]}
   Run Keyword If  '${MODE}' == 'assets'  Set To Dictionary  ${artifact}  item_id=${item_id}
+  Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  tender_uaid=${USERS.users['${tender_owner}'].tender_data.data.auctions[0].auctionID}
   Log   ${artifact}
   log_object_data  ${artifact}  file_name=artifact  update=${True}  artifact=${True}
 
@@ -191,6 +194,7 @@ Get Broker Property By Username
   ${MODE}=  Get Variable Value  ${MODE}  ${ARTIFACT.mode}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  item_id=${ARTIFACT.item_id}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token=${ARTIFACT.tender_owner_access_token}
+  Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  transfer_token=${ARTIFACT.transfer_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider}']}  access_token=${ARTIFACT.provider_access_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider1}']}  access_token=${ARTIFACT.provider1_access_token}
   Set Suite Variable  ${MODE}
@@ -203,6 +207,7 @@ Get Broker Property By Username
 Підготувати дані для створення тендера
   [Arguments]  ${tender_parameters}
   ${period_intervals}=  compute_intrs  ${BROKERS}  ${used_brokers}
+  Set Suite Variable  ${period_intervals}
   ${tender_data}=  prepare_test_tender_data  ${period_intervals}  ${tender_parameters}
   ${TENDER}=  Create Dictionary
   Set Global Variable  ${TENDER}
@@ -221,7 +226,7 @@ Get Broker Property By Username
 
 Можливість додати умови проведення аукціону
   :FOR  ${index}  IN  0  1
-  \  ${auction}=  test_lot_auctions_data  ${index}
+  \  ${auction}=  test_lot_auctions_data  ${index}  ${period_intervals}  ${tender_parameters}
   \  Run As  ${tender_owner}  Додати умови проведення аукціону  ${auction}  ${index}  ${TENDER['TENDER_UAID']}
 
 
@@ -578,6 +583,7 @@ Log differences between dicts
   [Arguments]  ${username}  ${tender_uaid}  ${object_id}  ${field_name}
   ${field_value}=  Run Keyword If  '${MODE}' == 'assets'  Run as  ${username}  Отримати інформацію з активу об'єкта МП  ${tender_uaid}  ${object_id}  ${field_name}
   ...  ELSE IF  '${MODE}' == 'lots'  Run as  ${username}  Отримати інформацію з активу лоту  ${tender_uaid}  ${object_id}  ${field_name}
+  ...  ELSE  Run as  ${username}  Отримати інформацію із предмету  ${tender_uaid}  ${object_id}  ${field_name}
   [return]  ${field_value}
 
 
@@ -585,6 +591,7 @@ Log differences between dicts
   [Arguments]  ${username}  ${tender_uaid}  ${field}
   ${field_value}=  Run Keyword If  '${MODE}' == 'assets'  Run as  ${username}  Отримати інформацію із об'єкта МП  ${tender_uaid}  ${field}
   ...  ELSE IF  '${MODE}' == 'lots'  Run as  ${username}  Отримати інформацію із лоту  ${tender_uaid}  ${field}
+  ...  ELSE  Run as  ${username}  Отримати інформацію із тендера  ${tender_uaid}  ${field}
   [return]  ${field_value}
 
 
@@ -596,16 +603,6 @@ Log differences between dicts
   \   ${obj_id}=  get_id_from_object  ${obj}
   \   Append To List  ${objects_ids}  ${obj_id}
   [return]  ${objects_ids}
-
-
-Можливість скасувати тендер
-  ${cancellation_data}=  Підготувати дані про скасування  ${tender_owner}
-  Run As  ${tender_owner}
-  ...      Скасувати закупівлю
-  ...      ${TENDER['TENDER_UAID']}
-  ...      ${cancellation_data['cancellation_reason']}
-  ...      ${cancellation_data['document']['doc_path']}
-  ...      ${cancellation_data['description']}
 
 
 Можливість вичитати посилання на аукціон для глядача
@@ -692,21 +689,21 @@ Require Failure
 Звірити статус тендера
   [Arguments]  ${username}  ${tender_uaid}  ${left}
   ${right}=  Run Keyword If  '${MODE}' == 'lots'  Run as  ${username}  Отримати інформацію із лоту  ${tender_uaid}  status
-  ...  ELSE  Run as  ${username}  Отримати інформацію з тендера  ${tender_uaid}  status
+  ...  ELSE  Run as  ${username}  Отримати інформацію із тендера  ${tender_uaid}  status
   Порівняти об'єкти  ${left}  ${right}
 
 
-Звірити статус опублікованого лоту
-  [Arguments]  ${username}  ${tender_uaid}
+Звірити статус лоту
+  [Arguments]  ${username}  ${tender_uaid}  ${status}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
-  ...      5 min 15 sec
+  ...      10 min 15 sec
   ...      15 sec
   ...      Звірити статус тендера
   ...      ${username}
   ...      ${tender_uaid}
-  ...      pending
+  ...      ${status}
 
 
 Звірити статус видаленого лоту

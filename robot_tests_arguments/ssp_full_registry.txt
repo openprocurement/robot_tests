@@ -1,0 +1,26 @@
+-v NUMBER_OF_ITEMS:1
+
+#----------asset----------#
+-i create_asset
+-i find_asset
+-i asset_view
+-i add_doc_content
+-i add_illustration
+-i add_tech_specifications
+-i add_notice
+-i add_presentation
+-i add_item
+-i modify_asset
+
+#-----------lot-----------#
+-i create_lot
+-i lot_status
+-i find_lot
+-i lot_view
+-i assetID_view
+-i modify_lot
+-i modify_auction
+-i modify_auction_value
+-i modify_auction_step
+-i modify_auction_guarantee
+-i modify_auction_registrationFee

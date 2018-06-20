@@ -1,0 +1,18 @@
+-v NUMBER_OF_ITEMS:1
+
+#----------asset----------#
+-i create_asset
+
+#-----------lot-----------#
+-i create_lot
+-i lot_status
+-i find_lot
+-i lot_active_status
+-i auctionID
+
+#-----------procedure-----------#
+-i activate_tender
+-i find_tender
+-i tender_cancellation
+-i tender_cancellation_description
+-i tender_cancellation_title

@@ -9,8 +9,6 @@ Suite Teardown  Test Suite Teardown
 ${MODE}              lots
 ${RESOURCE}          lots
 @{USED_ROLES}        tender_owner  viewer
-${NUMBER_OF_ITEMS}   ${1}
-
 
 *** Test Cases ***
 Можливість створити лот
@@ -38,7 +36,7 @@ ${NUMBER_OF_ITEMS}   ${1}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      lot_status
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  Звірити статус опублікованого лоту  ${tender_owner}  ${TENDER['TENDER_UAID']}
+  Звірити статус лоту  ${tender_owner}  ${TENDER['TENDER_UAID']}  pending
 
 
 Можливість знайти лот по ідентифікатору
@@ -76,7 +74,7 @@ ${NUMBER_OF_ITEMS}   ${1}
   Отримати дані із дати rectificationPeriod.endDate тендера для усіх користувачів
 
 
-Відображення ідентифікатору об'єкта, який прив'язаний до лоту
+Відображення ідентифікатора об'єкта, який прив'язаний до лоту
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
@@ -89,7 +87,6 @@ ${NUMBER_OF_ITEMS}   ${1}
   ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      lot_view
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Отримати дані із поля title тендера для усіх користувачів
 
 
@@ -828,3 +825,23 @@ ${NUMBER_OF_ITEMS}   ${1}
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${username}'].tender_data.data}  status
   \  Звірити статус видаленого лоту  ${username}  ${TENDER['TENDER_UAID']}
+
+# #############################################################################################
+#             Автоматичне створення процедури
+# #############################################################################################
+
+Можливість дочекатись переключення статусу лоту після створення процедури
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних лоту
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      lot_active_status
+  [Setup]  Дочекатись дати закінчення періоду редагування лоту  ${tender_owner}
+  Звірити статус лоту  ${tender_owner}  ${TENDER['TENDER_UAID']}  active.auction
+
+
+Відображення ідентифікатора створеного аукціону
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer  tender_owner
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      auctionID
+  Отримати дані із поля auctions[0].auctionID тендера для усіх користувачів
