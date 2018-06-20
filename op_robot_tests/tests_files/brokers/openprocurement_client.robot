@@ -14,6 +14,25 @@ Library  openprocurement_client.utils
   Log  ${tender}
 
 
+Змінити власника процедури
+  [Arguments]  ${username}  ${tender_uaid}
+  ${post_data}=  munch_dict  data=${True}
+  ${transfer}=  Call Method  ${USERS.users['${username}'].relocation_client}  create_tender  ${post_data}
+  Log object data  ${transfer}  created_tender
+  ${access_token}=  Get Variable Value  ${transfer.access.token}
+  ${transfer_token}=  Get Variable Value  ${transfer.access.transfer}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
+  ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
+  ${transfer_data}=  munch_dict  data=${True}
+  Set to dictionary  ${transfer_data.data}  id=${transfer.data.id}
+  Set to dictionary  ${transfer_data.data}  transfer=${USERS.users['${tender_owner}'].transfer_token}
+  ${tender}=  Call Method  ${USERS.users['${username}'].client}  change_ownership  ${tender}  ${transfer_data}
+  Log  ${tender}
+  Set To Dictionary  ${USERS.users['${username}']}   access_token=${access_token}
+  Set To Dictionary  ${USERS.users['${username}']}   transfer_token=${transfer_token}
+  [return]  ${internalid}
+
+
 Отримати internal id по UAid
   [Arguments]  ${username}  ${tender_uaid}
   Log  ${username}
