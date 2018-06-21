@@ -70,7 +70,7 @@ ${RESOURCE}          lots
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
-  ...      lot_view
+  ...      lot_view_rectificationPeriod
   Отримати дані із дати rectificationPeriod.endDate тендера для усіх користувачів
 
 
