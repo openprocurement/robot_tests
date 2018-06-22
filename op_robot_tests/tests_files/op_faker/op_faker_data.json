@@ -3127,8 +3127,8 @@
             "additionalClassifications": [
                 {
                     "scheme": "dk018",
-                    "id": "1251.5",
-                    "description": "Будівлі підприємств харчової промисловості"
+                    "id": "230",
+                    "description": "Комплексні промислові споруди"
                 }
             ],
             "classification": {
@@ -3163,6 +3163,62 @@
                 "scheme": "CAV-PS",
                 "id": "04211000-0",
                 "description": "Промислова заводська, фабрична будівля та їх частини"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "cadastralNumber",
+                    "id": "PA01-7",
+                    "description": "Оренда"
+                }
+            ],
+            "classification": {
+                "scheme": "CPV",
+                "id": "42990000-2",
+                "description": "Машини спеціального призначення різні"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "cadastralNumber",
+                    "id": "PA01-7",
+                    "description": "Оренда"
+                }
+            ],
+            "classification": {
+                "scheme": "CAV-PS",
+                "id": "08110000-0",
+                "description": "Корпоративні права Акціонерного товариства"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "UA-EDR",
+                    "id": "PA01-7",
+                    "description": "Оренда"
+                }
+            ],
+            "classification": {
+                "scheme": "CAV-PS",
+                "id": "08160000-5",
+                "description": "Корпоративні права інші"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "cadastralNumber",
+                    "id": "PA01-7",
+                    "description": "Оренда"
+                }
+            ],
+            "classification": {
+                "scheme": "CAV-PS",
+                "id": "04220000-6",
+                "description": "Торгова нерухомість"
             }
         },
         {
@@ -3348,10 +3404,13 @@
     ],
     "schemes_other": [
         "05110000-9",
-        "06110000-6",
         "04211000-0",
         "04111000-9",
-        "04151000-1"
+        "04151000-1",
+        "04220000-6",
+        "08110000-0",
+        "08160000-5",
+        "42990000-2"
     ],
     "items_base_data_other": [
            {
@@ -3374,6 +3433,50 @@
             "unit": {
                 "code": "MTK",
                 "name": "метри квадратні"
+            }
+        },
+        {
+            "scheme_id": "42990000-2",
+            "description": "Машини спеціального призначення",
+            "description_ru": "Машины специального назначения",
+            "description_en": "Special purpose machines",
+            "quantity": 7,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+        {
+            "scheme_id": "08110000-0",
+            "description": "Корпоративні права Акціонерного товариства",
+            "description_ru": "Корпоративные права акционерного общества",
+            "description_en": "Corporate rights of the joint-stock company",
+            "quantity": 7,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+            {
+            "scheme_id": "08160000-5",
+            "description": "Корпоративні права інші",
+            "description_ru": "Корпоративные права другие",
+            "description_en": "Corporate rights others",
+            "quantity": 7,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+        {
+            "scheme_id": "04220000-6",
+            "description": "Торгова нерухомість",
+            "description_ru": "Торговая недвижимость",
+            "description_en": "Commercial real estate",
+            "quantity": 7,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
             }
         },
         {
