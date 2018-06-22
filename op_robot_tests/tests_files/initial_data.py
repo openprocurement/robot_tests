@@ -113,6 +113,15 @@ def create_fake_bankName():
     return random.choice([u'PrivatBank', u'Oschadbank', u'Raiffeisen Bank Aval', u'KredoBank', u'ProCredit Bank'])
 
 
+def create_fake_scheme_id(scheme):
+    scheme_id = {
+            u'UA-MFO': random.randint(100000, 999999),
+            u'UA-EDR': random.randint(10000000, 99999999),
+            u'accountNumber': random.randint(100000, 999999),
+    }
+    return scheme_id[scheme]
+
+
 def create_fake_cancellation_reason():
     reasons = [u"Згідно рішення виконавчої дирекції Замовника",
                u"Порушення порядку публікації оголошення"]
@@ -293,6 +302,8 @@ def test_lot_auctions_data(index, procedure_intervals, params):
     period_dict["auctionPeriod"] = {}
     inc_dt += timedelta(minutes=tender_parameters['intervals']['auction'][0])
     accelerator = tender_parameters['intervals']['accelerator']
+    scheme = random.choice([u'UA-EDR', u'UA-MFO', u'accountNumber'])
+    scheme_id = create_fake_scheme_id(scheme)
     if index == '0':
         value_amount = create_fake_amount(3000, 999999999.99)
         lot_data = {
@@ -323,8 +334,8 @@ def test_lot_auctions_data(index, procedure_intervals, params):
                 "description": fake.description(),
                 "bankName": create_fake_bankName(),
                 "accountIdentification": [{
-                    "scheme": random.choice([u'UA-EDR', u'UA-MFO', u'accountNumber']),
-                    "id": random.randint(1000000, 99999999),
+                    "scheme": scheme,
+                    "id": scheme_id,
                     "description": fake.description()
                 }]
             }
