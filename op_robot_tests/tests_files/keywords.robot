@@ -225,6 +225,7 @@ Get Broker Property By Username
 
 
 Можливість додати умови проведення аукціону
+  Set To Dictionary  ${tender_parameters}  mode=auctions
   :FOR  ${index}  IN  0  1
   \  ${auction}=  test_lot_auctions_data  ${index}  ${period_intervals}  ${tender_parameters}
   \  Run As  ${tender_owner}  Додати умови проведення аукціону  ${auction}  ${index}  ${TENDER['TENDER_UAID']}
