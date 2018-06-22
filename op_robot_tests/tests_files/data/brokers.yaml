@@ -37,7 +37,9 @@ Default:
             auction:  [25, 30]
         lots:
             accelerator: 720
-            auction:  [35, 30]
+        auctions:
+            accelerator: 1440
+            auction:  [40, 30]
     # Synchronization delay, in seconds
     timeout_on_wait: 300
 Quinta:
