@@ -807,6 +807,27 @@ Resource           resource.robot
   Remove File  ${file_path}
 
 
+Можливість створити скаргу про виправлення визначення ${award_index} переможця із документацією
+  ${claim}=  Підготувати дані для подання вимоги
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
+  ${complaintID}=  Run As  ${provider}
+  ...      Створити скаргу про виправлення визначення переможця
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${claim}
+  ...      ${award_index}
+  ...      ${file_path}
+  ${doc_id}=  get_id_from_string  ${file_name}
+  ${claim_data}=  Create Dictionary
+  ...      claim=${claim}
+  ...      complaintID=${complaintID}
+  ...      doc_name=${file_name}
+  ...      doc_id=${doc_id}
+  ...      doc_content=${file_content}
+  ${claim_data}=  munch_dict  arg=${claim_data}
+  Set To Dictionary  ${USERS.users['${provider}']}  claim_data  ${claim_data}
+  Remove File  ${file_path}
+
+
 Можливість скасувати вимогу про виправлення умов закупівлі
   ${cancellation_reason}=  create_fake_sentence
   ${data}=  Create Dictionary
