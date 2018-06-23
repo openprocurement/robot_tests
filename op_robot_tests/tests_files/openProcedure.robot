@@ -108,7 +108,7 @@ ${MODE}  auctions
   ...      viewer  tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
-  ...      tender_view
+  ...      tender_view_value_amount
   Отримати дані із поля value.amount тендера для усіх користувачів
 
 
@@ -117,7 +117,7 @@ ${MODE}  auctions
   ...      viewer  tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
-  ...      tender_view
+  ...      tender_view_minimalStep
   Отримати дані із поля minimalStep.amount тендера для усіх користувачів
 
 
