@@ -676,6 +676,39 @@ Library  openprocurement_client.utils
   [return]  ${complaintID}
 
 
+Створити скаргу про виправлення визначення переможця
+  [Documentation]  Створює скаргу у статусі "pending"
+  ...      Можна створити скаргу як з документацією, так і без неї
+  [Arguments]  ${username}  ${tender_uaid}  ${claim}  ${award_index}  ${document}=${None}
+  ${complaintID}=  openprocurement_client.Створити чернетку вимоги про виправлення визначення переможця
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      ${claim}
+  ...      ${award_index}
+
+  ${status}=  Run keyword and return status  Should not be equal  ${document}  ${None}
+  Log  ${status}
+  Run keyword if  ${status} == ${True}  openprocurement_client.Завантажити документацію до вимоги про виправлення визначення переможця
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      ${complaintID}
+  ...      ${award_index}
+  ...      ${document}
+
+  ${status}=  Set variable  pending
+  ${data}=  Create Dictionary  status=${status}
+  ${confirmation_data}=  Create Dictionary  data=${data}
+  openprocurement_client.Подати вимогу про виправлення визначення переможця
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      ${complaintID}
+  ...      ${award_index}
+  ...      ${confirmation_data}
+
+  [return]  ${complaintID}
+
+
+
 Завантажити документацію до вимоги
   [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${document}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
