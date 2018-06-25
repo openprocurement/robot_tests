@@ -81,7 +81,7 @@ ${MODE}  auctions
   ...      viewer  tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
-  ...      tender_view
+  ...      tender_view_procurementMethodType
   Отримати дані із поля procurementMethodType тендера для усіх користувачів
 
 

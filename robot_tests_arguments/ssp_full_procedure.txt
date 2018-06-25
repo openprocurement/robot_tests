@@ -16,6 +16,9 @@
 -i find_tender
 -i tender_view
 -i tender_view_tenderPeriod
+-i tender_view_procurementMethodType
+-i tender_view_value_amount
+-i tender_view_minimalStep
 -i add_tender_doc
 -i add_tender_nda
 -i add_tender_doc_content
