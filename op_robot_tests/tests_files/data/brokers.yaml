@@ -374,11 +374,13 @@ uub:
         provider1:      uub_Provider1
         viewer:         uub_Viewer
     intervals:
+        lots:
+            accelerator: 180
         default:
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
-    timeout_on_wait: 10
+    timeout_on_wait: 20
 APStender:
     keywords_file: aps
     roles:
@@ -414,11 +416,13 @@ ueex:
         provider1:      ueex_Provider1
         viewer:         ueex_Viewer
     intervals:
+        lots:
+            accelerator: 180
         default:
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
-    timeout_on_wait: 60
+    timeout_on_wait: 30
 ecommodity:
     keywords_file: ecommodity
     roles:
@@ -472,11 +476,13 @@ katerynoslav:
         provider1:      katerynoslav_Provider1
         viewer:         katerynoslav_Viewer
     intervals:
+        lots:
+            accelerator: 180
         default:
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
-    timeout_on_wait: 60
+    timeout_on_wait: 20
 comminnex:
     intervals:
         default:
@@ -667,11 +673,13 @@ utsb:
         provider1:      utsb_Provider1
         viewer:         utsb_Viewer
     intervals:
+        lots:
+            accelerator: 180
         default:
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
-    timeout_on_wait: 60
+    timeout_on_wait: 20
 uisce:
     keywords_file: uisce
     accelerator: 360
@@ -817,11 +825,13 @@ podilska:
         provider1:      podilska_Provider1
         viewer:         podilska_Viewer
     intervals:
+        lots:
+            accelerator: 180
         default:
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
-    timeout_on_wait: 10
+    timeout_on_wait: 20
 stolitsa:
     keywords_file: stolitsa
     accelerator: 360
@@ -931,8 +941,10 @@ tsbgalcontract:
         provider1:      tsbgalcontract_Provider1
         viewer:         tsbgalcontract_Viewer
     intervals:
+        lots:
+            accelerator: 180
         default:
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
-    timeout_on_wait: 10
+    timeout_on_wait: 20
