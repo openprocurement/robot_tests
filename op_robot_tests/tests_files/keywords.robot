@@ -255,9 +255,11 @@ Get Broker Property By Username
   ${reply}=  Create Dictionary  data=${lot}
   [Return]  ${reply}
 
+
 Підготувати дані для створення нецінового показника
   ${reply}=  test_feature_data
   [Return]  ${reply}
+
 
 Підготувати дані для подання вимоги
   ${claim}=  test_claim_data
@@ -461,6 +463,12 @@ Log differences between dicts
   Звірити поле тендера із значенням  ${username}  ${tender_uaid}  ${left}  ${field}
 
 
+Звірити поле об'єкта моніторингу
+  [Arguments]  ${username}  ${tender_uaid}  ${tender_data}  ${field}
+  ${left}=  get_from_object  ${tender_data.data}  ${field}
+  Звірити поле об'єкта моніторингу із значенням  ${username}  ${tender_uaid}  ${left}  ${field}
+
+
 Звірити поле плану
   [Arguments]  ${username}  ${tender_uaid}  ${tender_data}  ${field}
   ${left}=  get_from_object  ${tender_data.data}  ${field}
@@ -476,6 +484,12 @@ Log differences between dicts
 Звірити поле тендера із значенням
   [Arguments]  ${username}  ${tender_uaid}  ${left}  ${field}  ${object_id}=${Empty}
   ${right}=  Отримати дані із тендера  ${username}  ${tender_uaid}  ${field}  ${object_id}
+  Порівняти об'єкти  ${left}  ${right}
+
+
+Звірити поле об'єкта моніторингу із значенням
+  [Arguments]  ${username}  ${tender_uaid}  ${left}  ${field}  ${object_id}=${Empty}
+  ${right}=  Отримати дані із об'єкта моніторингу  ${username}  ${tender_uaid}  ${field}  ${object_id}
   Порівняти об'єкти  ${left}  ${right}
 
 
@@ -630,6 +644,21 @@ Log differences between dicts
   ${data}=  munch_dict  arg=${USERS.users['${username}'].tender_data.data}
   Set To Dictionary  ${USERS.users['${username}'].tender_data}  data=${data}
   Log  ${USERS.users['${username}'].tender_data.data}
+  [return]  ${field_value}
+
+
+Отримати дані із об'єкта моніторингу
+  [Arguments]  ${username}  ${monitoring_uaid}  ${field_name}  ${object_id}=${Empty}
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      get_from_object
+  ...      ${USERS.users['${username}'].monitoring_data.data}
+  ...      ${field_name}
+  Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
+  ${field_value}=  Run As  ${username}  Отримати інформацію із об'єкта моніторингу  ${monitoring_uaid}  ${field_name}
+  Set_To_Object  ${USERS.users['${username}'].monitoring_data.data}  ${field_name}  ${field_value}
+  ${data}=  munch_dict  arg=${USERS.users['${username}'].monitoring_data.data}
+  Set To Dictionary  ${USERS.users['${username}'].monitoring_data}  data=${data}
+  Log  ${USERS.users['${username}'].monitoring_data.data}
   [return]  ${field_value}
 
 
@@ -823,6 +852,12 @@ Require Failure
 Звірити статус тендера
   [Arguments]  ${username}  ${tender_uaid}  ${left}
   ${right}=  Run as  ${username}  Отримати інформацію із тендера  ${tender_uaid}  status
+  Порівняти об'єкти  ${left}  ${right}
+
+
+Звірити статус об'єкта моніторингу
+  [Arguments]  ${username}  ${monitoring_uaid}  ${left}
+  ${right}=  Run As  ${username}  Отримати інформацію із об'єкта моніторингу  ${monitoring_uaid}  status
   Порівняти об'єкти  ${left}  ${right}
 
 
