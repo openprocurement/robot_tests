@@ -496,7 +496,7 @@ users:
     Prom_Owner:
         broker:   Promauctions
         homepage: "http://zakupki.dz-test.net/auctions"
-        default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_auction/list?mode=all"
+        default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_privatization_asset/all"
         login:    test@test17.com
         password: autotest
         browser:  chrome
@@ -505,7 +505,7 @@ users:
     Prom_Viewer:
         broker:   Promauctions
         homepage: "http://zakupki.dz-test.net/auctions"
-        default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_auction/list?mode=all"
+        default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_privatization_asset/all"
         login:    test@test13.com
         password: autotest
         browser:  chrome
