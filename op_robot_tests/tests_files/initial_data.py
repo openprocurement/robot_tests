@@ -19,9 +19,12 @@ fake_uk = Factory.create(locale='uk_UA')
 fake_uk.add_provider(OP_Provider)
 fake = fake_uk
 used_identifier_id = []
-mode_open = ["belowThreshold", "aboveThresholdUA", "aboveThresholdEU",
-            "aboveThresholdUA.defense", "competitiveDialogueUA", "competitiveDialogueEU", "esco"]
-mode_limited = ["reporting", "negotiation.quick", "negotiation"]
+mode_open =     ["belowThreshold", "aboveThresholdUA", "aboveThresholdEU",
+                "aboveThresholdUA.defense", "competitiveDialogueUA", "competitiveDialogueEU", "esco"]
+mode_limited =  ["reporting", "negotiation.quick", "negotiation"]
+violationType = ["corruptionDescription", "corruptionProcurementMethodType", "corruptionChanges",
+                "corruptionPublicDisclosure", "corruptionBiddingDocuments", "documentsForm",
+                "corruptionAwarded", "corruptionCancelled", "corruptionContracting"]
 
 # This workaround fixes an error caused by missing "catch_phrase" class method
 # for the "ru_RU" locale in Faker >= 0.7.4
@@ -511,6 +514,7 @@ def test_lot_document_data(document, lot_id):
     document.data.update({"documentOf": "lot", "relatedItem": lot_id})
     return munchify(document)
 
+
 def test_change_document_data(document, change_id):
     document.data.update({"documentOf": "change", "relatedItem": change_id})
     return munchify(document)
@@ -589,3 +593,78 @@ def test_change_data():
 
 def get_hash(file_contents):
     return ("md5:"+hashlib.md5(file_contents).hexdigest())
+
+
+def tets_monitoring_data( tender_id, accelerator=None):
+    data = {
+        "reasons": [random.choice(["public", "fiscal", "indicator", "authorities", "media"])],
+        "tender_id": tender_id,
+        "procuringStages": [random.choice(["awarding", "contracting", "planning"])],
+        "parties": [fake.procuringEntity()],
+        "decision": {
+            "date": get_now().isoformat(),
+            "description": fake_en.sentence(nb_words=10, variable_nb_words=True)
+        },
+        "mode": "test"
+    }
+    data["parties"][0]["roles"] = [random.choice(["create", "decision", "conclusion"])]
+    data["parties"][0]["name"] = "The State Audit Service of Ukraine"
+    data['monitoringDetails'] = 'quick, ' \
+        'accelerator={}'.format(accelerator)
+    return munchify({'data':data})
+
+
+def test_party(party):
+    party["roles"] = "dialogue"
+    del party["kind"]
+    return munchify({"data":party})
+
+
+def test_dialogue(relatedParty_id):
+    return munchify(
+    {
+        "data":
+        {
+            "title": fake_en.sentence(nb_words=10, variable_nb_words=True),
+            "relatedParty": relatedParty_id,
+            "description": fake_en.sentence(nb_words=10, variable_nb_words=True)
+        }
+    })
+
+
+def test_conclusion(violationOccurred=False):
+    return munchify(
+    {
+       "data": {
+            "conclusion": {
+                "violationOccurred": violationOccurred,
+                "violationType": random.choice(violationType)
+            }
+        }
+    })
+
+
+def test_status_data(status):
+    data= {
+        "data": {
+            "status": status
+        }
+    }
+    if status in ('stopped', 'cancelled'):
+        data["data"]["cancellation"]= {}
+        data["data"]["cancellation"]["description"] = fake_en.sentence(nb_words=10, variable_nb_words=True)
+    return munchify(data)
+
+
+def test_elimination_report(corruption):
+    return munchify({
+        "data": {
+            "eliminationResolution": {
+                "resultByType": {
+                    corruption: random.choice(["eliminated", "not_eliminated", "no_mechanism"])
+                },
+                "result": random.choice(["completely", "partly", "none"]),
+                "description": fake_en.sentence(nb_words=10, variable_nb_words=True)
+            }
+        }
+    })
