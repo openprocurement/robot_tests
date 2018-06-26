@@ -1,4 +1,5 @@
 from openprocurement_client.client import Client, EDRClient
+from openprocurement_client.dasu_client import DasuClient
 from openprocurement_client.document_service_client \
     import DocumentServiceClient
 from openprocurement_client.plan import PlansClient
@@ -158,3 +159,16 @@ class StableClient_plan(PlansClient):
 
 def prepare_plan_api_wrapper(key, host_url, api_version):
     return StableClient_plan(key, host_url, api_version)
+
+
+class StableClient_dasu(DasuClient):
+    @retry(stop_max_attempt_number=100, wait_random_min=500,
+           wait_random_max=4000, retry_on_exception=retry_if_request_failed)
+    def request(self, *args, **kwargs):
+        return super(StableClient_dasu, self).request(*args, **kwargs)
+
+
+def prepare_dasu_api_wrapper(key, resource, host_url, api_version, ds_client=None):
+    print  key
+    return StableClient_dasu(key, resource, host_url, api_version,
+                        ds_client=ds_client)

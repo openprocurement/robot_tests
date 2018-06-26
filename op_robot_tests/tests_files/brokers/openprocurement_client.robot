@@ -30,6 +30,19 @@ Library  openprocurement_client.utils
   [return]  ${tender_id}
 
 
+Отримати internal id об'єкта моніторингу по UAid
+  [Arguments]  ${username}  ${monitoring_uaid}
+  Log  ${username}
+  Log  ${monitoring_uaid}
+  Log Many  ${USERS.users['${username}'].id_map}
+  ${status}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${USERS.users['${username}'].id_map}  ${monitoring_uaid}
+  Run Keyword And Return If  ${status}  Get From Dictionary  ${USERS.users['${username}'].id_map}  ${monitoring_uaid}
+  Call Method  ${USERS.users['${username}'].dasu_client}  get_monitorings
+  ${monitoring_id}=  Wait Until Keyword Succeeds  5x  30 sec  get_monitoring_id_by_uaid  ${monitoring_uaid}  ${USERS.users['${username}'].dasu_client}
+  Set To Dictionary  ${USERS.users['${username}'].id_map}  ${monitoring_uaid}  ${monitoring_id}
+  [return]  ${monitoring_id}
+
+
 Підготувати клієнт для користувача
   [Arguments]  ${username}
   [Documentation]  Відкрити браузер, створити об’єкти api wrapper і
@@ -48,7 +61,9 @@ Library  openprocurement_client.utils
   ${api_wrapper}=  Run Keyword If  '${RESOURCE}' == 'plans'
   ...     prepare_plan_api_wrapper  ${USERS.users['${username}'].api_key}  ${API_HOST_URL}  ${API_VERSION}
   ...                     ELSE  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${RESOURCE}  ${API_HOST_URL}  ${API_VERSION}  ${ds_api_wraper}
+  ${dasu_api_wraper}=  prepare_dasu_api_wrapper  ${USERS.users['${username}'].dasu_api_key}  ${DASU_RESOURCE}  ${DASU_API_HOST_URL}  ${DASU_API_VERSION}  ${ds_api_wraper}
   Set To Dictionary  ${USERS.users['${username}']}  client=${api_wrapper}
+  Set To Dictionary  ${USERS.users['${username}']}  dasu_client=${dasu_api_wraper}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${EMPTY}
   ${id_map}=  Create Dictionary
   Set To Dictionary  ${USERS.users['${username}']}  id_map=${id_map}
@@ -75,6 +90,18 @@ Library  openprocurement_client.utils
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  upload_document  ${filepath}  ${tender}
   Log object data   ${reply}  reply
   #return here is needed to have uploaded doc data in `Завантажити документ в лот` keyword
+  [return]  ${reply}
+
+
+Завантажити документ до об'єкта моніторингу
+  [Arguments]  ${username}  ${filepath}  ${monitoring_uaid}  ${monitoring_obj}
+  Log  ${username}
+  Log  ${monitoring_uaid}
+  Log  ${filepath}
+  ${monitoring}=  openprocurement_client.Пошук об'єкта моніторингу по ідентифікатору  ${username}  ${monitoring_uaid}
+  ${monitoring}=  set_access_key  ${monitoring}  ${USERS.users['${username}'].access_token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].dasu_client}  upload_monitoring_document  ${filepath}  ${monitoring}  ${monitoring_obj}
+  Log object data   ${reply}  reply
   [return]  ${reply}
 
 
@@ -160,6 +187,29 @@ Library  openprocurement_client.utils
   [return]  ${tender.data.tenderID}
 
 
+Створити об'єкт моніторингу
+  [Arguments]  ${username}  ${monitoring_data}
+  ${monitoring}=  Call Method  ${USERS.users['${username}'].dasu_client}  create_monitoring  ${monitoring_data}
+  Log  ${monitoring}
+  ${access_token}=  Get Variable Value  ${monitoring.access.token}
+  Log  ${\n}${DASU_API_HOST_URL}/api/${DASU_API_VERSION}/monitorings/${monitoring.data.id}${\n}  WARN
+  Set To Dictionary  ${USERS.users['${username}']}   access_token=${access_token}
+  Set To Dictionary  ${USERS.users['${username}']}   monitoring_data=${monitoring}
+  Log   ${USERS.users['${username}'].monitoring_data}
+  [return]  ${monitoring.data.monitoring_id}
+
+
+Оприлюднити рішення про початок моніторингу
+  [Arguments]  ${username}  ${monitoring_uaid}
+  ${monitoring}=  openprocurement_client.Пошук об'єкта моніторингу по ідентифікатору  ${username}  ${monitoring_uaid}
+  ${monitoring_data}=  test_status_data  active
+  Log  ${monitoring_data}
+  ${reply}=  Call Method  ${USERS.users['${username}'].dasu_client}  patch_monitoring  ${monitoring_data}  ${monitoring.data.id}
+  Log  ${reply}
+  Set To Dictionary  ${USERS.users['${username}']}   monitoring_data=${reply}
+  [return]  ${reply}
+
+
 Створити план
   [Arguments]  ${username}  ${tender_data}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  create_plan  ${tender_data}
@@ -183,6 +233,117 @@ Library  openprocurement_client.utils
   ${tender}=  munch_dict  arg=${tender}
   Log  ${tender}
   [return]   ${tender}
+
+
+Пошук об'єкта моніторингу по ідентифікатору
+  [Arguments]  ${username}  ${monitoring_uaid}  ${save_key}=monitoring_data
+  ${internalid}=  openprocurement_client.Отримати internal id об'єкта моніторингу по UAid  ${username}  ${monitoring_uaid}
+  ${monitoring}=  Call Method  ${USERS.users['${username}'].dasu_client}  get_monitoring  ${internalid}
+  Set To Dictionary  ${USERS.users['${username}']}  ${save_key}=${monitoring}
+  ${monitoring}=  munch_dict  arg=${monitoring}
+  Log  ${monitoring}
+  [return]   ${monitoring}
+
+
+Отримати доступ до об'єкта моніторингу
+  [Arguments]  ${username}  ${monitoring_uaid}  ${save_key}=monitoring_data
+  ${token}=  Set Variable  ${USERS.users['${username}'].access_token}
+  ${internalid}=  openprocurement_client.Отримати internal id об'єкта моніторингу по UAid  ${username}  ${monitoring_uaid}
+  ${monitoring}=  Call Method  ${USERS.users['${username}'].dasu_client}  patch_credentials  ${token}  ${internalid}
+  Set To Dictionary  ${USERS.users['${username}']}  ${save_key}=${monitoring}
+  Log  ${USERS.users['${username}'].monitoring_data}
+  ${monitoring}=  munch_dict  arg=${monitoring}
+  [return]   ${monitoring}
+
+
+Додати замовника як учасника процесу моніторингу
+  [Arguments]  ${username}  ${monitoring_uaid}  ${party_data}
+  ${monitoring}=  openprocurement_client.Пошук об'єкта моніторингу по ідентифікатору  ${username}  ${monitoring_uaid}
+  Log  ${monitoring}
+  ${party}=  Call Method  ${USERS.users['${username}'].dasu_client}  create_party  ${monitoring}  ${party_data}
+  Log  ${party}
+  ${monitoring}=  openprocurement_client.Пошук об'єкта моніторингу по ідентифікатору  ${username}  ${monitoring_uaid}
+  Set To Dictionary  ${USERS.users['${username}']}   monitoring_data=${monitoring}
+  Log  ${USERS.users['${username}'].monitoring_data}
+  [return]  ${monitoring}
+
+
+Запитати в замовника пояснення
+  [Arguments]  ${username}  ${monitoring_uaid}  ${dialogue_data}
+  ${monitoring}=  openprocurement_client.Пошук об'єкта моніторингу по ідентифікатору  ${username}  ${monitoring_uaid}
+  ${dialogue}=  Call Method  ${USERS.users['${username}'].dasu_client}  create_dialogue  ${monitoring}  ${dialogue_data}
+  Log  ${dialogue}
+  ${monitoring}=  openprocurement_client.Пошук об'єкта моніторингу по ідентифікатору  ${username}  ${monitoring_uaid}
+  Set To Dictionary  ${USERS.users['${username}']}   monitoring_data=${monitoring}
+  Log  ${USERS.users['${username}'].monitoring_data}
+  [return]  ${monitoring}
+
+
+Надати пояснення замовником
+  [Arguments]  ${username}  ${monitoring_uaid}  ${answer_data}
+  Log  ${USERS.users['${username}'].access_token}
+  ${monitoring}=  openprocurement_client.Отримати доступ до об'єкта моніторингу  ${username}  ${monitoring_uaid}
+  ${answer}=  Call Method  ${USERS.users['${username}'].dasu_client}  patch_dialogue  ${monitoring}  ${answer_data}  ${monitoring.data.dialogues[0].id}
+  Log  ${answer}
+  [return]  ${answer}
+
+
+Змінити статус об’єкта моніторингу
+  [Arguments]  ${username}  ${monitoring_uaid}  ${status_data}
+  ${monitoring}=  openprocurement_client.Пошук об'єкта моніторингу по ідентифікатору  ${username}  ${monitoring_uaid}
+  ${reply}=  Call Method  ${USERS.users['${username}'].dasu_client}  patch_monitoring  ${status_data}  ${monitoring.data.id}
+  Log  ${reply}
+  Set To Dictionary  ${USERS.users['${username}']}  monitoring_data=${reply}
+  [return]  ${reply}
+
+
+Оприлюднити рішення про усунення порушення
+  [Arguments]  ${username}  ${monitoring_uaid}  ${report_data}
+  ${monitoring}=  openprocurement_client.Пошук об'єкта моніторингу по ідентифікатору  ${username}  ${monitoring_uaid}
+  ${reply}=  Call Method  ${USERS.users['${username}'].dasu_client}  patch_monitoring  ${report_data}  ${monitoring.data.id}
+  Log  ${reply}
+  Set To Dictionary  ${USERS.users['${username}']}  monitoring_data=${reply}
+  [return]  ${reply}
+
+
+Надати звіт про усунення порушення замовником
+  [Arguments]  ${username}  ${monitoring_uaid}  ${resolution_data}  ${file_path}
+  ${reply}=  Call Method  ${USERS.users['${username}'].dasu_client}  upload_obj_document  ${file_path}  ${USERS.users['${username}'].monitoring_data}
+  ${documents}=  Create List
+  Append To List  ${documents}  ${reply.data}
+  Set To Dictionary  ${resolution_data.data}  documents=${documents}
+  Log  ${resolution_data}
+  ${resolution}=  Call Method  ${USERS.users['${username}'].dasu_client}  patch_eliminationReport  ${USERS.users['${username}'].monitoring_data}  ${resolution_data}
+  Log  ${resolution}
+  [return]  ${resolution}
+
+
+Зазначити, що порушення було оскаржено в суді
+  [Arguments]  ${username}  ${monitoring_uaid}  ${appeal_data}  ${file_path}
+  ${reply}=  Call Method  ${USERS.users['${username}'].dasu_client}  upload_obj_document  ${filepath}  ${USERS.users['${username}'].monitoring_data}
+  ${documents}=  Create List
+  Append To List  ${documents}  ${reply.data}
+  Set To Dictionary  ${appeal_data.data}  documents=${documents}
+  Log  ${appeal_data}
+  ${appeal}=  Call Method  ${USERS.users['${username}'].dasu_client}  patch_appeal  ${USERS.users['${username}'].monitoring_data}  ${appeal_data}
+  Log  ${appeal}
+  [return]  ${appeal}
+
+
+Надати пояснення замовником з власної ініціативи
+  [Arguments]  ${username}  ${monitoring_uaid}  ${dialogue_data}
+  ${party}=  Call Method  ${USERS.users['${username}'].dasu_client}  create_dialogue  ${USERS.users['${username}'].monitoring_data}  ${dialogue_data}
+  Log  ${party}
+  [return]  ${monitoring}
+
+
+Надати висновок про наявність/відсутність порушення в тендері
+  [Arguments]  ${username}  ${monitoring_uaid}  ${conclusion_data}
+  ${monitoring}=  openprocurement_client.Пошук об'єкта моніторингу по ідентифікатору  ${username}  ${monitoring_uaid}
+  ${reply}=  Call Method  ${USERS.users['${username}'].dasu_client}  patch_monitoring  ${conclusion_data}  ${monitoring.data.id}
+  Log  ${reply}
+  Set To Dictionary  ${USERS.users['${username}']}   monitoring_data=${reply}
+  [return]  ${reply}
 
 
 Пошук плану по ідентифікатору
@@ -247,6 +408,21 @@ Library  openprocurement_client.utils
   ${status}  ${field_value}=  Run keyword and ignore error
   ...      Get from object
   ...      ${USERS.users['${username}'].tender_data.data}
+  ...      ${field_name}
+  Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
+
+  Fail  Field not found: ${field_name}
+
+
+Отримати інформацію із об'єкта моніторингу
+  [Arguments]  ${username}  ${monitoring_uaid}  ${field_name}
+  openprocurement_client.Пошук об'єкта моніторингу по ідентифікатору
+  ...      ${username}
+  ...      ${monitoring_uaid}
+
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      Get from object
+  ...      ${USERS.users['${username}'].monitoring_data.data}
   ...      ${field_name}
   Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
 
@@ -706,7 +882,6 @@ Library  openprocurement_client.utils
   ...      ${confirmation_data}
 
   [return]  ${complaintID}
-
 
 
 Завантажити документацію до вимоги
