@@ -32,9 +32,9 @@ ${MOZ_INTEGRATION}   ${False}
   ...      viewer  tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      ${USERS.users['${provider2}'].broker}
   ...      find_tender
   ...      critical
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Можливість знайти тендер по ідентифікатору для усіх користувачів
 
 
@@ -53,6 +53,7 @@ ${MOZ_INTEGRATION}   ${False}
   ...      ${USERS.users['${dasu_user}'].broker}
   ...      create_monitoring
   ...      critical
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість створити об'єкт моніторингу
 
 
@@ -62,6 +63,7 @@ ${MOZ_INTEGRATION}   ${False}
   ...      ${USERS.users['${dasu_user}'].broker}
   ...      add_doc
   ...      critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${dasu_user}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість додати документацію до об'єкта моніторингу
 
@@ -82,7 +84,6 @@ ${MOZ_INTEGRATION}   ${False}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${dasu_user}'].broker}
   ...      find_monitoring
   ...      critical
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Можливість знайти об'єкт моніторингу по ідентифікатору
 
 
