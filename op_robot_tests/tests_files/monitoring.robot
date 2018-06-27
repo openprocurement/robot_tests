@@ -47,6 +47,133 @@ ${MOZ_INTEGRATION}   ${False}
   Можливість знайти тендер по ідентифікатору для користувача ${dasu_user}
 
 
+Відображення ідентифікатора тендера
+  [Tags]   ${USERS.users['${dasu_user}'].broker}: Відображення основних даних тендера
+  ...      dasu_user
+  ...      ${USERS.users['${dasu_user}'].broker}
+  ...      tender_view
+  ...      critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля tenderID тендера із ${TENDER['TENDER_UAID']} для користувача ${dasu_user}
+
+
+Відображення імені замовника тендера
+  [Tags]   ${USERS.users['${dasu_user}'].broker}: Відображення основних даних тендера
+  ...      dasu_user
+  ...      ${USERS.users['${dasu_user}'].broker}
+  ...      tender_view
+  ...      critical
+  Звірити відображення поля procuringEntity.name тендера для користувача ${dasu_user}
+
+
+Відображення типу оголошеного тендера
+  [Tags]   ${USERS.users['${dasu_user}'].broker}: Відображення основних даних тендера
+  ...      dasu_user
+  ...      ${USERS.users['${dasu_user}'].broker}
+  ...      tender_view
+  ...      critical
+  Отримати дані із поля procurementMethodType тендера для користувача ${dasu_user}
+
+
+Відображення бюджету тендера
+  [Tags]   ${USERS.users['${dasu_user}'].broker}: Відображення основних даних тендера
+  ...      dasu_user
+  ...      ${USERS.users['${dasu_user}'].broker}
+  ...      tender_view
+  ...      critical
+  Звірити відображення поля value.amount тендера для користувача ${dasu_user}
+
+
+Відображення валюти тендера
+  [Tags]   ${USERS.users['${dasu_user}'].broker}: Відображення основних даних тендера
+  ...      dasu_user
+  ...      ${USERS.users['${dasu_user}'].broker}
+  ...      tender_view
+  ...      critical
+  Звірити відображення поля value.currency тендера для користувача ${dasu_user}
+
+
+Відображення опису номенклатур тендера
+  [Tags]   ${USERS.users['${dasu_user}'].broker}: Відображення основних даних тендера
+  ...      dasu_user
+  ...      ${USERS.users['${dasu_user}'].broker}
+  ...      tender_view
+  ...      critical
+  Звірити відображення поля description усіх предметів для користувача ${dasu_user}
+
+
+Відображення схеми класифікації номенклатур тендера
+  [Tags]   ${USERS.users['${dasu_user}'].broker}: Відображення основних даних тендера
+  ...      dasu_user
+  ...      ${USERS.users['${dasu_user}'].broker}
+  ...      tender_view
+  ...      critical
+  Звірити відображення поля classification.scheme усіх предметів для користувача ${dasu_user}
+
+
+Відображення кількості номенклатур тендера
+  [Tags]   ${USERS.users['${dasu_user}'].broker}: Відображення основних даних тендера
+  ...      dasu_user
+  ...      ${USERS.users['${dasu_user}'].broker}
+  ...      tender_view
+  ...      critical
+  Звірити відображення поля quantity усіх предметів для користувача ${dasu_user}
+
+
+Відображення назви одиниці номенклатур тендера
+  [Tags]   ${USERS.users['${dasu_user}'].broker}: Відображення основних даних тендера
+  ...      dasu_user
+  ...      ${USERS.users['${dasu_user}'].broker}
+  ...      tender_view
+  ...      critical
+  Звірити відображення поля unit.name усіх предметів для користувача ${dasu_user}
+
+
+Відображення дати кінця доставки номенклатур тендера
+  [Tags]   ${USERS.users['${dasu_user}'].broker}: Відображення основних даних тендера
+  ...      dasu_user
+  ...      ${USERS.users['${dasu_user}'].broker}
+  ...      tender_view
+  ...      critical
+  Звірити відображення дати deliveryDate.endDate усіх предметів для користувача ${dasu_user}
+
+
+Відображення країни доставки номенклатур тендера
+  [Tags]   ${USERS.users['${dasu_user}'].broker}: Відображення основних даних тендера
+  ...      dasu_user
+  ...      ${USERS.users['${dasu_user}'].broker}
+  ...      tender_view
+  ...      critical
+  Звірити відображення поля deliveryAddress.countryName усіх предметів для користувача ${dasu_user}
+
+
+Відображення пошт. коду доставки номенклатур тендера
+  [Tags]   ${USERS.users['${dasu_user}'].broker}: Відображення основних даних тендера
+  ...      dasu_user
+  ...      ${USERS.users['${dasu_user}'].broker}
+  ...      tender_view
+  ...      critical
+  Звірити відображення поля deliveryAddress.postalCode усіх предметів для користувача ${dasu_user}
+
+
+Відображення регіону доставки номенклатур тендера
+  [Tags]   ${USERS.users['${dasu_user}'].broker}: Відображення основних даних тендера
+  ...      dasu_user
+  ...      ${USERS.users['${dasu_user}'].broker}
+  ...      tender_view
+  ...      critical
+  Звірити відображення поля deliveryAddress.region усіх предметів для користувача ${dasu_user}
+
+
+Відображення статусу тендера
+  [Tags]   ${USERS.users['${dasu_user}'].broker}: Відображення основних даних тендера
+  ...      dasu_user
+  ...      ${USERS.users['${dasu_user}'].broker}
+  ...      tender_view
+  ...      critical
+  Отримати дані із поля status тендера для користувача ${dasu_user}
+
+
 Можливість створити об'єкт моніторингу
   [Tags]   ${USERS.users['${dasu_user}'].broker}: Створення об'єкта моніторингу
   ...      dasu_user
