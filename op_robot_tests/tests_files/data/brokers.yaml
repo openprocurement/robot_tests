@@ -150,6 +150,11 @@ aukzionua:
         dgfOtherAssets:
             accelerator: 1440
             auction:  [65, 70]
+        lots:
+            accelerator: 1
+        auctions:
+            accelerator: 1440
+            auction:  [15000, 15000]
     keywords_file: aukzionua
     roles:
         tender_owner:   aukzionua_Owner
