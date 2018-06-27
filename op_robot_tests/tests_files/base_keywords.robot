@@ -93,6 +93,7 @@ Resource           resource.robot
 
 
 Можливість знайти об'єкт моніторингу по ідентифікатору для користувача ${username}
+  Дочекатись синхронізації з майданчиком  ${username}
   Run as  ${username}  Пошук об'єкта моніторингу по ідентифікатору  ${MONITORING['MONITORING_UAID']}
 
 
