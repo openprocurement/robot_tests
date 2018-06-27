@@ -9,6 +9,7 @@
 
 -i create_tender
 -i find_tender
+-i tender_view
 
 -i create_monitoring
 -i find_monitoring
