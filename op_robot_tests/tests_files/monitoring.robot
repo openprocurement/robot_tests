@@ -180,7 +180,7 @@ ${MOZ_INTEGRATION}   ${False}
   ...      ${USERS.users['${dasu_user}'].broker}
   ...      create_monitoring
   ...      critical
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити DASU_LAST_MODIFICATION_DATE
   Можливість створити об'єкт моніторингу
 
 
@@ -190,8 +190,8 @@ ${MOZ_INTEGRATION}   ${False}
   ...      ${USERS.users['${dasu_user}'].broker}
   ...      add_doc
   ...      critical
-  [Setup]  Дочекатись синхронізації з майданчиком  ${dasu_user}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${dasu_user}
+  [Teardown]  Оновити DASU_LAST_MODIFICATION_DATE
   Можливість додати документацію до об'єкта моніторингу
 
 
@@ -201,7 +201,7 @@ ${MOZ_INTEGRATION}   ${False}
   ...      ${USERS.users['${dasu_user}'].broker}
   ...      active_monitoring
   ...      critical
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити DASU_LAST_MODIFICATION_DATE
   Можливість оприлюднити рішення про початок моніторингу
 
 
@@ -283,7 +283,7 @@ ${MOZ_INTEGRATION}   ${False}
   ...      ${USERS.users['${dasu_user}'].broker}
   ...      add_party_tender_owner
   ...      critical
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити DASU_LAST_MODIFICATION_DATE
   Можливість додати замовника як учасника процесу моніторингу
 
 
@@ -293,7 +293,7 @@ ${MOZ_INTEGRATION}   ${False}
   ...      ${USERS.users['${viewer}'].broker}
   ...      add_party_tender_owner
   ...      critical
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${viewer}
   Отримати дані із поля parties[1].name об'єкта моніторингу для користувача ${viewer}
 
 
@@ -312,7 +312,7 @@ ${MOZ_INTEGRATION}   ${False}
   ...      ${USERS.users['${dasu_user}'].broker}
   ...      create_dialogue
   ...      critical
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити DASU_LAST_MODIFICATION_DATE
   Можливість запитати в замовника пояснення
 
 
@@ -322,8 +322,8 @@ ${MOZ_INTEGRATION}   ${False}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      answer_tender_owner
   ...      critical
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${tender_owner}
+  [Teardown]  Оновити DASU_LAST_MODIFICATION_DATE
   Можливість надати пояснення замовником
 
 
@@ -333,8 +333,8 @@ ${MOZ_INTEGRATION}   ${False}
   ...      ${USERS.users['${dasu_user}'].broker}
   ...      declined
   ...      critical
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${dasu_user}
+  [Teardown]  Оновити DASU_LAST_MODIFICATION_DATE
   Можливість надати висновок про відсутність порушення в тендері
 
 
@@ -344,8 +344,8 @@ ${MOZ_INTEGRATION}   ${False}
   ...      ${USERS.users['${dasu_user}'].broker}
   ...      addressed
   ...      critical
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${dasu_user}
+  [Teardown]  Оновити DASU_LAST_MODIFICATION_DATE
   Можливість надати висновок про наявність порушення в тендері
 
 
@@ -355,19 +355,19 @@ ${MOZ_INTEGRATION}   ${False}
   ...      ${USERS.users['${dasu_user}'].broker}
   ...      declined
   ...      critical
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${dasu_user}
+  [Teardown]  Оновити DASU_LAST_MODIFICATION_DATE
   Можливість змінити статус об’єкта моніторингу на declined
 
 
 Відображення статусу declined об’єкта моніторингу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Порушення не виявлені
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Порушення не виявлені
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
   ...      declined
   ...      critical
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити статус об'єкта моніторингу  ${viewer}  ${MONITORING['MONITORING_UAID']}  declined
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${tender_owner}
+  Звірити статус об'єкта моніторингу  ${tender_owner}  ${MONITORING['MONITORING_UAID']}  declined
 
 
 Можливість змінити статус об’єкта моніторингу на addressed
@@ -376,19 +376,19 @@ ${MOZ_INTEGRATION}   ${False}
   ...      ${USERS.users['${dasu_user}'].broker}
   ...      addressed
   ...      critical
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${dasu_user}
+  [Teardown]  Оновити DASU_LAST_MODIFICATION_DATE
   Можливість змінити статус об’єкта моніторингу на addressed
 
 
 Відображення статусу addressed об’єкта моніторингу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Порушення виявлені
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Порушення виявлені
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
   ...      addressed
   ...      critical
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити статус об'єкта моніторингу  ${viewer}  ${MONITORING['MONITORING_UAID']}  addressed
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${tender_owner}
+  Звірити статус об'єкта моніторингу  ${tender_owner}  ${MONITORING['MONITORING_UAID']}  addressed
 
 
 Можливість надати пояснення замовником з власної ініціативи
@@ -397,8 +397,8 @@ ${MOZ_INTEGRATION}   ${False}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      addressed
   ...      critical
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${tender_owner}
+  [Teardown]  Оновити DASU_LAST_MODIFICATION_DATE
   Можливість надати пояснення замовником з власної ініціативи
 
 
@@ -408,8 +408,8 @@ ${MOZ_INTEGRATION}   ${False}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      addressed
   ...      critical
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${tender_owner}
+  [Teardown]  Оновити DASU_LAST_MODIFICATION_DATE
   Можливість надати звіт про усунення порушення замовником
 
 
@@ -419,8 +419,8 @@ ${MOZ_INTEGRATION}   ${False}
   ...      ${USERS.users['${dasu_user}'].broker}
   ...      addressed
   ...      critical
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${dasu_user}
+  [Teardown]  Оновити DASU_LAST_MODIFICATION_DATE
   Можливість оприлюднути рішення про усунення порушення
 
 
@@ -430,28 +430,19 @@ ${MOZ_INTEGRATION}   ${False}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      addressed
   ...      critical
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${tender_owner}
+  [Teardown]  Оновити DASU_LAST_MODIFICATION_DATE
   Можливість зазначити, що порушення було оскаржено в суді
 
 
 Відображення дати закінчення моніторингу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Завершення моніторингу
-  ...      viewer  tender_owner  dasu_user
-  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  [Tags]   ${USERS.users['${dasu_user}'].broker}: Завершення моніторингу
+  ...      dasu_user
   ...      ${USERS.users['${dasu_user}'].broker}
   ...      eliminationPeriod_endDate
   ...      critical
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Отримати дані із поля eliminationPeriod.endDate об'єкта моніторингу для усіх користувачів
-
-
-Можливість дочекатися дати закінчення моніторингу
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Завершення моніторингу
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      eliminationPeriod_endDate
-  ...      critical
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${dasu_user}
+  Отримати дані із поля eliminationPeriod.endDate об'єкта моніторингу для користувача ${dasu_user}
   Дочекатись дати  ${USERS.users['${dasu_user}'].monitoring_data.data.eliminationPeriod.endDate}
 
 
@@ -461,19 +452,18 @@ ${MOZ_INTEGRATION}   ${False}
   ...      ${USERS.users['${dasu_user}'].broker}
   ...      completed
   ...      critical
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити DASU_LAST_MODIFICATION_DATE
   Можливість змінити статус об’єкта моніторингу на completed
 
 
 Відображення статусу completed об’єкта моніторингу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Завершення моніторингу
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Завершення моніторингу
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
   ...      completed
   ...      critical
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити статус об'єкта моніторингу  ${viewer}  ${MONITORING['MONITORING_UAID']}  completed
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${tender_owner}
+  Звірити статус об'єкта моніторингу  ${tender_owner}  ${MONITORING['MONITORING_UAID']}  completed
 
 
 Можливість змінити статус об’єкта моніторингу на stopped
@@ -482,19 +472,19 @@ ${MOZ_INTEGRATION}   ${False}
   ...      ${USERS.users['${dasu_user}'].broker}
   ...      stopped
   ...      critical
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${dasu_user}
+  [Teardown]  Оновити DASU_LAST_MODIFICATION_DATE
   Можливість змінити статус об’єкта моніторингу на stopped
 
 
 Відображення статусу stopped об’єкта моніторингу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Завершення моніторингу
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Завершення моніторингу
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
   ...      stopped
   ...      critical
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити статус об'єкта моніторингу  ${viewer}  ${MONITORING['MONITORING_UAID']}  stopped
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${tender_owner}
+  Звірити статус об'єкта моніторингу  ${tender_owner}  ${MONITORING['MONITORING_UAID']}  stopped
 
 
 Можливість змінити статус об’єкта моніторингу на cancelled
@@ -503,19 +493,19 @@ ${MOZ_INTEGRATION}   ${False}
   ...      ${USERS.users['${dasu_user}'].broker}
   ...      cancelled
   ...      critical
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${dasu_user}
+  [Teardown]  Оновити DASU_LAST_MODIFICATION_DATE
   Можливість змінити статус об’єкта моніторингу на cancelled
 
 
 Відображення статусу cancelled об’єкта моніторингу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Завершення моніторингу
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Завершення моніторингу
   ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  ...      ${USERS.users['${tender_owner}'].broker}
   ...      cancelled
   ...      critical
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити статус об'єкта моніторингу  ${viewer}  ${MONITORING['MONITORING_UAID']}  cancelled
+ [Setup]  Дочекатись синхронізації з ДАСУ  ${tender_owner}
+  Звірити статус об'єкта моніторингу  ${tender_owner}  ${MONITORING['MONITORING_UAID']}  cancelled
 
 
 Можливість змінити статус об’єкта моніторингу на closed
@@ -524,8 +514,7 @@ ${MOZ_INTEGRATION}   ${False}
   ...      ${USERS.users['${dasu_user}'].broker}
   ...      closed
   ...      critical
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  [Teardown]  Оновити DASU_LAST_MODIFICATION_DATE
   Можливість змінити статус об’єкта моніторингу на closed
 
 
@@ -535,5 +524,5 @@ ${MOZ_INTEGRATION}   ${False}
   ...      ${USERS.users['${viewer}'].broker}
   ...      closed
   ...      critical
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити статус об'єкта моніторингу  ${viewer}  ${MONITORING['MONITORING_UAID']}  closed
+ [Setup]  Дочекатись синхронізації з ДАСУ  ${tender_owner}
+  Звірити статус об'єкта моніторингу  ${tender_owner}  ${MONITORING['MONITORING_UAID']}  closed
