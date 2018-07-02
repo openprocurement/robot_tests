@@ -134,6 +134,7 @@ Set Suite Variable With Default Value
   \  Set To Dictionary  ${USERS}  ${username}=${USERS.users.${username}}
   \  Set To Dictionary  ${USERS.${username}}  tender_data=${munch_dict}
   \  Set To Dictionary  ${USERS.${username}}  LAST_REFRESH_DATE  ${LAST_REFRESH_DATE}
+  \  Set To Dictionary  ${USERS.${username}}  DASU_LAST_REFRESH_DATE  ${LAST_REFRESH_DATE}
 
   # Drop all unused users
   Keep In Dictionary  ${USERS.users}  @{used_users}
@@ -449,6 +450,29 @@ Log differences between dicts
   ...      Оновити сторінку  ${username}
   ...      AND
   ...      Set To Dictionary  ${USERS.users['${username}']}  LAST_REFRESH_DATE=${LAST_REFRESH_DATE}
+
+
+Дочекатись синхронізації з ДАСУ
+  [Arguments]  ${username}
+  ${timeout_on_wait}=  Get Broker Property By Username  ${username}  timeout_on_wait
+  ${last_modification_date_corrected}=  Add Time To Date
+  ...      ${MONITORING['DASU_LAST_MODIFICATION_DATE']}
+  ...      ${timeout_on_wait} s
+  ${now}=  Get Current TZdate
+  ${sleep}=  Subtract Date From Date
+  ...      ${last_modification_date_corrected}
+  ...      ${now}
+  Run Keyword If  ${sleep} > 0  Sleep  ${sleep}
+
+
+  ${time_diff}=  Subtract Date From Date
+  ...      ${last_modification_date_corrected}
+  ...      ${USERS.users['${username}']['DASU_LAST_REFRESH_DATE']}
+  ${LAST_REFRESH_DATE}=  Get Current TZdate
+  Run Keyword If  ${time_diff} > 0  Run Keywords
+  ...      Оновити сторінку з об'єктом моніторингу  ${username}  ${MONITORING['MONITORING_UAID']}
+  ...      AND
+  ...      Set To Dictionary  ${USERS.users['${username}']}  DASU_LAST_REFRESH_DATE=${LAST_REFRESH_DATE}
 
 
 Оновити сторінку
@@ -1050,6 +1074,12 @@ Require Failure
   ${LAST_MODIFICATION_DATE}=  Get Current TZdate
   ${status}=  Get Variable Value  ${TEST_STATUS}  PASS
   Run Keyword If  '${status}' == 'PASS'  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE=${LAST_MODIFICATION_DATE}
+
+
+Оновити DASU_LAST_MODIFICATION_DATE
+  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
+  ${status}=  Get Variable Value  ${TEST_STATUS}  PASS
+  Run Keyword If  '${status}' == 'PASS'  Set To Dictionary  ${MONITORING}  DASU_LAST_MODIFICATION_DATE=${LAST_MODIFICATION_DATE}
 
 
 Отримати останній індекс

@@ -246,7 +246,7 @@ Library  openprocurement_client.utils
 
 
 Отримати доступ до об'єкта моніторингу
-  [Arguments]  ${username}  ${monitoring_uaid}  ${save_key}=monitoring_data
+  [Arguments]  ${username}  ${monitoring_uaid}  ${save_key}=monitoring
   ${token}=  Set Variable  ${USERS.users['${username}'].access_token}
   ${internalid}=  openprocurement_client.Отримати internal id об'єкта моніторингу по UAid  ${username}  ${monitoring_uaid}
   ${monitoring}=  Call Method  ${USERS.users['${username}'].dasu_client}  patch_credentials  ${token}  ${internalid}
@@ -313,26 +313,26 @@ Library  openprocurement_client.utils
   Append To List  ${documents}  ${reply.data}
   Set To Dictionary  ${resolution_data.data}  documents=${documents}
   Log  ${resolution_data}
-  ${resolution}=  Call Method  ${USERS.users['${username}'].dasu_client}  patch_eliminationReport  ${USERS.users['${username}'].monitoring_data}  ${resolution_data}
+  ${resolution}=  Call Method  ${USERS.users['${username}'].dasu_client}  patch_eliminationReport  ${USERS.users['${username}'].monitoring}  ${resolution_data}
   Log  ${resolution}
   [return]  ${resolution}
 
 
 Зазначити, що порушення було оскаржено в суді
   [Arguments]  ${username}  ${monitoring_uaid}  ${appeal_data}  ${file_path}
-  ${reply}=  Call Method  ${USERS.users['${username}'].dasu_client}  upload_obj_document  ${filepath}  ${USERS.users['${username}'].monitoring_data}
+  ${reply}=  Call Method  ${USERS.users['${username}'].dasu_client}  upload_obj_document  ${filepath}  ${USERS.users['${username}'].monitoring}
   ${documents}=  Create List
   Append To List  ${documents}  ${reply.data}
   Set To Dictionary  ${appeal_data.data}  documents=${documents}
   Log  ${appeal_data}
-  ${appeal}=  Call Method  ${USERS.users['${username}'].dasu_client}  patch_appeal  ${USERS.users['${username}'].monitoring_data}  ${appeal_data}
+  ${appeal}=  Call Method  ${USERS.users['${username}'].dasu_client}  patch_appeal  ${USERS.users['${username}'].monitoring}  ${appeal_data}
   Log  ${appeal}
   [return]  ${appeal}
 
 
 Надати пояснення замовником з власної ініціативи
   [Arguments]  ${username}  ${monitoring_uaid}  ${dialogue_data}
-  ${party}=  Call Method  ${USERS.users['${username}'].dasu_client}  create_dialogue  ${USERS.users['${username}'].monitoring_data}  ${dialogue_data}
+  ${party}=  Call Method  ${USERS.users['${username}'].dasu_client}  create_dialogue  ${USERS.users['${username}'].monitoring}  ${dialogue_data}
   Log  ${party}
   [return]  ${monitoring}
 
@@ -382,6 +382,11 @@ Library  openprocurement_client.utils
 Оновити сторінку з планом
   [Arguments]  ${username}  ${tender_uaid}
   openprocurement_client.Пошук плану по ідентифікатору  ${username}  ${tender_uaid}
+
+
+Оновити сторінку з об'єктом моніторингу
+  [Arguments]  ${username}  ${monitoring_uaid}
+  openprocurement_client.Пошук об'єкта моніторингу по ідентифікатору  ${username}  ${monitoring_uaid}
 
 
 Отримати інформацію із тендера
