@@ -135,6 +135,11 @@ brizol:
         dgfOtherAssets:
             accelerator: 1440
             auction:  [45, 50]
+        lots:
+            accelerator: 1
+        auctions:
+            accelerator: 1440
+            auction:  [15000, 15000]
     keywords_file: brizol
     roles:
         tender_owner:   brizol_Owner
