@@ -67,6 +67,7 @@ Quinta:
         provider2:      Tender_User2
         tender_owner:   Tender_Owner
         viewer:         Tender_Viewer
+        dasu_user:      Dasu_User
     timeout_on_wait: 15
 Etender:
     intervals:

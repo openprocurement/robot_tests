@@ -4,7 +4,8 @@ users:
             tenders:  [test.quintagroup.com, test.quintagroup.com]
             plans:    [test.quintagroup.com, test.quintagroup.com]
             auctions: [test.quintagroup.com, bc698baa8b814908bc75405ed3d63548]
-        api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
+        api_key:      e9c3ccb8e8124f26941d5f9639a4ebc3
+        dasu_api_key: e9c3ccb8e8124f26941d5f9639a4ebc3
         broker:   Quinta
         auth_edr: [test.quintagroup.com, f5111c99a97a45348d8165ba8fcf0d62]
         browser:  phantomjs
@@ -16,6 +17,7 @@ users:
             plans:    [test.quintagroup.com, test.quintagroup.com]
             auctions: [test.quintagroup.com, bc698baa8b814908bc75405ed3d63548]
         api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
+        dasu_api_key: ""
         broker:   Quinta
         auth_edr: [test.quintagroup.com, f5111c99a97a45348d8165ba8fcf0d62]
         browser:  phantomjs
@@ -27,6 +29,7 @@ users:
             plans:    [test.quintagroup.com, test.quintagroup.com]
             auctions: [test.quintagroup.com, bc698baa8b814908bc75405ed3d63548]
         api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
+        dasu_api_key: ""
         broker:   Quinta
         auth_edr: [test.quintagroup.com, f5111c99a97a45348d8165ba8fcf0d62]
         browser:  phantomjs
@@ -38,6 +41,7 @@ users:
             plans:    [test.quintagroup.com, test.quintagroup.com]
             auctions: [test.quintagroup.com, bc698baa8b814908bc75405ed3d63548]
         api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
+        dasu_api_key: ""
         broker:   Quinta
         auth_edr: [test.quintagroup.com, f5111c99a97a45348d8165ba8fcf0d62]
         browser:  phantomjs
@@ -45,12 +49,26 @@ users:
         size:     [1400, 900]
     Tender_Viewer:
         auth_ds:
-            tenders:  [test.quintagroup.com, test.quintagroup.com]
-            plans:    [test.quintagroup.com, test.quintagroup.com]
+            tenders:      [test.quintagroup.com, test.quintagroup.com]
+            plans:        [test.quintagroup.com, test.quintagroup.com]
+            monitorings:  [test.quintagroup.com, test.quintagroup.com]
             auctions: [test.quintagroup.com, bc698baa8b814908bc75405ed3d63548]
         api_key:  ""
+        dasu_api_key: ""
         broker:   Quinta
         browser:  firefox
+        auth_edr: [test.quintagroup.com, f5111c99a97a45348d8165ba8fcf0d62]
+        position: [0, 0]
+        size:     [1400, 900]
+    Dasu_User:
+        auth_ds:
+            monitorings:  [test.quintagroup.com, test.quintagroup.com]
+            plans:        [test.quintagroup.com, test.quintagroup.com]
+            tenders:      [test.quintagroup.com, test.quintagroup.com]
+        dasu_api_key:  9b3aaafba9fe4f4c95c3be3e1feaae31
+        api_key:  9b3aaafba9fe4f4c95c3be3e1feaae31
+        broker:   Quinta
+        browser:  phantomjs
         auth_edr: [test.quintagroup.com, f5111c99a97a45348d8165ba8fcf0d62]
         position: [0, 0]
         size:     [1400, 900]

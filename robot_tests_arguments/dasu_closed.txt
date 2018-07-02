@@ -1,0 +1,28 @@
+-v MODE:belowThreshold
+
+-v NUMBER_OF_ITEMS:1
+-v NUMBER_OF_LOTS:1
+
+-v TENDER_MEAT:True
+-v ITEM_MEAT:True
+-v LOT_MEAT:True
+
+-i create_tender
+-i find_tender
+-i tender_view
+
+-i create_monitoring
+-i find_monitoring
+-i monitoring_view
+-i add_doc
+-i active_monitoring
+
+-i add_party_tender_owner
+-i create_dialogue
+-i answer_tender_owner
+
+-i declined
+
+-i eliminationPeriod_endDate
+
+-i closed

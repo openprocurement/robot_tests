@@ -134,6 +134,7 @@ Set Suite Variable With Default Value
   \  Set To Dictionary  ${USERS}  ${username}=${USERS.users.${username}}
   \  Set To Dictionary  ${USERS.${username}}  tender_data=${munch_dict}
   \  Set To Dictionary  ${USERS.${username}}  LAST_REFRESH_DATE  ${LAST_REFRESH_DATE}
+  \  Set To Dictionary  ${USERS.${username}}  DASU_LAST_REFRESH_DATE  ${LAST_REFRESH_DATE}
 
   # Drop all unused users
   Keep In Dictionary  ${USERS.users}  @{used_users}
@@ -255,9 +256,11 @@ Get Broker Property By Username
   ${reply}=  Create Dictionary  data=${lot}
   [Return]  ${reply}
 
+
 Підготувати дані для створення нецінового показника
   ${reply}=  test_feature_data
   [Return]  ${reply}
+
 
 Підготувати дані для подання вимоги
   ${claim}=  test_claim_data
@@ -449,6 +452,29 @@ Log differences between dicts
   ...      Set To Dictionary  ${USERS.users['${username}']}  LAST_REFRESH_DATE=${LAST_REFRESH_DATE}
 
 
+Дочекатись синхронізації з ДАСУ
+  [Arguments]  ${username}
+  ${timeout_on_wait}=  Get Broker Property By Username  ${username}  timeout_on_wait
+  ${last_modification_date_corrected}=  Add Time To Date
+  ...      ${MONITORING['DASU_LAST_MODIFICATION_DATE']}
+  ...      ${timeout_on_wait} s
+  ${now}=  Get Current TZdate
+  ${sleep}=  Subtract Date From Date
+  ...      ${last_modification_date_corrected}
+  ...      ${now}
+  Run Keyword If  ${sleep} > 0  Sleep  ${sleep}
+
+
+  ${time_diff}=  Subtract Date From Date
+  ...      ${last_modification_date_corrected}
+  ...      ${USERS.users['${username}']['DASU_LAST_REFRESH_DATE']}
+  ${LAST_REFRESH_DATE}=  Get Current TZdate
+  Run Keyword If  ${time_diff} > 0  Run Keywords
+  ...      Оновити сторінку з об'єктом моніторингу  ${username}  ${MONITORING['MONITORING_UAID']}
+  ...      AND
+  ...      Set To Dictionary  ${USERS.users['${username}']}  DASU_LAST_REFRESH_DATE=${LAST_REFRESH_DATE}
+
+
 Оновити сторінку
   [Arguments]  ${username}
   Run Keyword If  '${RESOURCE}' == 'plans'  Run As  ${username}  Оновити сторінку з планом  ${TENDER['TENDER_UAID']}
@@ -459,6 +485,12 @@ Log differences between dicts
   [Arguments]  ${username}  ${tender_uaid}  ${tender_data}  ${field}
   ${left}=  get_from_object  ${tender_data.data}  ${field}
   Звірити поле тендера із значенням  ${username}  ${tender_uaid}  ${left}  ${field}
+
+
+Звірити поле об'єкта моніторингу
+  [Arguments]  ${username}  ${tender_uaid}  ${tender_data}  ${field}
+  ${left}=  get_from_object  ${tender_data.data}  ${field}
+  Звірити поле об'єкта моніторингу із значенням  ${username}  ${tender_uaid}  ${left}  ${field}
 
 
 Звірити поле плану
@@ -476,6 +508,12 @@ Log differences between dicts
 Звірити поле тендера із значенням
   [Arguments]  ${username}  ${tender_uaid}  ${left}  ${field}  ${object_id}=${Empty}
   ${right}=  Отримати дані із тендера  ${username}  ${tender_uaid}  ${field}  ${object_id}
+  Порівняти об'єкти  ${left}  ${right}
+
+
+Звірити поле об'єкта моніторингу із значенням
+  [Arguments]  ${username}  ${tender_uaid}  ${left}  ${field}  ${object_id}=${Empty}
+  ${right}=  Отримати дані із об'єкта моніторингу  ${username}  ${tender_uaid}  ${field}  ${object_id}
   Порівняти об'єкти  ${left}  ${right}
 
 
@@ -630,6 +668,21 @@ Log differences between dicts
   ${data}=  munch_dict  arg=${USERS.users['${username}'].tender_data.data}
   Set To Dictionary  ${USERS.users['${username}'].tender_data}  data=${data}
   Log  ${USERS.users['${username}'].tender_data.data}
+  [return]  ${field_value}
+
+
+Отримати дані із об'єкта моніторингу
+  [Arguments]  ${username}  ${monitoring_uaid}  ${field_name}  ${object_id}=${Empty}
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      get_from_object
+  ...      ${USERS.users['${username}'].monitoring_data.data}
+  ...      ${field_name}
+  Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
+  ${field_value}=  Run As  ${username}  Отримати інформацію із об'єкта моніторингу  ${monitoring_uaid}  ${field_name}
+  Set_To_Object  ${USERS.users['${username}'].monitoring_data.data}  ${field_name}  ${field_value}
+  ${data}=  munch_dict  arg=${USERS.users['${username}'].monitoring_data.data}
+  Set To Dictionary  ${USERS.users['${username}'].monitoring_data}  data=${data}
+  Log  ${USERS.users['${username}'].monitoring_data.data}
   [return]  ${field_value}
 
 
@@ -826,6 +879,12 @@ Require Failure
   Порівняти об'єкти  ${left}  ${right}
 
 
+Звірити статус об'єкта моніторингу
+  [Arguments]  ${username}  ${monitoring_uaid}  ${left}
+  ${right}=  Run As  ${username}  Отримати інформацію із об'єкта моніторингу  ${monitoring_uaid}  status
+  Порівняти об'єкти  ${left}  ${right}
+
+
 Звірити статус вимоги/скарги
   [Arguments]  ${username}  ${tender_uaid}  ${complaintID}  ${left}  ${award_index}=${None}
   ${right}=  Run as  ${username}  Отримати інформацію із скарги  ${tender_uaid}  ${complaintID}  status  ${award_index}
@@ -1015,6 +1074,12 @@ Require Failure
   ${LAST_MODIFICATION_DATE}=  Get Current TZdate
   ${status}=  Get Variable Value  ${TEST_STATUS}  PASS
   Run Keyword If  '${status}' == 'PASS'  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE=${LAST_MODIFICATION_DATE}
+
+
+Оновити DASU_LAST_MODIFICATION_DATE
+  ${LAST_MODIFICATION_DATE}=  Get Current TZdate
+  ${status}=  Get Variable Value  ${TEST_STATUS}  PASS
+  Run Keyword If  '${status}' == 'PASS'  Set To Dictionary  ${MONITORING}  DASU_LAST_MODIFICATION_DATE=${LAST_MODIFICATION_DATE}
 
 
 Отримати останній індекс
