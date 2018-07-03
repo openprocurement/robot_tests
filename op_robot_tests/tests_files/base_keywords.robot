@@ -129,13 +129,13 @@ Resource           resource.robot
 
 
 Можливість додати замовника як учасника процесу моніторингу
-  ${patry_data}=  test_party  ${USERS.users['${tender_owner}'].initial_data.data.procuringEntity}
-  Run As  ${dasu_user}  Додати замовника як учасника процесу моніторингу  ${MONITORING['MONITORING_UAID']}  ${patry_data}
+  ${party_data}=  test_party  ${USERS.users['${tender_owner}'].initial_data.data.procuringEntity}
+  Run As  ${dasu_user}  Додати замовника як учасника процесу моніторингу  ${MONITORING['MONITORING_UAID']}  ${party_data}
 
 
 Можливість запитати в замовника пояснення
-  ${patry_data}=  test_dialogue  ${USERS.users['${dasu_user}'].monitoring_data.data.parties[1].id}
-  Run As  ${dasu_user}  Запитати в замовника пояснення  ${MONITORING['MONITORING_UAID']}  ${patry_data}
+  ${party_data}=  test_dialogue  ${USERS.users['${dasu_user}'].monitoring_data.data.parties[1].id}
+  Run As  ${dasu_user}  Запитати в замовника пояснення  ${MONITORING['MONITORING_UAID']}  ${party_data}
 
 
 Можливість надати пояснення замовником
@@ -159,9 +159,9 @@ Resource           resource.robot
 
 
 Можливість надати пояснення замовником з власної ініціативи
-  ${patry_data}=  test_dialogue  ${USERS.users['${dasu_user}'].monitoring_data.data.parties[1].id}
-  Remove From Dictionary  ${patry_data.data}  relatedParty
-  Run As  ${tender_owner}  Надати пояснення замовником з власної ініціативи  ${MONITORING['MONITORING_UAID']}  ${patry_data}
+  ${party_data}=  test_dialogue  ${USERS.users['${dasu_user}'].monitoring_data.data.parties[1].id}
+  Remove From Dictionary  ${party_data.data}  relatedParty
+  Run As  ${tender_owner}  Надати пояснення замовником з власної ініціативи  ${MONITORING['MONITORING_UAID']}  ${party_data}
 
 
 Можливість надати звіт про усунення порушення замовником
