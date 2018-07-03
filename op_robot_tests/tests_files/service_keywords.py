@@ -375,39 +375,79 @@ def set_access_key(tender, access_token):
     return tender
 
 
-def get_from_object(obj, attribute):
+def get_from_object(obj, path):
     """Gets data from a dictionary using a dotted accessor-string"""
-    jsonpath_expr = parse_path(attribute)
+    jsonpath_expr = parse_path(path)
     return_list = [i.value for i in jsonpath_expr.find(obj)]
     if return_list:
         return return_list[0]
     else:
-        raise AttributeError('Attribute not found: {0}'.format(attribute))
+        raise AttributeError('Attribute not found: {0}'.format(path))
 
 
-def set_to_object(obj, attribute, value):
-    # Search the list index in path to value
-    list_index = re.search('\d+', attribute)
-    if list_index and attribute != 'stage2TenderID':
-        list_index = list_index.group(0)
-        parent, child = attribute.split('[' + list_index + '].')[:2]
-        # Split attribute to path to lits (parent) and path to value in list element (child)
-        try:
-            # Get list from parent
-            listing = get_from_object(obj, parent)
-            # Create object with list_index if he don`t exist
-            if len(listing) < int(list_index) + 1:
-                listing.append({})
-        except AttributeError:
-            # Create list if he don`t exist
-            listing = [{}]
-        # Update list in parent
-        xpathnew(obj, parent, listing, separator='.')
-        # Set value in obj
-        xpathnew(obj, '.'.join([parent, list_index,  child]), value, separator='.')
-    else:
-        xpathnew(obj, attribute, value, separator='.')
-    return munchify(obj)
+def set_to_object(obj, path, value):
+    def recur(obj, path, value):
+        if not isinstance(obj, dict):
+            raise TypeError('expected %s, got %s' %
+                            (dict.__name__, type(obj)))
+
+        # Search the list index in path to value
+        groups = re.search(r'^(?P<key>[0-9a-zA-Z_]+)(?:\[(?P<index>-?\d+)\])?'
+                           '(?:\.(?P<suffix>.+))?$', path)
+
+        err = RuntimeError('could not parse the path: ' + path)
+        if not groups:
+            raise err
+
+        gd = {k: v for k, v in groups.groupdict().items() if v is not None}
+        is_list = False
+        suffix = None
+
+        if 'key' not in gd:
+            raise err
+        key = gd['key']
+
+        if 'index' in gd:
+            is_list = True
+            index = int(gd['index'])
+
+        if 'suffix' in gd:
+            suffix = gd['suffix']
+
+        if is_list:
+            if key not in obj:
+                obj[key] = []
+            elif not isinstance(obj[key], list):
+                raise TypeError('expected %s, got %s' %
+                                (list.__name__, type(obj[key])))
+
+            plusone = 1 if index >= 0 else 0
+            if len(obj[key]) < abs(index) + plusone:
+                while not len(obj[key]) == abs(index) + plusone:
+                    extension = [None] * (abs(index) + plusone - len(obj[key]))
+                    if index < 0:
+                        obj[key] = extension + obj[key]
+                    else:
+                        obj[key].extend(extension)
+                if suffix:
+                    obj[key][index] = {}
+            if suffix:
+                obj[key][index] = recur(obj[key][index], suffix, value)
+            else:
+                obj[key][index] = value
+        else:
+            if key not in obj:
+                obj[key] = {}
+            if suffix:
+                obj[key] = recur(obj[key], suffix, value)
+            else:
+                obj[key] = value
+
+        return obj
+
+    if not isinstance(path, STR_TYPES):
+        raise TypeError('Path must be one of ' + str(STR_TYPES))
+    return munchify(recur(obj, path, value))
 
 
 def wait_to_date(date_stamp):
@@ -439,18 +479,23 @@ def merge_dicts(a, b):
 
 
 def create_data_dict(path_to_value=None, value=None):
-    data_dict = munchify({'data': {}})
-    if isinstance(path_to_value, basestring) and value:
-        list_items = re.search('\d+', path_to_value)
-        if list_items:
-            list_items = list_items.group(0)
-            path_to_value = path_to_value.split('[' + list_items + ']')
-            path_to_value.insert(1, '.' + list_items)
-            set_to_object(data_dict, path_to_value[0], [])
-            set_to_object(data_dict, ''.join(path_to_value[:2]), {})
-            set_to_object(data_dict, ''.join(path_to_value), value)
-        else:
-            data_dict = set_to_object(data_dict, path_to_value, value)
+    """Create a dictionary with one key, 'data'.
+
+    If `path_to_value` is not given, set the key's value
+    to an empty dictionary.
+    If `path_to_value` is given, set the key's value to `value`.
+    In case it's the latter and if `value` is not set,
+    the key's value is set to `None`.
+
+    Please note that `path_to_value` is relative to the parent dictionary,
+    thus, you may need to prepend `data.` to your path string.
+
+    To better understand how `path_to_value` is handled,
+    please refer to the `set_to_object()` function.
+    """
+    data_dict = {'data': {}}
+    if path_to_value:
+        data_dict = set_to_object(data_dict, path_to_value, value)
     return data_dict
 
 
@@ -463,10 +508,26 @@ def munch_dict(arg=None, data=False):
 
 
 def get_id_from_object(obj):
-    obj_id = re.match(r'(^[filq]-[0-9a-fA-F]{8}): ', obj.get('title', ''))
-    if not obj_id:
-        obj_id = re.match(r'(^[filq]-[0-9a-fA-F]{8}): ', obj.get('description', ''))
-    return obj_id.group(1)
+    regex = r'(^[filq]-[0-9a-fA-F]{8}): '
+
+    title = obj.get('title', '')
+    if title:
+        if not isinstance(title, STR_TYPES):
+            raise TypeError('title must be one of %s' % str(STR_TYPES))
+        obj_id = re.match(regex, title)
+        if obj_id and len(obj_id.groups()) >= 1:
+            return obj_id.group(1)
+
+    description = obj.get('description', '')
+    if description:
+        if not isinstance(description, STR_TYPES):
+            raise TypeError('description must be one of %s' % str(STR_TYPES))
+        obj_id = re.match(regex, description)
+        if obj_id and len(obj_id.groups()) >= 1:
+            return obj_id.group(1)
+
+    raise VaueError('could not find object ID in "title": "%s", '
+                    '"description": "%s"' % (title, description))
 
 
 def get_id_from_string(string):
@@ -601,7 +662,7 @@ def compare_rationale_types(type1, type2):
 def delete_from_dictionary(variable, path):
     if not type(path) in STR_TYPES:
         raise TypeError('path must be one of: ' +
-            str([x.__name__ for x in STR_TYPES]))
+            str(STR_TYPES))
     return xpathdelete(variable, path, separator='.')
 
 
