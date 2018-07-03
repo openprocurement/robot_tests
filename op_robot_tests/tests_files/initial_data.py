@@ -63,6 +63,10 @@ def create_fake_decisionDate():
     return (get_now() - timedelta(days=2)).strftime('%Y-%m-%d')
 
 
+def create_fake_dateSigned():
+    return get_now().isoformat()
+
+
 def create_fake_decisionID():
     return fake.dgfDecisionID()
 

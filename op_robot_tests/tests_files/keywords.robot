@@ -845,12 +845,12 @@ Require Failure
   ...      active.auction
 
 
-Дочекатись закінчення періоду аукціону
+Дочекатись початку кваліфікації
   [Arguments]  ${username}  ${tender_uaid}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
-  ...      90 min 15 sec
+  ...      15 min 15 sec
   ...      15 sec
   ...      Run Keyword And Expect Error  *
   ...      Звірити статус тендера

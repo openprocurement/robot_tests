@@ -451,6 +451,25 @@ Resource           resource.robot
   Run As  ${username}  Завантажити протокол аукціону в авард  ${TENDER['TENDER_UAID']}  ${auction_protocol_path}  ${award_index}
   Remove File  ${auction_protocol_path}
 
+
+Можливість завантажити протокол дискваліфікації в авард ${award_index} користувачем ${username}
+  ${disqualification_protocol_path}  ${file_title}  ${file_content}=  create_fake_doc
+  Run As  ${username}  Завантажити протокол дискваліфікації в авард  ${TENDER['TENDER_UAID']}  ${disqualification_protocol_path}  ${award_index}
+  Remove File  ${disqualification_protocol_path}
+
+
+Можливість завантажити протокол погодження в авард ${award_index} користувачем ${username}
+  ${admission_protocol_path}  ${file_title}  ${file_content}=  create_fake_doc
+  Run As  ${username}  Завантажити протокол погодження в авард  ${TENDER['TENDER_UAID']}  ${admission_protocol_path}  ${award_index}
+  Remove File  ${admission_protocol_path}
+
+
+Можливість завантажити протокол скасування в контракт ${contract_index} користувачем ${username}
+  ${rejection_protocol_path}  ${file_title}  ${file_content}=  create_fake_doc
+  Run As  ${username}  Завантажити протокол скасування в контракт  ${TENDER['TENDER_UAID']}  ${rejection_protocol_path}  ${contract_index}
+  Remove File  ${rejection_protocol_path}
+
+
 Можливість підтвердити цінову пропозицію учасником ${username}
   Run As  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  status  active
 
