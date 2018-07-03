@@ -223,6 +223,24 @@ ${MOZ_INTEGRATION}   ${False}
   Звірити статус об'єкта моніторингу  ${viewer}  ${MONITORING['MONITORING_UAID']}  active
 
 
+Відображення дати створення об’єкта моніторингу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних моніторингу
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      monitoring_view
+  ...      critical
+  Отримати дані із поля dateCreated об'єкта моніторингу для користувача ${viewer}
+
+
+Відображення ідентифікатора об’єкта моніторингу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних моніторингу
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      monitoring_view
+  ...      critical
+  Отримати дані із поля monitoring_id об'єкта моніторингу для користувача ${viewer}
+
+
 Відображення ідентифікатора тендера об’єкта моніторингу
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних моніторингу
   ...      viewer
@@ -250,6 +268,15 @@ ${MOZ_INTEGRATION}   ${False}
   Звірити відображення поля decision.description об'єкта моніторингу для користувача ${viewer}
 
 
+Відображення дати публікації рішення про проведення моніторингу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних моніторингу
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      monitoring_view
+  ...      critical
+  Отримати дані із поля decision.datePublished об'єкта моніторингу для користувача ${viewer}
+
+
 Відображення причини для проведення моніторингу
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних моніторингу
   ...      viewer
@@ -257,6 +284,33 @@ ${MOZ_INTEGRATION}   ${False}
   ...      monitoring_view
   ...      critical
   Звірити відображення поля reasons об'єкта моніторингу для користувача ${viewer}
+
+
+Відображення дати початку періоду моніторингу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних моніторингу
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      monitoring_view
+  ...      critical
+  Отримати дані із поля monitoringPeriod.startDate об'єкта моніторингу для користувача ${viewer}
+
+
+Відображення дати закінчення періоду моніторингу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних моніторингу
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      monitoring_view
+  ...      critical
+  Отримати дані із поля monitoringPeriod.endDate об'єкта моніторингу для користувача ${viewer}
+
+
+Відображення етапу тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних моніторингу
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      monitoring_view
+  ...      critical
+  Звірити відображення поля procuringStages[0] об'єкта моніторингу для користувача ${viewer}
 
 
 Відображення імені учасника моніторингу
@@ -275,6 +329,96 @@ ${MOZ_INTEGRATION}   ${False}
   ...      monitoring_view
   ...      critical
   Звірити відображення поля parties[0].roles об'єкта моніторингу для користувача ${viewer}
+
+
+Відображення імені контактної особи учасника процесу моніторингу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних моніторингу
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      monitoring_view
+  ...      critical
+  Звірити відображення поля parties[0].contactPoint.name об'єкта моніторингу для користувача ${viewer}
+
+
+Відображення мобільного номера контактної особи учасника процесу моніторингу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних моніторингу
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      monitoring_view
+  ...      critical
+  Звірити відображення поля parties[0].contactPoint.telephone об'єкта моніторингу для користувача ${viewer}
+
+
+Відображення країни в адресі учасника процесу моніторингу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних моніторингу
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      monitoring_view
+  ...      critical
+  Звірити відображення поля parties[0].address.countryName об'єкта моніторингу для користувача ${viewer}
+
+
+Відображення вулиці в адресі учасника процесу моніторингу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних моніторингу
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      monitoring_view
+  ...      critical
+  Звірити відображення поля parties[0].address.streetAddress об'єкта моніторингу для користувача ${viewer}
+
+
+Відображення регіону в адресі учасника процесу моніторингу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних моніторингу
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      monitoring_view
+  ...      critical
+  Звірити відображення поля parties[0].address.region об'єкта моніторингу для користувача ${viewer}
+
+
+Відображення нас. пункту в адресі учасника процесу моніторингу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних моніторингу
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      monitoring_view
+  ...      critical
+  Звірити відображення поля parties[0].address.locality об'єкта моніторингу для користувача ${viewer}
+
+
+Відображення id учасника процесу моніторингу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних моніторингу
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      monitoring_view
+  ...      critical
+  Отримати дані із поля parties[0].id об'єкта моніторингу для користувача ${viewer}
+
+
+Відображення схеми ідентифікатора учасника процесу моніторингу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних моніторингу
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      monitoring_view
+  ...      critical
+  Звірити відображення поля parties[0].identifier.scheme об'єкта моніторингу для користувача ${viewer}
+
+
+Відображення id ідентифікатора учасника процесу моніторингу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних моніторингу
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      monitoring_view
+  ...      critical
+  Звірити відображення поля parties[0].identifier.id об'єкта моніторингу для користувача ${viewer}
+
+
+Відображення юридичної назви учасника процесу моніторингу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних моніторингу
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      monitoring_view
+  ...      critical
+  Звірити відображення поля parties[0].identifier.legalName об'єкта моніторингу для користувача ${viewer}
 
 
 Можливість додати замовника як учасника процесу моніторингу
@@ -306,6 +450,15 @@ ${MOZ_INTEGRATION}   ${False}
   Отримати дані із поля parties[1].roles об'єкта моніторингу для користувача ${viewer}
 
 
+Відображення id замовника в моніторингу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Додати замовника
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      add_party_tender_owner
+  ...      critical
+  Отримати дані із поля parties[1].id об'єкта моніторингу для користувача ${viewer}
+
+
 Можливість запитати в замовника пояснення
   [Tags]   ${USERS.users['${dasu_user}'].broker}: Створення діалогу
   ...      dasu_user
@@ -325,6 +478,16 @@ ${MOZ_INTEGRATION}   ${False}
   [Setup]  Дочекатись синхронізації з ДАСУ  ${tender_owner}
   [Teardown]  Оновити DASU_LAST_MODIFICATION_DATE
   Можливість надати пояснення замовником
+
+
+Відображення пояснення
+  [Tags]   ${USERS.users['${dasu_user}'].broker}: Надання пояснення
+  ...      dasu_user
+  ...      ${USERS.users['${dasu_user}'].broker}
+  ...      answer_view
+  ...      critical
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${dasu_user}
+  Отримати дані із поля dialogues[0].answer об'єкта моніторингу для користувача ${dasu_user}
 
 
 Можливість надати висновок про відсутність порушення в тендері
@@ -402,6 +565,25 @@ ${MOZ_INTEGRATION}   ${False}
   Можливість надати пояснення замовником з власної ініціативи
 
 
+Відображення заголовку пояснення замовника з власної ініціативи
+  [Tags]   ${USERS.users['${dasu_user}'].broker}: Надання пояснення
+  ...      dasu_user
+  ...      ${USERS.users['${dasu_user}'].broker}
+  ...      dialogue_view
+  ...      critical
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${dasu_user}
+  Отримати дані із поля dialogues[1].title об'єкта моніторингу для користувача ${dasu_user}
+
+
+Відображення опису пояснення замовника з власної ініціативи
+  [Tags]   ${USERS.users['${dasu_user}'].broker}: Надання пояснення
+  ...      dasu_user
+  ...      ${USERS.users['${dasu_user}'].broker}
+  ...      dialogue_view
+  ...      critical
+  Отримати дані із поля dialogues[1].description об'єкта моніторингу для користувача ${dasu_user}
+
+
 Можливість надати звіт про усунення порушення замовником
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Надання звіту
   ...      tender_owner
@@ -411,6 +593,16 @@ ${MOZ_INTEGRATION}   ${False}
   [Setup]  Дочекатись синхронізації з ДАСУ  ${tender_owner}
   [Teardown]  Оновити DASU_LAST_MODIFICATION_DATE
   Можливість надати звіт про усунення порушення замовником
+
+
+Відображення опису звіту про усунення порушення замовником
+  [Tags]   ${USERS.users['${dasu_user}'].broker}: Надання звіту
+  ...      dasu_user
+  ...      ${USERS.users['${dasu_user}'].broker}
+  ...      report_view
+  ...      critical
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${dasu_user}
+  Отримати дані із поля eliminationReport.description об'єкта моніторингу для користувача ${dasu_user}
 
 
 Можливість оприлюднити рішення про усунення порушення
@@ -424,7 +616,17 @@ ${MOZ_INTEGRATION}   ${False}
   Можливість оприлюднути рішення про усунення порушення
 
 
-Можливість зазначити, що порушення було оскаржено в суді
+Відображення опису рішення про усунення порушення
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Оприлюднити рішення
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      resolution_view
+  ...      critical
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${tender_owner}
+  Отримати дані із поля eliminationResolution.description об'єкта моніторингу для користувача ${tender_owner}
+
+
+Можливість зазначити, що висновок було оскаржено в суді
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Оскарження в суді
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
@@ -435,7 +637,17 @@ ${MOZ_INTEGRATION}   ${False}
   Можливість зазначити, що порушення було оскаржено в суді
 
 
-Відображення дати закінчення моніторингу
+Відображення опису висновку, оскарженого в суді
+  [Tags]   ${USERS.users['${dasu_user}'].broker}: Оскарження в суді
+  ...      dasu_user
+  ...      ${USERS.users['${dasu_user}'].broker}
+  ...      appeal_view
+  ...      critical
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${dasu_user}
+  Отримати дані із поля appeal.description об'єкта моніторингу для користувача ${dasu_user}
+
+
+Відображення дати закінчення періоду ліквідаації
   [Tags]   ${USERS.users['${dasu_user}'].broker}: Завершення моніторингу
   ...      dasu_user
   ...      ${USERS.users['${dasu_user}'].broker}
@@ -478,13 +690,13 @@ ${MOZ_INTEGRATION}   ${False}
 
 
 Відображення статусу stopped об’єкта моніторингу
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Завершення моніторингу
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
+  [Tags]   ${USERS.users['${viewer}'].broker}: Завершення моніторингу
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
   ...      stopped
   ...      critical
-  [Setup]  Дочекатись синхронізації з ДАСУ  ${tender_owner}
-  Звірити статус об'єкта моніторингу  ${tender_owner}  ${MONITORING['MONITORING_UAID']}  stopped
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${viewer}
+  Звірити статус об'єкта моніторингу  ${viewer}  ${MONITORING['MONITORING_UAID']}  stopped
 
 
 Можливість змінити статус об’єкта моніторингу на cancelled
@@ -499,13 +711,23 @@ ${MOZ_INTEGRATION}   ${False}
 
 
 Відображення статусу cancelled об’єкта моніторингу
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Завершення моніторингу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Завершення моніторингу
   ...      viewer
-  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${viewer}'].broker}
   ...      cancelled
   ...      critical
- [Setup]  Дочекатись синхронізації з ДАСУ  ${tender_owner}
-  Звірити статус об'єкта моніторингу  ${tender_owner}  ${MONITORING['MONITORING_UAID']}  cancelled
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${viewer}
+  Звірити статус об'єкта моніторингу  ${viewer}  ${MONITORING['MONITORING_UAID']}  cancelled
+
+
+Відображення опису у звіті про зупинення
+  [Tags]   ${USERS.users['${viewer}'].broker}: Завершення моніторингу
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      cancellation_view
+  ...      critical
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${viewer}
+  Отримати дані із поля cancellation.description об'єкта моніторингу для користувача ${viewer}
 
 
 Можливість змінити статус об’єкта моніторингу на closed
@@ -524,5 +746,5 @@ ${MOZ_INTEGRATION}   ${False}
   ...      ${USERS.users['${viewer}'].broker}
   ...      closed
   ...      critical
- [Setup]  Дочекатись синхронізації з ДАСУ  ${tender_owner}
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${tender_owner}
   Звірити статус об'єкта моніторингу  ${tender_owner}  ${MONITORING['MONITORING_UAID']}  closed

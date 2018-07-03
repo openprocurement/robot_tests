@@ -21,6 +21,8 @@
 -i create_dialogue
 -i answer_tender_owner
 
+-i answer_view
+
 -i declined
 
 -i eliminationPeriod_endDate
