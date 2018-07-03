@@ -418,8 +418,7 @@ def set_to_object(obj, path, value):
             plusone = 1 if index >= 0 else 0
             if len(obj[key]) < abs(index) + plusone:
                 while not len(obj[key]) == abs(index) + plusone:
-                    extension = [None for _ in
-                                 range(abs(index) + plusone - len(obj[key]))]
+                    extension = [None] * (abs(index) + plusone - len(obj[key]))
                     if index < 0:
                         obj[key] = extension + obj[key]
                     else:
@@ -441,7 +440,7 @@ def set_to_object(obj, path, value):
         return obj
 
     if not isinstance(path, STR_TYPES):
-        raise TypeError('Path must be one of %s' % str(STR_TYPES))
+        raise TypeError('Path must be one of ' + str(STR_TYPES))
     return munchify(recur(obj, path, value))
 
 
