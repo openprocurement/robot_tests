@@ -42,3 +42,21 @@
 -i make_bid_after_tendering_period
 -i auction_url
 -i auction_url_provider1
+
+#-----------auction-----------#
+-i auction
+-i auction_end_date
+
+#-----------awarding-----------#
+-i awarding
+-i first_award_pending_status
+-i add_protocol_to_first_award
+-i confirm_first_award
+-i first_award_active_status
+-i cancel_second_award
+
+#-----------contract signing-----------#
+-i dateSigned
+-i contract_sign_upload
+-i contract_sign
+-i tender_status_complete

@@ -15,5 +15,4 @@
 -i activate_tender
 -i find_tender
 -i tender_cancellation
--i tender_cancellation_description
 -i tender_cancellation_title

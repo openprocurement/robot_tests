@@ -1,5 +1,4 @@
 -v NUMBER_OF_ITEMS:1
--v NUMBER_OF_AWARDS:1
 
 #----------asset----------#
 -i create_asset
@@ -20,20 +19,21 @@
 -i tender_view_value_amount
 -i tender_view_minimalStep
 -i make_bid_by_provider
+-i make_bid_by_provider1
+-i modify_bid_by_provider
 -i make_bid_after_tendering_period
+-i auction_url
+-i auction_url_provider1
+
+#-----------auction-----------#
+-i auction
+-i auction_end_date
 
 #-----------awarding-----------#
 -i awarding
--i award_admission_status
--i add_admission_protocol
--i confirm_admission
 -i first_award_pending_status
 -i add_protocol_to_first_award
--i confirm_first_award
--i first_award_active_status
-
-#-----------contract signing-----------#
--i dateSigned
--i contract_sign_upload
--i contract_sign
--i tender_status_complete
+-i disqualified_first_award
+-i second_award_pending_status
+-i disqualified_second_award
+-i tender_status_unsuccessful
