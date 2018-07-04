@@ -763,10 +763,10 @@ palata:
             accelerator: 480
             auction: [30,35]
         lots:
-            accelerator: 1440
+            accelerator: 90
         auctions:
             accelerator: 1440
-            auction:  [40, 30]
+            auction:  [200, 30]
     keywords_file: palata
     homepage: 'http://testing2.palata.com.ua/auctions2'
     roles:
