@@ -95,7 +95,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
-  ...      make_bid_by_provider1_before_dutch
+  ...      add_financial_license_to_bid_by_provider1
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider1}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість завантажити фінансову ліцензію в пропозицію користувачем ${provider1}
@@ -132,7 +132,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
-  ...      make_bid_by_provider1_after_dutch
+  ...      add_financial_license_to_bid_by_provider1
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider1}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість завантажити фінансову ліцензію в пропозицію користувачем ${provider1}
