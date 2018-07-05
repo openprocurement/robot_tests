@@ -769,6 +769,15 @@ ${MOZ_INTEGRATION}   ${False}
   Отримати дані із поля cancellation.description об'єкта моніторингу для користувача ${viewer}
 
 
+Відображення дати публікації звіту про зупинення
+  [Tags]   ${USERS.users['${viewer}'].broker}: Завершення моніторингу
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      cancellation_view
+  ...      critical
+  Отримати дані із поля cancellation.datePublished об'єкта моніторингу для користувача ${viewer}
+
+
 Можливість змінити статус об’єкта моніторингу на closed
   [Tags]   ${USERS.users['${dasu_user}'].broker}: Завершення моніторингу
   ...      dasu_user
