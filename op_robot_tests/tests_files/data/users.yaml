@@ -111,16 +111,16 @@ users:
     DZO_Provider_auction:
         broker:   DZOauctions
         homepage: "http://dz3.byustudio.in.ua"
-        login:    dzoprovider1@gmail.com
-        password: mux85BMrH
+        login:    testprozorroprovider@gmail.com
+        password: 12345678
         browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     DZO_Provider1_auction:
         broker:   DZOauctions
         homepage: "http://dz3.byustudio.in.ua"
-        login:    dzoprovider2@gmail.com
-        password: Z5FeM44kK
+        login:    testprozorroprovider1@gmail.com
+        password: 12345678
         browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
