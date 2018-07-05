@@ -135,13 +135,21 @@ Resource           resource.robot
 
 
 Можливість запитати в замовника пояснення
-  ${party_data}=  test_dialogue  ${USERS.users['${dasu_user}'].monitoring_data.data.parties[1].id}
-  Run As  ${dasu_user}  Запитати в замовника пояснення  ${MONITORING['MONITORING_UAID']}  ${party_data}
+  ${post_data}=  test_dialogue
+  Set To Dictionary  ${post_data.data}  relatedParty=${USERS.users['${dasu_user}'].monitoring_data.data.parties[0].id}
+  Run As  ${dasu_user}  Запитати в замовника пояснення  ${MONITORING['MONITORING_UAID']}  ${post_data}
 
 
 Можливість надати пояснення замовником
-  ${answer_data}=  test_question_answer_data
-  Run As  ${tender_owner}  Надати пояснення замовником  ${MONITORING['MONITORING_UAID']}  ${answer_data}
+  ${post_data}=  test_dialogue
+  Set To Dictionary  ${post_data.data}  relatedPost=${USERS.users['${dasu_user}'].monitoring_data.data.posts[0].id}
+  Run As  ${tender_owner}  Надати пояснення замовником  ${MONITORING['MONITORING_UAID']}  ${post_data}
+
+
+Можливість надати відповідь користувачем ДАСУ
+  ${post_data}=  test_dialogue
+  Set To Dictionary  ${post_data.data}  relatedPost=${USERS.users['${dasu_user}'].monitoring_data.data.posts[2].id}
+  Run As  ${dasu_user}  Надати відповідь користувачем ДАСУ  ${MONITORING['MONITORING_UAID']}  ${post_data}
 
 
 Можливість надати висновок про наявність порушення в тендері
@@ -160,8 +168,7 @@ Resource           resource.robot
 
 
 Можливість надати пояснення замовником з власної ініціативи
-  ${party_data}=  test_dialogue  ${USERS.users['${dasu_user}'].monitoring_data.data.parties[1].id}
-  Remove From Dictionary  ${party_data.data}  relatedParty
+  ${party_data}=  test_dialogue
   Run As  ${tender_owner}  Надати пояснення замовником з власної ініціативи  ${MONITORING['MONITORING_UAID']}  ${party_data}
 
 

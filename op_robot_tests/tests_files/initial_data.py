@@ -619,13 +619,12 @@ def test_party():
     return munchify(party)
 
 
-def test_dialogue(relatedParty_id):
+def test_dialogue(related=None, id=None):
     return munchify(
     {
         "data":
         {
             "title": fake_en.sentence(nb_words=10, variable_nb_words=True),
-            "relatedParty": relatedParty_id,
             "description": fake_en.sentence(nb_words=10, variable_nb_words=True)
         }
     })
