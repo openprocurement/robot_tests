@@ -630,19 +630,21 @@ def test_dialogue(related=None, id=None):
     })
 
 
-def test_conclusion(violationOccurred=False):
+
+def test_conclusion(violationOccurred, relatedParty_id):
     return munchify(
     {
        "data": {
             "conclusion": {
                 "violationOccurred": violationOccurred,
-                "violationType": random.choice(violationType)
+                "violationType": random.choice(violationType),
+                "relatedParty": relatedParty_id,
             }
         }
     })
 
 
-def test_status_data(status):
+def test_status_data(status, relatedParty_id=None):
     data = {
         "data": {
             "status": status
@@ -651,16 +653,18 @@ def test_status_data(status):
     if status in ('stopped', 'cancelled'):
         data["data"]["cancellation"] = {}
         data["data"]["cancellation"]["description"] = fake_en.sentence(nb_words=10, variable_nb_words=True)
+        data["data"]["cancellation"]["relatedParty"] = relatedParty_id
     return munchify(data)
 
 
-def test_elimination_report(corruption):
+def test_elimination_report(corruption, relatedParty_id):
     return munchify({
         "data": {
             "eliminationResolution": {
                 "resultByType": {
                     corruption: random.choice(["eliminated", "not_eliminated", "no_mechanism"])
                 },
+                "relatedParty": relatedParty_id,
                 "result": random.choice(["completely", "partly", "none"]),
                 "description": fake_en.sentence(nb_words=10, variable_nb_words=True)
             }

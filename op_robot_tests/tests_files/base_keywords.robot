@@ -153,17 +153,17 @@ Resource           resource.robot
 
 
 Можливість надати висновок про наявність порушення в тендері
-  ${conclusion_data}=  test_conclusion  ${True}
+  ${conclusion_data}=  test_conclusion  ${True}  ${USERS.users['${dasu_user}'].monitoring_data.data.parties[0].id}
   Run As  ${dasu_user}  Надати висновок про наявність/відсутність порушення в тендері  ${MONITORING['MONITORING_UAID']}  ${conclusion_data}
 
 
 Можливість надати висновок про відсутність порушення в тендері
-  ${conclusion_data}=  test_conclusion  ${False}
+  ${conclusion_data}=  test_conclusion  ${False}  ${USERS.users['${dasu_user}'].monitoring_data.data.parties[0].id}
   Run As  ${dasu_user}  Надати висновок про наявність/відсутність порушення в тендері  ${MONITORING['MONITORING_UAID']}  ${conclusion_data}
 
 
 Можливість змінити статус об’єкта моніторингу на ${status}
-  ${conclusion_data}=  test_status_data  ${status}
+  ${conclusion_data}=  test_status_data  ${status}  ${USERS.users['${dasu_user}'].monitoring_data.data.parties[0].id}
   Run As  ${dasu_user}  Змінити статус об’єкта моніторингу  ${MONITORING['MONITORING_UAID']}  ${conclusion_data}
 
 
@@ -189,7 +189,9 @@ Resource           resource.robot
 
 
 Можливість оприлюднути рішення про усунення порушення
-  ${report_data}=  test_elimination_report  ${USERS.users['${dasu_user}'].monitoring_data.data.conclusion.violationType[0]}
+  ${report_data}=  test_elimination_report
+  ...      ${USERS.users['${dasu_user}'].monitoring_data.data.conclusion.violationType[0]}
+  ...      ${USERS.users['${dasu_user}'].monitoring_data.data.parties[0].id}
   Run As  ${dasu_user}  Оприлюднити рішення про усунення порушення  ${MONITORING['MONITORING_UAID']}  ${report_data}
 
 
