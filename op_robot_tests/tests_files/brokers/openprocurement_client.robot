@@ -269,23 +269,29 @@ Library  openprocurement_client.utils
 
 
 Запитати в замовника пояснення
-  [Arguments]  ${username}  ${monitoring_uaid}  ${dialogue_data}
+  [Arguments]  ${username}  ${monitoring_uaid}  ${post_data}
   ${monitoring}=  openprocurement_client.Пошук об'єкта моніторингу по ідентифікатору  ${username}  ${monitoring_uaid}
-  ${dialogue}=  Call Method  ${USERS.users['${username}'].dasu_client}  create_dialogue  ${monitoring}  ${dialogue_data}
-  Log  ${dialogue}
+  ${post}=  Call Method  ${USERS.users['${username}'].dasu_client}  create_post  ${monitoring}  ${post_data}
+  Log  ${post}
   ${monitoring}=  openprocurement_client.Пошук об'єкта моніторингу по ідентифікатору  ${username}  ${monitoring_uaid}
   Set To Dictionary  ${USERS.users['${username}']}   monitoring_data=${monitoring}
   Log  ${USERS.users['${username}'].monitoring_data}
   [return]  ${monitoring}
 
 
+Надати відповідь користувачем ДАСУ
+  [Arguments]  ${username}  ${monitoring_uaid}  ${post_data}
+  ${monitoring}=  openprocurement_client.Запитати в замовника пояснення  ${username}  ${monitoring_uaid}  ${post_data}
+  [return]  ${monitoring}
+
+
 Надати пояснення замовником
-  [Arguments]  ${username}  ${monitoring_uaid}  ${answer_data}
+  [Arguments]  ${username}  ${monitoring_uaid}  ${post_data}
   Log  ${USERS.users['${username}'].access_token}
   ${monitoring}=  openprocurement_client.Отримати доступ до об'єкта моніторингу  ${username}  ${monitoring_uaid}
-  ${answer}=  Call Method  ${USERS.users['${username}'].dasu_client}  patch_dialogue  ${monitoring}  ${answer_data}  ${monitoring.data.dialogues[0].id}
-  Log  ${answer}
-  [return]  ${answer}
+  ${post}=  Call Method  ${USERS.users['${username}'].dasu_client}  create_post  ${monitoring}  ${post_data}
+  Log  ${post}
+  [return]  ${post}
 
 
 Змінити статус об’єкта моніторингу
@@ -331,10 +337,10 @@ Library  openprocurement_client.utils
 
 
 Надати пояснення замовником з власної ініціативи
-  [Arguments]  ${username}  ${monitoring_uaid}  ${dialogue_data}
-  ${party}=  Call Method  ${USERS.users['${username}'].dasu_client}  create_dialogue  ${USERS.users['${username}'].monitoring}  ${dialogue_data}
-  Log  ${party}
-  [return]  ${monitoring}
+  [Arguments]  ${username}  ${monitoring_uaid}  ${post_data}
+  ${post}=  Call Method  ${USERS.users['${username}'].dasu_client}  create_post  ${USERS.users['${username}'].monitoring}  ${post_data}
+  Log  ${post}
+  [return]  ${post}
 
 
 Надати висновок про наявність/відсутність порушення в тендері
