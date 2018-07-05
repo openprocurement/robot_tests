@@ -600,24 +600,23 @@ def tets_monitoring_data( tender_id, accelerator=None):
         "reasons": [random.choice(["public", "fiscal", "indicator", "authorities", "media"])],
         "tender_id": tender_id,
         "procuringStages": [random.choice(["awarding", "contracting", "planning"])],
-        "parties": [fake.procuringEntity()],
+        "parties": [test_party()],
         "decision": {
             "date": get_now().isoformat(),
             "description": fake_en.sentence(nb_words=10, variable_nb_words=True)
         },
         "mode": "test"
     }
-    data["parties"][0]["roles"] = [random.choice(["create", "decision", "conclusion"])]
-    data["parties"][0]["name"] = "The State Audit Service of Ukraine"
     data['monitoringDetails'] = 'quick, ' \
         'accelerator={}'.format(accelerator)
     return munchify({'data':data})
 
 
-def test_party(party):
-    party["roles"] = "dialogue"
-    del party["kind"]
-    return munchify({"data":party})
+def test_party():
+    party = fake.procuringEntity()
+    party["roles"] = [random.choice(['sas', 'risk_indicator'])]
+    party["name"] = "The State Audit Service of Ukraine"
+    return munchify(party)
 
 
 def test_dialogue(relatedParty_id):

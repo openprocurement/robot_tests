@@ -249,14 +249,14 @@ Library  openprocurement_client.utils
   [Arguments]  ${username}  ${monitoring_uaid}  ${save_key}=monitoring
   ${token}=  Set Variable  ${USERS.users['${username}'].access_token}
   ${internalid}=  openprocurement_client.Отримати internal id об'єкта моніторингу по UAid  ${username}  ${monitoring_uaid}
-  ${monitoring}=  Call Method  ${USERS.users['${username}'].dasu_client}  patch_credentials  ${token}  ${internalid}
+  ${monitoring}=  Call Method  ${USERS.users['${username}'].dasu_client}  patch_credentials  ${internalid}  ${token}
   Set To Dictionary  ${USERS.users['${username}']}  ${save_key}=${monitoring}
   Log  ${USERS.users['${username}'].monitoring_data}
   ${monitoring}=  munch_dict  arg=${monitoring}
   [return]   ${monitoring}
 
 
-Додати замовника як учасника процесу моніторингу
+Додати учасника процесу моніторингу
   [Arguments]  ${username}  ${monitoring_uaid}  ${party_data}
   ${monitoring}=  openprocurement_client.Пошук об'єкта моніторингу по ідентифікатору  ${username}  ${monitoring_uaid}
   Log  ${monitoring}

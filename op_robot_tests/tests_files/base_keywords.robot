@@ -128,9 +128,10 @@ Resource           resource.robot
   Run As  ${tender_owner}  Внести зміни в план  ${TENDER['TENDER_UAID']}  ${field_name}  ${field_value}
 
 
-Можливість додати замовника як учасника процесу моніторингу
-  ${party_data}=  test_party  ${USERS.users['${tender_owner}'].initial_data.data.procuringEntity}
-  Run As  ${dasu_user}  Додати замовника як учасника процесу моніторингу  ${MONITORING['MONITORING_UAID']}  ${party_data}
+Можливість додати учасника процесу моніторингу
+  ${party_data}=  test_party
+  ${party}=  Create Dictionary  data=${party_data}
+  Run As  ${dasu_user}  Додати учасника процесу моніторингу  ${MONITORING['MONITORING_UAID']}  ${party}
 
 
 Можливість запитати в замовника пояснення

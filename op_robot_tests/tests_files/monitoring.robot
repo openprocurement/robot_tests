@@ -421,40 +421,40 @@ ${MOZ_INTEGRATION}   ${False}
   Звірити відображення поля parties[0].identifier.legalName об'єкта моніторингу для користувача ${viewer}
 
 
-Можливість додати замовника як учасника процесу моніторингу
-  [Tags]   ${USERS.users['${dasu_user}'].broker}: Додати замовника
+Можливість додати учасника процесу моніторингу
+  [Tags]   ${USERS.users['${dasu_user}'].broker}: Додати учасника
   ...      dasu_user
   ...      ${USERS.users['${dasu_user}'].broker}
-  ...      add_party_tender_owner
+  ...      add_party
   ...      critical
   [Teardown]  Оновити DASU_LAST_MODIFICATION_DATE
-  Можливість додати замовника як учасника процесу моніторингу
+  Можливість додати учасника процесу моніторингу
 
 
-Відображення імені замовника в моніторингу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Додати замовника
+Відображення імені доданого учасника
+  [Tags]   ${USERS.users['${viewer}'].broker}: Додати учасника
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      add_party_tender_owner
+  ...      add_party
   ...      critical
   [Setup]  Дочекатись синхронізації з ДАСУ  ${viewer}
   Отримати дані із поля parties[1].name об'єкта моніторингу для користувача ${viewer}
 
 
-Відображення ролі замовника в моніторингу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Додати замовника
+Відображення ролі доданого учасника
+  [Tags]   ${USERS.users['${viewer}'].broker}: Додати учасника
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      add_party_tender_owner
+  ...      add_party
   ...      critical
   Отримати дані із поля parties[1].roles об'єкта моніторингу для користувача ${viewer}
 
 
-Відображення id замовника в моніторингу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Додати замовника
+Відображення id доданого учасника
+  [Tags]   ${USERS.users['${viewer}'].broker}: Додати учасника
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      add_party_tender_owner
+  ...      add_party
   ...      critical
   Отримати дані із поля parties[1].id об'єкта моніторингу для користувача ${viewer}
 
