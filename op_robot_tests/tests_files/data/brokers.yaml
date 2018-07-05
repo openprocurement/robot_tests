@@ -105,6 +105,11 @@ uaceauction:
         dgfOtherAssets:
             accelerator: 1440
             auction:  [45, 50]
+        lots:
+            accelerator: 720
+        auctions:
+            accelerator: 1440
+            auction:  [60, 60]
     keywords_file: uace
     roles:
         tender_owner:   uace_Owner_auction
