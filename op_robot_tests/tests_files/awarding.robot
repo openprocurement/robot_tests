@@ -24,12 +24,14 @@ ${MODE}  auctions
 
 Можливість звірити статус процедури в період кваліфікації
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес кваліфікації
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      awarding
   [Setup]  Дочекатись початку кваліфікації  ${viewer}  ${TENDER['TENDER_UAID']}
   Звірити кількість сформованих авардів лоту із ${NUMBER_OF_AWARDS} для користувача ${viewer}
-  Звірити статус тендера  ${viewer}  ${TENDER['TENDER_UAID']}  active.qualification
+  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${provider1}  ${viewer}
+  \  Звірити статус тендера  ${username}  ${TENDER['TENDER_UAID']}  active.qualification
 
 ##############################################################################################
 #             AWARDING
@@ -37,12 +39,11 @@ ${MODE}  auctions
 
 Відображення статусу 'очікується підтвердження' для єдиного кандидата
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
-  ...     viewer  tender_owner  provider  provider1
-  ...     ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
-  ...     ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...     viewer
+  ...     ${USERS.users['${viewer}'].broker}
   ...     award_admission_status
   [Setup]  Оновити LAST_MODIFICATION_DATE
-  Звірити відображення поля awards[0].status тендера із pending.admission для усіх користувачів
+  Звірити відображення поля awards[0].status тендера із pending.admission для користувача ${viewer}
 
 
 Відображення статусу неуспішного лоту через відсутність завантаженого протоколу підтвердження
@@ -92,12 +93,11 @@ ${MODE}  auctions
 
 Відображення статусу 'очікується протокол' для першого кандидата
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
-  ...     viewer  tender_owner  provider  provider1
-  ...     ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
-  ...     ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...     viewer
+  ...     ${USERS.users['${viewer}'].broker}
   ...     first_award_pending_status
   [Setup]  Оновити LAST_MODIFICATION_DATE
-  Звірити відображення поля awards[0].status тендера із pending для усіх користувачів
+  Звірити відображення поля awards[0].status тендера із pending для користувача ${viewer}
 
 
 Відображення статусу 'очікується кінець кваліфікації' для другого кандидата
@@ -137,13 +137,11 @@ ${MODE}  auctions
 
 Відображення статусу 'очікується завантаження контракту' для першого кандидата
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
-  ...     viewer  tender_owner  provider  provider1
-  ...     ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
-  ...     ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...     viewer
+  ...     ${USERS.users['${viewer}'].broker}
   ...     first_award_active_status
-  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
-  \  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${username}'].tender_data.data.awards[0]}  status
-  Звірити відображення поля awards[0].status тендера із active для усіх користувачів
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[0]}  status
+  Звірити відображення поля awards[0].status тендера із active для користувача ${viewer}
 
 
 Можливість скасувати рішення кваліфікації другим кандидатом
@@ -224,13 +222,11 @@ ${MODE}  auctions
 
 Відображення статусу 'очікується протокол' для другого кандидата
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
-  ...     viewer  tender_owner  provider  provider1
-  ...     ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
-  ...     ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...     viewer
+  ...     ${USERS.users['${viewer}'].broker}
   ...     second_award_pending_status
-  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
-  \  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${username}'].tender_data.data.awards[1]}  status
-  Звірити відображення поля awards[1].status тендера із pending для усіх користувачів
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[1]}  status
+  Звірити відображення поля awards[1].status тендера із pending для користувача ${viewer}
 
 
 Можливість завантажити протокол дискваліфікації другого кандидата
@@ -290,13 +286,11 @@ ${MODE}  auctions
 
 Відображення статусу 'очікується завантаження контракту' для другого кандидата
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
-  ...     viewer  tender_owner  provider  provider1
-  ...     ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
-  ...     ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...     viewer
+  ...     ${USERS.users['${viewer}'].broker}
   ...     second_award_active_status
-  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
-  \  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${username}'].tender_data.data.awards[1]}  status
-  Звірити відображення поля awards[1].status тендера із active для усіх користувачів
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[1]}  status
+  Звірити відображення поля awards[1].status тендера із active для користувача ${viewer}
 
 
 Відображення статусу неуспішного аукціону
