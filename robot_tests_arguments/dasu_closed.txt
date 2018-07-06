@@ -17,10 +17,9 @@
 -i add_doc
 -i active_monitoring
 
--i add_party_tender_owner
--i create_dialogue
+-i add_party
+-i create_post
 -i answer_tender_owner
-
 -i answer_view
 
 -i declined

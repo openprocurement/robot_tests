@@ -421,40 +421,40 @@ ${MOZ_INTEGRATION}   ${False}
   Звірити відображення поля parties[0].identifier.legalName об'єкта моніторингу для користувача ${viewer}
 
 
-Можливість додати замовника як учасника процесу моніторингу
-  [Tags]   ${USERS.users['${dasu_user}'].broker}: Додати замовника
+Можливість додати учасника процесу моніторингу
+  [Tags]   ${USERS.users['${dasu_user}'].broker}: Додати учасника
   ...      dasu_user
   ...      ${USERS.users['${dasu_user}'].broker}
-  ...      add_party_tender_owner
+  ...      add_party
   ...      critical
   [Teardown]  Оновити DASU_LAST_MODIFICATION_DATE
-  Можливість додати замовника як учасника процесу моніторингу
+  Можливість додати учасника процесу моніторингу
 
 
-Відображення імені замовника в моніторингу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Додати замовника
+Відображення імені доданого учасника
+  [Tags]   ${USERS.users['${viewer}'].broker}: Додати учасника
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      add_party_tender_owner
+  ...      add_party
   ...      critical
   [Setup]  Дочекатись синхронізації з ДАСУ  ${viewer}
   Отримати дані із поля parties[1].name об'єкта моніторингу для користувача ${viewer}
 
 
-Відображення ролі замовника в моніторингу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Додати замовника
+Відображення ролі доданого учасника
+  [Tags]   ${USERS.users['${viewer}'].broker}: Додати учасника
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      add_party_tender_owner
+  ...      add_party
   ...      critical
   Отримати дані із поля parties[1].roles об'єкта моніторингу для користувача ${viewer}
 
 
-Відображення id замовника в моніторингу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Додати замовника
+Відображення id доданого учасника
+  [Tags]   ${USERS.users['${viewer}'].broker}: Додати учасника
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      add_party_tender_owner
+  ...      add_party
   ...      critical
   Отримати дані із поля parties[1].id об'єкта моніторингу для користувача ${viewer}
 
@@ -463,7 +463,7 @@ ${MOZ_INTEGRATION}   ${False}
   [Tags]   ${USERS.users['${dasu_user}'].broker}: Створення діалогу
   ...      dasu_user
   ...      ${USERS.users['${dasu_user}'].broker}
-  ...      create_dialogue
+  ...      create_post
   ...      critical
   [Teardown]  Оновити DASU_LAST_MODIFICATION_DATE
   Можливість запитати в замовника пояснення
@@ -480,14 +480,24 @@ ${MOZ_INTEGRATION}   ${False}
   Можливість надати пояснення замовником
 
 
-Відображення пояснення
+Відображення опису пояснення
   [Tags]   ${USERS.users['${dasu_user}'].broker}: Надання пояснення
   ...      dasu_user
   ...      ${USERS.users['${dasu_user}'].broker}
   ...      answer_view
   ...      critical
   [Setup]  Дочекатись синхронізації з ДАСУ  ${dasu_user}
-  Отримати дані із поля dialogues[0].answer об'єкта моніторингу для користувача ${dasu_user}
+  Отримати дані із поля posts[1].description об'єкта моніторингу для користувача ${dasu_user}
+
+
+Відображення заголовку пояснення
+  [Tags]   ${USERS.users['${dasu_user}'].broker}: Надання пояснення
+  ...      dasu_user
+  ...      ${USERS.users['${dasu_user}'].broker}
+  ...      answer_view
+  ...      critical
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${dasu_user}
+  Отримати дані із поля posts[1].title об'єкта моніторингу для користувача ${dasu_user}
 
 
 Можливість надати висновок про відсутність порушення в тендері
@@ -569,19 +579,48 @@ ${MOZ_INTEGRATION}   ${False}
   [Tags]   ${USERS.users['${dasu_user}'].broker}: Надання пояснення
   ...      dasu_user
   ...      ${USERS.users['${dasu_user}'].broker}
-  ...      dialogue_view
+  ...      post_view
   ...      critical
   [Setup]  Дочекатись синхронізації з ДАСУ  ${dasu_user}
-  Отримати дані із поля dialogues[1].title об'єкта моніторингу для користувача ${dasu_user}
+  Отримати дані із поля posts[2].title об'єкта моніторингу для користувача ${dasu_user}
 
 
 Відображення опису пояснення замовника з власної ініціативи
   [Tags]   ${USERS.users['${dasu_user}'].broker}: Надання пояснення
   ...      dasu_user
   ...      ${USERS.users['${dasu_user}'].broker}
-  ...      dialogue_view
+  ...      post_view
   ...      critical
-  Отримати дані із поля dialogues[1].description об'єкта моніторингу для користувача ${dasu_user}
+  Отримати дані із поля posts[2].description об'єкта моніторингу для користувача ${dasu_user}
+
+
+Можливість надати відповідь на пояснення замовника
+  [Tags]   ${USERS.users['${dasu_user}'].broker}: Надання пояснення
+  ...      dasu_user
+  ...      ${USERS.users['${dasu_user}'].broker}
+  ...      addressed
+  ...      critical
+  [Teardown]  Оновити DASU_LAST_MODIFICATION_DATE
+  Можливість надати відповідь користувачем ДАСУ
+
+
+Відображення заголовку відповіді
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Надання пояснення
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      post_view
+  ...      critical
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${tender_owner}
+  Отримати дані із поля posts[3].title об'єкта моніторингу для користувача ${tender_owner}
+
+
+Відображення опису відповіді
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Надання пояснення
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      post_view
+  ...      critical
+  Отримати дані із поля posts[3].description об'єкта моніторингу для користувача ${tender_owner}
 
 
 Можливість надати звіт про усунення порушення замовником
@@ -728,6 +767,15 @@ ${MOZ_INTEGRATION}   ${False}
   ...      critical
   [Setup]  Дочекатись синхронізації з ДАСУ  ${viewer}
   Отримати дані із поля cancellation.description об'єкта моніторингу для користувача ${viewer}
+
+
+Відображення дати публікації звіту про зупинення
+  [Tags]   ${USERS.users['${viewer}'].broker}: Завершення моніторингу
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      cancellation_view
+  ...      critical
+  Отримати дані із поля cancellation.datePublished об'єкта моніторингу для користувача ${viewer}
 
 
 Можливість змінити статус об’єкта моніторингу на closed

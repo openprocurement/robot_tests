@@ -128,39 +128,47 @@ Resource           resource.robot
   Run As  ${tender_owner}  Внести зміни в план  ${TENDER['TENDER_UAID']}  ${field_name}  ${field_value}
 
 
-Можливість додати замовника як учасника процесу моніторингу
-  ${party_data}=  test_party  ${USERS.users['${tender_owner}'].initial_data.data.procuringEntity}
-  Run As  ${dasu_user}  Додати замовника як учасника процесу моніторингу  ${MONITORING['MONITORING_UAID']}  ${party_data}
+Можливість додати учасника процесу моніторингу
+  ${party_data}=  test_party
+  ${party}=  Create Dictionary  data=${party_data}
+  Run As  ${dasu_user}  Додати учасника процесу моніторингу  ${MONITORING['MONITORING_UAID']}  ${party}
 
 
 Можливість запитати в замовника пояснення
-  ${party_data}=  test_dialogue  ${USERS.users['${dasu_user}'].monitoring_data.data.parties[1].id}
-  Run As  ${dasu_user}  Запитати в замовника пояснення  ${MONITORING['MONITORING_UAID']}  ${party_data}
+  ${post_data}=  test_dialogue
+  Set To Dictionary  ${post_data.data}  relatedParty=${USERS.users['${dasu_user}'].monitoring_data.data.parties[0].id}
+  Run As  ${dasu_user}  Запитати в замовника пояснення  ${MONITORING['MONITORING_UAID']}  ${post_data}
 
 
 Можливість надати пояснення замовником
-  ${answer_data}=  test_question_answer_data
-  Run As  ${tender_owner}  Надати пояснення замовником  ${MONITORING['MONITORING_UAID']}  ${answer_data}
+  ${post_data}=  test_dialogue
+  Set To Dictionary  ${post_data.data}  relatedPost=${USERS.users['${dasu_user}'].monitoring_data.data.posts[0].id}
+  Run As  ${tender_owner}  Надати пояснення замовником  ${MONITORING['MONITORING_UAID']}  ${post_data}
+
+
+Можливість надати відповідь користувачем ДАСУ
+  ${post_data}=  test_dialogue
+  Set To Dictionary  ${post_data.data}  relatedPost=${USERS.users['${dasu_user}'].monitoring_data.data.posts[2].id}
+  Run As  ${dasu_user}  Надати відповідь користувачем ДАСУ  ${MONITORING['MONITORING_UAID']}  ${post_data}
 
 
 Можливість надати висновок про наявність порушення в тендері
-  ${conclusion_data}=  test_conclusion  ${True}
+  ${conclusion_data}=  test_conclusion  ${True}  ${USERS.users['${dasu_user}'].monitoring_data.data.parties[0].id}
   Run As  ${dasu_user}  Надати висновок про наявність/відсутність порушення в тендері  ${MONITORING['MONITORING_UAID']}  ${conclusion_data}
 
 
 Можливість надати висновок про відсутність порушення в тендері
-  ${conclusion_data}=  test_conclusion  ${False}
+  ${conclusion_data}=  test_conclusion  ${False}  ${USERS.users['${dasu_user}'].monitoring_data.data.parties[0].id}
   Run As  ${dasu_user}  Надати висновок про наявність/відсутність порушення в тендері  ${MONITORING['MONITORING_UAID']}  ${conclusion_data}
 
 
 Можливість змінити статус об’єкта моніторингу на ${status}
-  ${conclusion_data}=  test_status_data  ${status}
+  ${conclusion_data}=  test_status_data  ${status}  ${USERS.users['${dasu_user}'].monitoring_data.data.parties[0].id}
   Run As  ${dasu_user}  Змінити статус об’єкта моніторингу  ${MONITORING['MONITORING_UAID']}  ${conclusion_data}
 
 
 Можливість надати пояснення замовником з власної ініціативи
-  ${party_data}=  test_dialogue  ${USERS.users['${dasu_user}'].monitoring_data.data.parties[1].id}
-  Remove From Dictionary  ${party_data.data}  relatedParty
+  ${party_data}=  test_dialogue
   Run As  ${tender_owner}  Надати пояснення замовником з власної ініціативи  ${MONITORING['MONITORING_UAID']}  ${party_data}
 
 
@@ -181,7 +189,9 @@ Resource           resource.robot
 
 
 Можливість оприлюднути рішення про усунення порушення
-  ${report_data}=  test_elimination_report  ${USERS.users['${dasu_user}'].monitoring_data.data.conclusion.violationType[0]}
+  ${report_data}=  test_elimination_report
+  ...      ${USERS.users['${dasu_user}'].monitoring_data.data.conclusion.violationType[0]}
+  ...      ${USERS.users['${dasu_user}'].monitoring_data.data.parties[0].id}
   Run As  ${dasu_user}  Оприлюднити рішення про усунення порушення  ${MONITORING['MONITORING_UAID']}  ${report_data}
 
 

@@ -17,19 +17,18 @@
 
 -i add_doc
 -i active_monitoring
+-i add_party
 
--i add_party_tender_owner
--i create_dialogue
+-i create_post
+
 -i answer_tender_owner
-
 -i answer_view
+-i addressed
+-i post_view
 -i conclusion_view
--i dialogue_view
 -i report_view
 -i resolution_view
 -i appeal_view
-
--i addressed
 
 -i eliminationPeriod_endDate
 

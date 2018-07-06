@@ -249,14 +249,14 @@ Library  openprocurement_client.utils
   [Arguments]  ${username}  ${monitoring_uaid}  ${save_key}=monitoring
   ${token}=  Set Variable  ${USERS.users['${username}'].access_token}
   ${internalid}=  openprocurement_client.Отримати internal id об'єкта моніторингу по UAid  ${username}  ${monitoring_uaid}
-  ${monitoring}=  Call Method  ${USERS.users['${username}'].dasu_client}  patch_credentials  ${token}  ${internalid}
+  ${monitoring}=  Call Method  ${USERS.users['${username}'].dasu_client}  patch_credentials  ${internalid}  ${token}
   Set To Dictionary  ${USERS.users['${username}']}  ${save_key}=${monitoring}
   Log  ${USERS.users['${username}'].monitoring_data}
   ${monitoring}=  munch_dict  arg=${monitoring}
   [return]   ${monitoring}
 
 
-Додати замовника як учасника процесу моніторингу
+Додати учасника процесу моніторингу
   [Arguments]  ${username}  ${monitoring_uaid}  ${party_data}
   ${monitoring}=  openprocurement_client.Пошук об'єкта моніторингу по ідентифікатору  ${username}  ${monitoring_uaid}
   Log  ${monitoring}
@@ -269,23 +269,29 @@ Library  openprocurement_client.utils
 
 
 Запитати в замовника пояснення
-  [Arguments]  ${username}  ${monitoring_uaid}  ${dialogue_data}
+  [Arguments]  ${username}  ${monitoring_uaid}  ${post_data}
   ${monitoring}=  openprocurement_client.Пошук об'єкта моніторингу по ідентифікатору  ${username}  ${monitoring_uaid}
-  ${dialogue}=  Call Method  ${USERS.users['${username}'].dasu_client}  create_dialogue  ${monitoring}  ${dialogue_data}
-  Log  ${dialogue}
+  ${post}=  Call Method  ${USERS.users['${username}'].dasu_client}  create_post  ${monitoring}  ${post_data}
+  Log  ${post}
   ${monitoring}=  openprocurement_client.Пошук об'єкта моніторингу по ідентифікатору  ${username}  ${monitoring_uaid}
   Set To Dictionary  ${USERS.users['${username}']}   monitoring_data=${monitoring}
   Log  ${USERS.users['${username}'].monitoring_data}
   [return]  ${monitoring}
 
 
+Надати відповідь користувачем ДАСУ
+  [Arguments]  ${username}  ${monitoring_uaid}  ${post_data}
+  ${monitoring}=  openprocurement_client.Запитати в замовника пояснення  ${username}  ${monitoring_uaid}  ${post_data}
+  [return]  ${monitoring}
+
+
 Надати пояснення замовником
-  [Arguments]  ${username}  ${monitoring_uaid}  ${answer_data}
+  [Arguments]  ${username}  ${monitoring_uaid}  ${post_data}
   Log  ${USERS.users['${username}'].access_token}
   ${monitoring}=  openprocurement_client.Отримати доступ до об'єкта моніторингу  ${username}  ${monitoring_uaid}
-  ${answer}=  Call Method  ${USERS.users['${username}'].dasu_client}  patch_dialogue  ${monitoring}  ${answer_data}  ${monitoring.data.dialogues[0].id}
-  Log  ${answer}
-  [return]  ${answer}
+  ${post}=  Call Method  ${USERS.users['${username}'].dasu_client}  create_post  ${monitoring}  ${post_data}
+  Log  ${post}
+  [return]  ${post}
 
 
 Змінити статус об’єкта моніторингу
@@ -331,10 +337,10 @@ Library  openprocurement_client.utils
 
 
 Надати пояснення замовником з власної ініціативи
-  [Arguments]  ${username}  ${monitoring_uaid}  ${dialogue_data}
-  ${party}=  Call Method  ${USERS.users['${username}'].dasu_client}  create_dialogue  ${USERS.users['${username}'].monitoring}  ${dialogue_data}
-  Log  ${party}
-  [return]  ${monitoring}
+  [Arguments]  ${username}  ${monitoring_uaid}  ${post_data}
+  ${post}=  Call Method  ${USERS.users['${username}'].dasu_client}  create_post  ${USERS.users['${username}'].monitoring}  ${post_data}
+  Log  ${post}
+  [return]  ${post}
 
 
 Надати висновок про наявність/відсутність порушення в тендері
