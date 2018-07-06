@@ -201,17 +201,17 @@ users:
     brizol_Provider:
         broker:   brizol
         homepage: "http://test-eauction.brizol.net/login"
-        login:    prozorroyprovider1@gmail.com
+        login:    testprozorroprovider@gmail.com
         password: 123456
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     brizol_Provider1:
         broker:   brizol
         homepage: "http://test-eauction.brizol.net/login"
-        login:    prozorroyprovider2@gmail.com
+        login:    testprozorroprovider1@gmail.com
         password: 123456
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     brizol_Viewer:
@@ -231,17 +231,17 @@ users:
     aukzionua_Provider:
         broker:   aukzionua
         homepage: "http://test.neb.org.ua"
-        login:    prozorroyprovider1@gmail.com
+        login:    testprozorroprovider@gmail.com
         password: 123456
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     aukzionua_Provider1:
         broker:   aukzionua
         homepage: "http://test.neb.org.ua"
-        login:    prozorroyprovider2@gmail.com
+        login:    testprozorroprovider1@gmail.com
         password: 123456
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     aukzionua_Viewer:

@@ -146,17 +146,17 @@ brizol:
             accelerator: 1440
             auction:  [45, 50]
         lots:
-            accelerator: 1
+            accelerator: 720
         auctions:
             accelerator: 1440
-            auction:  [15000, 15000]
+            auction:  [60, 60]
     keywords_file: brizol
     roles:
         tender_owner:   brizol_Owner
         provider:   brizol_Provider
         provider1:   brizol_Provider1
         viewer:   brizol_Viewer
-    timeout_on_wait: 180
+    timeout_on_wait: 120
 aukzionua:
     intervals:
         default:
@@ -166,17 +166,17 @@ aukzionua:
             accelerator: 1440
             auction:  [65, 70]
         lots:
-            accelerator: 1
+            accelerator: 720
         auctions:
             accelerator: 1440
-            auction:  [15000, 15000]
+            auction:  [60, 60]
     keywords_file: aukzionua
     roles:
         tender_owner:   aukzionua_Owner
         provider:   aukzionua_Provider
         provider1:   aukzionua_Provider1
         viewer:   aukzionua_Viewer
-    timeout_on_wait: 180
+    timeout_on_wait: 120
 capitalua:
     intervals:
         default:
