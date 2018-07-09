@@ -72,7 +72,7 @@ def create_fake_decisionID():
 
 
 def create_fake_date():
-    return (get_now() + timedelta(days=7)).isoformat()
+    return (get_now() + timedelta(days=7)).strftime('%Y-%m-%dT%H:%M:%S')
 
 
 def convert_days_to_seconds(days, accelerator):
