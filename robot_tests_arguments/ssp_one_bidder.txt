@@ -25,7 +25,6 @@
 #-----------awarding-----------#
 -i awarding
 -i award_admission_status
--i add_admission_protocol
 -i confirm_admission
 -i first_award_pending_status
 -i add_protocol_to_first_award

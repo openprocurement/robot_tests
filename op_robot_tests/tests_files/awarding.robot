@@ -54,31 +54,14 @@ ${MODE}  auctions
   Звірити cтатус неуспішного тендера  ${viewer}  ${TENDER['TENDER_UAID']}
 
 
-Можливість завантажити протокол підтвердження проведення кваліфікації
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
-  ...     tender_owner
-  ...     ${USERS.users['${tender_owner}'].broker}
-  ...     add_admission_protocol
-  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
-  Можливість завантажити протокол погодження в авард 0 користувачем ${tender_owner}
-
-
 Можливість активувати процес кваліфікації єдиного учасника
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...     tender_owner
   ...     ${USERS.users['${tender_owner}'].broker}
   ...     confirm_admission
   [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
+  Можливість завантажити протокол погодження в авард 0 користувачем ${tender_owner}
   Run As  ${tender_owner}  Активувати кваліфікацію учасника  ${TENDER['TENDER_UAID']}
-
-
-Можливість завантажити протокол дискваліфікації єдиного кандидата
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
-  ...     tender_owner
-  ...     ${USERS.users['${tender_owner}'].broker}
-  ...     disqualified_award
-  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
-  Можливість завантажити протокол дискваліфікації в авард 0 користувачем ${tender_owner}
 
 
 Можливість дискваліфікувати єдиного кандидата
@@ -88,6 +71,7 @@ ${MODE}  auctions
   ...     disqualified_award
   [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
   ${description}=  create_fake_sentence
+  Можливість завантажити протокол дискваліфікації в авард 0 користувачем ${tender_owner}
   Run As  ${tender_owner}  Дискваліфікувати постачальника  ${TENDER['TENDER_UAID']}  0  ${description}
 
 
@@ -164,15 +148,6 @@ ${MODE}  auctions
   Звірити відображення поля awards[1].status тендера із cancelled для користувача ${viewer}
 
 
-Можливість завантажити протокол дискваліфікації першого кандидата
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
-  ...     tender_owner
-  ...     ${USERS.users['${tender_owner}'].broker}
-  ...     disqualified_first_award
-  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
-  Можливість завантажити протокол дискваліфікації в авард 0 користувачем ${tender_owner}
-
-
 Можливість дискваліфікувати першого кандидата
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...     tender_owner
@@ -180,6 +155,7 @@ ${MODE}  auctions
   ...     disqualified_first_award
   [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
   ${description}=  create_fake_sentence
+  Можливість завантажити протокол дискваліфікації в авард 0 користувачем ${tender_owner}
   Run As  ${tender_owner}  Дискваліфікувати постачальника  ${TENDER['TENDER_UAID']}  0  ${description}
 
 
@@ -230,15 +206,6 @@ ${MODE}  auctions
   Звірити відображення поля awards[1].status тендера із pending для користувача ${viewer}
 
 
-Можливість завантажити протокол дискваліфікації другого кандидата
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
-  ...     tender_owner
-  ...     ${USERS.users['${tender_owner}'].broker}
-  ...     disqualified_second_award
-  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
-  Можливість завантажити протокол дискваліфікації в авард 1 користувачем ${tender_owner}
-
-
 Можливість дискваліфікувати другого кандидата
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...     tender_owner
@@ -246,6 +213,7 @@ ${MODE}  auctions
   ...     disqualified_second_award
   [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
   ${description}=  create_fake_sentence
+  Можливість завантажити протокол дискваліфікації в авард 1 користувачем ${tender_owner}
   Run As  ${tender_owner}  Дискваліфікувати постачальника  ${TENDER['TENDER_UAID']}  1  ${description}
 
 
