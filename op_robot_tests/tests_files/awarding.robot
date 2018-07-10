@@ -96,7 +96,8 @@ ${MODE}  auctions
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
   ...     first_award_pending_status
-  [Setup]  Оновити LAST_MODIFICATION_DATE
+  [Setup]  Оновити LMD і дочекатись синхронізації  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[0]}  status
   Звірити відображення поля awards[0].status тендера із pending для користувача ${viewer}
 
 
