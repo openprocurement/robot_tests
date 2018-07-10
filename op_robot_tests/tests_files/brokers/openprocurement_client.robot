@@ -7,7 +7,7 @@ Library  openprocurement_client.utils
 Активувати процедуру
   [Arguments]  ${username}  ${tender_uaid}
   ${internalid}=  openprocurement_client.Змінити власника процедури  ${username}  ${tender_uaid}
-  ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
+  ${tender}=  Call Method  ${USERS.users['${username}'].public_client}  get_tender  ${internalid}
   Set To Dictionary  ${tender.data}  status=active.tendering
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
@@ -22,7 +22,7 @@ Library  openprocurement_client.utils
   ${access_token}=  Get Variable Value  ${transfer.access.token}
   ${transfer_token}=  Get Variable Value  ${transfer.access.transfer}
   ${internalid}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
-  ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
+  ${tender}=  Call Method  ${USERS.users['${username}'].public_client}  get_tender  ${internalid}
   ${transfer_data}=  munch_dict  data=${True}
   Set to dictionary  ${transfer_data.data}  id=${transfer.data.id}
   Set to dictionary  ${transfer_data.data}  transfer=${USERS.users['${tender_owner}'].transfer_token}
@@ -40,11 +40,11 @@ Library  openprocurement_client.utils
   Log Many  ${USERS.users['${username}'].id_map}
   ${status}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${USERS.users['${username}'].id_map}  ${tender_uaid}
   Run Keyword And Return If  ${status}  Get From Dictionary  ${USERS.users['${username}'].id_map}  ${tender_uaid}
-  Call Method  ${USERS.users['${username}'].client}  get_tenders
+  Call Method  ${USERS.users['${username}'].public_client}  get_tenders
   ${id_field}=  Run Keyword if  '${MODE}' == 'assets'  Set Variable  assetID
   ...  ELSE IF  '${MODE}' == 'lots'  Set Variable  lotID
   ...  ELSE  Set Variable  auctionID
-  ${tender_id}=  Wait Until Keyword Succeeds  5x  30 sec  get_tender_id_by_uaid  ${tender_uaid}  ${USERS.users['${username}'].client}  id_field=${id_field}
+  ${tender_id}=  Wait Until Keyword Succeeds  5x  30 sec  get_tender_id_by_uaid  ${tender_uaid}  ${USERS.users['${username}'].public_client}  id_field=${id_field}
   Set To Dictionary  ${USERS.users['${username}'].id_map}  ${tender_uaid}  ${tender_id}
   [return]  ${tender_id}
 
@@ -68,7 +68,11 @@ Library  openprocurement_client.utils
   ${asset_api_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  assets  ${api_host_url}  ${api_version}  ${ds_api_wraper}
   ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${resource}  ${api_host_url}  ${api_version}  ${ds_api_wraper}
   ${relocation_api_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  transfers  ${api_host_url}  ${api_version}
+  ${api_public_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${resource}  ${api_host_public_url}  ${api_version}  ${ds_api_wraper}
+  ${asset_api_public_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  assets  ${api_host_public_url}  ${api_version}  ${ds_api_wraper}
+  Set To Dictionary  ${USERS.users['${username}']}  public_client=${api_public_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  asset_client=${asset_api_wrapper}
+  Set To Dictionary  ${USERS.users['${username}']}  asset_public_client=${asset_api_public_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  client=${api_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  relocation_client=${relocation_api_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${EMPTY}
@@ -262,7 +266,7 @@ Library  openprocurement_client.utils
 Пошук тендера по ідентифікатору
   [Arguments]  ${username}  ${tender_uaid}
   ${internalid}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
-  ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
+  ${tender}=  Call Method  ${USERS.users['${username}'].public_client}  get_tender  ${internalid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   Set To Dictionary  ${USERS.users['${username}']}  tender_data=${tender}
   ${tender}=  munch_dict  arg=${tender}
@@ -812,8 +816,8 @@ Library  openprocurement_client.utils
 
 Створити лот
   [Arguments]  ${username}  ${tender_data}  ${ASSET_UAID}
-  Call Method  ${USERS.users['${username}'].asset_client}  get_tenders
-  ${asset_id}=  Wait Until Keyword Succeeds  5x  30 sec  get_tender_id_by_uaid  ${ASSET_UAID}  ${USERS.users['${username}'].asset_client}  id_field=assetID
+  Call Method  ${USERS.users['${username}'].asset_public_client}  get_tenders
+  ${asset_id}=  Wait Until Keyword Succeeds  5x  30 sec  get_tender_id_by_uaid  ${ASSET_UAID}  ${USERS.users['${username}'].asset_public_client}  id_field=assetID
   ${tender_data}=  update_lot_data  ${tender_data}  ${asset_id}
   ${ID}=  openprocurement_client.Створити тендер  ${username}  ${tender_data}
   [return]  ${ID}
@@ -829,7 +833,7 @@ Library  openprocurement_client.utils
 Додати умови проведення аукціону
   [Arguments]  ${username}  ${auction}  ${index}  ${tender_uaid}
   ${internalid}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
-  ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
+  ${tender}=  Call Method  ${USERS.users['${username}'].public_client}  get_tender  ${internalid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   ${auction_id}=  Get Variable Value  ${tender.data.auctions[${index}]['id']}
   Set To Dictionary  ${auction}  id=${auction_id}
