@@ -296,17 +296,17 @@ Promauctions:
             accelerator: 1440
             auction:  [70, 60]
         lots:
-            accelerator: 38
+            accelerator: 50
         auctions:
-            accelerator: 300
-            auction:  [300, 50]
+            accelerator: 180
+            auction:  [200, 60]
     keywords_file: prom
     roles:
         tender_owner:   Prom_Owner
         viewer:         Prom_Viewer
         provider:       Prom_Provider
         provider1:      Prom_Provider1
-    timeout_on_wait: 130
+    timeout_on_wait: 250
 Publicbid:
     intervals:
         default:
