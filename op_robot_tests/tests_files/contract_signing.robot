@@ -79,7 +79,7 @@ Suite Teardown  Test Suite Teardown
   ...      non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   ${contract_index}=  Отримати останній індекс  contracts  ${tender_owner}  ${viewer}
-  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.contracts[${contract_index}].value}  amount
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.contracts[${contract_index}].value}  amount
   Звірити відображення поля contracts[${contract_index}].value.amount тендера із ${USERS.users['${tender_owner}'].new_amount} для користувача ${viewer}
 
 
