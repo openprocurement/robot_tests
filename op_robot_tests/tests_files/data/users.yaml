@@ -1753,7 +1753,7 @@ users:
     tabua_Owner:
         broker:   tabua
         homepage: "http://sale_user:sale_password@staging_sale.tab.com.ua/login"
-        login:    tab_mayno@yopmail.com
+        login:    tab_privatization@yopmail.com
         password: 123456
         browser:  chrome
         position: [0, 0]
