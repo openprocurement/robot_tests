@@ -1392,38 +1392,38 @@ users:
         size:     [1366, 800]
     uisce_Owner:
         broker:   uisce
-        homepage: "http://test.proumstrade.com.ua/user/login"
-        default_page: "http://test.proumstrade.com.ua/public"
-        login:    organizator
+        homepage: "http://test.umstrade.com.ua/user/login"
+        default_page: "http://test.umstrade.com.ua/public"
+        login:    privatizator
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     uisce_Provider:
         broker:   uisce
-        homepage: "http://test.proumstrade.com.ua/user/login"
-        default_page: "http://test.proumstrade.com.ua/public"
+        homepage: "http://test.umstrade.com.ua/user/login"
+        default_page: "http://test.umstrade.com.ua/public"
         login:    member
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     uisce_Provider1:
         broker:   uisce
-        homepage: "http://test.proumstrade.com.ua/user/login"
-        default_page: "http://test.proumstrade.com.ua/public"
+        homepage: "http://test.umstrade.com.ua/user/login"
+        default_page: "http://test.umstrade.com.ua/public"
         login:    member1
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     uisce_Viewer:
         broker:   uisce
-        homepage: "http://test.proumstrade.com.ua/"
-        default_page: "http://test.proumstrade.com.ua/public"
+        homepage: "http://test.umstrade.com.ua/"
+        default_page: "http://test.umstrade.com.ua/public"
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     zupb_Owner:
         broker:   zupb
         homepage: "https://etm.zub.com.ua"
@@ -1850,38 +1850,38 @@ users:
         size:     [1024, 768]
     sets_Owner:
         broker:   sets
-        homepage: "http://sets.org.ua/user/login"
-        default_page: "http://sets.org.ua/public/index"
-        login:    organizator
+        homepage: "http://test.sets.org.ua/user/login"
+        default_page: "http://test.sets.org.ua/public/index"
+        login:    privatizator
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     sets_Provider:
         broker:   sets
-        homepage: "http://sets.org.ua/user/login"
-        default_page: "http://sets.org.ua/public/index"
+        homepage: "http://test.sets.org.ua/user/login"
+        default_page: "http://test.sets.org.ua/public/index"
         login:    member
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     sets_Provider1:
         broker:   sets
-        homepage: "http://sets.org.ua/user/login"
-        default_page: "http://sets.org.ua/public/index"
+        homepage: "http://test.sets.org.ua/user/login"
+        default_page: "http://test.sets.org.ua/public/index"
         login:    member1
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     sets_Viewer:
         broker:   sets
-        homepage: "http://sets.org.ua/user/login"
-        default_page: "http://sets.org.ua/public/index"
+        homepage: "http://test.sets.org.ua/user/login"
+        default_page: "http://test.sets.org.ua/public/index"
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     biddingtime_Owner:
         broker:   biddingtime
         homepage: "http://test.biddingtime.com.ua/user/login"
