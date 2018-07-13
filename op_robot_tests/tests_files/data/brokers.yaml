@@ -427,6 +427,8 @@ polonex:
         tender_owner:   polonex_owner
     homepage: 'http://test.polonex.in.ua/prozorrosale/auctions/public'
     intervals:
+        lots:
+            accelerator: 180
         default:
             enquiry: [0, 10]
             tender:  [0, 25]
@@ -473,6 +475,8 @@ etc:
         tender_owner:   etc_owner
     homepage: 'https://etc-torgi.com/prozorrosale/auctions/public'
     intervals:
+        lots:
+            accelerator: 180
         default:
             enquiry: [0, 10]
             tender:  [0, 25]
@@ -487,6 +491,8 @@ etrading:
         tender_owner:   etrading_owner
     homepage: 'https://e-trading.kiev.ua/prozorrosale/auctions/public'
     intervals:
+        lots:
+            accelerator: 180
         default:
             enquiry: [0, 10]
             tender:  [0, 25]
