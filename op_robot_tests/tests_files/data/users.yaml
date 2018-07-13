@@ -1392,38 +1392,38 @@ users:
         size:     [1366, 800]
     uisce_Owner:
         broker:   uisce
-        homepage: "http://test.proumstrade.com.ua/user/login"
-        default_page: "http://test.proumstrade.com.ua/public"
-        login:    organizator
+        homepage: "https://test.umstrade.com.ua/user/login"
+        default_page: "https://test.umstrade.com.ua/public"
+        login:    privatizator
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1920, 1080]
     uisce_Provider:
         broker:   uisce
-        homepage: "http://test.proumstrade.com.ua/user/login"
-        default_page: "http://test.proumstrade.com.ua/public"
+        homepage: "https://test.umstrade.com.ua/user/login"
+        default_page: "https://test.umstrade.com.ua/public"
         login:    member
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1920, 1080]
     uisce_Provider1:
         broker:   uisce
-        homepage: "http://test.proumstrade.com.ua/user/login"
-        default_page: "http://test.proumstrade.com.ua/public"
+        homepage: "https://test.umstrade.com.ua/user/login"
+        default_page: "https://test.umstrade.com.ua/public"
         login:    member1
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1920, 1080]
     uisce_Viewer:
         broker:   uisce
-        homepage: "http://test.proumstrade.com.ua/"
-        default_page: "http://test.proumstrade.com.ua/public"
+        homepage: "https://test.umstrade.com.ua/"
+        default_page: "https://test.umstrade.com.ua/public"
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1920, 1080]
     zupb_Owner:
         broker:   zupb
         homepage: "https://etm.zub.com.ua"
