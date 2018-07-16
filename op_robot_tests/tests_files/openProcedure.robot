@@ -720,7 +720,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення запитання
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      ask_question_to_tender
+  ...      ask_question_to_tender_view
   Звірити відображення поля title запитання на тендер для усіх користувачів
 
 
@@ -746,7 +746,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення відповіді на запитання
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      answer_question_to_tender
+  ...      answer_question_to_tender_view
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля answer запитання на тендер для користувача ${viewer}
 
@@ -765,7 +765,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення запитання
   ...      viewer tender_owner provider provider1
   ...      ${USERS.users['${viewer}'].broker}
-  ...      ask_question_to_item
+  ...      ask_question_to_item_view
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  Звірити відображення поля title запитання на ${item_index} предмет для усіх користувачів
 
@@ -774,7 +774,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення запитання
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      ask_question_to_item
+  ...      ask_question_to_item_view
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  Звірити відображення поля description запитання на ${item_index} предмет для усіх користувачів
 
@@ -794,7 +794,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення відповіді на запитання
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      answer_question_to_item
+  ...      answer_question_to_item_view
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  Звірити відображення поля answer запитання на ${item_index} предмет для користувача ${viewer}

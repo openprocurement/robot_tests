@@ -17,7 +17,6 @@
 -i modify_auction_title_ua
 -i modify_auction_guarantee
 -i modify_auction_periods
--i modify_auction_procuringEntity
 -i modify_auction_description
 -i modify_decisionDate
 -i modify_decisionID
