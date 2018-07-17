@@ -5,7 +5,7 @@ Suite Teardown  Test Suite Teardown
 
 *** Variables ***
 @{used_roles}  tender_owner  viewer
-
+${contract_index}  ${1}
 
 *** Test Cases ***
 Можливість знайти закупівлю по ідентифікатору
@@ -17,7 +17,7 @@ Suite Teardown  Test Suite Teardown
   Завантажити дані про тендер
   :FOR  ${username}  in  @{used_roles}
   \  Run As  ${${username}}  Пошук тендера по ідентифікатору  ${TENDER['TENDER_UAID']}
-  ${CONTRACT_UAID}=  Get variable value  ${USERS.users['${tender_owner}'].tender_data.data.contracts[1].contractID}
+  ${CONTRACT_UAID}=  Get variable value  ${USERS.users['${tender_owner}'].tender_data.data.contracts[${contract_index}].contractID}
   Set Suite Variable  ${CONTRACT_UAID}
 
 
@@ -39,11 +39,80 @@ Suite Teardown  Test Suite Teardown
   Run As  ${tender_owner}  Отримати доступ до договору  ${CONTRACT_UAID}
 
 
+Можливість подати звіт замовником для 1 milestone
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Подання звіту
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      milestones
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${amountPaid}=  Evaluate  ${USERS.users['${tender_owner}']['contract_data'].data.milestones[0].value.amount}*0.5
+  Подати звіт замовником  ${USERS.users['${tender_owner}']['contract_data'].data}  0  ${amountPaid}  partiallyMet
+
+
+Відображення статусу pending 2 milestone
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Подання звіту
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      milestones
+  [Setup]  Дочекатись зміни статусу на pending 1 milestone
+  Звірити поле договору із значенням
+  ...      ${tender_owner}
+  ...      ${CONTRACT_UAID}
+  ...      pending
+  ...      milestones[1].status
+
+
+Можливість вперше подати звіт замовником для 2 milestone
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Подання звіту
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      milestones
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${amountPaid}=  Evaluate  ${USERS.users['${tender_owner}']['contract_data'].data.milestones[1].value.amount}*0.5
+  Подати звіт замовником  ${USERS.users['${tender_owner}']['contract_data'].data}  1  ${amountPaid}
+
+
+Можливість вдруге подати звіт замовником для 2 milestone
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Подання звіту
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      milestones
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${amountPaid}=  Set Variable  ${USERS.users['${tender_owner}']['contract_data'].data.milestones[1].value.amount}
+  Подати звіт замовником  ${USERS.users['${tender_owner}']['contract_data'].data}  1  ${amountPaid}  met
+
+
+Відображення статусу pending 3 milestone
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Подання звіту
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      milestones
+  [Setup]  Дочекатись зміни статусу на pending 2 milestone
+  Звірити поле договору із значенням
+  ...      ${tender_owner}
+  ...      ${CONTRACT_UAID}
+  ...      pending
+  ...      milestones[2].status
+
+
+Можливість подати звіт замовником для 3 milestone
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Подання звіту
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      milestones
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Подати звіт замовником  ${USERS.users['${tender_owner}']['contract_data'].data}  2  0  notMet
+
+
 Можливість внести зміну до умов договору
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Внесення зміни
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      submit_change
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${change_data}=  Підготувати дані про зміну до договору  ${tender_owner}
   Run As  ${tender_owner}  Внести зміну в договір  ${CONTRACT_UAID}  ${change_data}
@@ -165,7 +234,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_contract
+  ...      modify_contract_amount
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${value.amount}=  create_fake_value_amount
   Set to dictionary  ${USERS.users['${tender_owner}']}  new_amount=${value.amount}
@@ -187,7 +256,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_contract
+  ...      modify_contract_startDate
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${startDate}=  create_fake_date
   ${period.startDate}=  add_minutes_to_date  ${startDate}  -20
@@ -249,7 +318,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування договору
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      modify_contract
+  ...      modify_contract_amount
   Звірити поле договору із значенням
   ...      ${viewer}
   ...      ${CONTRACT_UAID}
@@ -261,7 +330,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування договору
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      modify_contract
+  ...      modify_contract_start_date
   Звірити поле договору із значенням
   ...      ${viewer}
   ...      ${CONTRACT_UAID}
@@ -427,6 +496,63 @@ Suite Teardown  Test Suite Teardown
   ...      ${USERS.users['${viewer}'].broker}
   ...      amount_paid
   Звірити відображення поля amountPaid.currency договору із ${USERS.users['${tender_owner}']['terminating_data'].data.amountPaid.currency} для користувача ${tender_owner}
+
+
+Відображення статусу pending 4 milestone
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Подання звіту
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      milestones
+  [Setup]  Дочекатись зміни статусу на pending 3 milestone
+  Звірити поле договору із значенням
+  ...      ${tender_owner}
+  ...      ${CONTRACT_UAID}
+  ...      pending
+  ...      milestones[3].status
+
+
+Можливість подати звіт замовником для 4 milestone
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Подання звіту
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      milestones
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${amountPaid}=  Set Variable  ${USERS.users['${tender_owner}']['contract_data'].data.milestones[3].value.amount}
+  Подати звіт замовником  ${USERS.users['${tender_owner}']['contract_data'].data}  3  ${amountPaid}  met
+
+
+Відображення статусу pending 5 milestone
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Подання звіту
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      milestones
+  [Setup]  Дочекатись зміни статусу на pending 4 milestone
+  Звірити поле договору із значенням
+  ...      ${tender_owner}
+  ...      ${CONTRACT_UAID}
+  ...      pending
+  ...      milestones[4].status
+
+
+Відображення обсягу дійсно оплаченої суми
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Подання звіту
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      milestones
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  Отримати дані із договору  ${tender_owner}  ${CONTRACT_UAID}  amountPaid.amount
+
+
+Можливість подати звіт замовником для 5 milestone
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Подання звіту
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      milestones
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${amountPaid}=  Evaluate  ${USERS.users['${tender_owner}']['contract_data'].data.value.amount}-${USERS.users['${tender_owner}']['contract_data'].data.amountPaid.amount}
+  Подати звіт замовником  ${USERS.users['${tender_owner}']['contract_data'].data}  4  ${amountPaid}  met
 
 
 Можливість завершити договір

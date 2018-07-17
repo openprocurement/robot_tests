@@ -989,3 +989,20 @@ Require Failure
   Run Keyword If  '${status}' == 'False'  Fail  ${object} not found in \${USERS.users['${username}'].tender_data.data}
   ${len_of_object}=  Get Length  ${USERS.users['${username}'].tender_data.data.${object}}
   [Return]  ${len_of_object-1}
+
+
+Звірити статус milestone
+  [Arguments]  ${username}  ${index}  ${contract_uaid}  ${left}
+  ${right}=  Run as  ${username}  Отримати інформацію із договору  ${contract_uaid}  milestones[${index}].status
+  Порівняти об'єкти  ${left}  ${right}
+
+
+Дочекатись зміни статусу на ${status} ${index} milestone
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Звірити статус milestone
+  ...      ${tender_owner}
+  ...      ${index}
+  ...      ${CONTRACT_UAID}
+  ...      ${status}

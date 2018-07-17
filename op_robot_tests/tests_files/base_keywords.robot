@@ -1259,3 +1259,12 @@ Resource           resource.robot
 Перевірити документ кваліфікіції ${award_id} для користувача ${username} в тендері ${tender_uaid}
   ${document}=  openprocurement_client.Отримати останній документ кваліфікації з типом registerExtract  ${username}  ${tender_uaid}  ${award_id}
   Порівняти об'єкти  ${document['documentType']}  registerExtract
+
+
+Подати звіт замовником
+  [Arguments]  ${data}  ${index}  ${amountPaid}  ${status}=${None}
+  Set To Dictionary  ${data.milestones[${index}].amountPaid}  amount=${amountPaid}
+  Run Keyword If  '${status}' != '${None}'  Set To Dictionary  ${data.milestones[${index}]}  status=${status}
+  ${milestone}=  Create Dictionary  data=${data.milestones[${index}]}
+  Дочекатись дати  ${USERS.users['${tender_owner}']['contract_data'].data.milestones[${index}].period.startDate}
+  Run As  ${tender_owner}  Подати звіт  ${CONTRACT_UAID}  ${milestone}
