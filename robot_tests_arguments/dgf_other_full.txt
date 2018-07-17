@@ -18,9 +18,6 @@
 -i tender_view_modify_auction_title_ua
 -i modify_auction_guarantee
 -i modify_auction_periods
--i modify_auction_procuringEntity
--i modify_auction_description_ua
--i tender_view_modify_auction_description_ua
 -i modify_dgfID
 -i tender_view_modify_dgfID
 -i modify_decisionDate
