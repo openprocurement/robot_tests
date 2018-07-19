@@ -93,18 +93,6 @@ Library  openprocurement_client.utils
   [return]  ${reply}
 
 
-Завантажити документ до об'єкта моніторингу
-  [Arguments]  ${username}  ${filepath}  ${monitoring_uaid}  ${monitoring_obj}
-  Log  ${username}
-  Log  ${monitoring_uaid}
-  Log  ${filepath}
-  ${monitoring}=  openprocurement_client.Пошук об'єкта моніторингу по ідентифікатору  ${username}  ${monitoring_uaid}
-  ${monitoring}=  set_access_key  ${monitoring}  ${USERS.users['${username}'].access_token}
-  ${reply}=  Call Method  ${USERS.users['${username}'].dasu_client}  upload_monitoring_document  ${filepath}  ${monitoring}  ${monitoring_obj}
-  Log object data   ${reply}  reply
-  [return]  ${reply}
-
-
 Отримати інформацію із документа
   [Arguments]  ${username}  ${tender_uaid}  ${doc_id}  ${field}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
@@ -200,12 +188,16 @@ Library  openprocurement_client.utils
 
 
 Оприлюднити рішення про початок моніторингу
-  [Arguments]  ${username}  ${monitoring_uaid}
+  [Arguments]  ${username}  ${monitoring_uaid}  ${file_path}  ${monitoring_data}
   ${monitoring}=  openprocurement_client.Пошук об'єкта моніторингу по ідентифікатору  ${username}  ${monitoring_uaid}
-  ${monitoring_data}=  test_status_data  active
+  ${document}=  Call Method  ${USERS.users['${username}'].dasu_client}  upload_obj_document  ${file_path}  ${USERS.users['${username}'].monitoring_data}
+  ${documents}=  Create List
+  Append To List  ${documents}  ${document.data}
+  Set To Dictionary  ${monitoring_data.data.decision}  documents=${documents}
   Log  ${monitoring_data}
   ${reply}=  Call Method  ${USERS.users['${username}'].dasu_client}  patch_monitoring  ${monitoring_data}  ${monitoring.data.id}
   Log  ${reply}
+  Set To Dictionary  ${USERS.users['${dasu_user}'].initial_data.data}  decision=${monitoring_data.data.decision}
   Set To Dictionary  ${USERS.users['${username}']}   monitoring_data=${reply}
   [return]  ${reply}
 

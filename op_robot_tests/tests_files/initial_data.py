@@ -601,10 +601,6 @@ def tets_monitoring_data( tender_id, accelerator=None):
         "tender_id": tender_id,
         "procuringStages": [random.choice(["awarding", "contracting", "planning"])],
         "parties": [test_party()],
-        "decision": {
-            "date": get_now().isoformat(),
-            "description": fake_en.sentence(nb_words=10, variable_nb_words=True)
-        },
         "mode": "test"
     }
     data['monitoringDetails'] = 'quick, ' \

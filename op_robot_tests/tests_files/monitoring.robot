@@ -184,17 +184,6 @@ ${MOZ_INTEGRATION}   ${False}
   Можливість створити об'єкт моніторингу
 
 
-Можливість додати документацію до об’єкта моніторингу
-  [Tags]   ${USERS.users['${dasu_user}'].broker}: Додання документації
-  ...      dasu_user
-  ...      ${USERS.users['${dasu_user}'].broker}
-  ...      add_doc
-  ...      critical
-  [Setup]  Дочекатись синхронізації з ДАСУ  ${dasu_user}
-  [Teardown]  Оновити DASU_LAST_MODIFICATION_DATE
-  Можливість додати документацію до об'єкта моніторингу
-
-
 Можливість оприлюднити рішення про початок моніторингу
   [Tags]   ${USERS.users['${dasu_user}'].broker}: Оприлюднити рішення
   ...      dasu_user

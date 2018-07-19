@@ -488,9 +488,9 @@ Log differences between dicts
 
 
 Звірити поле об'єкта моніторингу
-  [Arguments]  ${username}  ${tender_uaid}  ${tender_data}  ${field}
-  ${left}=  get_from_object  ${tender_data.data}  ${field}
-  Звірити поле об'єкта моніторингу із значенням  ${username}  ${tender_uaid}  ${left}  ${field}
+  [Arguments]  ${username}  ${monitoring_uaid}  ${monitoring_data}  ${field}
+  ${left}=  get_from_object  ${monitoring_data.data}  ${field}
+  Звірити поле об'єкта моніторингу із значенням  ${username}  ${monitoring_uaid}  ${left}  ${field}
 
 
 Звірити поле плану
@@ -512,8 +512,8 @@ Log differences between dicts
 
 
 Звірити поле об'єкта моніторингу із значенням
-  [Arguments]  ${username}  ${tender_uaid}  ${left}  ${field}  ${object_id}=${Empty}
-  ${right}=  Отримати дані із об'єкта моніторингу  ${username}  ${tender_uaid}  ${field}  ${object_id}
+  [Arguments]  ${username}  ${monitoring_uaid}  ${left}  ${field}  ${object_id}=${Empty}
+  ${right}=  Отримати дані із об'єкта моніторингу  ${username}  ${monitoring_uaid}  ${field}  ${object_id}
   Порівняти об'єкти  ${left}  ${right}
 
 

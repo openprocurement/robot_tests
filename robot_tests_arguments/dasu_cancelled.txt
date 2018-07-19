@@ -13,6 +13,5 @@
 
 -i create_monitoring
 -i find_monitoring
--i add_doc
 -i cancelled
 -i cancellation_view

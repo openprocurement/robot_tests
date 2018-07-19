@@ -15,7 +15,6 @@
 -i find_monitoring
 -i monitoring_view
 
--i add_doc
 -i active_monitoring
 -i stopped
 -i cancellation_view

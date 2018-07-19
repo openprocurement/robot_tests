@@ -14,7 +14,6 @@
 -i create_monitoring
 -i find_monitoring
 -i monitoring_view
--i add_doc
 -i active_monitoring
 
 -i add_party

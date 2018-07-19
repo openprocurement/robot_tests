@@ -114,7 +114,15 @@ Resource           resource.robot
 
 
 Можливість оприлюднити рішення про початок моніторингу
-  Run As  ${dasu_user}  Оприлюднити рішення про початок моніторингу  ${MONITORING['MONITORING_UAID']}
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
+  ${monitoring_data}=  test_status_data  active
+  ${date}=  create_fake_date
+  ${description}=  create_fake_sentence
+  ${decision}=  Create Dictionary
+  ...      date=${date}
+  ...      description=${description}
+  Set To Dictionary  ${monitoring_data.data}  decision=${decision}
+  Run As  ${dasu_user}  Оприлюднити рішення про початок моніторингу  ${MONITORING['MONITORING_UAID']}  ${file_path}  ${monitoring_data}
 
 
 Можливість змінити поле ${field_name} тендера на ${field_value}
@@ -204,18 +212,6 @@ Resource           resource.robot
   ...      doc_id=${doc_id}
   ...      doc_content=${file_content}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  tender_document=${tender_document}
-  Remove File  ${file_path}
-
-
-Можливість додати документацію до об'єкта моніторингу
-  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
-  Run As  ${dasu_user}  Завантажити документ до об'єкта моніторингу  ${file_path}  ${MONITORING['MONITORING_UAID']}  decision
-  ${doc_id}=  get_id_from_string  ${file_name}
-  ${monitoring_document}=  Create Dictionary
-  ...      doc_name=${file_name}
-  ...      doc_id=${doc_id}
-  ...      doc_content=${file_content}
-  Set To Dictionary  ${USERS.users['${dasu_user}']}  monitoring_document=${monitoring_document}
   Remove File  ${file_path}
 
 
