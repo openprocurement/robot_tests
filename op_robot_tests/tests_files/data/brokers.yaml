@@ -56,20 +56,19 @@ Quinta:
         viewer:         Tender_Viewer
     timeout_on_wait: 15
 Etender:
-    intervals:
-        default:
-            enquiry: [0, 20]
-            tender:  [0, 20]
-        dgfOtherAssets:
-            accelerator: 1440
-            auction:  [50, 35]
     keywords_file: etender
     roles:
         provider:       Etender_Provider1
         provider1:      Etender_Provider2
         tender_owner:   Etender_Owner
         viewer:         Etender_Viewer
-    timeout_on_wait: 100
+    intervals:
+        auctions:
+            accelerator: 1440
+            auction:  [40, 30]
+        lots:
+            accelerator: 180
+    timeout_on_wait: 30
 DZO:
     intervals:
         default:

@@ -43,7 +43,7 @@ users:
     Etender_Owner:
         broker:   Etender
         homepage: "http://uatasset.e-auction.ua/#/"
-        login:    case31
+        login:    holder
         password: Qq123456
         browser:  chrome
         position: [0, 0]
