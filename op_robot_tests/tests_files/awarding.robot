@@ -169,21 +169,13 @@ ${MODE}  auctions
   Звірити відображення поля awards[0].status тендера із unsuccessful для користувача ${viewer}
 
 
-Можливість завантажити протокол скасування контракту
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
+Можливість скасувати контракт
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Скасування контракту
   ...     tender_owner
   ...     ${USERS.users['${tender_owner}'].broker}
   ...     cancel_contract
   [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
   Можливість завантажити протокол скасування в контракт -1 користувачем ${tender_owner}
-
-
-Можливість скасувати контракт
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
-  ...     tender_owner
-  ...     ${USERS.users['${tender_owner}'].broker}
-  ...     cancel_contract
-  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
   Run As  ${tender_owner}  Скасувати контракт  ${TENDER['TENDER_UAID']}  -1
 
 
