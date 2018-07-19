@@ -200,13 +200,18 @@ centrex:
         dgfOtherAssets:
             accelerator: 1440
             auction:  [45, 50]
+        lots:
+            accelerator: 100
+        auctions:
+            accelerator: 1440
+            auction:  [120, 60]
     keywords_file: centrex
     roles:
         tender_owner:   centrex_Owner
         provider:   centrex_Provider
         provider1:   centrex_Provider1
         viewer:   centrex_Viewer
-    timeout_on_wait: 180
+    timeout_on_wait: 120
 expagency:
     intervals:
         default:
