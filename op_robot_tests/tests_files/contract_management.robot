@@ -245,7 +245,7 @@ ${contract_index}  ${1}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_contract
+  ...      modify_contract_period
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${endDate}=  create_fake_date
   Set to dictionary  ${USERS.users['${tender_owner}']}  new_endDate=${endDate}
@@ -256,7 +256,7 @@ ${contract_index}  ${1}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_contract_startDate
+  ...      modify_contract_period
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${startDate}=  create_fake_date
   ${period.startDate}=  add_minutes_to_date  ${startDate}  -20
@@ -330,7 +330,7 @@ ${contract_index}  ${1}
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування договору
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      modify_contract_start_date
+  ...      modify_contract_period
   Звірити поле договору із значенням
   ...      ${viewer}
   ...      ${CONTRACT_UAID}
@@ -342,7 +342,7 @@ ${contract_index}  ${1}
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування договору
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      modify_contract
+  ...      modify_contract_period
   Звірити поле договору із значенням
   ...      ${viewer}
   ...      ${CONTRACT_UAID}
