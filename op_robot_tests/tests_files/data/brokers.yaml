@@ -744,6 +744,8 @@ uisce:
         provider1:      uisce_Provider1
         viewer:         uisce_Viewer
     intervals:
+        lots:
+            accelerator: 180
         default:
             enquiry: [0, 10]
             tender:  [0, 25]
@@ -964,6 +966,8 @@ sets:
         provider1:      sets_Provider1
         viewer:         sets_Viewer
     intervals:
+        lots:
+            accelerator: 180
         default:
             enquiry: [0, 10]
             tender:  [0, 25]
