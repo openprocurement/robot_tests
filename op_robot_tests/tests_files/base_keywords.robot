@@ -330,6 +330,10 @@ Resource           resource.robot
   Звірити дату тендера  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${date}
 
 
+Звірити відображення дати ${field} контракту із ${date} для користувача ${username}
+  Звірити дату тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${date}  ${field}
+
+
 Звірити відображення поля ${field} у новоствореному предметі для усіх користувачів
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}  ${provider2}
   \  Звірити відображення поля ${field} у новоствореному предметі для користувача ${username}
