@@ -342,7 +342,7 @@ ubiz:
             accelerator: 1440
         auctions:
             accelerator: 1440
-            auction:  [40, 30]
+            auction:  [10, 15]
     keywords_file: ubiz
     homepage: 'http://test.ubiz.com.ua/auctions2'
     roles:
@@ -505,7 +505,7 @@ comminnex:
             accelerator: 1440
         auctions:
             accelerator: 1440
-            auction:  [40, 30]
+            auction:  [10, 15]
     keywords_file: comminnex
     homepage: 'http://test.market.comminnex.com/auctions2'
     roles:
@@ -526,7 +526,7 @@ torgibirgaukraine:
             accelerator: 1440
         auctions:
             accelerator: 1440
-            auction:  [40, 30]
+            auction:  [10, 15]
     keywords_file: torgibirgaukraine
     homepage: 'http://test.torgi.birga-ukraine.com.ua/auctions2'
     roles:
@@ -597,7 +597,7 @@ cuex:
             accelerator: 1440
         auctions:
             accelerator: 1440
-            auction:  [40, 30]
+            auction:  [10, 15]
     keywords_file: cuex
     homepage: 'http://testing2.torgy.com.ua/auctions2'
     roles:
@@ -758,10 +758,10 @@ palata:
             accelerator: 480
             auction: [30,35]
         lots:
-            accelerator: 90
+            accelerator: 1440
         auctions:
             accelerator: 1440
-            auction:  [200, 30]
+            auction:  [10, 15]
     keywords_file: palata
     homepage: 'http://testing2.palata.com.ua/auctions2'
     roles:
