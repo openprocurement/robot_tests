@@ -7697,6 +7697,86 @@
                 "id": "33692100-8",
                 "description": "Інфузійні розчини"
             }
+        },
+        {
+           "additionalClassifications": [
+                {
+                    "scheme": "INN",
+                    "description": "Epinephrine",
+                    "id": "epinephrine"
+                },
+                {
+                    "scheme": "ATC",
+                    "description": "epinephrine",
+                    "id": "C01CA24"
+                }
+
+            ],
+            "classification": {
+                "scheme": "ДК021",
+                "id": "33600000-6",
+                "description": "Фармацевтична продукція"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "INN",
+                    "description": "Glucose",
+                    "id": "glucose"
+                },
+                {
+                    "scheme": "ATC",
+                    "description": "glucose",
+                    "id": "V04CA02"
+                }
+
+            ],
+            "classification": {
+                "scheme": "ДК021",
+                "id": "33600000-6",
+                "description": "Фармацевтична продукція"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "INN",
+                    "description": "Ondansetron",
+                    "id": "ondansetron"
+                },
+                {
+                    "scheme": "ATC",
+                    "description": "ondansetron",
+                    "id": "A04AA01"
+                }
+
+            ],
+            "classification": {
+                "scheme": "ДК021",
+                "id": "33600000-6",
+                "description": "Фармацевтична продукція"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "INN",
+                    "description": "Sodium chlorid",
+                    "id": "sodium chloride"
+                },
+                {
+                    "scheme": "ATC",
+                    "description": "sodium chloride",
+                    "id": "B05XA03"
+                }
+
+            ],
+            "classification": {
+                "scheme": "ДК021",
+                "id": "33600000-6",
+                "description": "Фармацевтична продукція"
+            }
         }
     ],
     "units": [
@@ -7801,6 +7881,7 @@
         "33612000-3",
         "33692500-2",
         "33692100-8",
+        "33600000-6",
         "99999999-9"
     ],
     "items_base_data": [
@@ -7974,6 +8055,50 @@
             "description": "АВЕЛОКС розчин для інфузій 400 мг/250 мл 250 мл флакони № 1",
             "description_ru": "Авелокс раствор для инфузий 400 мг / 250 мл 250 мл флаконы № 1",
             "description_en": "AVELLOX solution for infusion 400 mg / 250 ml 250 ml bottle № 1",
+            "quantity": 15,
+            "unit": {
+                "code": "VI",
+                "name": "Флакон"
+            }
+        },
+        {
+            "cpv_id": "33600000-6",
+            "description": "Фармацевтична продукція Епінефрин",
+            "description_ru": "Фармацевтическая продукция Эпинефрин",
+            "description_en": "Pharmaceutical products Epinephrine",
+            "quantity": 5,
+            "unit": {
+                "code": "PK",
+                "name": "упаковка"
+            }
+        },
+        {
+            "cpv_id": "33600000-6",
+            "description": "Глюкоза р-н д/інф. 50мг/мл по 400 мл",
+            "description_ru": "Глюкоза р-р д / инф. 50 мг / мл по 400 мл",
+            "description_en": "Glucose d / inf. 50 mg / ml 400 ml",
+            "quantity": 15,
+            "unit": {
+                "code": "VI",
+                "name": "Флакон"
+            }
+        },
+        {
+            "cpv_id": "33600000-6",
+            "description": "Ондасетрон (юнорм) р-н д/ін'єкц. 2мг/мл",
+            "description_ru": "Ондасетрон (юнорм) р-р д / инъекций. 2 мг / мл",
+            "description_en": "Ondasetron (youth) d / inject. 2 mg / ml",
+            "quantity": 15,
+            "unit": {
+                "code": "PK",
+                "name": "упаковка"
+            }
+        },
+        {
+            "cpv_id": "33600000-6",
+            "description": "Лактат натрію, складний розчин Натрію хлорид+Калію хлорид+Натрію лактат (реосорбілакт) р-н д/інф. 200 мл ",
+            "description_ru": "Лактат натрия, сложный раствор натрия хлорид + Калия хлорид + натрия лактат (реосорбилакт) р-р д / инф. 200 мл",
+            "description_en": "Sodium lactate, complex solution Sodium chloride + Potassium chloride + Sodium lactate (reosorbilactone) rn d / inf. 200 ml",
             "quantity": 15,
             "unit": {
                 "code": "VI",

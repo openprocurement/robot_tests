@@ -291,33 +291,33 @@ ${MOZ_INTEGRATION}  ${False}
   Звірити відображення поля description усіх предметів для користувача ${viewer}
 
 
-Відображення схеми основної/додаткової класифікації номенклатур переговорної процедури за нагальною потребою
+Відображення схеми класифікації номенклатур переговорної процедури за нагальною потребою
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
   Звірити відображення поля classification.scheme усіх предметів для користувача ${viewer}
-  Run Keyword If  "${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['description']}" == "Не відображене в інших розділах"
+  Run Keyword If  "${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['id']}" == "33600000-6"
   ...      Звірити відображення поля additionalClassifications[0].scheme усіх предметів для користувача ${viewer}
 
 
-Відображення ідентифікатора основної/додаткової класифікації номенклатур переговорної процедури за нагальною потребою
+Відображення ідентифікатора класифікації номенклатур переговорної процедури за нагальною потребою
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
   Звірити відображення поля classification.id усіх предметів для користувача ${viewer}
-  Run Keyword If  "${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['description']}" == "Не відображене в інших розділах"
+  Run Keyword If  "${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['id']}" == "33600000-6"
   ...      Звірити відображення поля additionalClassifications[0].id усіх предметів для користувача ${viewer}
 
 
-Відображення опису основної/додаткової класифікації номенклатур переговорної процедури за нагальною потребою
+Відображення опису класифікації номенклатур переговорної процедури за нагальною потребою
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури процедури
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
   Звірити відображення поля classification.description усіх предметів для користувача ${viewer}
-  Run Keyword If  "${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['description']}" == "Не відображене в інших розділах"
+  Run Keyword If  "${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['id']}" == "33600000-6"
   ...      Звірити відображення поля additionalClassifications[0].description усіх предметів для користувача ${viewer}
 
 
