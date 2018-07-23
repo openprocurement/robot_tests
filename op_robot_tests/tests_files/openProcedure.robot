@@ -276,6 +276,8 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_view
   ...      non-critical
   Звірити відображення поля classification.scheme усіх предметів для користувача ${viewer}
+  Run Keyword If  "${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['id']}" == "33600000-6"
+  ...      Звірити відображення поля additionalClassifications[0].scheme усіх предметів для користувача ${viewer}
 
 
 Відображення ідентифікатора класифікації номенклатур тендера
@@ -285,6 +287,8 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_view
   ...      non-critical
   Звірити відображення поля classification.id усіх предметів для користувача ${viewer}
+  Run Keyword If  "${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['id']}" == "33600000-6"
+  ...      Звірити відображення поля additionalClassifications[0].id усіх предметів для користувача ${viewer}
 
 
 Відображення опису класифікації номенклатур тенедра
@@ -294,6 +298,8 @@ ${MOZ_INTEGRATION}  ${False}
   ...      tender_view
   ...      non-critical
   Звірити відображення поля classification.description усіх предметів для користувача ${viewer}
+  Run Keyword If  "${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['id']}" == "33600000-6"
+  ...      Звірити відображення поля additionalClassifications[0].description усіх предметів для користувача ${viewer}
 
 
 Відображення назви одиниці номенклатур тендера
