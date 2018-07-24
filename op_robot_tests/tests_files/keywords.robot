@@ -295,9 +295,10 @@ Get Broker Property By Username
 
 
 Підготувати дані для подання пропозиції для другого етапу
-  [Arguments]  ${index}=0
-  ${bid}=  generate_test_bid_data_second_stage  ${USERS.users['${tender_owner}'].tender_data.data}  ${index}
-  [Return]  ${bid}
+  [Arguments]  ${username}
+  ${value}=  Evaluate  ${USERS.users['${username}'].bidresponses.bid.data.lotValues[0].value.amount}*0.95
+  Set To Dictionary  ${USERS.users['${username}'].bidresponses.bid.data.lotValues[0].value}  amount=${value}
+  [Return]  ${USERS.users['${username}'].bidresponses.bid}
 
 
 Підготувати дані про постачальника
