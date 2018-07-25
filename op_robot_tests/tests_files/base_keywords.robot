@@ -1226,8 +1226,8 @@ Resource           resource.robot
   Run As  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}  ${lots_ids}  ${features_ids}
 
 
-Можливість подати цінову пропозицію на другий етап ${index} користувачем ${username}
-  ${bid}=  Підготувати дані для подання пропозиції для другого етапу  ${index}
+Можливість подати цінову пропозицію на другий етап користувачем ${username}
+  ${bid}=  Підготувати дані для подання пропозиції для другого етапу  ${username}
   ${bidresponses}=  Create Dictionary  bid=${bid}
   Set To Dictionary  ${USERS.users['${username}']}  bidresponses=${bidresponses}
   ${lots}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.lots}  ${None}
