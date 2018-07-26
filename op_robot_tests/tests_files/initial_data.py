@@ -121,7 +121,7 @@ def create_fake_scheme_id(scheme):
     scheme_id = {
             u'UA-MFO': random.randint(100000, 999999),
             u'UA-EDR': random.randint(10000000, 99999999),
-            u'accountNumber': random.randint(1000000000, 99999999999999999999),
+            u'accountNumber': random.randint(1000000000, 9999999999)
     }
     return scheme_id[scheme]
 
