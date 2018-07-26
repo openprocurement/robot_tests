@@ -289,6 +289,8 @@ PrivatMarket:
         default:
             enquiry: [0, 15]
             tender:  [0, 15]
+        lots:
+            accelerator: 240
     keywords_file: privatmarket
     roles:
         tender_owner:   PrivatMarket_Owner
