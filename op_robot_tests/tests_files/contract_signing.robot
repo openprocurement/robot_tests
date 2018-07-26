@@ -105,7 +105,7 @@ Suite Teardown  Test Suite Teardown
   ...      non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   ${contract_index}=  Отримати останній індекс  contracts  ${tender_owner}  ${viewer}
-  Звірити відображення поля contracts[${contract_index}].dateSigned тендера із ${USERS.users['${tender_owner}'].dateSigned} для користувача ${viewer}
+  Звірити відображення дати contracts[${contract_index}].dateSigned контракту із ${USERS.users['${tender_owner}'].dateSigned} для користувача ${viewer}
 
 
 Можливість вказати період дії угоди
@@ -131,7 +131,7 @@ Suite Teardown  Test Suite Teardown
   ...      non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   ${contract_index}=  Отримати останній індекс  contracts  ${tender_owner}  ${viewer}
-  Звірити відображення поля contracts[${contract_index}].period.startDate тендера із ${USERS.users['${tender_owner}'].contract_startDate} для користувача ${viewer}
+  Звірити відображення дати contracts[${contract_index}].period.startDate контракту із ${USERS.users['${tender_owner}'].contract_startDate} для користувача ${viewer}
 
 
 Відображення дати завершення дії угоди
@@ -142,7 +142,7 @@ Suite Teardown  Test Suite Teardown
   ...      non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   ${contract_index}=  Отримати останній індекс  contracts  ${tender_owner}  ${viewer}
-  Звірити відображення поля contracts[${contract_index}].period.endDate тендера із ${USERS.users['${tender_owner}'].contract_endDate} для користувача ${viewer}
+  Звірити відображення дати contracts[${contract_index}].period.endDate контракту із ${USERS.users['${tender_owner}'].contract_endDate} для користувача ${viewer}
 
 
 Можливість завантажити документацію в угоду
