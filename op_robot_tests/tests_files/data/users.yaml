@@ -65,8 +65,8 @@ users:
             monitorings:  [test.quintagroup.com, test.quintagroup.com]
             plans:        [test.quintagroup.com, test.quintagroup.com]
             tenders:      [test.quintagroup.com, test.quintagroup.com]
-        dasu_api_key:  9b3aaafba9fe4f4c95c3be3e1feaae31
-        api_key:  9b3aaafba9fe4f4c95c3be3e1feaae31
+        dasu_api_key:  9987b551710b44699bf2ad10188bcf65
+        api_key:  9987b551710b44699bf2ad10188bcf65
         broker:   Quinta
         browser:  phantomjs
         auth_edr: [test.quintagroup.com, f5111c99a97a45348d8165ba8fcf0d62]
