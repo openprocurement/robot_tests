@@ -349,6 +349,8 @@ uatenders:
         dgfOtherAssets:
             accelerator: 360
             auction: [45, 50]
+        lots:
+            accelerator: 180
     keywords_file: uatenders
     roles:
         tender_owner:   uatenders_Owner
