@@ -940,6 +940,22 @@ sets:
         dgfInsider:
             accelerator: 360
     timeout_on_wait: 30
+mytender:
+    keywords_file: mytender
+    accelerator: 1440
+    roles:
+        tender_owner:   mytender_Owner
+        provider:       mytender_Provider
+        provider1:      mytender_Provider1
+        viewer:         mytender_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+        dgfInsider:
+            accelerator: 360
+    timeout_on_wait: 30
 biddingtime:
     keywords_file: biddingtime
     accelerator: 1440
