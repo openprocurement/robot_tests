@@ -1587,6 +1587,40 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1366, 768]
+    mytender_Owner:
+        broker:   mytender
+        homepage: "http://mytender.com.ua/user/login"
+        default_page: "http://mytender.com.ua/public"
+        login:    organizator
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    mytender_Provider:
+        broker:   mytender
+        homepage: "http://mytender.com.ua/user/login"
+        default_page: "http://mytender.com.ua/public"
+        login:    member
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    mytender_Provider1:
+        broker:   mytender
+        homepage: "http://mytender.com.ua/user/login"
+        default_page: "http://mytender.com.ua/public"
+        login:    member1
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    mytender_Viewer:
+        broker:   mytender
+        homepage: "http://mytender.com.ua"
+        default_page: "http://mytender.com.ua/public"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
     biddingtime_Owner:
         broker:   biddingtime
         homepage: "http://biddingtime.com.ua/user/login"
