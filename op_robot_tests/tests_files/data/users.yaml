@@ -1984,3 +1984,37 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
+    livtrade_Owner:
+        broker:   livtrade
+        homepage: "http://cbd1.livtrade.com.ua/user/login"
+        default_page: "http://cbd1.livtrade.com.ua/public/index"
+        login:    privatizator
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    livtrade_Provider:
+        broker:   livtrade
+        homepage: "http://cbd1.livtrade.com.ua/user/login"
+        default_page: "http://cbd1.livtrade.com.ua/public/index"
+        login:    member
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    livtrade_Provider1:
+        broker:   livtrade
+        homepage: "http://cbd1.livtrade.com.ua/user/login"
+        default_page: "http://cbd1.livtrade.com.ua/public/index"
+        login:    member1
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    livtrade_Viewer:
+        broker:   livtrade
+        homepage: "http://cbd1.livtrade.com.ua/user/login"
+        default_page: "http://cbd1.livtrade.com.ua/public/index"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]

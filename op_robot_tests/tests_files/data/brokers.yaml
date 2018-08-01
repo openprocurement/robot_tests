@@ -1022,3 +1022,19 @@ tsbgalcontract:
             tender:  [0, 25]
             auction: [25, 30]
     timeout_on_wait: 20
+livtrade:
+    keywords_file: livtrade
+    accelerator: 180
+    roles:
+        tender_owner:   livtrade_Owner
+        provider:       livtrade_Provider
+        provider1:      livtrade_Provider1
+        viewer:         livtrade_Viewer
+    intervals:
+        lots:
+            accelerator: 180
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 1
