@@ -2052,3 +2052,37 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1366, 768]
+    aukzionist_Owner:
+        broker:   aukzionist
+        homepage: "http://sale.auktsionist.com/user/login"
+        default_page: "http://sale.auktsionist.com/public/index"
+        login:    privatizator
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    aukzionist_Provider:
+        broker:   aukzionist
+        homepage: "http://sale.auktsionist.com/user/login"
+        default_page: "http://sale.auktsionist.com/public/index"
+        login:    member
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    aukzionist_Provider1:
+        broker:   aukzionist
+        homepage: "http://sale.auktsionist.com/user/login"
+        default_page: "http://sale.auktsionist.com/public/index"
+        login:    member1
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    aukzionist_Viewer:
+        broker:   aukzionist
+        homepage: "http://sale.auktsionist.com/user/login"
+        default_page: "http://sale.auktsionist.com/public/index"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]

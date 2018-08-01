@@ -1054,3 +1054,19 @@ mytender:
             tender:  [0, 25]
             auction: [25, 30]
     timeout_on_wait: 1
+aukzionist:
+    keywords_file: aukzionist
+    accelerator: 180
+    roles:
+        tender_owner:   aukzionist_Owner
+        provider:       aukzionist_Provider
+        provider1:      aukzionist_Provider1
+        viewer:         aukzionist_Viewer
+    intervals:
+        lots:
+            accelerator: 180
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 1
