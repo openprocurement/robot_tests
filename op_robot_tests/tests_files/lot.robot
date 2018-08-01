@@ -66,7 +66,7 @@ ${RESOURCE}          lots
   Отримати дані із дати date тендера для усіх користувачів
 
 
-Відображення дати завершення періоду редагування об'єкта МП
+Відображення дати завершення періоду редагування лоту
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
