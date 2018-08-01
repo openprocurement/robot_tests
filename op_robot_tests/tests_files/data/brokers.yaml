@@ -217,20 +217,21 @@ centrex:
         viewer:   centrex_Viewer
     timeout_on_wait: 120
 expagency:
-    intervals:
-        default:
-            enquiry: [0, 17]
-            tender:  [0, 19]
-        dgfOtherAssets:
-            accelerator: 1440
-            auction:  [45, 50]
     keywords_file: expagency
+    accelerator: 180
     roles:
         tender_owner:   expagency_Owner
-        provider:   expagency_Provider
-        provider1:   expagency_Provider1
-        viewer:   expagency_Viewer
-    timeout_on_wait: 180
+        provider:       expagency_Provider
+        provider1:      expagency_Provider1
+        viewer:         expagency_Viewer
+    intervals:
+        lots:
+            accelerator: 180
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 1
 govfound:
     intervals:
         default:
@@ -1021,3 +1022,51 @@ tsbgalcontract:
             tender:  [0, 25]
             auction: [25, 30]
     timeout_on_wait: 20
+livtrade:
+    keywords_file: livtrade
+    accelerator: 180
+    roles:
+        tender_owner:   livtrade_Owner
+        provider:       livtrade_Provider
+        provider1:      livtrade_Provider1
+        viewer:         livtrade_Viewer
+    intervals:
+        lots:
+            accelerator: 180
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 1
+mytender:
+    keywords_file: mytender
+    accelerator: 180
+    roles:
+        tender_owner:   mytender_Owner
+        provider:       mytender_Provider
+        provider1:      mytender_Provider1
+        viewer:         mytender_Viewer
+    intervals:
+        lots:
+            accelerator: 180
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 1
+aukzionist:
+    keywords_file: aukzionist
+    accelerator: 180
+    roles:
+        tender_owner:   aukzionist_Owner
+        provider:       aukzionist_Provider
+        provider1:      aukzionist_Provider1
+        viewer:         aukzionist_Viewer
+    intervals:
+        lots:
+            accelerator: 180
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 1
