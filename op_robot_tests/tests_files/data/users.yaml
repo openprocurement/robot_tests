@@ -2018,3 +2018,37 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1366, 768]
+    mytender_Owner:
+        broker:   mytender
+        homepage: "http://cbd2.mytender.com.ua/user/login"
+        default_page: "http://cbd2.mytender.com.ua/public/index"
+        login:    privatizator
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    mytender_Provider:
+        broker:   mytender
+        homepage: "http://cbd2.mytender.com.ua/user/login"
+        default_page: "http://cbd2.mytender.com.ua/public/index"
+        login:    member
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    mytender_Provider1:
+        broker:   mytender
+        homepage: "http://cbd2.mytender.com.ua/user/login"
+        default_page: "http://cbd2.mytender.com.ua/public/index"
+        login:    member1
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    mytender_Viewer:
+        broker:   mytender
+        homepage: "http://cbd2.mytender.com.ua/user/login"
+        default_page: "http://cbd2.mytender.com.ua/public/index"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
