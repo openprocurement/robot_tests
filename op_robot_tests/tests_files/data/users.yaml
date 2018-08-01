@@ -312,34 +312,38 @@ users:
         size:     [1366, 800]
     expagency_Owner:
         broker:   expagency
-        homepage: "http://test-torgi.exp-agency.com.ua"
-        login:    dzotenderowner@gmail.com
+        homepage: "http://cbd2.exp-agency.com.ua/user/login"
+        default_page: "http://cbd2.exp-agency.com.ua/public/index"
+        login:    privatizator
         password: 123456
-        browser:  Firefox
+        browser:  chrome
         position: [0, 0]
-        size:     [1366, 800]
+        size:     [1366, 768]
     expagency_Provider:
         broker:   expagency
-        homepage: "http://test-torgi.exp-agency.com.ua"
-        login:    prozorroyprovider1@gmail.com
+        homepage: "http://cbd2.exp-agency.com.ua/user/login"
+        default_page: "http://cbd2.exp-agency.com.ua/public/index"
+        login:    member
         password: 123456
-        browser:  Firefox
+        browser:  chrome
         position: [0, 0]
-        size:     [1366, 800]
+        size:     [1366, 768]
     expagency_Provider1:
         broker:   expagency
-        homepage: "http://test-torgi.exp-agency.com.ua"
-        login:    prozorroyprovider2@gmail.com
+        homepage: "http://cbd2.exp-agency.com.ua/user/login"
+        default_page: "http://cbd2.exp-agency.com.ua/public/index"
+        login:    member1
         password: 123456
-        browser:  Firefox
+        browser:  chrome
         position: [0, 0]
-        size:     [1366, 800]
+        size:     [1366, 768]
     expagency_Viewer:
         broker:   expagency
-        homepage: "http://test-torgi.exp-agency.com.ua"
-        browser:  Firefox
+        homepage: "http://cbd2.exp-agency.com.ua/user/login"
+        default_page: "http://cbd2.exp-agency.com.ua/public/index"
+        browser:  chrome
         position: [0, 0]
-        size:     [1366, 800]
+        size:     [1366, 768]
     govfound_Owner:
         broker:   govfound
         homepage: "http://test.gov.auction"
