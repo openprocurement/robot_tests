@@ -2299,37 +2299,37 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1366, 768]
-    livtrade_viewer:
+    livtrade_Owner:
         broker:   livtrade
-        homepage: "http://sale.livtrade.com.ua/prozorrosale/auctions/public"
-        syncpage: "http://sale.livtrade.com.ua/prozorrosale/auctions/sync-all"
+        homepage: "http://cbd1.livtrade.com.ua/user/login"
+        default_page: "http://cbd1.livtrade.com.ua/public"
+        login:    organizator
+        password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1366, 800]
-    livtrade_provider:
+        size:     [1366, 768]
+    livtrade_Provider:
         broker:   livtrade
-        homepage: "http://sale.livtrade.com.ua/prozorrosale/auctions/public"
-        syncpage: "http://sale.livtrade.com.ua/prozorrosale/auctions/sync-all"
-        login:    livmemb1@test.t
-        password: livpass
+        homepage: "http://cbd1.livtrade.com.ua/user/login"
+        default_page: "http://cbd1.livtrade.com.ua/public"
+        login:    member
+        password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1366, 800]
-    livtrade_provider1:
+        size:     [1366, 768]
+    livtrade_Provider1:
         broker:   livtrade
-        homepage: "http://sale.livtrade.com.ua/prozorrosale/auctions/public"
-        syncpage: "http://sale.livtrade.com.ua/prozorrosale/auctions/sync-all"
-        login:    livmemb2@test.t
-        password: livpass
+        homepage: "http://cbd1.livtrade.com.ua/user/login"
+        default_page: "http://cbd1.livtrade.com.ua/public"
+        login:    member1
+        password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1366, 800]
-    livtrade_owner:
+        size:     [1366, 768]
+    livtrade_Viewer:
         broker:   livtrade
-        homepage: "http://sale.livtrade.com.ua/prozorrosale/auctions/public"
-        syncpage: "http://sale.livtrade.com.ua/prozorrosale/auctions/sync-all"
-        login:    livadmin@test.t
-        password: livpass
+        homepage: "http://cbd1.livtrade.com.ua"
+        default_page: "http://cbd1.livtrade.com.ua/public"
         browser:  chrome
         position: [0, 0]
-        size:     [1366, 800]
+        size:     [1366, 768]
