@@ -1302,19 +1302,21 @@ vapol:
             auction: [25, 30]
     timeout_on_wait: 10
 avi:
-    keywords_file: aversinv
+    keywords_file: avi
+    accelerator: 1440
     roles:
-        viewer:         avi_Viewer
+        tender_owner:   avi_Owner
         provider:       avi_Provider
         provider1:      avi_Provider1
-        tender_owner:   avi_Owner
-    homepage: 'http://sales.avi.net.ua/'
+        viewer:         avi_Viewer
     intervals:
         default:
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
-    timeout_on_wait: 10
+        dgfInsider:
+            accelerator: 360
+    timeout_on_wait: 30
 livtrade:
     keywords_file: livtrade
     roles:
