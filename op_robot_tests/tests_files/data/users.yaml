@@ -403,38 +403,34 @@ users:
         size:     [1366, 800]
     expagency_Owner:
         broker:   expagency
-        homepage: "http://cbd1.exp-agency.com.ua/user/login"
-        default_page: "http://cbd1.exp-agency.com.ua/public"
-        login:    organizator
+        homepage: "http://test-torgi.exp-agency.com.ua"
+        login:    prozorroytenderowner@gmail.com
         password: 123456
-        browser:  chrome
+        browser:  Chrome
         position: [0, 0]
-        size:     [1366, 768]
+        size:     [1366, 800]
     expagency_Provider:
         broker:   expagency
-        homepage: "http://cbd1.exp-agency.com.ua/user/login"
-        default_page: "http://cbd1.exp-agency.com.ua/public"
-        login:    member
+        homepage: "http://test-torgi.exp-agency.com.ua"
+        login:    prozorroyprovider1@gmail.com
         password: 123456
-        browser:  chrome
+        browser:  Chrome
         position: [0, 0]
-        size:     [1366, 768]
+        size:     [1366, 800]
     expagency_Provider1:
         broker:   expagency
-        homepage: "http://cbd1.exp-agency.com.ua/user/login"
-        default_page: "http://cbd1.exp-agency.com.ua/public"
-        login:    member1
+        homepage: "http://test-torgi.exp-agency.com.ua"
+        login:    prozorroyprovider2@gmail.com
         password: 123456
-        browser:  chrome
+        browser:  Chrome
         position: [0, 0]
-        size:     [1366, 768]
+        size:     [1366, 800]
     expagency_Viewer:
         broker:   expagency
-        homepage: "http://cbd1.exp-agency.com.ua"
-        default_page: "http://cbd1.exp-agency.com.ua/public"
-        browser:  chrome
+        homepage: "http://test-torgi.exp-agency.com.ua"
+        browser:  Chrome
         position: [0, 0]
-        size:     [1366, 768]
+        size:     [1366, 800]
     govfound_Owner:
         broker:   govfound
         homepage: "http://test.gov.auction"
@@ -2299,37 +2295,37 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1366, 768]
-    livtrade_Owner:
+    livtrade_viewer:
         broker:   livtrade
-        homepage: "http://cbd1.livtrade.com.ua/user/login"
-        default_page: "http://cbd1.livtrade.com.ua/public"
-        login:    organizator
-        password: 123456
+        homepage: "http://sale.livtrade.com.ua/prozorrosale/auctions/public"
+        syncpage: "http://sale.livtrade.com.ua/prozorrosale/auctions/sync-all"
         browser:  chrome
         position: [0, 0]
-        size:     [1366, 768]
-    livtrade_Provider:
+        size:     [1366, 800]
+    livtrade_provider:
         broker:   livtrade
-        homepage: "http://cbd1.livtrade.com.ua/user/login"
-        default_page: "http://cbd1.livtrade.com.ua/public"
-        login:    member
-        password: 123456
+        homepage: "http://sale.livtrade.com.ua/prozorrosale/auctions/public"
+        syncpage: "http://sale.livtrade.com.ua/prozorrosale/auctions/sync-all"
+        login:    livmemb1@test.t
+        password: livpass
         browser:  chrome
         position: [0, 0]
-        size:     [1366, 768]
-    livtrade_Provider1:
+        size:     [1366, 800]
+    livtrade_provider1:
         broker:   livtrade
-        homepage: "http://cbd1.livtrade.com.ua/user/login"
-        default_page: "http://cbd1.livtrade.com.ua/public"
-        login:    member1
-        password: 123456
+        homepage: "http://sale.livtrade.com.ua/prozorrosale/auctions/public"
+        syncpage: "http://sale.livtrade.com.ua/prozorrosale/auctions/sync-all"
+        login:    livmemb2@test.t
+        password: livpass
         browser:  chrome
         position: [0, 0]
-        size:     [1366, 768]
-    livtrade_Viewer:
+        size:     [1366, 800]
+    livtrade_owner:
         broker:   livtrade
-        homepage: "http://cbd1.livtrade.com.ua"
-        default_page: "http://cbd1.livtrade.com.ua/public"
+        homepage: "http://sale.livtrade.com.ua/prozorrosale/auctions/public"
+        syncpage: "http://sale.livtrade.com.ua/prozorrosale/auctions/sync-all"
+        login:    livadmin@test.t
+        password: livpass
         browser:  chrome
         position: [0, 0]
-        size:     [1366, 768]
+        size:     [1366, 800]
