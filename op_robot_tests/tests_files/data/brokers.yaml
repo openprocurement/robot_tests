@@ -311,7 +311,7 @@ centrex:
     timeout_on_wait: 180
 expagency:
     keywords_file: expagency
-    accelerator: 1440
+    accelerator: 360
     roles:
         tender_owner:   expagency_Owner
         provider:       expagency_Provider
@@ -937,7 +937,7 @@ sets:
     timeout_on_wait: 30
 mytender:
     keywords_file: mytender
-    accelerator: 1440
+    accelerator: 360
     roles:
         tender_owner:   mytender_Owner
         provider:       mytender_Provider
@@ -953,7 +953,7 @@ mytender:
     timeout_on_wait: 30
 biddingtime:
     keywords_file: biddingtime
-    accelerator: 1440
+    accelerator: 360
     roles:
         tender_owner:   biddingtime_Owner
         provider:       biddingtime_Provider
@@ -1298,7 +1298,7 @@ vapol:
     timeout_on_wait: 10
 avi:
     keywords_file: avi
-    accelerator: 1440
+    accelerator: 360
     roles:
         tender_owner:   avi_Owner
         provider:       avi_Provider
@@ -1314,7 +1314,7 @@ avi:
     timeout_on_wait: 30
 livtrade:
     keywords_file: livtrade
-    accelerator: 1440
+    accelerator: 360
     roles:
         tender_owner:   livtrade_Owner
         provider:       livtrade_Provider
