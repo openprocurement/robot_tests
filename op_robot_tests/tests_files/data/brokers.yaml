@@ -308,10 +308,10 @@ Promauctions:
             accelerator: 1440
             auction:  [70, 60]
         lots:
-            accelerator: 40
+            accelerator: 50
         auctions:
-            accelerator: 150
-            auction:  [260, 60]
+            accelerator: 180
+            auction:  [270, 60]
     keywords_file: prom
     roles:
         tender_owner:   Prom_Owner
