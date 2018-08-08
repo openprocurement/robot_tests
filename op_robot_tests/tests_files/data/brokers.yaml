@@ -922,7 +922,10 @@ tabua:
             accelerator: 1400
             auction:  [75, 80]
         lots:
-            accelerator: 150
+            accelerator: 1440
+        auctions:
+            accelerator: 1440
+            auction:  [35, 40]
     keywords_file: tabua
     startpage: 'http://staging_sale.tab.com.ua/'
     auctionpage: 'http://staging_sale.tab.com.ua/auctions'
