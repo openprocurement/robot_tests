@@ -240,13 +240,18 @@ govfound:
         dgfOtherAssets:
             accelerator: 1440
             auction:  [45, 50]
+        lots:
+            accelerator: 720
+        auctions:
+            accelerator: 1440
+            auction:  [25, 60]
     keywords_file: govfound
     roles:
         tender_owner:   govfound_Owner
         provider:   govfound_Provider
         provider1:   govfound_Provider1
         viewer:   govfound_Viewer
-    timeout_on_wait: 180
+    timeout_on_wait: 120
 25h8:
     intervals:
         default:
