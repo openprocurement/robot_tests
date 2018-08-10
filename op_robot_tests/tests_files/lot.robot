@@ -8,7 +8,7 @@ Suite Teardown  Test Suite Teardown
 
 ${MODE}              lots
 ${RESOURCE}          lots
-@{USED_ROLES}        tender_owner  viewer
+@{USED_ROLES}        tender_owner  viewer  provider  provider1
 
 *** Test Cases ***
 Можливість створити лот
