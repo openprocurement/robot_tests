@@ -1692,32 +1692,32 @@ users:
         size:     [1366, 800]
     podilska_Owner:
         broker:   podilska
-        homepage: "https://sale.birzha.km.ua/Registration.aspx"
-        default_page: "https://sale.birzha.km.ua/PositionList.aspx"
+        homepage: "https://sale.birzha.km.ua/test/Registration.aspx"
+        default_page: "https://sale.birzha.km.ua/test/PositionList.aspx"
         login:    km_Owner@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     podilska_Provider:
         broker:   podilska
-        homepage: "https://sale.birzha.km.ua/Registration.aspx"
-        default_page: "https://sale.birzha.km.ua/PositionList.aspx"
+        homepage: "https://sale.birzha.km.ua/test/Registration.aspx"
+        default_page: "https://sale.birzha.km.ua/test/PositionList.aspx"
         login:    km_Provider@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     podilska_Provider1:
         broker:   podilska
-        homepage: "https://sale.birzha.km.ua/Registration.aspx"
-        default_page: "https://sale.birzha.km.ua/PositionList.aspx"
+        homepage: "https://sale.birzha.km.ua/test/Registration.aspx"
+        default_page: "https://sale.birzha.km.ua/test/PositionList.aspx"
         login:    km_Provider1@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     podilska_Viewer:
         broker:   podilska
-        homepage: "https://sale.birzha.km.ua/Registration.aspx"
-        default_page: "https://sale.birzha.km.ua/PositionList.aspx"
+        homepage: "https://sale.birzha.km.ua/test/Registration.aspx"
+        default_page: "https://sale.birzha.km.ua/test/PositionList.aspx"
         login:    km_Viewer@1.ua
         browser:  firefox
         position: [0, 0]
