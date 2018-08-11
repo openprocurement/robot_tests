@@ -2086,3 +2086,37 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1366, 768]
+    skyline_viewer:
+        broker:   skyline
+        homepage: "http://test.skyline.auction/prozorrosale/auctions/public"
+        syncpage: "http://test.skyline.auction/prozorrosale/auctions/sync-all"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    skyline_provider:
+        broker:   skyline
+        homepage: "http://test.skyline.auction/prozorrosale/auctions/public"
+        syncpage: "http://test.skyline.auction/prozorrosale/auctions/sync-all"
+        login:    testmemb1@test.t
+        password: testpass
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    skyline_provider1:
+        broker:   skyline
+        homepage: "http://test.skyline.auction/prozorrosale/auctions/public"
+        syncpage: "http://test.skyline.auction/prozorrosale/auctions/sync-all"
+        login:    testmemb2@test.t
+        password: testpass
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    skyline_owner:
+        broker:   skyline
+        homepage: "http://test.skyline.auction/prozorrosale/auctions/public"
+        syncpage: "http://test.skyline.auction/prozorrosale/auctions/sync-all"
+        login:    testadmin@test.t
+        password: testpass
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
