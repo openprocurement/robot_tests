@@ -610,7 +610,7 @@ users:
     uatenders_Owner:
         broker:   uatenders
         homepage: "http://cdb2dev.zakupki.com.ua/"
-        login:    test_owner_arm@ukr.net
+        login:    test_viewer@ukr.net
         password: 111111
         browser:  chrome
         position: [750, 0]
@@ -626,7 +626,7 @@ users:
     uatenders_Viewer:
         broker:   uatenders
         homepage: "http://cdb2dev.zakupki.com.ua/"
-        login:    test_owner_arm@ukr.net
+        login:    test_viewer@ukr.net
         password: 111111
         browser:  chrome
         position: [750, 0]
