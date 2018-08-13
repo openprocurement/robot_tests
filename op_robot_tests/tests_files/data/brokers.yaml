@@ -356,7 +356,10 @@ uatenders:
             accelerator: 360
             auction: [45, 50]
         lots:
-            accelerator: 180
+            accelerator: 360
+        auctions:
+            accelerator: 1440
+            auction:  [10, 15]
     keywords_file: uatenders
     roles:
         tender_owner:   uatenders_Owner
