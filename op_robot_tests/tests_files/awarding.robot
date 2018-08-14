@@ -175,8 +175,8 @@ ${MODE}  auctions
   ...     ${USERS.users['${tender_owner}'].broker}
   ...     cancel_contract
   [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
-  Можливість завантажити протокол скасування в контракт -1 користувачем ${tender_owner}
-  Run As  ${tender_owner}  Скасувати контракт  ${TENDER['TENDER_UAID']}  -1
+  Можливість завантажити протокол скасування в контракт 0 користувачем ${tender_owner}
+  Run As  ${tender_owner}  Скасувати контракт  ${TENDER['TENDER_UAID']}  0
 
 
 Відображення статусу скасованої угоди
