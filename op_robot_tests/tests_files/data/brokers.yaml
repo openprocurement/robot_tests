@@ -313,7 +313,7 @@ Promauctions:
             accelerator: 1440
             auction:  [70, 60]
         lots:
-            accelerator: 50
+            accelerator: 100
         auctions:
             accelerator: 550
             auction:  [120, 30]
