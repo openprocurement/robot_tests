@@ -78,6 +78,12 @@ Library  openprocurement_client.utils
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${EMPTY}
   ${id_map}=  Create Dictionary
   Set To Dictionary  ${USERS.users['${username}']}  id_map=${id_map}
+  #Variables for contracting_management module
+  ${contract_api_wrapper}=  prepare_contract_api_wrapper  ${USERS.users['${username}'].api_key}  ${api_host_url}  ${api_version}  ${ds_api_wraper}
+  Set To Dictionary  ${USERS.users['${username}']}  contracting_client=${contract_api_wrapper}
+  Set To Dictionary  ${USERS.users['${username}']}  contract_access_token=${EMPTY}
+  ${contracts_id_map}=  Create Dictionary
+  Set To Dictionary  ${USERS.users['${username}']}  contracts_id_map=${contracts_id_map}
   Log Variables
 
 
@@ -923,3 +929,143 @@ Library  openprocurement_client.utils
   Set_To_Object  ${tender.data}  status  pending.deleted
   Log  ${tender}
   Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+
+##############################################################################
+#             CONTRACT MANAGEMENT
+##############################################################################
+
+Отримати internal id по UAid для договору
+  [Arguments]  ${username}  ${contract_uaid}
+  Log  ${contract_uaid}
+  Log  ${USERS.users['${username}'].contracts_id_map}
+  ${status}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${USERS.users['${username}'].contracts_id_map}  ${contract_uaid}
+  Run Keyword and Return If  ${status}  Get From Dictionary  ${USERS.users['${username}'].contracts_id_map}  ${contract_uaid}
+  Call Method  ${USERS.users['${username}'].contracting_client}  get_contracts
+  ${contract_id}=  Wait Until Keyword Succeeds  15x  10 sec  get_contract_id_by_uaid  ${contract_uaid}  ${USERS.users['${username}'].contracting_client}
+  Set To Dictionary  ${USERS.users['${username}'].contracts_id_map}  ${contract_uaid}  ${contract_id}
+  [Return]  ${contract_id}
+
+
+Активувати контракт
+  [Arguments]  ${username}  ${contract_uaid}
+  ${internalid}=  openprocurement_client.Змінити власника контракту  ${username}  ${contract_uaid}
+  ${contract}=  Call Method  ${USERS.users['${username}'].contracting_client}  get_contract  ${internalid}
+  Set To Dictionary  ${contract.data}  status=active.payment
+  ${contract}=  Call Method  ${USERS.users['${username}'].contracting_client}  patch_contract  ${internalid}  ${USERS.users['${username}'].contract_access_token}  ${contract}
+  Log  ${contract}
+
+
+Змінити власника контракту
+  [Arguments]  ${username}  ${contract_uaid}
+  ${post_data}=  munch_dict  data=${True}
+  ${transfer}=  Call Method  ${USERS.users['${username}'].relocation_client}  create_tender  ${post_data}
+  Log object data  ${transfer}  created_tender
+  ${access_token}=  Get Variable Value  ${transfer.access.token}
+  ${transfer_token}=  Get Variable Value  ${transfer.access.transfer}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${contract}=  Call Method  ${USERS.users['${username}'].contracting_client}  get_contract  ${internalid}
+  ${transfer_data}=  munch_dict  data=${True}
+  Set to dictionary  ${transfer_data.data}  id=${transfer.data.id}
+  Set to dictionary  ${transfer_data.data}  transfer=${USERS.users['${tender_owner}'].transfer_token}
+  ${contract}=  Call Method  ${USERS.users['${username}'].contracting_client}  change_ownership  ${contract.data.id}  ${USERS.users['${tender_owner}'].access_token}  ${transfer_data}
+  Log  ${contract}
+  Set To Dictionary  ${USERS.users['${username}']}   contract_access_token=${access_token}
+  Set To Dictionary  ${USERS.users['${username}']}   transfer_token=${transfer_token}
+  [return]  ${internalid}
+
+
+Пошук договору по ідентифікатору
+  [Arguments]  ${username}  ${contract_uaid}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${contract}=  Call Method  ${USERS.users['${username}'].contracting_client}  get_contract  ${internalid}
+  ${contract}=  munch_dict  arg=${contract}
+  Set To Dictionary  ${USERS.users['${username}']}  contract_data=${contract}
+  Log  ${contract}
+  [return]  ${contract}
+
+
+Оновити сторінку з договором
+  [Arguments]  ${username}  ${contract_uaid}
+  openprocurement_client.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+
+
+Отримати інформацію із договору
+  [Arguments]  ${username}  ${contract_uaid}  ${field_name}
+  openprocurement_client.Пошук договору по ідентифікатору
+  ...      ${username}
+  ...      ${contract_uaid}
+
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      Get from object
+  ...      ${USERS.users['${username}'].contract_data.data}
+  ...      ${field_name}
+  Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
+
+  Fail  Field not found: ${field_name}
+
+
+Отримати інформацію з активу в договорі
+  [Arguments]  ${username}  ${contract_uaid}  ${item_id}  ${field_name}
+  ${field_name}=  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${item_id}
+  Run Keyword And Return  openprocurement_client.Отримати інформацію із договору  ${username}  ${contract_uaid}  ${field_name}
+  [return]  ${field_value}
+
+
+Вказати дату отримання оплати
+  [Arguments]  ${username}  ${contract_uaid}  ${dateMet}  ${milestone_index}
+  ${contract}=  openprocurement_client.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+  ${milestone}=  Get Variable Value  ${contract.data.milestones[${milestone_index}]}
+  Set To Dictionary  ${milestone}  dateMet=${dateMet}
+  ${milestone}=  Create Dictionary  data=${milestone}
+  Log  ${milestone}
+  ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  patch_milestone  ${contract.data.id}  ${USERS.users['${username}'].contract_access_token}  ${milestone}
+  Log  ${reply}
+
+
+Підтвердити відсутність оплати
+  [Arguments]  ${username}  ${contract_uaid}  ${milestone_index}
+  ${contract}=  openprocurement_client.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+  ${milestone}=  Get Variable Value  ${contract.data.milestones[${milestone_index}]}
+  Set To Dictionary  ${milestone}  status=notMet
+  ${milestone}=  Create Dictionary  data=${milestone}
+  Log  ${milestone}
+  ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  patch_milestone  ${contract.data.id}  ${USERS.users['${username}'].contract_access_token}  ${milestone}
+  Log  ${reply}
+
+
+Завантажити наказ про завершення приватизації
+  [Arguments]  ${username}  ${contract_uaid}  ${filepath}
+  ${document}=  openprocurement_client.Завантажити документ в майлстоун  ${username}  ${contract_uaid}  ${filepath}  approvalProtocol  1
+
+
+Вказати дату прийняття наказу
+  [Arguments]  ${username}  ${contract_uaid}  ${dateMet}
+  ${reply}=  openprocurement_client.Вказати дату отримання оплати  ${username}  ${contract_uaid}  ${dateMet}  1
+
+
+Підтвердити відсутність наказу про приватизацію
+  [Arguments]  ${username}  ${contract_uaid}  ${file_path}
+  ${document}=  openprocurement_client.Завантажити документ в майлстоун  ${username}  ${contract_uaid}  ${filepath}  rejectionProtocol  1
+  ${contract}=  openprocurement_client.Підтвердити відсутність оплати  ${username}  ${contract_uaid}  1
+
+
+Вказати дату виконання умов контракту
+  [Arguments]  ${username}  ${contract_uaid}  ${dateMet}
+  ${reply}=  openprocurement_client.Вказати дату отримання оплати  ${username}  ${contract_uaid}  ${dateMet}  2
+
+
+Підтвердити невиконання умов приватизації
+  [Arguments]  ${username}  ${contract_uaid}
+  ${contract}=  openprocurement_client.Підтвердити відсутність оплати  ${username}  ${contract_uaid}  2
+
+
+Завантажити документ в майлстоун
+  [Arguments]  ${username}  ${contract_uaid}  ${filepath}  ${doc_type}  ${milestone_index}
+  ${contract}=  openprocurement_client.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+  ${milestone_id}=  Get Variable Value  ${contract.data.milestones[${milestone_index}].id}
+  ${contract}=  set_access_key  ${contract}  ${USERS.users['${username}'].contract_access_token}
+  ${response}=  Call Method  ${USERS.users['${username}'].contracting_client}  upload_document  ${filepath}  ${contract}  ${doc_type}
+  Keep In Dictionary  ${response['data']}  id
+  Set To Dictionary  ${response['data']}  relatedItem=${milestone_id}  documentOf=milestone
+  ${reply}=  Call Method  ${USERS.users['${username}'].contracting_client}  patch_document  ${contract}  ${response}
+  [return]  ${reply}

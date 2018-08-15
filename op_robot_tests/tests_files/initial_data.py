@@ -75,6 +75,10 @@ def create_fake_date():
     return (get_now() + timedelta(days=7)).strftime('%Y-%m-%dT%H:%M:%S')
 
 
+def create_fake_dateMet(dueDate):
+    return (dueDate + timedelta(days=7)).strftime('%Y-%m-%dT%H:%M:%S')
+
+
 def convert_days_to_seconds(days, accelerator):
     seconds = timedelta(days=int(days)).total_seconds()
     return seconds / accelerator

@@ -1,0 +1,48 @@
+-v NUMBER_OF_ITEMS:1
+-v NUMBER_OF_AWARDS:1
+
+#----------asset----------#
+-i create_asset
+
+#-----------lot-----------#
+-i create_lot
+-i lot_status
+-i find_lot
+-i lot_view_rectificationPeriod
+-i lot_active_status
+-i auctionID
+
+#-----------procedure-----------#
+-i activate_tender
+-i find_tender
+-i tender_view_tenderPeriod
+-i tender_view_procurementMethodType
+-i tender_view_value_amount
+-i tender_view_minimalStep
+-i make_bid_by_provider
+-i make_bid_after_tendering_period
+
+#-----------awarding-----------#
+-i awarding
+-i award_admission_status
+-i confirm_admission
+-i first_award_pending_status
+-i add_protocol_to_first_award
+-i confirm_first_award
+-i first_award_active_status
+
+#-----------contract signing-----------#
+-i dateSigned
+-i contract_sign_upload
+-i contract_sign
+-i tender_status_complete
+-i contract_uaid
+
+
+#-----------contract management-----------#
+-i find_contract
+-i activate_contract
+-i first_milestone_met
+-i active_approval_status
+-i second_milestone_notMet
+-i unsuccessful_status
