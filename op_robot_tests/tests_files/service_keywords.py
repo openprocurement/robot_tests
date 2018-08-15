@@ -57,6 +57,7 @@ from .initial_data import (
     update_lot_data,
     get_intervals,
     create_fake_dateSigned,
+    create_fake_dateMet,
 
 )
 from barbecue import chef

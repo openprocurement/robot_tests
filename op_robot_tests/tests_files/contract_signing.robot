@@ -5,7 +5,7 @@ Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
 *** Variables ***
-@{USED_ROLES}   tender_owner  viewer
+@{USED_ROLES}   tender_owner  viewer  provider
 ${MODE}  auctions
 
 *** Test Cases ***
@@ -106,3 +106,11 @@ ${MODE}  auctions
   ...  ${USERS.users['${viewer}'].broker}
   ...  status_unsuccessful
   Звірити cтатус неуспішного тендера  ${viewer}  ${TENDER['TENDER_UAID']}
+
+
+Відображення ідентифікатора контракту
+  [Tags]  ${USERS.users['${provider}'].broker}: Відображення основних даних угоди
+  ...  provider
+  ...  ${USERS.users['${provider}'].broker}
+  ...  contract_uaid
+  Отримати дані із поля contracts[-1].contractID тендера для користувача ${provider}

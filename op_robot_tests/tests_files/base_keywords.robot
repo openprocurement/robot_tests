@@ -300,7 +300,18 @@ Resource           resource.robot
 Отримати дані із поля ${field} предмета для усіх користувачів
   ${values}=  Create List
   :FOR  ${username}  IN  @{used_users}
+  \  Дочекатись синхронізації з майданчиком  ${username}
   \  ${field_value}=  Отримати дані із поля ${field} предмета для користувача ${username}
+  \  Append To List  ${values}  ${field_value}
+  ${status}=  compare_values  ${values}
+  Should Be True  ${status}  msg=Values are not equal
+
+
+Отримати дані із поля ${field} активу в контракті для усіх користувачів
+  ${values}=  Create List
+  :FOR  ${username}  IN  @{used_users}
+  \  Дочекатись синхронізації з майданчиком  ${username}
+  \  ${field_value}=  Run as  ${username}  Отримати інформацію з активу в договорі  ${CONTRACT_UAID}  ${USERS.users['${tender_owner}'].item_id}  ${field}
   \  Append To List  ${values}  ${field_value}
   ${status}=  compare_values  ${values}
   Should Be True  ${status}  msg=Values are not equal
