@@ -42,5 +42,6 @@
 #-----------contract management-----------#
 -i find_contract
 -i activate_contract
+-i contract_view_description
 -i first_milestone_notMet
 -i unsuccessful_status
