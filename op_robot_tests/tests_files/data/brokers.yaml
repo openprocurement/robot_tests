@@ -313,9 +313,9 @@ Promauctions:
             accelerator: 1440
             auction:  [70, 60]
         lots:
-            accelerator: 100
+            accelerator: 500
         auctions:
-            accelerator: 550
+            accelerator: 500
             auction:  [120, 30]
     keywords_file: prom
     roles:
