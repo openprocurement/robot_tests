@@ -295,7 +295,6 @@ ${MODE}  contracts
   ...      ${USERS.users['${viewer}'].broker}
   ...      terminated_status
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Remove From Dictionary  ${USERS.users['${viewer}'].contract_data.data}  status
   Звірити статус контракту
   ...      ${viewer}
   ...      ${CONTRACT_UAID}
@@ -331,7 +330,6 @@ ${MODE}  contracts
   ...      ${USERS.users['${viewer}'].broker}
   ...      unsuccessful_status
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Remove From Dictionary  ${USERS.users['${viewer}'].contract_data.data}  status
   Звірити статус контракту
   ...      ${viewer}
   ...      ${CONTRACT_UAID}
