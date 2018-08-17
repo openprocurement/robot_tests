@@ -178,6 +178,7 @@ Get Broker Property By Username
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider1_access_token=${USERS.users['${provider1}'].access_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider_bid_id=${USERS.users['${provider}'].bid_id}
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider1_bid_id=${USERS.users['${provider1}'].bid_id}
+  Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  contract_access_token=${USERS.users['${tender_owner}'].contract_access_token}
   ${status}  ${item_id}=  Run Keyword And Ignore Error  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]}
   Run Keyword If  '${MODE}' == 'assets'  Set To Dictionary  ${artifact}  item_id=${item_id}
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  tender_uaid=${USERS.users['${tender_owner}'].tender_data.data.auctions[0].auctionID}

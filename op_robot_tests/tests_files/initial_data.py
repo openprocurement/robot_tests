@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -
 from datetime import timedelta
+from dateutil.parser import parse
 from faker import Factory
 from faker.providers.company.en_US import Provider as CompanyProviderEnUs
 from faker.providers.company.ru_RU import Provider as CompanyProviderRuRu
@@ -76,7 +77,7 @@ def create_fake_date():
 
 
 def create_fake_dateMet(dueDate):
-    return (dueDate + timedelta(days=7)).strftime('%Y-%m-%dT%H:%M:%S')
+    return (parse(dueDate) + timedelta(days=7)).isoformat()
 
 
 def convert_days_to_seconds(days, accelerator):

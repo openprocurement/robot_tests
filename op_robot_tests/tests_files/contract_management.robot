@@ -275,7 +275,7 @@ ${MODE}  contracts
   Run As  ${tender_owner}  Вказати дату виконання умов контракту  ${CONTRACT_UAID}  ${dateMet}
 
 
-Відображення статусу 'Частково виконано' для другого майлстоуну
+Відображення статусу 'Частково виконано' для третього майлстоуну
   [Tags]   ${USERS.users['${provider}'].broker}: Відображення основних даних договору
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
