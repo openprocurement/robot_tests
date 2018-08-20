@@ -231,7 +231,7 @@ expagency:
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
-    timeout_on_wait: 1
+    timeout_on_wait: 10
 govfound:
     intervals:
         default:
@@ -763,7 +763,7 @@ uisce:
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
-    timeout_on_wait: 1
+    timeout_on_wait: 10
 zupb:
     keywords_file: zupb
     roles:
@@ -988,7 +988,7 @@ sets:
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
-    timeout_on_wait: 1
+    timeout_on_wait: 10
 biddingtime:
     keywords_file: biddingtime
     accelerator: 180
@@ -1004,7 +1004,7 @@ biddingtime:
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
-    timeout_on_wait: 1
+    timeout_on_wait: 10
 tenderonline:
     keywords_file: tenderonline
     accelerator: 720
@@ -1050,7 +1050,7 @@ livtrade:
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
-    timeout_on_wait: 1
+    timeout_on_wait: 10
 mytender:
     keywords_file: mytender
     accelerator: 180
@@ -1066,7 +1066,7 @@ mytender:
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
-    timeout_on_wait: 1
+    timeout_on_wait: 10
 aukzionist:
     keywords_file: aukzionist
     accelerator: 180
@@ -1082,7 +1082,7 @@ aukzionist:
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
-    timeout_on_wait: 1
+    timeout_on_wait: 10
 skyline:
     keywords_file: skyline
     roles:
