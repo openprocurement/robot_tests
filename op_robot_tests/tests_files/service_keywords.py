@@ -526,7 +526,7 @@ def get_id_from_object(obj):
         if obj_id and len(obj_id.groups()) >= 1:
             return obj_id.group(1)
 
-    raise VaueError('could not find object ID in "title": "%s", '
+    raise ValueError('could not find object ID in "title": "%s", '
                     '"description": "%s"' % (title, description))
 
 

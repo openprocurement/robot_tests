@@ -869,8 +869,9 @@ Require Failure
 
 
 Дочекатись дати закінчення періоду відповідей на запитання
-  [Arguments]  ${username}
-  Дочекатись дати  ${USERS.users['${username}'].tender_data.data.enquiryPeriod.clarificationsUntil}
+  [Arguments]  ${username}  ${tender_uaid}
+  ${clarificationsUntil}=  Run As  ${username}  Отримати інформацію із тендера  ${tender_uaid}  enquiryPeriod.clarificationsUntil
+  Дочекатись дати  ${clarificationsUntil}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
 
