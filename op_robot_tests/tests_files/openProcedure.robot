@@ -1721,7 +1721,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      answer_question_after_clarifications_period
   ...      non-critical
-  [Setup]  Дочекатись дати закінчення періоду відповідей на запитання  ${tender_owner}
+  [Setup]  Дочекатись дати закінчення періоду відповідей на запитання  ${tender_owner}  ${TENDER['TENDER_UAID']}
   Run Keyword And Expect Error  *  Можливість відповісти resolved на вимогу про виправлення умов tender
 
 
