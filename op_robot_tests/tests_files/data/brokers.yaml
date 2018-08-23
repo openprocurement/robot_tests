@@ -559,6 +559,11 @@ vidol:
         dgfOtherAssets:
             accelerator: 480
             auction: [30,35]
+        lots:
+            accelerator: 1440
+        auctions:
+            accelerator: 1440
+            auction:  [10, 15]
     keywords_file: vidol
     homepage: 'http://test.torgi.vidol.com.ua/auctions2'
     roles:
