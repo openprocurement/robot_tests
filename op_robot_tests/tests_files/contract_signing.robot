@@ -30,7 +30,7 @@ Suite Teardown  Test Suite Teardown
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${datePaid}=  create_fake_date
   Set to dictionary  ${USERS.users['${tender_owner}']}  datePaid=${datePaid}
-  Run As  ${tender_owner}  Вказати дату отримання оплати  ${TENDER['TENDER_UAID']}  -1  ${datePaid}
+  Run As  ${tender_owner}  Вказати дату отримання оплати  ${TENDER['TENDER_UAID']}  1  ${datePaid}
 
 
 Відображення дати отримання оплати
@@ -39,7 +39,7 @@ Suite Teardown  Test Suite Teardown
   ...     ${USERS.users['${viewer}'].broker}
   ...     datePaid
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля contracts[-1].datePaid тендера із ${USERS.users['${tender_owner}'].datePaid} для користувача ${viewer}
+  Звірити відображення поля contracts[1].datePaid тендера із ${USERS.users['${tender_owner}'].datePaid} для користувача ${viewer}
 
 
 Можливість завантажити угоду до лоту
@@ -69,8 +69,8 @@ Suite Teardown  Test Suite Teardown
   ...  contract_sign_view
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   ${contract_index}=  Отримати останній індекс  contracts  ${tender_owner}  ${viewer}
-  Run As  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
-  Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}  active  contracts[${contract_index}].status
+  ${field_value}=  Run As  ${tender_owner}  Отримати інформацію із тендера  ${TENDER['TENDER_UAID']}  contracts[${contract_index}].status
+  Порівняти об'єкти  active  ${field_value}
 
 
 Відображення статусу завершення лоту
