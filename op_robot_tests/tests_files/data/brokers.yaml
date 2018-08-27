@@ -311,20 +311,12 @@ centrex:
     timeout_on_wait: 180
 expagency:
     keywords_file: expagency
-    accelerator: 360
     roles:
         tender_owner:   expagency_Owner
         provider:       expagency_Provider
         provider1:      expagency_Provider1
         viewer:         expagency_Viewer
-    intervals:
-        default:
-            enquiry: [0, 10]
-            tender:  [0, 25]
-            auction: [25, 30]
-        dgfInsider:
-            accelerator: 360
-    timeout_on_wait: 30
+    timeout_on_wait: 10
 govfound:
     intervals:
         default:
@@ -937,20 +929,12 @@ sets:
     timeout_on_wait: 30
 mytender:
     keywords_file: mytender
-    accelerator: 360
     roles:
         tender_owner:   mytender_Owner
         provider:       mytender_Provider
         provider1:      mytender_Provider1
         viewer:         mytender_Viewer
-    intervals:
-        default:
-            enquiry: [0, 10]
-            tender:  [0, 25]
-            auction: [25, 30]
-        dgfInsider:
-            accelerator: 360
-    timeout_on_wait: 30
+    timeout_on_wait: 10
 biddingtime:
     keywords_file: biddingtime
     accelerator: 360
@@ -1314,17 +1298,9 @@ avi:
     timeout_on_wait: 30
 livtrade:
     keywords_file: livtrade
-    accelerator: 360
     roles:
         tender_owner:   livtrade_Owner
         provider:       livtrade_Provider
         provider1:      livtrade_Provider1
         viewer:         livtrade_Viewer
-    intervals:
-        default:
-            enquiry: [0, 10]
-            tender:  [0, 25]
-            auction: [25, 30]
-        dgfInsider:
-            accelerator: 360
-    timeout_on_wait: 30
+    timeout_on_wait: 10
