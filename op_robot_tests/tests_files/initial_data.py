@@ -443,6 +443,32 @@ def test_bid_value(max_value_amount):
     })
 
 
+def test_bid_value_esco(tender_data):
+    annual_cost = []
+    for i in range(0, 21):
+        cost=round(random.uniform(1, 100), 2)
+        annual_cost.append(cost)
+    if tender_data['fundingKind'] == "budget":
+        yearly_percentage=round(random.uniform(0.01, float(tender_data['yearlyPaymentsPercentageRange'])), 5)
+    else:
+        yearly_percentage= 0.8
+    # when tender fundingKind is budget, yearlyPaymentsPercentageRange should be less or equal 0.8, and more or equal 0
+    # when tender fundingKind is other, yearlyPaymentsPercentageRange should be equal 0.8
+    return munchify({
+        "value": {
+            "currency": "UAH",
+            "valueAddedTaxIncluded": True,
+            "yearlyPaymentsPercentage": yearly_percentage,
+            "annualCostsReduction": annual_cost,
+            "contractDuration": {
+                "years": random.randint(7, 14),
+                "days": random.randint(1, 364)
+            }
+        }
+    })
+
+
+
 def test_supplier_data():
     return munchify({
         "data": {
