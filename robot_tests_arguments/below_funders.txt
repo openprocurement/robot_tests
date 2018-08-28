@@ -13,9 +13,15 @@
 -i find_tender
 -i find_tender_by_funder_id
 -i tender_view
+-i tender_view_value
+-i tender_view_minimalStep
+-i tender_view_deliveryDate
+-i tender_view_quantity
 -i tender_view_unit_code
 -i tender_view_coordinates
 -i lot_view
+-i lot_view_value
+-i lot_view_minimalStep
 -i funders_view
 
 -i delete_funder

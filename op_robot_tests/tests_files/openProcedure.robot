@@ -74,7 +74,7 @@ ${MOZ_INTEGRATION}  ${False}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level1
+  ...      tender_view_value  level1
   ...      critical
   Звірити відображення поля value.amount тендера для усіх користувачів
 
@@ -83,7 +83,7 @@ ${MOZ_INTEGRATION}  ${False}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level2
+  ...      tender_view_value  level2
   ...      non-critical
   Звірити відображення поля value.currency тендера для користувача ${viewer}
 
@@ -92,7 +92,7 @@ ${MOZ_INTEGRATION}  ${False}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level2
+  ...      tender_view_value  level2
   ...      non-critical
   Звірити відображення поля value.valueAddedTaxIncluded тендера для користувача ${viewer}
 
@@ -161,7 +161,7 @@ ${MOZ_INTEGRATION}  ${False}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level2
+  ...      tender_view_minimalStep  level2
   ...      critical
   Звірити відображення поля minimalStep.amount тендера для користувача ${viewer}
 
@@ -219,7 +219,7 @@ ${MOZ_INTEGRATION}  ${False}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level2
+  ...      tender_view_deliveryDate  level2
   ...      non-critical
   Звірити відображення дати deliveryDate.startDate усіх предметів для користувача ${viewer}
 
@@ -228,7 +228,7 @@ ${MOZ_INTEGRATION}  ${False}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level2
+  ...      tender_view_deliveryDate  level2
   ...      non-critical
   Звірити відображення дати deliveryDate.endDate усіх предметів для користувача ${viewer}
 
@@ -342,7 +342,7 @@ ${MOZ_INTEGRATION}  ${False}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення номенклатури тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level2
+  ...      tender_view_quantity  level2
   ...      non-critical
   Звірити відображення поля quantity усіх предметів для користувача ${viewer}
 
@@ -412,7 +412,7 @@ ${MOZ_INTEGRATION}  ${False}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      lot_view  level2
+  ...      lot_view_value  level2
   ...      critical
   Звірити відображення поля value.amount усіх лотів для усіх користувачів
 
@@ -421,7 +421,7 @@ ${MOZ_INTEGRATION}  ${False}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      lot_view  level2
+  ...      lot_view_value  level2
   ...      non-critical
   Звірити відображення поля value.currency усіх лотів для користувача ${viewer}
 
@@ -430,7 +430,7 @@ ${MOZ_INTEGRATION}  ${False}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      lot_view  level2
+  ...      lot_view_value  level2
   ...      non-critical
   Звірити відображення поля value.valueAddedTaxIncluded усіх лотів для користувача ${viewer}
 
@@ -439,7 +439,7 @@ ${MOZ_INTEGRATION}  ${False}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      lot_view  level2
+  ...      lot_view_minimalStep  level2
   ...      non-critical
   Звірити відображення поля minimalStep.amount усіх лотів для усіх користувачів
 
@@ -448,7 +448,7 @@ ${MOZ_INTEGRATION}  ${False}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      lot_view  level2
+  ...      lot_view_minimalStep  level2
   ...      non-critical
   Звірити відображення поля minimalStep.currency усіх лотів для користувача ${viewer}
 
@@ -457,7 +457,7 @@ ${MOZ_INTEGRATION}  ${False}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення лоту тендера
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      lot_view  level2
+  ...      lot_view_minimalStep  level2
   ...      non-critical
   Звірити відображення поля minimalStep.valueAddedTaxIncluded усіх лотів для користувача ${viewer}
 
