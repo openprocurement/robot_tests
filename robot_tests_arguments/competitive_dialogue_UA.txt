@@ -58,3 +58,4 @@
 -i contract_stand_still
 -i contract_view
 -i modify_contract
+  -i modify_contract_value
