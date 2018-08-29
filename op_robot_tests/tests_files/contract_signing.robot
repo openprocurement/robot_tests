@@ -39,7 +39,8 @@ Suite Teardown  Test Suite Teardown
   ...     ${USERS.users['${viewer}'].broker}
   ...     datePaid
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля contracts[1].datePaid тендера із ${USERS.users['${tender_owner}'].datePaid} для користувача ${viewer}
+  ${field_value}=  Run As  ${viewer}  Отримати інформацію із тендера  ${TENDER['TENDER_UAID']}  contracts[1].datePaid
+  Порівняти об'єкти  ${USERS.users['${tender_owner}'].datePaid}  ${field_value}
 
 
 Можливість завантажити угоду до лоту
