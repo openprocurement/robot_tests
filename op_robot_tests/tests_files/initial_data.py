@@ -300,7 +300,12 @@ def test_lot_data(params):
 
 
 def update_lot_data(lot_data, asset_id):
-    lot_data["data"].update({"assets": asset_id})
+    lot_data["data"].update({
+        "relatedProcesses": [{
+            "type": "asset",
+            "relatedProcessID": asset_id
+        }]
+    })
     return munchify(lot_data)
 
 
