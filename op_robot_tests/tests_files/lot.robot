@@ -79,7 +79,7 @@ ${RESOURCE}          lots
   ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      assetID_view
-  Отримати дані із поля assets лоту для усіх користувачів
+  Отримати дані із поля relatedProcesses[0].relatedProcessID лоту для усіх користувачів
 
 
 Відображення заголовку лоту
