@@ -1328,3 +1328,24 @@ livtrade:
         dgfInsider:
             accelerator: 360
     timeout_on_wait: 30
+setam:
+    intervals:
+        default:
+            enquiry: [0, 17]
+            tender:  [0, 19]
+        dgfFinancialAssets:
+            accelerator: 144
+            auction:  [45, 50]
+        dgfOtherAssets:
+            accelerator: 144
+            auction:  [45, 50]
+        dgfInsider:
+            accelerator: 360
+            auction:  [25, 30]
+    keywords_file: setam
+    roles:
+        tender_owner:   setam_Owner
+        provider:       setam_Provider
+        provider1:      setam_Provider1
+        viewer:         setam_Viewer
+    timeout_on_wait: 120
