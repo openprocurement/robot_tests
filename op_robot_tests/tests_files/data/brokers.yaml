@@ -1040,6 +1040,27 @@ tsbgalcontract:
             tender:  [0, 25]
             auction: [25, 30]
     timeout_on_wait: 20
+c1ux:
+    intervals:
+        default:
+            enquiry: [0, 20]
+            tender:  [0, 30]
+        dgfOtherAssets:
+            accelerator: 480
+            auction: [30,35]
+        lots:
+            accelerator: 1440
+        auctions:
+            accelerator: 1440
+            auction:  [10, 15]
+    keywords_file: c1ux
+    homepage: 'http://test.c1.ux.ua/auctions2'
+    roles:
+        provider:       c1ux_Provider1
+        provider1:      c1ux_Provider2
+        tender_owner:   c1ux_Owner
+        viewer:         c1ux_Viewer
+    timeout_on_wait: 90
 livtrade:
     keywords_file: livtrade
     accelerator: 180

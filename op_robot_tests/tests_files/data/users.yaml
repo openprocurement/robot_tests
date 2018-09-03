@@ -1984,6 +1984,36 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
+    c1ux_Owner:
+        broker:   c1ux
+        homepage: "http://test.c1.ux.ua/auctions2"
+        login:    test_zamovnyk@mfsa.ru
+        password: test_zamovnyk@mfsa.ru
+        browser:  chrome
+        position: [0, 0]
+        size:     [1280, 800]
+    c1ux_Provider1:
+        broker:   c1ux
+        homepage: "http://test.c1.ux.ua/auctions2"
+        login:    test_provider1@mfsa.ru
+        password: test_provider1@mfsa.ru
+        browser:  chrome
+        position: [0, 800]
+        size:     [1280, 800]
+    c1ux_Provider2:
+        broker:   c1ux
+        homepage: "http://test.c1.ux.ua/auctions2"
+        login:    test_provider2@mfsa.ru
+        password: test_provider2@mfsa.ru
+        browser:  chrome
+        position: [800, 0]
+        size:     [1280, 800]
+    c1ux_Viewer:
+        broker:   c1ux
+        homepage: "http://test.c1.ux.ua/auctions2"
+        browser:  chrome
+        position: [0, 500]
+        size:     [1280, 800]
     livtrade_Owner:
         broker:   livtrade
         homepage: "http://cbd2.livtrade.com.ua/user/login"
