@@ -178,9 +178,11 @@ Get Broker Property By Username
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider1_access_token=${USERS.users['${provider1}'].access_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider_bid_id=${USERS.users['${provider}'].bid_id}
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  provider1_bid_id=${USERS.users['${provider1}'].bid_id}
+  Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  contract_access_token=${USERS.users['${tender_owner}'].contract_access_token}
   ${status}  ${item_id}=  Run Keyword And Ignore Error  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]}
   Run Keyword If  '${MODE}' == 'assets'  Set To Dictionary  ${artifact}  item_id=${item_id}
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  tender_uaid=${USERS.users['${tender_owner}'].tender_data.data.auctions[0].auctionID}
+  Run Keyword And Ignore Error  Set To Dictionary  ${artifact}  contract_uaid=${USERS.users['${provider}'].tender_data.data.contracts[-1].contractID}
   Log   ${artifact}
   log_object_data  ${artifact}  file_name=artifact  update=${True}  artifact=${True}
 
@@ -191,6 +193,7 @@ Get Broker Property By Username
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token=${ARTIFACT.access_token}
   ${TENDER}=  Create Dictionary  TENDER_UAID=${ARTIFACT.tender_uaid}  LAST_MODIFICATION_DATE=${ARTIFACT.last_modification_date}  LOT_ID=${Empty}
   Run Keyword If  '${MODE}'=='lots'  Set Suite Variable  ${ASSET_UAID}  ${ARTIFACT.tender_uaid}
+  Run Keyword If  '${MODE}'=='contracts'  Set Suite Variable  ${CONTRACT_UAID}  ${ARTIFACT.contract_uaid}
   ${MODE}=  Get Variable Value  ${MODE}  ${ARTIFACT.mode}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  item_id=${ARTIFACT.item_id}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token=${ARTIFACT.tender_owner_access_token}
@@ -411,6 +414,12 @@ Log differences between dicts
   Порівняти об'єкти  ${left}  ${right}
 
 
+Звірити поле договору із значенням
+  [Arguments]  ${username}  ${contract_uaid}  ${left}  ${field}
+  ${right}=  Отримати дані із договору  ${username}  ${contract_uaid}  ${field}
+  Порівняти об'єкти  ${left}  ${right}
+
+
 Звірити значення поля серед усіх документів тендера
   [Arguments]  ${username}  ${tender_uaid}  ${field}  ${value}
   ${number_of_documents}=  Run As  ${username}  Отримати кількість документів в тендері  ${tender_uaid}
@@ -559,6 +568,24 @@ Log differences between dicts
   [return]  ${field_value}
 
 
+Отримати дані із договору
+  [Arguments]  ${username}  ${contract_uaid}  ${field}
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      get_from_object
+  ...      ${USERS.users['${username}'].contract_data.data}
+  ...      ${field}
+  # If field in cache, return its value
+  Run Keyword if  '${status}' == 'PASS'  Return from keyword  ${field_value}
+  # Else call broker to find field
+  ${field_value}=  Run As  ${username}  Отримати інформацію із договору  ${contract_uaid}  ${field}
+  # And caching its value before return
+  Set_To_Object  ${USERS.users['${username}'].contract_data.data}  ${field}  ${field_value}
+  ${data}=  munch_dict  arg=${USERS.users['${username}'].contract_data.data}
+  Set To Dictionary  ${USERS.users['${username}'].contract_data}  data=${data}
+  Log  ${USERS.users['${username}'].contract_data.data}
+  [return]  ${field_value}
+
+
 Отримати шлях до поля об’єкта
   [Arguments]  ${username}  ${field_name}  ${object_id}
   ${object_type}=  get_object_type_by_id  ${object_id}
@@ -690,6 +717,7 @@ Require Failure
 Звірити статус тендера
   [Arguments]  ${username}  ${tender_uaid}  ${left}
   ${right}=  Run Keyword If  '${MODE}' == 'lots'  Run as  ${username}  Отримати інформацію із лоту  ${tender_uaid}  status
+  ...  ELSE IF  '${MODE}' == 'contracts'  Run as  ${username}  Отримати інформацію із договору  ${tender_uaid}  status
   ...  ELSE  Run as  ${username}  Отримати інформацію із тендера  ${tender_uaid}  status
   Порівняти об'єкти  ${left}  ${right}
 
@@ -699,7 +727,20 @@ Require Failure
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
-  ...      10 min 15 sec
+  ...      50 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      ${status}
+
+
+Звірити статус контракту
+  [Arguments]  ${username}  ${tender_uaid}  ${status}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      20 min 15 sec
   ...      15 sec
   ...      Звірити статус тендера
   ...      ${username}
@@ -823,7 +864,7 @@ Require Failure
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
-  ...      5 min 15 sec
+  ...      20 min 15 sec
   ...      15 sec
   ...      Run Keyword And Expect Error  *
   ...      Звірити статус тендера
@@ -845,12 +886,12 @@ Require Failure
   ...      active.auction
 
 
-Дочекатись закінчення періоду аукціону
+Дочекатись початку кваліфікації
   [Arguments]  ${username}  ${tender_uaid}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
-  ...      90 min 15 sec
+  ...      15 min 15 sec
   ...      15 sec
   ...      Run Keyword And Expect Error  *
   ...      Звірити статус тендера

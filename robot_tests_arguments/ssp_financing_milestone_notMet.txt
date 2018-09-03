@@ -24,15 +24,20 @@
 
 #-----------awarding-----------#
 -i awarding
--i award_admission_status
 -i confirm_admission
--i first_award_pending_status
 -i add_protocol_to_first_award
 -i confirm_first_award
--i first_award_active_status
 
 #-----------contract signing-----------#
 -i dateSigned
 -i contract_sign_upload
 -i contract_sign
--i tender_status_complete
+-i contract_uaid
+
+
+#-----------contract management-----------#
+-i find_contract
+-i activate_contract
+-i contract_view_description
+-i first_milestone_notMet
+-i unsuccessful_status

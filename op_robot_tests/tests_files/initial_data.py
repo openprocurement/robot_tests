@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -
 from datetime import timedelta
+from dateutil.parser import parse
 from faker import Factory
 from faker.providers.company.en_US import Provider as CompanyProviderEnUs
 from faker.providers.company.ru_RU import Provider as CompanyProviderRuRu
@@ -63,12 +64,20 @@ def create_fake_decisionDate():
     return (get_now() - timedelta(days=2)).strftime('%Y-%m-%d')
 
 
+def create_fake_dateSigned():
+    return get_now().isoformat()
+
+
 def create_fake_decisionID():
     return fake.dgfDecisionID()
 
 
 def create_fake_date():
-    return (get_now() + timedelta(days=7)).isoformat()
+    return (get_now() + timedelta(days=7)).strftime('%Y-%m-%dT%H:%M:%S')
+
+
+def create_fake_dateMet(dueDate):
+    return (parse(dueDate) + timedelta(days=7)).isoformat()
 
 
 def convert_days_to_seconds(days, accelerator):
@@ -117,7 +126,7 @@ def create_fake_scheme_id(scheme):
     scheme_id = {
             u'UA-MFO': random.randint(100000, 999999),
             u'UA-EDR': random.randint(10000000, 99999999),
-            u'accountNumber': random.randint(100000, 999999),
+            u'accountNumber': random.randint(1000000000, 9999999999)
     }
     return scheme_id[scheme]
 
@@ -291,7 +300,12 @@ def test_lot_data(params):
 
 
 def update_lot_data(lot_data, asset_id):
-    lot_data["data"].update({"assets": asset_id})
+    lot_data["data"].update({
+        "relatedProcesses": [{
+            "type": "asset",
+            "relatedProcessID": asset_id
+        }]
+    })
     return munchify(lot_data)
 
 

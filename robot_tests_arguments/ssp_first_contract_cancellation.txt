@@ -14,31 +14,13 @@
 #-----------procedure-----------#
 -i activate_tender
 -i find_tender
--i tender_view
 -i tender_view_tenderPeriod
 -i tender_view_procurementMethodType
 -i tender_view_value_amount
 -i tender_view_minimalStep
--i add_tender_doc
--i add_tender_nda
--i add_tender_doc_content
--i add_tender_illustration
--i add_tender_tech_specifications
--i add_tender_notice
--i add_tender_presentation
--i add_tender_asset_familiarization
--i ask_question_to_tender
-  -i answer_question_to_tender
--i ask_question_to_item
-  -i answer_question_to_item
-
--i make_bid_by_provider_without_qualification
 -i make_bid_by_provider
 -i make_bid_by_provider1
 -i modify_bid_by_provider
--i add_doc_to_bid_by_provider
--i bid_view_in_tendering_period
-
 -i make_bid_after_tendering_period
 -i auction_url
 -i auction_url_provider1
@@ -53,7 +35,11 @@
 -i add_protocol_to_first_award
 -i confirm_first_award
 -i first_award_active_status
--i cancel_second_award
+-i cancel_contract
+-i second_award_pending_status
+-i add_protocol_to_second_award
+-i confirm_second_award
+-i second_award_active_status
 
 #-----------contract signing-----------#
 -i dateSigned

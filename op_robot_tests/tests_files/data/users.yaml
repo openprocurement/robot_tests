@@ -43,7 +43,7 @@ users:
     Etender_Owner:
         broker:   Etender
         homepage: "http://uatasset.e-auction.ua/#/"
-        login:    case31
+        login:    holder
         password: Qq123456
         browser:  chrome
         position: [0, 0]
@@ -111,16 +111,16 @@ users:
     DZO_Provider_auction:
         broker:   DZOauctions
         homepage: "http://dz3.byustudio.in.ua"
-        login:    dzoprovider1@gmail.com
-        password: mux85BMrH
+        login:    testprozorroprovider@gmail.com
+        password: 12345678
         browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     DZO_Provider1_auction:
         broker:   DZOauctions
         homepage: "http://dz3.byustudio.in.ua"
-        login:    dzoprovider2@gmail.com
-        password: Z5FeM44kK
+        login:    testprozorroprovider1@gmail.com
+        password: 12345678
         browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
@@ -141,17 +141,17 @@ users:
     uace_Provider_auction:
         broker:   uaceauction
         homepage: "http://test-eauction.uace.com.ua"
-        login:    prozorroyprovider1@gmail.com
+        login:    testprozorroprovider@gmail.com
         password: 123456
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     uace_Provider1_auction:
         broker:   uaceauction
         homepage: "http://test-eauction.uace.com.ua"
-        login:    prozorroyprovider2@gmail.com
+        login:    testprozorroprovider1@gmail.com
         password: 123456
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     uace_Viewer_auction:
@@ -171,17 +171,17 @@ users:
     opentender_Provider_auction:
         broker:   opentenderauction
         homepage: "http://test-eauction.open-tender.com.ua"
-        login:    prozorroyprovider1@gmail.com
+        login:    testprozorroprovider@gmail.com
         password: 123456
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     opentender_Provider1_auction:
         broker:   opentenderauction
         homepage: "http://test-eauction.open-tender.com.ua"
-        login:    prozorroyprovider2@gmail.com
+        login:    testprozorroprovider1@gmail.com
         password: 123456
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     opentender_Viewer_auction:
@@ -201,17 +201,17 @@ users:
     brizol_Provider:
         broker:   brizol
         homepage: "http://test-eauction.brizol.net/login"
-        login:    prozorroyprovider1@gmail.com
+        login:    testprozorroprovider@gmail.com
         password: 123456
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     brizol_Provider1:
         broker:   brizol
         homepage: "http://test-eauction.brizol.net/login"
-        login:    prozorroyprovider2@gmail.com
+        login:    testprozorroprovider1@gmail.com
         password: 123456
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     brizol_Viewer:
@@ -231,17 +231,17 @@ users:
     aukzionua_Provider:
         broker:   aukzionua
         homepage: "http://test.neb.org.ua"
-        login:    prozorroyprovider1@gmail.com
+        login:    testprozorroprovider@gmail.com
         password: 123456
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     aukzionua_Provider1:
         broker:   aukzionua
         homepage: "http://test.neb.org.ua"
-        login:    prozorroyprovider2@gmail.com
+        login:    testprozorroprovider1@gmail.com
         password: 123456
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     aukzionua_Viewer:
@@ -291,17 +291,17 @@ users:
     centrex_Provider:
         broker:   centrex
         homepage: "http://centrex.byustudio.in.ua"
-        login:    prozorroyprovider1@gmail.com
+        login:    testprozorroprovider@gmail.com
         password: 123456
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     centrex_Provider1:
         broker:   centrex
         homepage: "http://centrex.byustudio.in.ua"
-        login:    prozorroyprovider2@gmail.com
+        login:    testprozorroprovider1@gmail.com
         password: 123456
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     centrex_Viewer:
@@ -312,40 +312,44 @@ users:
         size:     [1366, 800]
     expagency_Owner:
         broker:   expagency
-        homepage: "http://test-torgi.exp-agency.com.ua"
-        login:    dzotenderowner@gmail.com
+        homepage: "http://cbd2.exp-agency.com.ua/user/login"
+        default_page: "http://cbd2.exp-agency.com.ua/public/index"
+        login:    privatizator
         password: 123456
-        browser:  Firefox
+        browser:  chrome
         position: [0, 0]
-        size:     [1366, 800]
+        size:     [1366, 768]
     expagency_Provider:
         broker:   expagency
-        homepage: "http://test-torgi.exp-agency.com.ua"
-        login:    prozorroyprovider1@gmail.com
+        homepage: "http://cbd2.exp-agency.com.ua/user/login"
+        default_page: "http://cbd2.exp-agency.com.ua/public/index"
+        login:    member
         password: 123456
-        browser:  Firefox
+        browser:  chrome
         position: [0, 0]
-        size:     [1366, 800]
+        size:     [1366, 768]
     expagency_Provider1:
         broker:   expagency
-        homepage: "http://test-torgi.exp-agency.com.ua"
-        login:    prozorroyprovider2@gmail.com
+        homepage: "http://cbd2.exp-agency.com.ua/user/login"
+        default_page: "http://cbd2.exp-agency.com.ua/public/index"
+        login:    member1
         password: 123456
-        browser:  Firefox
+        browser:  chrome
         position: [0, 0]
-        size:     [1366, 800]
+        size:     [1366, 768]
     expagency_Viewer:
         broker:   expagency
-        homepage: "http://test-torgi.exp-agency.com.ua"
-        browser:  Firefox
+        homepage: "http://cbd2.exp-agency.com.ua/user/login"
+        default_page: "http://cbd2.exp-agency.com.ua/public/index"
+        browser:  chrome
         position: [0, 0]
-        size:     [1366, 800]
+        size:     [1366, 768]
     govfound_Owner:
         broker:   govfound
         homepage: "http://test.gov.auction"
-        login:    prozorroytenderowner@gmail.com 
+        login:    testprozorroyowner@gmail.com
         password: 123456
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     govfound_Provider:
@@ -353,7 +357,7 @@ users:
         homepage: "http://test.gov.auction"
         login:    prozorroyprovider1@gmail.com
         password: 123456
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     govfound_Provider1:
@@ -361,13 +365,13 @@ users:
         homepage: "http://test.gov.auction"
         login:    prozorroyprovider2@gmail.com
         password: 123456
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     govfound_Viewer:
         broker:   govfound
         homepage: "http://test.gov.auction"
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     b25h8_Owner_auction:
@@ -514,7 +518,7 @@ users:
     Prom_Provider:
         broker:   Promauctions
         homepage: "http://zakupki.dz-test.net/auctions"
-        default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_auction/list?mode=all"
+        default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_privatization_asset/all"
         login:    test@test18.com
         password: autotest
         browser:  chrome
@@ -523,7 +527,7 @@ users:
     Prom_Provider1:
         broker:   Promauctions
         homepage: "http://zakupki.dz-test.net/auctions"
-        default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_auction/list?mode=all"
+        default_page: "https://my.zakupki.dz-test.net/cabinet/purchases/state_privatization_asset/all"
         login:    test@test19.com
         password: autotest
         browser:  chrome
@@ -606,7 +610,7 @@ users:
     uatenders_Owner:
         broker:   uatenders
         homepage: "http://cdb2dev.zakupki.com.ua/"
-        login:    test_owner_arm@ukr.net
+        login:    test_viewer@ukr.net
         password: 111111
         browser:  chrome
         position: [750, 0]
@@ -622,7 +626,7 @@ users:
     uatenders_Viewer:
         broker:   uatenders
         homepage: "http://cdb2dev.zakupki.com.ua/"
-        login:    test_owner_arm@ukr.net
+        login:    test_viewer@ukr.net
         password: 111111
         browser:  chrome
         position: [750, 0]
@@ -1392,38 +1396,38 @@ users:
         size:     [1366, 800]
     uisce_Owner:
         broker:   uisce
-        homepage: "http://test.proumstrade.com.ua/user/login"
-        default_page: "http://test.proumstrade.com.ua/public"
-        login:    organizator
+        homepage: "http://test.umstrade.com.ua/user/login"
+        default_page: "http://test.umstrade.com.ua/public"
+        login:    privatizator
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     uisce_Provider:
         broker:   uisce
-        homepage: "http://test.proumstrade.com.ua/user/login"
-        default_page: "http://test.proumstrade.com.ua/public"
+        homepage: "http://test.umstrade.com.ua/user/login"
+        default_page: "http://test.umstrade.com.ua/public"
         login:    member
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     uisce_Provider1:
         broker:   uisce
-        homepage: "http://test.proumstrade.com.ua/user/login"
-        default_page: "http://test.proumstrade.com.ua/public"
+        homepage: "http://test.umstrade.com.ua/user/login"
+        default_page: "http://test.umstrade.com.ua/public"
         login:    member1
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     uisce_Viewer:
         broker:   uisce
-        homepage: "http://test.proumstrade.com.ua/"
-        default_page: "http://test.proumstrade.com.ua/public"
+        homepage: "http://test.umstrade.com.ua/"
+        default_page: "http://test.umstrade.com.ua/public"
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     zupb_Owner:
         broker:   zupb
         homepage: "https://etm.zub.com.ua"
@@ -1688,32 +1692,32 @@ users:
         size:     [1366, 800]
     podilska_Owner:
         broker:   podilska
-        homepage: "https://sale.birzha.km.ua/Registration.aspx"
-        default_page: "https://sale.birzha.km.ua/PositionList.aspx"
+        homepage: "https://sale.birzha.km.ua/test/Registration.aspx"
+        default_page: "https://sale.birzha.km.ua/test/PositionList.aspx"
         login:    km_Owner@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     podilska_Provider:
         broker:   podilska
-        homepage: "https://sale.birzha.km.ua/Registration.aspx"
-        default_page: "https://sale.birzha.km.ua/PositionList.aspx"
+        homepage: "https://sale.birzha.km.ua/test/Registration.aspx"
+        default_page: "https://sale.birzha.km.ua/test/PositionList.aspx"
         login:    km_Provider@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     podilska_Provider1:
         broker:   podilska
-        homepage: "https://sale.birzha.km.ua/Registration.aspx"
-        default_page: "https://sale.birzha.km.ua/PositionList.aspx"
+        homepage: "https://sale.birzha.km.ua/test/Registration.aspx"
+        default_page: "https://sale.birzha.km.ua/test/PositionList.aspx"
         login:    km_Provider1@1.ua
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
     podilska_Viewer:
         broker:   podilska
-        homepage: "https://sale.birzha.km.ua/Registration.aspx"
-        default_page: "https://sale.birzha.km.ua/PositionList.aspx"
+        homepage: "https://sale.birzha.km.ua/test/Registration.aspx"
+        default_page: "https://sale.birzha.km.ua/test/PositionList.aspx"
         login:    km_Viewer@1.ua
         browser:  firefox
         position: [0, 0]
@@ -1753,7 +1757,7 @@ users:
     tabua_Owner:
         broker:   tabua
         homepage: "http://sale_user:sale_password@staging_sale.tab.com.ua/login"
-        login:    tab_mayno@yopmail.com
+        login:    tab_privatization@yopmail.com
         password: 123456
         browser:  chrome
         position: [0, 0]
@@ -1850,38 +1854,38 @@ users:
         size:     [1024, 768]
     sets_Owner:
         broker:   sets
-        homepage: "http://sets.org.ua/user/login"
-        default_page: "http://sets.org.ua/public/index"
-        login:    organizator
+        homepage: "http://test.sets.org.ua/user/login"
+        default_page: "http://test.sets.org.ua/public/index"
+        login:    privatizator
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     sets_Provider:
         broker:   sets
-        homepage: "http://sets.org.ua/user/login"
-        default_page: "http://sets.org.ua/public/index"
+        homepage: "http://test.sets.org.ua/user/login"
+        default_page: "http://test.sets.org.ua/public/index"
         login:    member
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     sets_Provider1:
         broker:   sets
-        homepage: "http://sets.org.ua/user/login"
-        default_page: "http://sets.org.ua/public/index"
+        homepage: "http://test.sets.org.ua/user/login"
+        default_page: "http://test.sets.org.ua/public/index"
         login:    member1
         password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     sets_Viewer:
         broker:   sets
-        homepage: "http://sets.org.ua/user/login"
-        default_page: "http://sets.org.ua/public/index"
+        homepage: "http://test.sets.org.ua/user/login"
+        default_page: "http://test.sets.org.ua/public/index"
         browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     biddingtime_Owner:
         broker:   biddingtime
         homepage: "http://test.biddingtime.com.ua/user/login"
@@ -2010,3 +2014,139 @@ users:
         browser:  chrome
         position: [0, 500]
         size:     [1280, 800]
+    livtrade_Owner:
+        broker:   livtrade
+        homepage: "http://cbd2.livtrade.com.ua/user/login"
+        default_page: "http://cbd2.livtrade.com.ua/public/index"
+        login:    privatizator
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    livtrade_Provider:
+        broker:   livtrade
+        homepage: "http://cbd2.livtrade.com.ua/user/login"
+        default_page: "http://cbd2.livtrade.com.ua/public/index"
+        login:    member
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    livtrade_Provider1:
+        broker:   livtrade
+        homepage: "http://cbd2.livtrade.com.ua/user/login"
+        default_page: "http://cbd2.livtrade.com.ua/public/index"
+        login:    member1
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    livtrade_Viewer:
+        broker:   livtrade
+        homepage: "http://cbd2.livtrade.com.ua/user/login"
+        default_page: "http://cbd2.livtrade.com.ua/public/index"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    mytender_Owner:
+        broker:   mytender
+        homepage: "http://cbd2.mytender.com.ua/user/login"
+        default_page: "http://cbd2.mytender.com.ua/public/index"
+        login:    privatizator
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    mytender_Provider:
+        broker:   mytender
+        homepage: "http://cbd2.mytender.com.ua/user/login"
+        default_page: "http://cbd2.mytender.com.ua/public/index"
+        login:    member
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    mytender_Provider1:
+        broker:   mytender
+        homepage: "http://cbd2.mytender.com.ua/user/login"
+        default_page: "http://cbd2.mytender.com.ua/public/index"
+        login:    member1
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    mytender_Viewer:
+        broker:   mytender
+        homepage: "http://cbd2.mytender.com.ua/user/login"
+        default_page: "http://cbd2.mytender.com.ua/public/index"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    aukzionist_Owner:
+        broker:   aukzionist
+        homepage: "http://sale.auktsionist.com/user/login"
+        default_page: "http://sale.auktsionist.com/public/index"
+        login:    privatizator
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    aukzionist_Provider:
+        broker:   aukzionist
+        homepage: "http://sale.auktsionist.com/user/login"
+        default_page: "http://sale.auktsionist.com/public/index"
+        login:    member
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    aukzionist_Provider1:
+        broker:   aukzionist
+        homepage: "http://sale.auktsionist.com/user/login"
+        default_page: "http://sale.auktsionist.com/public/index"
+        login:    member1
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    aukzionist_Viewer:
+        broker:   aukzionist
+        homepage: "http://sale.auktsionist.com/user/login"
+        default_page: "http://sale.auktsionist.com/public/index"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    skyline_viewer:
+        broker:   skyline
+        homepage: "http://test.skyline.auction/prozorrosale/auctions/public"
+        syncpage: "http://test.skyline.auction/prozorrosale/auctions/sync-all"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    skyline_provider:
+        broker:   skyline
+        homepage: "http://test.skyline.auction/prozorrosale/auctions/public"
+        syncpage: "http://test.skyline.auction/prozorrosale/auctions/sync-all"
+        login:    testmemb1@test.t
+        password: testpass
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    skyline_provider1:
+        broker:   skyline
+        homepage: "http://test.skyline.auction/prozorrosale/auctions/public"
+        syncpage: "http://test.skyline.auction/prozorrosale/auctions/sync-all"
+        login:    testmemb2@test.t
+        password: testpass
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    skyline_owner:
+        broker:   skyline
+        homepage: "http://test.skyline.auction/prozorrosale/auctions/public"
+        syncpage: "http://test.skyline.auction/prozorrosale/auctions/sync-all"
+        login:    testadmin@test.t
+        password: testpass
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]

@@ -5,51 +5,84 @@ Suite Teardown  Test Suite Teardown
 
 *** Variables ***
 @{USED_ROLES}   tender_owner  viewer  provider  provider1
-${NUMBER_OF_AWARDS}  ${1}
-
+${NUMBER_OF_AWARDS}  ${2}
+${MODE}  auctions
 
 *** Test Cases ***
 ##############################################################################################
 #             FIND TENDER
 ##############################################################################################
 
-Можливість знайти лот по ідентифікатору
+Можливість знайти процедуру по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук лоту
   ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      find_tender
   Завантажити дані про тендер
-  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
-  \   ${resp}=  Run As  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
+  Можливість знайти тендер по ідентифікатору для усіх користувачів
 
 
-Можливість звірити кількість сформованих авардів лоту
+Можливість звірити статус процедури в період кваліфікації
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес кваліфікації
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      number_of_awards
-  [Setup]  Дочекатись закінчення періоду аукціону  ${viewer}  ${TENDER['TENDER_UAID']}
-  Звірити кількість сформованих авардів лоту із ${NUMBER_OF_AWARDS} для користувача ${viewer}
-
-
-Відображення статусу тендера в період кваліфікації
-  [Tags]   ${USERS.users['${viewer}'].broker}: Процес кваліфікації
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      awarding
-  Звірити статус тендера  ${viewer}  ${TENDER['TENDER_UAID']}  active.qualification
+  [Setup]  Дочекатись початку кваліфікації  ${viewer}  ${TENDER['TENDER_UAID']}
+  Звірити кількість сформованих авардів лоту із ${NUMBER_OF_AWARDS} для користувача ${viewer}
+  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${provider1}  ${viewer}
+  \  Звірити статус тендера  ${username}  ${TENDER['TENDER_UAID']}  active.qualification
 
 ##############################################################################################
 #             AWARDING
 ##############################################################################################
 
+Відображення статусу 'очікується підтвердження' для єдиного кандидата
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
+  ...     viewer
+  ...     ${USERS.users['${viewer}'].broker}
+  ...     award_admission_status
+  [Setup]  Оновити LAST_MODIFICATION_DATE
+  Звірити відображення поля awards[0].status тендера із pending.admission для користувача ${viewer}
+
+
+Відображення статусу неуспішного лоту через відсутність завантаженого протоколу підтвердження
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення статусу аукціону
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      wait_for_verificationEndDate
+  Звірити cтатус неуспішного тендера  ${viewer}  ${TENDER['TENDER_UAID']}
+
+
+Можливість активувати процес кваліфікації єдиного учасника
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
+  ...     tender_owner
+  ...     ${USERS.users['${tender_owner}'].broker}
+  ...     confirm_admission
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
+  Можливість завантажити протокол погодження в авард 0 користувачем ${tender_owner}
+  Run As  ${tender_owner}  Активувати кваліфікацію учасника  ${TENDER['TENDER_UAID']}
+
+
+Можливість дискваліфікувати єдиного кандидата
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
+  ...     tender_owner
+  ...     ${USERS.users['${tender_owner}'].broker}
+  ...     disqualified_award
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
+  ${description}=  create_fake_sentence
+  Можливість завантажити протокол дискваліфікації в авард 0 користувачем ${tender_owner}
+  Run As  ${tender_owner}  Дискваліфікувати постачальника  ${TENDER['TENDER_UAID']}  0  ${description}
+
+
 Відображення статусу 'очікується протокол' для першого кандидата
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
-  ...     first_award_verification_status
+  ...     first_award_pending_status
   [Setup]  Оновити LMD і дочекатись синхронізації  ${viewer}
-  Звірити відображення поля awards[0].status тендера із pending.verification для користувача ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[0]}  status
+  Звірити відображення поля awards[0].status тендера із pending для користувача ${viewer}
 
 
 Відображення статусу 'очікується кінець кваліфікації' для другого кандидата
@@ -61,12 +94,12 @@ ${NUMBER_OF_AWARDS}  ${1}
   Звірити відображення поля awards[1].status тендера із pending.waiting для користувача ${viewer}
 
 
-Неможливість змінити статус на 'очікується підписання договору' для першого кандидата
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Подання пропозиції
+Неможливість підтвердити першого кандидата без завантаженого протоколу
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...     tender_owner
   ...     ${USERS.users['${tender_owner}'].broker}
-  ...     change_first_award_payment_status
-  Require Failure  ${tender_owner}  Підтвердити наявність протоколу аукціону  ${TENDER['TENDER_UAID']}  0
+  ...     confirm_award
+  Require Failure  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  0
 
 
 Можливість завантажити протокол аукціону в авард для першого кандидата
@@ -78,23 +111,22 @@ ${NUMBER_OF_AWARDS}  ${1}
   Можливість завантажити протокол аукціону в авард 0 користувачем ${tender_owner}
 
 
-Можливість підтвердити наявність протоколу аукціону для першого кандидата
+Можливість підтвердити першого кандидата
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...     tender_owner
   ...     ${USERS.users['${tender_owner}'].broker}
-  ...     approve_first_award_protocol
+  ...     confirm_first_award
   [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
-  Run As  ${tender_owner}  Підтвердити наявність протоколу аукціону  ${TENDER['TENDER_UAID']}  0
+  Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  0
 
 
-Відображення статусу 'очікується підписання договору' для першого кандидата
+Відображення статусу 'очікується завантаження контракту' для першого кандидата
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
-  ...     first_award_payment_status
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  ...     first_award_active_status
   Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[0]}  status
-  Звірити відображення поля awards[0].status тендера із pending.payment для користувача ${viewer}
+  Звірити відображення поля awards[0].status тендера із active для користувача ${viewer}
 
 
 Можливість скасувати рішення кваліфікації другим кандидатом
@@ -116,25 +148,6 @@ ${NUMBER_OF_AWARDS}  ${1}
   Звірити відображення поля awards[1].status тендера із cancelled для користувача ${viewer}
 
 
-Можливість підтвердити оплату першого кандидата
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
-  ...     tender_owner
-  ...     ${USERS.users['${tender_owner}'].broker}
-  ...     confirm_first_award
-  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
-  Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  0
-
-
-Відображення статусу 'оплачено, очікується підписання договору' для першого кандидата
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
-  ...     viewer
-  ...     ${USERS.users['${viewer}'].broker}
-  ...     first_award_active_status
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[0]}  status
-  Звірити відображення поля awards[0].status тендера із active для користувача ${viewer}
-
-
 Можливість дискваліфікувати першого кандидата
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...     tender_owner
@@ -142,16 +155,8 @@ ${NUMBER_OF_AWARDS}  ${1}
   ...     disqualified_first_award
   [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
   ${description}=  create_fake_sentence
+  Можливість завантажити протокол дискваліфікації в авард 0 користувачем ${tender_owner}
   Run As  ${tender_owner}  Дискваліфікувати постачальника  ${TENDER['TENDER_UAID']}  0  ${description}
-
-
-Відображення статусу неуспішного лоту через відсутність завантаженого протоколу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення статусу лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      wait_for_verificationEndDate
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити cтатус неуспішного тендера  ${viewer}  ${TENDER['TENDER_UAID']}
 
 
 Відображення статусу 'unsuccessful' для першого кандидата
@@ -164,6 +169,35 @@ ${NUMBER_OF_AWARDS}  ${1}
   Звірити відображення поля awards[0].status тендера із unsuccessful для користувача ${viewer}
 
 
+Можливість скасувати контракт
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Скасування контракту
+  ...     tender_owner
+  ...     ${USERS.users['${tender_owner}'].broker}
+  ...     cancel_contract
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
+  Можливість завантажити протокол скасування в контракт 0 користувачем ${tender_owner}
+  Run As  ${tender_owner}  Скасувати контракт  ${TENDER['TENDER_UAID']}  0
+
+
+Відображення статусу скасованої угоди
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних угоди
+  ...     viewer
+  ...     ${USERS.users['${viewer}'].broker}
+  ...      contract_cancel_view
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run As  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}  cancelled  contracts[-1].status
+
+
+Відображення статусу 'очікується протокол' для другого кандидата
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
+  ...     viewer
+  ...     ${USERS.users['${viewer}'].broker}
+  ...     second_award_pending_status
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[1]}  status
+  Звірити відображення поля awards[1].status тендера із pending для користувача ${viewer}
+
+
 Можливість дискваліфікувати другого кандидата
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...     tender_owner
@@ -171,6 +205,7 @@ ${NUMBER_OF_AWARDS}  ${1}
   ...     disqualified_second_award
   [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
   ${description}=  create_fake_sentence
+  Можливість завантажити протокол дискваліфікації в авард 1 користувачем ${tender_owner}
   Run As  ${tender_owner}  Дискваліфікувати постачальника  ${TENDER['TENDER_UAID']}  1  ${description}
 
 
@@ -184,22 +219,12 @@ ${NUMBER_OF_AWARDS}  ${1}
   Звірити відображення поля awards[1].status тендера із unsuccessful для користувача ${viewer}
 
 
-Відображення статусу 'очікується протокол' для другого кандидата
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
-  ...     viewer
-  ...     ${USERS.users['${viewer}'].broker}
-  ...     second_award_verification_status
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[1]}  status
-  Звірити відображення поля awards[1].status тендера із pending.verification для користувача ${viewer}
-
-
 Неможливість змінити статус на 'очікується підписання договору' для другого кандидата
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Подання пропозиції
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...     tender_owner
   ...     ${USERS.users['${tender_owner}'].broker}
-  ...     change_second_award_payment_status
-  Require Failure  ${tender_owner}  Підтвердити наявність протоколу аукціону  ${TENDER['TENDER_UAID']}  1
+  ...     confirm_award
+  Require Failure  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  1
 
 
 Можливість завантажити протокол аукціону в авард для другого кандидата
@@ -211,26 +236,7 @@ ${NUMBER_OF_AWARDS}  ${1}
   Можливість завантажити протокол аукціону в авард 1 користувачем ${tender_owner}
 
 
-Можливість підтвердити наявність протоколу аукціону для другого кандидата
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
-  ...     tender_owner
-  ...     ${USERS.users['${tender_owner}'].broker}
-  ...     approve_second_award_protocol
-  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
-  Run As  ${tender_owner}  Підтвердити наявність протоколу аукціону  ${TENDER['TENDER_UAID']}  1
-
-
-Відображення статусу 'очікується підписання договору' для другого кандидата
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
-  ...     viewer
-  ...     ${USERS.users['${viewer}'].broker}
-  ...     change_second_award_payment_status
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[1]}  status
-  Звірити відображення поля awards[1].status тендера із pending.payment для користувача ${viewer}
-
-
-Можливість підтвердити оплату другого кандидата
+Можливість підтвердити другого кандидата
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...     tender_owner
   ...     ${USERS.users['${tender_owner}'].broker}
@@ -239,18 +245,17 @@ ${NUMBER_OF_AWARDS}  ${1}
   Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  1
 
 
-Відображення статусу 'оплачено, очікується підписання договору' для другого кандидата
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+Відображення статусу 'очікується завантаження контракту' для другого кандидата
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
   ...     second_award_active_status
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[1]}  status
   Звірити відображення поля awards[1].status тендера із active для користувача ${viewer}
 
 
-Відображення статусу неуспішного лоту
-  [Tags]   ${USERS.users['${viewer}'].broker}: Подання пропозиції
+Відображення статусу неуспішного аукціону
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення статусу аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_status_unsuccessful

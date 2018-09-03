@@ -8,7 +8,7 @@ Suite Teardown  Test Suite Teardown
 
 ${MODE}              lots
 ${RESOURCE}          lots
-@{USED_ROLES}        tender_owner  viewer
+@{USED_ROLES}        tender_owner  viewer  provider  provider1
 
 *** Test Cases ***
 Можливість створити лот
@@ -66,7 +66,7 @@ ${RESOURCE}          lots
   Отримати дані із дати date тендера для усіх користувачів
 
 
-Відображення дати завершення періоду редагування об'єкта МП
+Відображення дати завершення періоду редагування лоту
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
@@ -79,7 +79,7 @@ ${RESOURCE}          lots
   ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      assetID_view
-  Отримати дані із поля assets лоту для усіх користувачів
+  Отримати дані із поля relatedProcesses[0].relatedProcessID лоту для усіх користувачів
 
 
 Відображення заголовку лоту
