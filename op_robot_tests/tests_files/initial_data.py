@@ -69,7 +69,7 @@ def create_fake_tenderAttempts(attempt):
 
 
 def create_fake_amount():
-    return round(random.uniform(3000, 999999999.99), 2)
+    return round(random.uniform(3000, 5000000), 2)
 
 
 def create_fake_minimal_step(value_amount):
