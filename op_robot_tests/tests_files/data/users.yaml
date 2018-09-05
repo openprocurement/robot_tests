@@ -1660,36 +1660,38 @@ users:
         size:     [1024, 768]
     vertas_Owner:
         broker:   vertas
-        homepage: "https://sale.vertas.com.ua/test/Registration.aspx"
-        default_page: "https://sale.vertas.com.ua/test/AuctionList.aspx"
-        login:    vertas_owner@1.ua
+        homepage: "http://cbd2.vertas.com.ua/user/login"
+        default_page: "http://cbd2.vertas.com.ua/public/index"
+        login:    privatizator
+        password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1366, 800]
+        size:     [1366, 768]
     vertas_Provider:
         broker:   vertas
-        homepage: "https://sale.vertas.com.ua/test/Registration.aspx"
-        default_page: "https://sale.vertas.com.ua/test/AuctionList.aspx"
-        login:    vertas_provider@1.ua
+        homepage: "http://cbd2.vertas.com.ua/user/login"
+        default_page: "http://cbd2.vertas.com.ua/public/index"
+        login:    member
+        password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1366, 800]
+        size:     [1366, 768]
     vertas_Provider1:
         broker:   vertas
-        homepage: "https://sale.vertas.com.ua/test/Registration.aspx"
-        default_page: "https://sale.vertas.com.ua/test/AuctionList.aspx"
-        login:    vertas_provider1@1.ua
+        homepage: "http://cbd2.vertas.com.ua/user/login"
+        default_page: "http://cbd2.vertas.com.ua/public/index"
+        login:    member1
+        password: 123456
         browser:  chrome
         position: [0, 0]
-        size:     [1366, 800]
+        size:     [1366, 768]
     vertas_Viewer:
         broker:   vertas
-        homepage: "https://sale.vertas.com.ua/test/Registration.aspx"
-        default_page: "https://sale.vertas.com.ua/test/AuctionList.aspx"
-        login:    vertas_viewer@1.ua
+        homepage: "http://cbd2.vertas.com.ua/user/login"
+        default_page: "http://cbd2.vertas.com.ua/public/index"
         browser:  chrome
         position: [0, 0]
-        size:     [1366, 800]
+        size:     [1366, 768]
     podilska_Owner:
         broker:   podilska
         homepage: "https://sale.birzha.km.ua/test/Registration.aspx"
@@ -2150,3 +2152,37 @@ users:
         browser:  chrome
         position: [0, 500]
         size:     [1280, 800]
+    pfts_Owner:
+        broker:   pfts
+        homepage: "http://cbd2.ex.pfts.ua/user/login"
+        default_page: "http://cbd2.ex.pfts.ua/public/index"
+        login:    privatizator
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    pfts_Provider:
+        broker:   pfts
+        homepage: "http://cbd2.ex.pfts.ua/user/login"
+        default_page: "http://cbd2.ex.pfts.ua/public/index"
+        login:    member
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    pfts_Provider1:
+        broker:   pfts
+        homepage: "http://cbd2.ex.pfts.ua/user/login"
+        default_page: "http://cbd2.ex.pfts.ua/public/index"
+        login:    member1
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    pfts_Viewer:
+        broker:   pfts
+        homepage: "http://cbd2.ex.pfts.ua/user/login"
+        default_page: "http://cbd2.ex.pfts.ua/public/index"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
