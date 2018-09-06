@@ -312,7 +312,8 @@ ${RESOURCE}          lots
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      lot_view
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Отримати дані із поля minimalStep.amount усіх аукціонів для усіх користувачів
+  :FOR  ${index}  IN  0  1
+  \  Отримати дані із поля auctions[${index}].minimalStep.amount тендера для усіх користувачів
 
 
 Відображення розміру гарантійного внеску усіх аукціонів
