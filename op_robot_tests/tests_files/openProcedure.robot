@@ -278,6 +278,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_auction_step  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_amount}=  create_fake_minimal_step  ${USERS.users['${tender_owner}'].tender_data.data.value.amount}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  new_amount=${new_amount}
   Можливість змінити поле minimalStep.amount тендера на ${new_amount}
@@ -356,7 +357,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_view_modify_auction_title_en  level1
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  title_en
-  Звірити відображення поля title_ru тендера із ${USERS.users['${tender_owner}'].new_title_en} для користувача ${viewer}
+  Звірити відображення поля title_en тендера із ${USERS.users['${tender_owner}'].new_title_en} для користувача ${viewer}
 
 
 Можливість змінити опис лоту українською мовою
@@ -491,6 +492,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_auction_guarantee  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${provider}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_amount}=  Evaluate  ${USERS.users['${tender_owner}'].tender_data.data.guarantee.amount}-1
   Set To Dictionary  ${USERS.users['${tender_owner}']}  new_amount=${new_amount}
   Можливість змінити поле guarantee.amount тендера на ${new_amount}
