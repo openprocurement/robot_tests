@@ -1298,7 +1298,6 @@ vapol:
     timeout_on_wait: 10
 avi:
     keywords_file: avi
-    accelerator: 360
     roles:
         tender_owner:   avi_Owner
         provider:       avi_Provider
@@ -1306,9 +1305,11 @@ avi:
         viewer:         avi_Viewer
     intervals:
         default:
-            enquiry: [0, 10]
-            tender:  [0, 25]
-            auction: [25, 30]
+            accelerator: 360
+        dgfFinancialAssets:
+           accelerator: 360
+        dgfOtherAssets:
+            accelerator: 360
         dgfInsider:
             accelerator: 360
     timeout_on_wait: 30
