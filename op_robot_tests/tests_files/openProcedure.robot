@@ -167,6 +167,15 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля minimalStep.amount тендера для усіх користувачів
 
 
+Відображення суми гарантування лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer tender_owner provider provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      tender_view_guarantee  level2
+  Звірити відображення поля guarantee.amount тендера для усіх користувачів
+
+
 Відображення фінансового критерію лоту
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
