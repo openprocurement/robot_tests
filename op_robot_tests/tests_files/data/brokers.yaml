@@ -1115,10 +1115,10 @@ c1ux:
             accelerator: 480
             auction: [30,35]
         lots:
-            accelerator: 90
+            accelerator: 1440
         auctions:
             accelerator: 1440
-            auction:  [200, 15]
+            auction:  [10, 15]
     keywords_file: c1ux
     homepage: 'http://test.c1.ux.ua/auctions2'
     roles:
