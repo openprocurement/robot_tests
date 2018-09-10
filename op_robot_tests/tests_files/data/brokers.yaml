@@ -1305,13 +1305,13 @@ avi:
         viewer:         avi_Viewer
     intervals:
         default:
-            accelerator: 360
+            accelerator: 180
         dgfFinancialAssets:
-           accelerator: 360
+           accelerator: 180
         dgfOtherAssets:
-            accelerator: 360
+            accelerator: 180
         dgfInsider:
-            accelerator: 360
+            accelerator: 180
     timeout_on_wait: 30
 livtrade:
     keywords_file: livtrade
