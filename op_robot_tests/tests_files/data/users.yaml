@@ -437,7 +437,7 @@ users:
     Newtend_Owner:
         broker:   Newtend
         homepage: "https://cdb2-dev.newtend.com/provider/#/profile/login"
-        login:    newttest78+001@gmail.com
+        login:    newttest78+501@gmail.com
         password: 123123
         browser:  chrome
         position: [0, 0]

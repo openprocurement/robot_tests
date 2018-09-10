@@ -283,6 +283,8 @@ Newtend:
     intervals:
         default:
             accelerator: 360
+        lots:
+            accelerator: 360
     keywords_file: newtend
     roles:
         provider1:      Newtend_Provider1
