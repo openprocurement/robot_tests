@@ -1108,7 +1108,8 @@ Library  openprocurement_client.utils
   Set To Dictionary  ${USERS.users['${username}']}  bid_access_token=${reply.access.token}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bid_access_token}
   ${procurementMethodType}=  Get variable value  ${USERS.users['${username}'].tender_data.data.procurementMethodType}
-  ${status}=  Set Variable If  'EU' in '${procurementMethodType}' or '${procurementMethodType}'=='competitiveDialogueUA'  pending  active
+  ${methods}=  Create List  competitiveDialogueUA  competitiveDialogueEU  aboveThresholdEU  closeFrameworkAgreementUA
+  ${status}=  Set Variable If  '${procurementMethodType}' in ${methods}  pending  active
   Set To Dictionary  ${reply['data']}  status=${status}
   ${reply_active}=  Call Method  ${USERS.users['${username}'].client}  patch_bid  ${tender}  ${reply}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${reply['access']['token']}
@@ -1467,6 +1468,16 @@ Library  openprocurement_client.utils
   Log  ${reply}
 
 
+Затвердити постачальників
+  [Arguments]  ${username}  ${tender_uaid}
+  ${internal_id}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
+  ${tender}=  create_data_dict  data.id  ${internal_id}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
+  set_to_object  ${tender}  data.status  active.qualification.stand-still
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+  Log  ${reply}
+
+
 Перевести тендер на статус очікування обробки мостом
   [Documentation]
   ...      [Arguments] Username and tender uaid
@@ -1508,6 +1519,25 @@ Library  openprocurement_client.utils
   ${contract}=  Create Dictionary  data=${tender.data.contracts[${contract_index}]}
   Set_to_object  ${contract.data}  ${fieldname}  ${fieldvalue}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract  ${tender}  ${contract}
+  Log  ${reply}
+
+
+Встановити ціну за одиницю для контракту
+  [Arguments]  ${username}  ${tender_uaid}  ${contract_data}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  Log  ${tender}
+  Log  ${contract_data}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_agreement_contract  ${tender}  ${tender.data.agreements[0].id}  ${contract_data}
+  Log  ${reply}
+
+
+Зареєструвати угоду
+  [Arguments]  ${username}  ${tender_uaid}  ${period}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${agreement}=  Create Dictionary  data=${tender.data.agreements[0]}
+  Set To Dictionary  ${agreement.data}  status=active
+  Set To Dictionary  ${agreement.data}  period=${period}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_agreement  ${tender}  ${agreement}
   Log  ${reply}
 
 

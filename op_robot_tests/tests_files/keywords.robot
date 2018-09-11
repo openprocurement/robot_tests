@@ -1046,9 +1046,29 @@ Require Failure
   ...      active.qualification
 
 
+Дочекатись дати закінчення періоду кваліфікації
+  [Arguments]  ${username}  ${tender_uaid}
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Run Keyword And Expect Error  *
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      active.qualification.stand-still
+
+
 Дочекатись дати закінчення періоду подання скарг
   [Arguments]  ${username}
   Дочекатись дати  ${USERS.users['${username}'].tender_data.data.complaintPeriod.endDate}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+
+
+Дочекатись можливості зареєструвати угоди
+  [Arguments]  ${username}
+  Дочекатись дати  ${USERS.users['${tender_owner}'].tender_data.data.contractPeriod.clarificationsUntil}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
 
@@ -1095,3 +1115,14 @@ Require Failure
   ${len_of_object}=  Run Keyword If  '${status}' == 'PASS'  Get Length  ${USERS.users['${role}'].tender_data.data.${object}}
   ${index}=  Run Keyword If  '${status}' == 'PASS'  subtraction  ${len_of_object}  1
   [Return]  ${index}
+
+
+Розрахувати ціну для ${index} контракту
+  ${contract_data}=  Create Dictionary  data=${USERS.users['${tender_owner}'].tender_data.data.agreements[0].contracts[${index}]}
+  ${quantity}=  Convert To Integer  ${USERS.users['${tender_owner}'].tender_data.data['items'][0]['quantity']}
+  ${value}=  Evaluate  ${USERS.users['${tender_owner}'].tender_data.data.awards[${index}+1].value.amount}/${quantity}
+  ${value}=  Convert To Integer  ${value}
+  Set To Dictionary  ${contract_data.data.unitPrices[0].value}  amount=${value}
+  ${contract_data}=  munch_dict  arg=${contract_data}
+  Log  ${contract_data}
+  [Return]  ${contract_data}
