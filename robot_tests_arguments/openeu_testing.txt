@@ -92,6 +92,7 @@
 -i qualification_approve_second_award
 
 -i contract_sign
+-i contract_stand_still
 -i modify_contract
 -i contract_view
 -i add_doc_to_contract
