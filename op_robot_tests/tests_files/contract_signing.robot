@@ -37,7 +37,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Процес укладання угоди
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      contract_sign
+  ...      contract_stand_still
   ...      critical
   ${award_index}=  Отримати останній індекс  awards  ${tender_owner}  ${viewer}
   ${standstillEnd}=  Get Variable Value  ${USERS.users['${tender_owner}'].tender_data.data.awards[${award_index}].complaintPeriod.endDate}
