@@ -51,6 +51,7 @@ from .initial_data import (
     test_tender_data_openua,
     test_tender_data_planning,
     test_tender_data_openua_defense,
+    test_tender_data_framework_agreement,
     test_bid_competitive_data,
     tets_monitoring_data,
     test_party,
@@ -340,6 +341,9 @@ def prepare_test_tender_data(procedure_intervals,
             tender_parameters, submissionMethodDetails)})
     elif mode == 'reporting':
         return munchify({'data': test_tender_data_limited(tender_parameters)})
+    elif mode == 'open_framework':
+        return munchify({'data': test_tender_data_framework_agreement(
+            tender_parameters, submissionMethodDetails)})
     elif mode == 'belowThreshold':
         return munchify({'data': test_tender_data(
             tender_parameters,

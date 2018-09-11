@@ -557,6 +557,14 @@ def test_tender_data_openeu(params, submissionMethodDetails):
     return data
 
 
+def test_tender_data_framework_agreement(params, submissionMethodDetails):
+    data = test_tender_data_openeu(params, submissionMethodDetails)
+    data['procurementMethodType'] = 'closeFrameworkAgreementUA'
+    data['maxAwardsCount'] = fake.random_int(min=3, max=5)
+    data['agreementDuration'] = 'P1M'
+    return data
+
+
 def test_tender_data_competitive_dialogue(params, submissionMethodDetails):
     # We should not provide any values for `enquiryPeriod` when creating
     # an openUA or openEU procedure. That field should not be present at all.
