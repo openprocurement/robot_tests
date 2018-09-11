@@ -60,6 +60,14 @@ def create_fake_date():
     return get_now().isoformat()
 
 
+def create_fake_period(days=0, hours=0, minutes=0):
+    data = {
+        "startDate": get_now().isoformat(),
+        "endDate": (get_now() + timedelta(days=days, hours=hours, minutes=minutes)).isoformat()
+    }
+    return data
+
+
 def subtraction(value1, value2):
     if "." in str (value1) or "." in str (value2):
         return (float (value1) - float (value2))
