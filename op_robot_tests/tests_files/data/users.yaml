@@ -462,8 +462,8 @@ users:
         broker:   Newtend
         homepage: "https://cdb2-dev.newtend.com/provider"
         browser:  chrome
-        position: [800, 400]
-        size:     [800, 700]
+        position: [0, 0]
+        size:     [1200, 1200]
     PrivatMarket_Viewer:
         broker:   PrivatMarket
         homepage: "http://auction.privatbank.ua"
