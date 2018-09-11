@@ -203,3 +203,72 @@ Suite Teardown  Test Suite Teardown
   ${contract_index}=  Отримати останній індекс  contracts  ${tender_owner}  ${viewer}
   Run As  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
   Звірити відображення поля contracts[${contract_index}].status тендера із active для користувача ${viewer}
+
+
+Можливість встановити ціну за одиницю для першого контракту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування угоди
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_agreement
+  ...      critical
+  [Setup]  Дочекатись дати закінчення періоду кваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${contract_data}=  Розрахувати ціну для 0 контракту
+  Run As  ${tender_owner}  Встановити ціну за одиницю для контракту  ${TENDER['TENDER_UAID']}  ${contract_data}
+
+
+Можливість встановити ціну за одиницю для другого контракту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування угоди
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_agreement
+  ...      critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${contract_data}=  Розрахувати ціну для 1 контракту
+  Run As  ${tender_owner}  Встановити ціну за одиницю для контракту  ${TENDER['TENDER_UAID']}  ${contract_data}
+
+
+Можливість встановити ціну за одиницю для третього контракту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування угоди
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_agreement
+  ...      critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${contract_data}=  Розрахувати ціну для 2 контракту
+  Run As  ${tender_owner}  Встановити ціну за одиницю для контракту  ${TENDER['TENDER_UAID']}  ${contract_data}
+
+
+Можливість зареєструвати угоду
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування угоди
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_agreement
+  ...      critical
+  [Setup]  Дочекатись можливості зареєструвати угоди  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${days}=  create_fake_number  366  1460
+  ${period}=  create_fake_period  days=${days}
+  Run As  ${tender_owner}  Зареєструвати угоду  ${TENDER['TENDER_UAID']}  ${period}
+
+
+Відображення статусу зареєстрованої угоди
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних угоди
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      agreement_registration
+  ...      critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля agreements[0].status тендера із active для користувача ${viewer}
+
+
+Відображення статусу успішного завершення тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних угоди
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      agreement_registration
+  ...      critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля status тендера із complete для користувача ${viewer}
