@@ -1335,8 +1335,8 @@ setam:
             enquiry: [0, 17]
             tender:  [0, 19]
         dgfFinancialAssets:
-           accelerator: 100
-           auction:  [55, 65]
+           accelerator: 70
+           auction:  [70, 80]
         dgfOtherAssets:
             accelerator: 100
             auction:  [55, 65]
