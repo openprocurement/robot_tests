@@ -298,9 +298,9 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      modify_auction_step  level2
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.minimalStep}  amount
-  Звірити відображення поля minimalStep.amount тендера із ${USERS.users['${tender_owner}'].new_amount} для користувача ${viewer}
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  \  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${username}'].tender_data.data.minimalStep}  amount
+  Звірити відображення поля minimalStep.amount тендера із ${USERS.users['${tender_owner}'].new_amount} для усіх користувачів
 
 
 Можливість змінити назву лоту українською мовою

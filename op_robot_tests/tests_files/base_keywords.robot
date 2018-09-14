@@ -120,6 +120,12 @@ Resource           resource.robot
   Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${data}  ${field}
 
 
+Звірити відображення поля ${field} тендера із ${data} для усіх користувачів
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  \  Дочекатись синхронізації з майданчиком  ${username}
+  \  Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${data}  ${field}
+
+
 Звірити відображення поля ${field} тендера для користувача ${username}
   Звірити поле тендера  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${field}
 
