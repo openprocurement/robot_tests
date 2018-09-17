@@ -672,35 +672,35 @@ users:
     pzo_Owner:
         broker:   pzo
         homepage: "http://dev.pzo.com.ua/user/tenders"
-        login:    slam_ua@mail.ru
+        login:    zamovnuk@rambler.ru
         password: 'qwe123qwe'
         browser:  chrome
         position: [0, 0]
-        size:     [1000, 500]
+        size:     [1000, 800]
     pzo_Provider:
         broker:   pzo
         homepage: "http://dev.pzo.com.ua/user/bids"
-        login:    nik.urgant@mail.ru
+        login:    posta4alnuk@rambler.ru
         password: 'qwe123qwe'
         browser:  chrome
         position: [0, 0]
-        size:     [1000, 500]
+        size:     [1000, 800]
     pzo_Provider1:
         broker:   pzo
         homepage: "http://dev.pzo.com.ua/user/bids"
-        login:    maks.sotnikov.62@mail.ru
+        login:    posta4alnuk1@test.ru
         password: 'qwe123qwe'
         browser:  chrome
         position: [0, 0]
-        size:     [1000, 500]
+        size:     [1000, 800]
     pzo_Viewer:
         broker:   pzo
         homepage: "http://dev.pzo.com.ua/user/tenders"
-        login:    belitskiy.vadim@mail.ru
+        login:    posta4alnuk2@test.ru
         password: 'qwe123qwe'
         browser:  chrome
         position: [0, 0]
-        size:     [1000, 500]
+        size:     [1000, 800]
     aladdin_Owner:
         broker:   aladdin
         homepage: "https://test-gov.ald.in.ua"
