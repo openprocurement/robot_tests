@@ -429,7 +429,11 @@ pzo:
         openeu:
             tender:  [0, 25]
             accelerator: 1440
+        open_competitive_dialogue:
+            accelerator: 1440
+            tender:  [0, 35]
     keywords_file: pzo
+    basepage: 'http://dev.pzo.com.ua'
     homepage: 'http://dev.pzo.com.ua/tenders'
     syncpage: 'http://dev.pzo.com.ua/develop/sync?psw=369369'
     roles:
