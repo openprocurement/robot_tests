@@ -284,9 +284,9 @@ Newtend:
         default:
             accelerator: 360
         lots:
-            accelerator: 180
+            accelerator: 1440
         auctions:
-            accelerator: 720
+            accelerator: 1440
     keywords_file: newtend
     roles:
         provider1:      Newtend_Provider1
