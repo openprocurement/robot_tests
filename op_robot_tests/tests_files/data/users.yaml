@@ -693,6 +693,14 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1000, 800]
+    pzo_Provider2:
+        broker:   pzo
+        homepage: "http://dev.pzo.com.ua/user/bids"
+        login:    posta4alnuk2@test.ru
+        password: 'qwe123qwe'
+        browser:  chrome
+        position: [0, 0]
+        size:     [1000, 800]
     pzo_Viewer:
         broker:   pzo
         homepage: "http://dev.pzo.com.ua/user/tenders"
