@@ -437,8 +437,9 @@ pzo:
     homepage: 'http://dev.pzo.com.ua/tenders'
     syncpage: 'http://dev.pzo.com.ua/develop/sync?psw=369369'
     roles:
-        provider:       pzo_Provider1
-        provider1:      pzo_Provider2
+        provider:       pzo_Provider
+        provider1:      pzo_Provider1
+        provider2:      pzo_Provider2
         tender_owner:   pzo_Owner
         viewer:         pzo_Viewer
     timeout_on_wait: 1
