@@ -1527,7 +1527,16 @@ Library  openprocurement_client.utils
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   Log  ${tender}
   Log  ${contract_data}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_agreement_contract  ${tender}  ${tender.data.agreements[0].id}  ${contract_data}
+  ${tender_id}=  Set Variable  ${tender.data.id}
+  ${agreement_id}=  Set Variable  ${tender.data.agreements[0].id}
+  ${contract_id}=  Set Variable  ${contract_data.data.id}
+  ${access_token}=  Set Variable  ${tender.access.token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_agreement_contract
+  ...      ${tender_id}
+  ...      ${agreement_id}
+  ...      ${contract_data}
+  ...      contract_id=${contract_id}
+  ...      access_token=${access_token}
   Log  ${reply}
 
 
@@ -1537,7 +1546,14 @@ Library  openprocurement_client.utils
   ${agreement}=  Create Dictionary  data=${tender.data.agreements[0]}
   Set To Dictionary  ${agreement.data}  status=active
   Set To Dictionary  ${agreement.data}  period=${period}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_agreement  ${tender}  ${agreement}
+  ${tender_id}=  Set Variable  ${tender.data.id}
+  ${agreement_id}=  Set Variable  ${tender.data.agreements[0].id}
+  ${access_token}=  Set Variable  ${tender.access.token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_agreement
+  ...      ${tender_id}
+  ...      ${agreement}
+  ...      ${agreement_id}
+  ...      access_token=${access_token}
   Log  ${reply}
 
 
