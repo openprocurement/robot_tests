@@ -249,7 +249,7 @@ ${award_index}      ${0}
   Run As  ${tender_owner}  Скасування рішення кваліфікаційної комісії  ${TENDER['TENDER_UAID']}  0
 
 
-Можливість завантажити документ рішення кваліфікаційної комісії для підтвердження нового постачальника
+Можливість завантажити документ рішення кваліфікаційної комісії для підтвердження другого постачальника
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
@@ -259,9 +259,60 @@ ${award_index}      ${0}
   Remove File  ${file_path}
 
 
-Можливість підтвердити нового постачальника
+Можливість підтвердити другого постачальника
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...  tender_owner
   ...  ${USERS.users['${tender_owner}'].broker}
   ...  qualification_approve_second_award  level1
   Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  1
+
+
+Можливість завантажити документ рішення кваліфікаційної комісії для підтвердження третього постачальника
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  qualification_add_doc_to_third_award
+  ${file_path}  ${file_name}  ${file_content}=   create_fake_doc
+  Run As   ${tender_owner}   Завантажити документ рішення кваліфікаційної комісії   ${file_path}   ${TENDER['TENDER_UAID']}   2
+  Remove File  ${file_path}
+
+
+Можливість підтвердити третього постачальника
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  qualification_approve_third_award
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  2
+
+
+Можливість завантажити документ рішення кваліфікаційної комісії для підтвердження четвертого постачальника
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  qualification_add_doc_to_fourth_award
+  ${file_path}  ${file_name}  ${file_content}=   create_fake_doc
+  Run As   ${tender_owner}   Завантажити документ рішення кваліфікаційної комісії   ${file_path}   ${TENDER['TENDER_UAID']}   3
+  Remove File  ${file_path}
+
+
+Можливість підтвердити четвертого постачальника
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  qualification_approve_fourth_award
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  3
+
+
+Можливість затвердити остаточне рішення кваліфікації
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Кваліфікація
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      qualification_approve_qualifications
+  ...      critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Run As  ${tender_owner}  Затвердити постачальників  ${TENDER['TENDER_UAID']}

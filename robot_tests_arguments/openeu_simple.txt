@@ -32,3 +32,4 @@
 -i qualification_approve_first_award
 
 -i contract_sign
+-i contract_stand_still

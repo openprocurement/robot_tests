@@ -183,6 +183,24 @@ ${MOZ_INTEGRATION}  ${False}
   ...      non-critical
   Отримати дані із поля complaintPeriod.endDate тендера для усіх користувачів
 
+
+Відображення максимальної кількості кваліфікованих учасників
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_framework
+  ...      critical
+  Звірити відображення поля maxAwardsCount тендера для усіх користувачів
+
+
+Відображення тривалості угоди
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_framework
+  ...      critical
+  Звірити відображення поля agreementDuration тендера для усіх користувачів
+
 ##############################################################################################
 #             Відображення основних даних предмету
 ##############################################################################################
@@ -562,6 +580,29 @@ ${MOZ_INTEGRATION}  ${False}
   ...      non-critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення дати tenderPeriod.endDate тендера для усіх користувачів
+
+
+Можливість змінити максимальну кількість кваліфікованих учасників
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_maxAwardsCount  level3
+  ...      non-critical
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${maxAwardsCount}=  create_fake_number  6  8
+  Можливість змінити поле maxAwardsCount тендера на ${maxAwardsCount}
+  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  maxAwardsCount
+  Set To Dictionary  ${USERS.users['${tender_owner}'].initial_data.data}  new_maxAwardsCount=${maxAwardsCount}
+
+
+Відображення зміненої максимальної кількості кваліфікованих учасників
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_maxAwardsCount
+  ...      non-critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля maxAwardsCount тендера із ${USERS.users['${tender_owner}'].initial_data.data.new_maxAwardsCount} для користувача ${viewer}
 
 
 Можливість додати документацію до тендера

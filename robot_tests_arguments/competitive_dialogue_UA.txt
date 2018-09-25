@@ -55,5 +55,6 @@
 -i qualification_approve_second_award
 
 -i contract_sign
+-i contract_stand_still
 -i contract_view
 -i modify_contract

@@ -75,6 +75,7 @@
 -i modify_contract
 -i add_doc_to_contract
 -i contract_sign
+-i contract_stand_still
 
 -i find_contract
 -i access_contract
