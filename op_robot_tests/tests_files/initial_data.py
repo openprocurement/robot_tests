@@ -60,6 +60,14 @@ def create_fake_date():
     return get_now().isoformat()
 
 
+def create_fake_period(days=0, hours=0, minutes=0):
+    data = {
+        "startDate": get_now().isoformat(),
+        "endDate": (get_now() + timedelta(days=days, hours=hours, minutes=minutes)).isoformat()
+    }
+    return data
+
+
 def subtraction(value1, value2):
     if "." in str (value1) or "." in str (value2):
         return (float (value1) - float (value2))
@@ -554,6 +562,14 @@ def test_tender_data_openeu(params, submissionMethodDetails):
     data['procuringEntity']['contactPoint']['availableLanguage'] = "en"
     data['procuringEntity']['identifier']['legalName_en'] = u"Institution \"Vinnytsia City Council primary and secondary general school № 10\""
     data['procuringEntity']['kind'] = 'general'
+    return data
+
+
+def test_tender_data_framework_agreement(params, submissionMethodDetails):
+    data = test_tender_data_openeu(params, submissionMethodDetails)
+    data['procurementMethodType'] = 'closeFrameworkAgreementUA'
+    data['maxAwardsCount'] = fake.random_int(min=3, max=5)
+    data['agreementDuration'] = 'P1M'
     return data
 
 
