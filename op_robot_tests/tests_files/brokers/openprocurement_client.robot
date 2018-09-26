@@ -195,13 +195,13 @@ Library  openprocurement_client.utils
 
 Оприлюднити рішення про початок моніторингу
   [Arguments]  ${username}  ${monitoring_uaid}  ${file_path}  ${monitoring_data}
-  ${monitoring}=  openprocurement_client.Пошук об'єкта моніторингу по ідентифікатору  ${username}  ${monitoring_uaid}
   ${document}=  Call Method  ${USERS.users['${username}'].dasu_client}  upload_obj_document  ${file_path}  ${USERS.users['${username}'].monitoring_data}
   ${documents}=  Create List
   Append To List  ${documents}  ${document.data}
   Set To Dictionary  ${monitoring_data.data.decision}  documents=${documents}
   Log  ${monitoring_data}
-  ${reply}=  Call Method  ${USERS.users['${username}'].dasu_client}  patch_monitoring  ${monitoring_data}  ${monitoring.data.id}
+  ${monitoring_id}=  Set Variable  ${USERS.users['${username}'].monitoring_data.data.id}
+  ${reply}=  Call Method  ${USERS.users['${username}'].dasu_client}  patch_monitoring  ${monitoring_data}  ${monitoring_id}
   Log  ${reply}
   Set To Dictionary  ${USERS.users['${dasu_user}'].initial_data.data}  decision=${monitoring_data.data.decision}
   Set To Dictionary  ${USERS.users['${username}']}   monitoring_data=${reply}
@@ -297,8 +297,8 @@ Library  openprocurement_client.utils
 
 Змінити статус об’єкта моніторингу
   [Arguments]  ${username}  ${monitoring_uaid}  ${status_data}
-  ${monitoring}=  openprocurement_client.Пошук об'єкта моніторингу по ідентифікатору  ${username}  ${monitoring_uaid}
-  ${reply}=  Call Method  ${USERS.users['${username}'].dasu_client}  patch_monitoring  ${status_data}  ${monitoring.data.id}
+  ${monitoring_id}=  Set Variable  ${USERS.users['${username}'].monitoring_data.data.id}
+  ${reply}=  Call Method  ${USERS.users['${username}'].dasu_client}  patch_monitoring  ${status_data}  ${monitoring_id}
   Log  ${reply}
   Set To Dictionary  ${USERS.users['${username}']}  monitoring_data=${reply}
   [return]  ${reply}
