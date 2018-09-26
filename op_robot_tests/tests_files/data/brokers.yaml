@@ -327,7 +327,7 @@ Promauctions:
         viewer:         Prom_Viewer
         provider:       Prom_Provider
         provider1:      Prom_Provider1
-    timeout_on_wait: 250
+    timeout_on_wait: 300
 Publicbid:
     intervals:
         default:
