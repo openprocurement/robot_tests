@@ -733,7 +733,6 @@ ${MOZ_INTEGRATION}   ${False}
   ...      ${USERS.users['${dasu_user}'].broker}
   ...      cancelled
   ...      critical
-  [Setup]  Дочекатись синхронізації з ДАСУ  ${dasu_user}
   [Teardown]  Оновити DASU_LAST_MODIFICATION_DATE
   Можливість змінити статус об’єкта моніторингу на cancelled
 

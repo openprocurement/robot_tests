@@ -12,6 +12,5 @@
 -i tender_view
 
 -i create_monitoring
--i find_monitoring
 -i cancelled
 -i cancellation_view
