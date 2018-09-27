@@ -157,8 +157,8 @@ class StableClient_plan(PlansClient):
         return super(StableClient_plan, self).request(*args, **kwargs)
 
 
-def prepare_plan_api_wrapper(key, host_url, api_version):
-    return StableClient_plan(key, host_url, api_version)
+def prepare_plan_api_wrapper(key, resource, host_url, api_version):
+    return StableClient_plan(key, resource, host_url, api_version)
 
 
 class StableClient_dasu(DasuClient):
