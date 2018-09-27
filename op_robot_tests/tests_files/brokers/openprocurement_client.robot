@@ -1237,7 +1237,7 @@ Library  openprocurement_client.utils
   Set To Dictionary  ${USERS.users['${username}']}  bid_access_token=${reply.access.token}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bid_access_token}
   ${procurementMethodType}=  Get variable value  ${USERS.users['${username}'].tender_data.data.procurementMethodType}
-  ${methods}=  Create List  competitiveDialogueUA  competitiveDialogueEU  aboveThresholdEU  closeFrameworkAgreementUA
+  ${methods}=  Create List  competitiveDialogueUA  competitiveDialogueEU  competitiveDialogueEU.stage2  aboveThresholdEU  closeFrameworkAgreementUA
   ${status}=  Set Variable If  '${procurementMethodType}' in ${methods}  pending  active
   Set To Dictionary  ${reply['data']}  status=${status}
   ${reply_active}=  Call Method  ${USERS.users['${username}'].client}  patch_bid
