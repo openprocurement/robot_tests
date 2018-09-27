@@ -1,9 +1,9 @@
-from openprocurement_client.client import Client, EDRClient
+from openprocurement_client.resources.tenders import Client
+from openprocurement_client.resources.edr import EDRClient
 from openprocurement_client.dasu_client import DasuClient
-from openprocurement_client.document_service_client \
-    import DocumentServiceClient
-from openprocurement_client.plan import PlansClient
-from openprocurement_client.contract import ContractingClient
+from openprocurement_client.resources.document_service import DocumentServiceClient
+from openprocurement_client.resources.plans import PlansClient
+from openprocurement_client.resources.contracts import ContractingClient
 from openprocurement_client.exceptions import IdNotFound
 from restkit.errors import RequestFailed, BadStatusLine, ResourceError
 from retrying import retry
@@ -49,8 +49,8 @@ class ContractingStableClient(ContractingClient):
         return super(ContractingStableClient, self).request(*args, **kwargs)
 
 
-def prepare_contract_api_wrapper(key, host_url, api_version, ds_client=None):
-    return ContractingStableClient(key, host_url, api_version, ds_client=ds_client)
+def prepare_contract_api_wrapper(key, resource, host_url, api_version, ds_client=None):
+    return ContractingStableClient(key, resource, host_url, api_version, ds_client=ds_client)
 
 
 class StableEDRClient(EDRClient):
@@ -157,8 +157,8 @@ class StableClient_plan(PlansClient):
         return super(StableClient_plan, self).request(*args, **kwargs)
 
 
-def prepare_plan_api_wrapper(key, host_url, api_version):
-    return StableClient_plan(key, host_url, api_version)
+def prepare_plan_api_wrapper(key, resource, host_url, api_version):
+    return StableClient_plan(key, resource, host_url, api_version)
 
 
 class StableClient_dasu(DasuClient):
