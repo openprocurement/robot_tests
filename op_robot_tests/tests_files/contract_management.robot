@@ -57,7 +57,7 @@ ${MODE}  contracts
   ...      first_milestone_met
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${dateMet}=  create_fake_dateSigned
+  ${dateMet}=  create_fake_date
   Run As  ${tender_owner}  Вказати дату отримання оплати  ${CONTRACT_UAID}  ${dateMet}  0
 
 
@@ -156,7 +156,7 @@ ${MODE}  contracts
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      second_milestone_met
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${dateMet}=  create_fake_dateSigned
+  ${dateMet}=  create_fake_date
   Run As  ${tender_owner}  Вказати дату прийняття наказу  ${CONTRACT_UAID}  ${dateMet}
 
 
@@ -245,7 +245,7 @@ ${MODE}  contracts
   ...      third_milestone_met
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${dateMet}=  create_fake_dateSigned
+  ${dateMet}=  create_fake_date
   Run As  ${tender_owner}  Вказати дату виконання умов контракту  ${CONTRACT_UAID}  ${dateMet}
 
 
