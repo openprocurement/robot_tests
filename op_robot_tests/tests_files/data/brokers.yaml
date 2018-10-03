@@ -1149,3 +1149,23 @@ pfts:
             tender:  [0, 25]
             auction: [25, 30]
     timeout_on_wait: 30
+setam:
+    intervals:
+        default:
+            enquiry: [0, 17]
+            tender:  [0, 19]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction:  [45, 50]
+        lots:
+            accelerator: 720
+        auctions:
+            accelerator: 1440
+            auction:  [25, 60]
+    keywords_file: setam
+    roles:
+        tender_owner:   setam_Owner_auction
+        provider:       setam_Provider_auction
+        provider1:      setam_Provider1_auction
+        viewer:         setam_Viewer_auction
+    timeout_on_wait: 120
