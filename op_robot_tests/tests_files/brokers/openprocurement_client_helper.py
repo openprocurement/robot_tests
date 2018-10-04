@@ -1,5 +1,6 @@
 from openprocurement_client.resources.tenders import Client
 from openprocurement_client.resources.edr import EDRClient
+from openprocurement_client.resources.agreements import AgreementClient
 from openprocurement_client.dasu_client import DasuClient
 from openprocurement_client.resources.document_service import DocumentServiceClient
 from openprocurement_client.resources.plans import PlansClient
@@ -34,6 +35,13 @@ class StableDsClient(DocumentServiceClient):
         return super(StableDsClient, self).request(*args, **kwargs)
 
 
+class StableAgreementClient(AgreementClient):
+    @retry(stop_max_attempt_number=100, wait_random_min=500,
+           wait_random_max=4000, retry_on_exception=retry_if_request_failed)
+    def request(self, *args, **kwargs):
+        return super(StableAgreementClient, self).request(*args, **kwargs)
+
+
 def prepare_api_wrapper(key, resource, host_url, api_version, ds_client=None):
     return StableClient(key, resource, host_url, api_version,
                         ds_client=ds_client)
@@ -41,6 +49,11 @@ def prepare_api_wrapper(key, resource, host_url, api_version, ds_client=None):
 
 def prepare_ds_api_wrapper(ds_host_url, auth_ds):
     return StableDsClient(ds_host_url, auth_ds)
+
+
+def prepare_agreement_api_wrapper(key, resource, host_url, api_version, ds_client=None):
+    return StableAgreementClient(key, resource, host_url, api_version,
+                        ds_client=ds_client)
 
 
 class ContractingStableClient(ContractingClient):
