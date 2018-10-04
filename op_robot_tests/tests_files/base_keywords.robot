@@ -1328,6 +1328,33 @@ Resource           resource.robot
   Remove File  ${file_path}
 
 
+Можливість завантажити документ для рамкової угоди користувачем ${username}
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
+  ${doc_id}=  get_id_from_string  ${file_name}
+  ${doc}=  Create Dictionary
+  ...      id=${doc_id}
+  ...      name=${file_name}
+  ...      content=${file_content}
+  Set to dictionary  ${USERS.users['${tender_owner}']}  contract_doc=${doc}
+  Run As  ${username}  Завантажити документ в рамкову угоду  ${file_path}  ${USERS.users['${tender_owner}'].tender_data.data.agreements[0].agreementID}
+  Remove File  ${file_path}
+
+
+Можливість завантажити документ для зміни у рамковій угоді користувачем ${username}
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
+  ${doc_id}=  get_id_from_string  ${file_name}
+  ${doc}=  Create Dictionary
+  ...      id=${doc_id}
+  ...      name=${file_name}
+  ...      content=${file_content}
+  Set to dictionary  ${USERS.users['${tender_owner}']}  contract_doc=${doc}
+  Run As  ${username}  Завантажити документ для зміни у рамковій угоді
+  ...      ${file_path}
+  ...      ${USERS.users['${tender_owner}'].tender_data.data.agreements[0].agreementID}
+  ...      ${USERS.users['${username}'].agreement_data.data['items'][0]['id']}
+  Remove File  ${file_path}
+
+
 Можливість укласти угоду для закупівлі
   Run as  ${tender_owner}
   ...      Підтвердити підписання контракту
