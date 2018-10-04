@@ -649,6 +649,32 @@ def test_change_data():
     })
 
 
+def test_agreement_change_data(rationaleType):
+    return munchify(
+    {
+        "data":
+        {
+            "rationale": fake.description(),
+            "rationale_en": fake_en.sentence(nb_words=10, variable_nb_words=True),
+            "rationale_ru": fake_ru.sentence(nb_words=10, variable_nb_words=True),
+            "rationaleType": rationaleType,
+        }
+    })
+
+
+def test_modification_data(item_id, field_name, field_value):
+    data = {
+        "modifications": [
+            {
+                "itemId": item_id,
+                field_name: field_value
+            }
+        ]
+    }
+    return munchify({'data':data})
+
+
+
 def get_hash(file_contents):
     return ("md5:"+hashlib.md5(file_contents).hexdigest())
 
