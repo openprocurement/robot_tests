@@ -738,32 +738,32 @@ ${MOZ_INTEGRATION}   ${False}
 
 
 Відображення статусу cancelled об’єкта моніторингу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Завершення моніторингу
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  [Tags]   ${USERS.users['${dasu_user}'].broker}: Завершення моніторингу
+  ...      dasu_user
+  ...      ${USERS.users['${dasu_user}'].broker}
   ...      cancelled
   ...      critical
-  [Setup]  Дочекатись синхронізації з ДАСУ  ${viewer}
-  Звірити статус об'єкта моніторингу  ${viewer}  ${MONITORING['MONITORING_UAID']}  cancelled
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${dasu_user}
+  Звірити статус об'єкта моніторингу  ${dasu_user}  ${MONITORING['MONITORING_UAID']}  cancelled
 
 
 Відображення опису у звіті про зупинення
-  [Tags]   ${USERS.users['${viewer}'].broker}: Завершення моніторингу
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  [Tags]   ${USERS.users['${dasu_user}'].broker}: Завершення моніторингу
+  ...      dasu_user
+  ...      ${USERS.users['${dasu_user}'].broker}
   ...      cancellation_view
   ...      critical
-  [Setup]  Дочекатись синхронізації з ДАСУ  ${viewer}
-  Отримати дані із поля cancellation.description об'єкта моніторингу для користувача ${viewer}
+  [Setup]  Дочекатись синхронізації з ДАСУ  ${dasu_user}
+  Отримати дані із поля cancellation.description об'єкта моніторингу для користувача ${dasu_user}
 
 
 Відображення дати публікації звіту про зупинення
-  [Tags]   ${USERS.users['${viewer}'].broker}: Завершення моніторингу
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
+  [Tags]   ${USERS.users['${dasu_user}'].broker}: Завершення моніторингу
+  ...      dasu_user
+  ...      ${USERS.users['${dasu_user}'].broker}
   ...      cancellation_view
   ...      critical
-  Отримати дані із поля cancellation.datePublished об'єкта моніторингу для користувача ${viewer}
+  Отримати дані із поля cancellation.datePublished об'єкта моніторингу для користувача ${dasu_user}
 
 
 Можливість змінити статус об’єкта моніторингу на closed
