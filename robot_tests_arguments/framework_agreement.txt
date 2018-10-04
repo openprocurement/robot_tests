@@ -76,6 +76,7 @@
 -i pre-qualification_approve_qualifications
 
 -i auction_url
+-i auction
 
 -i qualification_add_doc_to_first_award
 -i qualification_approve_first_award
@@ -93,3 +94,12 @@
 -i awarding_approve_first_award
 -i modify_agreement
 -i agreement_registration
+
+
+-i find_agreement
+-i add_agreement_doc
+-i submit_change
+-i change_view
+-i modification
+-i modification_view
+-i apply_change
