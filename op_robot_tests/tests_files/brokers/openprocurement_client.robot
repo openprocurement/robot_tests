@@ -43,6 +43,19 @@ Library  openprocurement_client.utils
   [return]  ${monitoring_id}
 
 
+Отримати internal id угоди по UAid
+  [Arguments]  ${username}  ${agreement_uaid}
+  Log  ${username}
+  Log  ${agreement_uaid}
+  Log Many  ${USERS.users['${username}'].id_map}
+  ${status}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${USERS.users['${username}'].id_map}  ${agreement_uaid}
+  Run Keyword And Return If  ${status}  Get From Dictionary  ${USERS.users['${username}'].id_map}  ${agreement_uaid}
+  Call Method  ${USERS.users['${username}'].agreement_client}  get_agreements
+  ${agreement_id}=  Wait Until Keyword Succeeds  5x  30 sec  get_agreement_id_by_uaid  ${agreement_uaid}  ${USERS.users['${username}'].agreement_client}
+  Set To Dictionary  ${USERS.users['${username}'].id_map}  ${agreement_uaid}  ${agreement_id}
+  [return]  ${agreement_id}
+
+
 Підготувати клієнт для користувача
   [Arguments]  ${username}
   [Documentation]  Відкрити браузер, створити об’єкти api wrapper і
@@ -62,7 +75,9 @@ Library  openprocurement_client.utils
   ...     prepare_plan_api_wrapper  ${USERS.users['${username}'].api_key}  PLANS  ${API_HOST_URL}  ${API_VERSION}
   ...                     ELSE  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${RESOURCE}  ${API_HOST_URL}  ${API_VERSION}  ${ds_api_wraper}
   ${dasu_api_wraper}=  prepare_dasu_api_wrapper  ${USERS.users['${username}'].dasu_api_key}  ${DASU_RESOURCE}  ${DASU_API_HOST_URL}  ${DASU_API_VERSION}  ${ds_api_wraper}
+  ${agreement_wrapper}=  prepare_agreement_api_wrapper  ${USERS.users['${username}'].api_key}  AGREEMENTS  ${API_HOST_URL}  ${API_VERSION}  ${ds_api_wraper}
   Set To Dictionary  ${USERS.users['${username}']}  client=${api_wrapper}
+  Set To Dictionary  ${USERS.users['${username}']}  agreement_client=${agreement_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  dasu_client=${dasu_api_wraper}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${EMPTY}
   ${id_map}=  Create Dictionary
@@ -75,6 +90,8 @@ Library  openprocurement_client.utils
   ${contract_api_wrapper}=  prepare_contract_api_wrapper  ${USERS.users['${username}'].api_key}  CONTRACTS  ${api_host_url}  ${api_version}  ${ds_api_wraper}
   Set To Dictionary  ${USERS.users['${username}']}  contracting_client=${contract_api_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  contract_access_token=${EMPTY}
+  Set To Dictionary  ${USERS.users['${username}']}  agreement_access_token=${EMPTY}
+  ${contracts_id_map}=  Create Dictionary
   ${contracts_id_map}=  Create Dictionary
   Set To Dictionary  ${USERS.users['${username}']}  contracts_id_map=${contracts_id_map}
   Log Variables
@@ -244,6 +261,16 @@ Library  openprocurement_client.utils
   ${monitoring}=  munch_dict  arg=${monitoring}
   Log  ${monitoring}
   [return]   ${monitoring}
+
+
+Пошук угоди по ідентифікатору
+  [Arguments]  ${username}  ${agreement_uaid}  ${save_key}=agreement_data
+  ${internalid}=  openprocurement_client.Отримати internal id угоди по UAid  ${username}  ${agreement_uaid}
+  ${agreement}=  Call Method  ${USERS.users['${username}'].agreement_client}  get_agreement  ${internalid}
+  Set To Dictionary  ${USERS.users['${username}']}  ${save_key}=${agreement}
+  ${agreement}=  munch_dict  arg=${agreement}
+  Log  ${agreement}
+  [return]   ${agreement}
 
 
 Отримати доступ до об'єкта моніторингу
@@ -2010,3 +2037,102 @@ Library  openprocurement_client.utils
   ${document}=  get_document_by_id  ${tender.data}  ${doc_id}
   ${filename}=  download_file_from_url  ${document.url}  ${OUTPUT_DIR}${/}${document.title}
   [return]  ${filename}
+
+
+Отримати доступ до угоди
+  [Arguments]  ${username}  ${agreement_uaid}
+  ${token}=  Set Variable  ${USERS.users['${username}'].access_token}
+  ${internalid}=  openprocurement_client.Отримати internal id угоди по UAid  ${username}  ${agreement_uaid}
+  ${agreement}=  Call Method  ${USERS.users['${username}'].agreement_client}  patch_credentials  ${internalid}  ${token}
+  Set To Dictionary  ${USERS.users['${username}']}  agreement_access_token=${agreement.access.token}
+  ${agreement}=  munch_dict  arg=${agreement}
+  [return]   ${agreement}
+
+
+Внести зміну в угоду
+  [Arguments]  ${username}  ${agreement_uaid}  ${change_data}
+  ${internalid}=  openprocurement_client.Отримати internal id угоди по UAid  ${username}  ${agreement_uaid}
+  ${reply}=  Call Method  ${USERS.users['${username}'].agreement_client}  create_change
+  ...      ${internalid}
+  ...      ${change_data}
+  ...      access_token=${USERS.users['${username}'].agreement_access_token}
+  Log  ${reply}
+
+
+Застосувати зміну для угоди
+  [Arguments]  ${username}  ${agreement_uaid}  ${dateSigned}  ${status}
+  ${agreement}=  openprocurement_client.Пошук угоди по ідентифікатору  ${username}  ${agreement_uaid}
+  ${data}=  Create Dictionary  status=${status}  dateSigned=${dateSigned}
+  ${data}=  Create Dictionary  data=${data}
+  ${reply}=  Call Method  ${USERS.users['${username}'].agreement_client}  patch_change
+  ...      ${agreement.data.id}
+  ...      ${agreement.data.changes[-1].id}
+  ...      ${data}
+  ...      access_token=${USERS.users['${username}'].agreement_access_token}
+  Log  ${reply}
+
+
+Оновити властивості угоди
+  [Arguments]  ${username}  ${agreement_uaid}  ${data}
+  ${agreement}=  openprocurement_client.Пошук угоди по ідентифікатору  ${username}  ${agreement_uaid}
+  ${reply}=  Call Method  ${USERS.users['${username}'].agreement_client}  patch_change
+  ...      ${agreement.data.id}
+  ...      ${agreement.data.changes[-1].id}
+  ...      ${data}
+  ...      access_token=${USERS.users['${username}'].agreement_access_token}
+  Log  ${reply}
+
+
+Завантажити документ в рамкову угоду
+  [Arguments]  ${username}  ${filepath}  ${agreement_uaid}
+  Log  ${username}
+  Log  ${agreement_uaid}
+  Log  ${filepath}
+  ${agreement}=  openprocurement_client.Пошук угоди по ідентифікатору  ${username}  ${agreement_uaid}
+  ${reply}=  Call Method  ${USERS.users['${username}'].agreement_client}  upload_document
+  ...      ${filepath}
+  ...      ${agreement.data.id}
+  ...      access_token=${USERS.users['${username}'].agreement_access_token}
+  Log Object Data  ${reply}  reply
+  [return]  ${reply}
+
+
+Завантажити документ для зміни у рамковій угоді
+  [Arguments]  ${username}  ${filepath}  ${agreement_uaid}  ${item_id}
+  Log  ${username}
+  Log  ${agreement_uaid}
+  Log  ${filepath}
+  ${agreement}=  openprocurement_client.Пошук угоди по ідентифікатору  ${username}  ${agreement_uaid}
+  ${document}=  openprocurement_client.Завантажити документ в рамкову угоду  ${username}  ${filepath}  ${agreement_uaid}
+  Set to dictionary  ${document.data}  documentOf=change
+  Set to dictionary  ${document.data}  relatedItem=${item_id}
+  ${reply}=  Call Method  ${USERS.users['${username}'].agreement_client}  patch_document
+  ...      ${agreement.data.id}
+  ...      ${document.data.id}
+  ...      ${document}
+  ...      access_token=${USERS.users['${username}'].agreement_access_token}
+  [return]  ${reply}
+
+
+Завершити угоду
+  [Arguments]  ${username}  ${agreement_uaid}
+  ${internalid}=  openprocurement_client.Отримати internal id угоди по UAid  ${username}  ${agreement_uaid}
+  ${data}=  Create Dictionary  status=terminated
+  ${data}=  Create Dictionary  data=${data}
+  ${reply}=  Call Method  ${USERS.users['${username}'].agreement_client}  patch_agreement
+  ...      ${internalid}
+  ...      ${data}
+  ...      access_token=${USERS.users['${username}'].agreement_access_token}
+
+
+Отримати інформацію із угоди
+  [Arguments]  ${username}  ${agreement_uaid}  ${field_name}
+  openprocurement_client.Пошук угоди по ідентифікатору
+  ...      ${username}
+  ...      ${agreement_uaid}
+  ${status}  ${field_value}=  Run Keyword And Ignore Error
+  ...      Get From Object
+  ...      ${USERS.users['${username}'].agreement_data.data}
+  ...      ${field_name}
+  Run Keyword If  '${status}' == 'PASS'  Return From Keyword   ${field_value}
+  Fail  Field not found: ${field_name}
