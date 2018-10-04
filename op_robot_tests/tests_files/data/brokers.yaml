@@ -48,6 +48,9 @@ Default:
              accelerator: 1440
              enquiry: [0, 15]
              tender:  [0, 30]
+        open_framework:
+            accelerator: 1440
+            tender:  [0, 30]
     # Synchronization delay, in seconds
     timeout_on_wait: 300
 Quinta:
@@ -64,10 +67,16 @@ Quinta:
         open_competitive_dialogue:
             accelerator: 1440
             tender:  [0, 30]
+<<<<<<< HEAD
         open_esco:
              accelerator: 1440
              enquiry: [0, 15]
              tender:  [0, 30]
+=======
+        open_framework:
+            accelerator: 1440
+            tender:  [0, 30]
+>>>>>>> add intervals for open_framework
     keywords_file: openprocurement_client
     roles:
         provider:       Tender_User
