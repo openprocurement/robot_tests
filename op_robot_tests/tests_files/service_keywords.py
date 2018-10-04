@@ -62,6 +62,8 @@ from .initial_data import (
     test_status_data,
     test_elimination_report,
     test_tender_data_esco,
+    test_modification_data,
+    test_agreement_change_data,
     create_fake_title,
     create_fake_value_amount,
     test_change_document_data,
