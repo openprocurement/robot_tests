@@ -1156,12 +1156,12 @@ setam:
             tender:  [0, 19]
         dgfOtherAssets:
             accelerator: 1440
-            auction:  [100, 105]
+            auction:  [120, 105]
         lots:
-            accelerator: 150
+            accelerator: 50
         auctions:
             accelerator: 1440
-            auction:  [100, 100]
+            auction:  [120, 100]
     keywords_file: setam
     roles:
         tender_owner:   setam_Owner_auction
