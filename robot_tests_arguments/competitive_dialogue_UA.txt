@@ -13,9 +13,15 @@
 -i create_tender
 -i find_tender
 -i tender_view
+-i tender_view_value
+-i tender_view_minimalStep
+-i tender_view_deliveryDate
+-i tender_view_quantity
 -i tender_view_unit_code
 -i tender_view_coordinates
 -i lot_view
+-i lot_view_value
+-i lot_view_minimalStep
 
 -i make_bid_by_provider
 -i make_bid_by_provider1
@@ -58,3 +64,4 @@
 -i contract_stand_still
 -i contract_view
 -i modify_contract
+  -i modify_contract_value

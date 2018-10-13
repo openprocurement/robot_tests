@@ -30,6 +30,7 @@ from .initial_data import (
     field_with_id,
     test_bid_data,
     test_bid_value,
+    test_bid_value_esco,
     test_change_data,
     test_claim_answer_data,
     test_claim_data,
@@ -60,6 +61,7 @@ from .initial_data import (
     test_conclusion,
     test_status_data,
     test_elimination_report,
+    test_tender_data_esco,
     create_fake_title,
     create_fake_value_amount,
     test_change_document_data,
@@ -351,6 +353,9 @@ def prepare_test_tender_data(procedure_intervals,
             submissionMethodDetails=submissionMethodDetails,
             funders=funders,
             accelerator=accelerator)})
+    elif mode == 'open_esco':
+         return munchify({'data': test_tender_data_esco(
+            tender_parameters, submissionMethodDetails)})
         # The previous line needs an explicit keyword argument because,
         # unlike previous functions, this one has three arguments.
     raise ValueError("Invalid mode for prepare_test_tender_data")
@@ -601,7 +606,8 @@ def generate_test_bid_data(tender_data):
             'aboveThresholdEU',
             'competitiveDialogueUA',
             'competitiveDialogueEU',
-            'closeFrameworkAgreementUA'
+            'closeFrameworkAgreementUA',
+            'esco'
         ):
         bid = test_bid_competitive_data()
         bid.data.selfEligible = True
@@ -611,11 +617,18 @@ def generate_test_bid_data(tender_data):
     if 'lots' in tender_data:
         bid.data.lotValues = []
         for lot in tender_data['lots']:
-            value = test_bid_value(lot['value']['amount'])
+            if tender_data.get('procurementMethodType', '') == 'esco':
+                value = test_bid_value_esco(tender_data)
+            else:
+                value = test_bid_value(lot['value']['amount'])
             value['relatedLot'] = lot.get('id', '')
             bid.data.lotValues.append(value)
     else:
-        bid.data.update(test_bid_value(tender_data['value']['amount']))
+        if tender_data.get('procurementMethodType', '') == 'esco':
+            value = test_bid_value(tender_data)
+            bid.data.update(value)
+        else:
+            bid.data.update(test_bid_value(tender_data['value']['amount']))
     if 'features' in tender_data:
         bid.data.parameters = []
         for feature in tender_data['features']:

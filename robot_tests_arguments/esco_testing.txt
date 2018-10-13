@@ -1,4 +1,4 @@
- -v MODE:openua
+-v MODE:open_esco
 
 -v NUMBER_OF_ITEMS:1
 -v NUMBER_OF_LOTS:1
@@ -7,50 +7,34 @@
 -v ITEM_MEAT:True
 -v LOT_MEAT:True
 
+-v FUNDING_KIND:budget
 
 -i create_tender
 -i find_tender
 -i tender_view
--i tender_view_value
--i tender_view_minimalStep
--i tender_view_deliveryDate
--i tender_view_quantity
--i tender_view_unit_code
--i tender_view_coordinates
+  -i esco_tender_view
+  -i open_tender_view
 -i meat_view
 -i lot_view
--i lot_view_value
--i lot_view_minimalStep
+  -i esco_lot_view
 
 -i extend_tendering_period
 -i add_tender_doc
 -i add_lot_doc
--i modify_lot_value_amount
--i add_lot
--i add_item
--i delete_item
--i delete_lot
--i add_tender_meat
--i delete_tender_meat
 -i add_lot_meat
--i delete_lot_meat
--i add_item_meat
-  -i delete_item_meat
-
--i ask_question_to_tender
-  -i answer_question_to_tender
+  -i delete_lot_meat
 
 -i ask_question_to_lot
   -i answer_question_to_lot
-
 -i modify_tender_after_questions
--i modify_lot_after_questions
+
 -i make_bid_without_related_lot
 -i make_bid_without_parameters
 -i make_bid_by_provider
   -i modify_bid_by_provider
   -i add_doc_to_bid_by_provider
 -i make_bid_by_provider1
+
 -i bid_view_in_tendering_period
 
 -i add_bid_doc_after_tendering_period_by_provider
@@ -66,21 +50,35 @@
   -i open_confirm_first_bid
   -i open_confirm_second_bid
 
--i document_service
+-i openeu_make_bid_doc_private_by_provider
+-i openeu_add_financial_bid_doc_by_provider
+-i openeu_add_qualification_bid_doc_by_provider
+-i openeu_add_eligibility_bid_doc_by_provider
+
+-i pre-qualification_view
+#-i pre-qualifications_check_by_edrpou
+-i pre-qualification_add_doc_to_first_bid
+-i pre-qualification_approve_first_bid
+-i pre-qualification_approve_second_bid
+-i pre-qualification_add_doc_to_second_bid
+-i pre-qualification_approve_qualifications
 
 -i auction_url
-
 -i auction
 
 -i qualification_add_doc_to_first_award
+
+#-i qualifications_check_by_edrpou
+
 -i qualification_approve_first_award
 -i qualification_cancel_first_award_qualification
--i qualification_add_doc_to_second_award
--i qualification_approve_second_award
+-i qualification_reject_second_award
+-i qualification_add_doc_to_third_award
+-i qualification_approve_third_award
 
--i contract_sign
+
+-i contract_view
 -i contract_stand_still
 -i modify_contract
-  -i modify_contract_value
--i contract_view
 -i add_doc_to_contract
+-i contract_sign
