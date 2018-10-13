@@ -108,11 +108,6 @@ Resource           resource.robot
   Run as  ${username}  Пошук тендера за кошти донора  ${funder_id}
 
 
-Можливість знайти тендер по ідентифікатору ${tender_id} та зберегти його в ${save_location} для користувача ${username}
-  Дочекатись синхронізації з майданчиком  ${username}
-  Run as  ${username}  Пошук тендера по ідентифікатору  ${tender_id}  ${save_location}
-
-
 Можливість оприлюднити рішення про початок моніторингу
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   ${monitoring_data}=  test_status_data  active
@@ -285,11 +280,11 @@ Resource           resource.robot
 
 
 Отримати доступ до тендера другого етапу та зберегти його
-  Run as  ${tender_owner}  Отримати тендер другого етапу та зберегти його  ${USERS.users['${tender_owner}'].tender_data.data.stage2TenderID}
   ${TENDER_UAID_second_stage}=  BuiltIn.Catenate  SEPARATOR=  ${TENDER['TENDER_UAID']}  .2
   Set to dictionary  ${TENDER}  TENDER_UAID=${TENDER_UAID_second_stage}
-  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${provider1}  ${viewer}
-  \  Можливість знайти тендер по ідентифікатору для користувача ${username}
+  Run as  ${tender_owner}  Отримати тендер другого етапу та зберегти його  ${TENDER['TENDER_UAID']}
+  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${provider1}  ${provider2}  ${viewer}
+  \  Run As  ${username}  Пошук тендера по ідентифікатору  ${TENDER['TENDER_UAID']}  second_stage_data
 
 
 Звірити відображення вмісту документа ${doc_id} із ${left} для користувача ${username}
@@ -538,9 +533,18 @@ Resource           resource.robot
 Звірити відображення поля ${field} ${lot_index} лоту другого етапу для користувача ${username}
   Дочекатись синхронізації з майданчиком  ${username}
   ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data.lots[${lot_index}]}
-  Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}
-  ...      ${USERS.users['${tender_owner}'].second_stage_data.data.lots[${lot_index}].${field}}  ${field}
-  ...      object_id=${lot_id}
+  ${left}=  Set Variable  ${USERS.users['${tender_owner}'].initial_data.data.lots[${lot_index}].${field}}
+  ${right}=  Run As  ${username}  Отримати інформацію із лоту  ${TENDER['TENDER_UAID']}  ${lot_id}  ${field}
+  Порівняти об'єкти  ${left}  ${right}
+
+
+Отримати дані із поля ${field} тендера другого етапу для усіх користувачів
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  \  Отримати дані із поля ${field} тендера другого етапу для користувача ${username}
+
+
+Отримати дані із поля ${field} тендера другого етапу для користувача ${username}
+  Отримати дані із тендера другого етапу  ${username}  ${TENDER['TENDER_UAID']}  ${field}
 
 
 Звірити відображення поля ${field} ${lot_index} лоту з ${data} для користувача ${username}

@@ -373,11 +373,12 @@ Library  openprocurement_client.utils
 
 
 Отримати тендер другого етапу та зберегти його
-  [Arguments]  ${username}  ${tender_id}
-  ${response}=  Call Method  ${USERS.users['${username}'].client}  patch_credentials  ${tender_id}  ${USERS.users['${username}'].access_token}
+  [Arguments]  ${username}  ${tender_uaid}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
+  ${response}=  Call Method  ${USERS.users['${username}'].client}  patch_credentials  ${internalid}  ${USERS.users['${username}'].access_token}
   ${tender}=  set_access_key  ${response}  ${response.access.token}
   Set To Dictionary  ${USERS.users['${username}']}   access_token=${response.access.token}
-  Set To Dictionary  ${USERS.users['${username}']}  tender_data=${response}
+  Set To Dictionary  ${USERS.users['${username}']}  second_stage_data=${response}
   Log  ${tender.data.tenderID}
 
 
