@@ -2144,59 +2144,63 @@ ${MOZ_INTEGRATION}  ${False}
 
 
 Можливість отримати тендер другого етапу
-  [Tags]   ${USERS.user['${tender_owner}'].broker}: Отримати id нового тендеру
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
+  [Tags]   ${USERS.user['${tender_owner}'].broker}: Пошук тендера другого етапу
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      get_second_stage
   ...      critical
-  Отримати дані із поля stage2TenderID тендера для усіх користувачів
-  ${tender_UAID_second_stage}=  Catenate  SEPARATOR=  ${TENDER['TENDER_UAID']}  .2
-  Можливість знайти тендер по ідентифікатору ${tender_UAID_second_stage} та зберегти його в second_stage_data для користувача ${tender_owner}
+  Отримати доступ до тендера другого етапу та зберегти його
 
 
 Відображення заголовку тендера другого етапу
   [Tags]   ${USERS.user['${tender_owner}'].broker}: Відображення основних даних тендера другого етапу
-  ...      viewer
-  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      compare_stages
   ...      critical
-  Звірити відображення поля title тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.title} для користувача ${viewer}
+  Отримати дані із поля title тендера другого етапу для усіх користувачів
 
 
 Відображення мінімального кроку закупівлі другого етапу
   [Tags]   ${USERS.user['${tender_owner}'].broker}: Відображення основних даних тендера другого етапу
-  ...      viewer
-  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      compare_stages
   ...      critical
-  Звірити відображення поля minimalStep.amount тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.minimalStep.amount} для користувача ${viewer}
+  Отримати дані із поля minimalStep.amount тендера другого етапу для усіх користувачів
 
 
 Відображення доступного бюджету закупівлі другого етапу
   [Tags]   ${USERS.user['${tender_owner}'].broker}: Відображення основних даних тендера другого етапу
-  ...      viewer
-  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      compare_stages
   ...      critical
-  Звірити відображення поля value тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.value} для користувача ${viewer}
+  Отримати дані із поля value.amount тендера другого етапу для усіх користувачів
 
 
 Відображення опису закупівлі другого етапу
   [Tags]   ${USERS.user['${tender_owner}'].broker}: Відображення основних даних тендера другого етапу
-  ...      viewer
-  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      compare_stages
   ...      non-critical
-  Звірити відображення поля description тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.description} для користувача ${viewer}
+  Отримати дані із поля description тендера другого етапу для усіх користувачів
 
 
 Відображення імені замовника тендера для другого етапу
   [Tags]   ${USERS.user['${tender_owner}'].broker}: Відображення основних даних тендера другого етапу
-  ...      viewer
-  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      compare_stages
   ...      critical
-  Звірити відображення поля procuringEntity.name тендера із ${USERS.users['${tender_owner}'].second_stage_data.data.procuringEntity.name} для користувача ${viewer}
+  Отримати дані із поля procuringEntity.name тендера другого етапу для усіх користувачів
 
 ###################################################################
 #           Відображення посилання на аукціон
@@ -2313,15 +2317,6 @@ ${MOZ_INTEGRATION}  ${False}
 ##############################################################################################
 #             END
 ##############################################################################################
-
-Можливість отримати доступ до тендера другого етапу
-  [Tags]   ${USERS.user['${tender_owner}'].broker}: Отримати токен для другог етапу
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      save_tender_second_stage
-  ...      critical
-  Отримати доступ до тендера другого етапу та зберегти його
-
 
 Можливість активувати тендер другого етапу
   [Tags]   ${USERS.users['${viewer}'].broker}: Активувати тендер другого етапу
