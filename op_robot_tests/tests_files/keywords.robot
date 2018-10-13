@@ -133,6 +133,7 @@ Set Suite Variable With Default Value
   \  ${LAST_REFRESH_DATE}=  Get Current TZdate
   \  Set To Dictionary  ${USERS}  ${username}=${USERS.users.${username}}
   \  Set To Dictionary  ${USERS.${username}}  tender_data=${munch_dict}
+  \  Set To Dictionary  ${USERS.${username}}  second_stage_data=${munch_dict}
   \  Set To Dictionary  ${USERS.${username}}  LAST_REFRESH_DATE  ${LAST_REFRESH_DATE}
   \  Set To Dictionary  ${USERS.${username}}  DASU_LAST_REFRESH_DATE  ${LAST_REFRESH_DATE}
 
@@ -668,6 +669,24 @@ Log differences between dicts
   ${data}=  munch_dict  arg=${USERS.users['${username}'].tender_data.data}
   Set To Dictionary  ${USERS.users['${username}'].tender_data}  data=${data}
   Log  ${USERS.users['${username}'].tender_data.data}
+  [return]  ${field_value}
+
+
+Отримати дані із тендера другого етапу
+  [Arguments]  ${username}  ${tender_uaid}  ${field_name}
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      get_from_object
+  ...      ${USERS.users['${username}'].second_stage_data.data}
+  ...      ${field}
+  # If field in cache, return its value
+  Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
+  # Else call broker to find field
+  ${field_value}=  Run As  ${username}  Отримати інформацію із тендера  ${tender_uaid}  ${field_name}
+  # And caching its value before return
+  Set_To_Object  ${USERS.users['${username}'].second_stage_data.data}  ${field_name}  ${field_value}
+  ${data}=  munch_dict  arg=${USERS.users['${username}'].second_stage_data.data}
+  Set To Dictionary  ${USERS.users['${username}'].second_stage_data}  data=${data}
+  Log  ${USERS.users['${username}'].second_stage_data.data}
   [return]  ${field_value}
 
 
