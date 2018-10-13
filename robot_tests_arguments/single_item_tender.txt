@@ -11,6 +11,10 @@
 -i add_tender_doc
 -i find_tender
 -i tender_view
+-i tender_view_value
+-i tender_view_minimalStep
+-i tender_view_deliveryDate
+-i tender_view_quantity
 -i tender_view_unit_code
 -i tender_view_coordinates
 -i extend_tendering_period

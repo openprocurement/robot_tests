@@ -443,6 +443,32 @@ def test_bid_value(max_value_amount):
     })
 
 
+def test_bid_value_esco(tender_data):
+    annual_cost = []
+    for i in range(0, 21):
+        cost=round(random.uniform(1, 100), 2)
+        annual_cost.append(cost)
+    if tender_data['fundingKind'] == "budget":
+        yearly_percentage=round(random.uniform(0.01, float(tender_data['yearlyPaymentsPercentageRange'])), 5)
+    else:
+        yearly_percentage= 0.8
+    # when tender fundingKind is budget, yearlyPaymentsPercentageRange should be less or equal 0.8, and more or equal 0
+    # when tender fundingKind is other, yearlyPaymentsPercentageRange should be equal 0.8
+    return munchify({
+        "value": {
+            "currency": "UAH",
+            "valueAddedTaxIncluded": True,
+            "yearlyPaymentsPercentage": yearly_percentage,
+            "annualCostsReduction": annual_cost,
+            "contractDuration": {
+                "years": random.randint(7, 14),
+                "days": random.randint(1, 364)
+            }
+        }
+    })
+
+
+
 def test_supplier_data():
     return munchify({
         "data": {
@@ -681,3 +707,45 @@ def test_elimination_report(corruption, relatedParty_id):
             }
         }
     })
+
+
+def test_tender_data_esco(params, submissionMethodDetails):
+    data = test_tender_data(params, ('tender',), submissionMethodDetails)
+    data['procurementMethodType'] = 'esco'
+    data['title_en'] = "[TESTING]"
+    for item_number, item in enumerate(data['items']):
+        item['description_en'] = "Test item #{}".format(item_number)
+    data['procuringEntity']['name_en'] = fake_en.name()
+    data['procuringEntity']['contactPoint']['name_en'] = fake_en.name()
+    data['procuringEntity']['contactPoint']['availableLanguage'] = "en"
+    data['procuringEntity']['identifier']['legalName_en'] = fake_en.sentence(nb_words=10, variable_nb_words=True)
+    data['procuringEntity']['kind'] = 'general'
+    data['minimalStepPercentage'] = float(round(random.uniform(0.015, 0.03), 5))
+    data['fundingKind'] = params['fundingKind']
+    data['NBUdiscountRate'] = float(round(random.uniform(0, 0.99), 5))
+    percentage_list = []
+    del data["value"]
+    del data["minimalStep"]
+    for index in range(params['number_of_lots']):
+        data['lots'][index]['fundingKind'] = data['fundingKind']
+        if index == 0:
+            data['lots'][index]['minimalStepPercentage'] = data['minimalStepPercentage']
+        else:
+            data['lots'][index]['minimalStepPercentage'] = round((float(data['minimalStepPercentage'])-0.0002), 5)
+        if data['fundingKind'] == "budget":
+            data['lots'][index]['yearlyPaymentsPercentageRange'] = float(round(random.uniform(0.01, 0.8), 5))
+        else:
+            data['lots'][index]['yearlyPaymentsPercentageRange'] = 0.8
+        percentage_list.append(data['lots'][index]['yearlyPaymentsPercentageRange'])
+        del data['lots'][index]['value']
+        del data['lots'][index]['minimalStep']
+    if params['number_of_lots'] == 0:
+        if data['fundingKind'] == "budget":
+            data['yearlyPaymentsPercentageRange'] = float(round(random.uniform(0.01, 0.8), 3))
+        else:
+            data['yearlyPaymentsPercentageRange'] = 0.8
+    else:
+        data['yearlyPaymentsPercentageRange'] = min(percentage_list)
+    for index in range(params['number_of_items']):
+        del data['items'][index]['deliveryDate']
+    return data
