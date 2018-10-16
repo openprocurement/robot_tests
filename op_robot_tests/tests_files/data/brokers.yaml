@@ -1169,3 +1169,21 @@ setam:
         provider1:      setam_Provider1_auction
         viewer:         setam_Viewer_auction
     timeout_on_wait: 120
+evropeyska:
+    keywords_file: evropeyska
+    accelerator: 180
+    roles:
+        tender_owner:   evropeyska_Owner
+        provider:       evropeyska_Provider
+        provider1:      evropeyska_Provider1
+        viewer:         evropeyska_Viewer
+    intervals:
+        default:
+            accelerator: 180
+        dgfOtherAssets:
+            accelerator: 180
+        lots:
+            accelerator: 180
+        auctions:
+            accelerator: 180
+    timeout_on_wait: 10
