@@ -2216,3 +2216,37 @@ users:
         browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
+    evropeyska_Owner:
+        broker:   evropeyska
+        homepage: "http://sale.tbe-birzha.com.ua/user/login"
+        default_page: "http://sale.tbe-birzha.com.ua/public/index"
+        login:    privatizator
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    evropeyska_Provider:
+        broker:   evropeyska
+        homepage: "http://sale.tbe-birzha.com.ua/user/login"
+        default_page: "http://sale.tbe-birzha.com.ua/public/index"
+        login:    member
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    evropeyska_Provider1:
+        broker:   evropeyska
+        homepage: "http://sale.tbe-birzha.com.ua/user/login"
+        default_page: "http://sale.tbe-birzha.com.ua/public/index"
+        login:    member1
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    evropeyska_Viewer:
+        broker:   evropeyska
+        homepage: "http://sale.tbe-birzha.com.ua/user/login"
+        default_page: "http://sale.tbe-birzha.com.ua/public/index"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
