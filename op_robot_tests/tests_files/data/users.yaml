@@ -757,3 +757,33 @@ users:
         size:     [1280, 1024]
         login: "test@izi.trade"
         password: "qwerty1!"
+    ukrtender_Owner:
+        broker:   ukrtender
+        homepage: "http://test.ukrtender.com.ua"
+        login:    tender_owner
+        password: 88888888
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    ukrtender_Provider:
+        broker:   ukrtender
+        homepage: "http://test.ukrtender.com.ua"
+        login:    provider
+        password: 88888888
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    ukrtender_Provider1:
+        broker:   ukrtender
+        homepage: "http://test.ukrtender.com.ua"
+        login:    provider1
+        password: 88888888
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    ukrtender_Viewer:
+        broker:   ukrtender
+        homepage: "http://test.ukrtender.com.ua"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
