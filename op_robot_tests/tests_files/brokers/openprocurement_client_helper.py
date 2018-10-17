@@ -119,6 +119,14 @@ def get_document_by_id(data, doc_id):
     raise Exception('Document with id {} not found'.format(doc_id))
 
 
+def get_tenders_feed(client):
+    tender_list = True
+    while tender_list:
+        tender_list = client.get_tenders()
+        for tender in tender_list:
+            yield tender
+
+
 def get_tenders_by_funder_id(client,
                              funder_id=None,
                              descending=True,

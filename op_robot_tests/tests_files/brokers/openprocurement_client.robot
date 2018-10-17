@@ -225,15 +225,26 @@ Library  openprocurement_client.utils
   [return]  ${tender.data.planID}
 
 
-Пошук тендера по ідентифікатору
-  [Arguments]  ${username}  ${tender_uaid}  ${save_key}=tender_data
-  ${internalid}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
+Отримати список тендерів
+  [Arguments]  ${username}
+  ${tenders_feed}=  Run Keyword  get_tenders_feed  ${USERS.users['${username}'].client}
+  [return]  ${tenders_feed}
+
+
+Отримати тендер по внутрішньому ідентифікатору
+  [Arguments]  ${username}  ${internalid}  ${save_key}=tender_data
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   Set To Dictionary  ${USERS.users['${username}']}  ${save_key}=${tender}
   ${tender}=  munch_dict  arg=${tender}
   Log  ${tender}
   [return]   ${tender}
+
+
+Пошук тендера по ідентифікатору
+  [Arguments]  ${username}  ${tender_uaid}  ${save_key}=tender_data
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
+  [return]  openprocurement_client.тримати тендер по внутрішньому ідентифікатору  ${username}  ${internalid}  ${save_key}
 
 
 Пошук об'єкта моніторингу по ідентифікатору

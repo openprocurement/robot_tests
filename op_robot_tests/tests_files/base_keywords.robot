@@ -79,6 +79,18 @@ Resource           resource.robot
   Run As  ${username}  Пошук тендера по ідентифікатору  ${TENDER['TENDER_UAID']}
 
 
+Можливість прочитати тендери
+  :FOR  ${username}  IN  ${tender_owner}  ${viewer}
+  \  Можливість прочитати тендери для користувача ${username}
+
+
+Можливість прочитати тендери для користувача ${username}
+  ${tenders_feed}=  Отримати список тендерів  ${username}
+  :FOR  ${tenders_feed_item}  IN  @{tenders_feed}
+  \  ${internalid}=  Get From Dictionary  ${tenders_feed_item}  id
+  \  Отримати тендер по внутрішньому ідентифікатору  ${username}  ${internalid}
+
+
 Можливість знайти план по ідентифікатору
   :FOR  ${username}  IN  ${tender_owner}  ${viewer}
   \  Можливість знайти план по ідентифікатору для користувача ${username}
