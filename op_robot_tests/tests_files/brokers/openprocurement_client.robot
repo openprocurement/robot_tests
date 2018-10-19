@@ -364,15 +364,26 @@ Library  openprocurement_client.utils
   [return]  ${reply}
 
 
-Пошук плану по ідентифікатору
-  [Arguments]  ${username}  ${tender_uaid}  ${save_key}=tender_data
-  ${internalid}=  openprocurement_client.Отримати internal id плану по UAid  ${username}  ${tender_uaid}
+Отримати список планів
+  [Arguments]  ${username}
+  ${plans_feed}=  Run Keyword  get_plans_feed  ${USERS.users['${username}'].client}
+  [return]  ${plans_feed}
+
+
+Отримати план по внутрішньому ідентифікатору
+  [Arguments]  ${username}  ${internalid}  ${save_key}=tender_data
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_plan  ${internalid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   Set To Dictionary  ${USERS.users['${username}']}  ${save_key}=${tender}
   ${tender}=  munch_dict  arg=${tender}
   Log  ${tender}
   [return]   ${tender}
+
+
+Пошук плану по ідентифікатору
+  [Arguments]  ${username}  ${tender_uaid}  ${save_key}=tender_data
+  ${internalid}=  openprocurement_client.Отримати internal id плану по UAid  ${username}  ${tender_uaid}
+  [return]  openprocurement_client.Отримати план по внутрішньому ідентифікатору  {username}  ${internalid}  ${save_key}
 
 
 Пошук тендера за кошти донора

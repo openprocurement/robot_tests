@@ -127,6 +127,14 @@ def get_tenders_feed(client):
             yield tender
 
 
+def get_plans_feed(client):
+    tender_list = True
+    while tender_list:
+        tender_list = client.get_plans()
+        for tender in tender_list:
+            yield tender
+
+
 def get_tenders_by_funder_id(client,
                              funder_id=None,
                              descending=True,

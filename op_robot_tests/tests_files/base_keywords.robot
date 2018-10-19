@@ -96,6 +96,18 @@ Resource           resource.robot
   \  Можливість знайти план по ідентифікатору для користувача ${username}
 
 
+Можливість прочитати плани
+  :FOR  ${username}  IN  ${tender_owner}  ${viewer}
+  \  Можливість прочитати плани для користувача ${username}
+
+
+Можливість прочитати плани для користувача ${username}
+  ${plans_feed}=  Отримати список планів  ${username}
+  :FOR  ${plans_feed_item}  IN  @{plans_feed}
+  \  ${internalid}=  Get From Dictionary  ${plans_feed_item}  id
+  \  Отримати план по внутрішньому ідентифікатору  ${username}  ${internalid}
+
+
 Можливість знайти об'єкт моніторингу по ідентифікатору
   :FOR  ${username}  IN  ${viewer}  ${dasu_user}
   \  Можливість знайти об'єкт моніторингу по ідентифікатору для користувача ${username}
