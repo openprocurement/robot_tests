@@ -884,7 +884,7 @@ Require Failure
 
 Звірити статус об'єкта моніторингу
   [Arguments]  ${username}  ${monitoring_uaid}  ${left}
-  ${right}=  Run As  ${username}  Отримати інформацію із об'єкта моніторингу  ${monitoring_uaid}  status
+  ${right}=  Отримати дані із об'єкта моніторингу  ${username}  ${monitoring_uaid}  status
   Порівняти об'єкти  ${left}  ${right}
 
 
