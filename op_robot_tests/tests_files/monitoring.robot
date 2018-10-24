@@ -743,7 +743,6 @@ ${MOZ_INTEGRATION}   ${False}
   ...      ${USERS.users['${dasu_user}'].broker}
   ...      cancelled
   ...      critical
-  [Setup]  Дочекатись синхронізації з ДАСУ  ${dasu_user}
   Звірити статус об'єкта моніторингу  ${dasu_user}  ${MONITORING['MONITORING_UAID']}  cancelled
 
 
@@ -753,7 +752,6 @@ ${MOZ_INTEGRATION}   ${False}
   ...      ${USERS.users['${dasu_user}'].broker}
   ...      cancellation_view
   ...      critical
-  [Setup]  Дочекатись синхронізації з ДАСУ  ${dasu_user}
   Отримати дані із поля cancellation.description об'єкта моніторингу для користувача ${dasu_user}
 
 
