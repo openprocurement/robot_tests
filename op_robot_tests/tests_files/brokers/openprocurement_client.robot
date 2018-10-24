@@ -244,7 +244,8 @@ Library  openprocurement_client.utils
 Пошук тендера по ідентифікатору
   [Arguments]  ${username}  ${tender_uaid}  ${save_key}=tender_data
   ${internalid}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
-  [return]  openprocurement_client.тримати тендер по внутрішньому ідентифікатору  ${username}  ${internalid}  ${save_key}
+  ${tender}=  openprocurement_client.Отримати тендер по внутрішньому ідентифікатору  ${username}  ${internalid}  ${save_key}
+  [return]  ${tender}
 
 
 Пошук об'єкта моніторингу по ідентифікатору
@@ -383,7 +384,8 @@ Library  openprocurement_client.utils
 Пошук плану по ідентифікатору
   [Arguments]  ${username}  ${tender_uaid}  ${save_key}=tender_data
   ${internalid}=  openprocurement_client.Отримати internal id плану по UAid  ${username}  ${tender_uaid}
-  [return]  openprocurement_client.Отримати план по внутрішньому ідентифікатору  {username}  ${internalid}  ${save_key}
+  ${tender}=  openprocurement_client.Отримати план по внутрішньому ідентифікатору  ${username}  ${internalid}  ${save_key}
+  [return]  ${tender}
 
 
 Пошук тендера за кошти донора
