@@ -88,6 +88,7 @@ Resource           resource.robot
   ${tenders_feed}=  Отримати список тендерів  ${username}
   :FOR  ${tenders_feed_item}  IN  @{tenders_feed}
   \  ${internalid}=  Get From Dictionary  ${tenders_feed_item}  id
+  \  Log To Console  Читання тендеру з id ${internalid}
   \  Отримати тендер по внутрішньому ідентифікатору  ${username}  ${internalid}
 
 
@@ -105,6 +106,7 @@ Resource           resource.robot
   ${plans_feed}=  Отримати список планів  ${username}
   :FOR  ${plans_feed_item}  IN  @{plans_feed}
   \  ${internalid}=  Get From Dictionary  ${plans_feed_item}  id
+  \  Log To Console  Читання плану з id ${internalid}
   \  Отримати план по внутрішньому ідентифікатору  ${username}  ${internalid}
 
 
