@@ -259,14 +259,19 @@ govfound:
             tender:  [0, 19]
         dgfOtherAssets:
             accelerator: 1440
-            auction:  [45, 50]
+            auction:  [100, 105]
+        lots:
+            accelerator: 100
+        auctions:
+            accelerator: 1440
+            auction:  [100, 100]
     keywords_file: 25h8
     roles:
         tender_owner:   b25h8_Owner_auction
         provider:       b25h8_Provider_auction
         provider1:      b25h8_Provider1_auction
         viewer:         b25h8_Viewer_auction
-    timeout_on_wait: 180
+    timeout_on_wait: 120
 ztv:
     intervals:
         default:

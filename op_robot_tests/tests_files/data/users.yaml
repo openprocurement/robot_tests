@@ -377,31 +377,31 @@ users:
     b25h8_Owner_auction:
         broker:   25h8
         homepage: "http://test.25h8.auction"
-        login:    dzotenderowner@gmail.com
-        password: 123456
-        browser:  Firefox
+        login:    malysheva.olya02@gmail.com
+        password: qazwsx!1
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     b25h8_Provider_auction:
         broker:   25h8
         homepage: "http://test.25h8.auction"
-        login:    prozorroyprovider1@gmail.com
+        login:    malysh.evaolya02@gmail.com
         password: 123456
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     b25h8_Provider1_auction:
         broker:   25h8
         homepage: "http://test.25h8.auction"
-        login:    prozorroyprovider2@gmail.com
+        login:    m.alyshevaolya02@gmail.com
         password: 123456
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     b25h8_Viewer_auction:
         broker:   25h8
         homepage: "http://test.25h8.auction"
-        browser:  Firefox
+        browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     ztv_Owner:
