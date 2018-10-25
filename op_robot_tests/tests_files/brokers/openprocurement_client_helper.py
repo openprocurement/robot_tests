@@ -120,29 +120,25 @@ def get_document_by_id(data, doc_id):
 
 
 def get_tenders_feed(client, interval=0.5):
-    tender_list = True
-    while tender_list:
-        tender_list = client.get_tenders()
-        for tender in tender_list:
-            yield tender
-        sleep(interval)
+    for item in get_items_feed(client, 'get_tenders', interval):
+        yield item
 
 
 def get_plans_feed(client, interval=0.5):
-    plans_list = True
-    while plans_list:
-        plans_list = client.get_plans()
-        for plan in plans_list:
-            yield plan
-        sleep(interval)
+    for item in get_items_feed(client, 'get_plans', interval):
+        yield item
 
 
 def get_contracts_feed(client, interval=0.5):
-    plans_list = True
-    while plans_list:
-        plans_list = client.get_contracts()
-        for plan in plans_list:
-            yield plan
+    for item in get_items_feed(client, 'get_contracts', interval):
+        yield item
+
+def get_items_feed(client, client_method, interval=0.5):
+    items = True
+    while items:
+        items = getattr(client, client_method)()
+        for item in items:
+            yield item
         sleep(interval)
 
 
