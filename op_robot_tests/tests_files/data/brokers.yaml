@@ -1192,3 +1192,19 @@ evropeyska:
         auctions:
             accelerator: 180
     timeout_on_wait: 10
+ecoex:
+    keywords_file: ecoex
+    accelerator: 360
+    roles:
+        tender_owner:   ecoex_Owner
+        provider:       ecoex_Provider
+        provider1:      ecoex_Provider1
+        viewer:         ecoex_Viewer
+    intervals:
+        lots:
+            accelerator: 180
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 30

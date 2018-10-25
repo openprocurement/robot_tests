@@ -2250,3 +2250,35 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1366, 768]
+    ecoex_Owner:
+        broker:   ecoex
+        homepage: "https://sale.ecoex.com.ua/test/Registration.aspx"
+        default_page: "https://sale.ecoex.com.ua/test/PositionList.aspx"
+        login:    ecoex_Owner@1.ua
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    ecoex_Provider:
+        broker:   ecoex
+        homepage: "https://sale.ecoex.com.ua/test/Registration.aspx"
+        default_page: "https://sale.ecoex.com.ua/test/PositionList.aspx"
+        login:    ecoex_Provider@1.ua
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    ecoex_Provider1:
+        broker:   ecoex
+        homepage: "https://sale.ecoex.com.ua/test/Registration.aspx"
+        default_page: "https://sale.ecoex.com.ua/test/PositionList.aspx"
+        login:    ecoex_Provider1@1.ua
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    ecoex_Viewer:
+        broker:   ecoex
+        homepage: "https://sale.ecoex.com.ua/test/Registration.aspx"
+        default_page: "https://sale.ecoex.com.ua/test/PositionList.aspx"
+        login:    ecoex_Viewer@1.ua
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
