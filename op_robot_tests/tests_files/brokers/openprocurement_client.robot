@@ -227,7 +227,8 @@ Library  openprocurement_client.utils
 
 Отримати список тендерів
   [Arguments]  ${username}
-  ${tenders_feed}=  Run Keyword  get_tenders_feed  ${USERS.users['${username}'].client}
+  ${tenders_feed_generator}=  Run Keyword  get_tenders_feed  ${USERS.users['${username}'].client}
+  @{tenders_feed}=  Set Variable  @{tenders_feed_generator}
   [return]  ${tenders_feed}
 
 
@@ -367,7 +368,8 @@ Library  openprocurement_client.utils
 
 Отримати список планів
   [Arguments]  ${username}
-  ${plans_feed}=  Run Keyword  get_plans_feed  ${USERS.users['${username}'].client}
+  ${plans_feed_generator}=  Run Keyword  get_plans_feed  ${USERS.users['${username}'].client}
+  @{plans_feed}=  Set Variable  @{plans_feed_generator}
   [return]  ${plans_feed}
 
 

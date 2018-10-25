@@ -6,15 +6,15 @@ Suite Teardown  Test Suite Teardown
 
 
 *** Variables ***
-${RESOURCE}     plans
-@{USED_ROLES}   tender_owner  viewer
+${RESOURCE}             plans
+@{USED_ROLES}           viewer
+${FEED_ITEMS_NUMBER}    10
 
 *** Test Cases ***
 Можливість переглянути плани
   [Tags]   ${USERS.users['${viewer}'].broker}: Читання планів
-  ...      viewer  tender_owner
+  ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      ${USERS.users['${tender_owner}'].broker}
   ...      plan_feed
   ...      plan_view
   ...      critical

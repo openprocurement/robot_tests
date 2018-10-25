@@ -80,15 +80,21 @@ Resource           resource.robot
 
 
 Можливість прочитати тендери
-  :FOR  ${username}  IN  ${tender_owner}  ${viewer}
+  :FOR  ${username}  IN  ${viewer}
   \  Можливість прочитати тендери для користувача ${username}
 
 
 Можливість прочитати тендери для користувача ${username}
   ${tenders_feed}=  Отримати список тендерів  ${username}
-  :FOR  ${tenders_feed_item}  IN  @{tenders_feed}
+  ${tenders_len}=  Get Length  ${tenders_feed}
+  ${items_number}=  Evaluate  min(${FEED_ITEMS_NUMBER}, ${tenders_len})
+  Log To Console  ${items_number}/${tenders_len}
+  :FOR  ${index}  IN RANGE  0  ${items_number}
+  \  ${rand_index}=  Evaluate	random.randint(0, ${tenders_len})  modules=random
+  \  ${tenders_feed_item}=  Get From List  ${tenders_feed}  ${rand_index}
   \  ${internalid}=  Get From Dictionary  ${tenders_feed_item}  id
-  \  Log To Console  Читання тендеру з id ${internalid}
+  \  ${date_modified}=  Get From Dictionary  ${tenders_feed_item}  dateModified
+  \  Log To Console  - Читання тендеру ${index} з id ${internalid} та датою модифікації ${date_modified}
   \  Отримати тендер по внутрішньому ідентифікатору  ${username}  ${internalid}
 
 
@@ -98,15 +104,21 @@ Resource           resource.robot
 
 
 Можливість прочитати плани
-  :FOR  ${username}  IN  ${tender_owner}  ${viewer}
+  :FOR  ${username}  IN  ${viewer}
   \  Можливість прочитати плани для користувача ${username}
 
 
 Можливість прочитати плани для користувача ${username}
   ${plans_feed}=  Отримати список планів  ${username}
-  :FOR  ${plans_feed_item}  IN  @{plans_feed}
+  ${plans_len}=  Get Length  ${plans_feed}
+  ${items_number}=  Evaluate  min(${FEED_ITEMS_NUMBER}, ${plans_len})
+  Log To Console  ${items_number}/${plans_len}
+  :FOR  ${index}  IN RANGE  0  ${items_number}
+  \  ${rand_index}=  Evaluate	random.randint(0, ${plans_len})  modules=random
+  \  ${plans_feed_item}=  Get From List  ${plans_feed}  ${rand_index}
   \  ${internalid}=  Get From Dictionary  ${plans_feed_item}  id
-  \  Log To Console  Читання плану з id ${internalid}
+  \  ${date_modified}=  Get From Dictionary  ${plans_feed_item}  dateModified
+  \  Log To Console  - Читання плану ${index} з id ${internalid} та датою модифікації ${date_modified}
   \  Отримати план по внутрішньому ідентифікатору  ${username}  ${internalid}
 
 

@@ -119,20 +119,22 @@ def get_document_by_id(data, doc_id):
     raise Exception('Document with id {} not found'.format(doc_id))
 
 
-def get_tenders_feed(client):
+def get_tenders_feed(client, interval=0.5):
     tender_list = True
     while tender_list:
         tender_list = client.get_tenders()
         for tender in tender_list:
             yield tender
+        sleep(interval)
 
 
-def get_plans_feed(client):
-    tender_list = True
-    while tender_list:
-        tender_list = client.get_plans()
-        for tender in tender_list:
-            yield tender
+def get_plans_feed(client, interval=0.5):
+    plans_list = True
+    while plans_list:
+        plans_list = client.get_plans()
+        for plan in plans_list:
+            yield plan
+        sleep(interval)
 
 
 def get_tenders_by_funder_id(client,
