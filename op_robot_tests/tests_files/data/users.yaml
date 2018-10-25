@@ -781,6 +781,14 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
+    ukrtender_Provider2:
+        broker:   ukrtender
+        homepage: "http://test.ukrtender.com.ua"
+        login:    provider2
+        password: 88888888
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
     ukrtender_Viewer:
         broker:   ukrtender
         homepage: "http://test.ukrtender.com.ua"

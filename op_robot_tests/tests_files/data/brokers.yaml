@@ -533,6 +533,7 @@ ukrtender:
     roles:
         provider:       ukrtender_Provider
         provider1:      ukrtender_Provider1
+        provider2:      ukrtender_Provider2
         tender_owner:   ukrtender_Owner
         viewer:         ukrtender_Viewer
     timeout_on_wait: 10
