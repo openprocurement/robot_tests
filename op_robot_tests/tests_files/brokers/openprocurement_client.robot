@@ -1894,13 +1894,26 @@ Library  openprocurement_client.utils
   openprocurement_client.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
 
 
-Пошук договору по ідентифікатору
-  [Arguments]  ${username}  ${contract_uaid}
-  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+Отримати список договорів
+  [Arguments]  ${username}
+  ${contracts_feed_generator}=  Run Keyword  get_contracts_feed  ${USERS.users['${username}'].contracting_client}
+  @{contracts_feed}=  Set Variable  @{contracts_feed_generator}
+  [return]  ${contracts_feed}
+
+
+Отримати договір по внутрішньому ідентифікатору
+  [Arguments]  ${username}  ${internalid}
   ${contract}=  Call Method  ${USERS.users['${username}'].contracting_client}  get_contract  ${internalid}
   ${contract}=  munch_dict  arg=${contract}
   Set To Dictionary  ${USERS.users['${username}']}  contract_data=${contract}
   Log  ${contract}
+  [return]  ${contract}
+
+
+Пошук договору по ідентифікатору
+  [Arguments]  ${username}  ${contract_uaid}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${contract}=  openprocurement_client.Отримати договір по внутрішнтому ідентифікатору  ${username}  ${contract_uaid}
   [return]  ${contract}
 
 

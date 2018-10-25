@@ -19,3 +19,12 @@ ${FEED_ITEMS_NUMBER}    10
   ...      tender_view
   ...      critical
   Можливість прочитати тендери
+
+Можливість переглянути договори
+  [Tags]   ${USERS.users['${viewer}'].broker}: Читання контрактів
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      contract_feed
+  ...      contract_view
+  ...      critical
+  Можливість прочитати договори

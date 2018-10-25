@@ -122,6 +122,25 @@ Resource           resource.robot
   \  Отримати план по внутрішньому ідентифікатору  ${username}  ${internalid}
 
 
+Можливість прочитати договори
+  :FOR  ${username}  IN  ${viewer}
+  \  Можливість прочитати договори для користувача ${username}
+
+
+Можливість прочитати договори для користувача ${username}
+  ${contracts_feed}=  Отримати список договорів  ${username}
+  ${contracts_len}=  Get Length  ${contracts_feed}
+  ${number}=  Evaluate  min(${FEED_ITEMS_NUMBER}, ${contracts_len})
+  ${sample}=  Evaluate  random.sample(range(0, ${contracts_len}), ${number})  random
+  Log To Console  ${number}/${contracts_len}
+  :FOR  ${index}  IN  @{sample}
+  \  ${contracts_feed_item}=  Get From List  ${contracts_feed}  ${index}
+  \  ${internalid}=  Get From Dictionary  ${contracts_feed_item}  id
+  \  ${date_modified}=  Get From Dictionary  ${contracts_feed_item}  dateModified
+  \  Log To Console  - Читання договору з id ${internalid} та датою модифікації ${date_modified}
+  \  Отримати договір по внутрішньому ідентифікатору  ${username}  ${internalid}
+
+
 Можливість знайти об'єкт моніторингу по ідентифікатору
   :FOR  ${username}  IN  ${viewer}  ${dasu_user}
   \  Можливість знайти об'єкт моніторингу по ідентифікатору для користувача ${username}

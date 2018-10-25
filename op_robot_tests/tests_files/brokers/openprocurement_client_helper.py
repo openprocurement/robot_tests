@@ -137,6 +137,15 @@ def get_plans_feed(client, interval=0.5):
         sleep(interval)
 
 
+def get_contracts_feed(client, interval=0.5):
+    plans_list = True
+    while plans_list:
+        plans_list = client.get_contracts()
+        for plan in plans_list:
+            yield plan
+        sleep(interval)
+
+
 def get_tenders_by_funder_id(client,
                              funder_id=None,
                              descending=True,
