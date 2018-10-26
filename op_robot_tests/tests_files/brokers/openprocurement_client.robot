@@ -225,15 +225,28 @@ Library  openprocurement_client.utils
   [return]  ${tender.data.planID}
 
 
-Пошук тендера по ідентифікатору
-  [Arguments]  ${username}  ${tender_uaid}  ${save_key}=tender_data
-  ${internalid}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
+Отримати список тендерів
+  [Arguments]  ${username}
+  ${tenders_feed_generator}=  Run Keyword  get_tenders_feed  ${USERS.users['${username}'].client}
+  @{tenders_feed}=  Set Variable  @{tenders_feed_generator}
+  [return]  ${tenders_feed}
+
+
+Отримати тендер по внутрішньому ідентифікатору
+  [Arguments]  ${username}  ${internalid}  ${save_key}=tender_data
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   Set To Dictionary  ${USERS.users['${username}']}  ${save_key}=${tender}
   ${tender}=  munch_dict  arg=${tender}
   Log  ${tender}
   [return]   ${tender}
+
+
+Пошук тендера по ідентифікатору
+  [Arguments]  ${username}  ${tender_uaid}  ${save_key}=tender_data
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Отримати тендер по внутрішньому ідентифікатору  ${username}  ${internalid}  ${save_key}
+  [return]  ${tender}
 
 
 Пошук об'єкта моніторингу по ідентифікатору
@@ -353,15 +366,28 @@ Library  openprocurement_client.utils
   [return]  ${reply}
 
 
-Пошук плану по ідентифікатору
-  [Arguments]  ${username}  ${tender_uaid}  ${save_key}=tender_data
-  ${internalid}=  openprocurement_client.Отримати internal id плану по UAid  ${username}  ${tender_uaid}
+Отримати список планів
+  [Arguments]  ${username}
+  ${plans_feed_generator}=  Run Keyword  get_plans_feed  ${USERS.users['${username}'].client}
+  @{plans_feed}=  Set Variable  @{plans_feed_generator}
+  [return]  ${plans_feed}
+
+
+Отримати план по внутрішньому ідентифікатору
+  [Arguments]  ${username}  ${internalid}  ${save_key}=tender_data
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_plan  ${internalid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   Set To Dictionary  ${USERS.users['${username}']}  ${save_key}=${tender}
   ${tender}=  munch_dict  arg=${tender}
   Log  ${tender}
   [return]   ${tender}
+
+
+Пошук плану по ідентифікатору
+  [Arguments]  ${username}  ${tender_uaid}  ${save_key}=tender_data
+  ${internalid}=  openprocurement_client.Отримати internal id плану по UAid  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Отримати план по внутрішньому ідентифікатору  ${username}  ${internalid}  ${save_key}
+  [return]  ${tender}
 
 
 Пошук тендера за кошти донора
@@ -1868,13 +1894,26 @@ Library  openprocurement_client.utils
   openprocurement_client.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
 
 
-Пошук договору по ідентифікатору
-  [Arguments]  ${username}  ${contract_uaid}
-  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+Отримати список договорів
+  [Arguments]  ${username}
+  ${contracts_feed_generator}=  Run Keyword  get_contracts_feed  ${USERS.users['${username}'].contracting_client}
+  @{contracts_feed}=  Set Variable  @{contracts_feed_generator}
+  [return]  ${contracts_feed}
+
+
+Отримати договір по внутрішньому ідентифікатору
+  [Arguments]  ${username}  ${internalid}
   ${contract}=  Call Method  ${USERS.users['${username}'].contracting_client}  get_contract  ${internalid}
   ${contract}=  munch_dict  arg=${contract}
   Set To Dictionary  ${USERS.users['${username}']}  contract_data=${contract}
   Log  ${contract}
+  [return]  ${contract}
+
+
+Пошук договору по ідентифікатору
+  [Arguments]  ${username}  ${contract_uaid}
+  ${internalid}=  openprocurement_client.Отримати internal id по UAid для договору  ${username}  ${contract_uaid}
+  ${contract}=  openprocurement_client.Отримати договір по внутрішнтому ідентифікатору  ${username}  ${contract_uaid}
   [return]  ${contract}
 
 

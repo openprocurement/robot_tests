@@ -119,6 +119,29 @@ def get_document_by_id(data, doc_id):
     raise Exception('Document with id {} not found'.format(doc_id))
 
 
+def get_tenders_feed(client, interval=0.5):
+    for item in get_items_feed(client, 'get_tenders', interval):
+        yield item
+
+
+def get_plans_feed(client, interval=0.5):
+    for item in get_items_feed(client, 'get_plans', interval):
+        yield item
+
+
+def get_contracts_feed(client, interval=0.5):
+    for item in get_items_feed(client, 'get_contracts', interval):
+        yield item
+
+def get_items_feed(client, client_method, interval=0.5):
+    items = True
+    while items:
+        items = getattr(client, client_method)()
+        for item in items:
+            yield item
+        sleep(interval)
+
+
 def get_tenders_by_funder_id(client,
                              funder_id=None,
                              descending=True,
