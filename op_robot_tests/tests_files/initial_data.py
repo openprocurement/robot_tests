@@ -2,6 +2,7 @@
 import os
 import random
 import hashlib
+import iso8601
 from datetime import timedelta
 from tempfile import NamedTemporaryFile
 from uuid import uuid4
@@ -591,12 +592,34 @@ def test_tender_data_openeu(params, submissionMethodDetails):
     return data
 
 
+def create_fake_IsoDurationType(
+        years=0, months=0,
+        weeks=0, days=0,
+        hours=0, minutes=0,
+        seconds=0):
+    return u"P{}Y{}M{}W{}DT{}H{}M{}S".format(
+        years, months,
+        weeks, days,
+        hours, minutes,
+        seconds
+    )
+
+
 def test_tender_data_framework_agreement(params, submissionMethodDetails):
     data = test_tender_data_openeu(params, submissionMethodDetails)
     data['procurementMethodType'] = 'closeFrameworkAgreementUA'
     data['maxAwardsCount'] = fake.random_int(min=3, max=5)
-    data['agreementDuration'] = 'P1M'
+    data['agreementDuration'] = create_fake_IsoDurationType(
+        years=fake.random_int(min=1, max=3),
+        months=fake.random_int(min=1, max=8),
+        weeks=fake.random_int(min=1, max=3),
+        days=fake.random_int(min=1, max=6),
+        hours=fake.random_int(min=1, max=20),
+        minutes=fake.random_int(min=1, max=50),
+        seconds=fake.random_int(min=1, max=60)
+    )
     return data
+
 
 
 def test_tender_data_competitive_dialogue(params, submissionMethodDetails):
