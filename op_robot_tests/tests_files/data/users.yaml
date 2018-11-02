@@ -603,7 +603,7 @@ users:
         size:     [1400, 900]
     alltenders_Owner:
         broker:   alltenders
-        homepage: 'https://prozorro.alltenders.com.ua/?mode=test&notification=off'
+        homepage: 'https://dprozorro.shadowy.eu/?mode=test&notification=off'
         login:    TestOwner@i.ua
         password: 111
         browser:  chrome
@@ -611,7 +611,7 @@ users:
         size:     [1210, 800]
     alltenders_Provider:
         broker:   alltenders
-        homepage: 'https://prozorro.alltenders.com.ua/?mode=test&notification=off'
+        homepage: 'https://dprozorro.shadowy.eu/?mode=test&notification=off'
         login:    member_01@i.ua
         password: 111
         browser:  chrome
@@ -619,7 +619,7 @@ users:
         size:     [1210, 800]
     alltenders_Provider1:
         broker:   alltenders
-        homepage: 'https://prozorro.alltenders.com.ua/?mode=test&notification=off'
+        homepage: 'https://dprozorro.shadowy.eu/?mode=test&notification=off'
         login:    member_02@i.ua
         password: 111
         browser:  chrome
@@ -627,7 +627,7 @@ users:
         size:     [1210, 800]
     alltenders_Provider2:
         broker:   alltenders
-        homepage: 'https://prozorro.alltenders.com.ua/?mode=test&notification=off'
+        homepage: 'https://dprozorro.shadowy.eu/?mode=test&notification=off'
         login:    member03@i.ua
         password: 111
         browser:  chrome
@@ -635,7 +635,7 @@ users:
         size:     [1210, 800]
     alltenders_Viewer:
         broker:   alltenders
-        homepage: "https://prozorro.alltenders.com.ua/?mode=test&notification=off"
+        homepage: "https://dprozorro.shadowy.eu/?mode=test&notification=off"
         browser:  chrome
         position: [0, 0]
         size:     [1210, 800]
