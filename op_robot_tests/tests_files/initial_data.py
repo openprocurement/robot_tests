@@ -157,6 +157,7 @@ def test_tender_data(params,
     period_dict = {}
     inc_dt = now
     for period_name in periods:
+        print period_name
         period_dict[period_name + "Period"] = {}
         for i, j in zip(range(2), ("start", "end")):
             inc_dt += timedelta(minutes=params['intervals'][period_name][i])
@@ -433,12 +434,24 @@ def test_bid_data():
     bid.data['status'] = 'draft'
     return bid
 
+def test_bid_data_selection(data, index):
+    bid = munchify({
+        "data": {
+            "tenderers": [
+                data['agreements'][0]['contracts'][index]['suppliers'][0]
+            ]
+        }
+    })
+    bid.data['status'] = 'draft'
+    bid.data['parameters'] = data['agreements'][0]['contracts'][index]['parameters']
+    return bid
+
 
 def test_bid_value(max_value_amount):
     return munchify({
         "value": {
             "currency": "UAH",
-            "amount": round(random.uniform((0.95 * max_value_amount), max_value_amount), 2),
+            "amount": round(random.uniform((0.50 * max_value_amount), max_value_amount), 2),
             "valueAddedTaxIncluded": True
         }
     })
@@ -586,7 +599,7 @@ def test_tender_data_openeu(params, submissionMethodDetails):
         item['description_en'] = "Test item #{}".format(item_number)
     data['procuringEntity']['name_en'] = fake_en.name()
     data['procuringEntity']['contactPoint']['name_en'] = fake_en.name()
-    data['procuringEntity']['contactPoint']['availableLanguage'] = "en"
+    # data['procuringEntity']['contactPoint']['availableLanguage'] = "en"
     data['procuringEntity']['identifier']['legalName_en'] = u"Institution \"Vinnytsia City Council primary and secondary general school № 10\""
     data['procuringEntity']['kind'] = 'general'
     return data
@@ -594,14 +607,12 @@ def test_tender_data_openeu(params, submissionMethodDetails):
 
 def create_fake_IsoDurationType(
         years=0, months=0,
-        weeks=0, days=0,
-        hours=0, minutes=0,
-        seconds=0):
-    return u"P{}Y{}M{}W{}DT{}H{}M{}S".format(
+        days=0, hours=0, 
+        minutes=0, seconds=0):
+    return u"P{}Y{}M{}DT{}H{}M{}S".format(
         years, months,
-        weeks, days,
-        hours, minutes,
-        seconds
+        days, hours,
+        minutes, seconds
     )
 
 
@@ -611,15 +622,13 @@ def test_tender_data_framework_agreement(params, submissionMethodDetails):
     data['maxAwardsCount'] = fake.random_int(min=3, max=5)
     data['agreementDuration'] = create_fake_IsoDurationType(
         years=fake.random_int(min=1, max=3),
-        months=fake.random_int(min=1, max=8),
-        weeks=fake.random_int(min=1, max=3),
-        days=fake.random_int(min=1, max=6),
-        hours=fake.random_int(min=1, max=20),
-        minutes=fake.random_int(min=1, max=50),
-        seconds=fake.random_int(min=1, max=60)
+        months=fake.random_int(min=1, max=11),
+        days=fake.random_int(min=1, max=29),
+        hours=fake.random_int(min=1, max=23),
+        minutes=fake.random_int(min=1, max=59),
+        seconds=fake.random_int(min=1, max=59)
     )
     return data
-
 
 
 def test_tender_data_competitive_dialogue(params, submissionMethodDetails):
@@ -640,6 +649,20 @@ def test_tender_data_competitive_dialogue(params, submissionMethodDetails):
     data['procuringEntity']['identifier']['legalName_en'] = fake_en.sentence(nb_words=10, variable_nb_words=True)
     data['procuringEntity']['kind'] = 'general'
     return data
+
+
+def test_tender_data_selection(procedure_intervals, params, submissionMethodDetails, tender_data=None):
+    intervals = procedure_intervals['framework_selection']
+    params['intervals'] = intervals
+    data = test_tender_data(params, ('enquiry', 'tender'), submissionMethodDetails)
+    data['title_en'] = "[TESTING]"
+    data['procuringEntity'] = tender_data['data']['procuringEntity']
+    data['procurementMethodType'] = 'closeFrameworkAgreementSelectionUA'
+    data['features'] = tender_data['data']['features']
+    data['items'] = tender_data['data']['items']
+    data['lots'] = tender_data['data']['lots']
+    data['agreements'] =  [{'id': tender_data['data']['agreements'][0]['id']}]
+    return munchify({'data':data})
 
 
 def test_change_data():
