@@ -308,3 +308,28 @@ ${ITEM_MEAT}        ${False}
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість видалити предмет закупівлі з плану
+
+
+Можливість задати період бюджету 1 рік
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування плану
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_plan
+  ...      critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${new_period}=   create_fake_period
+  Можливість змінити поле budget.period плану на ${new_period}
+
+
+Можливість задати період бюджету 5 років
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування плану
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_plan
+  ...      critical
+  ...      closeframework_period
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${new_period}=   create_fake_period  days=${1460}
+  Можливість змінити поле budget.period плану на ${new_period}
