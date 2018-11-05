@@ -54,6 +54,7 @@ from .initial_data import (
     test_tender_data_planning,
     test_tender_data_openua_defense,
     test_tender_data_framework_agreement,
+    test_tender_data_selection,
     test_bid_competitive_data,
     tets_monitoring_data,
     test_party,
@@ -70,6 +71,7 @@ from .initial_data import (
     convert_amount,
     get_number_of_minutes,
     get_hash,
+    test_bid_data_selection,
 )
 from barbecue import chef
 from restkit import request
@@ -601,7 +603,7 @@ def get_object_by_id(data, given_object_id, slice_element, object_id):
     return sliced_object[0]
 
 
-def generate_test_bid_data(tender_data):
+def generate_test_bid_data(tender_data, index=0):
     if tender_data.get('procurementMethodType', '') in (
             'aboveThresholdUA',
             'aboveThresholdUA.defense',
@@ -614,6 +616,8 @@ def generate_test_bid_data(tender_data):
         bid = test_bid_competitive_data()
         bid.data.selfEligible = True
         bid.data.selfQualified = True
+    elif tender_data.get('procurementMethodType', '') == 'closeFrameworkAgreementSelectionUA':
+        bid = test_bid_data_selection(tender_data, index)
     else:
         bid = test_bid_data()
     if 'lots' in tender_data:

@@ -74,11 +74,11 @@ Library  openprocurement_client.utils
   ${api_wrapper}=  Run Keyword If  '${RESOURCE}' == 'plans'
   ...     prepare_plan_api_wrapper  ${USERS.users['${username}'].api_key}  PLANS  ${API_HOST_URL}  ${API_VERSION}
   ...                     ELSE  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${RESOURCE}  ${API_HOST_URL}  ${API_VERSION}  ${ds_api_wraper}
-  ${dasu_api_wraper}=  prepare_dasu_api_wrapper  ${USERS.users['${username}'].dasu_api_key}  ${DASU_RESOURCE}  ${DASU_API_HOST_URL}  ${DASU_API_VERSION}  ${ds_api_wraper}
+  # ${dasu_api_wraper}=  prepare_dasu_api_wrapper  ${USERS.users['${username}'].dasu_api_key}  ${DASU_RESOURCE}  ${DASU_API_HOST_URL}  ${DASU_API_VERSION}  ${ds_api_wraper}
   ${agreement_wrapper}=  prepare_agreement_api_wrapper  ${USERS.users['${username}'].api_key}  AGREEMENTS  ${API_HOST_URL}  ${API_VERSION}  ${ds_api_wraper}
   Set To Dictionary  ${USERS.users['${username}']}  client=${api_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  agreement_client=${agreement_wrapper}
-  Set To Dictionary  ${USERS.users['${username}']}  dasu_client=${dasu_api_wraper}
+  # Set To Dictionary  ${USERS.users['${username}']}  dasu_client=${dasu_api_wraper}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${EMPTY}
   ${id_map}=  Create Dictionary
   Set To Dictionary  ${USERS.users['${username}']}  id_map=${id_map}
@@ -184,6 +184,7 @@ Library  openprocurement_client.utils
   ${access_token}=  Get Variable Value  ${tender.access.token}
   ${status}=  Set Variable If  'open' in '${MODE}'  active.tendering  ${EMPTY}
   ${status}=  Set Variable If  'below' in '${MODE}'  active.enquiries  ${status}
+  ${status}=  Set Variable If  'selection' in '${MODE}'  draft.pending  ${status}
   ${status}=  Set Variable If  '${status}'=='${EMPTY}'  active   ${status}
   Set To Dictionary  ${tender['data']}  status=${status}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_tender
@@ -1789,7 +1790,7 @@ Library  openprocurement_client.utils
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_agreement_contract
   ...      ${tender_id}
   ...      ${agreement_id}
-  ...      ${contract_data}
+  ...      ${data}
   ...      contract_id=${contract_id}
   ...      access_token=${access_token}
   Log  ${reply}
@@ -2066,8 +2067,8 @@ Library  openprocurement_client.utils
   ${data}=  Create Dictionary  data=${data}
   ${reply}=  Call Method  ${USERS.users['${username}'].agreement_client}  patch_change
   ...      ${agreement.data.id}
-  ...      ${agreement.data.changes[-1].id}
   ...      ${data}
+  ...      ${agreement.data.changes[-1].id}
   ...      access_token=${USERS.users['${username}'].agreement_access_token}
   Log  ${reply}
 
@@ -2077,8 +2078,8 @@ Library  openprocurement_client.utils
   ${agreement}=  openprocurement_client.Пошук угоди по ідентифікатору  ${username}  ${agreement_uaid}
   ${reply}=  Call Method  ${USERS.users['${username}'].agreement_client}  patch_change
   ...      ${agreement.data.id}
-  ...      ${agreement.data.changes[-1].id}
   ...      ${data}
+  ...      ${agreement.data.changes[-1].id}
   ...      access_token=${USERS.users['${username}'].agreement_access_token}
   Log  ${reply}
 
@@ -2108,8 +2109,8 @@ Library  openprocurement_client.utils
   Set to dictionary  ${document.data}  relatedItem=${item_id}
   ${reply}=  Call Method  ${USERS.users['${username}'].agreement_client}  patch_document
   ...      ${agreement.data.id}
-  ...      ${document.data.id}
   ...      ${document}
+  ...      ${document.data.id}
   ...      access_token=${USERS.users['${username}'].agreement_access_token}
   [return]  ${reply}
 

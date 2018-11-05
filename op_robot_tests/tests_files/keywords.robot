@@ -290,7 +290,8 @@ Get Broker Property By Username
 
 
 Підготувати дані для подання пропозиції
-  ${bid}=  generate_test_bid_data  ${USERS.users['${tender_owner}'].initial_data.data}
+  [Arguments]  ${index}=${0}
+  ${bid}=  generate_test_bid_data  ${USERS.users['${tender_owner}'].initial_data.data}  ${index}
   [Return]  ${bid}
 
 
@@ -904,7 +905,7 @@ Require Failure
   Дочекатись дати  ${date}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
-  ${next_status}=  Set variable if  'open' in '${MODE}'  active.tendering  active.enquiries
+  ${next_status}=  Set variable if  'open' in '${MODE}'  active.enquiries  active.tendering
   Wait until keyword succeeds
   ...      5 min 15 sec
   ...      15 sec
@@ -1119,6 +1120,19 @@ Require Failure
   ...      ${username}
   ...      ${tender_uaid}
   ...      active.qualification.stand-still
+
+
+Дочекатись дати початку періоду уточнення
+  [Arguments]  ${username}  ${tender_uaid}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      40 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      active.enquiries
 
 
 Дочекатись дати закінчення періоду подання скарг

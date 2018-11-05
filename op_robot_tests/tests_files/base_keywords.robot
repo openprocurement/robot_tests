@@ -29,6 +29,29 @@ Resource           resource.robot
   Set To Dictionary  ${TENDER}  TENDER_UAID=${TENDER_UAID}
 
 
+Можливість оголосити тендер другого етапу
+  ${NUMBER_OF_LOTS}=  Convert To Integer  ${NUMBER_OF_LOTS}
+  ${NUMBER_OF_ITEMS}=  Convert To Integer  ${NUMBER_OF_ITEMS}
+  ${tender_parameters}=  Create Dictionary
+  ...      mode=${MODE}
+  ...      number_of_items=${NUMBER_OF_ITEMS}
+  ...      number_of_lots=${NUMBER_OF_LOTS}
+  ...      tender_meat=${${TENDER_MEAT}}
+  ...      lot_meat=${${LOT_MEAT}}
+  ...      item_meat=${${ITEM_MEAT}}
+  ...      api_host_url=${API_HOST_URL}
+  ...      moz_integration=${${MOZ_INTEGRATION}}
+  ${submissionMethodDetails}=  Get Variable Value  ${submissionMethodDetails}
+  ${period_intervals}=  compute_intrs  ${BROKERS}  ${used_brokers}
+  ${first_stage}=  openprocurement_client.Пошук тендера по ідентифікатору  ${tender_owner}  ${TENDER['TENDER_UAID']}  first_stage
+  ${tender_data}=  test_tender_data_selection  ${period_intervals}  ${tender_parameters}  ${submissionMethodDetails}  tender_data=${first_stage}
+  ${adapted_data}=  Адаптувати дані для оголошення тендера  ${tender_data}
+  ${TENDER_UAID}=  Run As  ${tender_owner}  Створити тендер  ${adapted_data}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data=${first_stage}
+  Set To Dictionary  ${TENDER}  TENDER_UAID=${TENDER_UAID}
+  Дочекатись дати початку періоду уточнення  ${tender_owner}  ${TENDER_UAID}
+
+
 Можливість створити об'єкт моніторингу
   ${period_intervals}=  compute_intrs  ${BROKERS}  ${used_brokers}
   ${accelerator}=  Get Variable Value  ${accelerator}
@@ -1221,8 +1244,9 @@ Resource           resource.robot
 #             BIDDING
 ##############################################################################################
 
-Можливість подати цінову пропозицію користувачем ${username}
-  ${bid}=  Підготувати дані для подання пропозиції
+Можливість подати цінову пропозицію користувачем
+[Arguments] ${username}  ${index}=${0}
+  ${bid}=  Підготувати дані для подання пропозиції  ${index}
   ${bidresponses}=  Create Dictionary  bid=${bid}
   Set To Dictionary  ${USERS.users['${username}']}  bidresponses=${bidresponses}
   ${lots}=  Get Variable Value  ${USERS.users['${tender_owner}'].initial_data.data.lots}  ${None}
