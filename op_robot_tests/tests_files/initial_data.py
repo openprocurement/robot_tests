@@ -20,7 +20,7 @@ fake_uk.add_provider(OP_Provider)
 fake = fake_uk
 used_identifier_id = []
 mode_open =     ["belowThreshold", "aboveThresholdUA", "aboveThresholdEU",
-                "aboveThresholdUA.defense", "competitiveDialogueUA", "competitiveDialogueEU", "esco"]
+                "aboveThresholdUA.defense", "competitiveDialogueUA", "competitiveDialogueEU", "esco", "closeFrameworkAgreementUA"]
 mode_limited =  ["reporting", "negotiation.quick", "negotiation"]
 violationType = ["corruptionDescription", "corruptionProcurementMethodType", "corruptionChanges",
                 "corruptionPublicDisclosure", "corruptionBiddingDocuments", "documentsForm",
