@@ -325,7 +325,7 @@ ${ITEM_MEAT}        ${False}
 Можливість задати період бюджету 5 років
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування плану
   ...      tender_owner
-  ...      modify_plan
+  ...      ${USERS.users['${tender_owner}'].broker}
   ...      critical
   ...      closeframework_period
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
