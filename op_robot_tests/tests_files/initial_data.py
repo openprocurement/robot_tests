@@ -113,6 +113,15 @@ def create_fake_doc():
     return tf.name.replace('\\', '\\\\'), os.path.basename(tf.name), content
 
 
+def create_fake_IsoDurationType(
+        years=0, months=0, days=0,
+        hours=0, minutes=0, seconds=0):
+    return u"P{}Y{}M{}DT{}H{}M{}S".format(
+        years, months, days,
+        hours, minutes, seconds
+    )
+
+
 def test_tender_data(params,
                      periods=("enquiry", "tender"),
                      submissionMethodDetails=None,
@@ -595,7 +604,14 @@ def test_tender_data_framework_agreement(params, submissionMethodDetails):
     data = test_tender_data_openeu(params, submissionMethodDetails)
     data['procurementMethodType'] = 'closeFrameworkAgreementUA'
     data['maxAwardsCount'] = fake.random_int(min=3, max=5)
-    data['agreementDuration'] = 'P1M'
+    data['agreementDuration'] = create_fake_IsoDurationType(
+        years=fake.random_int(min=1, max=3),
+        months=fake.random_int(min=1, max=8),
+        days=fake.random_int(min=1, max=6),
+        hours=fake.random_int(min=1, max=20),
+        minutes=fake.random_int(min=1, max=50),
+        seconds=fake.random_int(min=1, max=60)
+    )
     return data
 
 
