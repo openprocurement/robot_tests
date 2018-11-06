@@ -3,8 +3,8 @@
 -v NUMBER_OF_ITEMS:1
 -v NUMBER_OF_LOTS:1
 
--v TENDER_MEAT:False
--v ITEM_MEAT:False
+-v TENDER_MEAT:True
+-v ITEM_MEAT:True
 -v LOT_MEAT:False
 
 
@@ -16,6 +16,12 @@
 -i tender_view_coordinates
 -i tender_view_framework
 -i lot_view
+-i meat_view
+
+-i add_item
+  -i delete_item
+-i add_tender_meat
+  -i delete_tender_meat
 
 -i extend_tendering_period
 -i add_tender_doc
@@ -63,6 +69,8 @@
 -i pre-qualification_add_doc_to_first_bid
 -i pre-qualification_approve_first_bid
 -i pre-qualification_add_doc_to_second_bid
+-i pre-qualification_reject_second_bid
+-i pre-qualification_cancel_second_bid_qualification
 -i pre-qualification_approve_second_bid
 -i pre-qualification_approve_third_bid
 -i pre-qualification_approve_qualifications
@@ -82,5 +90,6 @@
 
 
 -i contract_stand_still
+-i awarding_approve_first_award
 -i modify_agreement
 -i agreement_registration
