@@ -205,13 +205,23 @@ Suite Teardown  Test Suite Teardown
   Звірити відображення поля contracts[${contract_index}].status тендера із active для користувача ${viewer}
 
 
+Неможливість підтвердити постачальника після закінчення періоду кваліфікації
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  awarding_approve_first_award
+  ...  critical
+  [Setup]  Дочекатись дати закінчення періоду кваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
+  Run keyword and expect error  *  Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  0
+
+
 Можливість встановити ціну за одиницю для першого контракту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування угоди
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_agreement
   ...      critical
-  [Setup]  Дочекатись дати закінчення періоду кваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${contract_data}=  Розрахувати ціну для 0 контракту
   Run As  ${tender_owner}  Встановити ціну за одиницю для контракту  ${TENDER['TENDER_UAID']}  ${contract_data}
