@@ -39,6 +39,29 @@ ${MOZ_INTEGRATION}  ${False}
   Можливість знайти тендер по ідентифікатору для усіх користувачів
 
 
+Можливість зменшити бюджет лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_lot_value_amount  level2
+  ...      non-critical
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість змінити на 99 відсотки бюджет 0 лоту
+
+
+Можливість додати предмет закупівлі
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування тендера
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_item  level3
+  ...      critical
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Run Keyword IF  ${NUMBER_OF_LOTS} == 0
+  ...      Можливість додати предмет закупівлі в тендер
+  ...      ELSE
+  ...      Можливість додати предмет закупівлі в -1 лот
+
+
 Можливість змінити дату закінчення періоду подання пропозиції на 10 днів
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
   ...      tender_owner

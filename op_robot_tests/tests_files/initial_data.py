@@ -654,9 +654,10 @@ def test_tender_data_competitive_dialogue(params, submissionMethodDetails):
 def test_tender_data_selection(procedure_intervals, params, submissionMethodDetails, tender_data=None):
     intervals = procedure_intervals['framework_selection']
     params['intervals'] = intervals
-    data = test_tender_data(params, ('enquiry', 'tender'), submissionMethodDetails)
+    data = test_tender_data(params, (), submissionMethodDetails)
     data['title_en'] = "[TESTING]"
     data['procuringEntity'] = tender_data['data']['procuringEntity']
+    del data['procuringEntity']['contactPoint']['availableLanguage']
     data['procurementMethodType'] = 'closeFrameworkAgreementSelectionUA'
     data['features'] = tender_data['data']['features']
     data['items'] = tender_data['data']['items']

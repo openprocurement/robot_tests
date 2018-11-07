@@ -617,6 +617,8 @@ Library  openprocurement_client.utils
   ${lot_index}=  get_object_index_by_id  ${tender.data.lots}  ${lot_id}
   ${lot}=  Create Dictionary  data=${tender.data.lots[${lot_index}]}
   Set_To_Object   ${lot.data}   ${fieldname}   ${fieldvalue}
+  ${lot}=  munch_dict  arg=${lot}
+  Log  ${lot}
   ${reply}=  Call Method   ${USERS.users['${username}'].client}  patch_lot
   ...      ${tender.data.id}
   ...      ${lot}

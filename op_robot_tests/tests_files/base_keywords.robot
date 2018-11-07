@@ -466,7 +466,7 @@ Resource           resource.robot
 
 
 Можливість додати предмет закупівлі в ${lot_index} лот
-  ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}]}
+  ${lot_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data.lots[${lot_index}]}
   ${item}=  Підготувати дані для створення предмету закупівлі  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['id']}
   Run As  ${tender_owner}  Додати предмет закупівлі в лот  ${TENDER['TENDER_UAID']}  ${lot_id}  ${item}
   ${item_id}=  get_id_from_object  ${item}
@@ -592,8 +592,8 @@ Resource           resource.robot
 Можливість змінити на ${percent} відсотки бюджет ${lot_index} лоту
   ${percent}=  Convert To Number  ${percent}
   ${divider}=  Convert To Number  0.01
-  ${value}=  mult_and_round  ${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}].value.amount}  ${percent}  ${divider}  precision=${2}
-  ${step_value}=  mult_and_round  ${USERS.users['${tender_owner}'].tender_data.data.lots[${lot_index}].minimalStep.amount}  ${percent}  ${divider}  precision=${2}
+  ${value}=  mult_and_round  ${USERS.users['${tender_owner}'].initial_data.data.lots[${lot_index}].value.amount}  ${percent}  ${divider}  precision=${2}
+  ${step_value}=  mult_and_round  ${USERS.users['${tender_owner}'].initial_data.data.lots[${lot_index}].minimalStep.amount}  ${percent}  ${divider}  precision=${2}
   Можливість змінити поле value.amount ${lot_index} лоту на ${value}
   Можливість змінити поле minimalStep.amount ${lot_index} лоту на ${step_value}
 
@@ -1245,7 +1245,7 @@ Resource           resource.robot
 ##############################################################################################
 
 Можливість подати цінову пропозицію користувачем
-[Arguments] ${username}  ${index}=${0}
+  [Arguments] ${username}  ${index}=${0}
   ${bid}=  Підготувати дані для подання пропозиції  ${index}
   ${bidresponses}=  Create Dictionary  bid=${bid}
   Set To Dictionary  ${USERS.users['${username}']}  bidresponses=${bidresponses}
