@@ -70,6 +70,15 @@ ${MOZ_INTEGRATION}  ${False}
   Звірити відображення поля description тендера для користувача ${viewer}
 
 
+Відображення виду предмету закупівлі тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view  level2
+  ...      non-critical
+  Звірити відображення поля mainProcurementCategory тендера для користувача ${viewer}
+
+
 Відображення бюджету тендера
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних тендера
   ...      viewer

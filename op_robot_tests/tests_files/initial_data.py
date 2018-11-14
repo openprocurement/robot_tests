@@ -134,6 +134,7 @@ def test_tender_data(params,
     data = {
         "mode": "test",
         "submissionMethodDetails": submissionMethodDetails,
+        "mainProcurementCategory": fake.random_element(('goods', 'services', 'works')),
         "description": fake.description(),
         "description_en": fake_en.sentence(nb_words=10, variable_nb_words=True),
         "description_ru": fake_ru.sentence(nb_words=10, variable_nb_words=True),
