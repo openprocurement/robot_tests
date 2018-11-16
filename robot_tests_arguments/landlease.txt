@@ -1,0 +1,84 @@
+-v MODE:geb
+
+-v minNumberOfQualifiedBids:1
+
+-v NUMBER_OF_ITEMS:3
+
+
+-i create_tender
+-i find_tender
+
+
+-i tender_view_landLease
+-i tender_view
+
+
+-i modify_auction_procuringEntity_name
+-i modify_auction_lotIdentifier
+-i modify_auction_lotHolder
+-i modify_auction_title
+-i modify_auction_title_ru
+-i modify_auction_title_en
+-i modify_auction_description
+-i modify_auction_description_ru
+-i modify_auction_description_en
+-i modify_auction_value
+-i modify_auction_step
+-i modify_auction_guarantee
+-i modify_auction_registrationFee
+-i modify_auction_bankAccount
+-i modify_auction_budgetSpent
+-i modify_tenderAttempts
+-i modify_auction_contractTerms
+-i modify_asset
+-i modify_classification_id
+-i modify_asset_description
+
+
+-i add_item
+-i delete_item
+
+
+-i add_tender_doc
+-i add_tender_illustration
+-i add_tender_notice
+-i add_tender_tech_specifications
+-i add_tender_evaluationCriteria
+-i add_tender_contractProforma
+-i add_tender_asset_familiarization
+-i add_tender_presentation
+-i add_tender_clarifications
+-i add_tender_billOfQuantity
+-i add_tender_conflictOfInterest
+-i add_tender_evaluationReports
+-i add_tender_eligibilityCriteria
+-i add_tender_x_financialLicense
+-i add_tender_x_virtualDataRoom
+-i add_tender_x_nda
+-i add_tender_x_qualificationDocuments
+-i add_tender_cancellationDetails
+
+
+-i ask_question_to_tender
+-i answer_question_to_tender
+-i ask_question_to_item
+-i answer_question_to_item
+
+
+-i make_bid_qualify_by_provider
+-i make_bid_by_provider1
+-i add_eligibilityDocuments_to_bid_by_provider1
+-i make_bid_qualify_by_provider1
+-i auction_url
+-i auction_url_provider1
+
+
+-i number_of_awards
+-i add_protocol_to_first_award
+-i confirm_first_award
+
+
+-i dateSigned
+-i dateSigned_view
+-i contract_sign_upload
+-i contract_sign

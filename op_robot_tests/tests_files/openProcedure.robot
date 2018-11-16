@@ -53,13 +53,138 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля minNumberOfQualifiedBids тендера для користувача ${viewer}
 
 
+Відображення номер лоту замовника
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_landLease
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля lotIdentifier тендера для користувача ${viewer}
+
+
+Відображення організатор аукціону
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_landLease
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля lotHolder тендера для користувача ${viewer}
+
+
+Відображення розмір реєстраційного внеску
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_landLease
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля registrationFee.amount тендера для користувача ${viewer}
+
+
+Відображення валюту реєстраційного внеску
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_landLease
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля registrationFee.currency тендера для користувача ${viewer}
+
+
+Відображення поля опис банківських реквізитів
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_landLease
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля bankAccount.description тендера для користувача ${viewer}
+
+
+Відображення поля найменування банку
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_landLease
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля bankAccount.bankName тендера для користувача ${viewer}
+
+
+Відображення поля схеми ідентифікатора акаунта банку
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_landLease
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля bankAccount.accountIdentification[0].scheme тендера для користувача ${viewer}
+
+
+Відображення поля номер ідентифікатора акаунта банку
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_landLease
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля bankAccount.accountIdentification[0].id тендера для користувача ${viewer}
+
+
+Відображення поля опису ідентифікатора акаунта банку
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_landLease
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля bankAccount.accountIdentification[0].description тендера для користувача ${viewer}
+
+Відображення поля вартість підготовки лоту до торгів
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_landLease
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля budgetSpent.amount тендера для користувача ${viewer}
+
+
+Відображення поля валюти вартість підготовки лоту до торгів
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_landLease
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля budgetSpent.currency тендера для користувача ${viewer}
+
+
+Відображення включенного податку до вартості підготовки лоту до торгів
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_landLease
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля budgetSpent.valueAddedTaxIncluded тендера для користувача ${viewer}
+
+
+Відображення типу омуви контракту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_landLease
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля contractTerms.type тендера для користувача ${viewer}
+
+
+Відображення тривалості оренди
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_landLease
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля contractTerms.leaseTerms.leaseDuration тендера для користувача ${viewer}
+
+
 Відображення номера лоту ФГВ
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля dgfID тендера для користувача ${viewer}
+  Звірити відображення поля lotIdentifier тендера для користувача ${viewer}
 
 
 Відображення поля "Лоти виставляються"
@@ -117,6 +242,15 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
   Звірити відображення поля procuringEntity.name тендера для користувача ${viewer}
+
+
+Відображення завершення періоду редагування лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      tender_view
+  Отримати дані із поля rectificationPeriod.endDate тендера для усіх користувачів
 
 
 Відображення початку періоду уточнення лоту
@@ -329,7 +463,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      tender_view_rectificationPeriod
   Звірити відображення дати rectificationPeriod.endDate тендера для користувача ${viewer}
 
 
@@ -346,11 +480,203 @@ ${ITEM_MEAT}        ${True}
 #             Редагування лоту
 ##############################################################################################
 
-Можливість змінити назву лоту російською мовою
+Можливість змінити ID
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_id
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_id}=  Set Variable  ${112343}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_id=${new_id}
+  Можливість змінити поле id тендера на ${new_id}
+
+
+Відображення зміненого ID
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_auction_id
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  id
+  Звірити відображення поля id тендера із ${USERS.users['${tender_owner}'].new_id} для користувача ${viewer}
+
+
+Можливість змінити тип процедури
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_procurementMethodType
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_procurementMethodType}=  Set Variable  ${fgd}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_procurementMethodType=${new_procurementMethodType}
+  Можливість змінити поле procurementMethodType тендера на ${new_id}
+
+
+Відображення зміненого тип процедури
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_auction_procurementMethodType
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  procurementMethodType
+  Звірити відображення поля procurementMethodType тендера із ${USERS.users['${tender_owner}'].new_procurementMethodType} для користувача ${viewer}
+
+
+Можливість змінити мінімальну кількість учасників аукціону
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_minNumberOfQualifiedBids
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_minNumberOfQualifiedBids}=  Set Variable  ${1}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_minNumberOfQualifiedBids=${new_minNumberOfQualifiedBids}
+  Можливість змінити поле minNumberOfQualifiedBids тендера на ${new_minNumberOfQualifiedBids}
+
+
+Відображення змінену мінімальну кількість учасників аукціону
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_auction_minNumberOfQualifiedBids
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  minNumberOfQualifiedBids
+  Звірити відображення поля minNumberOfQualifiedBids тендера із ${USERS.users['${tender_owner}'].new_minNumberOfQualifiedBids} для користувача ${viewer}
+
+
+Можливість змінити rectificationPeriod.endDate
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_rectificationPeriod_endDate
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_rectificationPeriod_endDate}=  Set Variable  ${"2018-10-17T15:36:15.612792+03:00"}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_rectificationPeriod_endDate=${new_rectificationPeriod_endDate}
+  Можливість змінити поле rectificationPeriod.endDate тендера на ${new_rectificationPeriod_endDate}
+
+
+Відображення зміненого rectificationPeriod.endDate
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_auction_rectificationPeriod_endDate
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.rectificationPeriod}  endDate
+  Звірити відображення поля rectificationPeriod.endDate тендера із ${USERS.users['${tender_owner}'].new_id} для користувача ${viewer}
+
+
+Можливість змінити auctionPeriod_startDate
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_auctionPeriod_startDate
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_auctionPeriod_startDate}=  Set Variable  ${"2018-10-17T17:36:15.612792+03:00"}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_auctionPeriod_startDate=${new_auctionPeriod_startDate}
+  Можливість змінити поле auctionPeriod.startDate тендера на ${new_auctionPeriod_startDate}
+
+
+Відображення зміненого auctionPeriod_startDate
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_auction_auctionPeriod_startDate
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.auctionPeriod}  startDate
+  Звірити відображення поля auctionPeriod.startDate тендера із ${USERS.users['${tender_owner}'].new_id} для користувача ${viewer}
+
+
+##############################################################################################
+
+
+Можливість змінити дані про організатора лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_procuringEntity_name
+  [Setup]  Дочекатись дати закінчення періоду редагування лоту  ${tender_owner}  ${TENDER['TENDER_UAID']}
+  ${new_procuringEntity_name}=  create_fake_sentence
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_procuringEntity_name=${new_procuringEntity_name}
+  Можливість змінити поле procuringEntity.name тендера на ${new_procuringEntity_name}
+
+
+Відображення змінених даних про організатора лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_auction_procuringEntity_name
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.procuringEntity}  name
+  Звірити відображення поля procuringEntity.name тендера із ${USERS.users['${tender_owner}'].new_procuringEntity_name} для користувача ${viewer}
+
+
+Можливість змінити номер лоту Замовника
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_lotIdentifier
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_lotIdentifier}=  create_fake_dgfID
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_lotIdentifier=${new_lotIdentifier}
+  Можливість змінити поле lotIdentifier тендера на ${new_lotIdentifier}
+
+
+Відображення зміненого номера лоту Замовника
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_auction_lotIdentifier
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  lotIdentifier
+  Звірити відображення поля lotIdentifier тендера із ${USERS.users['${tender_owner}'].new_lotIdentifier} для користувача ${viewer}
+
+
+Можливість змінити дані про організатора лоту ДЗК
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_lotHolder
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_lotHolder_name}=  create_fake_sentence
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_lotHolder_name=${new_lotHolder_name}
+  Можливість змінити поле lotHolder.name тендера на ${new_lotHolder_name}
+
+
+Відображення змінених даних про організатора лоту ДЗК
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_auction_lotHolder
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.lotHolder}  name
+  Звірити відображення поля lotHolder.name тендера із ${USERS.users['${tender_owner}'].new_lotHolder_name} для користувача ${viewer}
+
+
+Можливість змінити назву лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_auction_title
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_title}=  create_fake_title  ua
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_title=${new_title}
+  Можливість змінити поле title тендера на ${new_title}
+
+
+Відображення зміненої назви лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_auction_title
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  title
+  Звірити відображення поля title тендера із ${USERS.users['${tender_owner}'].new_title} для користувача ${viewer}
+
+
+Можливість змінити назву лоту російською мовою
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_title_ru
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   ${new_title}=  create_fake_title  ru
   Set To Dictionary  ${USERS.users['${tender_owner}']}  new_title=${new_title}
@@ -361,7 +687,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      modify_auction_title
+  ...      modify_auction_title_ru
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  title_ru
   Звірити відображення поля title_ru тендера із ${USERS.users['${tender_owner}'].new_title} для користувача ${viewer}
@@ -371,7 +697,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_auction_title
+  ...      modify_auction_title_en
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   ${new_title}=  create_fake_title  en
   Set To Dictionary  ${USERS.users['${tender_owner}']}  new_title=${new_title}
@@ -382,7 +708,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      modify_auction_title
+  ...      modify_auction_title_en
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  title_en
   Звірити відображення поля title_en тендера із ${USERS.users['${tender_owner}'].new_title} для користувача ${viewer}
@@ -413,7 +739,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_auction_description
+  ...      modify_auction_description_ru
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   ${new_description}=  create_fake_description  ru
   Set To Dictionary  ${USERS.users['${tender_owner}']}  new_description_ru=${new_description}
@@ -424,7 +750,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      modify_auction_description
+  ...      modify_auction_description_ru
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  description_ru
   Звірити відображення поля description_ru тендера із ${USERS.users['${tender_owner}'].new_description_ru} для користувача ${viewer}
@@ -434,7 +760,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_auction_description
+  ...      modify_auction_description_en
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   ${new_description}=  create_fake_description  en
   Set To Dictionary  ${USERS.users['${tender_owner}']}  new_description_en=${new_description}
@@ -445,7 +771,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      modify_auction_description
+  ...      modify_auction_description_en
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  description_en
   Звірити відображення поля description_en тендера із ${USERS.users['${tender_owner}'].new_description_en} для користувача ${viewer}
@@ -591,6 +917,201 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля guarantee.amount тендера із ${USERS.users['${tender_owner}'].new_guarantee_value} для користувача ${viewer}
 
 
+Можливість змінити розмір реєстраційного внеску
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_registrationFee
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${new_guarantee_amount}=  create_fake_guarantee  ${USERS.users['${tender_owner}'].new_amount}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_guarantee_value=${new_guarantee_amount}
+  Можливість змінити поле guarantee.amount тендера на ${new_guarantee_amount}
+
+
+Відображення зміненого розміру реєстраційного внеску
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_auction_registrationFee
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.guarantee}  amount
+  Звірити відображення поля guarantee.amount тендера із ${USERS.users['${tender_owner}'].new_guarantee_value} для користувача ${viewer}
+
+
+Можливість змінити опис банківських реквізитів
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_bankAccount
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_bankAccount_description}=  create_fake_description  ua
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_bankAccount_description=${new_bankAccount_description}
+  Можливість змінити поле bankAccount.description тендера на ${new_bankAccount_description}
+
+
+Відображення зміненого опису банківських реквізитів
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_auction_bankAccount
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.bankAccount}  description
+  Звірити відображення поля bankAccount.description тендера із ${USERS.users['${tender_owner}'].new_bankAccount_description} для користувача ${viewer}
+
+
+Можливість змінити найменування банку
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_bankAccount
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_bankAccount_bankName}=  create_fake_bankName
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_bankAccount_bankName=${new_bankAccount_bankName}
+  Можливість змінити поле bankAccount.bankName тендера на ${new_bankAccount_bankName}
+
+
+Відображення зміненого найменування банку
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_auction_bankAccount
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.bankAccount}  bankName
+  Звірити відображення поля bankAccount.bankName тендера із ${USERS.users['${tender_owner}'].new_bankAccount_bankName} для користувача ${viewer}
+
+
+Можливість змінити основну інформацію про рахунок
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_bankAccount
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_bankAccount_accountIdentification}=  create_fake_description  ua
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_bankAccount_accountIdentification=${new_bankAccount_accountIdentification}
+  Можливість змінити поле bankAccount.accountIdentification[0].description тендера на ${new_bankAccount_accountIdentification}
+
+
+Відображення зміненої основної інформацію про рахунок
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_auction_bankAccount
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.bankAccount.accountIdentification[0]}  description
+  Звірити відображення поля bankAccount.accountIdentification[0].description тендера із ${USERS.users['${tender_owner}'].new_bankAccount_accountIdentification} для користувача ${viewer}
+
+
+Можливість змінити вартість підготовки лоту до торгів
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_budgetSpent
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${new_budgetSpent_amount}=  create_fake_value  ${USERS.users['${tender_owner}'].tender_data.data.value.amount}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_budgetSpent_amount=${new_budgetSpent_amount}
+  Можливість змінити поле budgetSpent.amount тендера на ${new_budgetSpent_amount}
+
+
+Відображення зміненої вартості підготовки лоту до торгів
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_auction_budgetSpent
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.budgetSpent}  amount
+  Звірити відображення поля budgetSpent.amount тендера із ${USERS.users['${tender_owner}'].new_budgetSpent_amount} для користувача ${viewer}
+
+
+Можливість змінити умови оренди
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_auction_contractTerms
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_contractTerms_leaseTerms_leaseDuration}=  create_fake_month
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_contractTerms_leaseTerms_leaseDuration=${new_contractTerms_leaseTerms_leaseDuration}
+  Можливість змінити поле contractTerms.leaseTerms.leaseDuration тендера на ${new_contractTerms_leaseTerms_leaseDuration}
+
+
+Відображення змінених умов оренди
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_auction_contractTerms
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.contractTerms.leaseTerms}  leaseDuration
+  Звірити відображення поля contractTerms.leaseTerms.leaseDuration тендера із ${USERS.users['${tender_owner}'].new_contractTerms_leaseTerms_leaseDuration} для користувача ${viewer}
+
+
+Можливість внести зміни до кількості одиниць виміру активу об’єкта МП
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати об'єкт МП
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_asset
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${quantity}=  create_fake_items_quantity
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  quantity=${quantity}
+  Можливість змінити поле quantity предмета на ${quantity}
+
+
+Відображення зміненої кількості одиниць виміру активу об’єкта МП
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних об'єкта МП
+  ...      viewer  tender_owner
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      modify_asset
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data['items'][0]}  quantity
+  Звірити відображення поля quantity зміненого предмета із ${USERS.users['${tender_owner}'].quantity} для користувача ${viewer}
+
+
+
+Можливість внести зміни до ідентифікатора класифікації активу об’єкта МП
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати об'єкт МП
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_classification_id
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${scheme_id}=  Run As  ${tender_owner}  Отримати інформацію із об'єкта МП  ${TENDER['TENDER_UAID']}  items[0].classification.id
+  ${new_id}=  create_fake_scheme_id_test
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_id=${new_id}
+  Можливість змінити поле classification.id предмета на ${new_id}
+
+
+Відображення зміненого ідентифікатора класифікації активу об’єкта МП
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних об'єкта МП
+  ...      viewer  tender_owner
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      modify_classification_id
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data['items'][0].classification}  id
+  Звірити відображення поля classification.id зміненого предмета із ${USERS.users['${tender_owner}'].new_id} для користувача ${viewer}
+
+
+
+Можливість внести зміни до опису активу об’єкта МП
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати об'єкт МП
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_asset_description
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${new_description}=  create_fake_item_description
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_description=${new_description}
+  Можливість змінити поле description предмета на ${new_description}
+
+
+Відображення зміненого опису активу об’єкта МП
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних об'єкта МП
+  ...      viewer  tender_owner
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      modify_asset_description
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data['items'][0]}  description
+  Звірити відображення поля items[0].description тендера із ${USERS.users['${tender_owner}'].new_description} для користувача ${viewer}
+
+
 Можливість додати актив лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування лота
   ...      tender_owner
@@ -608,6 +1129,9 @@ ${ITEM_MEAT}        ${True}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість видалити предмет закупівлі з тендера
 
+##############################################################################################
+#             Document
+##############################################################################################
 
 Можливість додати документацію до лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
@@ -616,6 +1140,42 @@ ${ITEM_MEAT}        ${True}
   ...      add_tender_doc
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість додати документацію до тендера
+
+
+Можливість завантажити ілюстрацію лоту аукціону
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_illustration_test
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ до тендера з типом illustration
+
+
+Можливість завантажити кваліфікаційні вимоги до лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_evaluationCriteria
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ до тендера з типом evaluationCriteria
+
+
+Можливість завантажити типовий договір до лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_contractProforma
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ до тендера з типом contractProforma
+
+
+Можливість завантажити документ з описом причин редагування
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_clarifications
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ до тендера з типом clarifications
 
 
 Можливість завантажити договір про нерозголошення до лоту
@@ -652,6 +1212,88 @@ ${ITEM_MEAT}        ${True}
   ...      add_tender_tech_specifications
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість завантажити документ до тендера з типом technicalSpecifications
+
+
+Можливість завантажити документ про кількість
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_billOfQuantity
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ до тендера з типом billOfQuantity
+
+
+Можливість завантажити документ про виявлені конфлікти інтересів
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_conflictOfInterest
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ до тендера з типом conflictOfInterest
+
+
+Можливість завантажити звіт про оцінку
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_evaluationReports
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ до тендера з типом evaluationReports
+
+
+Можливість завантажити критерії прийнятності
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_eligibilityCriteria
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ до тендера з типом eligibilityCriteria
+
+
+Можливість завантажити ліцензію
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_x_financialLicense
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ до тендера з типом x_financialLicense
+
+
+Можливість завантажити документ з віртуальним номером даних
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_x_virtualDataRoom
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ до тендера з типом x_virtualDataRoom
+
+
+Можливість завантажити договір про нерозголошення
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_x_nda
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ до тендера з типом x_nda
+
+
+Можливість завантажити кваліфікаційні документи
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_x_qualificationDocuments
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ до тендера з типом x_qualificationDocuments
+
+
+Можливість завантажити документ про подробиці скасування
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_cancellationDetails
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ до тендера з типом cancellationDetails
+
 
 
 Можливість завантажити документ з умовами ознайомлення з майном/активом у кімнаті даних
@@ -823,11 +1465,22 @@ ${ITEM_MEAT}        ${True}
   Неможливість подати цінову попрозицію без кваліфікації користувачем ${provider}
 
 
+Можливість подати пропозицію в статусі драфт першим учасником
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      make_bid_by_provider_draft
+  [Setup]  Дочекатись дати закінчення періоду редагування лоту  ${tender_owner}  ${TENDER['TENDER_UAID']}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість подати цінову пропозицію в статусі драфт користувачем ${provider}
+
+
 Можливість подати пропозицію першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      make_bid_by_provider
+  [Setup]  Дочекатись дати закінчення періоду редагування лоту  ${tender_owner}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider}
 
@@ -1013,7 +1666,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_auction_description
-  [Setup]  Дочекатись дати закінчення періоду редагування лоту  ${tender_owner}
+  [Setup]  Дочекатись дати закінчення періоду редагування лоту  ${tender_owner}  ${TENDER['TENDER_UAID']}
   ${new_description}=  create_fake_description  ua
   Перевірити неможливість зміни поля description тендера на значення ${new_description} для користувача ${tender_owner}
 
@@ -1023,7 +1676,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_auction_description
-  [Setup]  Дочекатись дати закінчення періоду редагування лоту  ${tender_owner}
+  [Setup]  Дочекатись дати закінчення періоду редагування лоту  ${tender_owner}  ${TENDER['TENDER_UAID']}
   ${new_description}=  create_fake_description  ru
   Перевірити неможливість зміни поля description_ru тендера на значення ${new_description} для користувача ${tender_owner}
 
@@ -1033,7 +1686,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_auction_description
-  [Setup]  Дочекатись дати закінчення періоду редагування лоту  ${tender_owner}
+  [Setup]  Дочекатись дати закінчення періоду редагування лоту  ${tender_owner}  ${TENDER['TENDER_UAID']}
   ${new_description}=  create_fake_description  en
   Перевірити неможливість зміни поля description_en тендера на значення ${new_description} для користувача ${tender_owner}
 
@@ -1193,6 +1846,46 @@ ${ITEM_MEAT}        ${True}
   ...      edit_document
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Неможливість редагувати документ  ${tender_owner}  ${TENDER['TENDER_UAID']}
+
+##############################################################################################
+#             PRE-QUALIFICATION
+##############################################################################################
+
+Можливість завантажити аукціонний квиток в пропозицію першим учасником
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      add_eligibilityDocuments_to_bid_by_provider
+  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}  ${TENDER['TENDER_UAID']}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ з типом eligibilityDocuments в пропозицію користувачем ${provider}
+
+
+Можливість кваліфікувати пропозицію першим учасником
+  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
+  ...      provider
+  ...      ${USERS.users['${provider1}'].broker}
+  ...      make_bid_qualify_by_provider
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість кваліфікувати цінову пропозицію 1 користувачем ${provider}
+
+
+Можливість завантажити аукціонний квиток в пропозицію другим учасником
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+  ...      provider1
+  ...      ${USERS.users['${provider}'].broker}
+  ...      add_eligibilityDocuments_to_bid_by_provider1
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ з типом eligibilityDocuments в пропозицію користувачем ${provider1}
+
+
+Можливість кваліфікувати пропозицію другим учасником
+  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
+  ...      provider1
+  ...      ${USERS.users['${provider1}'].broker}
+  ...      make_bid_qualify_by_provider1
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість кваліфікувати цінову пропозицію 2 користувачем ${provider1}
 
 ##############################################################################################
 #             AFTER BIDDING

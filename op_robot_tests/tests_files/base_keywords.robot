@@ -99,6 +99,17 @@ Resource           resource.robot
   Порівняти об'єкти  ${len_of_items_before_patch}  ${len_of_items_after_patch}
 
 
+Звірити відображення поля ${field} зміненого предмета із ${data} для користувача ${username}
+  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]}
+  Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${data}  ${field}  ${item_id}
+
+
+Можливість змінити поле ${field_name} предмета на ${field_value}
+  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data['items'][0]}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  item_id=${item_id}
+  Run As  ${tender_owner}  Внести зміни в предмет  ${item_id}  ${TENDER['TENDER_UAID']}  ${field_name}  ${field_value}
+
+
 Неможливість додати документацію до лоту
   ${len_of_documents_before_patch}=  Run As  ${tender_owner}  Отримати кількість документів в тендері  ${TENDER['TENDER_UAID']}
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
@@ -280,6 +291,17 @@ Resource           resource.robot
 ##############################################################################################
 #             BIDDING
 ##############################################################################################
+Можливість подати цінову пропозицію в статусі драфт користувачем ${username}
+  ${bid}=  Підготувати дані для подання пропозиції  ${username}
+  ${bidresponses}=  Create Dictionary  bid=${bid}
+  Set To Dictionary  ${USERS.users['${username}']}  bidresponses=${bidresponses}
+  ${features}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.features}  ${None}
+  ${features_ids}=  Run Keyword IF  ${features}
+  ...     Отримати ідентифікатори об’єктів  ${username}  features
+  ...     ELSE  Set Variable  ${None}
+  ${resp}=  Run As  ${username}  Подати цінову пропозицію в статусі драфт  ${TENDER['TENDER_UAID']}  ${bid}
+  Set To Dictionary  ${USERS.users['${username}'].bidresponses}  resp=${resp}
+
 
 Можливість подати цінову пропозицію користувачем ${username}
   ${bid}=  Підготувати дані для подання пропозиції  ${username}
@@ -323,6 +345,13 @@ Resource           resource.robot
   Remove File  ${file_path}
 
 
+Можливість завантажити документ з типом ${doc_type} в пропозицію користувачем ${username}
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
+  ${bid_doc_upload}=  Run As  ${username}  Завантажити документ в ставку з типом  ${TENDER['TENDER_UAID']}  ${file_path}  ${doc_type}
+  Set To Dictionary  ${USERS.users['${username}'].bidresponses}  bid_doc_upload=${bid_doc_upload}
+  Remove File  ${file_path}
+
+
 Можливість змінити документацію цінової пропозиції користувачем ${username}
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   ${docid}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['bid_doc_upload']['upload_response'].data.id}
@@ -342,8 +371,17 @@ Resource           resource.robot
   Run As  ${username}  Завантажити протокол аукціону в авард  ${TENDER['TENDER_UAID']}  ${auction_protocol_path}  ${award_index}
   Remove File  ${auction_protocol_path}
 
+Можливість завантажити протокол скасування в авард ${award_index} користувачем ${username}
+  ${auction_protocol_path}  ${file_title}  ${file_content}=  create_fake_doc
+  Run As  ${username}  Завантажити протокол скасування в авард  ${TENDER['TENDER_UAID']}  ${auction_protocol_path}  ${award_index}
+  Remove File  ${auction_protocol_path}
+
 Можливість підтвердити цінову пропозицію учасником ${username}
   Run As  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  status  active
+
+
+Можливість кваліфікувати цінову пропозицію ${bidNumber} користувачем ${username}
+  Run As  ${username}  Кваліфікувати пропозицію  ${TENDER['TENDER_UAID']}  ${bidNumber}
 
 ##############################################################################################
 #             Cancellations

@@ -417,9 +417,8 @@ Log differences between dicts
 Звірити поле ${field} тендера усіх предметів для користувача ${username}
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}]}
-  \  ${left}=  Set Variable  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}].${field}}
-  \  ${right}=  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}  ${item_id}
-  \  compare_additionalClassifications_description  ${right}
+  \  Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}].${field}}  ${field}  ${item_id}
+
 
 
 Порівняти об'єкти
@@ -747,10 +746,19 @@ Require Failure
 
 
 Дочекатись дати закінчення періоду редагування лоту
-  [Arguments]  ${username}
+  [Arguments]  ${username}  ${tender_uaid}
   wait_and_write_to_console  ${USERS.users['${username}'].tender_data.data.rectificationPeriod.endDate}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      12 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      active.tendering
+
+
 
 
 Дочекатись дати закінчення прийому пропозицій
@@ -767,7 +775,7 @@ Require Failure
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
-  ...      5 min 15 sec
+  ...      15 min 15 sec
   ...      15 sec
   ...      Run Keyword And Expect Error  *
   ...      Звірити статус тендера

@@ -2940,15 +2940,78 @@
         {
             "additionalClassifications": [
                 {
-                    "scheme": "CPVS",
-                    "id": "PA01-7",
-                    "description": "Оренда"
+                    "scheme": "kvtspz",
+                    "id": "01.01",
+                    "description": "Для ведення товарного сільськогосподарського виробництва"
+                },
+                {
+                    "scheme": "cadastralNumber",
+                    "id": "12.02",
+                    "description": "Для розміщення та експлуатації будівель і споруд морського транспорту"
                 }
             ],
             "classification": {
                 "scheme": "CAV-PS",
-                "id": "05110000-9",
-                "description": "Молокозаводи"
+                "id": "06110000-6",
+                "description": "Земельні ділянки"
+            }
+
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "kvtspz",
+                    "id": "02.03",
+                    "description": "Для будівництва і обслуговування багатоквартирного житлового будинку"
+                },
+                {
+                    "scheme": "cadastralNumber",
+                    "id": "12.02",
+                    "description": "Для розміщення та експлуатації будівель і споруд морського транспорту"
+                }
+            ],
+            "classification": {
+                "scheme": "CAV-PS",
+                "id": "06111000-3",
+                "description": "Земельні ділянки"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "kvtspz",
+                    "id": "03.07",
+                    "description": "Для будівництва та обслуговування будівель торгівлі"
+                },
+                {
+                    "scheme": "cadastralNumber",
+                    "id": "12.02",
+                    "description": "Для розміщення та експлуатації будівель і споруд морського транспорту"
+                }
+            ],
+            "classification": {
+                "scheme": "CAV-PS",
+                "id": "06112000-0",
+                "description": "Земельні ділянки"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "kvtspz",
+                    "id": "07.04",
+                    "description": "Для колективного дачного будівництва"
+                },
+                {
+                    "scheme": "cadastralNumber",
+                    "id": "12.02",
+                    "description": "Для розміщення та експлуатації будівель і споруд морського транспорту"
+                }
+            ],
+            "classification": {
+                "scheme": "CAV-PS",
+                "id": "06120000-9",
+                "description": "Земельні ділянки"
             }
         },
         {
@@ -2961,8 +3024,8 @@
             ],
             "classification": {
                 "scheme": "CAV-PS",
-                "id": "06110000-6",
-                "description": "Земельні ділянки призначені для забудови"
+                "id": "05110000-9",
+                "description": "Молокозаводи"
             }
         },
         {
@@ -3157,6 +3220,12 @@
         "16720000-8",
         "98910000-5"
     ],
+    "schemes_geb": [
+        "06110000-6",
+        "06111000-3",
+        "06112000-0",
+        "06120000-9"
+    ],
     "items_base_data_other": [
            {
             "scheme_id": "05110000-9",
@@ -3176,8 +3245,129 @@
             "description_en": "The land is intended for development",
             "quantity": 7,
             "unit": {
-                "code": "MTK",
-                "name": "метри квадратні"
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "scheme_id": "06111000-3",
+            "description": "Землі житлової забудови",
+            "description_ru": "Земли жилой застройки",
+            "description_en": "Land for residential development",
+            "quantity": 4,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "scheme_id": "06112000-0",
+            "description": "Землі громадської забудови",
+            "description_ru": "Земли общественной застройки",
+            "description_en": "Lands for public construction",
+            "quantity": 3,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "scheme_id": "06120000-9",
+            "description": "Землі з іншим призначенням",
+            "description_ru": "Земли с другим назначением",
+            "description_en": "Lands for other purposes",
+            "quantity": 1,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "scheme_id": "06121000-6",
+            "description": "Землі сільськогосподарського призначення",
+            "description_ru": "Земли сельскохозяйственного назначения",
+            "description_en": "Agricultural lands",
+            "quantity": 2,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "scheme_id": "06122000-3",
+            "description": "Землі природно-заповідного фонду",
+            "description_ru": "Земли природно-заповедного фонда",
+            "description_en": "Lands of natural reserve fund",
+            "quantity": 4,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "scheme_id": "06124000-7",
+            "description": "Землі рекреаційного призначення",
+            "description_ru": "Земли рекреационного назначения",
+            "description_en": "Lands for recreation purposes",
+            "quantity": 2,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "scheme_id": "06125000-4",
+            "description": "Землі історико-культурного призначення",
+            "description_ru": "Земли историко-культурного назначения",
+            "description_en": "Lands of historical and cultural destination",
+            "quantity": 3,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "scheme_id": "06126000-1",
+            "description": "Землі лісогосподарського призначення",
+            "description_ru": "Земли лесного фонда",
+            "description_en": "Land for forestry",
+            "quantity": 4,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "scheme_id": "06127000-8",
+            "description": "Землі водного фонду",
+            "description_ru": "Земли водного фонда",
+            "description_en": "Earth Water Fund",
+            "quantity": 2,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "scheme_id": "06128000-5",
+            "description": "Землі промисловості, транспорту, зв'язку",
+            "description_ru": "Земли промышленности, транспорта, связи",
+            "description_en": "Land of industry, transport, communications",
+            "quantity": 3,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "scheme_id": "06129000-2",
+            "description": "Землі запасу, резервного фонду",
+            "description_ru": "Земли запаса, резервного фонда",
+            "description_en": "Land reserves, reserve fund",
+            "quantity": 1,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
             }
         },
         {

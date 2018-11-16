@@ -135,6 +135,15 @@ ${NUMBER_OF_AWARDS}  ${1}
   Звірити відображення поля awards[0].status тендера із active для користувача ${viewer}
 
 
+Можливість завантажити документ про дискваліфікацію
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_rejectionProtocol
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити протокол скасування в авард 0 користувачем ${tender_owner}
+
+
 Можливість дискваліфікувати першого кандидата
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...     tender_owner

@@ -105,6 +105,19 @@ Library  openprocurement_client.utils
   [return]  ${reply}
 
 
+Завантажити протокол скасування в авард
+  [Arguments]  ${username}  ${tender_uaid}  ${filepath}  ${award_index}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${award_id}=  Get Variable Value  ${tender.data.awards[${award_index}].id}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
+  ${response}=  Call Method  ${USERS.users['${username}'].client}  upload_award_document  ${filepath}  ${tender}  ${award_id}  documents
+  Keep In Dictionary  ${response['data']}  id
+  Set To Dictionary  ${response['data']}  documentType=rejectionProtocol
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_award_document  ${tender}  ${response}  ${award_id}  ${response['data'].id}
+  Log  ${reply}
+  [return]  ${reply}
+
+
 Завантажити документ в ставку з типом
   [Arguments]  ${username}  ${tender_uaid}  ${filepath}  ${documentType}
   ${document}=  openprocurement_client.Завантажити документ в ставку  ${username}  ${filepath}  ${tender_uaid}
@@ -190,6 +203,9 @@ Library  openprocurement_client.utils
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  create_tender  ${tender_data}
   Log object data  ${tender}  created_tender
   ${access_token}=  Get Variable Value  ${tender.access.token}
+  Set To Dictionary  ${tender['data']}  status=active.rectification
+  ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+  Log  ${tender}
   Set To Dictionary  ${USERS.users['${username}']}   access_token=${access_token}
   Set To Dictionary  ${USERS.users['${username}']}   tender_data=${tender}
   Log  ${\n}${API_HOST_URL}/api/${API_VERSION}/auctions/${tender.data.id}${\n}  WARN
@@ -265,6 +281,21 @@ Library  openprocurement_client.utils
 ##############################################################################
 #             Item operations
 ##############################################################################
+Внести зміни в предмет
+  [Arguments]  ${username}  ${item_id}  ${tender_uaid}  ${fieldname}  ${fieldvalue}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${item_index}=  get_object_index_by_id  ${tender.data['items']}  ${item_id}
+  Set_To_Object  ${tender['data']['items'][${item_index}]}  ${fieldname}  ${fieldvalue}
+  Log  ${tender}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+  Log  ${reply}
+
+
+Отримати інформацію із об'єкта МП
+  [Arguments]  ${username}  ${tender_uaid}  ${field_name}
+  ${field_value}=  openprocurement_client.Отримати інформацію із тендера  ${username}  ${tender_uaid}  ${field_name}
+  [return]  ${field_value}
+
 
 Додати предмет закупівлі
   [Arguments]  ${username}  ${tender_uaid}  ${item}
@@ -340,10 +371,23 @@ Library  openprocurement_client.utils
 #             Bid operations
 ##############################################################################
 
+Подати цінову пропозицію в статусі драфт
+  [Arguments]  ${username}  ${tender_uaid}  ${bid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_bid  ${tender}  ${bid}
+  Set To Dictionary  ${USERS.users['${username}']}  access_token=${reply['access']['token']}
+  Set To Dictionary   ${USERS.users['${username}'].bidresponses['bid'].data}  id=${reply['data']['id']}
+  Set To Dictionary  ${USERS.users['${username}']}  bid_id=${reply['data']['id']}
+  Log  ${reply}
+  [return]  ${reply}
+
+
 Подати цінову пропозицію
   [Arguments]  ${username}  ${tender_uaid}  ${bid}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_bid  ${tender}  ${bid}
+  Run Keyword IF  '${tender.data.procurementMethodType}' == 'landLease'
+  ...      Set To Dictionary  ${reply.data}  status=pending
   Log  ${reply}
   ${reply_active}=  Call Method  ${USERS.users['${username}'].client}  patch_bid  ${tender}  ${reply}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${reply['access']['token']}
@@ -361,6 +405,18 @@ Library  openprocurement_client.utils
   Set_To_Object  ${bid.data}   ${fieldname}   ${fieldvalue}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_bid  ${tender}  ${bid}
+  Log  ${reply}
+  [return]   ${reply}
+
+
+Кваліфікувати пропозицію
+  [Arguments]  ${username}  ${tender_uaid}  ${bidNumber}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${bid}=  openprocurement_client.Отримати пропозицію  ${username}  ${tender_uaid}
+  ${bid_data}=  test_bid_qualified  ${bidNumber}  ${bid.data.id}
+  Log  ${bid_data}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].bidresponses['resp'].access.token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_bid  ${tender}  ${bid_data}
   Log  ${reply}
   [return]   ${reply}
 
@@ -649,3 +705,16 @@ Library  openprocurement_client.utils
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract_document  ${tender}  ${response}  ${contract_id}  ${response['data'].id}
   Log  ${reply}
   [return]  ${reply}
+
+
+##############################################################################
+#             CONTRACT SIGNING
+##############################################################################
+
+Встановити дату підписання угоди
+  [Arguments]  ${username}  ${tender_uaid}  ${contract_index}  ${fieldvalue}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${contract}=  Create Dictionary  data=${tender.data.contracts[${contract_index}]}
+  Set To Dictionary  ${contract.data}  dateSigned=${fieldvalue}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract  ${tender}  ${contract}
+  Log  ${reply}

@@ -1,5 +1,6 @@
 *** Settings ***
 Resource        keywords.robot
+Resource        base_keywords.robot
 Resource        resource.robot
 Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
@@ -22,6 +23,7 @@ Suite Teardown  Test Suite Teardown
 #             CONTRACT
 ##############################################################################################
 
+
 Можливість завантажити угоду до лоту
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Завантаження документів щодо угоди
   ...  tender_owner
@@ -31,6 +33,27 @@ Suite Teardown  Test Suite Teardown
   ${file_path}  ${file_title}  ${file_content}=  create_fake_doc
   Run As  ${tender_owner}  Завантажити угоду до тендера  ${TENDER['TENDER_UAID']}  -1  ${file_path}
   Remove File  ${file_path}
+
+
+Можливість встановити дату підписання угоди
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування угоди
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      dateSigned
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${dateSigned}=  create_fake_dateSigned
+  Set to dictionary  ${USERS.users['${tender_owner}']}  dateSigned=${dateSigned}
+  Run As  ${tender_owner}  Встановити дату підписання угоди  ${TENDER['TENDER_UAID']}  -1  ${dateSigned}
+
+
+Відображення дати підписання угоди
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних угоди
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      dateSigned_view
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля contracts[-1].dateSigned тендера із ${USERS.users['${tender_owner}'].dateSigned} для користувача ${viewer}
 
 
 Можливість укласти угоду для лоту

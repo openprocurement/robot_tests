@@ -38,12 +38,21 @@ from .initial_data import (
     test_question_data,
     test_supplier_data,
     test_tender_data,
+    test_bid_qualified,
     test_tender_data_dgf_other,
+    test_tender_data_dgf_geb,
     create_fake_tenderAttempts,
     create_fake_dgfID,
     convert_days_to_seconds,
     create_fake_title,
-    create_fake_description
+    create_fake_description,
+    create_fake_bankName,
+    create_fake_month,
+    create_fake_items_quantity,
+    create_fake_item_description,
+    create_fake_scheme_id_test,
+    create_fake_dateSigned
+
 
 )
 from barbecue import chef
@@ -333,6 +342,8 @@ def prepare_test_tender_data(procedure_intervals, tender_parameters):
         "Accelerator should not be less than 0"
     if mode == 'dgfOtherAssets':
         return munchify({'data': test_tender_data_dgf_other(tender_parameters)})
+    elif mode == 'geb':
+        return munchify({'data': test_tender_data_dgf_geb(tender_parameters)})
     raise ValueError("Invalid mode for prepare_test_tender_data")
 
 
@@ -497,6 +508,9 @@ def generate_test_bid_data(tender_data):
         bid.data.update(test_bid_value(tender_data['value']['amount'], tender_data['minimalStep']['amount']))
     if 'dgfOtherAssets' in tender_data.get('procurementMethodType', ''):
         bid.data.qualified = True
+    elif 'landLease' in tender_data.get('procurementMethodType', ''):
+        bid.data.value.amount = tender_data['value']['amount']
+        bid.data.value.valueAddedTaxIncluded = False
     return bid
 
 
