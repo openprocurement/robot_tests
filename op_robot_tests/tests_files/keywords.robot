@@ -1179,12 +1179,15 @@ Require Failure
   [Return]  ${index}
 
 
-Розрахувати ціну для ${index} контракту
-  ${contract_data}=  Create Dictionary  data=${USERS.users['${tender_owner}'].tender_data.data.agreements[0].contracts[${index}]}
-  ${quantity}=  Convert To Integer  ${USERS.users['${tender_owner}'].tender_data.data['items'][0]['quantity']}
-  ${value}=  Evaluate  ${USERS.users['${tender_owner}'].tender_data.data.awards[${index}+1].value.amount}/${quantity}
+Розрахувати ціну для ${contract_number} контракту
+  ${contract_data}=  Create Dictionary  data=${USERS.users['${tender_owner}'].tender_data.data.agreements[0].contracts[${contract_number}]}
+  ${quantity}=  Set Variable  ${0}
+  :FOR  ${index}  IN RANGE  ${NUMBER_OF_ITEMS}
+  \  ${quantity}=  Evaluate  ${quantity}+${USERS.users['${tender_owner}'].tender_data.data['items'][${index}]['quantity']}
+  ${value}=  Evaluate  ${USERS.users['${tender_owner}'].tender_data.data.awards[${contract_number}+1].value.amount}/${quantity}
   ${value}=  Convert To Integer  ${value}
-  Set To Dictionary  ${contract_data.data.unitPrices[0].value}  amount=${value}
+  :FOR  ${index}  IN RANGE  ${NUMBER_OF_ITEMS}
+  \  Set To Dictionary  ${contract_data.data.unitPrices[${index}].value}  amount=${value}
   ${contract_data}=  munch_dict  arg=${contract_data}
   Log  ${contract_data}
   [Return]  ${contract_data}
