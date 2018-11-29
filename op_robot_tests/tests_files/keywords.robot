@@ -294,6 +294,12 @@ Get Broker Property By Username
   [Return]  ${bid}
 
 
+Підготувати дані для подання пропозиції другого етапу рамкової угоди
+  [Arguments]  ${index}=${0}
+  ${bid}=  test_bid_data_selection  ${USERS.users['${provider2}'].tender_data.data}  ${index}
+  [Return]  ${bid}
+
+
 Підготувати дані для подання пропозиції для другого етапу
   [Arguments]  ${username}
   ${value}=  Evaluate  ${USERS.users['${username}'].bidresponses.bid.data.lotValues[0].value.amount}*0.95

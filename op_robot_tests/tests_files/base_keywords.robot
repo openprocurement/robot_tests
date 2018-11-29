@@ -1280,6 +1280,18 @@ Resource           resource.robot
   Run As  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}  ${lots_ids}  ${features_ids}
 
 
+Можливість подати цінову пропозицію на другому етапі рамкової угоди користувачем
+  [Arguments]  ${username}  ${index}=${0}
+  ${bid}=  Підготувати дані для подання пропозиції другого етапу рамкової угоди  ${index}
+  ${bidresponses}=  Create Dictionary  bid=${bid}
+  Set To Dictionary  ${USERS.users['${username}']}  bidresponses=${bidresponses}
+  ${lots}=  Get Variable Value  ${USERS.users['${tender_owner}'].initial_data.data.lots}  ${None}
+  ${lots_ids}=  Run Keyword IF  ${lots}
+  ...     Отримати ідентифікатори об’єктів  ${username}  lots
+  ...     ELSE  Set Variable  ${None}
+  Run As  ${username}  Подати цінову пропозицію  ${TENDER['TENDER_UAID']}  ${bid}  ${lots_ids}
+
+
 Можливість подати цінову пропозицію на другий етап користувачем ${username}
   ${bid}=  Підготувати дані для подання пропозиції для другого етапу  ${username}
   ${bidresponses}=  Create Dictionary  bid=${bid}

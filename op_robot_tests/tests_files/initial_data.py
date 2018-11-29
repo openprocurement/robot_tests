@@ -477,6 +477,19 @@ def test_bid_value_esco(tender_data):
     })
 
 
+def test_bid_data_selection(data, index):
+    bid = munchify({
+        "data": {
+            "tenderers": [
+                data['agreements'][0]['contracts'][index]['suppliers'][0]
+            ]
+        }
+    })
+    bid.data['status'] = 'draft'
+    bid.data['parameters'] = data['agreements'][0]['contracts'][index]['parameters']
+    bid.data['lotValues'] = [test_bid_value(data['lots'][0]['value']['amount'])]
+    return bid
+
 
 def test_supplier_data():
     return munchify({
