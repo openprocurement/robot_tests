@@ -963,6 +963,19 @@ Require Failure
   Порівняти об'єкти  ${left}  ${right}
 
 
+Дочекатись дати початку періоду уточнення
+  [Arguments]  ${username}  ${tender_uaid}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      10 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      active.enquiries
+
+
 Дочекатись дати початку прийому пропозицій
   [Arguments]  ${username}  ${tender_uaid}
   # This tries to get the date from current user's procurement data cache.
