@@ -675,6 +675,27 @@ Resource           resource.robot
   ...      object_id=${feature_id}
 
 
+Отримати дані із поля ${field_name} нецінових показників для усіх користувачів
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  \  Отримати дані із поля ${field_name} нецінових показників для користувача ${username}
+
+
+Отримати дані із поля ${field_name} нецінових показників для користувача ${username}
+  ${number_of_features}=  Get Length  ${USERS.users['${provider2}'].tender_data.data.features}
+  :FOR  ${feature_index}  IN RANGE  ${number_of_features}
+  \  Отримати дані із нецінового показника  ${username}  ${TENDER['TENDER_UAID']}  features[${feature_index}].${field_name}
+
+
+Отримати дані із нецінового показника
+  [Arguments]  ${username}  ${tender_uaid}  ${field_name}
+  ${field_value}=  Run As  ${username}  Отримати інформацію із тендера  ${tender_uaid}  ${field_name}
+  Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field_name}  ${field_value}
+  ${data}=  munch_dict  arg=${USERS.users['${username}'].tender_data.data}
+  Set To Dictionary  ${USERS.users['${username}'].tender_data}  data=${data}
+  Log  ${USERS.users['${username}'].tender_data.data}
+  [return]  ${field_value}
+
+
 Можливість видалити ${feature_index} неціновий показник
   ${feature_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data['features'][${feature_index}]}
   Run As  ${tender_owner}  Видалити неціновий показник  ${TENDER['TENDER_UAID']}  ${feature_id}
