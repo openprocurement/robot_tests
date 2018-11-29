@@ -635,6 +635,22 @@ def test_tender_data_competitive_dialogue(params, submissionMethodDetails):
     return data
 
 
+def test_tender_data_selection(procedure_intervals, params, submissionMethodDetails, tender_data=None):
+    intervals = procedure_intervals['framework_selection']
+    params['intervals'] = intervals
+    data = test_tender_data(params, (), submissionMethodDetails)
+    data['title_en'] = "[TESTING]"
+    data['procuringEntity'] = tender_data['data']['procuringEntity']
+    del data['procuringEntity']['contactPoint']['availableLanguage']
+    data['procurementMethodType'] = 'closeFrameworkAgreementSelectionUA'
+    data['items'] = tender_data['data']['items']
+    data['lots'] = tender_data['data']['lots']
+    data['agreements'] =  [{'id': tender_data['data']['agreements'][0]['id']}]
+    del data['value']
+    del data['minimalStep']
+    return munchify({'data':data})
+
+
 def test_change_data():
     return munchify(
     {

@@ -54,6 +54,7 @@ from .initial_data import (
     test_tender_data_planning,
     test_tender_data_openua_defense,
     test_tender_data_framework_agreement,
+    test_tender_data_selection,
     test_bid_competitive_data,
     tets_monitoring_data,
     test_party,
