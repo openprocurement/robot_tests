@@ -51,6 +51,8 @@ Default:
         open_framework:
              accelerator: 1440
              tender:  [0, 30]
+        framework_selection:
+             accelerator: 360
     # Synchronization delay, in seconds
     timeout_on_wait: 300
 Quinta:
@@ -74,6 +76,8 @@ Quinta:
         open_framework:
              accelerator: 1440
              tender:  [0, 30]
+        framework_selection:
+             accelerator: 360
     keywords_file: openprocurement_client
     roles:
         provider:       Tender_User
