@@ -43,7 +43,8 @@ from .initial_data import (
     create_fake_dgfID,
     convert_days_to_seconds,
     create_fake_title,
-    create_fake_description
+    create_fake_description,
+    format_amount
 
 )
 from barbecue import chef

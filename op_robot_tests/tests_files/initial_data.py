@@ -319,3 +319,7 @@ def test_tender_data_dgf_other(params):
         new_item = test_item_data(scheme_group_other)
         data['items'].append(new_item)
     return data
+
+
+def format_amount(amount_string):
+    return amount_string.replace('\n', ' ')
