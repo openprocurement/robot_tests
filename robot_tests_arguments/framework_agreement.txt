@@ -12,6 +12,7 @@
 -i find_tender
 
 -i tender_view
+-i tender_view_value
 -i tender_view_unit_code
 -i tender_view_coordinates
 -i tender_view_framework
