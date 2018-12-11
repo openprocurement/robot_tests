@@ -1780,7 +1780,17 @@ ${MOZ_INTEGRATION}  ${False}
   ...      openeu_add_financial_bid_doc_by_provider
   ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість завантажити financial_documents документ до пропозиції учасником ${provider}
+  Можливість завантажити документ до пропозиції учасником  ${provider}  financial_documents
+
+
+Можливість завантажити фінансовий документ winningBid до пропозиції першим учасником
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      add_winningBid_doc_by_provider
+  ...      critical
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ до пропозиції учасником  ${provider}  financial_documents  winningBid
 
 
 Можливість завантажити кваліфікаційний документ до пропозиції першим учасником
@@ -1790,7 +1800,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      openeu_add_qualification_bid_doc_by_provider
   ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість завантажити qualification_documents документ до пропозиції учасником ${provider}
+  Можливість завантажити документ до пропозиції учасником  ${provider}  qualification_documents
 
 
 Можливість завантажити документ для критеріїв прийнятності до пропозиції першим учасником
@@ -1800,7 +1810,7 @@ ${MOZ_INTEGRATION}  ${False}
   ...      openeu_add_eligibility_bid_doc_by_provider
   ...      critical
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Можливість завантажити eligibility_documents документ до пропозиції учасником ${provider}
+  Можливість завантажити документ до пропозиції учасником  ${provider}  eligibility_documents
 
 
 Неможливість задати запитання на тендер після завершення періоду уточнень

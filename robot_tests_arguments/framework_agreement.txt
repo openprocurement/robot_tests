@@ -59,6 +59,7 @@
 -i openeu_add_financial_bid_doc_by_provider
 -i openeu_add_qualification_bid_doc_by_provider
 -i openeu_add_eligibility_bid_doc_by_provider
+-i add_winningBid_doc_by_provider
 
 -i pre-qualification_add_doc_to_tender
 -i pre-qualification_add_doc_to_lot

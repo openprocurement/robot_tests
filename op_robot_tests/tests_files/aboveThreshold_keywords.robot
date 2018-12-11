@@ -48,9 +48,10 @@ Resource           base_keywords.robot
   Run As  ${username}  Змінити документацію в ставці  ${TENDER['TENDER_UAID']}  ${privat_doc}  ${USERS.users['${username}']['bid_document']['doc_id']}
 
 
-Можливість завантажити ${doc_type} документ до пропозиції учасником ${username}
+Можливість завантажити документ до пропозиції учасником
+  [Arguments]  ${username}  ${doc_name}  ${doc_type}=${NONE}
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
-  ${bid_doc_upload}=  Run As  ${username}  Завантажити документ в ставку  ${file_path}  ${TENDER['TENDER_UAID']}  ${doc_type}
+  ${bid_doc_upload}=  Run As  ${username}  Завантажити документ в ставку  ${file_path}  ${TENDER['TENDER_UAID']}  ${doc_name}  ${doc_type}
   Set To Dictionary  ${USERS.users['${username}'].bidresponses}  bid_doc_upload=${bid_doc_upload}
   Remove File  ${file_path}
 
