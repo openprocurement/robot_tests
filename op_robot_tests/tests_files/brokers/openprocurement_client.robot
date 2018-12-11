@@ -1314,9 +1314,9 @@ Library  openprocurement_client.utils
   ...      ${path}
   ...      ${tender.data.id}
   ...      ${bid_id}
-  ...      subitem_name=${doc_name}
   ...      doc_type=${doc_type}
   ...      access_token=${tender.access.token}
+  ...      subitem_name=${doc_name}
   ${uploaded_file} =  Create Dictionary
   ...      filepath=${path}
   ...      upload_response=${response}
