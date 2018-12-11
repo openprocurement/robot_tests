@@ -1306,7 +1306,7 @@ Library  openprocurement_client.utils
 
 
 Завантажити документ в ставку
-  [Arguments]  ${username}  ${path}  ${tender_uaid}  ${doc_type}=documents
+  [Arguments]  ${username}  ${path}  ${tender_uaid}  ${doc_name}=documents  ${doc_type}=${None}
   ${bid_id}=  Get Variable Value   ${USERS.users['${username}'].bidresponses['bid'].data.id}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}']['access_token']}
@@ -1314,6 +1314,8 @@ Library  openprocurement_client.utils
   ...      ${path}
   ...      ${tender.data.id}
   ...      ${bid_id}
+  ...      subitem_name=${doc_name}
+  ...      doc_type=${doc_type}
   ...      access_token=${tender.access.token}
   ${uploaded_file} =  Create Dictionary
   ...      filepath=${path}
