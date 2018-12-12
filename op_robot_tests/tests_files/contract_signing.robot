@@ -26,7 +26,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних тендера
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      tender_view
+  ...      contract_stand_still
   ...      critical
   ${award_index}=  Отримати останній індекс  awards  ${tender_owner}  ${viewer}
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
@@ -177,7 +177,7 @@ Suite Teardown  Test Suite Teardown
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      add_doc_to_contract
+  ...      contract_doc_documentOf
   Звірити відображення поля documentOf документа ${USERS.users['${tender_owner}']['contract_doc']['id']} із tender для користувача ${viewer}
 
 
