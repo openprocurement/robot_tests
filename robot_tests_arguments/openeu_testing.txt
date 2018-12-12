@@ -103,3 +103,4 @@
   -i modify_contract_value
 -i contract_view
 -i add_doc_to_contract
+  -i contract_doc_documentOf

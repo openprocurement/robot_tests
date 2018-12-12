@@ -477,6 +477,19 @@ def test_bid_value_esco(tender_data):
     })
 
 
+def test_bid_data_selection(data, index):
+    bid = munchify({
+        "data": {
+            "tenderers": [
+                data['agreements'][0]['contracts'][index]['suppliers'][0]
+            ]
+        }
+    })
+    bid.data['status'] = 'draft'
+    bid.data['parameters'] = data['agreements'][0]['contracts'][index]['parameters']
+    bid.data['lotValues'] = [test_bid_value(data['lots'][0]['value']['amount'])]
+    return bid
+
 
 def test_supplier_data():
     return munchify({
@@ -633,6 +646,22 @@ def test_tender_data_competitive_dialogue(params, submissionMethodDetails):
     data['procuringEntity']['identifier']['legalName_en'] = fake_en.sentence(nb_words=10, variable_nb_words=True)
     data['procuringEntity']['kind'] = 'general'
     return data
+
+
+def test_tender_data_selection(procedure_intervals, params, submissionMethodDetails, tender_data=None):
+    intervals = procedure_intervals['framework_selection']
+    params['intervals'] = intervals
+    data = test_tender_data(params, (), submissionMethodDetails)
+    data['title_en'] = "[TESTING]"
+    data['procuringEntity'] = tender_data['data']['procuringEntity']
+    del data['procuringEntity']['contactPoint']['availableLanguage']
+    data['procurementMethodType'] = 'closeFrameworkAgreementSelectionUA'
+    data['items'] = tender_data['data']['items']
+    data['lots'] = tender_data['data']['lots']
+    data['agreements'] =  [{'id': tender_data['data']['agreements'][0]['id']}]
+    del data['value']
+    del data['minimalStep']
+    return munchify({'data':data})
 
 
 def test_change_data():
