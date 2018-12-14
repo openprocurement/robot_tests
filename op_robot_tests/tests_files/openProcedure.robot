@@ -2197,7 +2197,6 @@ ${MOZ_INTEGRATION}  ${False}
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість перевести тендер на статус очікування обробки мостом
-  Звірити статус тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  active.stage2.waiting
 
 
 Можливість дочекатися завершення роботи мосту
@@ -2210,14 +2209,24 @@ ${MOZ_INTEGRATION}  ${False}
   Звірити статус тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  complete
 
 
-Можливість отримати тендер другого етапу
+Можливість активувати тендер другого етапу
+  [Tags]   ${USERS.users['${viewer}'].broker}: Активувати тендер другого етапу
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      activate_second_stage
+  ...      critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  Активувати тендер другого етапу
+
+
+Можливість знайти тендер другого етапу по ідентифікатору для усіх користувачів
   [Tags]   ${USERS.user['${tender_owner}'].broker}: Пошук тендера другого етапу
   ...      viewer  tender_owner  provider  provider1
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      get_second_stage
   ...      critical
-  Отримати доступ до тендера другого етапу та зберегти його
+  Можливість знайти тендер другого етапу по ідентифікатору для усіх користувачів
 
 
 Відображення заголовку тендера другого етапу
@@ -2384,15 +2393,6 @@ ${MOZ_INTEGRATION}  ${False}
 ##############################################################################################
 #             END
 ##############################################################################################
-
-Можливість активувати тендер другого етапу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Активувати тендер другого етапу
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      activate_second_stage
-  ...      critical
-  Активувати тендер другого етапу
-
 
 Можливість подати пропозицію першим учасником на другому етапі
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
