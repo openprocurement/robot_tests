@@ -514,15 +514,15 @@
                 "telephone": "+380444906671",
                 "url": "http://www.worldbank.org/uk/country/ukraine",
                 "faxNumber": "+380444906670",
-                "name": "Darya Gulei",
+                "name": "Дар’я Гулей",
                 "email": "ukraine@worldbank.org"
             },
             "identifier": {
                 "scheme": "XM-DAC",
                 "id": "44000",
-                "legalName": "International Bank for Reconstruction and Development (IBRD)"
+                "legalName": "Міжнародний банк реконструкції та розвитку (МБРР)"
             },
-            "name": "World Bank",
+            "name": "Світовий Банк",
             "address": {
                 "postalCode": "20433",
                 "countryName": "USA",
