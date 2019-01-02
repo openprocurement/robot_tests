@@ -86,4 +86,7 @@ Resource           base_keywords.robot
 
 
 Активувати тендер другого етапу
-  Run As  ${tender_owner}  активувати другий етап  ${TENDER['TENDER_UAID']}
+  ${TENDER_UAID_second_stage}=  BuiltIn.Catenate  SEPARATOR=  ${TENDER['TENDER_UAID']}  .2
+  Set to dictionary  ${TENDER}  TENDER_UAID=${TENDER_UAID_second_stage}
+  Run as  ${tender_owner}  Отримати тендер другого етапу та зберегти його  ${TENDER['TENDER_UAID']}
+  Run As  ${tender_owner}  Активувати другий етап  ${TENDER['TENDER_UAID']}

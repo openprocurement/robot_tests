@@ -304,11 +304,9 @@ Resource           resource.robot
   Звірити поле плану  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${field}
 
 
-Отримати доступ до тендера другого етапу та зберегти його
-  ${TENDER_UAID_second_stage}=  BuiltIn.Catenate  SEPARATOR=  ${TENDER['TENDER_UAID']}  .2
-  Set to dictionary  ${TENDER}  TENDER_UAID=${TENDER_UAID_second_stage}
-  Run as  ${tender_owner}  Отримати тендер другого етапу та зберегти його  ${TENDER['TENDER_UAID']}
+Можливість знайти тендер другого етапу по ідентифікатору для усіх користувачів
   :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${provider1}  ${provider2}  ${viewer}
+  \  Дочекатись синхронізації з майданчиком  ${username}
   \  Run As  ${username}  Пошук тендера по ідентифікатору  ${TENDER['TENDER_UAID']}  second_stage_data
 
 
