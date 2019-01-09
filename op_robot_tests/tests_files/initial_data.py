@@ -623,7 +623,7 @@ def test_tender_data_framework_agreement(params, submissionMethodDetails):
         days=fake.random_int(min=1, max=6),
         hours=fake.random_int(min=1, max=20),
         minutes=fake.random_int(min=1, max=50),
-        seconds=fake.random_int(min=1, max=60)
+        seconds=fake.random_int(min=1, max=50)
     )
     return data
 
