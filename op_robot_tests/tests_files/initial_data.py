@@ -304,7 +304,8 @@ def test_tender_data_limited(params):
 
 
 def test_feature_data():
-    return munchify({
+    words = fake.words()
+    feature = {
         "code": uuid4().hex,
         "title": field_with_id("f", fake.title()),
         "title_en": field_with_id('f', fake_en.sentence(nb_words=5, variable_nb_words=True)),
@@ -313,18 +314,19 @@ def test_feature_data():
         "enum": [
             {
                 "value": 0.05,
-                "title": fake.word()
+                "title": words[0]
             },
             {
                 "value": 0.01,
-                "title": fake.word()
+                "title": words[1]
             },
             {
                 "value": 0,
-                "title": fake.word()
+                "title": words[2]
             }
         ]
-    })
+    }
+    return munchify(feature)
 
 
 def test_question_data():
