@@ -26,6 +26,7 @@ class OP_Provider(BaseProvider):
     addresses = _fake_data.addresses
     classifications = _fake_data.classifications
     cpvs = _fake_data.cpvs
+    moz_cpvs = _fake_data.moz_cpvs
     items_base_data = _fake_data.items_base_data
     rationale_types = _fake_data.rationale_types
 
@@ -121,8 +122,11 @@ class OP_Provider(BaseProvider):
             in the beginning of each cpv id.
         """
         item_base_data = None
+        cpv = None
         if cpv_group is None:
-            item_base_data = self.random_element(self.items_base_data)
+            cpv = self.random_element(self.cpvs)
+        elif cpv_group == 336:
+            cpv = self.random_element(self.moz_cpvs)
         else:
             cpv_group = str(cpv_group)
             similar_cpvs = []
@@ -130,12 +134,12 @@ class OP_Provider(BaseProvider):
                 if cpv_element.startswith(cpv_group):
                     similar_cpvs.append(cpv_element)
             cpv = self.random_element(similar_cpvs)
-            for entity in self.items_base_data:
-                if entity["cpv_id"] == cpv:
-                    item_base_data = entity
-                    break
-            if not item_base_data:
-                raise ValueError('unable to find an item with CPV ' + cpv)
+        for entity in self.items_base_data:
+            if entity["cpv_id"] == cpv:
+                item_base_data = entity
+                break
+        if not item_base_data:
+            raise ValueError('unable to find an item with CPV ' + cpv)
 
         # choose appropriate additional classification for item_base_data's cpv
         additional_class = []
