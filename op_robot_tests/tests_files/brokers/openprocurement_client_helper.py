@@ -42,18 +42,18 @@ class StableAgreementClient(AgreementClient):
         return super(StableAgreementClient, self).request(*args, **kwargs)
 
 
-def prepare_api_wrapper(key, resource, host_url, api_version, ds_client=None):
+def prepare_api_wrapper(key, resource, host_url, api_version, ds_config=None):
     return StableClient(key, resource, host_url, api_version,
-                        ds_client=ds_client)
+                        ds_config=ds_config)
 
 
 def prepare_ds_api_wrapper(ds_host_url, auth_ds):
     return StableDsClient(ds_host_url, auth_ds)
 
 
-def prepare_agreement_api_wrapper(key, resource, host_url, api_version, ds_client=None):
+def prepare_agreement_api_wrapper(key, resource, host_url, api_version, ds_config=None):
     return StableAgreementClient(key, resource, host_url, api_version,
-                        ds_client=ds_client)
+                        ds_config=ds_config)
 
 
 class ContractingStableClient(ContractingClient):
@@ -62,8 +62,8 @@ class ContractingStableClient(ContractingClient):
         return super(ContractingStableClient, self).request(*args, **kwargs)
 
 
-def prepare_contract_api_wrapper(key, resource, host_url, api_version, ds_client=None):
-    return ContractingStableClient(key, resource, host_url, api_version, ds_client=ds_client)
+def prepare_contract_api_wrapper(key, resource, host_url, api_version, ds_config=None):
+    return ContractingStableClient(key, resource, host_url, api_version, ds_config=ds_config)
 
 
 class StableEDRClient(EDRClient):
@@ -181,7 +181,6 @@ class StableClient_dasu(DasuClient):
         return super(StableClient_dasu, self).request(*args, **kwargs)
 
 
-def prepare_dasu_api_wrapper(key, resource, host_url, api_version, ds_client=None):
-    print  key
+def prepare_dasu_api_wrapper(key, resource, host_url, api_version, ds_config=None):
     return StableClient_dasu(key, resource, host_url, api_version,
-                        ds_client=ds_client)
+                        ds_config=ds_config)
