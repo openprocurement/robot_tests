@@ -59,7 +59,7 @@ class OP_Provider(BaseProvider):
         :example: array('Надіньте', 'фуражка', 'зелено')
         :param nb: how many words to return
         """
-        return [self.word() for _ in range(0, nb)]
+        return random.sample(self.word_list, nb)
 
     @classmethod
     def sentence(self, nb_words=5, variable_nb_words=True):
