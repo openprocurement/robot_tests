@@ -13,6 +13,7 @@
 -i tender_view_tenderAttempts
 
 -i modify_auction_title
+-i modify_auction_title_after_bidding
 -i modify_auction_description
 -i modify_tenderAttempts
 -i modify_dgfID
@@ -23,6 +24,7 @@
 -i modify_auction_periods		
 -i modify_tender
 -i add_tender_doc
+-i add_tender_doc_after_bidding
 -i add_tender_doc_content
 -i add_tender_illustration
 -i add_tender_tech_specifications

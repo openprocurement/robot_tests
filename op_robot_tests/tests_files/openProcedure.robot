@@ -178,6 +178,15 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля contractTerms.leaseTerms.leaseDuration тендера для користувача ${viewer}
 
 
+Відображення номера лоту замовника
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_landLease
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля lotIdentifier тендера для користувача ${viewer}
+
+
 Відображення номера лоту ФГВ
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
@@ -593,7 +602,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_auction_procuringEntity_name
-  [Setup]  Дочекатись дати закінчення періоду редагування лоту  ${tender_owner}  ${TENDER['TENDER_UAID']}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   ${new_procuringEntity_name}=  create_fake_sentence
   Set To Dictionary  ${USERS.users['${tender_owner}']}  new_procuringEntity_name=${new_procuringEntity_name}
   Можливість змінити поле procuringEntity.name тендера на ${new_procuringEntity_name}
@@ -1579,7 +1588,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_auction_title
+  ...      modify_auction_title_after_bidding
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   ${new_title}=  create_fake_title  ua
   Set To Dictionary  ${USERS.users['${tender_owner}']}  new_title=${new_title}
@@ -1590,7 +1599,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      modify_auction_title
+  ...      modify_auction_title_after_bidding
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  title
   Звірити відображення поля title тендера із ${USERS.users['${tender_owner}'].new_title} для користувача ${viewer}
@@ -1834,7 +1843,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування лота
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      add_tender_doc
+  ...      add_tender_doc_after_bidding
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Неможливість додати документацію до лоту
 

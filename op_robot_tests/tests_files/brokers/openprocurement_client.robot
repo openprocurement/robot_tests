@@ -203,7 +203,9 @@ Library  openprocurement_client.utils
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  create_tender  ${tender_data}
   Log object data  ${tender}  created_tender
   ${access_token}=  Get Variable Value  ${tender.access.token}
-  Set To Dictionary  ${tender['data']}  status=active.rectification
+  ${status}=  Set Variable If  'dgfOtherAssets' in '${MODE}'  active.tendering  ${EMPTY}
+  ${status}=  Set Variable If  'geb' in '${MODE}'  active.rectification  ${status}
+  Set To Dictionary  ${tender['data']}  status=${status}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
   Log  ${tender}
   Set To Dictionary  ${USERS.users['${username}']}   access_token=${access_token}
@@ -717,4 +719,15 @@ Library  openprocurement_client.utils
   ${contract}=  Create Dictionary  data=${tender.data.contracts[${contract_index}]}
   Set To Dictionary  ${contract.data}  dateSigned=${fieldvalue}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract  ${tender}  ${contract}
+  Log  ${reply}
+
+
+Редагувати угоду
+  [Arguments]  ${username}  ${tender_uaid}  ${contract_index}  ${fieldname}  ${fieldvalue}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${contract}=  Create Dictionary  data=${tender.data.contracts[${contract_index}]}
+  Set_to_object  ${contract.data}  ${fieldname}  ${fieldvalue}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_contract
+  ...      ${tender}
+  ...      ${contract}
   Log  ${reply}

@@ -81,3 +81,17 @@ Suite Teardown  Test Suite Teardown
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
   Звірити статус завершення тендера  ${viewer}  ${TENDER['TENDER_UAID']}
+
+
+Можливість редагувати вартість угоди
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування угоди
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_contract_value
+  ...      critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${award_amount}=  Get From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[0].value}  amount
+  ${amount}=  Set Variable  create_fake_amount
+  Set to dictionary  ${USERS.users['${tender_owner}']}  new_amount=${amount}
+  Run As  ${tender_owner}  Редагувати угоду  ${TENDER['TENDER_UAID']}  0  value.amount  ${amount}

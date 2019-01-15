@@ -61,10 +61,10 @@
 
 -i ask_question_to_tender
 -i answer_question_to_tender
--i ask_question_to_item
--i answer_question_to_item
 
 
+-i make_bid_by_provider
+-i add_eligibilityDocuments_to_bid_by_provider
 -i make_bid_qualify_by_provider
 -i make_bid_by_provider1
 -i add_eligibilityDocuments_to_bid_by_provider1
