@@ -211,7 +211,7 @@ Library  openprocurement_client.utils
 
 Оприлюднити рішення про початок моніторингу
   [Arguments]  ${username}  ${monitoring_uaid}  ${file_path}  ${monitoring_data}
-  ${document}=  Call Method  ${USERS.users['${username}'].dasu_client}  upload_obj_document  ${file_path}  ${USERS.users['${username}'].monitoring_data}
+  ${document}=  Call Method  ${USERS.users['${username}'].dasu_client}  upload_obj_document  ${file_path}
   ${documents}=  Create List
   Append To List  ${documents}  ${document.data}
   Set To Dictionary  ${monitoring_data.data.decision}  documents=${documents}
@@ -341,7 +341,7 @@ Library  openprocurement_client.utils
 
 Надати звіт про усунення порушення замовником
   [Arguments]  ${username}  ${monitoring_uaid}  ${resolution_data}  ${file_path}
-  ${reply}=  Call Method  ${USERS.users['${username}'].dasu_client}  upload_obj_document  ${file_path}  ${USERS.users['${username}'].monitoring_data}
+  ${reply}=  Call Method  ${USERS.users['${username}'].dasu_client}  upload_obj_document  ${file_path}
   ${documents}=  Create List
   Append To List  ${documents}  ${reply.data}
   Set To Dictionary  ${resolution_data.data}  documents=${documents}
@@ -353,7 +353,7 @@ Library  openprocurement_client.utils
 
 Зазначити, що порушення було оскаржено в суді
   [Arguments]  ${username}  ${monitoring_uaid}  ${appeal_data}  ${file_path}
-  ${reply}=  Call Method  ${USERS.users['${username}'].dasu_client}  upload_obj_document  ${filepath}  ${USERS.users['${username}'].monitoring}
+  ${reply}=  Call Method  ${USERS.users['${username}'].dasu_client}  upload_obj_document  ${filepath}
   ${documents}=  Create List
   Append To List  ${documents}  ${reply.data}
   Set To Dictionary  ${appeal_data.data}  documents=${documents}
