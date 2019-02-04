@@ -18,6 +18,7 @@ Resource           resource.robot
   ${DIALOGUE_TYPE}=  Get Variable Value  ${DIALOGUE_TYPE}
   Run keyword if  '${DIALOGUE_TYPE}' != '${None}'  Set to dictionary  ${tender_parameters}  dialogue_type=${DIALOGUE_TYPE}
   ${tender_data}=  Підготувати дані для створення тендера  ${tender_parameters}
+  Log  ${tender_data}
   ${adapted_data}=  Адаптувати дані для оголошення тендера  ${tender_data}
   ${TENDER_UAID}=  Run As  ${tender_owner}  Створити тендер  ${adapted_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data=${adapted_data}
@@ -99,13 +100,13 @@ Resource           resource.robot
   Порівняти об'єкти  ${len_of_items_before_patch}  ${len_of_items_after_patch}
 
 
-Звірити відображення поля ${field} зміненого предмета із ${data} для користувача ${username}
-  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]}
+Звірити відображення поля ${field} зміненого предмета ${index} із ${data} для користувача ${username}
+  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][${index}]}
   Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${data}  ${field}  ${item_id}
 
 
-Можливість змінити поле ${field_name} предмета на ${field_value}
-  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data['items'][0]}
+Можливість змінити поле ${field_name} предмета ${index} на ${field_value}
+  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][${index}]}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  item_id=${item_id}
   Run As  ${tender_owner}  Внести зміни в предмет  ${item_id}  ${TENDER['TENDER_UAID']}  ${field_name}  ${field_value}
 
@@ -291,17 +292,6 @@ Resource           resource.robot
 ##############################################################################################
 #             BIDDING
 ##############################################################################################
-Можливість подати цінову пропозицію в статусі драфт користувачем ${username}
-  ${bid}=  Підготувати дані для подання пропозиції  ${username}
-  ${bidresponses}=  Create Dictionary  bid=${bid}
-  Set To Dictionary  ${USERS.users['${username}']}  bidresponses=${bidresponses}
-  ${features}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.features}  ${None}
-  ${features_ids}=  Run Keyword IF  ${features}
-  ...     Отримати ідентифікатори об’єктів  ${username}  features
-  ...     ELSE  Set Variable  ${None}
-  ${resp}=  Run As  ${username}  Подати цінову пропозицію в статусі драфт  ${TENDER['TENDER_UAID']}  ${bid}
-  Set To Dictionary  ${USERS.users['${username}'].bidresponses}  resp=${resp}
-
 
 Можливість подати цінову пропозицію користувачем ${username}
   ${bid}=  Підготувати дані для подання пропозиції  ${username}

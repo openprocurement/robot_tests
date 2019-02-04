@@ -9,6 +9,7 @@
 -i create_tender
 -i find_tender
 -i tender_view
+-i tender_view_dgf_id
 -i tender_view_tenderPeriod
 -i tender_view_contractPeriod
 -i tender_view_unit_code

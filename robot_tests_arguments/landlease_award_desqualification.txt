@@ -1,0 +1,61 @@
+-v MODE:geb
+
+-v minNumberOfQualifiedBids:1
+
+-v NUMBER_OF_ITEMS:3
+
+
+-i create_tender
+-i find_tender
+
+
+
+-i modify_asset
+-i modify_classification_id
+-i modify_asset_description
+
+
+-i add_item
+-i delete_item
+
+
+-i add_tender_doc
+-i add_tender_illustration
+-i add_tender_notice
+-i add_tender_tech_specifications
+-i add_tender_evaluationCriteria
+-i add_tender_contractProforma
+-i add_tender_asset_familiarization
+-i add_tender_presentation
+-i add_tender_clarifications
+-i add_tender_billOfQuantity
+-i add_tender_conflictOfInterest
+-i add_tender_evaluationReports
+-i add_tender_eligibilityCriteria
+-i add_tender_x_financialLicense
+-i add_tender_x_virtualDataRoom
+-i add_tender_x_nda
+-i add_tender_x_qualificationDocuments
+-i add_tender_cancellationDetails
+
+
+-i ask_question_to_tender
+-i answer_question_to_tender
+
+
+-i make_bid_by_provider
+-i add_eligibilityDocuments_to_bid_by_provider
+-i make_bid_qualify_by_provider
+-i make_bid_by_provider1
+-i add_eligibilityDocuments_to_bid_by_provider1
+-i make_bid_qualify_by_provider1
+-i auction_url
+-i auction_url_provider1
+
+
+-i number_of_awards
+-i add_rejectionProtocol
+-i disqualified_first_award
+-i first_award_status_unsuccessful
+
+

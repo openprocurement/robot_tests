@@ -587,11 +587,7 @@ Log differences between dicts
   ...      15 s
   ...      Run As  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
   Should Be True  '${url}'
-   ${procurementMethodType}=  Отримати дані із тендера  ${viewer}  ${TENDER['TENDER_UAID']}  procurementMethodType
-  Log  ${procurementMethodType}
-  Run Keyword If  '${procurementMethodType}' == 'landLease'
-  ...      Should Match Regexp  ${url}  ^https?:\/\/sandbox\.ea2\.openprocurement\.auction\/texas-auctions\/([0-9A-Fa-f]{32})
-  ...      ELSE  Should Match Regexp  ${url}  ^https?:\/\/sandbox\.ea2\.openprocurement\.auction\/auctions\/([0-9A-Fa-f]{32})
+  Should Match Regexp  ${url}  ^https?:\/\/sandbox\.ea2\.openprocurement\.auction\/auctions|texas-auctions\/([0-9A-Fa-f]{32})
   Log  URL аукціону для глядача: ${url}
 
 
@@ -606,11 +602,7 @@ Log differences between dicts
   ...      15 s
   ...      Run As  ${username}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
   Should Be True  '${url}'
-  ${procurementMethodType}=  Отримати дані із тендера  ${viewer}  ${TENDER['TENDER_UAID']}  procurementMethodType
-  Log  ${procurementMethodType}
-  Run Keyword If  '${procurementMethodType}' == 'landLease'
-  ...      Should Match Regexp  ${url}  ^https?:\/\/sandbox\.ea2\.openprocurement\.auction\/texas-auctions\/([0-9A-Fa-f]{32})
-  ...      ELSE  Should Match Regexp  ${url}  ^https?:\/\/sandbox\.ea2\.openprocurement\.auction\/auctions\/([0-9A-Fa-f]{32})
+  Should Match Regexp  ${url}  ^https?:\/\/sandbox\.ea2\.openprocurement\.auction\/auctions|texas-auctions\/([0-9A-Fa-f]{32})
   Log  URL аукціону для учасника: ${url}
 
 

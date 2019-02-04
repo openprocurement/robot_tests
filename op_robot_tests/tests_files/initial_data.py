@@ -56,7 +56,7 @@ def create_fake_dgfID():
     return fake.dgfID()
 
 
-def create_fake_dateSigned():
+def create_fake_date():
     return get_now().isoformat()
 
 
@@ -153,8 +153,11 @@ def create_fake_url():
     return '{0}/{1}x{2}/{3}/{4}.png'.format(base, size_x, size_y, background_color, font_color)
 
 
-def create_fake_bankName():
-    return random.choice([u'PrivatBank', u'Oschadbank', u'Raiffeisen Bank Aval', u'KredoBank', u'ProCredit Bank'])
+def create_fake_bankName(old_name=None):
+    banks_name = [u'PrivatBank', u'Oschadbank', u'Raiffeisen Bank Aval', u'KredoBank', u'ProCredit Bank']
+    if old_name:
+        banks_name.remove(old_name)
+    return random.choice(banks_name)
 
 
 def create_fake_month(start=1, end=12):

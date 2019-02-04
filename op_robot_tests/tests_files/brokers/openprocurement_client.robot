@@ -203,10 +203,11 @@ Library  openprocurement_client.utils
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  create_tender  ${tender_data}
   Log object data  ${tender}  created_tender
   ${access_token}=  Get Variable Value  ${tender.access.token}
-  ${status}=  Set Variable If  'dgfOtherAssets' in '${MODE}'  active.tendering  ${EMPTY}
-  ${status}=  Set Variable If  'geb' in '${MODE}'  active.rectification  ${status}
-  Set To Dictionary  ${tender['data']}  status=${status}
-  ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+  Run Keyword If  '${mode}' == 'geb'
+  ...      Run Keywords
+  ...      Set To Dictionary  ${tender['data']}   status=active.rectification
+  ...      AND
+  ...      Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
   Log  ${tender}
   Set To Dictionary  ${USERS.users['${username}']}   access_token=${access_token}
   Set To Dictionary  ${USERS.users['${username}']}   tender_data=${tender}
@@ -287,16 +288,11 @@ Library  openprocurement_client.utils
   [Arguments]  ${username}  ${item_id}  ${tender_uaid}  ${fieldname}  ${fieldvalue}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${item_index}=  get_object_index_by_id  ${tender.data['items']}  ${item_id}
-  Set_To_Object  ${tender['data']['items'][${item_index}]}  ${fieldname}  ${fieldvalue}
+  ${item}=  Create Dictionary  data=${tender['data']['items'][${item_index}]}
+  Set_To_Object  ${item.data}  ${fieldname}  ${fieldvalue}
   Log  ${tender}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_item  ${tender}  ${item}
   Log  ${reply}
-
-
-Отримати інформацію із об'єкта МП
-  [Arguments]  ${username}  ${tender_uaid}  ${field_name}
-  ${field_value}=  openprocurement_client.Отримати інформацію із тендера  ${username}  ${tender_uaid}  ${field_name}
-  [return]  ${field_value}
 
 
 Додати предмет закупівлі
@@ -372,17 +368,6 @@ Library  openprocurement_client.utils
 ##############################################################################
 #             Bid operations
 ##############################################################################
-
-Подати цінову пропозицію в статусі драфт
-  [Arguments]  ${username}  ${tender_uaid}  ${bid}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_bid  ${tender}  ${bid}
-  Set To Dictionary  ${USERS.users['${username}']}  access_token=${reply['access']['token']}
-  Set To Dictionary   ${USERS.users['${username}'].bidresponses['bid'].data}  id=${reply['data']['id']}
-  Set To Dictionary  ${USERS.users['${username}']}  bid_id=${reply['data']['id']}
-  Log  ${reply}
-  [return]  ${reply}
-
 
 Подати цінову пропозицію
   [Arguments]  ${username}  ${tender_uaid}  ${bid}
