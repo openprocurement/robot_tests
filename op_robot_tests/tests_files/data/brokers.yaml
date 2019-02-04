@@ -1350,3 +1350,19 @@ setam:
         provider1:      setam_Provider1
         viewer:         setam_Viewer
     timeout_on_wait: 120
+ecoex:
+    keywords_file: ecoex
+    accelerator: 720
+    roles:
+        tender_owner:   ecoex_Owner
+        provider:       ecoex_Provider
+        provider1:      ecoex_Provider1
+        viewer:         ecoex_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+        dgfInsider:
+            accelerator: 360
+    timeout_on_wait: 20
