@@ -556,9 +556,16 @@ polonex:
     homepage: 'http://test.polonex.in.ua/prozorrosale/auctions/public'
     intervals:
         default:
+            accelerator: 360
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
+        dgfFinancialAssets:
+           accelerator: 360
+        dgfOtherAssets:
+            accelerator: 360
+        dgfInsider:
+            accelerator: 360
     timeout_on_wait: 10
 ueex:
     keywords_file: ueex
@@ -603,9 +610,16 @@ etc:
     homepage: 'https://etc-torgi.com/prozorrosale/auctions/public'
     intervals:
         default:
+            accelerator: 360
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
+        dgfFinancialAssets:
+           accelerator: 360
+        dgfOtherAssets:
+            accelerator: 360
+        dgfInsider:
+            accelerator: 360
     timeout_on_wait: 10
 etrading:
     keywords_file: etrading
@@ -617,9 +631,16 @@ etrading:
     homepage: 'https://e-trading.kiev.ua/prozorrosale/auctions/public'
     intervals:
         default:
+            accelerator: 360
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
+        dgfFinancialAssets:
+           accelerator: 360
+        dgfOtherAssets:
+            accelerator: 360
+        dgfInsider:
+            accelerator: 360
     timeout_on_wait: 10
 katerynoslav:
     keywords_file: katerynoslav
@@ -1264,9 +1285,16 @@ skyline:
     homepage: 'http://test.skyline.auction/prozorrosale/auctions/public'
     intervals:
         default:
+            accelerator: 360
             enquiry: [0, 10]
             tender:  [0, 25]
             auction: [25, 30]
+        dgfFinancialAssets:
+           accelerator: 360
+        dgfOtherAssets:
+            accelerator: 360
+        dgfInsider:
+            accelerator: 360
     timeout_on_wait: 10
 dzherelo:
     keywords_file: dzherelo
