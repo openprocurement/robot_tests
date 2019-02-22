@@ -1823,38 +1823,38 @@ users:
         size:     [1366, 800]
     ukin_Owner:
         broker:   ukin
-        homepage: "https://ukin.com.ua/user/login"
-        default_page: "https://ukin.com.ua/public"
+        homepage: "http://ukin.com.ua/user/login"
+        default_page: "http://ukin.com.ua/public"
         login:    organizator
         password: 123456
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     ukin_Provider:
         broker:   ukin
-        homepage: "https://ukin.com.ua/user/login"
-        default_page: "https://ukin.com.ua/public"
+        homepage: "http://ukin.com.ua/user/login"
+        default_page: "http://ukin.com.ua/public"
         login:    member
         password: 123456
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     ukin_Provider1:
         broker:   ukin
-        homepage: "https://ukin.com.ua/user/login"
-        default_page: "https://ukin.com.ua/public"
+        homepage: "http://ukin.com.ua/user/login"
+        default_page: "http://ukin.com.ua/public"
         login:    member1
         password: 123456
-        browser:  firefox
+        browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     ukin_Viewer:
         broker:   ukin
-        homepage: "https://ukin.com.ua/user/login"
-        default_page: "https://ukin.com.ua/public"
-        browser:  firefox
+        homepage: "http://ukin.com.ua"
+        default_page: "http://ukin.com.ua/public"
+        browser:  chrome
         position: [0, 0]
-        size:     [1024, 768]
+        size:     [1366, 768]
     vertas_Owner:
         broker:   vertas
         homepage: "https://sale.vertas.com.ua/test/Registration.aspx"
