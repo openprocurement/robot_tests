@@ -2041,31 +2041,31 @@ users:
         size: [1024, 768]
     pag_Owner:
         broker:   pag
-        homepage: "http://test.pag.kiev.ua"
-        login:    comnxliquidator@mfsa.ru
-        password: 123456
+        homepage: "http://testing.pag.kiev.ua/auctions-all"
+        login:    test_zamovnyk@mfsa.ru
+        password: test_zamovnyk@mfsa.ru
         browser:  chrome
         position: [0, 0]
         size:     [1280, 800]
     pag_Provider1:
         broker:   pag
-        homepage: "http://test.pag.kiev.ua"
-        login:    part1@mfsa.ru
+        homepage: "http://testing.pag.kiev.ua/auctions-all"
+        login:    tender_provider@yopmail.com
         password: 123456
         browser:  chrome
         position: [0, 800]
         size:     [1280, 800]
     pag_Provider2:
         broker:   pag
-        homepage: "http://test.pag.kiev.ua"
-        login:    part2@mfsa.ru
+        homepage: "http://testing.pag.kiev.ua/auctions-all"
+        login:    tender_provider1@yopmail.com
         password: 123456
         browser:  chrome
         position: [800, 0]
         size:     [1280, 800]
     pag_Viewer:
         broker:   pag
-        homepage: "http://test.pag.kiev.ua"
+        homepage: "http://testing.pag.kiev.ua/auctions-all"
         browser:  chrome
         position: [0, 500]
         size:     [1280, 800]
