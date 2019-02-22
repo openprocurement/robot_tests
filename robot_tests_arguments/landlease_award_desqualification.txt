@@ -4,20 +4,15 @@
 
 -v NUMBER_OF_ITEMS:3
 
-
 -i create_tender
 -i find_tender
-
-
 
 -i modify_asset
 -i modify_classification_id
 -i modify_asset_description
 
-
 -i add_item
 -i delete_item
-
 
 -i add_tender_doc
 -i add_tender_illustration
@@ -38,10 +33,8 @@
 -i add_tender_x_qualificationDocuments
 -i add_tender_cancellationDetails
 
-
 -i ask_question_to_tender
 -i answer_question_to_tender
-
 
 -i make_bid_by_provider
 -i add_eligibilityDocuments_to_bid_by_provider
@@ -52,10 +45,7 @@
 -i auction_url
 -i auction_url_provider1
 
-
 -i number_of_awards
 -i add_rejectionProtocol
 -i disqualified_first_award
 -i first_award_status_unsuccessful
-
-

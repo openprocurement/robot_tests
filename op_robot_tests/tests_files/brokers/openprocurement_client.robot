@@ -290,7 +290,7 @@ Library  openprocurement_client.utils
   ${item_index}=  get_object_index_by_id  ${tender.data['items']}  ${item_id}
   ${item}=  Create Dictionary  data=${tender['data']['items'][${item_index}]}
   Set_To_Object  ${item.data}  ${fieldname}  ${fieldvalue}
-  Log  ${tender}
+  Log  ${item}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_item  ${tender}  ${item}
   Log  ${reply}
 
@@ -374,12 +374,12 @@ Library  openprocurement_client.utils
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_bid  ${tender}  ${bid}
   Run Keyword IF  '${tender.data.procurementMethodType}' == 'landLease'
+  ...      Run Keywords
   ...      Set To Dictionary  ${reply.data}  status=pending
-  Log  ${reply}
-  ${reply_active}=  Call Method  ${USERS.users['${username}'].client}  patch_bid  ${tender}  ${reply}
+  ...      AND
+  ...      Call Method  ${USERS.users['${username}'].client}  patch_bid  ${tender}  ${reply}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${reply['access']['token']}
   Set To Dictionary   ${USERS.users['${username}'].bidresponses['bid'].data}  id=${reply['data']['id']}
-  Log  ${reply_active}
   Set To Dictionary  ${USERS.users['${username}']}  bid_id=${reply['data']['id']}
   Log  ${reply}
   [return]  ${reply}

@@ -121,10 +121,10 @@ def create_fake_item_description():
 
 
 def create_fake_items_quantity():
-    return round(random.uniform(5, 10), 3)
+    return round(random.uniform(1, 10), 3)
 
 
-def create_fake_scheme_id_test():
+def create_fake_scheme_id_geb():
     return fake.scheme_geb()
 
 
@@ -321,7 +321,7 @@ def test_supplier_data():
     })
 
 
-def test_item_data(scheme):
+def test_item_data(scheme, decimal_digits=3):
     # using typical functions for dgf other and all other modes besides dgf financial
     # items will be genareted from other CAV-PS group
     data = fake.fake_item(scheme)
@@ -334,7 +334,7 @@ def test_item_data(scheme):
         "startDate": get_now().replace(hour=0, minute=0, second=0, microsecond=0).isoformat(),
         "endDate": get_now().replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
     }
-    data["quantity"] = round(random.uniform(1, 10), 4)
+    data["quantity"] = round(random.uniform(1, 10), int(decimal_digits))
     return munchify(data)
 
 
@@ -423,6 +423,6 @@ def test_tender_data_dgf_geb(params):
 
     scheme_group = fake.scheme_geb()[:4]
     for i in range(params['number_of_items']):
-        new_item = test_item_data(scheme_group)
+        new_item = test_item_data(scheme_group, 4)
         data['items'].append(new_item)
     return data

@@ -27,7 +27,7 @@
 -i add_item
 -i delete_item
 -i check_rectification_period
--i modify_auction_periods		
+-i modify_auction_periods
 -i modify_tender
 -i add_tender_doc
 -i add_tender_doc_after_bidding

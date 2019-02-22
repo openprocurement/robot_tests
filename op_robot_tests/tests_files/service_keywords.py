@@ -50,7 +50,7 @@ from .initial_data import (
     create_fake_month,
     create_fake_items_quantity,
     create_fake_item_description,
-    create_fake_scheme_id_test,
+    create_fake_scheme_id_geb,
     create_fake_date
 
 

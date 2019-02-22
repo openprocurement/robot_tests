@@ -208,8 +208,9 @@ Get Broker Property By Username
 
 Підготувати дані для створення предмету закупівлі
   [Arguments]  ${scheme}
-  ${item} =  Run Keyword If  '${MODE}'=='dgfFinancialAssets'  test_item_data_financial  ${scheme[0:4]}
-  ...        ELSE  test_item_data  ${scheme[0:4]}
+  ${decimal_digits}=  Set Variable If  '${MODE}'=='geb'  4  3
+  Log  ${decimal_digits}
+  ${item}=  test_item_data  ${scheme[0:4]}  ${decimal_digits}
   [Return]  ${item}
 
 
@@ -417,8 +418,10 @@ Log differences between dicts
 Звірити поле ${field} тендера усіх предметів для користувача ${username}
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}]}
-  \  Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}].${field}}  ${field}  ${item_id}
-
+  \  ${left}=  Set Variable  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}].${field}}
+  \  ${right}=  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}  ${item_id}
+  \  Run Keyword If  '${MODE}'=='dgfOtherAssets'  compare_additionalClassifications_description  ${right}
+  \  ...        ELSE  Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${left}  ${field}  ${item_id}
 
 
 Порівняти об'єкти
@@ -757,8 +760,6 @@ Require Failure
   ...      ${username}
   ...      ${tender_uaid}
   ...      active.tendering
-
-
 
 
 Дочекатись дати закінчення прийому пропозицій
