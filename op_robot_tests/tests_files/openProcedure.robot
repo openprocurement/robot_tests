@@ -610,8 +610,10 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      add_item  level3
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість додати предмет закупівлі в тендер
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  Перевірити кількість предметів в тендері
 
 
 Можливість видалити актив лоту
