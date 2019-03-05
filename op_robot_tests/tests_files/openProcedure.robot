@@ -122,6 +122,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_view_landLease
   Звірити відображення поля bankAccount.accountIdentification[0].description тендера для користувача ${viewer}
 
+
 Відображення поля вартість підготовки лоту до торгів
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
@@ -469,28 +470,6 @@ ${ITEM_MEAT}        ${True}
 ##############################################################################################
 #             Редагування лоту
 ##############################################################################################
-
-Можливість змінити мінімальну кількість учасників аукціону
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_auction_minNumberOfQualifiedBids
-  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${new_minNumberOfQualifiedBids}=  Set Variable  ${1}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_minNumberOfQualifiedBids=${new_minNumberOfQualifiedBids}
-  Можливість змінити поле minNumberOfQualifiedBids тендера на ${new_minNumberOfQualifiedBids}
-
-
-Відображення змінену мінімальну кількість учасників аукціону
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      modify_auction_minNumberOfQualifiedBids
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  minNumberOfQualifiedBids
-  Звірити відображення поля minNumberOfQualifiedBids тендера із ${USERS.users['${tender_owner}'].new_minNumberOfQualifiedBids} для користувача ${viewer}
-
 
 Можливість змінити дані про організатора лоту
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
@@ -1210,7 +1189,6 @@ ${ITEM_MEAT}        ${True}
   ...      add_tender_cancellationDetails
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість завантажити документ до тендера з типом cancellationDetails
-
 
 
 Можливість завантажити документ з умовами ознайомлення з майном/активом у кімнаті даних
