@@ -130,15 +130,6 @@ ${MODE}  auctions
   Отримати дані із поля guarantee.amount тендера для усіх користувачів
 
 
-Відображення розміру реєстраційного внеску
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних процедури
-  ...      viewer  tender_owner  provider  provider1
-  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
-  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
-  ...      tender_view
-  Отримати дані із поля registrationFee.amount тендера для усіх користувачів
-
-
 Відображення закінчення періоду прийому пропозицій
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних процедури
   ...      viewer  tender_owner  provider  provider1

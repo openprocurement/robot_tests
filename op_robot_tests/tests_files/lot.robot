@@ -325,15 +325,6 @@ ${RESOURCE}          lots
   Отримати дані із поля guarantee.amount усіх аукціонів для усіх користувачів
 
 
-Відображення розміру реєстраційного внеску усіх аукціонів
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення умов проведення аукціону
-  ...      viewer  tender_owner
-  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
-  ...      lot_view
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Отримати дані із поля registrationFee.amount усіх аукціонів для усіх користувачів
-
-
 Відображення періоду на подачу пропозицій в 2 та 3 процедурі циклу
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення умов проведення аукціону
   ...      viewer  tender_owner
@@ -726,28 +717,6 @@ ${RESOURCE}          lots
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${username}'].tender_data.data.auctions[0].guarantee}  amount
   Звірити відображення поля auctions[0].guarantee.amount тендера із ${USERS.users['${tender_owner}'].new_guarantee_value} для усіх користувачів
-
-
-Можливість змінити розмір реєстраційного внеску аукціону
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування умов проведення аукціону
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_auction_registrationFee
-  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${new_guarantee_amount}=  create_fake_guarantee  ${USERS.users['${tender_owner}'].new_amount}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_guarantee_value=${new_guarantee_amount}
-  Run As  ${tender_owner}  Внести зміни в умови проведення аукціону  ${TENDER['TENDER_UAID']}  registrationFee.amount  ${new_guarantee_amount}  0
-
-
-Відображення зміненого розміру реєстраційного внеску аукціону
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення умов проведення аукціону
-  ...      viewer  tender_owner
-  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
-  ...      modify_auction_registrationFee
-  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
-  \  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${username}'].tender_data.data.auctions[0].registrationFee}  amount
-  Звірити відображення поля auctions[0].registrationFee.amount тендера із ${USERS.users['${tender_owner}'].new_guarantee_value} для усіх користувачів
 
 
 Можливість змінити дату початку першого аукціону циклу

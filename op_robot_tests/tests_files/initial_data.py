@@ -337,10 +337,6 @@ def test_lot_auctions_data(index, procedure_intervals, params):
                 "currency": u"UAH",
                 "valueAddedTaxIncluded": True
             },
-            "registrationFee": {
-                "amount": create_fake_guarantee(value_amount),
-                "currency": u"UAH"
-            },
             "auctionPeriod": {
                 "startDate": inc_dt.isoformat()
             },
