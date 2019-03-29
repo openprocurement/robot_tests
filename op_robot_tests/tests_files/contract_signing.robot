@@ -53,6 +53,30 @@ Suite Teardown  Test Suite Teardown
   Звірити відображення поля contracts[-1].dateSigned тендера із ${USERS.users['${tender_owner}'].dateSigned} для користувача ${viewer}
 
 
+Можливість редагувати вартість угоди
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування угоди
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_contract_value
+  ...      critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${starting_price}=  Отримати дані із тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  value.amount
+  ${max_amount}=  Evaluate  ${starting_price}+${starting_price}
+  ${amount}=  create_fake_amount  ${starting_price}  ${max_amount}
+  Set to dictionary  ${USERS.users['${tender_owner}']}  amount=${amount}
+  Run As  ${tender_owner}  Редагувати угоду  ${TENDER['TENDER_UAID']}  -1  value.amount  ${amount}
+
+
+Відображення зміненої вартості угоди
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних угоди
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_contract_value
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля contracts[-1].value.amount тендера із ${USERS.users['${tender_owner}'].amount} для користувача ${viewer}
+
+
 Можливість укласти угоду для лоту
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес укладання угоди
   ...  tender_owner
@@ -78,17 +102,3 @@ Suite Teardown  Test Suite Teardown
   ...  ${USERS.users['${viewer}'].broker}
   ...  tender_view
   Звірити статус завершення тендера  ${viewer}  ${TENDER['TENDER_UAID']}
-
-
-Можливість редагувати вартість угоди
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування угоди
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_contract_value
-  ...      critical
-  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${award_amount}=  Get From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[0].value}  amount
-  ${amount}=  Set Variable  create_fake_amount
-  Set to dictionary  ${USERS.users['${tender_owner}']}  new_amount=${amount}
-  Run As  ${tender_owner}  Редагувати угоду  ${TENDER['TENDER_UAID']}  0  value.amount  ${amount}

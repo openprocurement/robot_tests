@@ -51,14 +51,6 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля minNumberOfQualifiedBids тендера для користувача ${viewer}
 
 
-Відображення номер лоту замовника
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view_landLease
-  Звірити відображення поля lotIdentifier тендера для користувача ${viewer}
-
-
 Відображення організатора аукціону
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
@@ -83,7 +75,7 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля registrationFee.currency тендера для користувача ${viewer}
 
 
-Відображення поля опис банківських реквізитів
+Відображення опису банківських реквізитів
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -91,7 +83,7 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля bankAccount.description тендера для користувача ${viewer}
 
 
-Відображення поля найменування банку
+Відображення найменування банку
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -99,7 +91,7 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля bankAccount.bankName тендера для користувача ${viewer}
 
 
-Відображення поля схеми ідентифікатора акаунта банку
+Відображення схеми ідентифікатора акаунта банку
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -107,7 +99,7 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля bankAccount.accountIdentification[0].scheme тендера для користувача ${viewer}
 
 
-Відображення поля номер ідентифікатора акаунта банку
+Відображення номера ідентифікатора акаунта банку
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -115,7 +107,7 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля bankAccount.accountIdentification[0].id тендера для користувача ${viewer}
 
 
-Відображення поля опису ідентифікатора акаунта банку
+Відображення опису ідентифікатора акаунта банку
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -123,7 +115,7 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля bankAccount.accountIdentification[0].description тендера для користувача ${viewer}
 
 
-Відображення поля вартість підготовки лоту до торгів
+Відображення вартості підготовки лоту до торгів
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -131,7 +123,7 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля budgetSpent.amount тендера для користувача ${viewer}
 
 
-Відображення поля валюти вартість підготовки лоту до торгів
+Відображення валюти вартості підготовки лоту до торгів
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -139,7 +131,7 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля budgetSpent.currency тендера для користувача ${viewer}
 
 
-Відображення включенного податку до вартості підготовки лоту до торгів
+Відображення включеного податку до вартості підготовки лоту до торгів
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -147,7 +139,7 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля budgetSpent.valueAddedTaxIncluded тендера для користувача ${viewer}
 
 
-Відображення типу омуви контракту
+Відображення типу умови контракту
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -448,14 +440,6 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
   ...      tender_view
   Звірити відображення поля guarantee.amount тендера для усіх користувачів
-
-
-Відображення дати завершення періоду редагування лоту
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view_rectificationPeriod
-  Звірити відображення дати rectificationPeriod.endDate тендера для користувача ${viewer}
 
 
 Можливість перевірити тривалість періоду редагування лоту
@@ -928,7 +912,7 @@ ${ITEM_MEAT}        ${True}
   ...      modify_auction_contractTerms
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${new_contractTerms_leaseTerms_leaseDuration}=  create_fake_month
+  ${new_contractTerms_leaseTerms_leaseDuration}=  create_fake_month  ${USERS.users['${viewer}'].tender_data.data.contractTerms.leaseTerms.leaseDuration}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  new_contractTerms_leaseTerms_leaseDuration=${new_contractTerms_leaseTerms_leaseDuration}
   Можливість змінити поле contractTerms.leaseTerms.leaseDuration тендера на ${new_contractTerms_leaseTerms_leaseDuration}
 
@@ -1365,7 +1349,6 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      make_bid_by_provider
-  [Setup]  Дочекатись дати закінчення періоду редагування лоту  ${tender_owner}  ${TENDER['TENDER_UAID']}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider}
 
@@ -1460,7 +1443,7 @@ ${ITEM_MEAT}        ${True}
   Можливість зменшити пропозицію до невалідної користувачем ${provider2}
 
 
-Можливість змінити назву лоту українською мовою
+Можливість змінити назву лоту українською мовою після подачі пропозиції
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
@@ -1472,7 +1455,7 @@ ${ITEM_MEAT}        ${True}
   Можливість змінити поле title тендера на ${new_title}
 
 
-Відображення зміненої назви лоту українською мовою
+Відображення зміненої назви лоту українською мовою після подачі пропозиції
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -1572,7 +1555,7 @@ ${ITEM_MEAT}        ${True}
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_auction_description
-  [Setup]  Дочекатись дати закінчення періоду редагування лоту  ${tender_owner}  ${TENDER['TENDER_UAID']}
+  [Setup]  Дочекатись дати початку прийому пропозицій  ${tender_owner}  ${TENDER['TENDER_UAID']}
   ${new_description}=  create_fake_description  en
   Перевірити неможливість зміни поля description_en тендера на значення ${new_description} для користувача ${tender_owner}
 
@@ -1591,7 +1574,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати лот
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_auction_title_ua
+  ...      modify_auction_title
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   ${new_title}=  create_fake_title  ua
   Перевірити неможливість зміни поля title тендера на значення ${new_title} для користувача ${tender_owner}

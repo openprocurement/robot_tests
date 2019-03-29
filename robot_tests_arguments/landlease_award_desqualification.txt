@@ -49,3 +49,4 @@
 -i add_rejectionProtocol
 -i disqualified_first_award
 -i first_award_status_unsuccessful
+-i tender_status_unsuccessful

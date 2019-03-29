@@ -70,6 +70,7 @@
 -i add_protocol_to_first_award
 -i confirm_first_award
 
+-i modify_contract_value
 -i dateSigned
 -i dateSigned_view
 -i contract_sign_upload

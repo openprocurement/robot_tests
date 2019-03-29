@@ -292,6 +292,8 @@ Resource           resource.robot
 ##############################################################################################
 
 Можливість подати цінову пропозицію користувачем ${username}
+  Run Keyword If  '${mode}' == 'geb'
+  ...      Дочекатись дати закінчення періоду редагування лоту  ${tender_owner}  ${TENDER['TENDER_UAID']}
   ${bid}=  Підготувати дані для подання пропозиції  ${username}
   ${bidresponses}=  Create Dictionary  bid=${bid}
   Set To Dictionary  ${USERS.users['${username}']}  bidresponses=${bidresponses}

@@ -160,11 +160,16 @@ def create_fake_bankName(old_name=None):
     return random.choice(banks_name)
 
 
-def create_fake_month(start=1, end=12):
+def create_fake_month(old_value=False, start=1, end=12):
     """
     Example: P9M
     """
-    return "P{}M".format(random.randint(start, end))
+    month = range(start, end+1)
+    if old_value:
+        old_value = old_value.strip('PM')
+        month.remove(int(old_value))
+    return "P{}M".format(random.choice(month))
+
 
 
 def create_fake_scheme_id(scheme):
@@ -213,9 +218,9 @@ def test_tender_data(params, periods=("enquiry", "tender")):
 
     data["procuringEntity"]["kind"] = "other"
 
-    data['rectificationPeriod'] = {
-        "endDate": (get_now() + timedelta(minutes=(random.randint(5, 19) * 1440) / accelerator)).isoformat(),
-    }
+    # data['rectificationPeriod'] = {
+    #     "endDate": (get_now() + timedelta(minutes=(random.randint(5, 19) * 1440) / accelerator)).isoformat(),
+    # }
 
     scheme_group = fake.scheme_other()[:4]
     for i in range(params['number_of_items']):
@@ -341,7 +346,8 @@ def test_item_data(scheme, decimal_digits=3):
 def test_tender_data_dgf_other(params):
     data = test_tender_data(params, [])
 
-    data['dgfID'] = fake.dgfID()
+    # data['dgfID'] = fake.dgfID()
+    data['lotIdentifier'] = fake.dgfID()
     data['tenderAttempts'] = fake.random_int(min=1, max=4)
     data['minNumberOfQualifiedBids'] = int(params['minNumberOfQualifiedBids'])
     del data["procuringEntity"]
@@ -358,7 +364,6 @@ def test_tender_data_dgf_other(params):
     period_dict["auctionPeriod"] = {}
     inc_dt += timedelta(minutes=params['intervals']['auction'][0])
     period_dict["auctionPeriod"]["startDate"] = inc_dt.isoformat()
-    print(period_dict["auctionPeriod"]["startDate"])
     data.update(period_dict)
 
     data['procurementMethodType'] = 'dgfOtherAssets'
@@ -374,8 +379,6 @@ def test_tender_data_dgf_other(params):
 def test_tender_data_dgf_geb(params):
     data = test_tender_data(params, [])
     value_amount = create_fake_amount(3000, 999999999.99)  # max value equals to budget of Ukraine in hryvnias
-
-    del data['rectificationPeriod']
 
     for i in range(params['number_of_items']):
         data['items'].pop()
