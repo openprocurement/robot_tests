@@ -159,16 +159,8 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view_landLease
+  ...      tender_view
   Звірити відображення поля lotIdentifier тендера для користувача ${viewer}
-
-
-Відображення номера лоту ФГВ
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view_dgf_id
-  Звірити відображення поля dgfID тендера для користувача ${viewer}
 
 
 Відображення поля "Лоти виставляються"
@@ -673,28 +665,6 @@ ${ITEM_MEAT}        ${True}
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  tenderAttempts
   Звірити відображення поля tenderAttempts тендера із ${USERS.users['${tender_owner}'].new_attempt} для користувача ${viewer}
-
-
-Можливість змінити номер лоту ФГВ
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних лоту
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_dgfID
-  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${new_dgfID}=  create_fake_dgfID
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_dgfID=${new_dgfID}
-  Можливість змінити поле dgfID тендера на ${new_dgfID}
-
-
-Відображення зміненого номер лоту ФГВ
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      modify_dgfID
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  dgfID
-  Звірити відображення поля dgfID тендера із ${USERS.users['${tender_owner}'].new_dgfID} для користувача ${viewer}
 
 
 Можливість змінити ПДВ в бюджеті лоту
@@ -1634,10 +1604,10 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних лоту
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
-  ...      modify_dgfID
+  ...      modify_auction_lotIdentifier
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  ${new_dgfID}=  create_fake_dgfID
-  Перевірити неможливість зміни поля dgfID тендера на значення ${new_dgfID} для користувача ${tender_owner}
+  ${new_lotIdentifier}=  create_fake_dgfID
+  Перевірити неможливість зміни поля lotIdentifier тендера на значення ${new_lotIdentifier} для користувача ${tender_owner}
 
 
 Неможливість змінити початкову вартість лоту

@@ -7,7 +7,6 @@
 -i create_tender
 -i find_tender
 -i tender_view
--i tender_view_dgf_id
 -i tender_view_min_step
 -i tender_view_tenderPeriod
 -i modify_auction_value_tax

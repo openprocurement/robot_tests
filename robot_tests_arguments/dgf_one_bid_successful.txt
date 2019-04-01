@@ -7,7 +7,6 @@
 -i create_tender
 -i find_tender
 -i tender_view
--i tender_view_dgf_id
 -i tender_view_tenderPeriod
 -i tender_view_contractPeriod
 -i tender_view_unit_code
@@ -17,7 +16,7 @@
 -i modify_auction_title_after_bidding
 -i modify_auction_description
 -i modify_tenderAttempts
--i modify_dgfID
+-i modify_auction_lotIdentifier
 -i modify_auction_value
 -i modify_auction_value_tax
 -i modify_auction_step
