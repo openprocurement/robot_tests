@@ -2137,3 +2137,33 @@ Library  openprocurement_client.utils
   ...      ${field_name}
   Run Keyword If  '${status}' == 'PASS'  Return From Keyword   ${field_value}
   Fail  Field not found: ${field_name}
+
+
+Порівняти версії тендера з останньою версією historical
+  [Arguments]  ${username}  ${tender_uaid}
+  ${internal_tender_id}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
+  #Витягуємо останню версію historical, не передаючи параметр revisions
+  ${new_historical_version}=  Call Method  ${USERS.users['${username}'].client}  get_resource_item_historical  ${internal_tender_id}
+  Log  ${new_historical_version.x_revision_n}
+  #Видаляємо поле dateModified (в поточній версії тендера і останній historical вони можуть відрізнятись на соті секунди)
+  Remove From Dictionary  ${new_historical_version.data}  dateModified
+  #Додаємо в список останню версію historical на даному етапі
+  Append To List  ${HISTORICAL_DATA}  ${new_historical_version}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору    ${username}  ${tender_uaid}
+  Remove From Dictionary  ${tender.data}  dateModified
+  Порівняти об'єкти  ${tender.data}  ${new_historical_version.data}
+
+
+
+Порівняти збережені версії з historical
+  [Arguments]  ${username}  ${tender_uaid}
+  ${internal_id}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
+  ${historical_length}=  Get Length  ${HISTORICAL_DATA}
+  Log Many  @{HISTORICAL_DATA}
+  #Порівнюємо з 2-ої ревізії, бо 1-ша -- draft
+  :FOR  ${index}  IN RANGE  2  ${historical_length}+1
+  #Витягуємо версію historical, передаючи параметр revisions
+  \  ${historical_version}=  Call Method  ${USERS.users['${username}'].client}  get_resource_item_historical
+  ...                        ${internal_id}  ${index}
+  \  Remove From Dictionary  ${historical_version.data}  dateModified
+  \  Порівняти об'єкти  ${historical_version.data}  ${HISTORICAL_DATA[${index}-1].data}
