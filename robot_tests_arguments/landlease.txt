@@ -63,8 +63,17 @@
 -i make_bid_by_provider1
 -i add_eligibilityDocuments_to_bid_by_provider1
 -i make_bid_qualify_by_provider1
+
+-i ask_question_to_tender_after_tendering_period_geb
+-i add_tender_contractProforma_after_tendering_period_geb
+
 -i auction_url
 -i auction_url_provider1
+
+-i make_bid_in_auction_period
+-i ask_question_to_tender_in_auction_period
+-i add_bid_doc_in_auction_period_by_provider
+-i cancel_bid_in_auction_period_by_provider1
 
 -i number_of_awards
 -i add_protocol_to_first_award

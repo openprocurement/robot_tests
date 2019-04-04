@@ -1724,6 +1724,25 @@ ${ITEM_MEAT}        ${True}
 #             AFTER BIDDING
 ##############################################################################################
 
+Можливість задати запитання на лот після закінчення прийому пропозицій
+  [Tags]   ${USERS.users['${provider}'].broker}: Задання запитання
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      ask_question_to_tender_after_tendering_period_geb
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider}
+  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}  ${TENDER['TENDER_UAID']}
+  Можливість задати запитання на тендер користувачем ${provider}
+
+
+Можливість завантажити типовий договір до лоту після закінчення прийому пропозицій
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      add_tender_contractProforma_after_tendering_period_geb
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ до тендера з типом contractProforma
+
+
 Неможливість завантажити документ першим учасником після закінчення прийому пропозицій
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
   ...      provider
@@ -1782,6 +1801,42 @@ ${ITEM_MEAT}        ${True}
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      cancel_bid_after_tendering_period_by_provider1
+  Run Keyword And Expect Error  *  Можливість скасувати цінову пропозицію користувачем ${provider1}
+
+##############################################################################################
+#             AUCTION
+##############################################################################################
+
+Неможливість подати пропозицію в період аукціону першим учасником
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      make_bid_in_auction_period
+  [Setup]  Дочекатись дати початку періоду аукціону  ${viewer}  ${TENDER['TENDER_UAID']}
+  Run Keyword And Expect Error  *  Можливість подати цінову пропозицію користувачем ${provider}
+
+
+Неможливість задати запитання на лот в період аукціону
+  [Tags]   ${USERS.users['${provider}'].broker}: Задання запитання
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      ask_question_to_tender_in_auction_period
+  Run Keyword And Expect Error  *  Можливість задати запитання на тендер користувачем ${provider}
+
+
+Неможливість завантажити документ першим учасником в період аукціону
+  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
+  ...      provider
+  ...      ${USERS.users['${provider1}'].broker}
+  ...      add_bid_doc_in_auction_period_by_provider
+  Run Keyword And Expect Error  *  Можливість завантажити документ в пропозицію користувачем ${provider}
+
+
+Неможливість скасувати пропозицію другим учасником в період аукціону
+  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
+  ...      provider1
+  ...      ${USERS.users['${provider1}'].broker}
+  ...      cancel_bid_in_auction_period_by_provider1
   Run Keyword And Expect Error  *  Можливість скасувати цінову пропозицію користувачем ${provider1}
 
 
