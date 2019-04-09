@@ -409,3 +409,11 @@ Resource           resource.robot
   ${left}=  Convert To Integer  ${number_of_awards}
   ${right}=  Run As  ${username}  Отримати кількість авардів в тендері  ${TENDER['TENDER_UAID']}
   Порівняти об'єкти  ${left}  ${right}
+
+
+Можливість редагувати вартість угоди
+  ${starting_price}=  Отримати дані із тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  contracts[0].value.amount
+  ${minimalStep}=  Отримати дані із тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  minimalStep.amount
+  ${amount}=  Evaluate  ${starting_price}+${minimalStep}
+  Set to dictionary  ${USERS.users['${tender_owner}']}  amount=${amount}
+  Run As  ${tender_owner}  Редагувати угоду  ${TENDER['TENDER_UAID']}  -1  value.amount  ${amount}

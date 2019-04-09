@@ -61,12 +61,7 @@ Suite Teardown  Test Suite Teardown
   ...      critical
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${starting_price}=  Отримати дані із тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  value.amount
-  ${max_amount}=  Evaluate  ${starting_price}+${starting_price}
-  ${amount}=  create_fake_amount  ${starting_price}  ${max_amount}
-  Set to dictionary  ${USERS.users['${tender_owner}']}  amount=${amount}
-  Run As  ${tender_owner}  Редагувати угоду  ${TENDER['TENDER_UAID']}  -1  value.amount  ${amount}
-
+  Можливість редагувати вартість угоди
 
 Відображення зміненої вартості угоди
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних угоди
