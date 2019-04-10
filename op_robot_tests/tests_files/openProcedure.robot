@@ -1179,7 +1179,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_to_tender
-  [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість задати запитання на тендер користувачем ${provider}
 
 
@@ -1207,7 +1207,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      answer_question_to_tender
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість відповісти на запитання на тендер
 
 
@@ -1225,7 +1225,7 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_to_item
-  [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  Можливість задати запитання на ${item_index} предмет користувачем ${provider}
 
@@ -1256,7 +1256,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      answer_question_to_item
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  Можливість відповісти на запитання на ${item_index} предмет
 
@@ -1729,9 +1729,46 @@ ${ITEM_MEAT}        ${True}
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      ask_question_to_tender_after_tendering_period_geb
-  [Teardown]  Оновити LMD і дочекатись синхронізації  ${provider}
-  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}  ${TENDER['TENDER_UAID']}
+  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість задати запитання на тендер користувачем ${provider}
+
+
+Відображення заголовку запитання на лот без відповіді після закінчення прийому пропозицій
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення запитання
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      ask_question_to_tender_after_tendering_period_geb
+  Звірити відображення поля title запитання на тендер для користувача ${viewer}
+
+
+Відображення опису запитання на лот без відповіді після закінчення прийому пропозицій
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення запитання
+  ...      viewer  tender_owner  provider  provider1
+  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
+  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
+  ...      ask_question_to_tender_after_tendering_period_geb
+  Звірити відображення поля description запитання на тендер для користувача ${viewer}
+
+
+Можливість відповісти на запитання на лот після закінчення прийому пропозицій
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відповідь на запитання
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      answer_question_to_tender_after_tendering_period_geb
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість відповісти на запитання на тендер
+
+
+Відображення відповіді на запитання на лот після закінчення прийому пропозицій
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення відповіді на запитання
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      answer_question_to_tender_after_tendering_period_geb
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля answer запитання на тендер для користувача ${viewer}
 
 
 Можливість завантажити типовий договір до лоту після закінчення прийому пропозицій
