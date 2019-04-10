@@ -358,12 +358,12 @@ Resource           resource.robot
 
 Можливість завантажити протокол аукціону в авард ${award_index} користувачем ${username}
   ${auction_protocol_path}  ${file_title}  ${file_content}=  create_fake_doc
-  Run As  ${username}  Завантажити протокол аукціону в авард  ${TENDER['TENDER_UAID']}  ${auction_protocol_path}  ${award_index}
+  Run As  ${username}  Завантажити протокол в авард  ${TENDER['TENDER_UAID']}  ${auction_protocol_path}  ${award_index}  auctionProtocol
   Remove File  ${auction_protocol_path}
 
 Можливість завантажити протокол скасування в авард ${award_index} користувачем ${username}
   ${auction_protocol_path}  ${file_title}  ${file_content}=  create_fake_doc
-  Run As  ${username}  Завантажити протокол скасування в авард  ${TENDER['TENDER_UAID']}  ${auction_protocol_path}  ${award_index}
+  Run As  ${username}  Завантажити протокол в авард  ${TENDER['TENDER_UAID']}  ${auction_protocol_path}  ${award_index}  rejectionProtocol
   Remove File  ${auction_protocol_path}
 
 Можливість підтвердити цінову пропозицію учасником ${username}
