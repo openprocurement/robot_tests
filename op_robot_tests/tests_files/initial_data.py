@@ -10,6 +10,7 @@ from .local_time import get_now
 from op_faker import OP_Provider
 import os
 import random
+import re
 
 fake_en = Factory.create(locale='en_US')
 fake_ru = Factory.create(locale='ru_RU')
@@ -116,8 +117,8 @@ def create_fake_doc():
     return tf.name, os.path.basename(tf.name), content
 
 
-def create_fake_item_description():
-    return field_with_id("i", fake.title())
+def create_fake_item_description(description):
+    return re.match(r'(^[filq]-[0-9a-fA-F]{8}): ', description).group(0) + fake.title()
 
 
 def create_fake_items_quantity():

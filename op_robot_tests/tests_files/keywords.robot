@@ -415,7 +415,8 @@ Log differences between dicts
   compare_tender_attempts  ${left}  ${right}
 
 
-Звірити поле ${field} тендера усіх предметів для користувача ${username}
+Звірити відображення опису додаткової класифікаці усіх предметів для користувача ${username}
+  ${field}=  Set Variable  additionalClassifications[0].description
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}]}
   \  ${left}=  Set Variable  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}].${field}}

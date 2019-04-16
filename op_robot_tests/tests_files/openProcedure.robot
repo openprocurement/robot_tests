@@ -380,7 +380,7 @@ ${ITEM_MEAT}        ${True}
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
-  Звірити поле additionalClassifications[0].description тендера усіх предметів для користувача ${viewer}
+  Звірити відображення опису додаткової класифікаці усіх предметів для користувача ${viewer}
 
 
 Відображення назви одиниці активів лоту
@@ -915,8 +915,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      modify_asset
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data['items'][0]}  quantity
-  Звірити відображення поля quantity зміненого предмета 0 із ${USERS.users['${tender_owner}'].quantity} для користувача ${viewer}
+  Звірити відображення зміненого поля quantity предмета 0 для користувача ${viewer}
 
 
 Можливість внести зміни до ідентифікатора класифікації активу об’єкта МП
@@ -927,7 +926,6 @@ ${ITEM_MEAT}        ${True}
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   ${new_id}=  create_fake_scheme_id_geb
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_id=${new_id}
   Можливість змінити поле classification.id предмета 0 на ${new_id}
 
 
@@ -936,9 +934,8 @@ ${ITEM_MEAT}        ${True}
   ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      modify_classification_id
-  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
-  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data['items'][0].classification}  id
-  Звірити відображення поля classification.id зміненого предмета 0 із ${USERS.users['${tender_owner}'].new_id} для користувача ${viewer}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення зміненого поля classification.id предмета 0 для користувача ${viewer}
 
 
 Можливість внести зміни до опису активу об’єкта МП
@@ -948,8 +945,7 @@ ${ITEM_MEAT}        ${True}
   ...      modify_asset_description
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${new_description}=  create_fake_item_description
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_description=${new_description}
+  ${new_description}=  create_fake_item_description  ${USERS.users['${tender_owner}'].initial_data['data']['items'][0]['description']}
   Можливість змінити поле description предмета 0 на ${new_description}
 
 
@@ -958,8 +954,8 @@ ${ITEM_MEAT}        ${True}
   ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
   ...      modify_asset_description
-  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data['items'][0]}  description
-  Звірити відображення поля items[0].description тендера із ${USERS.users['${tender_owner}'].new_description} для користувача ${viewer}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення зміненого поля description предмета 0 для користувача ${viewer}
 
 
 Можливість додати актив лоту

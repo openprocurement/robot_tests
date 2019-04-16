@@ -99,14 +99,18 @@ Resource           resource.robot
   Порівняти об'єкти  ${len_of_items_before_patch}  ${len_of_items_after_patch}
 
 
-Звірити відображення поля ${field} зміненого предмета ${index} із ${data} для користувача ${username}
-  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][${index}]}
-  Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${data}  ${field}  ${item_id}
+Звірити відображення зміненого поля ${field} предмета ${index} для користувача ${username}
+  ${item_id}=  get_id_from_object  ${USERS.users['${viewer}'].tender_data.data['items'][${index}]}
+  ${field_value}=  Run As  ${viewer}  Отримати інформацію із предмету  ${TENDER['TENDER_UAID']}  ${item_id}  ${field}
+  Порівняти об'єкти  ${field_value}  ${USERS.users['${tender_owner}'].initial_data.data['items'][${index}].${field}}
+  Set_To_Object  ${USERS.users['${username}'].tender_data.data['items'][${index}]}  ${field}  ${field_value}
+
 
 
 Можливість змінити поле ${field_name} предмета ${index} на ${field_value}
-  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][${index}]}
+  ${item_id}=  get_id_from_object  ${USERS.users['${viewer}'].tender_data.data['items'][${index}]}
   Run As  ${tender_owner}  Внести зміни в предмет  ${item_id}  ${TENDER['TENDER_UAID']}  ${field_name}  ${field_value}
+  Set_To_Object  ${USERS.users['${tender_owner}'].initial_data.data['items'][${index}]}  ${field_name}  ${field_value}
 
 
 Неможливість додати документацію до лоту
