@@ -195,7 +195,8 @@ Library  openprocurement_client.utils
   ...      Set To Dictionary  ${tender['data']}   status=active.rectification
   ...      AND
   ...      Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
-  Log  ${tender}
+  ...      AND
+  ...      Log  ${tender}
   Set To Dictionary  ${USERS.users['${username}']}   access_token=${access_token}
   Set To Dictionary  ${USERS.users['${username}']}   tender_data=${tender}
   Log  ${\n}${API_HOST_URL}/api/${API_VERSION}/auctions/${tender.data.id}${\n}  WARN

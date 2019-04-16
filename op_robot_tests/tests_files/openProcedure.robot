@@ -772,9 +772,9 @@ ${ITEM_MEAT}        ${True}
   ...      modify_auction_registrationFee
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${new_guarantee_amount}=  create_fake_guarantee  ${USERS.users['${tender_owner}'].tender_data.data.registrationFee.amount}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_guarantee_value=${new_guarantee_amount}
-  Можливість змінити поле guarantee.amount тендера на ${new_guarantee_amount}
+  ${new_registrationFee_amount}=  create_fake_guarantee  ${USERS.users['${tender_owner}'].tender_data.data.registrationFee.amount}
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_registrationFee_value=${new_registrationFee_amount}
+  Можливість змінити поле registrationFee.amount тендера на ${new_registrationFee_amount}
 
 
 Відображення зміненого розміру реєстраційного внеску
@@ -784,7 +784,7 @@ ${ITEM_MEAT}        ${True}
   ...      modify_auction_registrationFee
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.registrationFee}  amount
-  Звірити відображення поля guarantee.amount тендера із ${USERS.users['${tender_owner}'].new_guarantee_value} для користувача ${viewer}
+  Звірити відображення поля registrationFee.amount тендера із ${USERS.users['${tender_owner}'].new_registrationFee_value} для користувача ${viewer}
 
 
 Можливість змінити опис банківських реквізитів
@@ -860,7 +860,7 @@ ${ITEM_MEAT}        ${True}
   ...      modify_auction_budgetSpent
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${new_budgetSpent_amount}=  create_fake_value  ${USERS.users['${tender_owner}'].tender_data.data.value.amount}
+  ${new_budgetSpent_amount}=  create_fake_value  ${USERS.users['${tender_owner}'].tender_data.data.budgetSpent.amount}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  new_budgetSpent_amount=${new_budgetSpent_amount}
   Можливість змінити поле budgetSpent.amount тендера на ${new_budgetSpent_amount}
 
