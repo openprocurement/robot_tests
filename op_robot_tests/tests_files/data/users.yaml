@@ -2282,3 +2282,37 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
+    fidda_Owner:
+        broker:   fidda
+        homepage: "http://cbd2.fidda.com.ua/user/login"
+        default_page: "http://cbd2.fidda.com.ua/public/index"
+        login:    privatizator
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    fidda_Provider:
+        broker:   fidda
+        homepage: "http://cbd2.fidda.com.ua/user/login"
+        default_page: "http://cbd2.fidda.com.ua/public/index"
+        login:    member
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    fidda_Provider1:
+        broker:   fidda
+        homepage: "http://cbd2.fidda.com.ua/user/login"
+        default_page: "http://cbd2.fidda.com.ua/public/index"
+        login:    member1
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    fidda_Viewer:
+        broker:   fidda
+        homepage: "http://cbd2.fidda.com.ua/user/login"
+        default_page: "http://cbd2.fidda.com.ua/public/index"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
