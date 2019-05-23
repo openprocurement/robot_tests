@@ -1208,3 +1208,21 @@ ecoex:
             tender:  [0, 25]
             auction: [25, 30]
     timeout_on_wait: 30
+fidda:
+    keywords_file: fidda
+    accelerator: 360
+    roles:
+        tender_owner:   fidda_Owner
+        provider:       fidda_Provider
+        provider1:      fidda_Provider1
+        viewer:         fidda_Viewer
+    intervals:
+        default:
+            accelerator: 360
+        dgfOtherAssets:
+            accelerator: 360
+        lots:
+            accelerator: 360
+        auctions:
+            accelerator: 360
+    timeout_on_wait: 15
