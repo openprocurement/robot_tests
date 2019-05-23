@@ -2282,3 +2282,37 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
+    playtender_Owner:
+        broker:   playtender
+        homepage: "https://test-cbd2.playtender.com.ua/user/login"
+        default_page: "https://test-cbd2.playtender.com.ua/public/index"
+        login:    privatizator
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    playtender_Provider:
+        broker:   playtender
+        homepage: "https://test-cbd2.playtender.com.ua/user/login"
+        default_page: "https://test-cbd2.playtender.com.ua/public/index"
+        login:    member
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    playtender_Provider1:
+        broker:   playtender
+        homepage: "https://test-cbd2.playtender.com.ua/user/login"
+        default_page: "https://test-cbd2.playtender.com.ua/public/index"
+        login:    member1
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    playtender_Viewer:
+        broker:   playtender
+        homepage: "https://test-cbd2.playtender.com.ua/user/login"
+        default_page: "https://test-cbd2.playtender.com.ua/public/index"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]

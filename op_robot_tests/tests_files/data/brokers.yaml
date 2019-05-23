@@ -1208,3 +1208,25 @@ ecoex:
             tender:  [0, 25]
             auction: [25, 30]
     timeout_on_wait: 30
+playtender:
+    keywords_file: playtender
+    accelerator: 180
+    roles:
+        tender_owner:   playtender_Owner
+        provider:       playtender_Provider
+        provider1:      playtender_Provider1
+        viewer:         playtender_Viewer
+    intervals:
+        default:
+            accelerator: 360
+        dgfOtherAssets:
+            accelerator: 360
+        lots:
+            accelerator: 360
+        auctions:
+            accelerator: 360
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
