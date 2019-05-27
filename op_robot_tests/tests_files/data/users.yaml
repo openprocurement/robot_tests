@@ -39,7 +39,7 @@ users:
             auctions: [test.quintagroup.com, 30852434db2e4574b57d37bda228ed2e]
         api_key:  ""
         broker:   Quinta
-        browser:  firefox
+        browser:  chrome
     Etender_Owner:
         broker:   Etender
         homepage: "http://uatasset.e-auction.ua/#/"
