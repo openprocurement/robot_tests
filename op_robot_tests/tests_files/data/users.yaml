@@ -2350,3 +2350,37 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1366, 768]
+    torgibiz_Owner:
+        broker:   torgibiz
+        homepage: "http://cbd2.torgy.biz/user/login"
+        default_page: "http://cbd2.torgy.biz/public/index"
+        login:    privatizator
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    torgibiz_Provider:
+        broker:   torgibiz
+        homepage: "http://cbd2.torgy.biz/user/login"
+        default_page: "http://cbd2.torgy.biz/public/index"
+        login:    member
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    torgibiz_Provider1:
+        broker:   torgibiz
+        homepage: "http://cbd2.torgy.biz/user/login"
+        default_page: "http://cbd2.torgy.biz/public/index"
+        login:    member1
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    torgibiz_Viewer:
+        broker:   torgibiz
+        homepage: "http://cbd2.torgy.biz/user/login"
+        default_page: "http://cbd2.torgy.biz/public/index"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
