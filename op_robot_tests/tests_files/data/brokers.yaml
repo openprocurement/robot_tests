@@ -1247,3 +1247,21 @@ fidda:
         auctions:
             accelerator: 360
     timeout_on_wait: 15
+torgibiz:
+    keywords_file: torgibiz
+    accelerator: 360
+    roles:
+        tender_owner:   torgibiz_Owner
+        provider:       torgibiz_Provider
+        provider1:      torgibiz_Provider1
+        viewer:         torgibiz_Viewer
+    intervals:
+        default:
+            accelerator: 360
+        dgfOtherAssets:
+            accelerator: 360
+        lots:
+            accelerator: 360
+        auctions:
+            accelerator: 360
+    timeout_on_wait: 15
