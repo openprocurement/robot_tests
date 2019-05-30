@@ -29,7 +29,7 @@ users:
             auctions: [test.quintagroup.com, bc698baa8b814908bc75405ed3d63548]
         api_key:  ""
         broker:   Quinta
-        browser:  firefox
+        browser:  Firefox
     Etender_Owner:
         broker:   Etender
         homepage: "http://e-auction.pro/#/"

@@ -94,7 +94,10 @@ Suite Teardown  Test Suite Teardown
 
 Відкрити сторінку аукціону для ${username}
   ${url}=  Run as  ${username}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}  ${TENDER['LOT_ID']}
-  Open browser  ${url}  ${USERS.users['${username}'].browser}
+  Wait Until Keyword Succeeds  10 x  1 s  Run Keywords
+  ...  Create WebDriver  ${USERS.users['${username}'].browser}
+  ...  AND  set_custom_page_load_timeout  15
+  ...  AND  Go To  ${url}
 
 
 Дочекатись дати закінчення аукціону користувачем ${username}
