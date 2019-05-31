@@ -1297,3 +1297,21 @@ agropromysl:
             tender:  [0, 25]
             auction: [25, 30]
     timeout_on_wait: 30
+ubase:
+    keywords_file: ubase
+    accelerator: 360
+    roles:
+        tender_owner:   ubase_Owner
+        provider:       ubase_Provider
+        provider1:      ubase_Provider1
+        viewer:         ubase_Viewer
+    intervals:
+        default:
+            accelerator: 360
+        dgfOtherAssets:
+            accelerator: 360
+        lots:
+            accelerator: 360
+        auctions:
+            accelerator: 360
+    timeout_on_wait: 15
