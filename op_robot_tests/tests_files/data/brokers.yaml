@@ -1315,3 +1315,23 @@ ubase:
         auctions:
             accelerator: 360
     timeout_on_wait: 15
+rwsbank:
+    intervals:
+        default:
+            enquiry: [0, 17]
+            tender:  [0, 19]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction:  [45, 50]
+        lots:
+            accelerator: 100
+        auctions:
+            accelerator: 1440
+            auction:  [120, 60]
+    keywords_file: rwsbank
+    roles:
+        tender_owner:   rwsbank_Owner_auction
+        provider:       rwsbank_Provider_auction
+        provider1:      rwsbank_Provider1_auction
+        viewer:         rwsbank_Viewer_auction
+    timeout_on_wait: 120
