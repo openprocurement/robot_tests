@@ -2482,3 +2482,33 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1366, 768]
+    rwsbank_Owner_auction:
+        broker:   rwsbank
+        homepage: "https://test.torgy.rwsbank.com.ua"
+        login:    testprozorroyowner@gmail.com
+        password: 123456
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    rwsbank_Provider_auction:
+        broker:   rwsbank
+        homepage: "https://test.torgy.rwsbank.com.ua"
+        login:    testprozorroprovider@gmail.com
+        password: 123456
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    rwsbank_Provider1_auction:
+        broker:   rwsbank
+        homepage: "https://test.torgy.rwsbank.com.ua"
+        login:    testprozorroprovider1@gmail.com
+        password: 123456
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    rwsbank_Viewer_auction:
+        broker:   rwsbank
+        homepage: "https://test.torgy.rwsbank.com.ua"
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
