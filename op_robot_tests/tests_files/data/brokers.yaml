@@ -1324,7 +1324,7 @@ rwsbank:
             accelerator: 1440
             auction:  [45, 50]
         lots:
-            accelerator: 100
+            accelerator: 120
         auctions:
             accelerator: 1440
             auction:  [120, 60]
