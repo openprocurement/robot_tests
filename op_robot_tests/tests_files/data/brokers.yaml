@@ -1335,3 +1335,21 @@ rwsbank:
         provider1:      rwsbank_Provider1_auction
         viewer:         rwsbank_Viewer_auction
     timeout_on_wait: 120
+agrobirga:
+    keywords_file: agrobirga
+    accelerator: 360
+    roles:
+        tender_owner:   agrobirga_Owner
+        provider:       agrobirga_Provider
+        provider1:      agrobirga_Provider1
+        viewer:         agrobirga_Viewer
+    intervals:
+        default:
+            accelerator: 360
+        dgfOtherAssets:
+            accelerator: 360
+        lots:
+            accelerator: 360
+        auctions:
+            accelerator: 360
+    timeout_on_wait: 15

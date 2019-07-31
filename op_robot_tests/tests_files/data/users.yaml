@@ -2512,3 +2512,37 @@ users:
         browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
+    agrobirga_Owner:
+        broker:   agrobirga
+        homepage: "http://cbd2.agrex.gov.ua/user/login"
+        default_page: "http://cbd2.agrex.gov.ua/public/index"
+        login:    privatizator
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    agrobirga_Provider:
+        broker:   agrobirga
+        homepage: "http://cbd2.agrex.gov.ua/user/login"
+        default_page: "http://cbd2.agrex.gov.ua/public/index"
+        login:    member
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    agrobirga_Provider1:
+        broker:   agrobirga
+        homepage: "http://cbd2.agrex.gov.ua/user/login"
+        default_page: "http://cbd2.agrex.gov.ua/public/index"
+        login:    member1
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    agrobirga_Viewer:
+        broker:   agrobirga
+        homepage: "http://cbd2.agrex.gov.ua/user/login"
+        default_page: "http://cbd2.agrex.gov.ua/public/index"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
