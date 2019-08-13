@@ -848,3 +848,17 @@ tabua:
         tender_owner:   tabua_Owner
         viewer:         tabua_Viewer
     timeout_on_wait: 30
+uap:
+    keywords_file: uap
+    roles:
+        provider:       uap_Provider1
+        provider1:      uap_Provider2
+        tender_owner:   uap_Owner
+        viewer:         uap_Viewer
+    intervals:
+        auctions:
+            accelerator: 1440
+            auction:  [20, 19]
+        lots:
+            accelerator: 720
+    timeout_on_wait: 45
