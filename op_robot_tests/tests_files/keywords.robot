@@ -776,6 +776,23 @@ Require Failure
   ...      active.tendering
 
 
+Дочекатись дати закінчення періоду уточнень
+  [Arguments]  ${username}  ${tender_uaid}
+  # XXX: HACK: Same as above
+  ${date}=  Set Variable  ${USERS.users['${username}'].tender_data.data.enquiryPeriod.endDate}
+  wait_and_write_to_console  ${date}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      5 min 15 sec
+  ...      15 sec
+  ...      Run Keyword And Expect Error  *
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      active.enquiry
+
+
 Дочекатись дати початку періоду аукціону
   [Arguments]  ${username}  ${tender_uaid}
   Оновити LAST_MODIFICATION_DATE
