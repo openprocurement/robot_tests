@@ -2,6 +2,8 @@
 
 -v minNumberOfQualifiedBids:2
 
+-v ITEM_ADDRESS: False
+
 -v NUMBER_OF_ITEMS:1
 
 -i create_tender

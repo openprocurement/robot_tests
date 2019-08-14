@@ -24,6 +24,7 @@ class OP_Provider(BaseProvider):
     addresses = __fake_data.addresses
     classifications_other = __fake_data.classifications_other
     schemes_other = __fake_data.schemes_other
+    schemes_no_validation = __fake_data.schemes_no_validation
     items_base_data_other = __fake_data.items_base_data_other
     additionalIdentifiers = __fake_data.additionalIdentifiers
 
@@ -106,6 +107,10 @@ class OP_Provider(BaseProvider):
         return self.random_element(self.schemes_other)
 
     @classmethod
+    def scheme_no_validation(self):
+        return self.random_element(self.schemes_no_validation)
+
+    @classmethod
     def additionalIdentifier(self):
         return self.random_element(self.additionalIdentifiers)
 
@@ -135,16 +140,20 @@ class OP_Provider(BaseProvider):
                 classification = entity
                 break
 
-        address = self.random_element(self.addresses)
         item = {
             "description": item_base_data["description"],
             "description_ru": item_base_data["description_ru"],
             "description_en": item_base_data["description_en"],
             "classification": classification["classification"],
             "additionalClassifications": classification["additionalClassifications"],
-            "address": address["deliveryAddress"],
-            "deliveryLocation": address["deliveryLocation"],
             "unit": item_base_data["unit"],
             "quantity": self.randomize_nb_elements(number=item_base_data["quantity"], le=80, ge=120)
         }
+
+        if classification["classification"]["id"] not in self.schemes_no_validation:
+            address = self.random_element(self.addresses)
+            item.update({
+                "address": address["deliveryAddress"]
+                })
+
         return deepcopy(item)
