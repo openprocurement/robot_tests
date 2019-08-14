@@ -29,6 +29,12 @@ __version__ = '2015-07-01'
 # See zc.buildout's changelog if this version is up to date.
 
 tmpeggs = tempfile.mkdtemp(prefix='bootstrap-')
+eggsdir = os.path.join(os.path.dirname(__file__), 'eggs')
+try:
+    os.mkdir(eggsdir)
+except OSError as e:
+    if e.errno != 17:
+        raise
 
 usage = '''\
 [DESIRED PYTHON FOR BUILDOUT] bootstrap.py [options]
@@ -64,10 +70,13 @@ parser.add_option("--allow-site-packages",
                   action="store_true", default=False,
                   help=("Let bootstrap.py use existing site packages"))
 parser.add_option("--buildout-version",
+                  default='2.5.3',
                   help="Use a specific zc.buildout version")
 parser.add_option("--setuptools-version",
+                  default='33.1.1',
                   help="Use a specific setuptools version")
 parser.add_option("--setuptools-to-dir",
+                  default=eggsdir,
                   help=("Allow for re-use of existing directory of "
                         "setuptools versions"))
 

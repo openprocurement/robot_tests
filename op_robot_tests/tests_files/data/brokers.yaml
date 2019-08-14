@@ -57,14 +57,14 @@ Etender:
             tender:  [0, 20]
         dgfOtherAssets:
             accelerator: 1440
-            auction:  [110, 25]
+            auction:  [50, 35]
     keywords_file: etender
     roles:
         provider:       Etender_Provider1
         provider1:      Etender_Provider2
         tender_owner:   Etender_Owner
         viewer:         Etender_Viewer
-    timeout_on_wait: 30
+    timeout_on_wait: 100
 DZO:
     intervals:
         default:
@@ -83,8 +83,8 @@ DZOauctions:
             enquiry: [0, 20]
             tender:  [0, 20]
         dgfOtherAssets:
-            accelerator: 144
-            auction:  [15, 20]
+            accelerator: 720
+            auction:  [85, 90]
     keywords_file: dzo
     roles:
         tender_owner:   DZO_Owner_auction
@@ -128,8 +128,8 @@ brizol:
             enquiry: [0, 17]
             tender:  [0, 19]
         dgfOtherAssets:
-            accelerator: 144
-            auction:  [8, 12]
+            accelerator: 1440
+            auction:  [45, 50]
     keywords_file: brizol
     roles:
         tender_owner:   brizol_Owner
@@ -144,7 +144,7 @@ aukzionua:
             tender:  [0, 19]
         dgfOtherAssets:
             accelerator: 1440
-            auction:  [45, 50]
+            auction:  [65, 70]
     keywords_file: aukzionua
     roles:
         tender_owner:   aukzionua_Owner
@@ -212,6 +212,21 @@ govfound:
         provider1:   govfound_Provider1
         viewer:   govfound_Viewer
     timeout_on_wait: 180
+25h8:
+    intervals:
+        default:
+            enquiry: [0, 17]
+            tender:  [0, 19]
+        dgfOtherAssets:
+            accelerator: 1440
+            auction:  [45, 50]
+    keywords_file: 25h8
+    roles:
+        tender_owner:   b25h8_Owner_auction
+        provider:       b25h8_Provider_auction
+        provider1:      b25h8_Provider1_auction
+        viewer:         b25h8_Viewer_auction
+    timeout_on_wait: 180
 ztv:
     intervals:
         default:
@@ -253,15 +268,15 @@ Promauctions:
             enquiry: [0, 15]
             tender:  [0, 25]
         dgfOtherAssets:
-            accelerator: 96
-            auction:  [55, 60]
+            accelerator: 1440
+            auction:  [70, 60]
     keywords_file: prom
     roles:
         tender_owner:   Prom_Owner
         viewer:         Prom_Viewer
         provider:       Prom_Provider
         provider1:      Prom_Provider1
-    timeout_on_wait: 300
+    timeout_on_wait: 330
 Publicbid:
     intervals:
         default:
@@ -280,18 +295,18 @@ Publicbid:
 SmartTender:
     intervals:
         default:
-            enquiry: [0, 10]
+            enquiry: [0, 20]
             tender:  [0, 20]
         dgfOtherAssets:
-            accelerator: 144
-            auction:  [45, 50]
+            accelerator: 720
+            auction:  [40, 45]
     keywords_file: smarttender
     roles:
         provider:       SmartTender_Provider1
         provider1:      SmartTender_Provider2
         tender_owner:   SmartTender_Owner
         viewer:         SmartTender_Viewer
-    timeout_on_wait: 50
+    timeout_on_wait: 30
 uatenders:
     intervals:
         default:
@@ -299,13 +314,13 @@ uatenders:
             tender:  [0, 30]
         dgfOtherAssets:
             accelerator: 360
-            auction:  [45, 50]
+            auction: [45, 50]
     keywords_file: uatenders
     roles:
-        provider:       uatenders_Provider
-        provider1:      uatenders_Provider1
         tender_owner:   uatenders_Owner
         viewer:         uatenders_Viewer
+        provider:       uatenders_Provider
+        provider1:      uatenders_Provider1
     timeout_on_wait: 60
 ubiz:
     intervals:
@@ -313,18 +328,16 @@ ubiz:
             enquiry: [0, 20]
             tender:  [0, 30]
         dgfOtherAssets:
-            accelerator: 180
-            auction: [50,55]
+            accelerator: 480
+            auction: [30,35]
     keywords_file: ubiz
-    homepage: 'http://test.ubiz.com.ua'
-    syncpage: 'http://test.ubiz.com.ua/site/sync'
-    syncdocs: 'http://test.ubiz.com.ua/site/syncdocs'
+    homepage: 'http://test.ubiz.com.ua/auctions2'
     roles:
         provider:       ubiz_Provider1
         provider1:      ubiz_Provider2
         tender_owner:   ubiz_Owner
         viewer:         ubiz_Viewer
-    timeout_on_wait: 180
+    timeout_on_wait: 90
 zakpro:
     intervals:
         default:
@@ -410,14 +423,14 @@ ecommodity:
         provider:       ecommodity_provider
         provider1:      ecommodity_provider1
         tender_owner:   ecommodity_owner
-    homepage: 'https://zakupki.e-commodity.fbp.com.ua'
+    homepage: 'http://testpro.e-commodity.fbp.com.ua'
     intervals:
          default:
              enquiry: [0, 10]
              tender:  [0, 15]
          dgfOtherAssets:
-             accelerator: 360
-             auction: [15, 20]
+             accelerator: 1440
+             auction: [25, 30]
     timeout_on_wait: 60
 etc:
     keywords_file: etc
@@ -467,72 +480,64 @@ comminnex:
             enquiry: [0, 20]
             tender:  [0, 30]
         dgfOtherAssets:
-            accelerator: 180
-            auction: [50,55]
+            accelerator: 480
+            auction: [30,35]
     keywords_file: comminnex
-    homepage: 'http://test.market.comminnex.com'
-    syncpage: 'http://test.market.comminnex.com/site/sync'
-    syncdocs: 'http://test.market.comminnex.com/site/syncdocs'
+    homepage: 'http://test.market.comminnex.com/auctions2'
     roles:
         provider:       comminnex_Provider1
         provider1:      comminnex_Provider2
         tender_owner:   comminnex_Owner
         viewer:         comminnex_Viewer
-    timeout_on_wait: 180
+    timeout_on_wait: 90
 torgibirgaukraine:
     intervals:
         default:
             enquiry: [0, 20]
             tender:  [0, 30]
         dgfOtherAssets:
-            accelerator: 180
-            auction: [45,50]
+            accelerator: 480
+            auction: [30,35]
     keywords_file: torgibirgaukraine
-    homepage: 'http://test.torgi.birga-ukraine.com.ua'
-    syncpage: 'http://test.torgi.birga-ukraine.com.ua/site/sync'
-    syncdocs: 'http://test.torgi.birga-ukraine.com.ua/site/syncdocs'
+    homepage: 'http://test.torgi.birga-ukraine.com.ua/auctions2'
     roles:
         provider:       torgibirgaukraine_Provider1
         provider1:      torgibirgaukraine_Provider2
         tender_owner:   torgibirgaukraine_Owner
         viewer:         torgibirgaukraine_Viewer
-    timeout_on_wait: 180
+    timeout_on_wait: 90
 statusexpert:
     intervals:
         default:
             enquiry: [0, 20]
             tender:  [0, 30]
         dgfOtherAssets:
-            accelerator: 180
-            auction: [50,55]
+            accelerator: 480
+            auction: [30,35]
     keywords_file: statusexpert
-    homepage: 'http://test.torgi.status-expert.com.ua'
-    syncpage: 'http://test.torgi.status-expert.com.ua/site/sync'
-    syncdocs: 'http://test.torgi.status-expert.com.ua/site/syncdocs'
+    homepage: 'http://test.torgi.status-expert.com.ua/auctions2'
     roles:
         provider:       statusexpert_Provider1
         provider1:      statusexpert_Provider2
         tender_owner:   statusexpert_Owner
         viewer:         statusexpert_Viewer
-    timeout_on_wait: 180
+    timeout_on_wait: 90
 vidol:
     intervals:
         default:
             enquiry: [0, 20]
             tender:  [0, 30]
         dgfOtherAssets:
-            accelerator: 180
-            auction: [50,55]
+            accelerator: 480
+            auction: [30,35]
     keywords_file: vidol
-    homepage: 'http://test.torgi.vidol.com.ua'
-    syncpage: 'http://test.torgi.vidol.com.ua/site/sync'
-    syncdocs: 'http://test.torgi.vidol.com.ua/site/syncdocs'
+    homepage: 'http://test.torgi.vidol.com.ua/auctions2'
     roles:
         provider:       vidol_Provider1
         provider1:      vidol_Provider2
         tender_owner:   vidol_Owner
         viewer:         vidol_Viewer
-    timeout_on_wait: 180
+    timeout_on_wait: 90
 uutb:
     intervals:
         default:
@@ -557,18 +562,16 @@ cuex:
             enquiry: [0, 20]
             tender:  [0, 30]
         dgfOtherAssets:
-            accelerator: 180
-            auction: [50,55]
+            accelerator: 480
+            auction: [30,35]
     keywords_file: cuex
-    homepage: 'http://testing.torgy.com.ua'
-    syncpage: 'http://testing.torgy.com.ua/site/sync'
-    syncdocs: 'http://testing.torgy.com.ua/site/syncdocs'
+    homepage: 'http://testing2.torgy.com.ua/auctions2'
     roles:
         provider:       cuex_Provider1
         provider1:      cuex_Provider2
         tender_owner:   cuex_Owner
         viewer:         cuex_Viewer
-    timeout_on_wait: 180
+    timeout_on_wait: 90
 nkcentr:
     keywords_file: nkcentr
     accelerator: 360
@@ -716,18 +719,16 @@ palata:
             enquiry: [0, 20]
             tender:  [0, 30]
         dgfOtherAssets:
-            accelerator: 180
-            auction: [65,70]
+            accelerator: 480
+            auction: [30,35]
     keywords_file: palata
-    homepage: 'http://testing.palata.com.ua'
-    syncpage: 'http://testing.palata.com.ua/site/sync'
-    syncdocs: 'http://testing.palata.com.ua/site/syncdocs'
+    homepage: 'http://testing2.palata.com.ua/auctions2'
     roles:
         provider:       palata_Provider1
         provider1:      palata_Provider2
         tender_owner:   palata_Owner
         viewer:         palata_Viewer
-    timeout_on_wait: 180
+    timeout_on_wait: 90
 tirex:
     intervals:
         default:
@@ -835,9 +836,9 @@ stolitsa:
 tabua:
     intervals:
         default:
-            accelerator: 360
+            accelerator: 1440
         dgfOtherAssets:
-            accelerator: 144
+            accelerator: 1440
             auction:  [75, 80]
     keywords_file: tabua
     startpage: 'http://staging_sale.tab.com.ua/'
@@ -862,3 +863,88 @@ uap:
         lots:
             accelerator: 720
     timeout_on_wait: 45
+=======
+tbums:
+    keywords_file: tbums
+    accelerator: 360
+    roles:
+        tender_owner:   tbums_Owner
+        provider:       tbums_Provider
+        provider1:      tbums_Provider1
+        viewer:         tbums_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 60
+kme:
+    keywords_file: kme
+    accelerator: 360
+    roles:
+        tender_owner:   kme_Owner
+        provider:       kme_Provider
+        provider1:      kme_Provider1
+        viewer:         kme_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 60
+sets:
+    keywords_file: sets
+    accelerator: 360
+    roles:
+        tender_owner:   sets_Owner
+        provider:       sets_Provider
+        provider1:      sets_Provider1
+        viewer:         sets_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 60
+biddingtime:
+    keywords_file: biddingtime
+    accelerator: 360
+    roles:
+        tender_owner:   biddingtime_Owner
+        provider:       biddingtime_Provider
+        provider1:      biddingtime_Provider1
+        viewer:         biddingtime_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 60
+tenderonline:
+    keywords_file: tenderonline
+    accelerator: 720
+    roles:
+        tender_owner:   tenderonline_Owner
+        provider:       tenderonline_Provider
+        provider1:      tenderonline_Provider1
+        viewer:         tenderonline_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10
+tsbgalcontract:
+    keywords_file: tsbgalcontract
+    accelerator: 720
+    roles:
+        tender_owner:   tsbgalcontract_Owner
+        provider:       tsbgalcontract_Provider
+        provider1:      tsbgalcontract_Provider1
+        viewer:         tsbgalcontract_Viewer
+    intervals:
+        default:
+            enquiry: [0, 10]
+            tender:  [0, 25]
+            auction: [25, 30]
+    timeout_on_wait: 10

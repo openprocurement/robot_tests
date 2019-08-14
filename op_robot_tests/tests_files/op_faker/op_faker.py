@@ -142,7 +142,7 @@ class OP_Provider(BaseProvider):
             "description_en": item_base_data["description_en"],
             "classification": classification["classification"],
             "additionalClassifications": classification["additionalClassifications"],
-            "deliveryAddress": address["deliveryAddress"],
+            "address": address["deliveryAddress"],
             "deliveryLocation": address["deliveryLocation"],
             "unit": item_base_data["unit"],
             "quantity": self.randomize_nb_elements(number=item_base_data["quantity"], le=80, ge=120)

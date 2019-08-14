@@ -68,12 +68,15 @@ Resource           resource.robot
 
 
 Можливість додати предмет закупівлі в тендер
+  ${len_of_items_before_patch}=  Run As  ${tender_owner}  Отримати кількість предметів в тендері  ${TENDER['TENDER_UAID']}
   ${item}=  Підготувати дані для створення предмету закупівлі  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['id']}
   Run As  ${tender_owner}  Додати предмет закупівлі  ${TENDER['TENDER_UAID']}  ${item}
   ${item_id}=  get_id_from_object  ${item}
   ${item_data}=  Create Dictionary  item=${item}  item_id=${item_id}
   ${item_data}=  munch_dict  arg=${item_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  item_data=${item_data}
+  ${len_of_items_after_patch}=  Run As  ${tender_owner}  Отримати кількість предметів в тендері  ${TENDER['TENDER_UAID']}
+  Run Keyword And Expect Error  *  Порівняти об'єкти  ${len_of_items_before_patch}  ${len_of_items_after_patch}
 
 
 Можливість видалити предмет закупівлі з тендера
@@ -83,17 +86,36 @@ Resource           resource.robot
 Неможливість додати предмет закупівлі в тендер
   ${len_of_items_before_patch}=  Run As  ${tender_owner}  Отримати кількість предметів в тендері  ${TENDER['TENDER_UAID']}
   ${item}=  Підготувати дані для створення предмету закупівлі  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]['classification']['id']}
-  Run As  ${tender_owner}  Додати предмет закупівлі  ${TENDER['TENDER_UAID']}  ${item}
+  Require Failure  ${tender_owner}  Додати предмет закупівлі  ${TENDER['TENDER_UAID']}  ${item}
   ${len_of_items_after_patch}=  Run As  ${tender_owner}  Отримати кількість предметів в тендері  ${TENDER['TENDER_UAID']}
   Порівняти об'єкти  ${len_of_items_before_patch}  ${len_of_items_after_patch}
 
 
 Неможливість видалити предмет закупівлі з тендера
   ${len_of_items_before_patch}=  Run As  ${tender_owner}  Отримати кількість предметів в тендері  ${TENDER['TENDER_UAID']}
-  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][0]}
-  Run As  ${tender_owner}  Видалити предмет закупівлі  ${TENDER['TENDER_UAID']}  ${item_id}
+  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].tender_data.data['items'][-1]}
+  Require Failure  ${tender_owner}  Видалити предмет закупівлі  ${TENDER['TENDER_UAID']}  ${item_id}
   ${len_of_items_after_patch}=  Run As  ${tender_owner}  Отримати кількість предметів в тендері  ${TENDER['TENDER_UAID']}
   Порівняти об'єкти  ${len_of_items_before_patch}  ${len_of_items_after_patch}
+
+
+Неможливість додати документацію до лоту
+  ${len_of_documents_before_patch}=  Run As  ${tender_owner}  Отримати кількість документів в тендері  ${TENDER['TENDER_UAID']}
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
+  Require Failure  ${tender_owner}  Завантажити документ  ${file_path}  ${TENDER['TENDER_UAID']}
+  ${len_of_documents_after_patch}=  Run As  ${tender_owner}  Отримати кількість документів в тендері  ${TENDER['TENDER_UAID']}
+  Порівняти об'єкти  ${len_of_documents_before_patch}  ${len_of_documents_after_patch}
+  Remove File  ${file_path}
+
+
+Неможливість редагувати документ
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
+  ${document}=  get_document_by_id  ${tender.data}  ${USERS.users['${tender_owner}'].tender_document.doc_id}
+  ${patch_data}=  Create Dictionary  data=${document}
+  Set To Dictionary  ${patch_data.data}  documentType=illustration
+  Run keyword and expect error  *  Call Method  ${USERS.users['${username}'].client}  patch_document  ${tender}  ${patch_data}
 
 
 Звірити відображення поля ${field} документа ${doc_id} із ${left} для користувача ${username}
@@ -183,6 +205,13 @@ Resource           resource.robot
 
 Отримати дані із поля ${field} тендера для користувача ${username}
   Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}
+
+
+Перевірити, чи тривалість між ${rectificationPeriod_endDate} і ${tenderPeriod_endDate} становить не менше ${days} днів
+  ${period_intervals}=  compute_intrs  ${BROKERS}  ${used_brokers}
+  ${seconds}=  convert_days_to_seconds  ${days}  ${period_intervals.${MODE}.accelerator}
+  ${status}=  compare_periods_duration  ${rectificationPeriod_endDate}  ${tenderPeriod_endDate}  ${seconds}
+  Should Be True  ${status}  msg=Період редагування лоту завершується менш ніж за 5 днів до закінчення періоду подачі пропозицій
 
 ##############################################################################################
 #             QUESTIONS
@@ -279,6 +308,14 @@ Resource           resource.robot
   Run as  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  ${field}  ${value}
 
 
+Можливість зменшити пропозицію до невалідної користувачем ${username}
+  ${starting_price}=  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  value.amount
+  ${minimalStep}=  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  minimalStep.amount
+  ${max_amount}=  Evaluate  ${starting_price}+${minimalStep}
+  ${value}=  create_fake_amount  ${starting_price}  ${max_amount}
+  Run As  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  value.amount  ${value}
+
+
 Можливість завантажити документ в пропозицію користувачем ${username}
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   ${bid_doc_upload}=  Run As  ${username}  Завантажити документ в ставку  ${file_path}  ${TENDER['TENDER_UAID']}
@@ -304,6 +341,9 @@ Resource           resource.robot
   ${auction_protocol_path}  ${file_title}  ${file_content}=  create_fake_doc
   Run As  ${username}  Завантажити протокол аукціону в авард  ${TENDER['TENDER_UAID']}  ${auction_protocol_path}  ${award_index}
   Remove File  ${auction_protocol_path}
+
+Можливість підтвердити цінову пропозицію учасником ${username}
+  Run As  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  status  active
 
 ##############################################################################################
 #             Cancellations
@@ -335,3 +375,9 @@ Resource           resource.robot
   ...      ${TENDER['TENDER_UAID']}
   ...      ${0}
   Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.contracts[0]}  status
+
+
+Звірити кількість сформованих авардів лоту із ${number_of_awards} для користувача ${username}
+  ${left}=  Convert To Integer  ${number_of_awards}
+  ${right}=  Run As  ${username}  Отримати кількість авардів в тендері  ${TENDER['TENDER_UAID']}
+  Порівняти об'єкти  ${left}  ${right}

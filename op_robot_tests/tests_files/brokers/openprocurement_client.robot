@@ -174,6 +174,7 @@ Library  openprocurement_client.utils
   ...                         ELSE  Set Variable  ${tender.data.auctionUrl}
   [return]  ${auctionUrl}
 
+
 ##############################################################################
 #             Tender operations
 ##############################################################################
@@ -236,6 +237,15 @@ Library  openprocurement_client.utils
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
   Run Keyword And Expect Error  *  Порівняти об'єкти  ${prev_value}  ${tender.data.${fieldname}}
   Set_To_Object   ${USERS.users['${username}'].tender_data}   ${fieldname}   ${fieldvalue}
+
+
+Редагувати ПДВ
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  Set_to_object  ${tender.data.value}  valueAddedTaxIncluded  True
+  Set_to_object  ${tender.data.minimalStep}  valueAddedTaxIncluded  True
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  patch_tender  ${tender}
+  Log  ${reply}
 
 
 Отримати кількість документів в тендері
@@ -448,6 +458,14 @@ Library  openprocurement_client.utils
   ...      ${number_of_documents}
   Log  ${number_of_documents}
   [return]  ${number_of_documents}
+
+
+Отримати кількість авардів в тендері
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${number_of_awards}=  get_length_of_item  ${tender.data}  awards
+  Log  ${number_of_awards}
+  [Return]  ${number_of_awards}
 
 ##############################################################################
 #             Qualification operations

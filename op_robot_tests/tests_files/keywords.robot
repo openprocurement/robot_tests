@@ -225,7 +225,8 @@ Get Broker Property By Username
 
 Підготувати дані для подання пропозиції
   [Arguments]  ${username}
-  ${bid}=  generate_test_bid_data  ${USERS.users['${username}'].tender_data.data}
+  # use ${USERS.users['${tender_owner}'].tender_data.data} because only tender_owner has access to the changed amount data
+  ${bid}=  generate_test_bid_data  ${USERS.users['${tender_owner}'].tender_data.data}
   [Return]  ${bid}
 
 
@@ -411,6 +412,14 @@ Log differences between dicts
   ${left}=  Set Variable  ${USERS.users['${tender_owner}'].initial_data.data.${field}}
   ${right}=  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}  ${Empty}
   compare_tender_attempts  ${left}  ${right}
+
+
+Звірити поле ${field} тендера усіх предметів для користувача ${username}
+  :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
+  \  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}]}
+  \  ${left}=  Set Variable  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}].${field}}
+  \  ${right}=  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}  ${item_id}
+  \  compare_additionalClassifications_description  ${right}
 
 
 Порівняти об'єкти
@@ -737,6 +746,13 @@ Require Failure
   ...      active.tendering
 
 
+Дочекатись дати закінчення періоду редагування лоту
+  [Arguments]  ${username}
+  wait_and_write_to_console  ${USERS.users['${username}'].tender_data.data.rectificationPeriod.endDate}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
+
+
 Дочекатись дати закінчення прийому пропозицій
   [Arguments]  ${username}  ${tender_uaid}
   # XXX: HACK: Same as above
@@ -773,17 +789,18 @@ Require Failure
   ...      active.auction
 
 
-Дочекатись дати початку періоду кваліфікації
+Дочекатись закінчення періоду аукціону
   [Arguments]  ${username}  ${tender_uaid}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
-  ...      30 min 15 sec
+  ...      90 min 15 sec
   ...      15 sec
+  ...      Run Keyword And Expect Error  *
   ...      Звірити статус тендера
   ...      ${username}
   ...      ${tender_uaid}
-  ...      active.qualification
+  ...      active.auction
 
 
 Оновити LAST_MODIFICATION_DATE

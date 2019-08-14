@@ -28,12 +28,42 @@ def create_fake_sentence():
     return fake.sentence(nb_words=10, variable_nb_words=True)
 
 
-def create_fake_tenderAttempts():
-   return fake.random_int(min=1, max=4)
+def create_fake_tenderAttempts(attempt):
+    if attempt == 1:
+        return random.choice([2, 3, 4])
+    else:
+        return 1
 
 
-def create_fake_amount():
-    return round(random.uniform(3000, 999999999.99), 2)
+def create_fake_title(language):
+    title = {
+            u'ua': u"[ТЕСТУВАННЯ] {}".format(fake.title()),
+            u'ru': u"[ТЕСТИРОВАНИЕ] {}".format(fake_ru.sentence(nb_words=2), variable_nb_words=True),
+            u'en': u"[TESTING] {}".format(fake_en.sentence(nb_words=2), variable_nb_words=True)
+    }
+    return title[language]
+
+
+def create_fake_description(language):
+    description = {
+            u'ua': fake.sentence(nb_words=10, variable_nb_words=True),
+            u'ru': fake_ru.sentence(nb_words=10, variable_nb_words=True),
+            u'en': fake_en.sentence(nb_words=10, variable_nb_words=True)
+    }
+    return description[language]
+
+
+def create_fake_dgfID():
+    return fake.dgfID()
+
+
+def convert_days_to_seconds(days, accelerator):
+    seconds = timedelta(days=int(days)).total_seconds()
+    return seconds / accelerator
+
+
+def create_fake_amount(min_value, max_value):
+    return round(random.uniform(min_value, max_value), 2)
 
 
 def create_fake_value(value_amount):
@@ -41,17 +71,16 @@ def create_fake_value(value_amount):
 
 
 def create_fake_minimal_step(value_amount):
-    return round(random.uniform(0.01, 0.03) * value_amount, 2)
+    return round(random.uniform(0.01, 0.1) * value_amount, 2)
 
 
 def create_fake_guarantee(value_amount):
-    guarantee = round(0.1 * value_amount, 2)
     # Required guarantee deposit must not be greater than 500 000 UAH
-    return guarantee if guarantee <= 500000 else 500000
+    return round(random.uniform(0.02, 0.1) * value_amount, 2)
 
 
 def create_fake_cancellation_reason():
-    reasons = [u"Згідно рішення виконавчої дирекції Фонду гарантування вкладів фізичних осіб",
+    reasons = [u"Згідно рішення виконавчої дирекції Замовника",
                u"Порушення порядку публікації оголошення"]
     return random.choice(reasons)
 
@@ -111,7 +140,7 @@ def create_fake_url():
 
 def test_tender_data(params, periods=("enquiry", "tender")):
     now = get_now()
-    value_amount = create_fake_amount()  # max value equals to budget of Ukraine in hryvnias
+    value_amount = create_fake_amount(3000, 999999999.99)  # max value equals to budget of Ukraine in hryvnias
 
     data = {
         "mode": "test",
@@ -126,7 +155,7 @@ def test_tender_data(params, periods=("enquiry", "tender")):
         "value": {
             "amount": value_amount,
             "currency": u"UAH",
-            "valueAddedTaxIncluded": True
+            "valueAddedTaxIncluded": False
         },
         "guarantee": {
             "amount": create_fake_guarantee(value_amount),
@@ -134,7 +163,8 @@ def test_tender_data(params, periods=("enquiry", "tender")):
         },
         "minimalStep": {
             "amount": create_fake_minimal_step(value_amount),
-            "currency": u"UAH"
+            "currency": u"UAH",
+            "valueAddedTaxIncluded": False
         },
         "items": [],
     }
@@ -144,6 +174,10 @@ def test_tender_data(params, periods=("enquiry", "tender")):
         'accelerator={}'.format(accelerator)
 
     data["procuringEntity"]["kind"] = "other"
+
+    data['rectificationPeriod'] = {
+            "endDate": (get_now() + timedelta(minutes=(random.randint(5, 19) * 1440) / accelerator)).isoformat(),
+    }
 
     scheme_group = fake.scheme_other()[:4]
     for i in range(params['number_of_items']):
@@ -247,11 +281,9 @@ def test_item_data(scheme):
     data["description_en"] = field_with_id("i", data["description_en"])
     data["description_ru"] = field_with_id("i", data["description_ru"])
     days = fake.random_int(min=1, max=30)
-    data["deliveryAddress"]["countryName_en"] = translate_country_en(data["deliveryAddress"]["countryName"])
-    data["deliveryAddress"]["countryName_ru"] = translate_country_ru(data["deliveryAddress"]["countryName"])
     data["contractPeriod"] = {
-                "startDate": (get_now() + timedelta(minutes=70)).isoformat(),
-                "endDate": (get_now() + timedelta(minutes=100)).isoformat()
+                "startDate": get_now().replace(hour=0, minute=0, second=0, microsecond=0).isoformat(),
+                "endDate": get_now().replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
     }
     data["quantity"] = round(random.uniform(1, 10), 3)
     return munchify(data)
@@ -261,7 +293,7 @@ def test_tender_data_dgf_other(params):
     data = test_tender_data(params, [])
 
     data['dgfID'] = fake.dgfID()
-    data['tenderAttempts'] =  fake.random_int(min=1, max=4)
+    data['tenderAttempts'] = fake.random_int(min=1, max=4)
     data['minNumberOfQualifiedBids'] = int(params['minNumberOfQualifiedBids'])
     del data["procuringEntity"]
 
