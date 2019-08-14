@@ -1770,6 +1770,37 @@ users:
         browser:  chrome
         position: [800, 400]
         size:     [800, 700]
+    uap_Owner:
+        broker:   uap
+        homepage: "http://uaplatform.com.ua/#/"
+        login:    holder
+        password: Qq123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    uap_Provider1:
+        broker:   uap
+        homepage: "http://uaplatform.com.ua/#/"
+        login:    auto4
+        password: Qq123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    uap_Provider2:
+        broker:   uap
+        homepage: "http://uaplatform.com.ua/#/"
+        login:    auto26
+        password: Qq123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    uap_Viewer:
+        broker:   uap
+        homepage: "http://uaplatform.com.ua/#/"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 800]
+=======
     tbums_Owner:
         broker:   tbums
         homepage: "http://test.proumstrade.com.ua/user/login"
