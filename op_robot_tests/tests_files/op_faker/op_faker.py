@@ -24,6 +24,7 @@ class OP_Provider(BaseProvider):
     addresses = __fake_data.addresses
     classifications_other = __fake_data.classifications_other
     schemes_other = __fake_data.schemes_other
+    schemes_geb = __fake_data.schemes_geb
     items_base_data_other = __fake_data.items_base_data_other
     additionalIdentifiers = __fake_data.additionalIdentifiers
 
@@ -104,6 +105,10 @@ class OP_Provider(BaseProvider):
     @classmethod
     def scheme_other(self):
         return self.random_element(self.schemes_other)
+
+    @classmethod
+    def scheme_geb(self):
+        return self.random_element(self.schemes_geb)
 
     @classmethod
     def additionalIdentifier(self):

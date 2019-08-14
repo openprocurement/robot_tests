@@ -1,6 +1,5 @@
 *** Settings ***
-Resource        keywords.robot
-Resource        resource.robot
+Resource        base_keywords.robot
 Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
@@ -31,6 +30,46 @@ Suite Teardown  Test Suite Teardown
   ${file_path}  ${file_title}  ${file_content}=  create_fake_doc
   Run As  ${tender_owner}  Завантажити угоду до тендера  ${TENDER['TENDER_UAID']}  -1  ${file_path}
   Remove File  ${file_path}
+
+
+Можливість встановити дату підписання угоди
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування угоди
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      dateSigned
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${dateSigned}=  create_fake_date
+  Set to dictionary  ${USERS.users['${tender_owner}']}  dateSigned=${dateSigned}
+  Run As  ${tender_owner}  Встановити дату підписання угоди  ${TENDER['TENDER_UAID']}  -1  ${dateSigned}
+
+
+Відображення дати підписання угоди
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних угоди
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      dateSigned
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля contracts[-1].dateSigned тендера із ${USERS.users['${tender_owner}'].dateSigned} для користувача ${viewer}
+
+
+Можливість редагувати вартість угоди
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування угоди
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_contract_value
+  ...      critical
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість редагувати вартість угоди
+
+Відображення зміненої вартості угоди
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних угоди
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_contract_value
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля contracts[-1].value.amount тендера із ${USERS.users['${tender_owner}'].amount} для користувача ${viewer}
 
 
 Можливість укласти угоду для лоту

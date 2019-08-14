@@ -35,6 +35,9 @@ Default:
         dgfOtherAssets:
             accelerator: 1440
             auction:  [25, 30]
+        geb:
+            accelerator: 360
+            auction:  [30, 30]
     # Synchronization delay, in seconds
     timeout_on_wait: 300
 Quinta:

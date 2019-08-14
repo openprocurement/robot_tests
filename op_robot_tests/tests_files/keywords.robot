@@ -208,8 +208,9 @@ Get Broker Property By Username
 
 Підготувати дані для створення предмету закупівлі
   [Arguments]  ${scheme}
-  ${item} =  Run Keyword If  '${MODE}'=='dgfFinancialAssets'  test_item_data_financial  ${scheme[0:4]}
-  ...        ELSE  test_item_data  ${scheme[0:4]}
+  ${decimal_digits}=  Set Variable If  '${MODE}'=='geb'  4  3
+  Log  ${decimal_digits}
+  ${item}=  test_item_data  ${scheme[0:4]}  ${decimal_digits}
   [Return]  ${item}
 
 
@@ -414,12 +415,14 @@ Log differences between dicts
   compare_tender_attempts  ${left}  ${right}
 
 
-Звірити поле ${field} тендера усіх предметів для користувача ${username}
+Звірити відображення опису додаткової класифікаці усіх предметів для користувача ${username}
+  ${field}=  Set Variable  additionalClassifications[0].description
   :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
   \  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}]}
   \  ${left}=  Set Variable  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}].${field}}
   \  ${right}=  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}  ${item_id}
-  \  compare_additionalClassifications_description  ${right}
+  \  Run Keyword If  '${MODE}'=='dgfOtherAssets'  compare_additionalClassifications_description  ${right}
+  \  ...        ELSE  Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${left}  ${field}  ${item_id}
 
 
 Порівняти об'єкти
@@ -588,7 +591,7 @@ Log differences between dicts
   ...      15 s
   ...      Run As  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
   Should Be True  '${url}'
-  Should Match Regexp  ${url}  ^https?:\/\/sandbox\.ea2\.openprocurement\.auction\/auctions\/([0-9A-Fa-f]{32})
+  Should Match Regexp  ${url}  ^https?:\/\/sandbox\.ea2\.openprocurement\.auction\/auctions|texas-auctions\/([0-9A-Fa-f]{32})
   Log  URL аукціону для глядача: ${url}
 
 
@@ -603,7 +606,7 @@ Log differences between dicts
   ...      15 s
   ...      Run As  ${username}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
   Should Be True  '${url}'
-  Should Match Regexp  ${url}  ^https?:\/\/sandbox\.ea2\.openprocurement\.auction\/auctions\/([0-9A-Fa-f]{32})
+  Should Match Regexp  ${url}  ^https?:\/\/sandbox\.ea2\.openprocurement\.auction\/auctions|texas-auctions\/([0-9A-Fa-f]{32})
   Log  URL аукціону для учасника: ${url}
 
 
@@ -747,10 +750,17 @@ Require Failure
 
 
 Дочекатись дати закінчення періоду редагування лоту
-  [Arguments]  ${username}
+  [Arguments]  ${username}  ${tender_uaid}
   wait_and_write_to_console  ${USERS.users['${username}'].tender_data.data.rectificationPeriod.endDate}
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
+  Wait until keyword succeeds
+  ...      12 min 15 sec
+  ...      15 sec
+  ...      Звірити статус тендера
+  ...      ${username}
+  ...      ${tender_uaid}
+  ...      active.tendering
 
 
 Дочекатись дати закінчення прийому пропозицій
@@ -767,7 +777,7 @@ Require Failure
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
-  ...      5 min 15 sec
+  ...      15 min 15 sec
   ...      15 sec
   ...      Run Keyword And Expect Error  *
   ...      Звірити статус тендера
@@ -781,7 +791,7 @@ Require Failure
   Оновити LAST_MODIFICATION_DATE
   Дочекатись синхронізації з майданчиком  ${username}
   Wait until keyword succeeds
-  ...      12 min 15 sec
+  ...      14 min 15 sec
   ...      15 sec
   ...      Звірити статус тендера
   ...      ${username}

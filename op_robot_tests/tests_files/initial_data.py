@@ -10,7 +10,7 @@ from .local_time import get_now
 from op_faker import OP_Provider
 import os
 import random
-
+import re
 
 fake_en = Factory.create(locale='en_US')
 fake_ru = Factory.create(locale='ru_RU')
@@ -37,24 +37,28 @@ def create_fake_tenderAttempts(attempt):
 
 def create_fake_title(language):
     title = {
-            u'ua': u"[ТЕСТУВАННЯ] {}".format(fake.title()),
-            u'ru': u"[ТЕСТИРОВАНИЕ] {}".format(fake_ru.sentence(nb_words=2), variable_nb_words=True),
-            u'en': u"[TESTING] {}".format(fake_en.sentence(nb_words=2), variable_nb_words=True)
+        u'ua': u"[ТЕСТУВАННЯ] {}".format(fake.title()),
+        u'ru': u"[ТЕСТИРОВАНИЕ] {}".format(fake_ru.sentence(nb_words=2), variable_nb_words=True),
+        u'en': u"[TESTING] {}".format(fake_en.sentence(nb_words=2), variable_nb_words=True)
     }
     return title[language]
 
 
 def create_fake_description(language):
     description = {
-            u'ua': fake.sentence(nb_words=10, variable_nb_words=True),
-            u'ru': fake_ru.sentence(nb_words=10, variable_nb_words=True),
-            u'en': fake_en.sentence(nb_words=10, variable_nb_words=True)
+        u'ua': fake.sentence(nb_words=10, variable_nb_words=True),
+        u'ru': fake_ru.sentence(nb_words=10, variable_nb_words=True),
+        u'en': fake_en.sentence(nb_words=10, variable_nb_words=True)
     }
     return description[language]
 
 
 def create_fake_dgfID():
     return fake.dgfID()
+
+
+def create_fake_date():
+    return get_now().isoformat()
 
 
 def convert_days_to_seconds(days, accelerator):
@@ -113,6 +117,18 @@ def create_fake_doc():
     return tf.name, os.path.basename(tf.name), content
 
 
+def create_fake_item_description(description):
+    return re.match(r'(^[filq]-[0-9a-fA-F]{8}): ', description).group(0) + fake.title()
+
+
+def create_fake_items_quantity():
+    return round(random.uniform(1, 10), 3)
+
+
+def create_fake_scheme_id_geb():
+    return fake.scheme_geb()
+
+
 def create_fake_image():
     # TODO: Move this code (as well as other "fake" stuff in this file)
     # into op_faker
@@ -133,9 +149,37 @@ def create_fake_url():
     base = 'https://dummyimage.com'
     background_color = ''.join([random.choice('0123456789ABCDEF') for _ in range(6)])
     font_color = ''.join([random.choice('0123456789ABCDEF') for _ in range(6)])
-    size_x =  random.randint(10, 1000)
-    size_y =  random.randint(10, 1000)
+    size_x = random.randint(10, 1000)
+    size_y = random.randint(10, 1000)
     return '{0}/{1}x{2}/{3}/{4}.png'.format(base, size_x, size_y, background_color, font_color)
+
+
+def create_fake_bankName(old_name=None):
+    banks_name = [u'PrivatBank', u'Oschadbank', u'Raiffeisen Bank Aval', u'KredoBank', u'ProCredit Bank']
+    if old_name:
+        banks_name.remove(old_name)
+    return random.choice(banks_name)
+
+
+def create_fake_month(old_value=False, start=1, end=12):
+    """
+    Example: P9M
+    """
+    month = range(start, end+1)
+    if old_value:
+        old_value = old_value.strip('PM')
+        month.remove(int(old_value))
+    return "P{}M".format(random.choice(month))
+
+
+
+def create_fake_scheme_id(scheme):
+    scheme_id = {
+        u'UA-MFO': random.randint(100000, 999999),
+        u'UA-EDR': random.randint(10000000, 99999999),
+        u'accountNumber': random.randint(1000000000, 9999999999)
+    }
+    return str(scheme_id[scheme])
 
 
 def test_tender_data(params, periods=("enquiry", "tender")):
@@ -171,13 +215,9 @@ def test_tender_data(params, periods=("enquiry", "tender")):
 
     accelerator = params['intervals']['accelerator']
     data['procurementMethodDetails'] = 'quick, ' \
-        'accelerator={}'.format(accelerator)
+                                       'accelerator={}'.format(accelerator)
 
     data["procuringEntity"]["kind"] = "other"
-
-    data['rectificationPeriod'] = {
-            "endDate": (get_now() + timedelta(minutes=(random.randint(5, 19) * 1440) / accelerator)).isoformat(),
-    }
 
     scheme_group = fake.scheme_other()[:4]
     for i in range(params['number_of_items']):
@@ -250,8 +290,19 @@ def test_bid_value(max_value_amount, minimalStep):
     return munchify({
         "value": {
             "currency": "UAH",
-            "amount": round(random.uniform(1, 1.05)*(max_value_amount + minimalStep), 2),
+            "amount": round(random.uniform(1, 1.05) * (max_value_amount + minimalStep), 2),
             "valueAddedTaxIncluded": True
+        }
+    })
+
+
+def test_bid_qualified(bid_number, bid_id):
+    return munchify({
+        "data": {
+            "status": "active",
+            "qualified": True,
+            "bidNumber": int(bid_number),
+            "id": bid_id
         }
     })
 
@@ -272,9 +323,9 @@ def test_supplier_data():
     })
 
 
-def test_item_data(scheme):
-    #using typical functions for dgf other and all other modes besides dgf financial
-    #items will be genareted from other CAV-PS group
+def test_item_data(scheme, decimal_digits=3):
+    # using typical functions for dgf other and all other modes besides dgf financial
+    # items will be genareted from other CAV-PS group
     data = fake.fake_item(scheme)
 
     data["description"] = field_with_id("i", data["description"])
@@ -282,17 +333,17 @@ def test_item_data(scheme):
     data["description_ru"] = field_with_id("i", data["description_ru"])
     days = fake.random_int(min=1, max=30)
     data["contractPeriod"] = {
-                "startDate": get_now().replace(hour=0, minute=0, second=0, microsecond=0).isoformat(),
-                "endDate": get_now().replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
+        "startDate": get_now().replace(hour=0, minute=0, second=0, microsecond=0).isoformat(),
+        "endDate": get_now().replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
     }
-    data["quantity"] = round(random.uniform(1, 10), 3)
+    data["quantity"] = round(random.uniform(1, 10), int(decimal_digits))
     return munchify(data)
 
 
 def test_tender_data_dgf_other(params):
     data = test_tender_data(params, [])
 
-    data['dgfID'] = fake.dgfID()
+    data['lotIdentifier'] = fake.dgfID()
     data['tenderAttempts'] = fake.random_int(min=1, max=4)
     data['minNumberOfQualifiedBids'] = int(params['minNumberOfQualifiedBids'])
     del data["procuringEntity"]
@@ -317,5 +368,60 @@ def test_tender_data_dgf_other(params):
     for i in range(params['number_of_items']):
         scheme_group_other = fake.scheme_other()[:4]
         new_item = test_item_data(scheme_group_other)
+        data['items'].append(new_item)
+    return data
+
+
+def test_tender_data_dgf_geb(params):
+    data = test_tender_data(params, [])
+    value_amount = create_fake_amount(3000, 999999999.99)  # max value equals to budget of Ukraine in hryvnias
+
+    for i in range(params['number_of_items']):
+        data['items'].pop()
+
+    scheme = random.choice([u'UA-EDR', u'UA-MFO', u'accountNumber'])
+    scheme_id = create_fake_scheme_id(scheme)
+
+    data['procurementMethodType'] = "landLease"
+    data['lotIdentifier'] = fake.dgfID()
+    data['lotHolder'] = fake.procuringEntity()
+    data['registrationFee'] = {
+        "amount": create_fake_guarantee(value_amount),
+        "currency": u"UAH"
+    }
+    data['bankAccount'] = {
+        "description": fake.description(),
+        "bankName": create_fake_bankName(),
+        "accountIdentification": [{
+            "scheme": scheme,
+            "id": scheme_id,
+            "description": fake.description()
+        }]
+    }
+    data['budgetSpent'] = {
+        "amount": value_amount,
+        "currency": u"UAH",
+        "valueAddedTaxIncluded": False
+    }
+    data['tenderAttempts'] = fake.random_int(min=1, max=10)
+    data['contractTerms'] = {
+        "type": "lease",
+        "leaseTerms": {
+            "leaseDuration": create_fake_month(),
+        }
+    }
+
+    period_dict = {}
+    inc_dt = get_now()
+    period_dict["auctionPeriod"] = {}
+    inc_dt += timedelta(minutes=params['intervals']['auction'][0])
+    period_dict["auctionPeriod"]["startDate"] = inc_dt.isoformat()
+    data.update(period_dict)
+
+    data["minNumberOfQualifiedBids"] = int(params['minNumberOfQualifiedBids'])
+
+    scheme_group = fake.scheme_geb()[:4]
+    for i in range(params['number_of_items']):
+        new_item = test_item_data(scheme_group, 4)
         data['items'].append(new_item)
     return data

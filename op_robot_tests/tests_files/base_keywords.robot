@@ -99,6 +99,20 @@ Resource           resource.robot
   Порівняти об'єкти  ${len_of_items_before_patch}  ${len_of_items_after_patch}
 
 
+Звірити відображення зміненого поля ${field} предмета ${index} для користувача ${username}
+  ${item_id}=  get_id_from_object  ${USERS.users['${viewer}'].tender_data.data['items'][${index}]}
+  ${field_value}=  Run As  ${viewer}  Отримати інформацію із предмету  ${TENDER['TENDER_UAID']}  ${item_id}  ${field}
+  Порівняти об'єкти  ${field_value}  ${USERS.users['${tender_owner}'].initial_data.data['items'][${index}].${field}}
+  Set_To_Object  ${USERS.users['${username}'].tender_data.data['items'][${index}]}  ${field}  ${field_value}
+
+
+
+Можливість змінити поле ${field_name} предмета ${index} на ${field_value}
+  ${item_id}=  get_id_from_object  ${USERS.users['${viewer}'].tender_data.data['items'][${index}]}
+  Run As  ${tender_owner}  Внести зміни в предмет  ${item_id}  ${TENDER['TENDER_UAID']}  ${field_name}  ${field_value}
+  Set_To_Object  ${USERS.users['${tender_owner}'].initial_data.data['items'][${index}]}  ${field_name}  ${field_value}
+
+
 Неможливість додати документацію до лоту
   ${len_of_documents_before_patch}=  Run As  ${tender_owner}  Отримати кількість документів в тендері  ${TENDER['TENDER_UAID']}
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
@@ -282,6 +296,8 @@ Resource           resource.robot
 ##############################################################################################
 
 Можливість подати цінову пропозицію користувачем ${username}
+  Run Keyword If  '${mode}' == 'geb'
+  ...      Дочекатись дати закінчення періоду редагування лоту  ${tender_owner}  ${TENDER['TENDER_UAID']}
   ${bid}=  Підготувати дані для подання пропозиції  ${username}
   ${bidresponses}=  Create Dictionary  bid=${bid}
   Set To Dictionary  ${USERS.users['${username}']}  bidresponses=${bidresponses}
@@ -323,6 +339,13 @@ Resource           resource.robot
   Remove File  ${file_path}
 
 
+Можливість завантажити документ з типом ${doc_type} в пропозицію користувачем ${username}
+  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
+  ${bid_doc_upload}=  Run As  ${username}  Завантажити документ в ставку з типом  ${TENDER['TENDER_UAID']}  ${file_path}  ${doc_type}
+  Set To Dictionary  ${USERS.users['${username}'].bidresponses}  bid_doc_upload=${bid_doc_upload}
+  Remove File  ${file_path}
+
+
 Можливість змінити документацію цінової пропозиції користувачем ${username}
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   ${docid}=  Get Variable Value  ${USERS.users['${username}'].bidresponses['bid_doc_upload']['upload_response'].data.id}
@@ -339,11 +362,20 @@ Resource           resource.robot
 
 Можливість завантажити протокол аукціону в авард ${award_index} користувачем ${username}
   ${auction_protocol_path}  ${file_title}  ${file_content}=  create_fake_doc
-  Run As  ${username}  Завантажити протокол аукціону в авард  ${TENDER['TENDER_UAID']}  ${auction_protocol_path}  ${award_index}
+  Run As  ${username}  Завантажити протокол в авард  ${TENDER['TENDER_UAID']}  ${auction_protocol_path}  ${award_index}  auctionProtocol
+  Remove File  ${auction_protocol_path}
+
+Можливість завантажити протокол скасування в авард ${award_index} користувачем ${username}
+  ${auction_protocol_path}  ${file_title}  ${file_content}=  create_fake_doc
+  Run As  ${username}  Завантажити протокол в авард  ${TENDER['TENDER_UAID']}  ${auction_protocol_path}  ${award_index}  rejectionProtocol
   Remove File  ${auction_protocol_path}
 
 Можливість підтвердити цінову пропозицію учасником ${username}
   Run As  ${username}  Змінити цінову пропозицію  ${TENDER['TENDER_UAID']}  status  active
+
+
+Можливість кваліфікувати цінову пропозицію ${bidNumber} користувачем ${username}
+  Run As  ${username}  Кваліфікувати пропозицію  ${TENDER['TENDER_UAID']}  ${bidNumber}
 
 ##############################################################################################
 #             Cancellations
@@ -381,3 +413,11 @@ Resource           resource.robot
   ${left}=  Convert To Integer  ${number_of_awards}
   ${right}=  Run As  ${username}  Отримати кількість авардів в тендері  ${TENDER['TENDER_UAID']}
   Порівняти об'єкти  ${left}  ${right}
+
+
+Можливість редагувати вартість угоди
+  ${starting_price}=  Отримати дані із тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  contracts[0].value.amount
+  ${minimalStep}=  Отримати дані із тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  minimalStep.amount
+  ${amount}=  Evaluate  ${starting_price}+${minimalStep}
+  Set to dictionary  ${USERS.users['${tender_owner}']}  amount=${amount}
+  Run As  ${tender_owner}  Редагувати угоду  ${TENDER['TENDER_UAID']}  -1  value.amount  ${amount}

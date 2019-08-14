@@ -2940,15 +2940,78 @@
         {
             "additionalClassifications": [
                 {
-                    "scheme": "CPVS",
-                    "id": "PA01-7",
-                    "description": "Оренда"
+                    "scheme": "kvtspz",
+                    "id": "01.01",
+                    "description": "Для ведення товарного сільськогосподарського виробництва"
+                },
+                {
+                    "scheme": "cadastralNumber",
+                    "id": "12.02",
+                    "description": "Для розміщення та експлуатації будівель і споруд морського транспорту"
                 }
             ],
             "classification": {
                 "scheme": "CAV-PS",
-                "id": "05110000-9",
-                "description": "Молокозаводи"
+                "id": "06110000-6",
+                "description": "Земельні ділянки"
+            }
+
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "kvtspz",
+                    "id": "02.03",
+                    "description": "Для будівництва і обслуговування багатоквартирного житлового будинку"
+                },
+                {
+                    "scheme": "cadastralNumber",
+                    "id": "12.02",
+                    "description": "Для розміщення та експлуатації будівель і споруд морського транспорту"
+                }
+            ],
+            "classification": {
+                "scheme": "CAV-PS",
+                "id": "06111000-3",
+                "description": "Земельні ділянки"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "kvtspz",
+                    "id": "03.07",
+                    "description": "Для будівництва та обслуговування будівель торгівлі"
+                },
+                {
+                    "scheme": "cadastralNumber",
+                    "id": "12.02",
+                    "description": "Для розміщення та експлуатації будівель і споруд морського транспорту"
+                }
+            ],
+            "classification": {
+                "scheme": "CAV-PS",
+                "id": "06112000-0",
+                "description": "Земельні ділянки"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "kvtspz",
+                    "id": "07.04",
+                    "description": "Для колективного дачного будівництва"
+                },
+                {
+                    "scheme": "cadastralNumber",
+                    "id": "12.02",
+                    "description": "Для розміщення та експлуатації будівель і споруд морського транспорту"
+                }
+            ],
+            "classification": {
+                "scheme": "CAV-PS",
+                "id": "06120000-9",
+                "description": "Земельні ділянки"
             }
         },
         {
@@ -2961,8 +3024,8 @@
             ],
             "classification": {
                 "scheme": "CAV-PS",
-                "id": "06110000-6",
-                "description": "Земельні ділянки призначені для забудови"
+                "id": "05110000-9",
+                "description": "Молокозаводи"
             }
         },
         {
@@ -3148,7 +3211,6 @@
     ],
     "schemes_other": [
         "05110000-9",
-        "06110000-6",
         "04211000-0",
         "04111000-9",
         "30111000-0",
@@ -3156,6 +3218,12 @@
         "39710000-2",
         "16720000-8",
         "98910000-5"
+    ],
+    "schemes_geb": [
+        "06110000-6",
+        "06111000-3",
+        "06112000-0",
+        "06120000-9"
     ],
     "items_base_data_other": [
            {
@@ -3176,8 +3244,41 @@
             "description_en": "The land is intended for development",
             "quantity": 7,
             "unit": {
-                "code": "MTK",
-                "name": "метри квадратні"
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "scheme_id": "06111000-3",
+            "description": "Землі житлової забудови",
+            "description_ru": "Земли жилой застройки",
+            "description_en": "Land for residential development",
+            "quantity": 4,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "scheme_id": "06112000-0",
+            "description": "Землі громадської забудови",
+            "description_ru": "Земли общественной застройки",
+            "description_en": "Lands for public construction",
+            "quantity": 3,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+        {
+            "scheme_id": "06120000-9",
+            "description": "Землі з іншим призначенням",
+            "description_ru": "Земли с другим назначением",
+            "description_en": "Lands for other purposes",
+            "quantity": 1,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
             }
         },
         {
