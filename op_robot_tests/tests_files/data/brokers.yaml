@@ -1353,3 +1353,17 @@ agrobirga:
         auctions:
             accelerator: 360
     timeout_on_wait: 15
+uap:
+    keywords_file: uap
+    roles:
+        provider:       uap_Provider1
+        provider1:      uap_Provider2
+        tender_owner:   uap_Owner
+        viewer:         uap_Viewer
+    intervals:
+        auctions:
+            accelerator: 1440
+            auction:  [20, 19]
+        lots:
+            accelerator: 1440
+    timeout_on_wait: 45
