@@ -1365,5 +1365,5 @@ uap:
             accelerator: 1440
             auction:  [80, 30]
         lots:
-            accelerator: 90
+            accelerator: 1440
     timeout_on_wait: 45
