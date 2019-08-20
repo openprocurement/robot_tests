@@ -1362,8 +1362,8 @@ uap:
         viewer:         uap_Viewer
     intervals:
         auctions:
-            accelerator: 180
+            accelerator: 90
             auction:  [20, 19]
         lots:
-            accelerator: 180
+            accelerator: 90
     timeout_on_wait: 45
