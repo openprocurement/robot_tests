@@ -1362,7 +1362,7 @@ uap:
         viewer:         uap_Viewer
     intervals:
         auctions:
-            accelerator: 90
+            accelerator: 1440
             auction:  [20, 19]
         lots:
             accelerator: 90
