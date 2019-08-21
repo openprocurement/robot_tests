@@ -1363,7 +1363,7 @@ uap:
     intervals:
         auctions:
             accelerator: 1440
-            auction:  [40, 30]
+            auction:  [20, 19]
         lots:
-            accelerator: 1440
+            accelerator: 720
     timeout_on_wait: 45
