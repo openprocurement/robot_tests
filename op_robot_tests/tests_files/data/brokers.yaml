@@ -1388,3 +1388,20 @@ ecoex:
         dgfInsider:
             accelerator: 360
     timeout_on_wait: 20
+ubase:
+    keywords_file: ubase
+    roles:
+        tender_owner:   ubase_Owner
+        provider:       ubase_Provider
+        provider1:      ubase_Provider1
+        viewer:         ubase_Viewer
+    intervals:
+        default:
+            accelerator: 360
+        dgfFinancialAssets:
+           accelerator: 360
+        dgfOtherAssets:
+            accelerator: 360
+        dgfInsider:
+            accelerator: 360
+    timeout_on_wait: 30

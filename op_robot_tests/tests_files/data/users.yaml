@@ -2395,3 +2395,37 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
+    ubase_Owner:
+        broker:   ubase
+        homepage: "http://cbd1.ubase.com.ua/user/login"
+        default_page: "http://cbd1.ubase.com.ua/public"
+        login:    organizator
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    ubase_Provider:
+        broker:   ubase
+        homepage: "http://cbd1.ubase.com.ua/user/login"
+        default_page: "http://cbd1.ubase.com.ua/public"
+        login:    member
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    ubase_Provider1:
+        broker:   ubase
+        homepage: "http://cbd1.ubase.com.ua/user/login"
+        default_page: "http://cbd1.ubase.com.ua/public"
+        login:    member1
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    ubase_Viewer:
+        broker:   ubase
+        homepage: "http://cbd1.ubase.com.ua"
+        default_page: "http://cbd1.ubase.com.ua/public"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
