@@ -2576,3 +2576,37 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
+    thetender_Owner:
+        broker:   thetender
+        homepage: "http://cbd2.thetender.com.ua/user/login"
+        default_page: "http://cbd2.thetender.com.ua/public/index"
+        login:    privatizator
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    thetender_Provider:
+        broker:   thetender
+        homepage: "http://cbd2.thetender.com.ua/user/login"
+        default_page: "http://cbd2.thetender.com.ua/public/index"
+        login:    member
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    thetender_Provider1:
+        broker:   thetender
+        homepage: "http://cbd2.thetender.com.ua/user/login"
+        default_page: "http://cbd2.thetender.com.ua/public/index"
+        login:    member1
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    thetender_Viewer:
+        broker:   thetender
+        homepage: "http://cbd2.thetender.com.ua/user/login"
+        default_page: "http://cbd2.thetender.com.ua/public/index"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
