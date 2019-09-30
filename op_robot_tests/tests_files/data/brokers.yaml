@@ -1367,3 +1367,21 @@ uap:
         lots:
             accelerator: 720
     timeout_on_wait: 45
+thetender:
+    keywords_file: thetender
+    accelerator: 360
+    roles:
+        tender_owner:   thetender_Owner
+        provider:       thetender_Provider
+        provider1:      thetender_Provider1
+        viewer:         thetender_Viewer
+    intervals:
+        default:
+            accelerator: 360
+        dgfOtherAssets:
+            accelerator: 360
+        lots:
+            accelerator: 360
+        auctions:
+            accelerator: 360
+    timeout_on_wait: 15
