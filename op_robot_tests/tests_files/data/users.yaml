@@ -2429,3 +2429,37 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1366, 768]
+    torgibiz_Owner:
+        broker:   torgibiz
+        homepage: "http://cbd1.torgy.biz/user/login"
+        default_page: "http://cbd1.torgy.biz/public"
+        login:    organizator
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    torgibiz_Provider:
+        broker:   torgibiz
+        homepage: "http://cbd1.torgy.biz/user/login"
+        default_page: "http://cbd1.torgy.biz/public"
+        login:    member
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    torgibiz_Provider1:
+        broker:   torgibiz
+        homepage: "http://cbd1.torgy.biz/user/login"
+        default_page: "http://cbd1.torgy.biz/public"
+        login:    member1
+        password: 123456
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
+    torgibiz_Viewer:
+        broker:   torgibiz
+        homepage: "http://cbd1.torgy.biz"
+        default_page: "http://cbd1.torgy.biz/public"
+        browser:  chrome
+        position: [0, 0]
+        size:     [1366, 768]
