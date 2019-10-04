@@ -1405,3 +1405,20 @@ ubase:
         dgfInsider:
             accelerator: 360
     timeout_on_wait: 30
+torgibiz:
+    keywords_file: torgibiz
+    roles:
+        tender_owner:   torgibiz_Owner
+        provider:       torgibiz_Provider
+        provider1:      torgibiz_Provider1
+        viewer:         torgibiz_Viewer
+    intervals:
+        default:
+            accelerator: 360
+        dgfFinancialAssets:
+           accelerator: 360
+        dgfOtherAssets:
+            accelerator: 360
+        dgfInsider:
+            accelerator: 360
+    timeout_on_wait: 30
