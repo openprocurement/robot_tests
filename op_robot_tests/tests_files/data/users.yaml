@@ -373,15 +373,15 @@ users:
         size:     [1366, 800]
     centrex_Owner:
         broker:   centrex
-        homepage: "http://centrex.byustudio.in.ua"
-        login:    prozorroytenderowner@gmail.com
-        password: 123456
+        homepage: "http://test-eauction.centrex.com.ua"
+        login:    organiz_owner_test_bank_cbd1@byustudio.in.ua
+        password: organiz_owner_test_bank_cbd1@byustudio.in.ua
         browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     centrex_Provider:
         broker:   centrex
-        homepage: "http://centrex.byustudio.in.ua"
+        homepage: "http://test-eauction.centrex.com.ua"
         login:    prozorroyprovider1@gmail.com
         password: 123456
         browser:  Chrome
@@ -389,7 +389,7 @@ users:
         size:     [1366, 800]
     centrex_Provider1:
         broker:   centrex
-        homepage: "http://centrex.byustudio.in.ua"
+        homepage: "http://test-eauction.centrex.com.ua"
         login:    prozorroyprovider2@gmail.com
         password: 123456
         browser:  Chrome
@@ -397,7 +397,7 @@ users:
         size:     [1366, 800]
     centrex_Viewer:
         broker:   centrex
-        homepage: "http://centrex.byustudio.in.ua"
+        homepage: "http://test-eauction.centrex.com.ua"
         browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
@@ -640,34 +640,34 @@ users:
         size:     [640, 480]
     SmartTender_Viewer:
         broker:   SmartTender
-        homepage: "http://test.smarttender.biz/"
+        homepage: "http://test.smarttender.biz/test-tenders?allcat=1"
         browser:  chrome
-        position: [0, 0]
-        size:     [1920, 1080]
+        position: [0, 450]
+        size:     [640, 450]
     SmartTender_Provider1:
         broker:   SmartTender
-        homepage: "http://test.smarttender.biz/"
+        homepage: "http://test.smarttender.biz/test-tenders?allcat=1"
         login:    bened@it.ua
         password: 111111
         browser:  chrome
-        position: [0, 0]
-        size:     [1920, 1080]
+        position: [0, 450]
+        size:     [640, 450]
     SmartTender_Provider2:
         broker:   SmartTender
-        homepage: "http://test.smarttender.biz/"
+        homepage: "http://test.smarttender.biz/test-tenders?allcat=1"
         login:    my.mail.rudenko@gmail.com
         password: qwerty123
         browser:  chrome
-        position: [0, 0]
-        size:     [1920, 1080]
+        position: [0, 450]
+        size:     [640, 450]
     SmartTender_Owner:
         broker:   SmartTender
-        homepage: "http://test.smarttender.biz/"
+        homepage: "http://test.smarttender.biz/test-tenders?allcat=1"
         login:    PPR_BV
         password: 123321
         browser:  chrome
         position: [0, 0]
-        size:     [1920, 1080]
+        size:     [1400, 900]
     uatenders_Owner:
         broker:   uatenders
         homepage: "http://devs.zakupki.com.ua"
@@ -2395,71 +2395,33 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1366, 800]
-    ubase_Owner:
-        broker:   ubase
-        homepage: "http://cbd1.ubase.com.ua/user/login"
-        default_page: "http://cbd1.ubase.com.ua/public"
-        login:    organizator
+    rwsbank_Owner:
+        broker:   rwsbank
+        homepage: "https://test.torgy.rwsbank.com.ua"
+        login:    cloudemail40@gmail.com
         password: 123456
-        browser:  chrome
+        browser:  Chrome
         position: [0, 0]
-        size:     [1366, 768]
-    ubase_Provider:
-        broker:   ubase
-        homepage: "http://cbd1.ubase.com.ua/user/login"
-        default_page: "http://cbd1.ubase.com.ua/public"
-        login:    member
+        size:     [1366, 800]
+    rwsbank_Provider:
+        broker:   rwsbank
+        homepage: "https://test.torgy.rwsbank.com.ua"
+        login:    cloudemail4.0@gmail.com
         password: 123456
-        browser:  chrome
+        browser:  Chrome
         position: [0, 0]
-        size:     [1366, 768]
-    ubase_Provider1:
-        broker:   ubase
-        homepage: "http://cbd1.ubase.com.ua/user/login"
-        default_page: "http://cbd1.ubase.com.ua/public"
-        login:    member1
+        size:     [1366, 800]
+    rwsbank_Provider1:
+        broker:   rwsbank
+        homepage: "https://test.torgy.rwsbank.com.ua"
+        login:    cloudemail.40@gmail.com
         password: 123456
-        browser:  chrome
+        browser:  Chrome
         position: [0, 0]
-        size:     [1366, 768]
-    ubase_Viewer:
-        broker:   ubase
-        homepage: "http://cbd1.ubase.com.ua"
-        default_page: "http://cbd1.ubase.com.ua/public"
-        browser:  chrome
+        size:     [1366, 800]
+    rwsbank_Viewer:
+        broker:   rwsbank
+        homepage: "https://test.torgy.rwsbank.com.ua"
+        browser:  Chrome
         position: [0, 0]
-        size:     [1366, 768]
-    torgibiz_Owner:
-        broker:   torgibiz
-        homepage: "http://cbd1.torgy.biz/user/login"
-        default_page: "http://cbd1.torgy.biz/public"
-        login:    organizator
-        password: 123456
-        browser:  chrome
-        position: [0, 0]
-        size:     [1366, 768]
-    torgibiz_Provider:
-        broker:   torgibiz
-        homepage: "http://cbd1.torgy.biz/user/login"
-        default_page: "http://cbd1.torgy.biz/public"
-        login:    member
-        password: 123456
-        browser:  chrome
-        position: [0, 0]
-        size:     [1366, 768]
-    torgibiz_Provider1:
-        broker:   torgibiz
-        homepage: "http://cbd1.torgy.biz/user/login"
-        default_page: "http://cbd1.torgy.biz/public"
-        login:    member1
-        password: 123456
-        browser:  chrome
-        position: [0, 0]
-        size:     [1366, 768]
-    torgibiz_Viewer:
-        broker:   torgibiz
-        homepage: "http://cbd1.torgy.biz"
-        default_page: "http://cbd1.torgy.biz/public"
-        browser:  chrome
-        position: [0, 0]
-        size:     [1366, 768]
+        size:     [1366, 800]

@@ -1388,37 +1388,24 @@ ecoex:
         dgfInsider:
             accelerator: 360
     timeout_on_wait: 20
-ubase:
-    keywords_file: ubase
-    roles:
-        tender_owner:   ubase_Owner
-        provider:       ubase_Provider
-        provider1:      ubase_Provider1
-        viewer:         ubase_Viewer
+rwsbank:
     intervals:
         default:
-            accelerator: 360
+            enquiry: [0, 40]
+            tender:  [0, 40]
         dgfFinancialAssets:
-           accelerator: 360
+           accelerator: 120
+           auction:  [70, 80]
         dgfOtherAssets:
             accelerator: 360
+            auction:  [55, 65]
         dgfInsider:
             accelerator: 360
-    timeout_on_wait: 30
-torgibiz:
-    keywords_file: torgibiz
+            auction:  [25, 30]
+    keywords_file: rwsbank
     roles:
-        tender_owner:   torgibiz_Owner
-        provider:       torgibiz_Provider
-        provider1:      torgibiz_Provider1
-        viewer:         torgibiz_Viewer
-    intervals:
-        default:
-            accelerator: 360
-        dgfFinancialAssets:
-           accelerator: 360
-        dgfOtherAssets:
-            accelerator: 360
-        dgfInsider:
-            accelerator: 360
-    timeout_on_wait: 30
+        tender_owner:   rwsbank_Owner
+        provider:       rwsbank_Provider
+        provider1:      rwsbank_Provider1
+        viewer:         rwsbank_Viewer
+    timeout_on_wait: 120
