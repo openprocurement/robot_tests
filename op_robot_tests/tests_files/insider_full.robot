@@ -343,7 +343,6 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   ${input_amount}=  Convert To String  ${amount}
   Clear Element Text  ${bid_input}
   Input Text  ${bid_input}  ${input_amount}
-  Sleep  5
   Capture Page Screenshot
   Click Element  id=place-bid-button
   Wait Until Page Contains  ${msg}  10s
