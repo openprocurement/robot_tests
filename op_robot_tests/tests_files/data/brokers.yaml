@@ -1408,4 +1408,4 @@ rwsbank:
         provider:       rwsbank_Provider
         provider1:      rwsbank_Provider1
         viewer:         rwsbank_Viewer
-    timeout_on_wait: 120
+    timeout_on_wait: 20
