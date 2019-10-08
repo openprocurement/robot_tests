@@ -341,6 +341,7 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   ${last_amount}=  convert_amount_string_to_float  ${last_amount}
   ${amount}=  Evaluate  ${last_amount}+${step}
   ${input_amount}=  Convert To String  ${amount}
+  Clear Element Text  ${bid_input}
   Input Text  ${bid_input}  ${input_amount}
   Capture Page Screenshot
   Click Element  id=place-bid-button
