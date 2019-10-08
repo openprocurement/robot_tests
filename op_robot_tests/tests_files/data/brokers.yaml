@@ -1391,7 +1391,7 @@ ecoex:
 rwsbank:
     intervals:
         default:
-            enquiry: [0, 40]
+            enquiry: [0, 50]
             tender:  [0, 40]
         dgfFinancialAssets:
            accelerator: 120
