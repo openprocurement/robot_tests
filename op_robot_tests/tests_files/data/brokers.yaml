@@ -1401,7 +1401,7 @@ rwsbank:
             auction:  [55, 65]
         dgfInsider:
             accelerator: 360
-            auction:  [25, 30]
+            auction:  [15, 30]
     keywords_file: rwsbank
     roles:
         tender_owner:   rwsbank_Owner
