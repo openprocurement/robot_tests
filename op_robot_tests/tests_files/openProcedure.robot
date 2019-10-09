@@ -710,7 +710,7 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      add_tender_doc  level2
+  ...      add_tender_doc_details  level2
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити значення поля серед усіх документів тендера  ${viewer}  ${TENDER['TENDER_UAID']}  documentType  x_dgfPlatformLegalDetails
 

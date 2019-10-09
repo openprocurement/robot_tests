@@ -25,6 +25,7 @@
 -i modify_tenderAttempts
 -i modify_tender
 -i add_tender_doc
+-i add_tender_doc_details
 -i add_tender_doc_content
 -i add_tender_illustration
 -i add_tender_public_asset_certificate
