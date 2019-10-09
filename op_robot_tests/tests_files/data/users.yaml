@@ -2463,3 +2463,34 @@ users:
         browser:  chrome
         position: [0, 0]
         size:     [1366, 768]
+    rwsbank_Owner:
+        broker:   rwsbank
+        homepage: "https://test.torgy.rwsbank.com.ua"
+        login:    cloudemail40@gmail.com
+        password: 123456
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    rwsbank_Provider:
+        broker:   rwsbank
+        homepage: "https://test.torgy.rwsbank.com.ua"
+        login:    cloudemail4.0@gmail.com
+        password: 123456
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    rwsbank_Provider1:
+        broker:   rwsbank
+        homepage: "https://test.torgy.rwsbank.com.ua"
+        login:    cloudemail.40@gmail.com
+        password: 123456
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
+    rwsbank_Viewer:
+        broker:   rwsbank
+        homepage: "https://test.torgy.rwsbank.com.ua"
+        browser:  Chrome
+        position: [0, 0]
+        size:     [1366, 800]
+

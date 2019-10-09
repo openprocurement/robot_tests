@@ -1422,3 +1422,24 @@ torgibiz:
         dgfInsider:
             accelerator: 360
     timeout_on_wait: 30
+rwsbank:
+    intervals:
+        default:
+            enquiry: [0, 50]
+            tender:  [0, 40]
+        dgfFinancialAssets:
+           accelerator: 120
+           auction:  [70, 80]
+        dgfOtherAssets:
+            accelerator: 360
+            auction:  [55, 65]
+        dgfInsider:
+            accelerator: 360
+            auction:  [15, 30]
+    keywords_file: rwsbank
+    roles:
+        tender_owner:   rwsbank_Owner
+        provider:       rwsbank_Provider
+        provider1:      rwsbank_Provider1
+        viewer:         rwsbank_Viewer
+    timeout_on_wait: 20
