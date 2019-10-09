@@ -373,15 +373,15 @@ users:
         size:     [1366, 800]
     centrex_Owner:
         broker:   centrex
-        homepage: "http://centrex.byustudio.in.ua"
-        login:    prozorroytenderowner@gmail.com
-        password: 123456
+        homepage: "http://test-eauction.centrex.com.ua"
+        login:    organiz_owner_test_bank_cbd1@byustudio.in.ua
+        password: organiz_owner_test_bank_cbd1@byustudio.in.ua
         browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
     centrex_Provider:
         broker:   centrex
-        homepage: "http://centrex.byustudio.in.ua"
+        homepage: "http://test-eauction.centrex.com.ua"
         login:    prozorroyprovider1@gmail.com
         password: 123456
         browser:  Chrome
@@ -389,7 +389,7 @@ users:
         size:     [1366, 800]
     centrex_Provider1:
         broker:   centrex
-        homepage: "http://centrex.byustudio.in.ua"
+        homepage: "http://test-eauction.centrex.com.ua"
         login:    prozorroyprovider2@gmail.com
         password: 123456
         browser:  Chrome
@@ -397,7 +397,7 @@ users:
         size:     [1366, 800]
     centrex_Viewer:
         broker:   centrex
-        homepage: "http://centrex.byustudio.in.ua"
+        homepage: "http://test-eauction.centrex.com.ua"
         browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]

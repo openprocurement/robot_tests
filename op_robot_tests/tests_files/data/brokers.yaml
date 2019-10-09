@@ -291,24 +291,24 @@ capitalua:
 centrex:
     intervals:
         default:
-            enquiry: [0, 17]
-            tender:  [0, 19]
+            enquiry: [0, 50]
+            tender:  [0, 40]
         dgfFinancialAssets:
-           accelerator: 1440
-           auction:  [45, 50]
+           accelerator: 120
+           auction:  [70, 80]
         dgfOtherAssets:
-            accelerator: 1440
-            auction:  [45, 50]
+            accelerator: 360
+            auction:  [55, 65]
         dgfInsider:
-            accelerator: 320
-            auction:  [25, 30]
+            accelerator: 360
+            auction:  [15, 30]
     keywords_file: centrex
     roles:
         tender_owner:   centrex_Owner
-        provider:   centrex_Provider
-        provider1:   centrex_Provider1
-        viewer:   centrex_Viewer
-    timeout_on_wait: 180
+        provider:       centrex_Provider
+        provider1:      centrex_Provider1
+        viewer:         centrex_Viewer
+    timeout_on_wait: 20
 expagency:
     keywords_file: expagency
     accelerator: 360
