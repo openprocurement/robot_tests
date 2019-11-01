@@ -283,7 +283,7 @@ ${RESOURCE}          lots
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення умов проведення аукціону
   ...      viewer  tender_owner
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
-  ...      lot_view
+  ...      lot_view_all_auction_status
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Отримати дані із поля status усіх аукціонів для усіх користувачів
 
