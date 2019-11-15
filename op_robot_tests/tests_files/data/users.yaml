@@ -282,7 +282,7 @@ users:
         size:     [1366, 800]
     centrex_Owner:
         broker:   centrex
-        homepage: "http://centrex.byustudio.in.ua"
+        homepage: "http://test-eauction.centrex.com.ua"
         login:    testprozorroyowner@gmail.com
         password: 123456
         browser:  Chrome
@@ -290,7 +290,7 @@ users:
         size:     [1366, 800]
     centrex_Provider:
         broker:   centrex
-        homepage: "http://centrex.byustudio.in.ua"
+        homepage: "http://test-eauction.centrex.com.ua"
         login:    testprozorroprovider@gmail.com
         password: 123456
         browser:  Chrome
@@ -298,7 +298,7 @@ users:
         size:     [1366, 800]
     centrex_Provider1:
         broker:   centrex
-        homepage: "http://centrex.byustudio.in.ua"
+        homepage: "http://test-eauction.centrex.com.ua"
         login:    testprozorroprovider1@gmail.com
         password: 123456
         browser:  Chrome
@@ -306,7 +306,7 @@ users:
         size:     [1366, 800]
     centrex_Viewer:
         broker:   centrex
-        homepage: "http://centrex.byustudio.in.ua"
+        homepage: "http://test-eauction.centrex.com.ua"
         browser:  Chrome
         position: [0, 0]
         size:     [1366, 800]
