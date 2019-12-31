@@ -67,6 +67,9 @@ Library  openprocurement_client.utils
   ${auth_ds_all}=  get variable value  ${USERS.users.${username}.auth_ds}
   ${auth_ds}=  set variable  ${auth_ds_all.${RESOURCE}}
   Log  ${auth_ds}
+  ${auth_criteria}=  set variable  ${USERS.users.${username}.auth_criteria}
+  Log  ${auth_criteria}
+
 
   ${ds_config}=  Create Dictionary  host_url=${ds_host_url}  auth_ds=${auth_ds}
   ${api_wrapper}=  Run Keyword If  '${RESOURCE}' == 'plans'
@@ -74,7 +77,10 @@ Library  openprocurement_client.utils
   ...                     ELSE  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${RESOURCE}  ${API_HOST_URL}  ${API_VERSION}  ${ds_config}
   ${dasu_api_wraper}=  prepare_dasu_api_wrapper  ${USERS.users['${username}'].dasu_api_key}  ${DASU_RESOURCE}  ${DASU_API_HOST_URL}  ${DASU_API_VERSION}  ${ds_config}
   ${agreement_wrapper}=  prepare_agreement_api_wrapper  ${USERS.users['${username}'].api_key}  AGREEMENTS  ${API_HOST_URL}  ${API_VERSION}  ${ds_config}
+  ${criteria_wrapper}=  prepare_criteria_api_wrapper  ${API_HOST_URL}  ${API_VERSION}  ${auth_criteria}
+
   Set To Dictionary  ${USERS.users['${username}']}  client=${api_wrapper}
+  Set To Dictionary  ${USERS.users['${username}']}  criteria_client=${criteria_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  agreement_client=${agreement_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  dasu_client=${dasu_api_wraper}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${EMPTY}
@@ -2137,3 +2143,51 @@ Library  openprocurement_client.utils
   ...      ${field_name}
   Run Keyword If  '${status}' == 'PASS'  Return From Keyword   ${field_value}
   Fail  Field not found: ${field_name}
+
+
+Створити характеристику
+  [Arguments]  ${username}  ${criteria_data}
+  ${criteria}=  Call Method  ${USERS.users['${username}'].criteria_client}  create_criteria  ${criteria_data}
+  [return]  ${criteria.id}
+
+
+Пошук характеристики по ідентифікатору
+  [Arguments]  ${username}  ${criteria_uaid}  ${save_key}=criteria_data
+  ${criteria}=  Call Method  ${USERS.users['${username}'].criteria_client}  get_criteria  ${criteria_uaid}
+  ${criteria}=  munch_dict  arg=${criteria}
+  Set To Dictionary  ${USERS.users['${username}']}  ${save_key}=${criteria}
+  Log  ${USERS.users['${username}'].criteria_data}
+  [return]  ${criteria}
+
+
+Отримати інформацію із характеристики
+  [Arguments]  ${username}  ${criteria_uaid}  ${field_name}
+  ${criteria_data}=  openprocurement_client.Пошук характеристики по ідентифікатору
+  ...      ${username}
+  ...      ${criteria_uaid}
+  ${criteria_data}=  munch_dict  arg=${criteria_data}
+  ${status}  ${field_value}=  Run Keyword And Ignore Error
+  ...      Get From Object
+  ...      ${criteria_data}
+  ...      ${field_name}
+  Run Keyword If  '${status}' == 'PASS'  Return From Keyword   ${field_value}
+  Fail  Field not found: ${field_name}
+
+
+Внести зміни в характеристику
+  [Arguments]  ${username}  ${criteria_uaid}  ${field_name}  ${field_value}
+  ${data}=  Create Dictionary  ${field_name}=${field_value}
+  ${criteria_data}=  Call Method  ${USERS.users['${username}'].criteria_client}  patch_criteria
+  ...      ${criteria_uaid}
+  ...      ${data}
+  Set_To_Object  ${USERS.users['${username}'].criteria_data}  ${field_name}  ${field_value}
+
+
+Видалити характеристику
+  [Arguments]  ${username}  ${criteria_uaid}
+  ${criteria_data}=  Call Method  ${USERS.users['${username}'].criteria_client}  delete_criteria  ${criteria_uaid}
+
+
+Оновити сторінку з характеристикою
+  [Arguments]  ${username}  ${criteria_uaid}
+  openprocurement_client.Пошук характеристики по ідентифікатору  ${username}  ${criteria_uaid}

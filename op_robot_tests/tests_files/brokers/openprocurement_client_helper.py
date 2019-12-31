@@ -5,7 +5,8 @@ from openprocurement_client.dasu_client import DasuClient
 from openprocurement_client.resources.document_service import DocumentServiceClient
 from openprocurement_client.resources.plans import PlansClient
 from openprocurement_client.resources.contracts import ContractingClient
-from openprocurement_client.exceptions import IdNotFound
+from openprocurement_client.resources.contracts import ContractingClient
+from openprocurement_client.resources.criteria import CriteriaServiceClient
 from restkit.errors import RequestFailed, BadStatusLine, ResourceError
 from retrying import retry
 from time import sleep
@@ -35,6 +36,12 @@ class StableDsClient(DocumentServiceClient):
         return super(StableDsClient, self).request(*args, **kwargs)
 
 
+class StableCriteriaClient(CriteriaServiceClient):
+    @retry(stop_max_attempt_number=100, wait_random_min=500,
+           wait_random_max=4000, retry_on_exception=retry_if_request_failed)
+    def request(self, *args, **kwargs):
+        return super(StableCriteriaClient, self).request(*args, **kwargs)
+
 class StableAgreementClient(AgreementClient):
     @retry(stop_max_attempt_number=100, wait_random_min=500,
            wait_random_max=4000, retry_on_exception=retry_if_request_failed)
@@ -49,6 +56,10 @@ def prepare_api_wrapper(key, resource, host_url, api_version, ds_config=None):
 
 def prepare_ds_api_wrapper(ds_host_url, auth_ds):
     return StableDsClient(ds_host_url, auth_ds)
+
+
+def prepare_criteria_api_wrapper(ds_host_url, api_version, auth_criteria):
+    return StableCriteriaClient(ds_host_url, api_version, auth_criteria)
 
 
 def prepare_agreement_api_wrapper(key, resource, host_url, api_version, ds_config=None):

@@ -29,6 +29,7 @@ class OP_Provider(BaseProvider):
     moz_cpvs = _fake_data.moz_cpvs
     items_base_data = _fake_data.items_base_data
     rationale_types = _fake_data.rationale_types
+    units = _fake_data.units
 
     @classmethod
     def randomize_nb_elements(self, number=10, le=60, ge=140):
@@ -182,3 +183,15 @@ class OP_Provider(BaseProvider):
     @classmethod
     def rationaleTypes(self, amount=3):
         return random.sample(self.rationale_types, amount)
+
+    @classmethod
+    def classification(self, c_scheme=u'ДК021', a_scheme=u'ДК003'):
+        classifications = []
+        for classification in self.classifications:
+            if classification['classification']['scheme'] == c_scheme and classification['additionalClassifications'][0]['scheme'] == a_scheme:
+                classifications.append(classification)
+        return self.random_element(classifications)
+
+    @classmethod
+    def unit(self):
+        return self.random_element(self.units)

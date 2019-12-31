@@ -417,7 +417,7 @@ Log differences between dicts
 
 
 Дочекатись синхронізації з майданчиком
-  [Arguments]  ${username}
+  [Arguments]  ${username}  ${dictionary}=TENDER
   [Documentation]
   ...      Synchronise with ``username`` and update cache
   ...      First section
@@ -460,7 +460,7 @@ Log differences between dicts
   ...      Else do nothing.
   ${timeout_on_wait}=  Get Broker Property By Username  ${username}  timeout_on_wait
   ${last_modification_date_corrected}=  Add Time To Date
-  ...      ${TENDER['LAST_MODIFICATION_DATE']}
+  ...      ${${dictionary}['LAST_MODIFICATION_DATE']}
   ...      ${timeout_on_wait} s
   ${now}=  Get Current TZdate
   ${sleep}=  Subtract Date From Date
@@ -505,6 +505,7 @@ Log differences between dicts
 Оновити сторінку
   [Arguments]  ${username}
   Run Keyword If  '${RESOURCE}' == 'plans'  Run As  ${username}  Оновити сторінку з планом  ${TENDER['TENDER_UAID']}
+  ...      ELSE IF  '${RESOURCE}' == 'criteria'  Run As  ${username}  Оновити сторінку з характеристикою  ${CRITERIA['CRITERIA_UAID']}
   ...      ELSE  Run As  ${username}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
 
 
@@ -1172,6 +1173,7 @@ Require Failure
 
 
 Оновити LAST_MODIFICATION_DATE
+  [Arguments]  ${dictionary_name}=TENDER
   [Documentation]
   ...      Variable ``${TEST_STATUS}`` is only available in test case teardown.
   ...      When we call this keyword from elswere, we need to presume that
@@ -1179,7 +1181,7 @@ Require Failure
   ...      one was called).
   ${LAST_MODIFICATION_DATE}=  Get Current TZdate
   ${status}=  Get Variable Value  ${TEST_STATUS}  PASS
-  Run Keyword If  '${status}' == 'PASS'  Set To Dictionary  ${TENDER}  LAST_MODIFICATION_DATE=${LAST_MODIFICATION_DATE}
+  Run Keyword If  '${status}' == 'PASS'  Set To Dictionary  ${${dictionary_name}}  LAST_MODIFICATION_DATE=${LAST_MODIFICATION_DATE}
 
 
 Оновити DASU_LAST_MODIFICATION_DATE
@@ -1213,3 +1215,44 @@ Require Failure
   ${contract_data}=  munch_dict  arg=${contract_data}
   Log  ${contract_data}
   [Return]  ${contract_data}
+
+
+Звірити поле характеристики із значенням
+  [Arguments]  ${username}  ${criteria_uaid}  ${left}  ${field}
+  ${left}=  Convert To String  ${left}
+  ${right}=  Отримати дані із характеристики  ${username}  ${criteria_uaid}  ${field}
+  Порівняти об'єкти  ${left}  ${right}
+
+
+Отримати дані із характеристики
+  [Arguments]  ${username}  ${criteria_uaid}  ${field}
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      get_from_object
+  ...      ${USERS.users['${username}'].criteria_data}
+  ...      ${field}
+  # If field in cache, return its value
+  Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
+  # Else call broker to find field
+  ${field_value}=    Run As  ${username}  Отримати інформацію із характеристики  ${criteria_uaid}  ${field}
+  # And caching its value before return
+  Set_To_Object  ${USERS.users['${username}'].criteria_data}  ${field}  ${field_value}
+  ${data}=  munch_dict  arg=${USERS.users['${username}'].criteria_data}
+  Set To Dictionary  ${USERS.users['${username}']}  criteria_data=${data}
+  Log  ${USERS.users['${username}'].criteria_data}
+  [return]  ${field_value}
+
+
+Звірити поле характеристики
+  [Arguments]  ${username}  ${criteria_uaid}  ${criteria_data}  ${field}
+  ${criteria_data}=  munchify  ${criteria_data}
+  ${left}=  get_from_object  ${criteria_data}  ${field}
+  ${status}=  Run Keyword And Return Status  Should Be Byte String  ${left}
+  ${left}=  Run Keyword If  ${status}
+  ...     Decode Bytes To String  ${left}  UTF-8
+  ...     ELSE  Set Variable  ${left}
+  Звірити поле характеристики із значенням  ${username}  ${criteria_uaid}  ${left}  ${field}
+
+
+Оновити сторінку з характеристикою
+  [Arguments]  ${username}
+  Run As  ${username}  Оновити сторінку з характеристикою  ${CRITERIA['CRITERIA_UAID']}

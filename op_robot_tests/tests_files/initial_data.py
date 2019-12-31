@@ -35,6 +35,8 @@ fake_ru.add_provider(CompanyProviderRuRu)
 def create_fake_sentence():
     return fake.sentence(nb_words=10, variable_nb_words=True)
 
+def create_fake_eng_sentence():
+    return fake_en.sentence(nb_words=10, variable_nb_words=True)
 
 def create_fake_funder():
     return fake.funders_data()
@@ -75,8 +77,8 @@ def subtraction(value1, value2):
         return (int (value1) - int (value2))
 
 
-def create_fake_value_amount():
-    return fake.random_int(min=1)
+def create_fake_value_amount(min=1):
+    return fake.random_int(min=min)
 
 def get_number_of_minutes(days, accelerator):
     return 1440 * int(days) / accelerator
@@ -822,3 +824,22 @@ def test_tender_data_esco(params, submissionMethodDetails):
     for index in range(params['number_of_items']):
         del data['items'][index]['deliveryDate']
     return data
+
+
+def test_criteria_data():
+    min_value = create_fake_value_amount()
+    max_value = create_fake_value_amount(min_value)
+    classification = fake.classification()
+    data_types = ['number', 'string', 'boolean', 'integer']
+    unit = fake.unit()
+    data = {
+          "name": create_fake_sentence(),
+          "nameEng": create_fake_eng_sentence(),
+          "classification": classification['classification'],
+          "additionalClassification": classification['additionalClassifications'][0],
+          "minValue": str(min_value),
+          "maxValue": str(max_value),
+          "dataType": random.choice(data_types),
+          "unit": unit
+    }
+    return munchify(data)

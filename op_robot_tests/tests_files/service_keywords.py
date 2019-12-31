@@ -72,6 +72,8 @@ from .initial_data import (
     convert_amount,
     get_number_of_minutes,
     get_hash,
+    test_criteria_data,
+    create_fake_eng_sentence,
 )
 from barbecue import chef
 from restkit import request
