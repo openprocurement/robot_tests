@@ -2143,3 +2143,51 @@ Library  openprocurement_client.utils
   ...      ${field_name}
   Run Keyword If  '${status}' == 'PASS'  Return From Keyword   ${field_value}
   Fail  Field not found: ${field_name}
+
+
+Створити характеристику
+  [Arguments]  ${username}  ${criteria_data}
+  ${criteria}=  Call Method  ${USERS.users['${username}'].criteria_client}  create_criteria  ${criteria_data}
+  [return]  ${criteria.id}
+
+
+Пошук характеристики по ідентифікатору
+  [Arguments]  ${username}  ${criteria_uaid}  ${save_key}=criteria_data
+  ${criteria}=  Call Method  ${USERS.users['${username}'].criteria_client}  get_criteria  ${criteria_uaid}
+  ${criteria}=  munch_dict  arg=${criteria}
+  Set To Dictionary  ${USERS.users['${username}']}  ${save_key}=${criteria}
+  Log  ${USERS.users['${username}'].criteria_data}
+  [return]  ${criteria}
+
+
+Отримати інформацію із характеристики
+  [Arguments]  ${username}  ${criteria_uaid}  ${field_name}
+  ${criteria_data}=  openprocurement_client.Пошук характеристики по ідентифікатору
+  ...      ${username}
+  ...      ${criteria_uaid}
+  ${criteria_data}=  munch_dict  arg=${criteria_data}
+  ${status}  ${field_value}=  Run Keyword And Ignore Error
+  ...      Get From Object
+  ...      ${criteria_data}
+  ...      ${field_name}
+  Run Keyword If  '${status}' == 'PASS'  Return From Keyword   ${field_value}
+  Fail  Field not found: ${field_name}
+
+
+Внести зміни в характеристику
+  [Arguments]  ${username}  ${criteria_uaid}  ${field_name}  ${field_value}
+  ${data}=  Create Dictionary  ${field_name}=${field_value}
+  ${criteria_data}=  Call Method  ${USERS.users['${username}'].criteria_client}  patch_criteria
+  ...      ${criteria_uaid}
+  ...      ${data}
+  Set_To_Object  ${USERS.users['${username}'].criteria_data}  ${field_name}  ${field_value}
+
+
+Видалити характеристику
+  [Arguments]  ${username}  ${criteria_uaid}
+  ${criteria_data}=  Call Method  ${USERS.users['${username}'].criteria_client}  delete_criteria  ${criteria_uaid}
+
+
+Оновити сторінку з характеристикою
+  [Arguments]  ${username}  ${criteria_uaid}
+  openprocurement_client.Пошук характеристики по ідентифікатору  ${username}  ${criteria_uaid}

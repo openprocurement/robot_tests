@@ -1465,3 +1465,53 @@ Resource           resource.robot
 Перевірити документ кваліфікіції ${award_id} для користувача ${username} в тендері ${tender_uaid}
   ${document}=  openprocurement_client.Отримати останній документ кваліфікації з типом registerExtract  ${username}  ${tender_uaid}  ${award_id}
   Порівняти об'єкти  ${document['documentType']}  registerExtract
+
+
+Можливість створити характеристику
+  ${criteria_data}=  test_criteria_data
+  ${criteria_data}=  munchify  ${criteria_data}
+  ${criteria_id}=  Run As  ${criteria_admin}
+  ...      Створити характеристику
+  ...      ${criteria_data}
+  ${CRITERIA}=  Create Dictionary
+  Set Global Variable  ${CRITERIA}
+  Set To Dictionary  ${USERS.users['${criteria_admin}']}  initial_data=${criteria_data}
+  Log  ${USERS.users['${criteria_admin}'].initial_data}
+  Set To Dictionary  ${CRITERIA}  CRITERIA_UAID=${criteria_id}
+
+
+Можливість знайти характеристику по ідентифікатору для усіх користувачів
+  :FOR  ${username}  IN  ${criteria_admin}  ${viewer}
+  \  Можливість знайти характеристику по ідентифікатору для користувача ${username}
+
+
+Можливість знайти характеристику по ідентифікатору для користувача ${username}
+  Дочекатись синхронізації з майданчиком  ${username}  CRITERIA
+  Run As  ${username}  Пошук характеристики по ідентифікатору  ${CRITERIA['CRITERIA_UAID']}
+
+
+Звірити відображення поля ${field} характеристики для усіх користувачів
+  :FOR  ${username}  IN  ${viewer}  ${criteria_admin}
+  \  Звірити відображення поля ${field} характеристики для користувача ${username}
+
+
+Звірити відображення поля ${field} характеристики для користувача ${username}
+  Звірити поле характеристики  ${username}  ${CRITERIA['CRITERIA_UAID']}  ${USERS.users['${criteria_admin}'].initial_data}  ${field}
+
+
+Звірити відображення поля ${field} характеристики із ${value} для усіх користувачів
+  :FOR  ${username}  IN  ${criteria_admin}  ${viewer}
+  \  Звірити відображення поля ${field} характеристики із ${value} для користувача ${username}
+
+
+Звірити відображення поля ${field} характеристики із ${value} для користувача ${username}
+  Звірити поле характеристики із значенням  ${username}  ${CRITERIA['CRITERIA_UAID']}  ${value}  ${field}
+
+
+Можливість змінити поле ${field_name} характеристики на ${field_value}
+  Run As  ${criteria_admin}  Внести зміни в характеристику  ${CRITERIA['CRITERIA_UAID']}  ${field_name}  ${field_value}
+  Set To Dictionary  ${USERS.users['${criteria_admin}']}  new_${field_name}=${field_value}
+
+
+Можливість видалити характеристику
+  Run As  ${criteria_admin}  Видалити характеристику  ${CRITERIA['CRITERIA_UAID']}
