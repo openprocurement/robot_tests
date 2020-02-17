@@ -73,7 +73,7 @@ parser.add_option("--buildout-version",
                   default='2.5.3',
                   help="Use a specific zc.buildout version")
 parser.add_option("--setuptools-version",
-                  default='33.1.1',
+                  default='42.0.2',
                   help="Use a specific setuptools version")
 parser.add_option("--setuptools-to-dir",
                   default=eggsdir,
