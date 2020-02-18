@@ -67,38 +67,12 @@ Library  openprocurement_client.utils
   ${auth_ds_all}=  get variable value  ${USERS.users.${username}.auth_ds}
   ${auth_ds}=  set variable  ${auth_ds_all.${RESOURCE}}
   Log  ${auth_ds}
-  ${auth_criteria}=  set variable  ${USERS.users.${username}.auth_criteria}
-  Log  ${auth_criteria}
+  ${auth_catalogues}=  set variable  ${USERS.users.${username}.auth_catalogues}
+  Log  ${auth_catalogues}
 
-
-  ${ds_config}=  Create Dictionary  host_url=${ds_host_url}  auth_ds=${auth_ds}
-  ${api_wrapper}=  Run Keyword If  '${RESOURCE}' == 'plans'
-  ...     prepare_plan_api_wrapper  ${USERS.users['${username}'].api_key}  PLANS  ${API_HOST_URL}  ${API_VERSION}
-  ...                     ELSE  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${RESOURCE}  ${API_HOST_URL}  ${API_VERSION}  ${ds_config}
-  ${dasu_api_wraper}=  prepare_dasu_api_wrapper  ${USERS.users['${username}'].dasu_api_key}  ${DASU_RESOURCE}  ${DASU_API_HOST_URL}  ${DASU_API_VERSION}  ${ds_config}
-  ${agreement_wrapper}=  prepare_agreement_api_wrapper  ${USERS.users['${username}'].api_key}  AGREEMENTS  ${API_HOST_URL}  ${API_VERSION}  ${ds_config}
-  ${criteria_wrapper}=  prepare_criteria_api_wrapper  ${API_HOST_URL}  ${API_VERSION}  ${auth_criteria}
-
-  Set To Dictionary  ${USERS.users['${username}']}  client=${api_wrapper}
+  ${criteria_wrapper}=  prepare_criteria_api_wrapper  ${API_HOST_URL}  ${API_VERSION}  ${auth_catalogues}
   Set To Dictionary  ${USERS.users['${username}']}  criteria_client=${criteria_wrapper}
-  Set To Dictionary  ${USERS.users['${username}']}  agreement_client=${agreement_wrapper}
-  Set To Dictionary  ${USERS.users['${username}']}  dasu_client=${dasu_api_wraper}
-  Set To Dictionary  ${USERS.users['${username}']}  access_token=${EMPTY}
-  ${id_map}=  Create Dictionary
-  Set To Dictionary  ${USERS.users['${username}']}  id_map=${id_map}
-  Log  ${EDR_HOST_URL}
-  Log  ${EDR_VERSION}
-  ${edr_wrapper}=  prepare_edr_wrapper  ${EDR_HOST_URL}  ${EDR_VERSION}  ${USERS.users['${username}'].auth_edr[0]}  ${USERS.users['${username}'].auth_edr[1]}
-  Set To Dictionary  ${USERS.users['${username}']}  edr_client=${edr_wrapper}
-  #Variables for contracting_management module
-  ${contract_api_wrapper}=  prepare_contract_api_wrapper  ${USERS.users['${username}'].api_key}  CONTRACTS  ${api_host_url}  ${api_version}  ${ds_config}
-  Set To Dictionary  ${USERS.users['${username}']}  contracting_client=${contract_api_wrapper}
-  Set To Dictionary  ${USERS.users['${username}']}  contract_access_token=${EMPTY}
-  Set To Dictionary  ${USERS.users['${username}']}  agreement_access_token=${EMPTY}
-  ${contracts_id_map}=  Create Dictionary
-  ${contracts_id_map}=  Create Dictionary
-  Set To Dictionary  ${USERS.users['${username}']}  contracts_id_map=${contracts_id_map}
-  Log Variables
+
 
 
 Завантажити документ
@@ -2144,11 +2118,11 @@ Library  openprocurement_client.utils
   Run Keyword If  '${status}' == 'PASS'  Return From Keyword   ${field_value}
   Fail  Field not found: ${field_name}
 
-
+###############FOR CRITERIA###############
 Створити характеристику
   [Arguments]  ${username}  ${criteria_data}
   ${criteria}=  Call Method  ${USERS.users['${username}'].criteria_client}  create_criteria  ${criteria_data}
-  [return]  ${criteria.id}
+  [Return]  ${criteria}
 
 
 Пошук характеристики по ідентифікатору

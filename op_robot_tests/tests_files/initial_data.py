@@ -35,8 +35,10 @@ fake_ru.add_provider(CompanyProviderRuRu)
 def create_fake_sentence():
     return fake.sentence(nb_words=10, variable_nb_words=True)
 
+
 def create_fake_eng_sentence():
     return fake_en.sentence(nb_words=10, variable_nb_words=True)
+
 
 def create_fake_funder():
     return fake.funders_data()
@@ -58,6 +60,17 @@ def create_fake_title():
     return u"[ТЕСТУВАННЯ] {}".format(fake.title())
 
 
+def create_fake_url():
+    return fake.url()
+
+
+def create_fake_word():
+    new_word = fake.word()
+    if len(new_word) >= 10:
+        new_word = new_word[:10]
+    return new_word
+
+
 def create_fake_date():
     return get_now().isoformat()
 
@@ -71,17 +84,19 @@ def create_fake_period(days=0, hours=0, minutes=0):
 
 
 def subtraction(value1, value2):
-    if "." in str (value1) or "." in str (value2):
-        return (float (value1) - float (value2))
+    if "." in str(value1) or "." in str(value2):
+        return (float(value1) - float(value2))
     else:
-        return (int (value1) - int (value2))
+        return (int(value1) - int(value2))
 
 
 def create_fake_value_amount(min=1):
     return fake.random_int(min=min)
 
+
 def get_number_of_minutes(days, accelerator):
     return 1440 * int(days) / accelerator
+
 
 def field_with_id(prefix, sentence):
     return u"{}-{}: {}".format(prefix, fake.uuid4()[:8], sentence)

@@ -506,6 +506,7 @@ Log differences between dicts
   [Arguments]  ${username}
   Run Keyword If  '${RESOURCE}' == 'plans'  Run As  ${username}  Оновити сторінку з планом  ${TENDER['TENDER_UAID']}
   ...      ELSE IF  '${RESOURCE}' == 'criteria'  Run As  ${username}  Оновити сторінку з характеристикою  ${CRITERIA['CRITERIA_UAID']}
+  ...      ELSE IF  '${RESOURCE}' == 'profile'  Run As  ${username}  Оновити сторінку з профілем  ${PROFILE['PROFILE_UAID']}
   ...      ELSE  Run As  ${username}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
 
 
@@ -603,6 +604,13 @@ Log differences between dicts
   Should Not Be Equal  ${right}  ${None}
   Should Be Equal  ${left}  ${right}  msg=Objects are not equal
 
+Порівняти на невідповідність
+  [Arguments]  ${left}  ${right}
+  Log  ${left}
+  Log  ${right}
+  Should Not Be Equal  ${left}  ${None}
+  Should Not Be Equal  ${right}  ${None}
+  Should Not Be Equal  ${left}  ${right}  msg=Objects are equal
 
 Звірити дату тендера
   [Arguments]  ${username}  ${tender_uaid}  ${tender_data}  ${field}  ${accuracy}=60  ${absolute_delta}=${False}
@@ -1223,6 +1231,12 @@ Require Failure
   ${right}=  Отримати дані із характеристики  ${username}  ${criteria_uaid}  ${field}
   Порівняти об'єкти  ${left}  ${right}
 
+Звірити на невідповідність поле характеристики із значенням
+  [Arguments]  ${username}  ${criteria_uaid}  ${left}  ${field}
+  ${left}=  Convert To String  ${left}
+  ${right}=  Отримати дані із характеристики  ${username}  ${criteria_uaid}  ${field}
+  Порівняти на невідповідність  ${left}  ${right}
+
 
 Отримати дані із характеристики
   [Arguments]  ${username}  ${criteria_uaid}  ${field}
@@ -1252,7 +1266,11 @@ Require Failure
   ...     ELSE  Set Variable  ${left}
   Звірити поле характеристики із значенням  ${username}  ${criteria_uaid}  ${left}  ${field}
 
-
 Оновити сторінку з характеристикою
   [Arguments]  ${username}
   Run As  ${username}  Оновити сторінку з характеристикою  ${CRITERIA['CRITERIA_UAID']}
+
+Звірити повідомлення
+  [Arguments]  ${actual_result}  ${expected_result}
+  ${get_regexp_mesage}  Get Regexp Matches  ${actual_result}  ({.*})
+  should be equal  ${get_regexp_mesage[0]}  ${expected_result}

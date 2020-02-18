@@ -1,7 +1,7 @@
 *** Variables ***
-${RESOURCE}      tenders   # possible values: tenders, auctions
-${API_HOST_URL}  https://lb.api-sandbox.openprocurement.org
-${API_VERSION}   2.3
+${RESOURCE}      tender   # possible values: tenders, auctions
+${API_HOST_URL}  http://demo.api-market.quintagroup.com
+${API_VERSION}   0
 ${BROKER}        Quinta
 ${DS_HOST_URL}   https://upload.docs-sandbox.openprocurement.org
 ${ROLE}          viewer
