@@ -19,15 +19,16 @@
 
 
   -i modify_criteria_name
-  -i modify_criteria_view_name
+  -i view_modified_criteria_name
   -i modify_criteria_view_by_en
+  -i view_modified_criteria_by_en
   -i modify_criteria_min_value
-  -i view_criteria_min_value
+  -i view_modified_criteria_min_value
   -i modify_criteria_max_value
-  -i view_criteria_max_value
+  -i view_modified_criteria_max_value
 
   -i delete_criteria
-    -i view_status_ofter_delete_criteria
+    -i view_status_ofter_deleted_criteria
 
 -i impossibility_create_criteria
 -i impossibility_view_criteria
