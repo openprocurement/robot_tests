@@ -171,7 +171,7 @@ ${MODE}             criteria
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      modify_criteria_view_name
+  ...      view_modified_criteria_name
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  CRITERIA
   Remove From Dictionary  ${USERS.users['${viewer}'].criteria_data}  name
   Звірити відображення поля name характеристики із ${USERS.users['${catalogues_admin}'].new_name} для користувача ${viewer}
@@ -211,7 +211,7 @@ ${MODE}             criteria
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      criteria_view_by_en
+  ...      view_modified_criteria_by_en
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  CRITERIA
   Remove From Dictionary  ${USERS.users['${viewer}'].criteria_data}  nameEng
   Звірити відображення поля nameEng характеристики із ${USERS.users['${catalogues_admin}'].new_nameEng} для користувача ${viewer}
@@ -231,7 +231,7 @@ ${MODE}             criteria
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      view_criteria_min_value
+  ...      view_modified_criteria_min_value
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  CRITERIA
   Remove From Dictionary  ${USERS.users['${viewer}'].criteria_data}  minValue
   Звірити відображення поля minValue характеристики із ${USERS.users['${catalogues_admin}'].new_minValue} для користувача ${viewer}
@@ -272,7 +272,7 @@ ${MODE}             criteria
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      view_criteria_max_value
+  ...      view_modified_criteria_max_value
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  CRITERIA
   Remove From Dictionary  ${USERS.users['${viewer}'].criteria_data}  maxValue
   Звірити відображення поля maxValue характеристики із ${USERS.users['${catalogues_admin}'].new_maxValue} для користувача ${viewer}
@@ -304,7 +304,7 @@ ${MODE}             criteria
   [Tags]   ${USERS.users['${catalogues_admin}'].broker}: Видалення характеристики
   ...      criteria_admin
   ...      ${USERS.users['${catalogues_admin}'].broker}
-  ...      view_delete_criteria
+  ...      delete_criteria
   [Teardown]  Оновити LAST_MODIFICATION_DATE  CRITERIA
   Можливість видалити характеристику
 
@@ -312,7 +312,7 @@ ${MODE}             criteria
   [Tags]   ${USERS.users['${viewer}'].broker}: Переглянути статус видаленої характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      view_status_ofter_delete_criteria
+  ...      view_status_ofter_deleted_criteria
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  CRITERIA
   Remove From Dictionary  ${USERS.users['${viewer}'].criteria_data}  status
   Звірити відображення поля status характеристики із retired для користувача ${viewer}
