@@ -1,0 +1,38 @@
+-v MODE:criteria
+
+-i create_criteria
+  -i find_criteria
+  -i criteria_view_status
+  -i criteria_view_name
+  -i criteria_view_name_us
+  -i criteria_view_min
+  -i criteria_view_max
+  -i criteria_view_util_code
+  -i criteria_view_util_name
+  -i criteria_view_type_data
+  -i criteria_view_classifications_id
+  -i criteria_view_classifications_description
+  -i criteria_view_classifications_scheme
+  -i criteria_view_additionalClassification_id
+  -i criteria_view_additionalClassification_description
+  -i criteria_view_additionalClassification_scheme
+
+
+  -i modify_criteria_name
+  -i modify_criteria_view_name
+  -i modify_criteria_view_by_en
+  -i modify_criteria_min_value
+  -i view_criteria_min_value
+  -i modify_criteria_max_value
+  -i view_criteria_max_value
+
+  -i delete_criteria
+    -i view_status_ofter_delete_criteria
+
+-i impossibility_create_criteria
+-i impossibility_view_criteria
+-i impossibility_modify_criteria
+-i impossibility_modify_criteria_min_value
+-i impossibility_modify_criteria_max_value
+-i impossibility_delete_criteria
+    -i check_no_delete_criteria
