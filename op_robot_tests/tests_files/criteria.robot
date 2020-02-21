@@ -17,6 +17,7 @@ ${MODE}             criteria
   [Teardown]  Оновити LAST_MODIFICATION_DATE  CRITERIA
   Можливість створити характеристику
 
+
 Можливість знайти характеристику по ідентифікатору
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук характеристики
   ...      viewer  criteria_admin
@@ -25,30 +26,20 @@ ${MODE}             criteria
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  CRITERIA
   Можливість знайти характеристику по ідентифікатору для усіх користувачів
 
-#########################################
-#######NEGATIVE TESTS
-#######
-Превірка на відсутність можливості створення критерії
-  [Tags]   ${USERS.users['${viewer}'].broker}: Оголошення характеристики
+
+Неможливість створення характеристику
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість оголошення характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      impossibility_create_criteria
-  Відсутність можливості для ${viewer} створити критерію
+  Неможливість для ${viewer} створити критерію
 
-Перевірка на відсутність характеристики
-  [Tags]   ${USERS.users['${viewer}'].broker}: Оголошення характеристики
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      impossibility_view_criteria
-  Перевірити на відсутність потенційно створеної характеристики по ідентифікатору для усіх користувачів
-#######
-###########################################
 
 Відображення статусу характеристики
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних характеристики
   ...      viewer
   ...      ${USERS.users['${catalogues_admin}'].broker}
-  ...      criteria_view_status
+  ...      criteria_view
   Звірити відображення поля status характеристики із active для усіх користувачів
 
 
@@ -56,7 +47,7 @@ ${MODE}             criteria
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      criteria_view_name
+  ...      criteria_view
   Звірити відображення поля name характеристики для користувача ${viewer}
 
 
@@ -64,7 +55,7 @@ ${MODE}             criteria
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      criteria_view_name_us
+  ...      criteria_view
   Звірити відображення поля nameEng характеристики для користувача ${viewer}
 
 
@@ -72,7 +63,7 @@ ${MODE}             criteria
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      criteria_view_min
+  ...      criteria_view
   Звірити відображення поля minValue характеристики для користувача ${viewer}
 
 
@@ -80,7 +71,7 @@ ${MODE}             criteria
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      criteria_view_max
+  ...      criteria_view
   Звірити відображення поля maxValue характеристики для користувача ${viewer}
 
 
@@ -88,7 +79,7 @@ ${MODE}             criteria
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      criteria_view_util_code
+  ...      criteria_view
   Звірити відображення поля unit.code характеристики для користувача ${viewer}
 
 
@@ -96,7 +87,7 @@ ${MODE}             criteria
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      criteria_view_util_name
+  ...      criteria_view
   Звірити відображення поля unit.name характеристики для користувача ${viewer}
 
 
@@ -104,7 +95,7 @@ ${MODE}             criteria
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      criteria_view_type_data
+  ...      criteria_view
   Звірити відображення поля dataType характеристики для користувача ${viewer}
 
 
@@ -112,7 +103,7 @@ ${MODE}             criteria
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      criteria_view_classifications_id
+  ...      criteria_view
   Звірити відображення поля classification.id характеристики для користувача ${viewer}
 
 
@@ -120,7 +111,7 @@ ${MODE}             criteria
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      criteria_view_classifications_description
+  ...      criteria_view
   Звірити відображення поля classification.description характеристики для користувача ${viewer}
 
 
@@ -128,7 +119,7 @@ ${MODE}             criteria
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      criteria_view_classifications_scheme
+  ...      criteria_view
   Звірити відображення поля classification.scheme характеристики для користувача ${viewer}
 
 
@@ -136,8 +127,7 @@ ${MODE}             criteria
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      criteria_view_additionalClassification_id
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  CRITERIA
+  ...      criteria_view
   Звірити відображення поля additionalClassification.id характеристики для користувача ${viewer}
 
 
@@ -145,7 +135,7 @@ ${MODE}             criteria
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      criteria_view_additionalClassification_description
+  ...      criteria_view
   Звірити відображення поля additionalClassification.description характеристики для користувача ${viewer}
 
 
@@ -153,7 +143,7 @@ ${MODE}             criteria
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      criteria_view_additionalClassification_scheme
+  ...      criteria_view
   Звірити відображення поля additionalClassification.scheme характеристики для користувача ${viewer}
 
 
@@ -161,47 +151,45 @@ ${MODE}             criteria
   [Tags]   ${USERS.users['${catalogues_admin}'].broker}: Редагування характеристики
   ...      catalogues_admin
   ...      ${USERS.users['${catalogues_admin}'].broker}
-  ...      modify_criteria_name
+  ...      modify_criteria
   [Teardown]  Оновити LAST_MODIFICATION_DATE  CRITERIA
   ${field_value}=  create_fake_sentence
   Можливість змінити поле name характеристики на ${field_value}
 
 
 Відображення зміненої назви характеристики
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення характеристики
+  [Tags]   ${USERS.users['${viewer}'].broker}: Редагування характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      view_modified_criteria_name
+  ...      modify_criteria
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  CRITERIA
   Remove From Dictionary  ${USERS.users['${viewer}'].criteria_data}  name
   Звірити відображення поля name характеристики із ${USERS.users['${catalogues_admin}'].new_name} для користувача ${viewer}
 
-##################################################
-#######NEGATIVE TESTS
-Відсутність можливості змінити назву характерестики
-    [Tags]   ${USERS.users['${viewer}'].broker}: Відображення характеристики
+
+Неможливість змінити назву характерестики
+    [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагування характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      impossibility_modify_criteria
-  ${field_value_name}=  create_fake_sentence
-  Відсутність можливості змінити поле name характеристики на ${field_value_name}
+  ${field_value}=  create_fake_sentence
+  Перевірити неможливість зміни поля name характеристики на значення ${field_value} для користувача ${viewer}
 
-Перевірити чи змінено назву характеристики
-  [Tags]   ${USERS.users['${viewer}'].broker}: Редагування характеристики
+
+Відображення незміненої назви у характеристики
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагування характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      impossibility_modify_criteria_view
-  Remove From Dictionary  ${USERS.users['${viewer}'].criteria_data}  name
+  ...      impossibility_modify_criteria
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  CRITERIA
-  Перевірити чи не відбулися зміни поля name характеристики із ${USERS.users['${catalogues_admin}'].exeption_name} для користувача ${viewer}
-##########
-####################################################
+  Звірити відображення поля name характеристики із ${USERS.users['${catalogues_admin}'].criteria_data.name} для користувача ${viewer}
+
 
 Можливість змінити назву англійською мовою характеристики
   [Tags]   ${USERS.users['${catalogues_admin}'].broker}: Редагування характеристики
   ...      catalogues_admin
   ...      ${USERS.users['${catalogues_admin}'].broker}
-  ...      modify_criteria_view_by_en
+  ...      modify_criteria
   [Teardown]  Оновити LAST_MODIFICATION_DATE  CRITERIA
   ${field_value}=  create_fake_eng_sentence
   Можливість змінити поле nameEng характеристики на ${field_value}
@@ -211,17 +199,35 @@ ${MODE}             criteria
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      view_modified_criteria_by_en
+  ...      modify_criteria
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  CRITERIA
   Remove From Dictionary  ${USERS.users['${viewer}'].criteria_data}  nameEng
   Звірити відображення поля nameEng характеристики із ${USERS.users['${catalogues_admin}'].new_nameEng} для користувача ${viewer}
+
+
+Неможливість змінити назву англійською мовою характеристики
+    [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагування характеристики
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      impossibility_modify_criteria
+  ${field_value}=  create_fake_eng_sentence
+  Перевірити неможливість зміни поля nameEng характеристики на значення ${field_value} для користувача ${viewer}
+
+
+Відображення незміненої назви англійською мовою у характеристики
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагування характеристики
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      impossibility_modify_criteria
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  CRITERIA
+  Звірити відображення поля nameEng характеристики із ${USERS.users['${catalogues_admin}'].criteria_data.nameEng} для користувача ${viewer}
 
 
 Можливість змінити мінімальне значення характеристики
   [Tags]   ${USERS.users['${catalogues_admin}'].broker}: Редагування характеристики
   ...      catalogues_admin
   ...      ${USERS.users['${catalogues_admin}'].broker}
-  ...      modify_criteria_min_value
+  ...      modify_criteria
   [Teardown]  Оновити LAST_MODIFICATION_DATE  CRITERIA
   ${field_value}=  create_fake_number  ${USERS.users['${viewer}'].criteria_data.minValue}  ${USERS.users['${viewer}'].criteria_data.maxValue}
   Можливість змінити поле minValue характеристики на ${field_value}
@@ -231,37 +237,35 @@ ${MODE}             criteria
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      view_modified_criteria_min_value
+  ...      modify_criteria
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  CRITERIA
   Remove From Dictionary  ${USERS.users['${viewer}'].criteria_data}  minValue
   Звірити відображення поля minValue характеристики із ${USERS.users['${catalogues_admin}'].new_minValue} для користувача ${viewer}
 
-#############################################################################
-######NEGATIVE TESTS
 
-Відсутність можливості змінити мінімальне значення характеристики
-  [Tags]   ${USERS.users['${viewer}'].broker}: Редагування характеристики
+Неможливість змінити мінімальне значення характеристики
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагування характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      impossibility_modify_criteria_min_value
-  ${field_value_min}=  create_fake_number  ${USERS.users['${viewer}'].criteria_data.minValue}  ${USERS.users['${viewer}'].criteria_data.maxValue}
-  Відсутність можливості змінити поле minValue характеристики на ${field_value_min}
+  ...      impossibility_modify_criteria
+  ${field_value}=  create_fake_number  ${USERS.users['${viewer}'].criteria_data.minValue}  ${USERS.users['${viewer}'].criteria_data.maxValue}
+  Перевірити неможливість зміни поля minValue характеристики на значення ${field_value} для користувача ${viewer}
 
-Перевірити чи не відбулися зміни в полі мінімальне значення характеристики
-  [Tags]   ${USERS.users['${viewer}'].broker}: Редагування характеристики
+
+Відображення незміненого мінімального значення у характеристики
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагування характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      impossibility_view_criteria_min_value
-  Remove From Dictionary  ${USERS.users['${viewer}'].criteria_data}  minValue
-  Перевірити чи не відбулися зміни поля minValue характеристики із ${USERS.users['${catalogues_admin}'].exeption_minValue} для користувача ${viewer}
-#######
-##############################################################################
+  ...      impossibility_modify_criteria
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  CRITERIA
+  Звірити відображення поля minValue характеристики із ${USERS.users['${catalogues_admin}'].criteria_data.minValue} для користувача ${viewer}
+
 
 Можливість змінити максимальне значення характеристики
   [Tags]   ${USERS.users['${catalogues_admin}'].broker}: Редагування характеристики
   ...      catalogues_admin
   ...      ${USERS.users['${catalogues_admin}'].broker}
-  ...      modify_criteria_max_value
+  ...      modify_criteria
   [Teardown]  Оновити LAST_MODIFICATION_DATE  CRITERIA
   ${min_value}=  Convert To Number  ${USERS.users['${viewer}'].criteria_data.minValue}
   ${field_value}=  create_fake_value_amount  ${min_value}
@@ -272,33 +276,75 @@ ${MODE}             criteria
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      view_modified_criteria_max_value
+  ...      modify_criteria
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  CRITERIA
   Remove From Dictionary  ${USERS.users['${viewer}'].criteria_data}  maxValue
   Звірити відображення поля maxValue характеристики із ${USERS.users['${catalogues_admin}'].new_maxValue} для користувача ${viewer}
 
-########################################################################
-###########NEGATIVE TESTS
 
-Відсутність можливості змінити максимальне значення характеристики
-  [Tags]   ${USERS.users['${viewer}'].broker}: Редагування характеристики
+Неможливість змінити максимальне значення характеристики
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагування характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      impossibility_modify_criteria_max_value
-  ${field_value_max}=  create_fake_number  ${USERS.users['${viewer}'].criteria_data.minValue}  ${USERS.users['${viewer}'].criteria_data.maxValue}
-  Відсутність можливості змінити поле maxValue характеристики на ${field_value_max}
+  ...      impossibility_modify_criteria
+  ${field_value}=  create_fake_number  ${USERS.users['${catalogues_admin}'].criteria_data.minValue}  ${USERS.users['${catalogues_admin}'].criteria_data.maxValue}
+  Перевірити неможливість зміни поля maxValue характеристики на значення ${field_value} для користувача ${viewer}
 
-Перевірити чи відбулися зміни в полі максимальне значення характеристики
-  [Tags]   ${USERS.users['${viewer}'].broker}: Редагування характеристики
+
+Відображення незміненого максимального значення у характеристики
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагування характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      impossibility_view_criteria_min_value
-  Remove From Dictionary  ${USERS.users['${viewer}'].criteria_data}  maxValue
+  ...      impossibility_modify_criteria
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  CRITERIA
-  Перевірити чи не відбулися зміни поля maxValue характеристики із ${USERS.users['${catalogues_admin}'].exeption_maxValue} для користувача ${viewer}
+  Звірити відображення поля maxValue характеристики із ${USERS.users['${catalogues_admin}'].criteria_data.maxValue} для користувача ${viewer}
 
-###########
-########################################################################
+
+Неможливість змінити величину характеристики
+  [Tags]   ${USERS.users['${catalogues_admin}'].broker}: Неможливість редагування характеристики
+  ...      viewer
+  ...      ${USERS.users['${catalogues_admin}'].broker}
+  ...      impossibility_modify_criteria
+  ${field_value}=  create_unit
+  Перевірити неможливість зміни поля unit характеристики на значення ${field_value} для користувача ${catalogues_admin}
+
+
+Відображення незміненої величини коду характеристики
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагування характеристики
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_criteria
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  CRITERIA
+  Звірити відображення поля unit.code характеристики із ${USERS.users['${catalogues_admin}'].criteria_data.unit.code} для користувача ${viewer}
+
+
+Відображення незміненої величини назви характеристики
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагування характеристики
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_criteria
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  CRITERIA
+  Звірити відображення поля unit.name характеристики із ${USERS.users['${catalogues_admin}'].criteria_data.unit.name} для користувача ${viewer}
+
+
+Неможливість видалити характеристику
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість видалення характеристики
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      impossibility_delete_criteria
+  [Teardown]  Оновити LAST_MODIFICATION_DATE  CRITERIA
+  Неможливість ${viewer} видалити характеристику
+
+
+Відображення статусу невидаленої характеристики
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість видалення характеристики
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      impossibility_delete_criteria
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  CRITERIA
+  Remove From Dictionary  ${USERS.users['${viewer}'].criteria_data}  status
+  Звірити відображення поля status характеристики із active для користувача ${viewer}
+
 
 Можливість видалити характеристику
   [Tags]   ${USERS.users['${catalogues_admin}'].broker}: Видалення характеристики
@@ -308,32 +354,12 @@ ${MODE}             criteria
   [Teardown]  Оновити LAST_MODIFICATION_DATE  CRITERIA
   Можливість видалити характеристику
 
+
 Відображення статусу видаленої характеристики
-  [Tags]   ${USERS.users['${viewer}'].broker}: Переглянути статус видаленої характеристики
+  [Tags]   ${USERS.users['${viewer}'].broker}: Видалення характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      view_status_ofter_deleted_criteria
+  ...      delete_criteria
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  CRITERIA
   Remove From Dictionary  ${USERS.users['${viewer}'].criteria_data}  status
   Звірити відображення поля status характеристики із retired для користувача ${viewer}
-
-###################################################
-#########NEGATIVE TESTS
-Відсутність можливості видалити
-  [Tags]   ${USERS.users['${viewer}'].broker}: Видалення характеристики
-  ...      criteria_admin
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      impossibility_delete_criteria
-  [Teardown]  Оновити LAST_MODIFICATION_DATE  CRITERIA
-  Відсутність можливості ${viewer} видалити характеристику
-
-
-Відображення статусу потеційно видаленої характеристики
-  [Tags]   ${USERS.users['${viewer}'].broker}: Видалення характеристики
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      check_no_delete_criteria
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  CRITERIA
-  Remove From Dictionary  ${USERS.users['${viewer}'].criteria_data}  status
-  Звірити відображення поля status характеристики із active для користувача ${viewer}
-####################################################
