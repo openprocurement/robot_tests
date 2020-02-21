@@ -12,19 +12,18 @@ from munch import munchify
 from op_faker import OP_Provider
 from .local_time import get_now, TZ
 
-
 fake_en = Factory.create(locale='en_US')
 fake_ru = Factory.create(locale='ru_RU')
 fake_uk = Factory.create(locale='uk_UA')
 fake_uk.add_provider(OP_Provider)
 fake = fake_uk
 used_identifier_id = []
-mode_open =     ["belowThreshold", "aboveThresholdUA", "aboveThresholdEU",
-                "aboveThresholdUA.defense", "competitiveDialogueUA", "competitiveDialogueEU", "esco"]
-mode_limited =  ["reporting", "negotiation.quick", "negotiation"]
+mode_open = ["belowThreshold", "aboveThresholdUA", "aboveThresholdEU",
+             "aboveThresholdUA.defense", "competitiveDialogueUA", "competitiveDialogueEU", "esco"]
+mode_limited = ["reporting", "negotiation.quick", "negotiation"]
 violationType = ["corruptionDescription", "corruptionProcurementMethodType", "corruptionChanges",
-                "corruptionPublicDisclosure", "corruptionBiddingDocuments", "documentsForm",
-                "corruptionAwarded", "corruptionCancelled", "corruptionContracting"]
+                 "corruptionPublicDisclosure", "corruptionBiddingDocuments", "documentsForm",
+                 "corruptionAwarded", "corruptionCancelled", "corruptionContracting"]
 
 # This workaround fixes an error caused by missing "catch_phrase" class method
 # for the "ru_RU" locale in Faker >= 0.7.4
@@ -47,6 +46,9 @@ def create_fake_funder():
 def get_fake_funder_scheme():
     return fake.funder_scheme()
 
+def create_unit():
+    unit_code = fake.unit()
+    return unit_code
 
 def create_fake_amount(award_amount):
     return round(random.uniform(1, award_amount), 2)
@@ -58,17 +60,6 @@ def create_fake_number(min_number, max_number):
 
 def create_fake_title():
     return u"[ТЕСТУВАННЯ] {}".format(fake.title())
-
-
-def create_fake_url():
-    return fake.url()
-
-
-def create_fake_word():
-    new_word = fake.word()
-    if len(new_word) >= 10:
-        new_word = new_word[:10]
-    return new_word
 
 
 def create_fake_date():
@@ -110,7 +101,7 @@ def translate_country_en(country):
 
 
 def convert_amount(amount):
-    return  (("{:,}".format(float (amount))).replace(',',' ').replace('.',','))
+    return (("{:,}".format(float(amount))).replace(',', ' ').replace('.', ','))
 
 
 def translate_country_ru(country):
@@ -173,7 +164,7 @@ def test_tender_data(params,
     accelerator = accelerator \
         if accelerator else params['intervals']['accelerator']
     data['procurementMethodDetails'] = 'quick, ' \
-        'accelerator={}'.format(accelerator)
+                                       'accelerator={}'.format(accelerator)
     data["procuringEntity"]["kind"] = "other"
     if data.get("mode") == "test":
         data["title"] = u"[ТЕСТУВАННЯ] {}".format(data["title"])
@@ -263,9 +254,9 @@ def test_tender_data_planning(params):
             }
         },
         "items": []
-        }
-    id_cpv=fake.cpv()[:4]
-    cpv_data=test_item_data(id_cpv)
+    }
+    id_cpv = fake.cpv()[:4]
+    cpv_data = test_item_data(id_cpv)
     data.update(cpv_data)
     del data['deliveryDate']
     del data['description']
@@ -276,10 +267,11 @@ def test_tender_data_planning(params):
     del data['quantity']
     del data['unit']
     for i in range(params['number_of_items']):
-        item_data=test_item_data(id_cpv)
+        item_data = test_item_data(id_cpv)
         del item_data['deliveryAddress']
         del item_data['deliveryLocation']
-        item_data['deliveryDate']['endDate'] = (get_now() + timedelta(days=10)).replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
+        item_data['deliveryDate']['endDate'] = (get_now() + timedelta(days=10)).replace(hour=0, minute=0, second=0,
+                                                                                        microsecond=0).isoformat()
         del item_data['deliveryDate']['startDate']
         data['items'].append(item_data)
     if params['mode'] in mode_open:
@@ -474,12 +466,12 @@ def test_bid_value(max_value_amount):
 def test_bid_value_esco(tender_data):
     annual_cost = []
     for i in range(0, 21):
-        cost=round(random.uniform(1, 100), 2)
+        cost = round(random.uniform(1, 100), 2)
         annual_cost.append(cost)
     if tender_data['fundingKind'] == "budget":
-        yearly_percentage=round(random.uniform(0.01, float(tender_data['yearlyPaymentsPercentageRange'])), 5)
+        yearly_percentage = round(random.uniform(0.01, float(tender_data['yearlyPaymentsPercentageRange'])), 5)
     else:
-        yearly_percentage= 0.8
+        yearly_percentage = 0.8
     # when tender fundingKind is budget, yearlyPaymentsPercentageRange should be less or equal 0.8, and more or equal 0
     # when tender fundingKind is other, yearlyPaymentsPercentageRange should be equal 0.8
     return munchify({
@@ -534,8 +526,10 @@ def test_item_data(cpv=None):
     startDate = fake.random_int(min=1, max=30)
     endDate = startDate + fake.random_int(min=1, max=7)
     data["deliveryDate"] = {
-        "startDate": (get_now() + timedelta(days=startDate)).astimezone(TZ).replace(hour=0, minute=0, second=0, microsecond=0).isoformat(),
-        "endDate": (get_now() + timedelta(days=endDate)).astimezone(TZ).replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
+        "startDate": (get_now() + timedelta(days=startDate)).astimezone(TZ).replace(hour=0, minute=0, second=0,
+                                                                                    microsecond=0).isoformat(),
+        "endDate": (get_now() + timedelta(days=endDate)).astimezone(TZ).replace(hour=0, minute=0, second=0,
+                                                                                microsecond=0).isoformat()
     }
     data["deliveryAddress"]["countryName_en"] = translate_country_en(data["deliveryAddress"]["countryName"])
     data["deliveryAddress"]["countryName_ru"] = translate_country_ru(data["deliveryAddress"]["countryName"])
@@ -627,7 +621,8 @@ def test_tender_data_openeu(params, submissionMethodDetails):
     data['procuringEntity']['name_en'] = fake_en.name()
     data['procuringEntity']['contactPoint']['name_en'] = fake_en.name()
     data['procuringEntity']['contactPoint']['availableLanguage'] = "en"
-    data['procuringEntity']['identifier']['legalName_en'] = u"Institution \"Vinnytsia City Council primary and secondary general school № 10\""
+    data['procuringEntity']['identifier'][
+        'legalName_en'] = u"Institution \"Vinnytsia City Council primary and secondary general school № 10\""
     data['procuringEntity']['kind'] = 'general'
     return data
 
@@ -677,37 +672,37 @@ def test_tender_data_selection(procedure_intervals, params, submissionMethodDeta
     data['procurementMethodType'] = 'closeFrameworkAgreementSelectionUA'
     data['items'] = tender_data['data']['items']
     data['lots'] = tender_data['data']['lots']
-    data['agreements'] =  [{'id': tender_data['data']['agreements'][0]['id']}]
+    data['agreements'] = [{'id': tender_data['data']['agreements'][0]['id']}]
     del data['value']
     del data['minimalStep']
-    return munchify({'data':data})
+    return munchify({'data': data})
 
 
 def test_change_data():
     return munchify(
-    {
-        "data":
         {
-            "rationale": fake.description(),
-            "rationale_en": fake_en.sentence(nb_words=10, variable_nb_words=True),
-            "rationale_ru": fake_ru.sentence(nb_words=10, variable_nb_words=True),
-            "rationaleTypes": fake.rationaleTypes(amount=3), 
-            "status": "pending"
-        }
-    })
+            "data":
+                {
+                    "rationale": fake.description(),
+                    "rationale_en": fake_en.sentence(nb_words=10, variable_nb_words=True),
+                    "rationale_ru": fake_ru.sentence(nb_words=10, variable_nb_words=True),
+                    "rationaleTypes": fake.rationaleTypes(amount=3),
+                    "status": "pending"
+                }
+        })
 
 
 def test_agreement_change_data(rationaleType):
     return munchify(
-    {
-        "data":
         {
-            "rationale": fake.description(),
-            "rationale_en": fake_en.sentence(nb_words=10, variable_nb_words=True),
-            "rationale_ru": fake_ru.sentence(nb_words=10, variable_nb_words=True),
-            "rationaleType": rationaleType,
-        }
-    })
+            "data":
+                {
+                    "rationale": fake.description(),
+                    "rationale_en": fake_en.sentence(nb_words=10, variable_nb_words=True),
+                    "rationale_ru": fake_ru.sentence(nb_words=10, variable_nb_words=True),
+                    "rationaleType": rationaleType,
+                }
+        })
 
 
 def test_modification_data(item_id, field_name, field_value):
@@ -719,15 +714,14 @@ def test_modification_data(item_id, field_name, field_value):
             }
         ]
     }
-    return munchify({'data':data})
-
+    return munchify({'data': data})
 
 
 def get_hash(file_contents):
-    return ("md5:"+hashlib.md5(file_contents).hexdigest())
+    return ("md5:" + hashlib.md5(file_contents).hexdigest())
 
 
-def tets_monitoring_data( tender_id, accelerator=None):
+def tets_monitoring_data(tender_id, accelerator=None):
     data = {
         "reasons": [random.choice(["public", "fiscal", "indicator", "authorities", "media"])],
         "tender_id": tender_id,
@@ -736,8 +730,8 @@ def tets_monitoring_data( tender_id, accelerator=None):
         "mode": "test"
     }
     data['monitoringDetails'] = 'quick, ' \
-        'accelerator={}'.format(accelerator)
-    return munchify({'data':data})
+                                'accelerator={}'.format(accelerator)
+    return munchify({'data': data})
 
 
 def test_party():
@@ -749,26 +743,26 @@ def test_party():
 
 def test_dialogue():
     return munchify(
-    {
-        "data":
         {
-            "title": fake_en.sentence(nb_words=10, variable_nb_words=True),
-            "description": fake_en.sentence(nb_words=10, variable_nb_words=True)
-        }
-    })
+            "data":
+                {
+                    "title": fake_en.sentence(nb_words=10, variable_nb_words=True),
+                    "description": fake_en.sentence(nb_words=10, variable_nb_words=True)
+                }
+        })
 
 
 def test_conclusion(violationOccurred, relatedParty_id):
     return munchify(
-    {
-       "data": {
-            "conclusion": {
-                "violationOccurred": violationOccurred,
-                "violationType": random.choice(violationType),
-                "relatedParty": relatedParty_id,
+        {
+            "data": {
+                "conclusion": {
+                    "violationOccurred": violationOccurred,
+                    "violationType": random.choice(violationType),
+                    "relatedParty": relatedParty_id,
+                }
             }
-        }
-    })
+        })
 
 
 def test_status_data(status, relatedParty_id=None):
@@ -821,7 +815,7 @@ def test_tender_data_esco(params, submissionMethodDetails):
         if index == 0:
             data['lots'][index]['minimalStepPercentage'] = data['minimalStepPercentage']
         else:
-            data['lots'][index]['minimalStepPercentage'] = round((float(data['minimalStepPercentage'])-0.0002), 5)
+            data['lots'][index]['minimalStepPercentage'] = round((float(data['minimalStepPercentage']) - 0.0002), 5)
         if data['fundingKind'] == "budget":
             data['lots'][index]['yearlyPaymentsPercentageRange'] = float(round(random.uniform(0.01, 0.8), 5))
         else:
@@ -848,13 +842,14 @@ def test_criteria_data():
     data_types = ['number', 'string', 'boolean', 'integer']
     unit = fake.unit()
     data = {
-          "name": create_fake_sentence(),
-          "nameEng": create_fake_eng_sentence(),
-          "classification": classification['classification'],
-          "additionalClassification": classification['additionalClassifications'][0],
-          "minValue": str(min_value),
-          "maxValue": str(max_value),
-          "dataType": random.choice(data_types),
-          "unit": unit
+        "name": create_fake_sentence(),
+        "nameEng": create_fake_eng_sentence(),
+        "classification": classification['classification'],
+        "additionalClassification": classification['additionalClassifications'][0],
+        "minValue": str(min_value),
+        "maxValue": str(max_value),
+        "dataType": random.choice(data_types),
+        "unit": unit
     }
     return munchify(data)
+
