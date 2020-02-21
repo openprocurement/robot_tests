@@ -73,14 +73,13 @@ from .initial_data import (
     get_number_of_minutes,
     get_hash,
     test_criteria_data,
-    create_fake_eng_sentence,
+    create_unit,
 )
 from barbecue import chef
 from restkit import request
 # End of non-pointless import
 import os
 import re
-
 
 NUM_TYPES = (int, long, float)
 STR_TYPES = (str, unicode)
@@ -137,7 +136,8 @@ def compare_date(left, right, accuracy="minute", absolute_delta=True):
         try:
             accuracy = float(accuracy)
         except ValueError:
-            LOGGER.log_message(Message("Could not convert from {} to float. Accuracy is set to 60 seconds.".format(accuracy), "WARN"))
+            LOGGER.log_message(
+                Message("Could not convert from {} to float. Accuracy is set to 60 seconds.".format(accuracy), "WARN"))
             accuracy = 60
     if absolute_delta:
         delta = abs(delta)
@@ -163,11 +163,12 @@ def compare_coordinates(left_lat, left_lon, right_lat, right_lon, accuracy=0.1):
                             into float value. When it will be catched warning will be
                             given and accuracy will be set to 0.1.
     '''
-    for key, value in {'left_lat': left_lat, 'left_lon': left_lon, 'right_lat': right_lat, 'right_lon': right_lon}.iteritems():
+    for key, value in {'left_lat': left_lat, 'left_lon': left_lon, 'right_lat': right_lat,
+                       'right_lon': right_lon}.iteritems():
         if not isinstance(value, NUM_TYPES):
             raise TypeError("Invalid type for coordinate '{0}'. "
                             "Expected one of {1}, got {2}".format(
-                                key, str(NUM_TYPES), str(type(value))))
+                key, str(NUM_TYPES), str(type(value))))
     distance = haversine((left_lat, left_lon), (right_lat, right_lon))
     if distance > accuracy:
         return False
@@ -237,7 +238,7 @@ def load_data_from(file_name, mode=None, external_params_name=None):
     """We assume that 'external_params' is a a valid json if passed
     """
 
-    external_params = BuiltIn().\
+    external_params = BuiltIn(). \
         get_variable_value('${{{name}}}'.format(name=external_params_name))
 
     if not os.path.exists(file_name):
@@ -261,7 +262,7 @@ def load_data_from(file_name, mode=None, external_params_name=None):
     except ValueError:
         raise ValueError(
             'Value {param} of command line parameter {name} is invalid'.
-            format(name=external_params_name, param=str(external_params))
+                format(name=external_params_name, param=str(external_params))
         )
 
     return merge_dicts(file_data, ext_params_munch)
@@ -295,7 +296,7 @@ def compute_intrs(brokers_data, used_brokers):
                 if k not in l.keys():
                     l[k] = v
                 elif k in keys_to_prefer_lesser:
-                   l[k] = recur(l[k], v, prefer_greater_numbers=False)
+                    l[k] = recur(l[k], v, prefer_greater_numbers=False)
                 else:
                     l[k] = recur(l[k], v)
             return l
@@ -360,10 +361,10 @@ def prepare_test_tender_data(procedure_intervals,
             funders=funders,
             accelerator=accelerator)})
     elif mode == 'open_esco':
-         return munchify({'data': test_tender_data_esco(
+        return munchify({'data': test_tender_data_esco(
             tender_parameters, submissionMethodDetails)})
-        # The previous line needs an explicit keyword argument because,
-        # unlike previous functions, this one has three arguments.
+    # The previous line needs an explicit keyword argument because,
+    # unlike previous functions, this one has three arguments.
     raise ValueError("Invalid mode for prepare_test_tender_data")
 
 
@@ -488,7 +489,7 @@ def merge_dicts(a, b):
     result = deepcopy(a)
     for k, v in b.iteritems():
         if k in result and isinstance(result[k], dict):
-                result[k] = merge_dicts(result[k], v)
+            result[k] = merge_dicts(result[k], v)
         else:
             result[k] = deepcopy(v)
     return munchify(result)
@@ -543,7 +544,7 @@ def get_id_from_object(obj):
             return obj_id.group(1)
 
     raise ValueError('could not find object ID in "title": "%s", '
-                    '"description": "%s"' % (title, description))
+                     '"description": "%s"' % (title, description))
 
 
 def get_id_from_string(string):
@@ -614,7 +615,7 @@ def generate_test_bid_data(tender_data):
             'competitiveDialogueEU',
             'closeFrameworkAgreementUA',
             'esco'
-        ):
+    ):
         bid = test_bid_competitive_data()
         bid.data.selfEligible = True
         bid.data.selfQualified = True
@@ -658,7 +659,7 @@ def compare_rationale_types(type1, type2):
 def delete_from_dictionary(variable, path):
     if not type(path) in STR_TYPES:
         raise TypeError('path must be one of: ' +
-            str(STR_TYPES))
+                        str(STR_TYPES))
     return xpathdelete(variable, path, separator='.')
 
 
