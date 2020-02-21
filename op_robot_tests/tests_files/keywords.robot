@@ -5,8 +5,6 @@ Library  Collections
 Library  Selenium2Library
 Library  OperatingSystem
 Library  DateTime
-Library  DebugLibrary
-
 
 Documentation
 ...  This resource file contains keywords that are used directly by
@@ -870,7 +868,7 @@ Require Failure
   ${keywords_file}=  Get Broker Property By Username  ${username}  keywords_file
   ${status}  ${value}=  Run keyword and ignore keyword definitions  ${keywords_file}.${command}  ${username}  @{arguments}
   Run keyword if  '${status}' == 'PASS'  Fail  Користувач ${username} зміг виконати "${command}"
-  [return]  ${value}
+  [Return]  ${value}
 
 
 Можливість отримати посилання на аукціон для глядача
@@ -1231,6 +1229,7 @@ Require Failure
   ${right}=  Отримати дані із характеристики  ${username}  ${criteria_uaid}  ${field}
   Порівняти об'єкти  ${left}  ${right}
 
+
 Звірити на невідповідність поле характеристики із значенням
   [Arguments]  ${username}  ${criteria_uaid}  ${left}  ${field}
   ${left}=  Convert To String  ${left}
@@ -1266,11 +1265,8 @@ Require Failure
   ...     ELSE  Set Variable  ${left}
   Звірити поле характеристики із значенням  ${username}  ${criteria_uaid}  ${left}  ${field}
 
+
 Оновити сторінку з характеристикою
   [Arguments]  ${username}
   Run As  ${username}  Оновити сторінку з характеристикою  ${CRITERIA['CRITERIA_UAID']}
 
-Звірити повідомлення
-  [Arguments]  ${actual_result}  ${expected_result}
-  ${get_regexp_mesage}  Get Regexp Matches  ${actual_result}  ({.*})
-  should be equal  ${get_regexp_mesage[0]}  ${expected_result}
