@@ -74,6 +74,7 @@ from .initial_data import (
     get_hash,
     test_criteria_data,
     create_unit,
+    create_fake_eng_sentence
 )
 from barbecue import chef
 from restkit import request
