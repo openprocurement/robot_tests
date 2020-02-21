@@ -691,7 +691,7 @@ Resource           resource.robot
   ${data}=  munch_dict  arg=${USERS.users['${username}'].tender_data.data}
   Set To Dictionary  ${USERS.users['${username}'].tender_data}  data=${data}
   Log  ${USERS.users['${username}'].tender_data.data}
-  [return]  ${field_value}
+  [Return]  ${field_value}
 
 
 Можливість видалити ${feature_index} неціновий показник
@@ -1477,72 +1477,54 @@ Resource           resource.robot
   Set Global Variable  ${CRITERIA}
   Set To Dictionary  ${USERS.users['${catalogues_admin}']}  initial_data=${criteria_data}
   Log  ${USERS.users['${catalogues_admin}']}
-  Set To Dictionary  ${CRITERIA}  CRITERIA_UAID=${criteria_id.id}
-  Set To Dictionary  ${CRITERIA}  CRITERIA_RESPONSE=${criteria_id}
+  Set To Dictionary  ${CRITERIA}  CRITERIA_UAID=${criteria_id}
 
-Відсутність можливості для ${viewer} створити критерію
+
+Неможливість для ${viewer} створити критерію
   ${criteria_data}=  test_criteria_data
   ${criteria_data}=  munchify  ${criteria_data}
-  ${actual_result}=  Run Keyword And Expect Error  *  Run As  ${viewer}  Створити характеристику  ${criteria_data}
-  Звірити повідомлення  ${actual_result}   {"detail":"You do not have permission to perform this action."}
-  ${criteria_id_exeption}  Get Regexp Matches	${actual_result}  ({.*})
-  log  ${criteria_id_exeption}
-  ${CRITERIA_EXCEPTION}=  Create Dictionary
-  Set Global Variable  ${CRITERIA_EXCEPTION}
-  Set To Dictionary  ${USERS.users['${viewer}']}  initial_data=${criteria_data}
-  Log  ${USERS.users['${viewer}']}
-  Set To Dictionary  ${CRITERIA_EXCEPTION}  CRITERIA_UAID_EXCEPTION=${criteria_id_exeption}
+  Require Failure  ${viewer}  Створити характеристику  ${criteria_data}
 
 
 Можливість знайти характеристику по ідентифікатору для усіх користувачів
   :FOR  ${username}  IN  ${catalogues_admin}  ${viewer}
   \  Можливість знайти характеристику по ідентифікатору для користувача ${username}
 
+
 Можливість знайти характеристику по ідентифікатору для користувача ${username}
-  Дочекатись синхронізації з майданчиком  ${username}  CRITERIA
   Run As  ${username}  Пошук характеристики по ідентифікатору  ${CRITERIA['CRITERIA_UAID']}
+
 
 Звірити відображення поля ${field} характеристики для усіх користувачів
   :FOR  ${username}  IN  ${viewer}  ${catalogues_admin}
   \  Звірити відображення поля ${field} характеристики для користувача ${username}
 
+
 Звірити відображення поля ${field} характеристики для користувача ${username}
-  Дочекатись синхронізації з майданчиком  ${viewer}  CRITERIA
   Звірити поле характеристики  ${username}  ${CRITERIA['CRITERIA_UAID']}  ${USERS.users['${catalogues_admin}'].initial_data}  ${field}
+
 
 Звірити відображення поля ${field} характеристики із ${value} для усіх користувачів
   :FOR  ${username}  IN  ${catalogues_admin}  ${viewer}
   \  Звірити відображення поля ${field} характеристики із ${value} для користувача ${username}
 
+
 Звірити відображення поля ${field} характеристики із ${value} для користувача ${username}
-  Дочекатись синхронізації з майданчиком  ${viewer}  CRITERIA
   Звірити поле характеристики із значенням  ${username}  ${CRITERIA['CRITERIA_UAID']}  ${value}  ${field}
+
 
 Можливість змінити поле ${field_name} характеристики на ${field_value}
   Run As  ${catalogues_admin}  Внести зміни в характеристику  ${CRITERIA['CRITERIA_UAID']}  ${field_name}  ${field_value}
   Set To Dictionary  ${USERS.users['${catalogues_admin}']}  new_${field_name}=${field_value}
 
+
 Можливість видалити характеристику
   Run As  ${catalogues_admin}  Видалити характеристику  ${CRITERIA['CRITERIA_UAID']}
 
-Перевірити на відсутність потенційно створеної характеристики по ідентифікатору для усіх користувачів
-  :FOR  ${username}  IN  ${catalogues_admin}  ${viewer}
-  \  Спроба знайти характеристику по ідентифікатору для користувача ${username}
 
-Спроба знайти характеристику по ідентифікатору для користувача ${username}
-  Дочекатись синхронізації з майданчиком  ${username}  CRITERIA
-  ${actual_result_view}=  Run Keyword And Expect Error  *  Run As  ${username}  Пошук характеристики по ідентифікатору  ${CRITERIA_EXCEPTION.CRITERIA_UAID_EXCEPTION}
-  log  ${actual_result_view}
+Неможливість ${viewer} видалити характеристику
+  Require Failure  ${viewer}  Видалити характеристику  ${CRITERIA['CRITERIA_UAID']}
 
-Відсутність можливості ${viewer} видалити характеристику
-  Можливість створити характеристику
-  ${exeption}  Run Keyword And Expect Error  *  Run As  ${viewer}  Видалити характеристику  ${CRITERIA['CRITERIA_UAID']}
-  Звірити повідомлення  ${exeption}   {"detail":"You do not have permission to perform this action."}
 
-Відсутність можливості змінити поле ${field_name} характеристики на ${field_value}
-  ${exeption}  Run Keyword And Expect Error  *  Run As  ${viewer}  Внести зміни в характеристику  ${CRITERIA['CRITERIA_UAID']}  ${field_name}  ${field_value}
-  Звірити повідомлення  ${exeption}   {"detail":"You do not have permission to perform this action."}
-  Set To Dictionary  ${USERS.users['${catalogues_admin}']}  exeption_${field_name}=${field_value}
-
-Перевірити чи не відбулися зміни поля ${field} характеристики із ${value} для користувача ${username}
-  Звірити на невідповідність поле характеристики із значенням  ${username}  ${CRITERIA['CRITERIA_UAID']}  ${value}  ${field}
+Перевірити неможливість зміни поля ${field_name} характеристики на значення ${field_value} для користувача ${username}
+  Require Failure  ${username}  Внести зміни в характеристику  ${CRITERIA['CRITERIA_UAID']}  ${field_name}  ${field_value}
