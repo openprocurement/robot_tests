@@ -2143,10 +2143,11 @@ Library  openprocurement_client.utils
   Run Keyword If  '${status}' == 'PASS'  Return From Keyword   ${field_value}
   Fail  Field not found: ${field_name}
 
+
 Створити характеристику
   [Arguments]  ${username}  ${criteria_data}
   ${criteria}=  Call Method  ${USERS.users['${username}'].criteria_client}  create_criteria  ${criteria_data}
-  [Return]  ${criteria.id}
+  [return]  ${criteria.id}
 
 
 Пошук характеристики по ідентифікатору
