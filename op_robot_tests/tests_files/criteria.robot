@@ -13,9 +13,7 @@ ${MODE}             criteria
   [Tags]   ${USERS.users['${e_admin}'].broker}: Оголошення характеристики
   ...      e_admin
   ...      ${USERS.users['${e_admin}'].broker}
-  ...      create_criteria  modify_criteria
-  ...      impossibility_modify_criteria
-  ...      delete_criteria  impossibility_delete_criteria
+  ...      create_criteria
   [Teardown]  Оновити LAST_MODIFICATION_DATE  CRITERIA
   Можливість створити характеристику
 
@@ -24,9 +22,7 @@ ${MODE}             criteria
   [Tags]   ${USERS.users['${viewer}'].broker}: Пошук характеристики
   ...      viewer  criteria_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
-  ...      find_criteria  modify_criteria
-  ...      impossibility_modify_criteria
-  ...      delete_criteria  impossibility_delete_criteria
+  ...      find_criteria
   Можливість знайти характеристику по ідентифікатору для усіх користувачів
 
 
