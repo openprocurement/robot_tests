@@ -691,7 +691,7 @@ Resource           resource.robot
   ${data}=  munch_dict  arg=${USERS.users['${username}'].tender_data.data}
   Set To Dictionary  ${USERS.users['${username}'].tender_data}  data=${data}
   Log  ${USERS.users['${username}'].tender_data.data}
-  [Return]  ${field_value}
+  [return]  ${field_value}
 
 
 Можливість видалити ${feature_index} неціновий показник
@@ -1480,10 +1480,10 @@ Resource           resource.robot
   Set To Dictionary  ${CRITERIA}  CRITERIA_UAID=${criteria_id}
 
 
-Неможливість для ${viewer} створити критерію
+Неможливість створити характеристику для ${username}
   ${criteria_data}=  test_criteria_data
   ${criteria_data}=  munchify  ${criteria_data}
-  Require Failure  ${viewer}  Створити характеристику  ${criteria_data}
+  Require Failure  ${username}  Створити характеристику  ${criteria_data}
 
 
 Можливість знайти характеристику по ідентифікатору для усіх користувачів
@@ -1492,6 +1492,7 @@ Resource           resource.robot
 
 
 Можливість знайти характеристику по ідентифікатору для користувача ${username}
+  Дочекатись синхронізації з майданчиком  ${username}  CRITERIA
   Run As  ${username}  Пошук характеристики по ідентифікатору  ${CRITERIA['CRITERIA_UAID']}
 
 
@@ -1510,6 +1511,7 @@ Resource           resource.robot
 
 
 Звірити відображення поля ${field} характеристики із ${value} для користувача ${username}
+  Дочекатись синхронізації з майданчиком  ${username}  CRITERIA
   Звірити поле характеристики із значенням  ${username}  ${CRITERIA['CRITERIA_UAID']}  ${value}  ${field}
 
 
@@ -1522,9 +1524,10 @@ Resource           resource.robot
   Run As  ${catalogues_admin}  Видалити характеристику  ${CRITERIA['CRITERIA_UAID']}
 
 
-Неможливість ${viewer} видалити характеристику
-  Require Failure  ${viewer}  Видалити характеристику  ${CRITERIA['CRITERIA_UAID']}
+Неможливість видалити характеристику для ${username}
+  Require Failure  ${username}  Видалити характеристику  ${CRITERIA['CRITERIA_UAID']}
 
 
-Перевірити неможливість зміни поля ${field_name} характеристики на значення ${field_value} для користувача ${username}
+Неможливість змінити поле ${field_name} характеристики на значення ${field_value} для користувача ${username}
   Require Failure  ${username}  Внести зміни в характеристику  ${CRITERIA['CRITERIA_UAID']}  ${field_name}  ${field_value}
+
