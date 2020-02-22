@@ -36,12 +36,12 @@ class StableDsClient(DocumentServiceClient):
         return super(StableDsClient, self).request(*args, **kwargs)
 
 
-
 class StableCriteriaClient(CriteriaServiceClient):
     @retry(stop_max_attempt_number=100, wait_random_min=500,
            wait_random_max=4000, retry_on_exception=retry_if_request_failed)
     def request(self, *args, **kwargs):
         return super(StableCriteriaClient, self).request(*args, **kwargs)
+
 
 class StableAgreementClient(AgreementClient):
     @retry(stop_max_attempt_number=100, wait_random_min=500,
