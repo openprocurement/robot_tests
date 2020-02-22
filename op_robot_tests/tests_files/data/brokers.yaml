@@ -84,9 +84,9 @@ Quinta:
         provider1:      Tender_User1
         provider2:      Tender_User2
         tender_owner:   Tender_Owner
-        viewer:         Catalogues_Viewer
+        viewer:         Tender_Viewer
         dasu_user:      Dasu_User
-        catalogues_admin: Catalogues_Admin
+        e_admin:        Ecatalogues_Admin
     timeout_on_wait: 15
 Etender:
     intervals:

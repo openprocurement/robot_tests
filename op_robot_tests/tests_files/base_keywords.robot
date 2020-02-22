@@ -1470,13 +1470,13 @@ Resource           resource.robot
 Можливість створити характеристику
   ${criteria_data}=  test_criteria_data
   ${criteria_data}=  munchify  ${criteria_data}
-  ${criteria_id}=  Run As  ${catalogues_admin}
+  ${criteria_id}=  Run As  ${e_admin}
   ...      Створити характеристику
   ...      ${criteria_data}
   ${CRITERIA}=  Create Dictionary
   Set Global Variable  ${CRITERIA}
-  Set To Dictionary  ${USERS.users['${catalogues_admin}']}  initial_data=${criteria_data}
-  Log  ${USERS.users['${catalogues_admin}']}
+  Set To Dictionary  ${USERS.users['${e_admin}']}  initial_data=${criteria_data}
+  Log  ${USERS.users['${e_admin}']}
   Set To Dictionary  ${CRITERIA}  CRITERIA_UAID=${criteria_id}
 
 
@@ -1487,7 +1487,7 @@ Resource           resource.robot
 
 
 Можливість знайти характеристику по ідентифікатору для усіх користувачів
-  :FOR  ${username}  IN  ${catalogues_admin}  ${viewer}
+  :FOR  ${username}  IN  ${e_admin}  ${viewer}
   \  Можливість знайти характеристику по ідентифікатору для користувача ${username}
 
 
@@ -1497,16 +1497,16 @@ Resource           resource.robot
 
 
 Звірити відображення поля ${field} характеристики для усіх користувачів
-  :FOR  ${username}  IN  ${viewer}  ${catalogues_admin}
+  :FOR  ${username}  IN  ${viewer}  ${e_admin}
   \  Звірити відображення поля ${field} характеристики для користувача ${username}
 
 
 Звірити відображення поля ${field} характеристики для користувача ${username}
-  Звірити поле характеристики  ${username}  ${CRITERIA['CRITERIA_UAID']}  ${USERS.users['${catalogues_admin}'].initial_data}  ${field}
+  Звірити поле характеристики  ${username}  ${CRITERIA['CRITERIA_UAID']}  ${USERS.users['${e_admin}'].initial_data}  ${field}
 
 
 Звірити відображення поля ${field} характеристики із ${value} для усіх користувачів
-  :FOR  ${username}  IN  ${catalogues_admin}  ${viewer}
+  :FOR  ${username}  IN  ${e_admin}  ${viewer}
   \  Звірити відображення поля ${field} характеристики із ${value} для користувача ${username}
 
 
@@ -1516,16 +1516,21 @@ Resource           resource.robot
 
 
 Можливість змінити поле ${field_name} характеристики на ${field_value}
-  Run As  ${catalogues_admin}  Внести зміни в характеристику  ${CRITERIA['CRITERIA_UAID']}  ${field_name}  ${field_value}
-  Set To Dictionary  ${USERS.users['${catalogues_admin}']}  new_${field_name}=${field_value}
+  Run As  ${e_admin}  Внести зміни в характеристику  ${CRITERIA['CRITERIA_UAID']}  ${field_name}  ${field_value}
+  Set To Dictionary  ${USERS.users['${e_admin}']}  new_${field_name}=${field_value}
 
 
 Можливість видалити характеристику
-  Run As  ${catalogues_admin}  Видалити характеристику  ${CRITERIA['CRITERIA_UAID']}
+  Run As  ${e_admin}  Видалити характеристику  ${CRITERIA['CRITERIA_UAID']}
 
 
 Неможливість видалити характеристику для ${username}
   Require Failure  ${username}  Видалити характеристику  ${CRITERIA['CRITERIA_UAID']}
+
+
+Неможливість змінити поле ${field_name} характеристики на значення ${field_value} для усіх користувачів
+  :FOR  ${username}  IN  ${e_admin}  ${viewer}
+  \  Неможливість змінити поле ${field_name} характеристики на значення ${field_value} для користувача ${username}
 
 
 Неможливість змінити поле ${field_name} характеристики на значення ${field_value} для користувача ${username}

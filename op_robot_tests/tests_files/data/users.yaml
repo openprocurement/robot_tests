@@ -1,5 +1,5 @@
 users:
-    Catalogues_Admin:
+    Ecatalogues_Admin:
         auth_ds:
             tenders:  [test.quintagroup.com, test.quintagroup.com]
             plans:    [test.quintagroup.com, test.quintagroup.com]
@@ -11,21 +11,6 @@ users:
         broker:   Quinta
         auth_edr: [test.quintagroup.com, f5111c99a97a45348d8165ba8fcf0d62]
         auth_catalogues: [admin, adminpassword]
-        browser:  phantomjs
-        position: [0, 0]
-        size:     [1400, 900]
-    Catalogues_Viewer:
-        auth_ds:
-            tenders:  [test.quintagroup.com, test.quintagroup.com]
-            plans:    [test.quintagroup.com, test.quintagroup.com]
-            auctions: [test.quintagroup.com, bc698baa8b814908bc75405ed3d63548]
-            criteria: [test.quintagroup.com, test.quintagroup.com]
-            profile:  [test.quintagroup.com, test.quintagroup.com]
-        api_key:  e9c3ccb8e8124f26941d5f9639a4ebc3
-        dasu_api_key: ""
-        broker:   Quinta
-        auth_edr: [test.quintagroup.com, f5111c99a97a45348d8165ba8fcf0d62]
-        auth_catalogues: [user, userpassword]
         browser:  phantomjs
         position: [0, 0]
         size:     [1400, 900]
@@ -97,7 +82,7 @@ users:
         broker:   Quinta
         browser:  firefox
         auth_edr: [test.quintagroup.com, f5111c99a97a45348d8165ba8fcf0d62]
-        auth_criteria: [user, userpassword]
+        auth_catalogues: [user, userpassword]
         position: [0, 0]
         size:     [1400, 900]
     Dasu_User:
