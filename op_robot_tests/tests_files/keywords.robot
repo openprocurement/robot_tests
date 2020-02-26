@@ -602,13 +602,6 @@ Log differences between dicts
   Should Not Be Equal  ${right}  ${None}
   Should Be Equal  ${left}  ${right}  msg=Objects are not equal
 
-Порівняти на невідповідність
-  [Arguments]  ${left}  ${right}
-  Log  ${left}
-  Log  ${right}
-  Should Not Be Equal  ${left}  ${None}
-  Should Not Be Equal  ${right}  ${None}
-  Should Not Be Equal  ${left}  ${right}  msg=Objects are equal
 
 Звірити дату тендера
   [Arguments]  ${username}  ${tender_uaid}  ${tender_data}  ${field}  ${accuracy}=60  ${absolute_delta}=${False}
@@ -810,6 +803,31 @@ Log differences between dicts
   [return]  ${object_type}[${object_index}].${field_name}
 
 
+Отримати шлях до поля об’єкта в профілі
+  [Arguments]  ${username}  ${field_name}  ${object_id}
+  ${object_type}=  get_object_type_by_id  ${object_id}
+  ${objects}=  Get Variable Value  ${USERS.users['${username}'].profile_data['${object_type}']}  ${None}
+  ${object_index}=  get_object_index_by_id  ${objects}  ${object_id}
+  [return]  ${object_type}[${object_index}].${field_name}
+
+
+#Отримати дані із профіля
+#  [Arguments]  ${username}  ${tender_uaid}  ${object_id}  ${field_name}
+#  ${object_type}=  get_object_type_by_id  ${object_id}
+#  ${status}  ${value}=  Run Keyword If  '${object_type}'=='questions'
+#  ...      Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із характеристики  ${tender_uaid}  ${object_id}  ${field_name}
+#  ...      ELSE IF  '${object_type}'=='lots'
+#  ...      Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із групи вимог  ${tender_uaid}  ${object_id}  ${field_name}
+#  ...      ELSE IF  '${object_type}'=='items'
+#  ...      Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із предмету  ${tender_uaid}  ${object_id}  ${field_name}
+#  ...      ELSE IF  '${object_type}'=='features'
+#  ...      Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із нецінового показника  ${tender_uaid}  ${object_id}  ${field_name}
+#  ${field}=  Отримати шлях до поля об’єкта в профілі  ${username}  ${field_name}  ${object_id}
+#  ${field_value}=  Run Keyword IF  '${status}'=='PASS'  Set Variable  ${value}
+#  ...      ELSE  Run As  ${username}  Отримати інформацію із профіля  ${tender_uaid}  ${field}
+#  [return]  ${field_value}
+
+
 Отримати дані із об’єкта тендера
   [Arguments]  ${username}  ${tender_uaid}  ${object_id}  ${field_name}
   ${object_type}=  get_object_type_by_id  ${object_id}
@@ -868,7 +886,7 @@ Require Failure
   ${keywords_file}=  Get Broker Property By Username  ${username}  keywords_file
   ${status}  ${value}=  Run keyword and ignore keyword definitions  ${keywords_file}.${command}  ${username}  @{arguments}
   Run keyword if  '${status}' == 'PASS'  Fail  Користувач ${username} зміг виконати "${command}"
-  [Return]  ${value}
+  [return]  ${value}
 
 
 Можливість отримати посилання на аукціон для глядача
@@ -1228,13 +1246,6 @@ Require Failure
   ${left}=  Convert To String  ${left}
   ${right}=  Отримати дані із характеристики  ${username}  ${criteria_uaid}  ${field}
   Порівняти об'єкти  ${left}  ${right}
-
-
-Звірити на невідповідність поле характеристики із значенням
-  [Arguments]  ${username}  ${criteria_uaid}  ${left}  ${field}
-  ${left}=  Convert To String  ${left}
-  ${right}=  Отримати дані із характеристики  ${username}  ${criteria_uaid}  ${field}
-  Порівняти на невідповідність  ${left}  ${right}
 
 
 Отримати дані із характеристики
