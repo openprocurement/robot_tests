@@ -76,10 +76,8 @@ Library  openprocurement_client.utils
   ${dasu_api_wraper}=  prepare_dasu_api_wrapper  ${USERS.users['${username}'].dasu_api_key}  ${DASU_RESOURCE}  ${DASU_API_HOST_URL}  ${DASU_API_VERSION}  ${ds_config}
   ${agreement_wrapper}=  prepare_agreement_api_wrapper  ${USERS.users['${username}'].api_key}  AGREEMENTS  ${API_HOST_URL}  ${API_VERSION}  ${ds_config}
   ${criteria_wrapper}=  prepare_criteria_api_wrapper  ${API_HOST_URL}  ${API_VERSION}  ${auth_catalogues}
-  ${profile_wrapper}=  prepare_profile_api_wrapper  ${API_HOST_URL}  ${API_VERSION}  ${auth_catalogues}
   Set To Dictionary  ${USERS.users['${username}']}  client=${api_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  criteria_client=${criteria_wrapper}
-  Set To Dictionary  ${USERS.users['${username}']}  profile_client=${profile_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  agreement_client=${agreement_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  dasu_client=${dasu_api_wraper}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${EMPTY}
