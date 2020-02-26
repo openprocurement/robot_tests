@@ -46,9 +46,6 @@ def create_fake_funder():
 def get_fake_funder_scheme():
     return fake.funder_scheme()
 
-def create_unit():
-    unit_code = fake.unit()
-    return unit_code
 
 def create_fake_amount(award_amount):
     return round(random.uniform(1, award_amount), 2)
@@ -60,6 +57,19 @@ def create_fake_number(min_number, max_number):
 
 def create_fake_title():
     return u"[ТЕСТУВАННЯ] {}".format(fake.title())
+
+
+def create_unit_en():
+    unit_code = fake.unit_en()
+    return unit_code
+
+
+def create_fake_word():
+    return fake.word()
+
+
+def create_fake_url():
+    return fake.url()
 
 
 def create_fake_date():
@@ -840,7 +850,7 @@ def test_criteria_data():
     max_value = create_fake_value_amount(min_value)
     classification = fake.classification()
     data_types = ['number', 'string', 'boolean', 'integer']
-    unit = fake.unit()
+    unit = create_unit_en()
     data = {
         "name": create_fake_sentence(),
         "nameEng": create_fake_eng_sentence(),
