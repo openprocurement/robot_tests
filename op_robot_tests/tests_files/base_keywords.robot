@@ -152,6 +152,7 @@ Resource           resource.robot
 Перевірити неможливість зміни поля ${field_name} тендера на значення ${field_value} для користувача ${username}
   Require Failure  ${username}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  ${field_name}  ${field_value}
 
+
 Можливість змінити поле ${field_name} плану на ${field_value}
   Run As  ${tender_owner}  Внести зміни в план  ${TENDER['TENDER_UAID']}  ${field_name}  ${field_value}
 
@@ -1511,7 +1512,6 @@ Resource           resource.robot
 
 
 Звірити відображення поля ${field} характеристики із ${value} для користувача ${username}
-  Дочекатись синхронізації з майданчиком  ${username}  CRITERIA
   Звірити поле характеристики із значенням  ${username}  ${CRITERIA['CRITERIA_UAID']}  ${value}  ${field}
 
 
