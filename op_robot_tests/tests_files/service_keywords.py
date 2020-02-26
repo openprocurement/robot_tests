@@ -73,8 +73,8 @@ from .initial_data import (
     get_number_of_minutes,
     get_hash,
     test_criteria_data,
-    create_unit,
-    create_fake_eng_sentence
+    create_fake_eng_sentence,
+    create_unit_en
 )
 from barbecue import chef
 from restkit import request
@@ -670,3 +670,4 @@ def dictionary_should_not_contain_path(dictionary, path):
     except KeyError:
         return
     raise RuntimeError("Dictionary contains path '%s'." % path)
+
