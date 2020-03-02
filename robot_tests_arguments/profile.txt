@@ -1,0 +1,11 @@
+-v MODE:profile
+
+-i create_profile
+-i find_profile
+-i profile_view
+-i modify_profile
+-i add_profile
+-i add_profile_view
+-i modify_add_profile
+-i delete_add_profile
+-i delete_profile
