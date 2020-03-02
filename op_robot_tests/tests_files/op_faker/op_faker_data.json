@@ -7865,6 +7865,92 @@
             "name": "Флакон"
         }
     ],
+    "units_en": [
+        {
+            "code": "05",
+            "name": "lift"
+        },
+        {
+            "code": "06",
+            "name": "small spray"
+        },
+        {
+            "code": "08",
+            "name": "heat lot"
+        },
+        {
+            "code": "10",
+            "name": "group"
+        },
+        {
+            "code": "11",
+            "name": "outfit"
+        },
+        {
+            "code": "13",
+            "name": "ration"
+        },
+        {
+            "code": "14",
+            "name": "shot"
+        },
+        {
+            "code": "15",
+            "name": "stick, military"
+        },
+        {
+            "code": "16",
+            "name": "hundred fifteen kg drum"
+        },
+        {
+            "code": "17",
+            "name": "hundred lb drum"
+        },
+        {
+            "code": "18",
+            "name": "fiftyfive gallon (US) drum"
+        },
+        {
+            "code": "19",
+            "name": "tank truck"
+        },
+        {
+            "code": "1A",
+            "name": "car mile"
+        },
+        {
+            "code": "1B",
+            "name": "car count"
+        },
+        {
+            "code": "1C",
+            "name": "locomotive count"
+        },
+        {
+            "code": "1D",
+            "name": "caboose count"
+        },
+        {
+            "code": "1E",
+            "name": "empty car"
+        },
+        {
+            "code": "1F",
+            "name": "train mile"
+        },
+        {
+            "code": "1G",
+            "name": "fuel usage gallon (US)"
+        },
+        {
+            "code": "1H",
+            "name": "caboose mile"
+        },
+        {
+            "code": "1I",
+            "name": "fixed rate"
+        }
+    ],
     "cpvs": [
         "22200000-2",
         "22212000-9",

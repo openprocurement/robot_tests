@@ -30,6 +30,7 @@ class OP_Provider(BaseProvider):
     items_base_data = _fake_data.items_base_data
     rationale_types = _fake_data.rationale_types
     units = _fake_data.units
+    units_en = _fake_data.units_en
 
     @classmethod
     def randomize_nb_elements(self, number=10, le=60, ge=140):
@@ -195,3 +196,7 @@ class OP_Provider(BaseProvider):
     @classmethod
     def unit(self):
         return self.random_element(self.units)
+
+    @classmethod
+    def unit_en(self):
+        return self.random_element(self.units_en)

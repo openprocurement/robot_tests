@@ -1,0 +1,7 @@
+-v MODE:criteria
+
+-i create_criteria
+-i impossibility_create_criteria
+-i find_criteria
+-i impossibility_modify_criteria
+-i impossibility_delete_criteria

@@ -67,18 +67,15 @@ Library  openprocurement_client.utils
   ${auth_ds_all}=  get variable value  ${USERS.users.${username}.auth_ds}
   ${auth_ds}=  set variable  ${auth_ds_all.${RESOURCE}}
   Log  ${auth_ds}
-  ${auth_criteria}=  set variable  ${USERS.users.${username}.auth_criteria}
-  Log  ${auth_criteria}
-
-
+  ${auth_catalogues}=  set variable  ${USERS.users.${username}.auth_catalogues}
+  Log  ${auth_catalogues}
   ${ds_config}=  Create Dictionary  host_url=${ds_host_url}  auth_ds=${auth_ds}
   ${api_wrapper}=  Run Keyword If  '${RESOURCE}' == 'plans'
   ...     prepare_plan_api_wrapper  ${USERS.users['${username}'].api_key}  PLANS  ${API_HOST_URL}  ${API_VERSION}
   ...                     ELSE  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${RESOURCE}  ${API_HOST_URL}  ${API_VERSION}  ${ds_config}
   ${dasu_api_wraper}=  prepare_dasu_api_wrapper  ${USERS.users['${username}'].dasu_api_key}  ${DASU_RESOURCE}  ${DASU_API_HOST_URL}  ${DASU_API_VERSION}  ${ds_config}
   ${agreement_wrapper}=  prepare_agreement_api_wrapper  ${USERS.users['${username}'].api_key}  AGREEMENTS  ${API_HOST_URL}  ${API_VERSION}  ${ds_config}
-  ${criteria_wrapper}=  prepare_criteria_api_wrapper  ${API_HOST_URL}  ${API_VERSION}  ${auth_criteria}
-
+  ${criteria_wrapper}=  prepare_criteria_api_wrapper  ${API_HOST_URL}  ${API_VERSION}  ${auth_catalogues}
   Set To Dictionary  ${USERS.users['${username}']}  client=${api_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  criteria_client=${criteria_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  agreement_client=${agreement_wrapper}
@@ -2191,3 +2188,4 @@ Library  openprocurement_client.utils
 Оновити сторінку з характеристикою
   [Arguments]  ${username}  ${criteria_uaid}
   openprocurement_client.Пошук характеристики по ідентифікатору  ${username}  ${criteria_uaid}
+

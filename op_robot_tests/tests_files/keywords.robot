@@ -5,8 +5,6 @@ Library  Collections
 Library  Selenium2Library
 Library  OperatingSystem
 Library  DateTime
-Library  DebugLibrary
-
 
 Documentation
 ...  This resource file contains keywords that are used directly by
@@ -1256,3 +1254,4 @@ Require Failure
 Оновити сторінку з характеристикою
   [Arguments]  ${username}
   Run As  ${username}  Оновити сторінку з характеристикою  ${CRITERIA['CRITERIA_UAID']}
+
