@@ -103,6 +103,10 @@ def field_with_id(prefix, sentence):
     return u"{}-{}: {}".format(prefix, fake.uuid4()[:8], sentence)
 
 
+def description_with_id():
+    return u"{}-{}".format(fake.uuid4()[:8], fake.description())
+
+
 def translate_country_en(country):
     if country == u"Україна":
         return "Ukraine"
@@ -863,3 +867,98 @@ def test_criteria_data():
     }
     return munchify(data)
 
+
+def choose_type(data_type):
+    if data_type == 'number':
+        data_type = round(random.uniform(3000, 99999999.99), 2)
+    elif data_type == 'integer':
+        data_type = create_fake_value_amount()
+    elif data_type == 'string':
+        data_type = create_fake_word()#.decode('uth-8')
+    elif data_type == 'boolean':
+        data_type = random.choice(["false", "true"])
+    return data_type
+
+
+
+
+
+def create_currency():
+    currency = random.choice(['UAH', 'USD', 'EUR'])
+    return currency
+
+
+def create_tax():
+    tax = random.choice(["false", "true"])
+    return tax
+
+
+def create_value_amount():
+    value_amount = round(random.uniform(3000, 999999.99), 2)
+    return value_amount
+
+
+def create_value():
+    values = {
+        "amount": create_value_amount(),
+        "currency": create_currency(),
+        "valueAddedTaxIncluded": create_tax()
+    }
+    return munchify(values)
+
+
+def create_image_data():
+    images = [{
+        "sizes": str(create_fake_number(1, 10)),
+        "url": create_fake_url()
+    }]
+    return images
+
+
+def create_requirements(criteria_uaid, data_type):
+    field_value = random.choice(["minValue", "maxValue", "expectedValue"])
+    criteria_data = {
+        "description": description_with_id(),
+        field_value: choose_type(data_type),
+        "relatedCriteria_id": str(criteria_uaid),
+        "title": fake.title(),
+    }
+    return munchify(criteria_data)
+
+
+def create_requirements_group(criteria_uaid, data_type):
+    requirements = {
+        "requirements": [
+            create_requirements(criteria_uaid, data_type)
+        ],
+        "description": description_with_id()
+    }
+    return munchify(requirements)
+
+
+def create_criteria_for_profile(criteria_uaid, data_type):
+    criteria_group = {
+        "requirementGroups": [
+            create_requirements_group(criteria_uaid, data_type)
+        ],
+        "description": description_with_id(),
+        "title": fake.title()
+    }
+    return munchify(criteria_group)
+
+
+def test_profile_data(criteria_uaid, data_type):
+    classification = fake.classification()
+    data = {
+        "classification": classification['classification'],
+        "additionalClassification": [classification['additionalClassifications'][0]],
+        "description": fake.description(),
+        "status": "active",
+        "author": "admin",
+        "images": create_image_data(),
+        "criteria": [create_criteria_for_profile(criteria_uaid, data_type)],
+        "title": fake.title(),
+        "unit": create_unit_en(),
+        "value": create_value()
+    }
+    return munchify(data)
