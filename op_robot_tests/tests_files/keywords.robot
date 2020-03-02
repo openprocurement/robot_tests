@@ -504,7 +504,6 @@ Log differences between dicts
   [Arguments]  ${username}
   Run Keyword If  '${RESOURCE}' == 'plans'  Run As  ${username}  Оновити сторінку з планом  ${TENDER['TENDER_UAID']}
   ...      ELSE IF  '${RESOURCE}' == 'criteria'  Run As  ${username}  Оновити сторінку з характеристикою  ${CRITERIA['CRITERIA_UAID']}
-  ...      ELSE IF  '${RESOURCE}' == 'profile'  Run As  ${username}  Оновити сторінку з профілем  ${PROFILE['PROFILE_UAID']}
   ...      ELSE  Run As  ${username}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
 
 
@@ -801,31 +800,6 @@ Log differences between dicts
   ${objects}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data['${object_type}']}  ${None}
   ${object_index}=  get_object_index_by_id  ${objects}  ${object_id}
   [return]  ${object_type}[${object_index}].${field_name}
-
-
-Отримати шлях до поля об’єкта в профілі
-  [Arguments]  ${username}  ${field_name}  ${object_id}
-  ${object_type}=  get_object_type_by_id  ${object_id}
-  ${objects}=  Get Variable Value  ${USERS.users['${username}'].profile_data['${object_type}']}  ${None}
-  ${object_index}=  get_object_index_by_id  ${objects}  ${object_id}
-  [return]  ${object_type}[${object_index}].${field_name}
-
-
-#Отримати дані із профіля
-#  [Arguments]  ${username}  ${tender_uaid}  ${object_id}  ${field_name}
-#  ${object_type}=  get_object_type_by_id  ${object_id}
-#  ${status}  ${value}=  Run Keyword If  '${object_type}'=='questions'
-#  ...      Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із характеристики  ${tender_uaid}  ${object_id}  ${field_name}
-#  ...      ELSE IF  '${object_type}'=='lots'
-#  ...      Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із групи вимог  ${tender_uaid}  ${object_id}  ${field_name}
-#  ...      ELSE IF  '${object_type}'=='items'
-#  ...      Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із предмету  ${tender_uaid}  ${object_id}  ${field_name}
-#  ...      ELSE IF  '${object_type}'=='features'
-#  ...      Run Keyword And Ignore Error  Run As  ${username}  Отримати інформацію із нецінового показника  ${tender_uaid}  ${object_id}  ${field_name}
-#  ${field}=  Отримати шлях до поля об’єкта в профілі  ${username}  ${field_name}  ${object_id}
-#  ${field_value}=  Run Keyword IF  '${status}'=='PASS'  Set Variable  ${value}
-#  ...      ELSE  Run As  ${username}  Отримати інформацію із профіля  ${tender_uaid}  ${field}
-#  [return]  ${field_value}
 
 
 Отримати дані із об’єкта тендера
