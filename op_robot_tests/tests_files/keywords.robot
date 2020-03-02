@@ -504,6 +504,7 @@ Log differences between dicts
   [Arguments]  ${username}
   Run Keyword If  '${RESOURCE}' == 'plans'  Run As  ${username}  Оновити сторінку з планом  ${TENDER['TENDER_UAID']}
   ...      ELSE IF  '${RESOURCE}' == 'criteria'  Run As  ${username}  Оновити сторінку з характеристикою  ${CRITERIA['CRITERIA_UAID']}
+  ...      ELSE IF  '${RESOURCE}' == 'profile'  Run As  ${username}  Оновити сторінку з профілем  ${PROFILE['PROFILE_UAID']}
   ...      ELSE  Run As  ${username}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
 
 
