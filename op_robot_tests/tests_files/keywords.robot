@@ -1256,3 +1256,89 @@ Require Failure
   [Arguments]  ${username}
   Run As  ${username}  Оновити сторінку з характеристикою  ${CRITERIA['CRITERIA_UAID']}
 
+
+Оновити сторінку з профілем
+  [Arguments]  ${username}
+  Run As  ${username}  Оновити сторінку з профілем  ${PROFILE['PROFILE_UAID']}
+
+
+Звірити поле профіля
+  [Arguments]  ${username}  ${profile_uaid}  ${profile_data}  ${field}
+  ${profile_data}=  munchify  ${profile_data}
+  ${left}=  get_from_object  ${profile_data}  ${field}
+  ${status}=  Run Keyword And Return Status  Should Be Byte String  ${left}
+  ${left}=  Run Keyword If  ${status}
+  ...     Decode Bytes To String  ${left}  UTF-8
+  ...     ELSE  Set Variable  ${left}
+  Звірити поле профіля із значенням  ${username}  ${profile_uaid}  ${left}  ${field}
+
+
+Звірити поле характеристики в профілі
+  [Arguments]  ${username}  ${profile_uaid}  ${profile_data}  ${field}  ${id}
+  ${profile_data}=  munchify  ${profile_data}
+  ${path}  get_path_to_id_from_criteria  ${profile_data}  ${id}
+#  ${profile_data}  set variable  ${profile_data.${path['path']}[${path['index']}]}
+  ${left}=  get_from_object  ${profile_data.${path['path']}[${path['index']}]}  ${field}
+  ${status}=  Run Keyword And Return Status  Should Be Byte String  ${left}
+  ${left}=  Run Keyword If  ${status}
+  ...     Decode Bytes To String  ${left}  UTF-8
+  ...     ELSE  Set Variable  ${left}
+  Звірити поле характеристики в профілі із значенням  ${username}  ${profile_uaid}  ${left}  ${field}  ${id}
+
+
+Звірити поле профіля із значенням
+  [Arguments]  ${username}  ${profile_uaid}  ${left}  ${field}
+  ${left}=  Convert To String  ${left}
+  ${left}=  Convert To Lowercase  ${left}
+  ${right}=  Отримати дані із профіля  ${username}  ${profile_uaid}  ${field}
+  ${right}=  Convert To String  ${right}
+  ${right}=  Convert To Lowercase  ${right}
+  Порівняти об'єкти  ${left}  ${right}
+
+
+Звірити поле характеристики в профілі із значенням
+  [Arguments]  ${username}  ${profile_uaid}  ${left}  ${field}  ${key_id}
+  ${left}=  Convert To String  ${left}
+  ${left}=  Convert To Lowercase  ${left}
+  ${right}=  Отримати дані із характеристики профіля  ${username}  ${profile_uaid}  ${field}  ${key_id}
+  ${right}=  Convert To String  ${right}
+  ${right}=  Convert To Lowercase  ${right}
+  Порівняти об'єкти  ${left}  ${right}
+
+
+Отримати дані із характеристики профіля
+  [Arguments]  ${username}  ${profile_uaid}  ${field}  ${key_id}
+  ${path}  get_path_to_id_from_criteria  ${USERS.users['${username}'].profile_data}  ${key_id}
+#  ${profile_data}  set variable  ${profile_data.${path}}
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      get_from_object
+  ...      ${USERS.users['${username}'].profile_data.${path['path']}[${path['index']}]}
+  ...      ${field}
+  # If field in cache, return its value
+  Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
+  # Else call broker to find field
+  ${field_value}=    Run As  ${username}  Отримати інформацію із профіля для характеристики  ${profile_uaid}  ${field}  ${key_id}
+  # And caching its value before return
+  Set_To_Object  ${USERS.users['${username}'].profile_data}  ${field}  ${field_value}
+  ${data}=  munch_dict  arg=${USERS.users['${username}'].profile_data}
+  Set To Dictionary  ${USERS.users['${username}']}  profile_data=${data}
+  Log  ${USERS.users['${username}'].profile_data}
+  [Return]  ${field_value}
+
+
+Отримати дані із профіля
+  [Arguments]  ${username}  ${profile_uaid}  ${field}
+  ${status}  ${field_value}=  Run keyword and ignore error
+  ...      get_from_object
+  ...      ${USERS.users['${username}'].profile_data}
+  ...      ${field}
+  # If field in cache, return its value
+  Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
+  # Else call broker to find field
+  ${field_value}=    Run As  ${username}  Отримати інформацію із профіля  ${profile_uaid}  ${field}
+  # And caching its value before return
+  Set_To_Object  ${USERS.users['${username}'].profile_data}  ${field}  ${field_value}
+  ${data}=  munch_dict  arg=${USERS.users['${username}'].profile_data}
+  Set To Dictionary  ${USERS.users['${username}']}  profile_data=${data}
+  Log  ${USERS.users['${username}'].profile_data}
+  [Return]  ${field_value}
