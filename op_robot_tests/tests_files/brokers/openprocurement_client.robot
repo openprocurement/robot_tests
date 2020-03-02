@@ -76,8 +76,10 @@ Library  openprocurement_client.utils
   ${dasu_api_wraper}=  prepare_dasu_api_wrapper  ${USERS.users['${username}'].dasu_api_key}  ${DASU_RESOURCE}  ${DASU_API_HOST_URL}  ${DASU_API_VERSION}  ${ds_config}
   ${agreement_wrapper}=  prepare_agreement_api_wrapper  ${USERS.users['${username}'].api_key}  AGREEMENTS  ${API_HOST_URL}  ${API_VERSION}  ${ds_config}
   ${criteria_wrapper}=  prepare_criteria_api_wrapper  ${API_HOST_URL}  ${API_VERSION}  ${auth_catalogues}
+  ${profile_wrapper}=  prepare_profile_api_wrapper  ${API_HOST_URL}  ${API_VERSION}  ${auth_catalogues}
   Set To Dictionary  ${USERS.users['${username}']}  client=${api_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  criteria_client=${criteria_wrapper}
+  Set To Dictionary  ${USERS.users['${username}']}  profile_client=${profile_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  agreement_client=${agreement_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  dasu_client=${dasu_api_wraper}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${EMPTY}
@@ -2188,4 +2190,134 @@ Library  openprocurement_client.utils
 Оновити сторінку з характеристикою
   [Arguments]  ${username}  ${criteria_uaid}
   openprocurement_client.Пошук характеристики по ідентифікатору  ${username}  ${criteria_uaid}
+
+
+Створити профіль
+  [Arguments]  ${username}  ${profile_data}
+  ${profile}=  Call Method  ${USERS.users['${username}'].profile_client}  create_profile  ${profile_data}
+  Set To Dictionary  ${USERS.users['${username}']}   access=${profile.access}
+  [return]  ${profile}
+
+
+Отримати профіль по ідентифікатору
+  [Arguments]  ${username}  ${profile_id}  ${save_key}=profile_data
+  ${profile}=  Call Method  ${USERS.users['${username}'].profile_client}  get_profile  ${profile_id}
+  ${profile}=  munch_dict  arg=${profile}
+  Set To Dictionary  ${USERS.users['${username}']}  ${save_key}=${profile}
+  Log  ${USERS.users['${username}'].profile_data}
+  [return]  ${profile}
+
+
+Отримати інформацію із профіля
+  [Arguments]  ${username}  ${profile_uaid}  ${field_name}
+  ${profile_data}=  openprocurement_client.Отримати профіль по ідентифікатору
+  ...      ${username}
+  ...      ${profile_uaid}
+  ${profile_data}=  munch_dict  arg=${profile_data}
+  ${status}  ${field_value}=  Run Keyword And Ignore Error
+  ...      Get From Object
+  ...      ${profile_data}
+  ...      ${field_name}
+  Run Keyword If  '${status}' == 'PASS'  Return From Keyword   ${field_value}
+  Fail  Field not found: ${field_name}
+
+
+Отримати інформацію із профіля для характеристики
+  [Arguments]  ${username}  ${profile_uaid}  ${field_name}  ${id}
+  ${profile_data}=  openprocurement_client.Отримати профіль по ідентифікатору
+  ...      ${username}
+  ...      ${profile_uaid}
+  ${path}  get_path_to_id_from_criteria  ${profile_data}  ${id}
+  ${profile_data}  set variable  ${profile_data.${path['path']}[${path['index']}]}
+  log  ${profile_data}
+  ${profile_data}=  munch_dict  arg=${profile_data}
+  ${status}  ${field_value}=  Run Keyword And Ignore Error
+  ...      Get From Object
+  ...      ${profile_data}
+  ...      ${field_name}
+  Run Keyword If  '${status}' == 'PASS'  Return From Keyword   ${field_value}
+  Fail  Field not found: ${field_name}
+
+
+Оновити сторінку з профілем
+  [Arguments]  ${username}  ${profile_uaid}
+  openprocurement_client.Отримати профіль по ідентифікатору  ${username}  ${profile_uaid}
+
+
+Внести зміни в профіль
+  [Arguments]  ${username}  ${profile_id}  ${fieldname}  ${fieldvalue}
+  ${profile}=  openprocurement_client.Отримати профіль по ідентифікатору  ${username}  ${profile_id}
+  ${profile}  prepare_data_profile  ${profile}
+  Set_To_Object  ${profile}   ${fieldname}   ${fieldvalue}
+  ${data}=  Create Dictionary  access=${USERS.users['${username}'].access}  data=${profile}
+  ${data}  munch_dict  ${data}
+  ${profile_data}=  Call Method  ${USERS.users['${username}'].profile_client}  patch_profile
+  ...      ${profile_id}
+  ...      ${data}
+  Set_To_Object   ${USERS.users['${username}'].profile_data}   ${fieldname}   ${fieldvalue}
+
+
+Внести зміни у характеристику профіля
+  [Arguments]  ${username}  ${profile_id}  ${fieldname}  ${fieldvalue}  ${key_id}
+  ${profile}=  openprocurement_client.Отримати профіль по ідентифікатору  ${username}  ${profile_id}
+  ${profile}  prepare_data_profile  ${profile}
+  ${path}  get_path_to_id_from_criteria  ${profile}  ${key_id}
+  Set_To_Object  ${profile.${path['path']}[${path['index']}]}   ${fieldname}   ${fieldvalue}
+  ${data}=  Create Dictionary  access=${USERS.users['${username}'].access}  data=${profile}
+  ${data}  munch_dict  ${data}
+  ${profile_data}=  Call Method  ${USERS.users['${username}'].profile_client}  patch_profile
+  ...      ${profile_id}
+  ...      ${data}
+  Set_To_Object   ${USERS.users['${username}'].profile_data}   ${fieldname}   ${fieldvalue}
+
+
+Додати до профіля
+  [Arguments]  ${username}  ${profile_id}  ${fieldname}  ${value}  ${key_id}
+  ${profile}  openprocurement_client.Отримати профіль по ідентифікатору  ${username}  ${profile_id}
+  ${profile}  prepare_data_profile  ${profile}
+  ${path}  get_path_to_id_from_criteria  ${profile}  ${key_id}
+  Run Keyword if  '${fieldname}' == 'criteria'  Append To List  ${profile['criteria']}  ${value}
+  ...       ELSE  Append To List  ${profile.${path['path']}[${path['index']}].${fieldname}}  ${value}
+  ${data}=  Create Dictionary  access=${USERS.users['${username}'].access}  data=${profile}
+  ${data}  munch_dict  ${data}
+  ${profile_data}=  Call Method  ${USERS.users['${username}'].profile_client}  patch_profile
+  ...      ${profile_id}
+  ...      ${data}
+
+
+Видалити з профіля
+  [Arguments]  ${username}  ${profile_id}  ${key_id}
+  ${profile}  openprocurement_client.Отримати профіль по ідентифікатору  ${username}  ${profile_id}
+  ${profile}  prepare_data_profile  ${profile}
+  ${path}  get_path_to_id_from_criteria  ${profile}  ${key_id}
+  Remove From List  ${profile.${path['path']}}  ${path['index']}
+  ${data}=  Create Dictionary  access=${USERS.users['${username}'].access}  data=${profile}
+  ${data}  munch_dict  ${data}
+  ${profile_data}=  Call Method  ${USERS.users['${username}'].profile_client}  patch_profile
+  ...      ${profile_id}
+  ...      ${data}
+
+
+Можливість отримати інформацію із профіля для характеристики по ключу
+  [Arguments]  ${username}  ${profile_uaid}  ${key_id}
+  ${profile_data}=  openprocurement_client.Отримати профіль по ідентифікатору
+  ...      ${username}
+  ...      ${profile_uaid}
+  ${path}  get_path_to_id_from_criteria
+  ...      ${profile_data}
+  ...      ${key_id}
+  ${profile_data}=  munch_dict  arg=${profile_data}
+  ${field_value}=  Run Keyword
+  ...      Get From Object
+  ...      ${profile_data.${path['path']}[${path['index']}]}
+  ...      description
+  Return From Keyword   ${field_value}
+
+
+Видалити профіль
+  [Arguments]  ${username}  ${profile_id}
+  ${data}=  Create Dictionary  access=${USERS.users['${username}'].access}
+  ${data}  munch_dict  ${data}
+  log  ${data}
+  ${profile_data}=  Call Method  ${USERS.users['${username}'].profile_client}  delete_profile  ${profile_id}  ${data}
 
