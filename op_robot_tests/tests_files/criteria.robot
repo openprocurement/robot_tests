@@ -206,7 +206,7 @@ ${MODE}             criteria
 
 
 Неможливість змінити назву англійською мовою характеристики
-    [Tags]   ${USERS.users['${viewer}'].broker}: impossibility редагування характеристики
+    [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагування характеристики
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      impossibility_modify_criteria
@@ -250,6 +250,7 @@ ${MODE}             criteria
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      impossibility_modify_criteria
+  [Teardown]  Оновити LAST_MODIFICATION_DATE  CRITERIA
   ${field_value}=  create_fake_number  ${USERS.users['${viewer}'].criteria_data.minValue}  ${USERS.users['${viewer}'].criteria_data.maxValue}
   Неможливість змінити поле minValue характеристики на значення ${field_value} для користувача ${viewer}
 
