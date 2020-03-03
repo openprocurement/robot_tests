@@ -2196,7 +2196,7 @@ Library  openprocurement_client.utils
   [Arguments]  ${username}  ${profile_data}
   ${profile}=  Call Method  ${USERS.users['${username}'].profile_client}  create_profile  ${profile_data}
   Set To Dictionary  ${USERS.users['${username}']}   access=${profile.access}
-  [return]  ${profile}
+  [return]  ${profile.data.id}
 
 
 Отримати профіль по ідентифікатору
@@ -2254,7 +2254,6 @@ Library  openprocurement_client.utils
   ${profile_data}=  Call Method  ${USERS.users['${username}'].profile_client}  patch_profile
   ...      ${profile_id}
   ...      ${data}
-  Set_To_Object   ${USERS.users['${username}'].profile_data}   ${fieldname}   ${fieldvalue}
 
 
 Внести зміни у характеристику профіля
@@ -2268,7 +2267,6 @@ Library  openprocurement_client.utils
   ${profile_data}=  Call Method  ${USERS.users['${username}'].profile_client}  patch_profile
   ...      ${profile_id}
   ...      ${data}
-  Set_To_Object   ${USERS.users['${username}'].profile_data}   ${fieldname}   ${fieldvalue}
 
 
 Додати до профіля
