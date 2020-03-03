@@ -1590,7 +1590,6 @@ Resource           resource.robot
   Set To Dictionary  ${USERS.users['${e_admin}']}  new_${field_name}=${field_value}
 
 
-
 Звірити відображення ${field} поля характеристики профіля із ${value} для користувачів по ключу ${id_key}
   :FOR  ${username}  IN  ${e_admin}  ${viewer}
   \  Звірити відображення ${field} поля характеристики профіля із ${value} для користувача ${username} по ключу ${id_key}
