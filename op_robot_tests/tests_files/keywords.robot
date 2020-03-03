@@ -1277,7 +1277,6 @@ Require Failure
   [Arguments]  ${username}  ${profile_uaid}  ${profile_data}  ${field}  ${id}
   ${profile_data}=  munchify  ${profile_data}
   ${path}  get_path_to_id_from_criteria  ${profile_data}  ${id}
-#  ${profile_data}  set variable  ${profile_data.${path['path']}[${path['index']}]}
   ${left}=  get_from_object  ${profile_data.${path['path']}[${path['index']}]}  ${field}
   ${status}=  Run Keyword And Return Status  Should Be Byte String  ${left}
   ${left}=  Run Keyword If  ${status}
