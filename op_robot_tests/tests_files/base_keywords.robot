@@ -1545,7 +1545,7 @@ Resource           resource.robot
   Set Global Variable  ${PROFILE}
   Set To Dictionary  ${USERS.users['${e_admin}']}  initial_profile=${profile_data}
   Log  ${USERS.users['${e_admin}']}
-  Set To Dictionary  ${PROFILE}  PROFILE_UAID=${profile_result.data.id}
+  Set To Dictionary  ${PROFILE}  PROFILE_UAID=${profile_result}
   log  ${profile_result}
 
 
