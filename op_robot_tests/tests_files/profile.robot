@@ -269,6 +269,7 @@ ${MODE}             profile
   ${field_value}=  create_unit_en
   Можливість змінити поле unit профіля на ${field_value}
 
+
 Відображення зміненої назви одиниці в профайлі
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування профіля
   ...      viewer  e_admin
@@ -277,6 +278,7 @@ ${MODE}             profile
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  PROFILE
   Remove From Dictionary  ${USERS.users['${viewer}'].profile_data.unit}  name
   Звірити відображення поля unit.name профіля із ${USERS.users['${e_admin}'].new_unit.name} для усіх користувачів
+
 
 Відображення зміненого коду одиниці в профайлі
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування профіля
@@ -1394,6 +1396,4 @@ ${MODE}             profile
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  PROFILE
   Remove From Dictionary  ${USERS.users['${viewer}'].profile_data}  status
   Звірити відображення поля status профіля із active для користувача ${viewer}
-
-
 
