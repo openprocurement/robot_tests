@@ -1590,22 +1590,11 @@ Resource           resource.robot
   Set To Dictionary  ${USERS.users['${e_admin}']}  new_${field_name}=${field_value}
 
 
-Звірити відображення ${field} поля характеристики профіля із ${value} для користувачів по ключу ${id_key}
-  :FOR  ${username}  IN  ${e_admin}  ${viewer}
-  \  Звірити відображення ${field} поля характеристики профіля із ${value} для користувача ${username} по ключу ${id_key}
-
-
 Звірити відображення ${field} поля характеристики профіля із ${value} для користувача ${username} по ключу ${id_key}
   Звірити поле характеристики в профілі із значенням  ${username}  ${PROFILE['PROFILE_UAID']}  ${value}  ${field}  ${id_key}
 
 
-Звірити відображення поля ${field} профіля із ${value} для усіх користувачів
-  :FOR  ${username}  IN  ${e_admin}  ${viewer}
-  \  Звірити відображення поля ${field} профіля із ${value} для користувача ${username}
-
-
 Звірити відображення поля ${field} профіля із ${value} для користувача ${username}
-  Дочекатись синхронізації з майданчиком  ${username}  PROFILE
   Звірити поле профіля із значенням  ${username}  ${PROFILE['PROFILE_UAID']}  ${value}  ${field}
 
 
@@ -1621,7 +1610,7 @@ Resource           resource.robot
   Run As  ${e_admin}  Видалити профіль  ${PROFILE['PROFILE_UAID']}
 
 
-Видалити дані
+Видалити дані з profile data
   [Arguments]  ${field}  ${id}
   ${path}  get_path_to_id_from_criteria  ${USERS.users['${viewer}'].profile_data}  ${id}
   Remove From Dictionary  ${USERS.users['${viewer}'].profile_data.${path['path']}[${path['index']}]}  ${field}
@@ -1634,10 +1623,10 @@ Resource           resource.robot
   ...   expectedValue
   ...   minValue
   ...   maxValue
-  [Return]  ${value}
+  [return]  ${value}
 
 
-Неможливість створити профайл для ${username}
+Неможливість створити профіль для ${username}
   ${profile_data}=  test_profile_data  ${CRITERIA['CRITERIA_UAID']}  ${USERS.users['${e_admin}'].initial_data.dataType}
   ${profile_data}=  munchify  ${profile_data}
   Require Failure  ${username}  Створити профіль  ${profile_data}
