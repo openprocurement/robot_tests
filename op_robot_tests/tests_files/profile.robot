@@ -1039,7 +1039,7 @@ ${MODE}             profile
   ...      impossibility_modify_profile
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  PROFILE
   Remove From Dictionary  ${USERS.users['${viewer}'].profile_data}  title
-  Звірити відображення поля title профіля із ${USERS.users['${e_admin}'].initial_profile.title} для користувача ${username}
+  Звірити відображення поля title профіля із ${USERS.users['${e_admin}'].initial_profile.title} для користувача ${viewer}
 
 
 Неможливість змінити опис профіля
@@ -1059,7 +1059,7 @@ ${MODE}             profile
   ...      impossibility_modify_profile
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  PROFILE
   Remove From Dictionary  ${USERS.users['${viewer}'].profile_data}  description
-  Звірити відображення поля description профіля із ${USERS.users['${e_admin}'].initial_profile.description} для користувача ${username}
+  Звірити відображення поля description профіля із ${USERS.users['${e_admin}'].initial_profile.description} для користувача ${viewer}
 
 
 Неможливість змінити одиницю в профіля
@@ -1079,7 +1079,7 @@ ${MODE}             profile
   ...      impossibility_modify_profile
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  PROFILE
   Remove From Dictionary  ${USERS.users['${viewer}'].profile_data.unit}  name
-  Звірити відображення поля unit.name профіля із ${USERS.users['${e_admin}'].initial_profile.unit.name} для користувача ${username}
+  Звірити відображення поля unit.name профіля із ${USERS.users['${e_admin}'].initial_profile.unit.name} для користувача ${viewer}
 
 
 Відображення незміненого коду одиниці в профіля
@@ -1089,7 +1089,7 @@ ${MODE}             profile
   ...      impossibility_modify_profile
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  PROFILE
   Remove From Dictionary  ${USERS.users['${viewer}'].profile_data.unit}  code
-  Звірити відображення поля unit.code профіля із ${USERS.users['${e_admin}'].initial_profile.unit.code} для користувача ${username}
+  Звірити відображення поля unit.code профіля із ${USERS.users['${e_admin}'].initial_profile.unit.code} для користувача ${viewer}
 
 
 Неможливість змінити податок на додану вартість в профіля
@@ -1109,7 +1109,7 @@ ${MODE}             profile
   ...      impossibility_modify_profile
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  PROFILE
   Remove From Dictionary  ${USERS.users['${viewer}'].profile_data.value}  valueAddedTaxIncluded
-  Звірити відображення поля value.valueAddedTaxIncluded профіля із ${USERS.users['${e_admin}'].initial_profile.value.valueAddedTaxIncluded} для користувача ${username}
+  Звірити відображення поля value.valueAddedTaxIncluded профіля із ${USERS.users['${e_admin}'].initial_profile.value.valueAddedTaxIncluded} для користувача ${viewer}
 
 
 Неможливість змінити обсяг вартості в профіля
@@ -1129,7 +1129,7 @@ ${MODE}             profile
   ...      impossibility_modify_profile
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  PROFILE
   Remove From Dictionary  ${USERS.users['${viewer}'].profile_data.value}  amount
-  Звірити відображення поля value.amount профіля із ${USERS.users['${e_admin}'].initial_profile.value.amount} для користувача ${username}
+  Звірити відображення поля value.amount профіля із ${USERS.users['${e_admin}'].initial_profile.value.amount} для користувача ${viewer}
 
 
 Неможливість змінити валюту в профіля
@@ -1149,7 +1149,7 @@ ${MODE}             profile
   ...      impossibility_modify_profile
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  PROFILE
   Remove From Dictionary  ${USERS.users['${viewer}'].profile_data.value}  currency
-  Звірити відображення поля value.currency профіля із ${USERS.users['${e_admin}'].initial_profile.value.currency} для користувача ${username}
+  Звірити відображення поля value.currency профіля із ${USERS.users['${e_admin}'].initial_profile.value.currency} для користувача ${viewer}
 
 
 Неможливість змінити розмір картинки в профіля
@@ -1169,7 +1169,7 @@ ${MODE}             profile
   ...      impossibility_modify_profile
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  PROFILE
   Remove From Dictionary  ${USERS.users['${viewer}'].profile_data.images[0]}  sizes
-  Звірити відображення поля images[0].sizes профіля із ${USERS.users['${e_admin}'].initial_profile.images[0].sizes} для користувача ${username}
+  Звірити відображення поля images[0].sizes профіля із ${USERS.users['${e_admin}'].initial_profile.images[0].sizes} для користувача ${viewer}
 
 
 Неможливість змінити посилання картинки в профіля
@@ -1189,7 +1189,7 @@ ${MODE}             profile
   ...      impossibility_modify_profile
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  PROFILE
   Remove From Dictionary  ${USERS.users['${viewer}'].profile_data.images[0]}  url
-  Звірити відображення поля images[0].url профіля із ${USERS.users['${e_admin}'].initial_profile.images[0].url} для користувача ${username}
+  Звірити відображення поля images[0].url профіля із ${USERS.users['${e_admin}'].initial_profile.images[0].url} для користувача ${viewer}
 
 
 Неможливість внести зміни у опис характеристики
@@ -1209,7 +1209,7 @@ ${MODE}             profile
   ...      impossibility_modify_profile
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  PROFILE
   Remove From Dictionary  ${USERS.users['${viewer}'].profile_data.criteria[0]}  description
-  Звірити відображення поля criteria[0].description профіля із ${USERS.users['${e_admin}'].initial_profile.criteria[0].description} для користувача ${username}
+  Звірити відображення поля criteria[0].description профіля із ${USERS.users['${e_admin}'].initial_profile.criteria[0].description} для користувача ${viewer}
 
 
 Неможливість внести змінти у заголовок характеристики
@@ -1229,7 +1229,7 @@ ${MODE}             profile
   ...      impossibility_modify_profile
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  PROFILE
   Remove From Dictionary  ${USERS.users['${viewer}'].profile_data.criteria[0]}  title
-  Звірити відображення поля criteria[0].title профіля із ${USERS.users['${e_admin}'].initial_profile.criteria[0].title} для користувача ${username}
+  Звірити відображення поля criteria[0].title профіля із ${USERS.users['${e_admin}'].initial_profile.criteria[0].title} для користувача ${viewer}
 
 
 Неможливість змінти опис у групі вимог
@@ -1248,7 +1248,7 @@ ${MODE}             profile
   ...      impossibility_modify_profile
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  PROFILE
   Remove From Dictionary  ${USERS.users['${viewer}'].profile_data.criteria[0].requirementGroups[0]}  description
-  Звірити відображення поля criteria[0].requirementGroups[0].description профіля із ${USERS.users['${e_admin}'].initial_profile.criteria[0].requirementGroups[0].description} для користувача ${username}
+  Звірити відображення поля criteria[0].requirementGroups[0].description профіля із ${USERS.users['${e_admin}'].initial_profile.criteria[0].requirementGroups[0].description} для користувача ${viewer}
 
 
 Неможливість внести змінти у заголовок вимоги
@@ -1268,7 +1268,7 @@ ${MODE}             profile
   ...      impossibility_modify_profile
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  PROFILE
   Remove From Dictionary  ${USERS.users['${viewer}'].profile_data.criteria[0].requirementGroups[0].requirements[0]}  title
-  Звірити відображення поля criteria[0].requirementGroups[0].requirements[0].title профіля із ${USERS.users['${e_admin}'].initial_profile.criteria[0].requirementGroups[0].requirements[0].title} для користувача ${username}
+  Звірити відображення поля criteria[0].requirementGroups[0].requirements[0].title профіля із ${USERS.users['${e_admin}'].initial_profile.criteria[0].requirementGroups[0].requirements[0].title} для користувача ${viewer}
 
 
 Неможливість внести змінти у опис вимоги
@@ -1288,7 +1288,7 @@ ${MODE}             profile
   ...      impossibility_modify_profile
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  PROFILE
   Remove From Dictionary  ${USERS.users['${viewer}'].profile_data.criteria[0].requirementGroups[0].requirements[0]}  description
-  Звірити відображення поля criteria[0].requirementGroups[0].requirements[0].description профіля із ${USERS.users['${e_admin}'].initial_profile.criteria[0].requirementGroups[0].requirements[0].description} для користувача ${username}
+  Звірити відображення поля criteria[0].requirementGroups[0].requirements[0].description профіля із ${USERS.users['${e_admin}'].initial_profile.criteria[0].requirementGroups[0].requirements[0].description} для користувача ${viewer}
 
 
 Неможливість внести змінти у значення характеристики
@@ -1310,7 +1310,7 @@ ${MODE}             profile
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  PROFILE
   ${key}  Вибрати значення для вимоги  ${USERS.users['${viewer}'].profile_data.criteria[0].requirementGroups[0].requirements[0]}
   Remove From Dictionary  ${USERS.users['${viewer}'].profile_data.criteria[0].requirementGroups[0].requirements[0]}  ${key}
-  Звірити відображення поля criteria[0].requirementGroups[0].requirements[0].${key} профіля із ${USERS.users['${e_admin}'].initial_profile.criteria[0].requirementGroups[0].requirements[0].${key}} для користувача ${username}
+  Звірити відображення поля criteria[0].requirementGroups[0].requirements[0].${key} профіля із ${USERS.users['${e_admin}'].initial_profile.criteria[0].requirementGroups[0].requirements[0].${key}} для користувача ${viewer}
 
 
 Неможливість добавити нову характеристику до профіля
