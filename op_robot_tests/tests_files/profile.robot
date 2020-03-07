@@ -296,7 +296,7 @@ ${MODE}             profile
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      modify_profile
   [Teardown]  Оновити LAST_MODIFICATION_DATE  PROFILE
-  ${field_value}=  create_tax
+  ${field_value}=  choose_tax
   Можливість змінити поле value.valueAddedTaxIncluded профіля на ${field_value}
 
 
@@ -336,7 +336,7 @@ ${MODE}             profile
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      modify_profile
   [Teardown]  Оновити LAST_MODIFICATION_DATE  PROFILE
-  ${field_value}=  create_currency
+  ${field_value}=  choose_currency
   Можливість змінити поле value.currency профіля на ${field_value}
 
 
@@ -597,7 +597,7 @@ ${MODE}             profile
   [Teardown]  Оновити LAST_MODIFICATION_DATE  PROFILE
   ${key_id}  Set Variable  ${USERS.users['${e_admin}'].new_criteria.requirementGroups[0].requirements[0].description}
   ${field_value}  description_with_id
-  Можливість змінити description поле характеристики профіля на ${field_value} по ключу ${key_id}
+  Можливість змінити description поле в характеристиці профіля на ${field_value} по ключу ${key_id}
   Set To Dictionary  ${USERS.users['${e_admin}'].new_criteria.requirementGroups[0].requirements[0]}  description=${field_value}
 
 
@@ -609,7 +609,7 @@ ${MODE}             profile
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  PROFILE
   ${key_id}  Set Variable  ${USERS.users['${e_admin}'].new_criteria.requirementGroups[0].requirements[0].description}
   Видалити дані з profile data  description  ${key_id}
-  Звірити відображення description поля характеристики профіля із ${USERS.users['${e_admin}'].new_description} для користувача ${viewer} по ключу ${key_id}
+  Звірити відображення description поля в характеристиці профіля із ${USERS.users['${e_admin}'].new_description} для користувача ${viewer} по ключу ${key_id}
 
 
 Можливість змінити заголов у добавленій вимозі профіля
@@ -620,7 +620,7 @@ ${MODE}             profile
   [Teardown]  Оновити LAST_MODIFICATION_DATE  PROFILE
   ${key_id}  Set Variable  ${USERS.users['${e_admin}'].new_criteria.requirementGroups[0].requirements[0].description}
   ${field_value}=  create_fake_title
-  Можливість змінити title поле характеристики профіля на ${field_value} по ключу ${key_id}
+  Можливість змінити title поле в характеристиці профіля на ${field_value} по ключу ${key_id}
 
 
 Відображення зміненого заголовка у добавленій вимозі профіля
@@ -631,7 +631,7 @@ ${MODE}             profile
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  PROFILE
   ${key_id}  Set Variable  ${USERS.users['${e_admin}'].new_criteria.requirementGroups[0].requirements[0].description}
   Видалити дані з profile data  title  ${key_id}
-  Звірити відображення title поля характеристики профіля із ${USERS.users['${e_admin}'].new_title} для користувача ${viewer} по ключу ${key_id}
+  Звірити відображення title поля в характеристиці профіля із ${USERS.users['${e_admin}'].new_title} для користувача ${viewer} по ключу ${key_id}
 
 
 Можливість змінити значення у добавленій вимозі профіля
@@ -643,7 +643,7 @@ ${MODE}             profile
   ${key_id}  Set Variable  ${USERS.users['${e_admin}'].new_criteria.requirementGroups[0].requirements[0].description}
   ${field_value}=  choose_type  ${USERS.users['${e_admin}'].initial_data.dataType}
   ${key}  Вибрати значення для вимоги  ${USERS.users['${e_admin}'].new_criteria.requirementGroups[0].requirements[0]}
-  Можливість змінити ${key} поле характеристики профіля на ${field_value} по ключу ${key_id}
+  Можливість змінити ${key} поле в характеристиці профіля на ${field_value} по ключу ${key_id}
 
 
 Відображення зміненого значення у добавленій вимозі профіля
@@ -655,7 +655,7 @@ ${MODE}             profile
   ${key_id}  Set Variable  ${USERS.users['${e_admin}'].new_criteria.requirementGroups[0].requirements[0].description}
   ${key}  Вибрати значення для вимоги  ${USERS.users['${e_admin}'].new_criteria.requirementGroups[0].requirements[0]}
   Видалити дані з profile data  ${key}  ${key_id}
-  Звірити відображення ${key} поля характеристики профіля із ${USERS.users['${e_admin}'].new_${key}} для користувача ${viewer} по ключу ${key_id}
+  Звірити відображення ${key} поля в характеристиці профіля із ${USERS.users['${e_admin}'].new_${key}} для користувача ${viewer} по ключу ${key_id}
 
 
 Можливість змінити опис у добавленій групі вимог профіля
@@ -666,7 +666,7 @@ ${MODE}             profile
   [Teardown]  Оновити LAST_MODIFICATION_DATE  PROFILE
   ${key_id}  Set Variable  ${USERS.users['${e_admin}'].new_criteria.requirementGroups[0].description}
   ${field_value}  description_with_id
-  Можливість змінити description поле характеристики профіля на ${field_value} по ключу ${key_id}
+  Можливість змінити description поле в характеристиці профіля на ${field_value} по ключу ${key_id}
   Set To Dictionary  ${USERS.users['${e_admin}'].new_criteria.requirementGroups[0]}  description=${field_value}
 
 
@@ -678,7 +678,7 @@ ${MODE}             profile
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  PROFILE
   ${key_id}  Set Variable  ${USERS.users['${e_admin}'].new_criteria.requirementGroups[0].description}
   Видалити дані з profile data  description  ${key_id}
-  Звірити відображення description поля характеристики профіля із ${USERS.users['${e_admin}'].new_description} для користувача ${viewer} по ключу ${key_id}
+  Звірити відображення description поля в характеристиці профіля із ${USERS.users['${e_admin}'].new_description} для користувача ${viewer} по ключу ${key_id}
 
 
 Можливість добавити групу вимог у нову характеристику до профіля
@@ -739,7 +739,7 @@ ${MODE}             profile
   [Teardown]  Оновити LAST_MODIFICATION_DATE  PROFILE
   ${key_id}  Set Variable  ${USERS.users['${e_admin}'].new_requirementGroups.requirements[0].description}
   ${field_value}  description_with_id
-  Можливість змінити description поле характеристики профіля на ${field_value} по ключу ${key_id}
+  Можливість змінити description поле в характеристиці профіля на ${field_value} по ключу ${key_id}
   Set To Dictionary  ${USERS.users['${e_admin}'].new_requirementGroups.requirements[0]}  description=${field_value}
 
 
@@ -751,7 +751,7 @@ ${MODE}             profile
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  PROFILE
   ${key_id}  Set Variable  ${USERS.users['${e_admin}'].new_requirementGroups.requirements[0].description}
   Видалити дані з profile data  description  ${key_id}
-  Звірити відображення description поля характеристики профіля із ${USERS.users['${e_admin}'].new_description} для користувача ${viewer} по ключу ${key_id}
+  Звірити відображення description поля в характеристиці профіля із ${USERS.users['${e_admin}'].new_description} для користувача ${viewer} по ключу ${key_id}
 
 
 Можливість змінити заголов у вимозі групи вимог в новій характеристиці
@@ -762,7 +762,7 @@ ${MODE}             profile
   [Teardown]  Оновити LAST_MODIFICATION_DATE  PROFILE
   ${key_id}  Set Variable  ${USERS.users['${e_admin}'].new_requirementGroups.requirements[0].description}
   ${field_value}=  create_fake_title
-  Можливість змінити title поле характеристики профіля на ${field_value} по ключу ${key_id}
+  Можливість змінити title поле в характеристиці профіля на ${field_value} по ключу ${key_id}
 
 
 Відображення зміненого заголовка у вимозі групи вимог в новій характеристиці
@@ -773,7 +773,7 @@ ${MODE}             profile
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  PROFILE
   ${key_id}  Set Variable  ${USERS.users['${e_admin}'].new_requirementGroups.requirements[0].description}
   Видалити дані з profile data  title  ${key_id}
-  Звірити відображення title поля характеристики профіля із ${USERS.users['${e_admin}'].new_title} для користувача ${viewer} по ключу ${key_id}
+  Звірити відображення title поля в характеристиці профіля із ${USERS.users['${e_admin}'].new_title} для користувача ${viewer} по ключу ${key_id}
 
 
 Можливість змінити значення у вимозі групи вимог в новій характеристиці
@@ -785,7 +785,7 @@ ${MODE}             profile
   ${key_id}  Set Variable  ${USERS.users['${e_admin}'].new_requirementGroups.requirements[0].description}
   ${field_value}=  choose_type  ${USERS.users['${e_admin}'].initial_data.dataType}
   ${key}  Вибрати значення для вимоги  ${USERS.users['${e_admin}'].new_requirementGroups.requirements[0]}
-  Можливість змінити ${key} поле характеристики профіля на ${field_value} по ключу ${key_id}
+  Можливість змінити ${key} поле в характеристиці профіля на ${field_value} по ключу ${key_id}
 
 
 Відображення зміненого значення у вимозі групи вимог в новій характеристиці
@@ -797,7 +797,7 @@ ${MODE}             profile
   ${key_id}  Set Variable  ${USERS.users['${e_admin}'].new_requirementGroups.requirements[0].description}
   ${key}  Вибрати значення для вимоги  ${USERS.users['${e_admin}'].new_requirementGroups.requirements[0]}
   Видалити дані з profile data  ${key}  ${key_id}
-  Звірити відображення ${key} поля характеристики профіля із ${USERS.users['${e_admin}'].new_${key}} для користувача ${viewer} по ключу ${key_id}
+  Звірити відображення ${key} поля в характеристиці профіля із ${USERS.users['${e_admin}'].new_${key}} для користувача ${viewer} по ключу ${key_id}
 
 
 Можливість змінити опис у групі вимог в новій характеристиці
@@ -808,7 +808,7 @@ ${MODE}             profile
   [Teardown]  Оновити LAST_MODIFICATION_DATE  PROFILE
   ${key_id}  Set Variable  ${USERS.users['${e_admin}'].new_requirementGroups.description}
   ${field_value}  description_with_id
-  Можливість змінити description поле характеристики профіля на ${field_value} по ключу ${key_id}
+  Можливість змінити description поле в характеристиці профіля на ${field_value} по ключу ${key_id}
   Set To Dictionary  ${USERS.users['${e_admin}'].new_requirementGroups}  description=${field_value}
 
 
@@ -820,7 +820,7 @@ ${MODE}             profile
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  PROFILE
   ${key_id}  Set Variable  ${USERS.users['${e_admin}'].new_requirementGroups.description}
  Видалити дані з profile data  description  ${key_id}
-  Звірити відображення description поля характеристики профіля із ${USERS.users['${e_admin}'].new_description} для користувача ${viewer} по ключу ${key_id}
+  Звірити відображення description поля в характеристиці профіля із ${USERS.users['${e_admin}'].new_description} для користувача ${viewer} по ключу ${key_id}
 
 
 Можливість добавити вимогу у нову групу вимог
@@ -872,7 +872,7 @@ ${MODE}             profile
   [Teardown]  Оновити LAST_MODIFICATION_DATE  PROFILE
   ${key_id}  Set Variable  ${USERS.users['${e_admin}'].new_requirements.description}
   ${field_value}  description_with_id
-  Можливість змінити description поле характеристики профіля на ${field_value} по ключу ${key_id}
+  Можливість змінити description поле в характеристиці профіля на ${field_value} по ключу ${key_id}
   Set To Dictionary  ${USERS.users['${e_admin}'].new_requirements}  description=${field_value}
 
 
@@ -884,7 +884,7 @@ ${MODE}             profile
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  PROFILE
   ${key_id}  Set Variable  ${USERS.users['${e_admin}'].new_requirements.description}
   Видалити дані з profile data  description  ${key_id}
-  Звірити відображення description поля характеристики профіля із ${USERS.users['${e_admin}'].new_description} для користувача ${viewer} по ключу ${key_id}
+  Звірити відображення description поля в характеристиці профіля із ${USERS.users['${e_admin}'].new_description} для користувача ${viewer} по ключу ${key_id}
 
 
 Можливість змінити заголов у новій вимозі
@@ -895,7 +895,7 @@ ${MODE}             profile
   [Teardown]  Оновити LAST_MODIFICATION_DATE  PROFILE
   ${key_id}  Set Variable  ${USERS.users['${e_admin}'].new_requirements.description}
   ${field_value}=  create_fake_title
-  Можливість змінити title поле характеристики профіля на ${field_value} по ключу ${key_id}
+  Можливість змінити title поле в характеристиці профіля на ${field_value} по ключу ${key_id}
 
 
 Відображення зміненого заголовка у новій вимозі
@@ -906,7 +906,7 @@ ${MODE}             profile
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  PROFILE
   ${key_id}  Set Variable  ${USERS.users['${e_admin}'].new_requirements.description}
   Видалити дані з profile data  title  ${key_id}
-  Звірити відображення title поля характеристики профіля із ${USERS.users['${e_admin}'].new_title} для користувача ${viewer} по ключу ${key_id}
+  Звірити відображення title поля в характеристиці профіля із ${USERS.users['${e_admin}'].new_title} для користувача ${viewer} по ключу ${key_id}
 
 
 Можливість змінити значення у новій вимозі
@@ -918,7 +918,7 @@ ${MODE}             profile
   ${key_id}  Set Variable  ${USERS.users['${e_admin}'].new_requirements.description}
   ${field_value}=  choose_type  ${USERS.users['${e_admin}'].initial_data.dataType}
   ${key}  Вибрати значення для вимоги  ${USERS.users['${e_admin}'].new_requirements}
-  Можливість змінити ${key} поле характеристики профіля на ${field_value} по ключу ${key_id}
+  Можливість змінити ${key} поле в характеристиці профіля на ${field_value} по ключу ${key_id}
 
 
 Відображення зміненого значення у новій вимозі
@@ -930,7 +930,7 @@ ${MODE}             profile
   ${key_id}  Set Variable  ${USERS.users['${e_admin}'].new_requirements.description}
   ${key}  Вибрати значення для вимоги  ${USERS.users['${e_admin}'].new_requirements}
   Видалити дані з profile data  ${key}  ${key_id}
-  Звірити відображення ${key} поля характеристики профіля із ${USERS.users['${e_admin}'].new_${key}} для користувача ${viewer} по ключу ${key_id}
+  Звірити відображення ${key} поля в характеристиці профіля із ${USERS.users['${e_admin}'].new_${key}} для користувача ${viewer} по ключу ${key_id}
 
 
 Можливість видалити нову вимогу
@@ -1098,7 +1098,7 @@ ${MODE}             profile
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
   [Teardown]  Оновити LAST_MODIFICATION_DATE  PROFILE
-  ${field_value}=  create_tax
+  ${field_value}=  choose_tax
   Неможливість змінити поле value.valueAddedTaxIncluded профіля на ${field_value} для ${viewer}
 
 
@@ -1138,7 +1138,7 @@ ${MODE}             profile
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
   [Teardown]  Оновити LAST_MODIFICATION_DATE  PROFILE
-  ${field_value}=  create_currency
+  ${field_value}=  choose_currency
   Неможливість змінити поле value.currency профіля на ${field_value} для ${viewer}
 
 
