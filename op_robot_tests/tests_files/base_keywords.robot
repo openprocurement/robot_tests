@@ -56,7 +56,7 @@ Resource           resource.robot
   ${period_intervals}=  compute_intrs  ${BROKERS}  ${used_brokers}
   ${accelerator}=  Get Variable Value  ${accelerator}
   ${accelerator}=  Set Variable If  '${accelerator}' != '${None}'  ${accelerator}  ${period_intervals.default.accelerator}
-  ${monitoring_data}=  tets_monitoring_data  ${USERS.users['${dasu_user}'].tender_data.data.id}  ${accelerator}
+  ${monitoring_data}=  test_monitoring_data  ${USERS.users['${dasu_user}'].tender_data.data.id}  ${accelerator}
   Log  ${monitoring_data}
   ${MNITORING_UAID}=  Run As  ${dasu_user}  Створити об'єкт моніторингу  ${monitoring_data}
   ${MONITORING}=  Create Dictionary
@@ -1546,7 +1546,7 @@ Resource           resource.robot
   Set To Dictionary  ${USERS.users['${e_admin}']}  initial_profile=${profile_data}
   Log  ${USERS.users['${e_admin}']}
   Set To Dictionary  ${PROFILE}  PROFILE_UAID=${profile_result}
-  log  ${profile_result}
+  Log  ${profile_result}
 
 
 Звірити відображення поля ${field} профіля для усіх користувачів
@@ -1585,12 +1585,12 @@ Resource           resource.robot
   Звірити поле характеристики в профілі  ${username}  ${PROFILE['PROFILE_UAID']}  ${USERS.users['${e_admin}'].initial_profile}  ${field}  ${key_id}
 
 
-Можливість змінити ${field_name} поле характеристики профіля на ${field_value} по ключу ${key_id}
+Можливість змінити ${field_name} поле в характеристиці профіля на ${field_value} по ключу ${key_id}
   Run As  ${e_admin}  Внести зміни у характеристику профіля  ${PROFILE['PROFILE_UAID']}  ${field_name}  ${field_value}  ${key_id}
   Set To Dictionary  ${USERS.users['${e_admin}']}  new_${field_name}=${field_value}
 
 
-Звірити відображення ${field} поля характеристики профіля із ${value} для користувача ${username} по ключу ${id_key}
+Звірити відображення ${field} поля в характеристиці профіля із ${value} для користувача ${username} по ключу ${id_key}
   Звірити поле характеристики в профілі із значенням  ${username}  ${PROFILE['PROFILE_UAID']}  ${value}  ${field}  ${id_key}
 
 
@@ -1611,8 +1611,8 @@ Resource           resource.robot
 
 
 Видалити дані з profile data
-  [Arguments]  ${field}  ${id}
-  ${path}  get_path_to_id_from_criteria  ${USERS.users['${viewer}'].profile_data}  ${id}
+  [Arguments]  ${field}  ${key_id}
+  ${path}  get_path_to_id_from_criteria  ${USERS.users['${viewer}'].profile_data}  ${key_id}
   Remove From Dictionary  ${USERS.users['${viewer}'].profile_data.${path['path']}[${path['index']}]}  ${field}
 
 
