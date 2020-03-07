@@ -47,6 +47,11 @@ def get_fake_funder_scheme():
     return fake.funder_scheme()
 
 
+def create_value_amount():
+    value_amount = round(random.uniform(3000, 99999999.99), 2)
+    return value_amount
+
+
 def create_fake_amount(award_amount):
     return round(random.uniform(1, award_amount), 2)
 
@@ -152,7 +157,7 @@ def test_tender_data(params,
     submissionMethodDetails = submissionMethodDetails \
         if submissionMethodDetails else "quick"
     now = get_now()
-    value_amount = round(random.uniform(3000, 99999999.99), 2)  # max value equals to budget of Ukraine in hryvnias
+    value_amount = create_value_amount()  # max value equals to budget of Ukraine in hryvnias
     data = {
         "mode": "test",
         "submissionMethodDetails": submissionMethodDetails,
@@ -242,14 +247,14 @@ def test_tender_data(params,
 def test_tender_data_planning(params):
     data = {
         "budget": {
-            "amountNet": round(random.uniform(3000, 999999999.99), 2),
+            "amountNet": create_value_amount(),
             "description": fake.description(),
             "project": {
                 "id": str(fake.random_int(min=1, max=999)),
                 "name": fake.description(),
             },
             "currency": "UAH",
-            "amount": round(random.uniform(3000, 99999999999.99), 2),
+            "amount": create_value_amount(),
             "id": str(fake.random_int(min=1, max=99999999999)) + "-" + str(fake.random_int(min=1, max=9)),
         },
         "procuringEntity": {
@@ -735,7 +740,7 @@ def get_hash(file_contents):
     return ("md5:" + hashlib.md5(file_contents).hexdigest())
 
 
-def tets_monitoring_data(tender_id, accelerator=None):
+def test_monitoring_data(tender_id, accelerator=None):
     data = {
         "reasons": [random.choice(["public", "fiscal", "indicator", "authorities", "media"])],
         "tender_id": tender_id,
@@ -870,39 +875,31 @@ def test_criteria_data():
 
 def choose_type(data_type):
     if data_type == 'number':
-        data_type = round(random.uniform(3000, 99999999.99), 2)
+        data_type = create_value_amount()
     elif data_type == 'integer':
         data_type = create_fake_value_amount()
     elif data_type == 'string':
-        data_type = create_fake_word()#.decode('uth-8')
+        data_type = create_fake_word()
     elif data_type == 'boolean':
         data_type = random.choice(["false", "true"])
     return data_type
 
 
-
-
-
-def create_currency():
+def choose_currency():
     currency = random.choice(['UAH', 'USD', 'EUR'])
     return currency
 
 
-def create_tax():
+def choose_tax():
     tax = random.choice(["false", "true"])
     return tax
-
-
-def create_value_amount():
-    value_amount = round(random.uniform(3000, 999999.99), 2)
-    return value_amount
 
 
 def create_value():
     values = {
         "amount": create_value_amount(),
-        "currency": create_currency(),
-        "valueAddedTaxIncluded": create_tax()
+        "currency": choose_currency(),
+        "valueAddedTaxIncluded": choose_tax()
     }
     return munchify(values)
 
