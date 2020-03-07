@@ -1308,7 +1308,6 @@ Require Failure
 Отримати дані із характеристики профіля
   [Arguments]  ${username}  ${profile_uaid}  ${field}  ${key_id}
   ${path}  get_path_to_id_from_criteria  ${USERS.users['${username}'].profile_data}  ${key_id}
-#  ${profile_data}  set variable  ${profile_data.${path}}
   ${status}  ${field_value}=  Run keyword and ignore error
   ...      get_from_object
   ...      ${USERS.users['${username}'].profile_data.${path['path']}[${path['index']}]}
