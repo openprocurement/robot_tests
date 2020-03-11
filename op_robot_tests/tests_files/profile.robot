@@ -296,7 +296,7 @@ ${MODE}             profile
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      modify_profile
   [Teardown]  Оновити LAST_MODIFICATION_DATE  PROFILE
-  ${field_value}=  choose_tax
+  ${field_value}=  choose_tax  ${USERS.users['${e_admin}'].initial_profile.value.valueAddedTaxIncluded}
   Можливість змінити поле value.valueAddedTaxIncluded профіля на ${field_value}
 
 
@@ -336,7 +336,7 @@ ${MODE}             profile
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      modify_profile
   [Teardown]  Оновити LAST_MODIFICATION_DATE  PROFILE
-  ${field_value}=  choose_currency
+  ${field_value}=  choose_currency  ${USERS.users['${e_admin}'].initial_profile.value.currency}
   Можливість змінити поле value.currency профіля на ${field_value}
 
 
@@ -1098,7 +1098,7 @@ ${MODE}             profile
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
   [Teardown]  Оновити LAST_MODIFICATION_DATE  PROFILE
-  ${field_value}=  choose_tax
+  ${field_value}=  choose_tax  ${USERS.users['${e_admin}'].initial_profile.value.valueAddedTaxIncluded}
   Неможливість змінити поле value.valueAddedTaxIncluded профіля на ${field_value} для ${viewer}
 
 
@@ -1138,7 +1138,7 @@ ${MODE}             profile
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
   [Teardown]  Оновити LAST_MODIFICATION_DATE  PROFILE
-  ${field_value}=  choose_currency
+  ${field_value}=  choose_currency  ${USERS.users['${e_admin}'].initial_profile.value.choose_currency}
   Неможливість змінити поле value.currency профіля на ${field_value} для ${viewer}
 
 

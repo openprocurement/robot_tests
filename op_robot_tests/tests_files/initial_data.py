@@ -885,13 +885,26 @@ def choose_type(data_type):
     return data_type
 
 
-def choose_currency():
-    currency = random.choice(['UAH', 'USD', 'EUR'])
+def choose_currency(existent_data=None):
+    if isinstance(existent_data, type(None)):
+        currency = random.choice(['UAH', 'USD', 'EUR'])
+    if existent_data == 'UAH':
+        currency = random.choice(['USD', 'EUR'])
+    if existent_data == 'USD':
+        currency = random.choice(['UAH', 'EUR'])
+    if existent_data == 'EUR':
+        currency = random.choice(['UAH', 'USD'])
     return currency
 
 
-def choose_tax():
-    tax = random.choice(["false", "true"])
+def choose_tax(existent_data=None):
+    tax = ''
+    if isinstance(existent_data, type(None)):
+        tax = random.choice(["false", "true"])
+    elif str(existent_data) == "false":
+        tax = "true"
+    elif str(existent_data) == "true":
+        tax = "false"
     return tax
 
 
