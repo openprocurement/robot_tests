@@ -898,7 +898,6 @@ def choose_currency(existent_data=None):
 
 
 def choose_tax(existent_data=None):
-    tax = ''
     if isinstance(existent_data, type(None)):
         tax = random.choice(["false", "true"])
     elif str(existent_data) == "false":
