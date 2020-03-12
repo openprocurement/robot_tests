@@ -885,33 +885,18 @@ def choose_type(data_type):
     return data_type
 
 
-def choose_currency(existent_data=None):
-    if isinstance(existent_data, type(None)):
-        currency = random.choice(['UAH', 'USD', 'EUR'])
-    if existent_data == 'UAH':
-        currency = random.choice(['USD', 'EUR'])
-    if existent_data == 'USD':
-        currency = random.choice(['UAH', 'EUR'])
-    if existent_data == 'EUR':
-        currency = random.choice(['UAH', 'USD'])
+def choose_currency(existent_data=''):
+    currency = {'USD', 'EUR', 'UAH'}
+    currency -= {existent_data}
+    currency = random.choice(list(currency))
     return currency
-
-
-def choose_tax(existent_data=None):
-    if isinstance(existent_data, type(None)):
-        tax = random.choice(["false", "true"])
-    elif str(existent_data) == "false":
-        tax = "true"
-    elif str(existent_data) == "true":
-        tax = "false"
-    return tax
 
 
 def create_value():
     values = {
         "amount": create_value_amount(),
         "currency": choose_currency(),
-        "valueAddedTaxIncluded": choose_tax()
+        "valueAddedTaxIncluded": 'false'
     }
     return munchify(values)
 

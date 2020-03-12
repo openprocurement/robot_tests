@@ -83,7 +83,6 @@ from .initial_data import (
     create_requirements_group,
     create_requirements,
     choose_currency,
-    choose_tax,
     create_value_amount,
     choose_type,
     create_fake_word,
