@@ -10,7 +10,7 @@ ${MODE}             profile
 
 *** Test Cases ***
 Можливість створити профіль
-    [Tags]   ${USERS.users['${e_admin}'].broker}: Створити профіля
+    [Tags]   ${USERS.users['${e_admin}'].broker}: Створення профіля
   ...      e_admin
   ...      ${USERS.users['${e_admin}'].broker}
   ...      create_profile
@@ -43,7 +43,7 @@ ${MODE}             profile
   Звірити відображення поля classification.description профіля для усіх користувачів
 
 
-Відображення схема класифікатора в профіля
+Відображення схеми класифікатора в профіля
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -67,7 +67,7 @@ ${MODE}             profile
   Звірити відображення поля additionalClassification[0].description профіля для усіх користувачів
 
 
-Відображення схема додаткового класифікатора в профіля
+Відображення схеми додаткового класифікатора в профіля
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -99,7 +99,7 @@ ${MODE}             profile
   Звірити відображення поля description профіля для усіх користувачів
 
 
-Відображення розмір образу в профіля
+Відображення розміру образу в профіля
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -131,7 +131,7 @@ ${MODE}             profile
   Звірити відображення поля unit.code профіля для усіх користувачів
 
 
-Відображення назва одиниці в профіля
+Відображення назви одиниці в профіля
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -155,7 +155,7 @@ ${MODE}             profile
   Звірити відображення поля value.currency профіля для усіх користувачів
 
 
-Відображення податока на додану вартість в профіля
+Відображення податка на додану вартість в профіля
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -163,7 +163,7 @@ ${MODE}             profile
   Звірити відображення поля value.valueAddedTaxIncluded профіля для усіх користувачів
 
 
-Відображення заголовок характеристики в профіля
+Відображення заголовока характеристики в профіля
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -220,7 +220,7 @@ ${MODE}             profile
   Звірити відображення поля criteria[0].requirementGroups[0].requirements[0].${key} профіля для усіх користувачів
 
 
-Можливість змінити заголовок профіля
+Можливість змінити заголовок в профіля
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування профіля
   ...      e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -230,7 +230,7 @@ ${MODE}             profile
   Можливість змінити поле title профіля на ${field_value}
 
 
-Відображення зміненого заголовка профіля
+Відображення зміненого заголовка в профіля
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -240,7 +240,7 @@ ${MODE}             profile
   Звірити відображення поля title профіля із ${USERS.users['${e_admin}'].new_title} для користувача ${viewer}
 
 
-Можливість змінити опис профіля
+Можливість змінити опис в профіля
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування профіля
   ...      e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -250,7 +250,7 @@ ${MODE}             profile
   Можливість змінити поле description профіля на ${field_value}
 
 
-Відображення зміненого опису профіля
+Відображення зміненого опису в профіля
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -260,7 +260,7 @@ ${MODE}             profile
   Звірити відображення поля description профіля із ${USERS.users['${e_admin}'].new_description} для користувача ${viewer}
 
 
-Можливість змінити одиницю в профіля
+Можливість змінити назву одиниці в профіля
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування профіля
   ...      e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -469,7 +469,7 @@ ${MODE}             profile
   Звірити відображення поля criteria[0].requirementGroups[0].requirements[0].title профіля із ${USERS.users['${e_admin}']['new_criteria[0].requirementGroups[0].requirements[0].title']} для користувача ${viewer}
 
 
-Можливість внести змінти у опис вимоги
+Можливість внести зміни у опис вимоги
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування профіля
   ...      e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -479,7 +479,7 @@ ${MODE}             profile
   Можливість змінити поле criteria[0].requirementGroups[0].requirements[0].description профіля на ${field_value}
 
 
-Відображення змін у опис вимоги
+Відображення змін у описі вимоги
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -489,7 +489,7 @@ ${MODE}             profile
   Звірити відображення поля criteria[0].requirementGroups[0].requirements[0].description профіля із ${USERS.users['${e_admin}']['new_criteria[0].requirementGroups[0].requirements[0].description']} для користувача ${viewer}
 
 
-Можливість внести змінти у значення характеристики
+Можливість внести зміни у значення характеристики
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування профіля
   ...      e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -579,7 +579,7 @@ ${MODE}             profile
   Звірити відображення поля description критерія для користувача ${viewer} по ключу ${key_id}
 
 
-Відображення пов'язаного ідентифікатору у добавленій вимозі профіля
+Відображення пов'язаного ідентифікатора у добавленій вимозі профіля
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення доданих даних
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -1022,7 +1022,7 @@ ${MODE}             profile
 
 
 Неможливість змінити заголовок профіля
-  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
@@ -1032,7 +1032,7 @@ ${MODE}             profile
 
 
 Відображення незміненого заголовка профіля
-  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
@@ -1042,7 +1042,7 @@ ${MODE}             profile
 
 
 Неможливість змінити опис профіля
-  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
@@ -1052,7 +1052,7 @@ ${MODE}             profile
 
 
 Відображення незміненого опису профіля
-  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
@@ -1062,7 +1062,7 @@ ${MODE}             profile
 
 
 Неможливість змінити одиницю в профіля
-  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
@@ -1072,7 +1072,7 @@ ${MODE}             profile
 
 
 Відображення незміненої назви одиниці в профіля
-  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
@@ -1082,7 +1082,7 @@ ${MODE}             profile
 
 
 Відображення незміненого коду одиниці в профіля
-  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
@@ -1092,7 +1092,7 @@ ${MODE}             profile
 
 
 Неможливість змінити податок на додану вартість в профіля
-  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
@@ -1101,7 +1101,7 @@ ${MODE}             profile
 
 
 Відображення незміненого податку на додану вартість в профіля
-  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
@@ -1111,7 +1111,7 @@ ${MODE}             profile
 
 
 Неможливість змінити обсяг вартості в профіля
-  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
@@ -1121,7 +1121,7 @@ ${MODE}             profile
 
 
 Відображення незміненого обсягу вартості в профіля
-  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
@@ -1131,7 +1131,7 @@ ${MODE}             profile
 
 
 Неможливість змінити валюту в профіля
-  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
@@ -1141,7 +1141,7 @@ ${MODE}             profile
 
 
 Відображення незміненої валюти в профіля
-  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
@@ -1151,7 +1151,7 @@ ${MODE}             profile
 
 
 Неможливість змінити розмір картинки в профіля
-  [Tags]   ${USERS.users['${e_admin}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${e_admin}'].broker}: Неможливість редагувати профіль
   ...      e_admin
   ...      ${USERS.users['${e_admin}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
@@ -1161,7 +1161,7 @@ ${MODE}             profile
 
 
 Відображення незміненого розміру картинки в профіля
-  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
@@ -1171,7 +1171,7 @@ ${MODE}             profile
 
 
 Неможливість змінити посилання картинки в профіля
-  [Tags]   ${USERS.users['${e_admin}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${e_admin}'].broker}: Неможливість редагувати профіль
   ...      e_admin
   ...      ${USERS.users['${e_admin}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
@@ -1181,7 +1181,7 @@ ${MODE}             profile
 
 
 Відображення незміненого посилання на картинку в профіля
-  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
@@ -1191,7 +1191,7 @@ ${MODE}             profile
 
 
 Неможливість внести зміни у опис характеристики
-  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
@@ -1201,7 +1201,7 @@ ${MODE}             profile
 
 
 Відображення незміненого опису у характеристики
-  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
@@ -1211,7 +1211,7 @@ ${MODE}             profile
 
 
 Неможливість внести змінти у заголовок характеристики
-  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
@@ -1221,7 +1221,7 @@ ${MODE}             profile
 
 
 Відображення незміненого заголовку характеристики
-  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
@@ -1231,7 +1231,7 @@ ${MODE}             profile
 
 
 Неможливість змінти опис у групі вимог
-  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
@@ -1241,7 +1241,7 @@ ${MODE}             profile
 
 
 Відображення незміненого опису у групі вимог
-  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}  PROFILE
@@ -1250,7 +1250,7 @@ ${MODE}             profile
 
 
 Неможливість внести змінти у заголовок вимоги
-  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
@@ -1260,7 +1260,7 @@ ${MODE}             profile
 
 
 Відображення незміненого заголовоку вимоги
-  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
@@ -1270,7 +1270,7 @@ ${MODE}             profile
 
 
 Неможливість внести змінти у опис вимоги
-  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
@@ -1279,8 +1279,8 @@ ${MODE}             profile
   Неможливість змінити поле criteria[0].requirementGroups[0].requirements[0].description профіля на ${field_value} для ${viewer}
 
 
-Відображення незміненого опис вимоги
-  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіля
+Відображення незміненого опису вимоги
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
@@ -1290,7 +1290,7 @@ ${MODE}             profile
 
 
 Неможливість внести змінти у значення характеристики
-  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
@@ -1301,7 +1301,7 @@ ${MODE}             profile
 
 
 Відображення незміненого значення характеристики
-  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіля
+  [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
   ...      impossibility_modify_profile
