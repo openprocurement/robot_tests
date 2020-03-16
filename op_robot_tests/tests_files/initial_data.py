@@ -888,7 +888,7 @@ def choose_type(data_type):
 def choose_currency(existent_data=''):
     currency = {'USD', 'EUR', 'UAH'}
     currency -= {existent_data}
-    currency = random.choice(list(currency))
+    currency = random.sample(currency, 1)[0]
     return currency
 
 
