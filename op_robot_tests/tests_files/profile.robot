@@ -27,7 +27,7 @@ ${MODE}             profile
   Можливість знайти профіль по ідентифікатору для усіх користувачів
 
 
-Відображення коду класифікатора в профіля
+Відображення коду класифікатора у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -35,7 +35,7 @@ ${MODE}             profile
   Звірити відображення поля classification.id профіля для усіх користувачів
 
 
-Відображення опису класифікатора в профіля
+Відображення опису класифікатора у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -43,7 +43,7 @@ ${MODE}             profile
   Звірити відображення поля classification.description профіля для усіх користувачів
 
 
-Відображення схеми класифікатора в профіля
+Відображення схеми класифікатора у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -51,7 +51,7 @@ ${MODE}             profile
   Звірити відображення поля classification.scheme профіля для усіх користувачів
 
 
-Відображення коду додаткового класифікатора в профіля
+Відображення коду додаткового класифікатора у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -59,7 +59,7 @@ ${MODE}             profile
   Звірити відображення поля additionalClassification[0].id профіля для усіх користувачів
 
 
-Відображення опису додаткового класифікатора в профіля
+Відображення опису додаткового класифікатора у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -67,7 +67,7 @@ ${MODE}             profile
   Звірити відображення поля additionalClassification[0].description профіля для усіх користувачів
 
 
-Відображення схеми додаткового класифікатора в профіля
+Відображення схеми додаткового класифікатора у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -75,7 +75,7 @@ ${MODE}             profile
   Звірити відображення поля additionalClassification[0].scheme профіля для усіх користувачів
 
 
-Відображення статус в профіля
+Відображення статусу у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}:  Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -83,7 +83,7 @@ ${MODE}             profile
   Звірити відображення поля status профіля для усіх користувачів
 
 
-Відображення автора в профіля
+Відображення автора у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -91,7 +91,7 @@ ${MODE}             profile
   Звірити відображення поля author профіля для усіх користувачів
 
 
-Відображення опису в профіля
+Відображення опису у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -99,7 +99,7 @@ ${MODE}             profile
   Звірити відображення поля description профіля для усіх користувачів
 
 
-Відображення розміру образу в профіля
+Відображення розміру образу у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -107,7 +107,7 @@ ${MODE}             profile
   Звірити відображення поля images[0].sizes профіля для усіх користувачів
 
 
-Відображення посилання образу в профіля
+Відображення посилання образу у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  criteria_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -115,7 +115,7 @@ ${MODE}             profile
   Звірити відображення поля images[0].url профіля для усіх користувачів
 
 
-Відображення заголовка в профіля
+Відображення заголовка у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -123,7 +123,7 @@ ${MODE}             profile
   Звірити відображення поля title профіля для усіх користувачів
 
 
-Відображення одиниці коду в профіля
+Відображення одиниці коду у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -131,7 +131,7 @@ ${MODE}             profile
   Звірити відображення поля unit.code профіля для усіх користувачів
 
 
-Відображення назви одиниці в профіля
+Відображення назви одиниці у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -139,7 +139,7 @@ ${MODE}             profile
   Звірити відображення поля unit.name профіля для усіх користувачів
 
 
-Відображення величини вартості в профіля
+Відображення величини вартості у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -147,7 +147,7 @@ ${MODE}             profile
   Звірити відображення поля value.amount профіля для усіх користувачів
 
 
-Відображення валюти в профіля
+Відображення валюти у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -155,7 +155,7 @@ ${MODE}             profile
   Звірити відображення поля value.currency профіля для усіх користувачів
 
 
-Відображення податка на додану вартість в профіля
+Відображення податка на додану вартість у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -163,7 +163,7 @@ ${MODE}             profile
   Звірити відображення поля value.valueAddedTaxIncluded профіля для усіх користувачів
 
 
-Відображення заголовока характеристики в профіля
+Відображення заголовока характеристики у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -171,7 +171,7 @@ ${MODE}             profile
   Звірити відображення поля criteria[0].title профіля для усіх користувачів
 
 
-Відображення опису характеристики в профіля
+Відображення опису характеристики у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -179,7 +179,7 @@ ${MODE}             profile
   Звірити відображення поля criteria[0].description профіля для усіх користувачів
 
 
-Відображення опису групи вимог в профіля
+Відображення опису групи вимог у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -187,7 +187,7 @@ ${MODE}             profile
   Звірити відображення поля criteria[0].requirementGroups[0].description профіля для усіх користувачів
 
 
-Відображення опису вимоги в профіля
+Відображення опису вимоги у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -195,7 +195,7 @@ ${MODE}             profile
   Звірити відображення поля criteria[0].requirementGroups[0].requirements[0].description профіля для усіх користувачів
 
 
-Відображення назви вимоги в профіля
+Відображення назви вимоги у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -203,7 +203,7 @@ ${MODE}             profile
   Звірити відображення поля criteria[0].requirementGroups[0].requirements[0].title профіля для усіх користувачів
 
 
-Відображення ідентифікатора критерії в профіля
+Відображення ідентифікатора критерії у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -211,7 +211,7 @@ ${MODE}             profile
   Звірити відображення поля criteria[0].requirementGroups[0].requirements[0].relatedCriteria_id профіля для усіх користувачів
 
 
-Відображення значення вимоги в профіля
+Відображення значення вимоги у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних профіля
   ...      viewer  e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -220,7 +220,7 @@ ${MODE}             profile
   Звірити відображення поля criteria[0].requirementGroups[0].requirements[0].${key} профіля для усіх користувачів
 
 
-Можливість змінити заголовок в профіля
+Можливість змінити заголовок у профілі
   [Tags]   ${USERS.users['${e_admin}'].broker}: Редагування профіля
   ...      e_admin
   ...      ${USERS.users['${e_admin}'].broker}
@@ -230,7 +230,7 @@ ${MODE}             profile
   Можливість змінити поле title профіля на ${field_value}
 
 
-Відображення зміненого заголовка в профіля
+Відображення зміненого заголовка у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування профіля
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -240,7 +240,7 @@ ${MODE}             profile
   Звірити відображення поля title профіля із ${USERS.users['${e_admin}'].new_title} для користувача ${viewer}
 
 
-Можливість змінити опис в профіля
+Можливість змінити опис у профілі
   [Tags]   ${USERS.users['${e_admin}'].broker}: Редагування профіля
   ...      e_admin
   ...      ${USERS.users['${e_admin}'].broker}
@@ -250,7 +250,7 @@ ${MODE}             profile
   Можливість змінити поле description профіля на ${field_value}
 
 
-Відображення зміненого опису в профіля
+Відображення зміненого опису у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування профіля
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -260,7 +260,7 @@ ${MODE}             profile
   Звірити відображення поля description профіля із ${USERS.users['${e_admin}'].new_description} для користувача ${viewer}
 
 
-Можливість змінити назву одиниці в профіля
+Можливість змінити назву одиниці у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування профіля
   ...      e_admin
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -270,7 +270,7 @@ ${MODE}             profile
   Можливість змінити поле unit профіля на ${field_value}
 
 
-Відображення зміненої назви одиниці в профіля
+Відображення зміненої назви одиниці у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування профіля
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -280,7 +280,7 @@ ${MODE}             profile
   Звірити відображення поля unit.name профіля із ${USERS.users['${e_admin}'].new_unit.name} для користувача ${viewer}
 
 
-Відображення зміненого коду одиниці в профіля
+Відображення зміненого коду одиниці у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування профіля
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -290,7 +290,7 @@ ${MODE}             profile
   Звірити відображення поля unit.code профіля із ${USERS.users['${e_admin}'].new_unit.code} для користувача ${viewer}
 
 
-Можливість змінити податок на додану вартість в профіля
+Можливість змінити податок на додану вартість у профілі
   [Tags]   ${USERS.users['${e_admin}'].broker}: Редагування профіля
   ...      e_admin
   ...      ${USERS.users['${e_admin}'].broker}
@@ -299,7 +299,7 @@ ${MODE}             profile
   Можливість змінити поле value.valueAddedTaxIncluded профіля на true
 
 
-Відображення змін в податку на додану вартість в профіля
+Відображення змін в податку на додану вартість у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування профіля
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -309,7 +309,7 @@ ${MODE}             profile
   Звірити відображення поля value.valueAddedTaxIncluded профіля із ${USERS.users['${e_admin}']['new_value.valueAddedTaxIncluded']} для користувача ${viewer}
 
 
-Можливість змінити обсяг вартості в профіля
+Можливість змінити обсяг вартості у профілі
   [Tags]   ${USERS.users['${e_admin}'].broker}: Редагування профіля
   ...      e_admin
   ...      ${USERS.users['${e_admin}'].broker}
@@ -319,7 +319,7 @@ ${MODE}             profile
   Можливість змінити поле value.amount профіля на ${field_value}
 
 
-Відображення зміненого обсягу вартості в профіля
+Відображення зміненого обсягу вартості у профілі
   [Tags]   ${USERS.users['${e_admin}'].broker}: Редагування профіля
   ...      viewer
   ...      ${USERS.users['${e_admin}'].broker}
@@ -329,7 +329,7 @@ ${MODE}             profile
   Звірити відображення поля value.amount профіля із ${USERS.users['${e_admin}']['new_value.amount']} для користувача ${viewer}
 
 
-Можливість змінити валюту в профіля
+Можливість змінити валюту у профілі
   [Tags]   ${USERS.users['${e_admin}'].broker}: Редагування профіля
   ...      e_admin
   ...      ${USERS.users['${e_admin}'].broker}
@@ -339,7 +339,7 @@ ${MODE}             profile
   Можливість змінити поле value.currency профіля на ${field_value}
 
 
-Відображення зміненої валюти в профіля
+Відображення зміненої валюти у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування профіля
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -349,7 +349,7 @@ ${MODE}             profile
   Звірити відображення поля value.currency профіля із ${USERS.users['${e_admin}']['new_value.currency']} для користувача ${viewer}
 
 
-Можливість змінити розмір картинки в профіля
+Можливість змінити розмір картинки у профілі
   [Tags]   ${USERS.users['${e_admin}'].broker}: Редагування профіля
   ...      e_admin
   ...      ${USERS.users['${e_admin}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -359,7 +359,7 @@ ${MODE}             profile
   Можливість змінити поле images[0].sizes профіля на ${field_value}
 
 
-Відображення змін в полі розмір картинки в профіля
+Відображення змін в полі розмір картинки у профілі
   [Tags]   ${USERS.users['${e_admin}'].broker}: Редагування профіля
   ...      viewer
   ...      ${USERS.users['${e_admin}'].broker}
@@ -369,7 +369,7 @@ ${MODE}             profile
   Звірити відображення поля images[0].sizes профіля із ${USERS.users['${e_admin}']['new_images[0].sizes']} для користувача ${viewer}
 
 
-Можливість змінити посилання картинки в профіля
+Можливість змінити посилання картинки у профілі
   [Tags]   ${USERS.users['${e_admin}'].broker}: Редагування профіля
   ...      e_admin
   ...      ${USERS.users['${e_admin}'].broker}
@@ -379,7 +379,7 @@ ${MODE}             profile
   Можливість змінити поле images[0].url профіля на ${field_value}
 
 
-Відображення змін в полі посилання на картинку в профіля
+Відображення змін в полі посилання на картинку у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування профіля
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -399,7 +399,7 @@ ${MODE}             profile
   Можливість змінити поле criteria[0].description профіля на ${field_value}
 
 
-Відображення змін у опису характеристики
+Відображення змін у описі характеристики
   [Tags]   ${USERS.users['${viewer}'].broker}: Редагування профіля
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -1061,7 +1061,7 @@ ${MODE}             profile
   Звірити відображення поля description профіля із ${USERS.users['${e_admin}'].initial_profile.description} для користувача ${viewer}
 
 
-Неможливість змінити одиницю в профіля
+Неможливість змінити одиницю у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -1071,7 +1071,7 @@ ${MODE}             profile
   Неможливість змінити поле unit профіля на ${field_value} для ${viewer}
 
 
-Відображення незміненої назви одиниці в профіля
+Відображення незміненої назви одиниці у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -1081,7 +1081,7 @@ ${MODE}             profile
   Звірити відображення поля unit.name профіля із ${USERS.users['${e_admin}'].initial_profile.unit.name} для користувача ${viewer}
 
 
-Відображення незміненого коду одиниці в профіля
+Відображення незміненого коду одиниці у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -1091,7 +1091,7 @@ ${MODE}             profile
   Звірити відображення поля unit.code профіля із ${USERS.users['${e_admin}'].initial_profile.unit.code} для користувача ${viewer}
 
 
-Неможливість змінити податок на додану вартість в профіля
+Неможливість змінити податок на додану вартість у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -1100,7 +1100,7 @@ ${MODE}             profile
   Неможливість змінити поле value.valueAddedTaxIncluded профіля на true для ${viewer}
 
 
-Відображення незміненого податку на додану вартість в профіля
+Відображення незміненого податку на додану вартість у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -1110,7 +1110,7 @@ ${MODE}             profile
   Звірити відображення поля value.valueAddedTaxIncluded профіля із ${USERS.users['${e_admin}'].initial_profile.value.valueAddedTaxIncluded} для користувача ${viewer}
 
 
-Неможливість змінити обсяг вартості в профіля
+Неможливість змінити обсяг вартості у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -1120,7 +1120,7 @@ ${MODE}             profile
   Неможливість змінити поле value.amount профіля на ${field_value} для ${viewer}
 
 
-Відображення незміненого обсягу вартості в профіля
+Відображення незміненого обсягу вартості у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -1130,7 +1130,7 @@ ${MODE}             profile
   Звірити відображення поля value.amount профіля із ${USERS.users['${e_admin}'].initial_profile.value.amount} для користувача ${viewer}
 
 
-Неможливість змінити валюту в профіля
+Неможливість змінити валюту у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -1140,7 +1140,7 @@ ${MODE}             profile
   Неможливість змінити поле value.currency профіля на ${field_value} для ${viewer}
 
 
-Відображення незміненої валюти в профіля
+Відображення незміненої валюти у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${e_admin}'].broker}
@@ -1150,7 +1150,7 @@ ${MODE}             profile
   Звірити відображення поля value.currency профіля із ${USERS.users['${e_admin}'].initial_profile.value.currency} для користувача ${viewer}
 
 
-Неможливість змінити розмір картинки в профіля
+Неможливість змінити розмір картинки у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -1160,7 +1160,7 @@ ${MODE}             profile
   Неможливість змінити поле images[0].sizes профіля на ${field_value} для ${viewer}
 
 
-Відображення незміненого розміру картинки в профіля
+Відображення незміненого розміру картинки у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -1170,7 +1170,7 @@ ${MODE}             profile
   Звірити відображення поля images[0].sizes профіля із ${USERS.users['${e_admin}'].initial_profile.images[0].sizes} для користувача ${viewer}
 
 
-Неможливість змінити посилання картинки в профіля
+Неможливість змінити посилання картинки у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
@@ -1180,7 +1180,7 @@ ${MODE}             profile
   Неможливість змінити поле images[0].url профіля на ${field_value} для ${viewer}
 
 
-Відображення незміненого посилання на картинку в профіля
+Відображення незміненого посилання на картинку у профілі
   [Tags]   ${USERS.users['${viewer}'].broker}: Неможливість редагувати профіль
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
