@@ -1,0 +1,9 @@
+-v MODE:profile
+
+-i create_profile
+-i find_profile
+-i impossibility_create_profile
+-i impossibility_modify_profile
+-i impossibility_add_profile
+-i impossibility_delete_add_profile
+-i impossibility_delete_profile

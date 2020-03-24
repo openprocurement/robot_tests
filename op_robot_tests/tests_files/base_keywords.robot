@@ -56,7 +56,7 @@ Resource           resource.robot
   ${period_intervals}=  compute_intrs  ${BROKERS}  ${used_brokers}
   ${accelerator}=  Get Variable Value  ${accelerator}
   ${accelerator}=  Set Variable If  '${accelerator}' != '${None}'  ${accelerator}  ${period_intervals.default.accelerator}
-  ${monitoring_data}=  tets_monitoring_data  ${USERS.users['${dasu_user}'].tender_data.data.id}  ${accelerator}
+  ${monitoring_data}=  test_monitoring_data  ${USERS.users['${dasu_user}'].tender_data.data.id}  ${accelerator}
   Log  ${monitoring_data}
   ${MNITORING_UAID}=  Run As  ${dasu_user}  Створити об'єкт моніторингу  ${monitoring_data}
   ${MONITORING}=  Create Dictionary
@@ -1536,3 +1536,114 @@ Resource           resource.robot
 Неможливість змінити поле ${field_name} характеристики на значення ${field_value} для користувача ${username}
   Require Failure  ${username}  Внести зміни в характеристику  ${CRITERIA['CRITERIA_UAID']}  ${field_name}  ${field_value}
 
+
+Можливість створити профіль
+  ${profile_data}=  test_profile_data  ${CRITERIA['CRITERIA_UAID']}  ${USERS.users['${e_admin}'].initial_data.dataType}
+  ${profile_data}=  munchify  ${profile_data}
+  ${profile_result}=  Run As  ${e_admin}  Створити профіль  ${profile_data}
+  ${PROFILE}=  Create Dictionary
+  Set Global Variable  ${PROFILE}
+  Set To Dictionary  ${USERS.users['${e_admin}']}  initial_profile=${profile_data}
+  Log  ${USERS.users['${e_admin}']}
+  Set To Dictionary  ${PROFILE}  PROFILE_UAID=${profile_result}
+  Log  ${profile_result}
+
+
+Звірити відображення поля ${field} профіля для усіх користувачів
+  :FOR  ${username}  IN  ${viewer}  ${e_admin}
+  \  Звірити відображення поля ${field} профіля для користувача ${username}
+
+
+Звірити відображення поля ${field} профіля для користувача ${username}
+  Звірити поле профіля  ${username}  ${PROFILE['PROFILE_UAID']}  ${USERS.users['${e_admin}'].initial_profile}  ${field}
+
+
+Можливість знайти профіль по ідентифікатору для усіх користувачів
+  :FOR  ${username}  IN  ${e_admin}  ${viewer}
+  \  Знайти профіль по ідентифікатору для користувача ${username}
+
+
+Знайти профіль по ідентифікатору для користувача ${username}
+  Дочекатись синхронізації з майданчиком  ${viewer}  PROFILE
+  Run As  ${username}  Отримати профіль по ідентифікатору  ${PROFILE['PROFILE_UAID']}
+
+
+Можливість змінити поле ${field_name} профіля на ${field_value}
+  Run As  ${e_admin}  Внести зміни в профіль  ${PROFILE['PROFILE_UAID']}  ${field_name}  ${field_value}
+  Set To Dictionary  ${USERS.users['${e_admin}']}  new_${field_name}=${field_value}
+
+
+Можливість додати ${filed_name} до профіля ${value} по ключу ${key_id}
+  ${profile_data}=  Run As  ${e_admin}  Додати до профіля  ${PROFILE['PROFILE_UAID']}  ${filed_name}  ${value}  ${key_id}
+  Run Keyword If  '${filed_name}' == 'criteria'  Append To List  ${USERS.users['${e_admin}'].initial_profile['criteria']}  ${value}
+  ...      ELSE IF  '${filed_name}' == 'requirementGroups'  Append To List  ${USERS.users['${e_admin}'].initial_profile['criteria'][0]['requirementGroups']}  ${value}
+  ...      ELSE IF  '${filed_name}' == 'requirements'  Append To List  ${USERS.users['${e_admin}'].initial_profile['criteria'][0]['requirementGroups'][0]['requirements']}  ${value}
+  Set To Dictionary  ${USERS.users['${e_admin}']}  new_${filed_name}=${value}
+
+
+Звірити відображення поля ${field} критерія для користувача ${username} по ключу ${key_id}
+  Звірити поле характеристики в профілі  ${username}  ${PROFILE['PROFILE_UAID']}  ${USERS.users['${e_admin}'].initial_profile}  ${field}  ${key_id}
+
+
+Можливість змінити ${field_name} поле в характеристиці профіля на ${field_value} по ключу ${key_id}
+  Run As  ${e_admin}  Внести зміни у характеристику профіля  ${PROFILE['PROFILE_UAID']}  ${field_name}  ${field_value}  ${key_id}
+  Set To Dictionary  ${USERS.users['${e_admin}']}  new_${field_name}=${field_value}
+
+
+Звірити відображення ${field} поля в характеристиці профіля із ${value} для користувача ${username} по ключу ${id_key}
+  Звірити поле характеристики в профілі із значенням  ${username}  ${PROFILE['PROFILE_UAID']}  ${value}  ${field}  ${id_key}
+
+
+Звірити відображення поля ${field} профіля із ${value} для користувача ${username}
+  Звірити поле профіля із значенням  ${username}  ${PROFILE['PROFILE_UAID']}  ${value}  ${field}
+
+
+Можливість видалити з профіля по ключу ${key_id}
+  Run As  ${e_admin}  Видалити з профіля  ${PROFILE['PROFILE_UAID']}  ${key_id}
+
+
+Неможливість знайти видаленні дані з характеристики по ключу ${key_id} для користувача ${username}
+  Require Failure  ${username}  Можливість отримати інформацію із профіля для характеристики по ключу  ${PROFILE['PROFILE_UAID']}  ${key_id}
+
+
+Можливість видалити профіль
+  Run As  ${e_admin}  Видалити профіль  ${PROFILE['PROFILE_UAID']}
+
+
+Видалити дані з profile data
+  [Arguments]  ${field}  ${key_id}
+  ${path}  get_path_to_id_from_criteria  ${USERS.users['${viewer}'].profile_data}  ${key_id}
+  Remove From Dictionary  ${USERS.users['${viewer}'].profile_data.${path['path']}[${path['index']}]}  ${field}
+
+
+Вибрати значення для вимоги
+  [Arguments]  ${requirement_data}
+  ${value}  choose_contain_key
+  ...   ${requirement_data}
+  ...   expectedValue
+  ...   minValue
+  ...   maxValue
+  [return]  ${value}
+
+
+Неможливість створити профіль для ${username}
+  ${profile_data}=  test_profile_data  ${CRITERIA['CRITERIA_UAID']}  ${USERS.users['${e_admin}'].initial_data.dataType}
+  ${profile_data}=  munchify  ${profile_data}
+  Require Failure  ${username}  Створити профіль  ${profile_data}
+
+
+Неможливість видалити профіль для ${username}
+  Require Failure  ${username}  Видалити профіль  ${PROFILE['PROFILE_UAID']}
+
+
+Неможливість змінити ${field_name} поле характеристики профіля на ${field_value} по ключу ${key_id} для ${username}
+  Require Failure  ${username}  Внести зміни у характеристику профіля  ${PROFILE['PROFILE_UAID']}  ${field_name}  ${field_value}  ${key_id}
+
+
+Неможливість змінити поле ${field_name} профіля на ${field_value} для ${username}
+  Require Failure  ${username}  Внести зміни в профіль  ${PROFILE['PROFILE_UAID']}  ${field_name}  ${field_value}
+
+
+Неможливість додати ${filed_name} до профіля ${value} по ключу ${key_id} для ${username}
+  Require Failure  ${username}  Додати до профіля  ${PROFILE['PROFILE_UAID']}  ${filed_name}  ${value}  ${key_id}
+  Set To Dictionary  ${USERS.users['${e_admin}']}  new_${filed_name}=${value}

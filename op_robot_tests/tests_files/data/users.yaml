@@ -77,6 +77,7 @@ users:
             monitorings:  [test.quintagroup.com, test.quintagroup.com]
             auctions: [test.quintagroup.com, bc698baa8b814908bc75405ed3d63548]
             criteria: [test.quintagroup.com, test.quintagroup.com]
+            profile: [test.quintagroup.com, test.quintagroup.com]
         api_key:  ""
         dasu_api_key: ""
         broker:   Quinta

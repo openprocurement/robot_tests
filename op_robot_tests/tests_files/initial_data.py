@@ -47,6 +47,11 @@ def get_fake_funder_scheme():
     return fake.funder_scheme()
 
 
+def create_value_amount():
+    value_amount = round(random.uniform(3000, 99999999.99), 2)
+    return value_amount
+
+
 def create_fake_amount(award_amount):
     return round(random.uniform(1, award_amount), 2)
 
@@ -103,6 +108,10 @@ def field_with_id(prefix, sentence):
     return u"{}-{}: {}".format(prefix, fake.uuid4()[:8], sentence)
 
 
+def description_with_id():
+    return u"{}-{}".format(fake.uuid4()[:8], fake.description())
+
+
 def translate_country_en(country):
     if country == u"Україна":
         return "Ukraine"
@@ -148,7 +157,7 @@ def test_tender_data(params,
     submissionMethodDetails = submissionMethodDetails \
         if submissionMethodDetails else "quick"
     now = get_now()
-    value_amount = round(random.uniform(3000, 99999999.99), 2)  # max value equals to budget of Ukraine in hryvnias
+    value_amount = create_value_amount()  # max value equals to budget of Ukraine in hryvnias
     data = {
         "mode": "test",
         "submissionMethodDetails": submissionMethodDetails,
@@ -238,14 +247,14 @@ def test_tender_data(params,
 def test_tender_data_planning(params):
     data = {
         "budget": {
-            "amountNet": round(random.uniform(3000, 999999999.99), 2),
+            "amountNet": create_value_amount(),
             "description": fake.description(),
             "project": {
                 "id": str(fake.random_int(min=1, max=999)),
                 "name": fake.description(),
             },
             "currency": "UAH",
-            "amount": round(random.uniform(3000, 99999999999.99), 2),
+            "amount": create_value_amount(),
             "id": str(fake.random_int(min=1, max=99999999999)) + "-" + str(fake.random_int(min=1, max=9)),
         },
         "procuringEntity": {
@@ -731,7 +740,7 @@ def get_hash(file_contents):
     return ("md5:" + hashlib.md5(file_contents).hexdigest())
 
 
-def tets_monitoring_data(tender_id, accelerator=None):
+def test_monitoring_data(tender_id, accelerator=None):
     data = {
         "reasons": [random.choice(["public", "fiscal", "indicator", "authorities", "media"])],
         "tender_id": tender_id,
@@ -863,3 +872,87 @@ def test_criteria_data():
     }
     return munchify(data)
 
+
+def choose_type(data_type):
+    if data_type == 'number':
+        data_type = create_value_amount()
+    elif data_type == 'integer':
+        data_type = create_fake_value_amount()
+    elif data_type == 'string':
+        data_type = create_fake_word()
+    elif data_type == 'boolean':
+        data_type = random.choice(["false", "true"])
+    return data_type
+
+
+def choose_currency(existent_data=''):
+    currency = {'USD', 'EUR', 'UAH'}
+    currency -= {existent_data}
+    currency = random.sample(currency, 1)[0]
+    return currency
+
+
+def create_value():
+    values = {
+        "amount": create_value_amount(),
+        "currency": choose_currency(),
+        "valueAddedTaxIncluded": 'false'
+    }
+    return munchify(values)
+
+
+def create_image_data():
+    images = [{
+        "sizes": str(create_fake_number(1, 10)),
+        "url": create_fake_url()
+    }]
+    return images
+
+
+def create_requirements(criteria_uaid, data_type):
+    field_value = random.choice(["minValue", "maxValue", "expectedValue"])
+    criteria_data = {
+        "description": description_with_id(),
+        field_value: choose_type(data_type),
+        "relatedCriteria_id": str(criteria_uaid),
+        "title": fake.title(),
+    }
+    return munchify(criteria_data)
+
+
+def create_requirements_group(criteria_uaid, data_type):
+    requirements = {
+        "requirements": [
+            create_requirements(criteria_uaid, data_type)
+        ],
+        "description": description_with_id()
+    }
+    return munchify(requirements)
+
+
+def create_criteria_for_profile(criteria_uaid, data_type):
+    criteria_group = {
+        "requirementGroups": [
+            create_requirements_group(criteria_uaid, data_type)
+        ],
+        "description": description_with_id(),
+        "title": fake.title()
+    }
+    return munchify(criteria_group)
+
+
+def test_profile_data(criteria_uaid, data_type):
+    classification = fake.classification()
+    data = {
+        "classification": classification['classification'],
+        "additionalClassification": [classification['additionalClassifications'][0]],
+        "description": fake.description(),
+        "status": "active",
+        "author": "admin",
+        "images": create_image_data(),
+        "criteria": [create_criteria_for_profile(criteria_uaid, data_type)],
+        "title": fake.title(),
+        "unit": create_unit_en(),
+        "value": create_value()
+    }
+    return munchify(data)

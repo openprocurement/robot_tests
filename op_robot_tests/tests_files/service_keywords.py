@@ -57,7 +57,7 @@ from .initial_data import (
     test_tender_data_framework_agreement,
     test_tender_data_selection,
     test_bid_competitive_data,
-    tets_monitoring_data,
+    test_monitoring_data,
     test_party,
     test_dialogue,
     test_conclusion,
@@ -74,7 +74,19 @@ from .initial_data import (
     get_hash,
     test_criteria_data,
     create_fake_eng_sentence,
-    create_unit_en
+    create_unit_en,
+    test_profile_data,
+    create_fake_url,
+    create_value,
+    create_image_data,
+    create_criteria_for_profile,
+    create_requirements_group,
+    create_requirements,
+    choose_currency,
+    create_value_amount,
+    choose_type,
+    create_fake_word,
+    description_with_id
 )
 from barbecue import chef
 from restkit import request
@@ -670,4 +682,37 @@ def dictionary_should_not_contain_path(dictionary, path):
     except KeyError:
         return
     raise RuntimeError("Dictionary contains path '%s'." % path)
+
+
+def choose_contain_key(dic_obj, *args):
+    for i in args:
+        if i in dic_obj.keys():
+            found_key = i
+            break
+    return found_key
+
+
+def prepare_data_profile(data):
+    del data['dateModified']
+    del data['classification']
+    del data['additionalClassification']
+    del data['id']
+    del data['author']
+    return data
+
+
+def get_path_to_id_from_criteria(data, key_id):
+    try:
+        for index_c in range(len(data['criteria'])):
+            if data['criteria'][index_c]['description'] == key_id:
+                return {'path': "criteria", 'index': index_c}
+            for index_g in range(len(data['criteria'][index_c]['requirementGroups'])):
+                if data['criteria'][index_c]['requirementGroups'][index_g]['description'] == key_id:
+                    return {'path': "criteria[{}]['requirementGroups']".format(index_c), 'index': index_g}
+                for index_re in range(len(data['criteria'][index_c]['requirementGroups'][index_g]['requirements'])):
+                    if data['criteria'][index_c]['requirementGroups'][index_g]['requirements'][index_re]['description'] == key_id:
+                        return {'path': "criteria[{}]['requirementGroups'][{}]['requirements']".format(index_c, index_g), 'index':index_re}
+    except KeyError:
+        return "Not found path to '%s'." % key_id
+
 

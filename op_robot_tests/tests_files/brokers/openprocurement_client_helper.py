@@ -7,11 +7,13 @@ from openprocurement_client.resources.plans import PlansClient
 from openprocurement_client.resources.contracts import ContractingClient
 from openprocurement_client.resources.contracts import ContractingClient
 from openprocurement_client.resources.criteria import CriteriaServiceClient
+from openprocurement_client.resources.profile import ProfileServiceClient
 from restkit.errors import RequestFailed, BadStatusLine, ResourceError
 from retrying import retry
 from time import sleep
 import os
 import urllib
+
 
 def retry_if_request_failed(exception):
     status_code = getattr(exception, 'status_code', None)
@@ -34,6 +36,17 @@ class StableDsClient(DocumentServiceClient):
            wait_random_max=4000, retry_on_exception=retry_if_request_failed)
     def request(self, *args, **kwargs):
         return super(StableDsClient, self).request(*args, **kwargs)
+
+
+class StableProfileClient(ProfileServiceClient):
+    @retry(stop_max_attempt_number=100, wait_random_min=500,
+           wait_random_max=4000, retry_on_exception=retry_if_request_failed)
+    def request(self, *args, **kwargs):
+        return super(ProfileServiceClient, self).request(*args, **kwargs)
+
+
+def prepare_profile_api_wrapper(host_url, api_version, auth_profile):
+    return StableProfileClient(host_url, api_version, auth_profile)
 
 
 class StableCriteriaClient(CriteriaServiceClient):
@@ -65,11 +78,12 @@ def prepare_criteria_api_wrapper(ds_host_url, api_version, auth_criteria):
 
 def prepare_agreement_api_wrapper(key, resource, host_url, api_version, ds_config=None):
     return StableAgreementClient(key, resource, host_url, api_version,
-                        ds_config=ds_config)
+                                 ds_config=ds_config)
 
 
 class ContractingStableClient(ContractingClient):
-    @retry(stop_max_attempt_number=100, wait_random_min=500, wait_random_max=4000, retry_on_exception=retry_if_request_failed)
+    @retry(stop_max_attempt_number=100, wait_random_min=500, wait_random_max=4000,
+           retry_on_exception=retry_if_request_failed)
     def request(self, *args, **kwargs):
         return super(ContractingStableClient, self).request(*args, **kwargs)
 
@@ -177,7 +191,8 @@ def download_file_from_url(url, path_to_save_file):
 
 
 class StableClient_plan(PlansClient):
-    @retry(stop_max_attempt_number=100, wait_random_min=500, wait_random_max=4000, retry_on_exception=retry_if_request_failed)
+    @retry(stop_max_attempt_number=100, wait_random_min=500, wait_random_max=4000,
+           retry_on_exception=retry_if_request_failed)
     def request(self, *args, **kwargs):
         return super(StableClient_plan, self).request(*args, **kwargs)
 
@@ -195,4 +210,4 @@ class StableClient_dasu(DasuClient):
 
 def prepare_dasu_api_wrapper(key, resource, host_url, api_version, ds_config=None):
     return StableClient_dasu(key, resource, host_url, api_version,
-                        ds_config=ds_config)
+                             ds_config=ds_config)
